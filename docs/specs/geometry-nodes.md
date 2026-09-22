@@ -55,6 +55,10 @@
 
 ## 4. 四种主要配方
 
+体积雾配方使用 `QC Style Volume Fog v1`，输入为 Volume 和 Material，输出仍是体积几何，可与表面分支组合。材质通过 `qc_value` 和 `qc_valid` 采样：有符号量的不透明度为 `scale * abs(value)`，电子数密度为 `scale * max(value, 0)`，仅在有效域显示。scale 是光学显示参数，不代表电子数密度转换，也不把轨道振幅改写为概率密度。默认颜色仅区分正负，原始场和单位不变；侧栏与材质节点共用不透明度和颜色参数。
+
+Blender 5.1 的 [Set Material](https://docs.blender.org/manual/en/5.1/modeling/geometry_nodes/geometry/material/set_material.html) 支持体积几何；[体积材质](https://docs.blender.org/manual/en/5.1/render/materials/components/volume.html) 可通过 Attribute 节点读取命名网格。空间采样范围过小会截断体积云；提高显示不透明度不能替代网格范围收敛。
+
 ### 轨道/自旋双相等值面
 
 ```mermaid

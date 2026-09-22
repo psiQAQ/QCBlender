@@ -73,4 +73,13 @@ $env:BLENDER_USER_RESOURCES = "$PWD/outputs/blender-acceptance"
 
 `verify_node_assets.py` 在原生安装测试创建场之后执行，检查公共等值面节点的参数/源对象隔离、已有分支连接保留及无对象/材质绑定的 `.blend` 资产导出和重新加载；报告为 `outputs/node-assets/report.json`。
 
+体积雾检查复用原生安装测试生成的轨道工程：
+
+```powershell
+& $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/verify_fog.py
+& $blender --background --offline-mode --disable-autoexec 'outputs/fog-acceptance/fog.blend' --python-exit-code 1 --python tools/verify_fog.py -- --reopen-fog
+```
+
+`outputs/fog-acceptance/report.json` 记录正负颜色、零不透明度、连续透明度、缓存不变和保存后渲染一致性。
+
 完成相应检查后运行 `& $blenderPython -I tools/qualify_package.py`，核对最终 ZIP 与当前源码、随包 wheel 哈希，并汇总已有报告。它不代替上述 Blender 验收命令。

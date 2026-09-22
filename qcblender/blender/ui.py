@@ -253,6 +253,7 @@ class QCBLENDER_PT_main(bpy.types.Panel):
         row = layout.row(align=True)
         row.operator('qcblender.map_scalar', text='Map Colors', icon='COLOR')
         row.operator('qcblender.create_slice', text='Slice', icon='MESH_PLANE')
+        row.operator('qcblender.create_fog', text='Fog', icon='VOLUME_DATA')
         row = layout.row(align=True)
         row.operator('qcblender.color_charge', text='Charge', icon='MATERIAL')
         row.operator('qcblender.show_dipole', text='Dipole', icon='EMPTY_ARROWS')
@@ -318,6 +319,7 @@ class QCBLENDER_PT_main(bpy.types.Panel):
                     layout.label(text='Colors: ' + color_source['quantity'] + ' [' + color_source['unit'] + ']')
                     layout.label(text='Minimum: red | center: white | maximum: blue')
                     layout.label(text='Magenta: outside valid field domain')
+        if obj and obj.get('qc_view_kind'):
             modifier = next((m for m in obj.modifiers if m.type == 'NODES' and m.node_group), None)
             if modifier:
                 values = {item.name: modifier.get(item.identifier) for item in modifier.node_group.interface.items_tree
@@ -328,3 +330,15 @@ class QCBLENDER_PT_main(bpy.types.Panel):
                 for item in modifier.node_group.interface.items_tree:
                     if item.item_type == 'SOCKET' and item.in_out == 'INPUT' and item.identifier in modifier:
                         layout.prop(modifier, '["' + item.identifier + '"]', text=item.name)
+                        if item.socket_type == 'NodeSocketMaterial':
+                            mat = modifier.get(item.identifier)
+                            if mat and mat.get('qc_fog') and mat.use_nodes:
+                                nodes = mat.node_tree.nodes
+                                scale, colors = nodes.get('Optical Scale'), nodes.get('Sign Colors')
+                                if scale:
+                                    layout.prop(scale.outputs[0], 'default_value', text='Opacity Scale')
+                                if colors:
+                                    layout.prop(colors.color_ramp.elements[0], 'color', text='Negative Color')
+                                    layout.prop(colors.color_ramp.elements[-1], 'color', text='Positive Color')
+                                layout.label(text='Opacity: ' + mat['qc_transfer'])
+                                layout.label(text='Optical display; source values unchanged')
