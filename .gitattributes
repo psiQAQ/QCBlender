@@ -1,0 +1,12 @@
+.gitattributes text eol=lf
+.gitignore text eol=lf
+.gitmodules text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+*.txt text eol=lf
+# Preserve fixed upstream scientific fixtures and their checksum identities byte for byte.
+tests/data/** -text -diff
+# Preserve the upstream GNU license text, including its original final blank line.
+LICENSE -text whitespace=-blank-at-eof

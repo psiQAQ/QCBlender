@@ -1,0 +1,4 @@
+[submodule "submodules/MolecularNodes"]
+	path = submodules/MolecularNodes
+	url = https://github.com/BradyAJohnston/MolecularNodes.git
+	shallow = true
