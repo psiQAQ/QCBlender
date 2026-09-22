@@ -201,6 +201,44 @@ def field_view(directory, parent=None, index=0):
     info = nodes.new('GeometryNodeObjectInfo')
     info.transform_space = 'RELATIVE'
     info.inputs['Object'].default_value = source
+    style = nodes.new('GeometryNodeGroup')
+    style.node_tree = isosurface_group()
+    links.new(info.outputs['Geometry'], style.inputs['Volume'])
+    for name in ('Isovalue', 'Positive Phase', 'Negative Phase', 'Adaptivity', 'Smooth Normals'):
+        links.new(inputs.outputs[name], style.inputs[name])
+    for label, color in [('Positive', (0.1, 0.3, 0.8, 1)), ('Negative', (0.85, 0.12, 0.08, 1))]:
+        name = label + ' Material'
+        socket(tree, name, 'NodeSocketMaterial', default=material('QC ' + label + ' Phase', color))
+        links.new(inputs.outputs[name], style.inputs[name])
+    links.new(style.outputs['Geometry'], output.inputs['Geometry'])
+    for number, node in enumerate(nodes):
+        node.location = (number * 240, 0)
+    obj.modifiers.new('QC Isosurface', 'NODES').node_group = tree
+    bpy.context.view_layer.objects.active = obj
+    obj.select_set(True)
+    return obj
+
+
+def isosurface_group():
+    """Reusable signed isosurfaces of QC grids; bindings belong to the caller."""
+    asset_id = 'qc.isosurface.v1'
+    existing = next((group for group in bpy.data.node_groups
+                     if group.bl_idname == 'GeometryNodeTree' and group.get('qc_asset_id') == asset_id), None)
+    if existing is not None:
+        return existing
+    tree = bpy.data.node_groups.new('QC Style Isosurface v1', 'GeometryNodeTree')
+    tree['qc_asset_id'] = asset_id
+    socket(tree, 'Volume', 'NodeSocketGeometry')
+    socket(tree, 'Isovalue', 'NodeSocketFloat', default=.05, minimum=1e-7)
+    socket(tree, 'Positive Phase', 'NodeSocketBool', default=True)
+    socket(tree, 'Negative Phase', 'NodeSocketBool', default=True)
+    socket(tree, 'Adaptivity', 'NodeSocketFloat', default=0, minimum=0)
+    socket(tree, 'Smooth Normals', 'NodeSocketBool', default=True)
+    socket(tree, 'Positive Material', 'NodeSocketMaterial')
+    socket(tree, 'Negative Material', 'NodeSocketMaterial')
+    socket(tree, 'Geometry', 'NodeSocketGeometry', 'OUTPUT')
+    nodes, links = tree.nodes, tree.links
+    inputs, output = nodes.new('NodeGroupInput'), nodes.new('NodeGroupOutput')
     join = nodes.new('GeometryNodeJoinGeometry')
     smooth = nodes.new('GeometryNodeSetShadeSmooth')
     links.new(join.outputs['Geometry'], smooth.inputs['Geometry'])
@@ -208,7 +246,7 @@ def field_view(directory, parent=None, index=0):
     links.new(smooth.outputs['Geometry'], output.inputs['Geometry'])
     valid_grid = nodes.new('GeometryNodeGetNamedGrid')
     valid_grid.inputs['Name'].default_value = 'qc_valid'
-    links.new(info.outputs['Geometry'], valid_grid.inputs['Volume'])
+    links.new(inputs.outputs['Volume'], valid_grid.inputs['Volume'])
     sample = nodes.new('GeometryNodeSampleGrid')
     sample.inputs['Interpolation'].default_value = 'Trilinear'
     links.new(valid_grid.outputs['Grid'], sample.inputs['Grid'])
@@ -218,11 +256,10 @@ def field_view(directory, parent=None, index=0):
     invalid.operation = 'LESS_THAN'
     invalid.inputs[1].default_value = 0.999999
     links.new(sample.outputs['Value'], invalid.inputs[0])
-    for label, name, color in [('Positive Phase', 'qc_value', (0.1, 0.3, 0.8, 1)),
-                                ('Negative Phase', 'qc_negative', (0.85, 0.12, 0.08, 1))]:
+    for label, name in [('Positive Phase', 'qc_value'), ('Negative Phase', 'qc_negative')]:
         grid = nodes.new('GeometryNodeGetNamedGrid')
         grid.inputs['Name'].default_value = name
-        links.new(info.outputs['Geometry'], grid.inputs['Volume'])
+        links.new(inputs.outputs['Volume'], grid.inputs['Volume'])
         surface = nodes.new('GeometryNodeGridToMesh')
         links.new(grid.outputs['Grid'], surface.inputs['Grid'])
         links.new(inputs.outputs['Isovalue'], surface.inputs['Threshold'])
@@ -232,7 +269,7 @@ def field_view(directory, parent=None, index=0):
         links.new(surface.outputs['Mesh'], delete.inputs['Geometry'])
         links.new(invalid.outputs[0], delete.inputs['Selection'])
         assign = nodes.new('GeometryNodeSetMaterial')
-        assign.inputs['Material'].default_value = material('QC ' + label, color)
+        links.new(inputs.outputs[label.replace('Phase', 'Material')], assign.inputs['Material'])
         links.new(delete.outputs['Geometry'], assign.inputs['Geometry'])
         switch = nodes.new('GeometryNodeSwitch')
         switch.input_type = 'GEOMETRY'
@@ -241,8 +278,6 @@ def field_view(directory, parent=None, index=0):
         links.new(switch.outputs['Output'], join.inputs['Geometry'])
     for index, node in enumerate(nodes):
         node.location = (index % 5 * 220, -(index // 5) * 240)
-    obj.modifiers.new('QC Isosurface', 'NODES').node_group = tree
     tree.asset_mark()
-    bpy.context.view_layer.objects.active = obj
-    obj.select_set(True)
-    return obj
+    tree.asset_data.description = 'Signed QC scalar isosurfaces with validity mask; input coordinates in angstrom'
+    return tree

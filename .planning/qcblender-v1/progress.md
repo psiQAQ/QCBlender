@@ -1,5 +1,7 @@
 # 开发任务已迁移
 
+2026-09-23：用户确认首版完整显示层管理、现有物理量加外部 Cube、原生出图。新增 M6 任务；公共等值面节点已提取，原生安装与节点复用验证进行中。状态以 `.scratch/qcblender-v1/issues/07-m6-display-layers.md` 为准。
+
 复建验收发现并修复 Blender 宿主的 Windows 长路径缓存读取；原失败配置复验和 20 项科学回归通过，最新包摘要与边界见 M5 任务记录。
 
 已有开发已分五批本地提交；17 个已提交样本的 SHA-256 与来源记录一致，当前安装包资格检查 Passed。提交与验收证据见 `.scratch/qcblender-v1/issues/06-m5-release.md`。

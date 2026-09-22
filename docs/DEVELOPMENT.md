@@ -52,7 +52,7 @@ $scienceWheels = $scienceWheels | ForEach-Object { Join-Path "$PWD/outputs/wheel
 
 ```powershell
 $env:BLENDER_USER_RESOURCES = "$PWD/outputs/blender-acceptance"
-& $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_extension.py
+& $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_extension.py --python tools/verify_node_assets.py
 & $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_storage_paths.py
 & $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/verify_extension.py -- --reopen
 & $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/verify_project_recovery.py
@@ -70,5 +70,7 @@ $env:BLENDER_USER_RESOURCES = "$PWD/outputs/blender-acceptance"
 在限制文件系统的 Agent 沙箱内，Blender 原生安装器可能无法将扩展暂存目录重命名；该测试需要宿主批准相应的本地安装操作。这不属于最终用户的插件依赖。
 
 当前技术状态以 `.scratch/qcblender-v1/issues/` 和实际报告为准。独立用户验收不得由 Agent 代签。
+
+`verify_node_assets.py` 在原生安装测试创建场之后执行，检查公共等值面节点的参数/源对象隔离、已有分支连接保留及无对象/材质绑定的 `.blend` 资产导出和重新加载；报告为 `outputs/node-assets/report.json`。
 
 完成相应检查后运行 `& $blenderPython -I tools/qualify_package.py`，核对最终 ZIP 与当前源码、随包 wheel 哈希，并汇总已有报告。它不代替上述 Blender 验收命令。
