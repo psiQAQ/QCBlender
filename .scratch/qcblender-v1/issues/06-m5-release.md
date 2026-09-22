@@ -1,0 +1,26 @@
+# M5 发布与工程验收
+
+Status: ready-for-human
+Execution: in_progress
+Owner: root
+Blocked by: 01, 02, 03, 04, 05
+
+## 工作
+
+完成科学数据持久化、冷重开/移动/恢复、离线扩展安装、资源释放、渲染导出、性能和用户文档。
+
+## 验收
+
+主设计V01–V08技术验收均通过；交付ZIP和可复现证据。独立用户认可另行记录，Agent不能代签。
+
+## Comments
+
+2026-09-22：继续验收发现并修复保存失败的索引回滚；旧索引/首次无索引两种实际 Blender 失败场景 Passed。模式、IR、能量列表及动画参数冷重开通过，双场色标/文字图例冷渲染通过。11 个随包 wheel 的 RECORD/许可材料/来源核对 Passed，GPL/LGPL 上游声明差异保留。最新 ZIP 50,401,654 bytes，SHA-256 e1e0dae81c362aca6e0900c8a91d6ea07fd53e3a64bf304c68835caf10bb8070。VESTA 对照 Cube 已生成并按原数值回读；官方程序下载因 TLS/EOF 失败，外部渲染尚未执行。
+
+2026-09-22：用户新增授权：已有开发分批本地提交，后续开发持续提交；推送与对外发布仍未授权。
+
+2026-09-22：技术候选已交付，M5 保持 in_progress。50,401,050 字节 ZIP 的 SHA-256 为 4cbefb6fd3027ebc088fc2ff7ea736da804af687dd3cbd77686a078d8c3afe16；源码/包一致、wheel 摘要与报告汇总 Passed（outputs/qualification.json）。新配置离线安装、取消/缓存、移动后冷开、恢复、静态图/动画及用户/构建文档完成。独立用户复做、VMD/VESTA 同场景视觉比较、对外发布许可复核仍未完成；Agent 未签署人工认可，不宣称 M0–M5 全部发布完成。无提交或推送。
+
+2026-09-22：.blend+.qcdata 原子保存、ZIP 打包、中文/空格目录冷重开、科学数组一致、缺失 VDB 重建及按 manifest 身份重定位 Passed。离线扩展安装、宿主库来源、生命周期和静态渲染 Passed。证据：outputs/acceptance/extension.json、recovery.json、mo8.png。首版 V01–V08 尚未整体完成；最终用户文档、发布材料、完整成图/动画和独立用户认可继续保留为未完成。
+
+2026-09-22：由已确认设计路线建立；实施、启动/安装 Blender 和下载公开样例已获用户授权。未授权提交、推送或发布。
