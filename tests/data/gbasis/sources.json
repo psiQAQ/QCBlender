@@ -1,0 +1,20 @@
+[
+  {
+    "file": "ch2o_q_0.fchk",
+    "sha256": "2be8499480834ebf30a921fe12f8696d264a6722916d3ad3e2a1430b651800b3",
+    "license": "GPL-3.0-or-later metadata; upstream LICENSE is LGPL-3.0 text",
+    "url": "https://raw.githubusercontent.com/theochem/gbasis/071969c900d6d7a9fbbdfe193c65ba3be177fbdf/notebooks/tutorial/ch2o_q_0.fchk"
+  },
+  {
+    "file": "h2o_hf_ccpv5z_sph.fchk",
+    "sha256": "34f7063d2fdf97e4c7eaae4f2f1fb41b17c4c27a61540c7980af7a79ddf54a99",
+    "license": "GPL-3.0-or-later metadata; upstream LICENSE is LGPL-3.0 text",
+    "url": "https://raw.githubusercontent.com/theochem/gbasis/071969c900d6d7a9fbbdfe193c65ba3be177fbdf/tests/h2o_hf_ccpv5z_sph.fchk"
+  },
+  {
+    "file": "h2o_hf_ccpv5z_cart.fchk",
+    "sha256": "8ab96a3e64daf359353e19f0cc54fcc84ddbbded341a0b74c3b1a8f6a88b9f60",
+    "license": "GPL-3.0-or-later metadata; upstream LICENSE is LGPL-3.0 text",
+    "url": "https://raw.githubusercontent.com/theochem/gbasis/071969c900d6d7a9fbbdfe193c65ba3be177fbdf/tests/h2o_hf_ccpv5z_cart.fchk"
+  }
+]

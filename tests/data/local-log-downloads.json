@@ -1,0 +1,22 @@
+[
+  {
+    "file": "water_neutral_nbo_opt_freq.out",
+    "url": "https://raw.githubusercontent.com/cclib/cclib-data/a16cc80ea29e8baec60abd0df346ce6862f52531/Gaussian/Gaussian16/water_neutral_nbo_opt_freq.out",
+    "sha256": "9493d24655fb261a2c945d292ad517567f3024996594a25f678199df74017519"
+  },
+  {
+    "file": "water.log",
+    "url": "https://raw.githubusercontent.com/cclib/cclib-data/a16cc80ea29e8baec60abd0df346ce6862f52531/Gaussian/Gaussian16/water.log",
+    "sha256": "3c5aa038823d5b84b9c314286a7a3d8f13a68bacea3a0028b1a4d21202693f3d"
+  },
+  {
+    "file": "benzene_HPfreq.log",
+    "url": "https://raw.githubusercontent.com/cclib/cclib-data/a16cc80ea29e8baec60abd0df346ce6862f52531/Gaussian/Gaussian09/benzene_HPfreq.log",
+    "sha256": "38397a99e6b92295fe4ad5fd6cca3f3a4363439ae09d302f78daeae20db7bdc9"
+  },
+  {
+    "file": "issue746-dsdpbep86.log",
+    "url": "https://github.com/cclib/cclib/files/3231956/g16.log",
+    "sha256": "a43082b35aa8ea3c91a9ca242450bb6585a9c187dcef369d81c081499a7b7768"
+  }
+]

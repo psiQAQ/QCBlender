@@ -1,0 +1,26 @@
+[
+  {
+    "file": "water_mp2.log",
+    "url": "https://raw.githubusercontent.com/cclib/cclib/07260dd0394cb1a2381d4d897746d727a12ad6ce/data/Gaussian/basicGaussian16/water_mp2.log",
+    "sha256": "9a93eac63dba161d4973494df296ff4e62bd1f3c97da6e519df97df172bade74",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "file": "water_ccsdt.log",
+    "url": "https://raw.githubusercontent.com/cclib/cclib/07260dd0394cb1a2381d4d897746d727a12ad6ce/data/Gaussian/basicGaussian16/water_ccsdt.log",
+    "sha256": "b0b99ae2c142931cbcdc76a035ce719e4fc068a83c8d9cb610105eaae9527b2c",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "file": "dvb_td.out",
+    "url": "https://raw.githubusercontent.com/cclib/cclib/07260dd0394cb1a2381d4d897746d727a12ad6ce/data/Gaussian/basicGaussian16/dvb_td.out",
+    "sha256": "c9255c92b829a4d2072ffca262be4dd9212f35a9c75d84c1fe8eb5969c166eef",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "file": "dvb_ir.out",
+    "url": "https://raw.githubusercontent.com/cclib/cclib/07260dd0394cb1a2381d4d897746d727a12ad6ce/data/Gaussian/basicGaussian16/dvb_ir.out",
+    "sha256": "bc1a21de15ada135d5188b11d44226389022d92488ddfa8163ba7d4d713e5061",
+    "license": "BSD-3-Clause"
+  }
+]

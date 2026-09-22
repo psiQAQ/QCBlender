@@ -1,0 +1,44 @@
+[
+  {
+    "file": "water_sto3g_hf_g03.fchk",
+    "sha256": "aa8dec77849d4f9e1e9dc9357c80f5b4d6ba1efc3bbc17da6c59754bdaed0816",
+    "license": "GPL-3.0-or-later",
+    "url": "https://raw.githubusercontent.com/theochem/iodata/adab5813713ba64641565eb2a8c11803a4e9bba6/iodata/test/data/water_sto3g_hf_g03.fchk"
+  },
+  {
+    "file": "ch3_hf_sto3g.fchk",
+    "sha256": "b5b33475a6766447a287e6cf16ac6111eb489a5985743413b056ac2e7a4c384c",
+    "license": "GPL-3.0-or-later",
+    "url": "https://raw.githubusercontent.com/theochem/iodata/adab5813713ba64641565eb2a8c11803a4e9bba6/iodata/test/data/ch3_hf_sto3g.fchk"
+  },
+  {
+    "file": "ch3_rohf_sto3g_g03.fchk",
+    "sha256": "bcca51fed07cde2ca5cd8cbf1d748c4af7d9e507f9e0560f91cc93a21eeac88f",
+    "license": "GPL-3.0-or-later",
+    "url": "https://raw.githubusercontent.com/theochem/iodata/adab5813713ba64641565eb2a8c11803a4e9bba6/iodata/test/data/ch3_rohf_sto3g_g03.fchk"
+  },
+  {
+    "file": "o2_cc_pvtz_pure.fchk",
+    "sha256": "8819fd8c2de84554b739cd28f270c33fb9d136e4b6029c0819fee49b378784cd",
+    "license": "GPL-3.0-or-later",
+    "url": "https://raw.githubusercontent.com/theochem/iodata/adab5813713ba64641565eb2a8c11803a4e9bba6/iodata/test/data/o2_cc_pvtz_pure.fchk"
+  },
+  {
+    "file": "o2_cc_pvtz_cart.fchk",
+    "sha256": "398f37a06728b90af4c878052509aeba9fbf25f22c0833b9310e1f608a89f56b",
+    "license": "GPL-3.0-or-later",
+    "url": "https://raw.githubusercontent.com/theochem/iodata/adab5813713ba64641565eb2a8c11803a4e9bba6/iodata/test/data/o2_cc_pvtz_cart.fchk"
+  },
+  {
+    "file": "li_h_3-21G_hf_g09.fchk",
+    "sha256": "6c083e8730c88caee139122e154f80c5028e0246670af6b4e7f40fc9fda913f7",
+    "license": "GPL-3.0-or-later",
+    "url": "https://raw.githubusercontent.com/theochem/iodata/adab5813713ba64641565eb2a8c11803a4e9bba6/iodata/test/data/li_h_3-21G_hf_g09.fchk"
+  },
+  {
+    "file": "li2_g09_nbasis_indep.fchk",
+    "sha256": "2ed3af93c54999e3eab7f438a4e07a9d9d37cbc016af348119415139737d48cc",
+    "license": "GPL-3.0-or-later",
+    "url": "https://raw.githubusercontent.com/theochem/iodata/adab5813713ba64641565eb2a8c11803a4e9bba6/iodata/test/data/li2_g09_nbasis_indep.fchk"
+  }
+]

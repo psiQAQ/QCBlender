@@ -1,0 +1,20 @@
+[
+  {
+    "file": "ch4_uhf_ccpvdz.fchk",
+    "sha256": "3f93c52df5ef5adda00eff89bc5c9bb0bc10182722193d87e72f3b710d7c2c40",
+    "license": "GPL-3.0-or-later",
+    "url": "https://raw.githubusercontent.com/theochem/chemtools/47c9fe255848b8dbc6f589beb738421f76401885/chemtools/data/ch4_uhf_ccpvdz.fchk"
+  },
+  {
+    "file": "data_cubegen_g09_C01_ch4_uhf_ccpvdz.npz",
+    "sha256": "b265e6c121f7b56da9386ed004f8c36decc09b1946fe6a3ce0f28b382cac6eec",
+    "license": "GPL-3.0-or-later",
+    "url": "https://raw.githubusercontent.com/theochem/chemtools/47c9fe255848b8dbc6f589beb738421f76401885/chemtools/data/data_cubegen_g09_C01_ch4_uhf_ccpvdz.npz"
+  },
+  {
+    "file": "data_fortran_ch4_uhf_ccpvdz.npz",
+    "sha256": "6687ac93fbdcc3fc11fca59c6a7eb68df462c98509680abe8e209065786cebeb",
+    "license": "GPL-3.0-or-later",
+    "url": "https://raw.githubusercontent.com/theochem/chemtools/47c9fe255848b8dbc6f589beb738421f76401885/chemtools/data/data_fortran_ch4_uhf_ccpvdz.npz"
+  }
+]
