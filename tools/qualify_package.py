@@ -29,7 +29,7 @@ with zipfile.ZipFile(archive_path) as archive:
 evidence = {}
 for relative in ('science-reference.json', 'scientific-convergence.json', 'field-performance.json',
                  'acceptance/extension.json', 'acceptance/recovery.json', 'visual-acceptance/result.json',
-                 'acceptance/failed-save.json', 'acceptance/water-mode-cold-view.json',
+                 'acceptance/failed-save.json', 'acceptance/storage-paths.json', 'acceptance/water-mode-cold-view.json',
                  'acceptance/density-esp-cold-view.json',
                  'animation-acceptance/result.json', 'scalar-probe/result.json', 'vibration-probe.json'):
     path = ROOT / 'outputs' / relative

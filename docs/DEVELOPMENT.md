@@ -53,6 +53,7 @@ $scienceWheels = $scienceWheels | ForEach-Object { Join-Path "$PWD/outputs/wheel
 ```powershell
 $env:BLENDER_USER_RESOURCES = "$PWD/outputs/blender-acceptance"
 & $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_extension.py
+& $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_storage_paths.py
 & $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/verify_extension.py -- --reopen
 & $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/verify_project_recovery.py
 & $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_visual_features.py
@@ -64,7 +65,7 @@ $env:BLENDER_USER_RESOURCES = "$PWD/outputs/blender-acceptance"
 & $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/benchmark_fields.py
 ```
 
-第一条安装当前 ZIP，验证运行库来源、后台计算/取消、重复场缓存、双相和阈值，生成渲染并保存可迁移工程。第二条在新目录冷启动并核对数组身份及网格数量。第三条验证缺失缓存恢复、重定位、电荷/偶极及振动/IR。报告位于 `outputs/acceptance/`。
+`verify_extension.py` 安装当前 ZIP，验证运行库来源、后台计算/取消、重复场缓存、双相和阈值，生成渲染并保存可迁移工程；带 `--reopen` 在新目录冷启动并核对数组身份及网格数量。`verify_storage_paths.py` 必须在 Blender 宿主中运行，验证超过 260 字符的数组路径；独立 Python 的 Windows 长路径行为不能代替这项检查。`verify_project_recovery.py` 验证缺失缓存恢复、重定位、电荷/偶极及振动/IR。报告位于 `outputs/acceptance/`。
 
 在限制文件系统的 Agent 沙箱内，Blender 原生安装器可能无法将扩展暂存目录重命名；该测试需要宿主批准相应的本地安装操作。这不属于最终用户的插件依赖。
 

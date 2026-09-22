@@ -21,7 +21,7 @@ GBasis 来源固定在 `science-sources.lock.json`，当前 wheel 为 `0.1.0+qcb
 
 | 项目 | 状态 | 证据 |
 | --- | --- | --- |
-| 解析/归一化/科学回归 | Passed | 19 项测试，`outputs/science-reference.json`；含路径逃逸/损坏摘要拒绝、并发不可变数据复制 |
+| 解析/归一化/科学回归 | Passed | 20 项测试，`outputs/science-reference.json`；含路径逃逸/损坏摘要拒绝、并发不可变数据复制 |
 | MO 独立参考 | Passed | CH4 UHF/cc-pVDZ，27 点 Fortran 参考，Alpha/Beta MO 8/9 最大绝对误差约 4.85e-9 |
 | 密度/ESP 独立参考 | Passed | 同一 CH4 的 Gaussian Cubegen 18 点：密度最大误差 8.44e-7 electron/bohr^3，ESP 4.61e-6 hartree/e；只证明对应样本 |
 | AO/电子数 | Passed | 开闭壳层、纯/笛卡尔、矩形 MO 的 CᵀSC 与 Tr(PS)；CH4 电子数 9.9999999974 |
@@ -34,6 +34,7 @@ GBasis 来源固定在 `science-sources.lock.json`，当前 wheel 为 `0.1.0+qcb
 | 动画导出 | Passed | `outputs/animation-acceptance/result.json`；原生 Blender 渲染 4 张 PNG，图注保留频率及非物理播放速度，源科学数组完全不变；已检查代表帧 |
 | 保存、中文路径、迁移恢复 | Passed | 配套 `.blend + .qcdata`、ZIP、移动后冷启动、缺 VDB 重建、按 manifest 摘要重定位；数组和表面保持一致 |
 | 保存失败的回滚 | Passed | `outputs/acceptance/failed-save.json`：真实 Blender 保存失败后，先前场景索引与内存中的对象/体文件引用保留 |
+| Windows 长路径数组 | Passed | `outputs/acceptance/storage-paths.json`：Blender 宿主内超过 260 字符的数组路径可读取、复制复用和归档；深层隔离配置中的实际重复场缓存命中 |
 | 模式和色标的冷重开 | Passed | `outputs/acceptance/*-cold-view.json`：模式选择、IR 引用、能量记录、时间驱动位移及扩展开关；双场绑定/色标/文字图例保持，冷启动渲染已检查 |
 | 交互界面 | Passed（局部） | `outputs/acceptance/interactive.json`：开发实例实际异步 Log/FCHK 导入、模式/能量接入、HOMO 生成（Alpha MO 5，占据 1，-0.543101269 Eh）；不是独立用户复做证据 |
 | 人工使用与外部视觉对照 | Not Run | 用户独立复做及 VMD/VESTA 同输入同阈值的视觉比较尚未执行 |

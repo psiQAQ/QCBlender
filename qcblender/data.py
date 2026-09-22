@@ -13,20 +13,39 @@ BOHR_ANGSTROM = 0.529177210544
 SCHEMA = '0.1'
 
 
+def filesystem_path(path):
+    """Use extended Windows paths for Python I/O, independent of the host manifest."""
+    value = os.path.abspath(path)
+    if os.name == 'nt' and not value.startswith('\\\\?\\'):
+        value = '\\\\?\\UNC\\' + value[2:] if value.startswith('\\\\') else '\\\\?\\' + value
+    return Path(value)
+
+
+def unprefixed_path(path):
+    """Keep Blender references and public dataset paths in ordinary path syntax."""
+    value = str(path)
+    if os.name == 'nt':
+        if value.startswith('\\\\?\\UNC\\'):
+            value = '\\\\' + value[8:]
+        elif value.startswith('\\\\?\\'):
+            value = value[4:]
+    return Path(value)
+
+
 def resolve_asset(directory, relative):
-    root = Path(directory).resolve(strict=True)
+    root = filesystem_path(directory).resolve(strict=True)
     path = Path(relative)
     if path.is_absolute() or path.drive or '..' in path.parts:
         raise ValueError('Project asset must use a contained relative path')
     resolved = (root / path).resolve(strict=True)
     if not resolved.is_relative_to(root):
         raise ValueError('Project asset escapes its data directory')
-    return resolved
+    return unprefixed_path(resolved)
 
 
 def volume_cache(directory, scalar):
     path = resolve_asset(directory, scalar.get('vdb', 'field.vdb'))
-    if scalar.get('vdb_sha256') and hashlib.sha256(path.read_bytes()).hexdigest() != scalar['vdb_sha256']:
+    if scalar.get('vdb_sha256') and hashlib.sha256(filesystem_path(path).read_bytes()).hexdigest() != scalar['vdb_sha256']:
         raise ValueError('Volume cache checksum mismatch; rebuild it from scientific arrays')
     return path
 
@@ -105,7 +124,7 @@ class Dataset:
 def save_dataset(data, directory):
     """Commit a new manifest only after all content-addressed arrays are written."""
     data.validate()
-    directory = Path(directory).resolve()
+    directory = filesystem_path(directory).resolve()
     directory.mkdir(parents=True, exist_ok=True)
     array_dir = directory / 'arrays'
     array_dir.mkdir(exist_ok=True)
@@ -135,11 +154,11 @@ def save_dataset(data, directory):
         os.replace(pending, directory / 'manifest.json')
     finally:
         pending.unlink(missing_ok=True)
-    return directory / 'manifest.json'
+    return unprefixed_path(directory / 'manifest.json')
 
 
 def load_dataset(directory, max_bytes=1024**3):
-    directory = Path(directory).resolve(strict=True)
+    directory = filesystem_path(directory).resolve(strict=True)
     manifest_path = directory / 'manifest.json'
     if manifest_path.stat().st_size > 16 * 1024**2:
         raise ValueError('Manifest exceeds size limit')

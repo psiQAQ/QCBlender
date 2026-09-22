@@ -15,6 +15,8 @@ Blocked by: 01, 02, 03, 04, 05
 
 ## Comments
 
+2026-09-22：从已提交源码的独立复建揭示 Blender 宿主的 Win32 长路径限制：289 字符缓存数组存在但读取失败，实际重复场缓存未命中。现于科学存储/复制/归档层采用扩展 Windows 路径，对外路径保持原格式。原失败配置的缓存、冷重开、保存失败回滚与恢复复验 Passed；新增 tools/verify_storage_paths.py 在 Blender 中验证真实长路径，20 项科学回归 Passed。当前 ZIP 50,401,929 bytes，SHA-256 e2edbd8aff841a9a491f8e0ab093b1c7247d03e138c041ff054064f3a0a927b0；资格汇总 Passed。复建条件和失败定位记入 docs/CHANGELOG.md。独立用户认可及外部视觉对照继续未完成。
+
 2026-09-22：已有开发已按逻辑单元本地提交：01ca63f 仓库约定与参考子模块、a19d2d5 设计与路线、7e9c29a 科学数据层与求值、21e4221 Blender 功能与工程持久化、91d8257 离线构建与验收。核对 Git HEAD 中 17 个科学样本原始字节，SHA-256 全部匹配来源记录；tools/qualify_package.py 对当前 ZIP 的源码、wheel 校验和与已记录技术验收汇总 Passed。未推送；M5 剩余验收边界保持不变。
 
 2026-09-22：继续验收发现并修复保存失败的索引回滚；旧索引/首次无索引两种实际 Blender 失败场景 Passed。模式、IR、能量列表及动画参数冷重开通过，双场色标/文字图例冷渲染通过。11 个随包 wheel 的 RECORD/许可材料/来源核对 Passed，GPL/LGPL 上游声明差异保留。最新 ZIP 50,401,654 bytes，SHA-256 e1e0dae81c362aca6e0900c8a91d6ea07fd53e3a64bf304c68835caf10bb8070。VESTA 对照 Cube 已生成并按原数值回读；官方程序下载因 TLS/EOF 失败，外部渲染尚未执行。

@@ -93,7 +93,7 @@ def main():
                         except (ValueError, OSError, KeyError) as error:
                             cache_rejected = str(error)
                     if cache_hit:
-                        shutil.copytree(cached, directory / 'dataset')
+                        shutil.copytree(storage.filesystem_path(cached), storage.filesystem_path(directory / 'dataset'))
                     grid = evaluator.Grid(**request['grid'])
                     if not cache_hit:
                         data = evaluator.evaluate_field(data, grid, **request['parameters'],

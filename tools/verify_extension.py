@@ -86,7 +86,8 @@ else:
     repeated.pop('schema')
     repeated.pop('job_id')
     second_job = jobs.Job(**repeated)
-    assert run_job(second_job)['cache_hit']
+    repeated_report = run_job(second_job)
+    assert repeated_report['cache_hit'], repeated_report
     assert (second_job.directory / 'dataset/manifest.json').read_bytes() == (generator.directory / 'dataset/manifest.json').read_bytes()
     directory = generator.directory / 'dataset'
     digest = hashlib.sha256((directory / 'field.vdb').read_bytes()).hexdigest()
