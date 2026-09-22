@@ -96,8 +96,64 @@ set_input(surface, 'Negative Isovalue', .2)
 assert len(mesh_points(surface)) < len(solid)
 add_mapping(surface, surface, -.3, .3)
 assert len(mesh_points(surface)) > 0
+from qcblender.blender.inspection import add_clip, sample_point
+add_clip(surface)
+set_input(surface, 'Plane Enabled', True)
+assert mesh_points(surface)[:, 0].min() >= 0
+set_input(surface, 'Plane Enabled', False)
+set_input(surface, 'Box Enabled', True)
+set_input(surface, 'Box Minimum', (-.5, -.5, -.5))
+set_input(surface, 'Box Maximum', (.5, .5, .5))
+clipped = mesh_points(surface)
+assert len(clipped) > 0 and np.abs(clipped).max() < .501
+assert abs(sample_point(2*x-3*y+.5*z+1, np.ones(values.shape, bool), field, [.1, -.2, .3]) - 1.95) < 1e-12
+shear = np.array([[.2, .03, 0], [0, .2, .02], [.01, 0, .2]])
+indices = np.moveaxis(np.indices(values.shape), 0, -1)
+positions = indices @ shear + [-2, -2, -2]
+analytic = positions @ [2., -3., .5] + 1
+sheared_field = dict(field, steps=shear.tolist())
+point = np.array([7.2, 9.1, 12.4]) @ shear + [-2, -2, -2]
+assert abs(sample_point(analytic, np.ones(values.shape, bool), sheared_field, point) - (point @ [2, -3, .5] + 1)) < 1e-12
+invalid = np.ones(values.shape, bool)
+invalid[7, 9, 12] = False
+try:
+    sample_point(analytic, invalid, sheared_field, point)
+except ValueError:
+    pass
+else:
+    raise AssertionError('Invalid contributing voxel accepted')
+for point in ([8, 0, 0], [float('nan'), 0, 0]):
+    try:
+        sample_point(values, np.ones(values.shape, bool), field, point)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError('Invalid sample accepted')
+from qcblender.blender.fog import fog_view
+fog = fog_view(surface)
+mat = next(s.default_value for s in view_modifier(fog).node_group.interface.items_tree
+           if s.item_type == 'SOCKET' and s.socket_type == 'NodeSocketMaterial')
+assert any(n.get('qc_role') == 'opacity_ramp' for n in mat.node_tree.nodes)
+from mathutils import Vector
+volume = surface.qc_settings.volume
+volume.location = (1, -2, .5)
+volume.rotation_euler = (.2, .3, -.1)
+volume.scale = (1.2, .8, 1.5)
+bpy.context.view_layer.update()
+bpy.context.scene.cursor.location = volume.matrix_world @ Vector((.1, -.2, .3))
+bpy.context.view_layer.objects.active = surface
+assert bpy.ops.qcblender.probe_field() == {'FINISHED'}
+np.testing.assert_allclose(json.loads(surface['qc_probe'])['source_position_angstrom'], [.1, -.2, .3], atol=1e-6)
+old_tree = view_modifier(surface).node_group
+old_links = [(l.from_socket, l.to_socket) for l in old_tree.links]
+assert bpy.ops.qcblender.new_current_view() == {'FINISHED'}
+new = bpy.context.object
+assert new != surface and view_modifier(new).node_group != old_tree
+assert old_links == [(l.from_socket, l.to_socket) for l in old_tree.links]
 report = {'status': 'Passed', 'blender': bpy.app.version_string, 'atom_styles': 'Passed',
           'modifier_reorder': 'Passed', 'preserved_branch': 'Passed', 'unbound_assets': 'Passed',
-          'signed_surface_styles': 'Passed', 'independent_thresholds': 'Passed', 'mapping': 'Passed'}
+          'signed_surface_styles': 'Passed', 'independent_thresholds': 'Passed', 'mapping': 'Passed',
+          'plane_box_clip': 'Passed', 'point_sampling': 'Passed', 'volume_transfer_graph': 'Passed',
+          'affine_sampling_invalid_regions': 'Passed', 'cursor_world_transform': 'Passed', 'keep_original_upgrade': 'Passed'}
 (OUT / 'report.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
 print(json.dumps(report))

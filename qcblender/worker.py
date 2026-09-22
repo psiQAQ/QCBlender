@@ -67,9 +67,16 @@ def main():
                     units = {'orbital_amplitude': 'bohr^-3/2', 'electron_number_density': 'electron/bohr^3',
                              'spin_density': 'electron/bohr^3', 'electrostatic_potential': 'hartree/e'}
                     scalar = next(f for f in data.metadata['fields'] if f['array'] == request['field_array'])
-                    if scalar['quantity'] != 'unknown_scalar' or request['quantity'] not in units:
+                    if scalar['quantity'] != 'unknown_scalar' or request['quantity'] not in (*units, 'custom'):
                         raise ValueError('Only unknown scalar fields accept a supported user interpretation')
-                    scalar.update(quantity=request['quantity'], unit=units[request['quantity']],
+                    quantity = request['quantity']
+                    unit = units.get(quantity)
+                    if quantity == 'custom':
+                        quantity, unit = request.get('custom_quantity', '').strip(), request.get('custom_unit', '').strip()
+                        if (not quantity or not unit or len(quantity) > 120 or len(unit) > 80
+                                or any(ord(c) < 32 for c in quantity + unit)):
+                            raise ValueError('Custom quantity and unit must be nonempty printable text')
+                    scalar.update(quantity=quantity, unit=unit,
                                   interpretation='user_assigned', original_quantity='unknown_scalar',
                                   numeric_conversion='none; user confirmed values use declared units')
                 if request['action'] == 'evaluate':

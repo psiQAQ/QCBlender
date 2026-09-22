@@ -4,6 +4,7 @@ import json
 import bpy
 
 from .views import socket
+from .graph import tag_view
 
 
 def fog_material(quantity):
@@ -27,6 +28,7 @@ def fog_material(quantity):
     links.new(value.outputs['Fac'], magnitude.inputs[0])
     scale = nodes.new('ShaderNodeValue')
     scale.name = 'Optical Scale'
+    scale['qc_control'] = 'Opacity Scale'
     scale.label = 'Display opacity scale (not electron density)'
     scale.outputs[0].default_value = 20
     opacity = nodes.new('ShaderNodeMath')
@@ -41,25 +43,61 @@ def fog_material(quantity):
     density.operation = 'MULTIPLY'
     links.new(clip.outputs[0], density.inputs[0])
     links.new(mask.outputs[0], density.inputs[1])
-    positive = nodes.new('ShaderNodeMath')
-    positive.operation = 'GREATER_THAN'
-    positive.inputs[1].default_value = 0
-    links.new(value.outputs['Fac'], positive.inputs[0])
     color = nodes.new('ShaderNodeValToRGB')
     color.name = 'Sign Colors'
+    color['qc_role'] = 'color_ramp'
     color.color_ramp.elements[0].color = (.85, .12, .08, 1)
     color.color_ramp.elements[1].color = (.1, .3, .8, 1)
-    links.new(positive.outputs[0], color.inputs['Fac'])
+    from .assets import math
+    controls = {}
+    for name, default in [('Color Minimum', -.05 if signed else 0.), ('Color Maximum', .05),
+                          ('Opacity Range', .1), ('Display Threshold', 0.)]:
+        control = nodes.new('ShaderNodeValue')
+        control['qc_control'] = name
+        control.label = name
+        control.outputs[0].default_value = default
+        controls[name] = control.outputs[0]
+    normalized = nodes.new('ShaderNodeMapRange')
+    normalized.clamp = True
+    links.new(value.outputs['Fac'], normalized.inputs['Value'])
+    links.new(controls['Color Minimum'], normalized.inputs['From Min'])
+    links.new(controls['Color Maximum'], normalized.inputs['From Max'])
+    links.new(normalized.outputs['Result'], color.inputs['Fac'])
+    opacity_map = nodes.new('ShaderNodeValToRGB')
+    opacity_map['qc_role'] = 'opacity_ramp'
+    opacity_map.label = 'Opacity multiplier versus field magnitude'
+    for element in opacity_map.color_ramp.elements:
+        element.color = (1, 1, 1, 1)
+    fraction = math(mat.node_tree, 'DIVIDE', magnitude.outputs[0], math(mat.node_tree, 'MAXIMUM', controls['Opacity Range'], 1e-12))
+    links.new(fraction, opacity_map.inputs['Fac'])
+    passed = math(mat.node_tree, 'GREATER_THAN', magnitude.outputs[0], controls['Display Threshold'])
+    opacity_factor = math(mat.node_tree, 'MULTIPLY', opacity_map.outputs['Color'], passed)
+    from .inspection import CLIP_INPUTS, clip_mask
+    clipping = {}
+    for name, kind, default in CLIP_INPUTS:
+        control = nodes.new('ShaderNodeCombineXYZ' if kind == 'NodeSocketVector' else 'ShaderNodeValue')
+        control['qc_control'] = name
+        control.label = name
+        if kind == 'NodeSocketVector':
+            for i, component in enumerate(default):
+                control.inputs[i].default_value = component
+        else:
+            control.outputs[0].default_value = float(default)
+        clipping[name] = control.outputs[0]
+    coordinates = nodes.new('ShaderNodeTexCoord')
+    keep = clip_mask(mat.node_tree, coordinates.outputs['Object'], clipping)
+    optical_density = math(mat.node_tree, 'MULTIPLY', density.outputs[0],
+                           math(mat.node_tree, 'MULTIPLY', opacity_factor, keep))
     shader = nodes.new('ShaderNodeVolumePrincipled')
     shader.inputs['Density Attribute'].default_value = ''
     shader.inputs['Color Attribute'].default_value = ''
-    links.new(density.outputs[0], shader.inputs['Density'])
+    links.new(optical_density, shader.inputs['Density'])
     links.new(color.outputs[0], shader.inputs['Color'])
     output = nodes.new('ShaderNodeOutputMaterial')
     links.new(shader.outputs['Volume'], output.inputs['Volume'])
     for index, node in enumerate(nodes):
         node.location = (index % 5 * 220, -(index // 5) * 220)
-    mat['qc_transfer'] = 'scale * abs(value)' if signed else 'scale * max(value, 0)'
+    mat['qc_transfer'] = ('scale * abs(value)' if signed else 'scale * max(value, 0)') + ' * opacity curve * threshold/clip/valid masks'
     return mat
 
 
@@ -115,6 +153,7 @@ def fog_view(source):
     for index, node in enumerate(tree.nodes):
         node.location = (index * 240, 0)
     obj.modifiers.new('QC Volume Fog', 'NODES').node_group = tree
+    tag_view(tree)
     bpy.context.view_layer.objects.active = obj
     obj.select_set(True)
     return obj

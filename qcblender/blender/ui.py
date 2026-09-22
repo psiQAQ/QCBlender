@@ -11,6 +11,33 @@ ADDON_ID = __package__.rsplit('.', 1)[0]
 _operations = {}
 
 
+def draw_material_controls(layout, mat):
+    if not mat or not mat.use_nodes:
+        return
+    nodes = mat.node_tree.nodes
+    shader = nodes.get('Principled BSDF')
+    if shader:
+        for name in ('Base Color', 'Alpha', 'Roughness'):
+            if not shader.inputs[name].is_linked:
+                layout.prop(shader.inputs[name], 'default_value', text=name)
+    for node in nodes:
+        if node.get('qc_role') in ('color_ramp', 'opacity_ramp'):
+            layout.label(text='Opacity multiplier' if node['qc_role'] == 'opacity_ramp' else 'Color map')
+            layout.template_color_ramp(node, 'color_ramp', expand=True)
+        elif node.get('qc_role') == 'color_invert':
+            layout.prop(node.outputs[0], 'default_value', text='Reverse (0 or 1)')
+        elif node.get('qc_control'):
+            if node.bl_idname == 'ShaderNodeCombineXYZ':
+                layout.label(text=node['qc_control'])
+                row = layout.row(align=True)
+                for item in node.inputs:
+                    row.prop(item, 'default_value', text=item.name)
+            else:
+                layout.prop(node.outputs[0], 'default_value', text=node['qc_control'])
+    if mat.get('qc_fog'):
+        layout.label(text='Optical display; source values unchanged')
+
+
 def cancel_operations():
     for operator, manager in list(_operations.values()):
         manager.event_timer_remove(operator._timer)
@@ -205,7 +232,10 @@ class QCBLENDER_OT_declare_field(AsyncOperation, bpy.types.Operator):
         ('electron_number_density', 'Electron density [electron/bohr^3]', ''),
         ('spin_density', 'Alpha-minus-beta spin density [electron/bohr^3]', ''),
         ('electrostatic_potential', 'ESP [hartree/e]', ''),
-        ('orbital_amplitude', 'Orbital amplitude [bohr^-3/2]', '')])
+        ('orbital_amplitude', 'Orbital amplitude [bohr^-3/2]', ''),
+        ('custom', 'Other externally computed scalar field', '')])
+    custom_quantity: StringProperty(name='Physical quantity', default='External scalar', maxlen=120)
+    custom_unit: StringProperty(name='Unit (use unknown if unavailable)', default='unknown', maxlen=80)
 
     @classmethod
     def poll(cls, context):
@@ -217,6 +247,9 @@ class QCBLENDER_OT_declare_field(AsyncOperation, bpy.types.Operator):
 
     def draw(self, context):
         self.layout.prop(self, 'quantity')
+        if self.quantity == 'custom':
+            self.layout.prop(self, 'custom_quantity')
+            self.layout.prop(self, 'custom_unit')
         self.layout.label(text='Confirm against the generating calculation; values are not converted.')
 
     def begin(self, context):
@@ -225,14 +258,15 @@ class QCBLENDER_OT_declare_field(AsyncOperation, bpy.types.Operator):
         self._directory = bpy.path.abspath(self._source['qc_dataset'])
         self._digest = hashlib.sha256((Path(self._directory) / 'manifest.json').read_bytes()).hexdigest()
         return Job('declare_field', dataset=self._directory, dataset_sha256=self._digest,
-                   field_array=json.loads(self._source['qc_field'])['array'], quantity=self.quantity)
+                   field_array=json.loads(self._source['qc_field'])['array'], quantity=self.quantity,
+                   custom_quantity=self.custom_quantity, custom_unit=self.custom_unit)
 
     def accept(self, context, report):
         from .project import rebind_dataset
         if hashlib.sha256((Path(self._directory) / 'manifest.json').read_bytes()).hexdigest() != self._digest:
             raise ValueError('Dataset changed during interpretation')
         rebind_dataset(self._directory, self._job.directory / 'dataset')
-        self.report({'INFO'}, 'Saved explicit user-assigned quantity and atomic units')
+        self.report({'INFO'}, 'Saved explicit user-assigned quantity and units; array values unchanged')
 
 
 class QCBLENDER_PT_main(bpy.types.Panel):
@@ -254,6 +288,9 @@ class QCBLENDER_PT_main(bpy.types.Panel):
         row.operator('qcblender.map_scalar', text='Map Colors', icon='COLOR')
         row.operator('qcblender.create_slice', text='Slice', icon='MESH_PLANE')
         row.operator('qcblender.create_fog', text='Fog', icon='VOLUME_DATA')
+        row = layout.row(align=True)
+        row.operator('qcblender.add_clipping', text='Clip', icon='MOD_BOOLEAN')
+        row.operator('qcblender.probe_field', text='Read at Cursor', icon='PIVOT_CURSOR')
         row = layout.row(align=True)
         row.operator('qcblender.color_charge', text='Charge', icon='MATERIAL')
         row.operator('qcblender.show_dipole', text='Dipole', icon='EMPTY_ARROWS')
@@ -301,6 +338,13 @@ class QCBLENDER_PT_main(bpy.types.Panel):
                     layout.label(text=str(record.get('raw_label', record['kind'])))
             if 'qc_charge_method' in obj:
                 layout.label(text='Charges: ' + obj['qc_charge_method'])
+            if obj.get('qc_vdw_missing', '[]') != '[]':
+                layout.label(text='Missing VDW radii: ' + obj['qc_vdw_missing'], icon='ERROR')
+            if 'qc_probe' in obj:
+                probe = json.loads(obj['qc_probe'])
+                layout.label(text=f"Last sample: {probe['value']:.8g} {probe['unit']}")
+                layout.label(text='Source angstrom: ' + ', '.join(f'{v:.4g}' for v in probe['source_position_angstrom']))
+                layout.label(text='Trilinear grid interpolation; click to refresh')
             if 'qc_field' in obj:
                 field = json.loads(obj['qc_field'])
                 layout.label(text=field['quantity'])
@@ -317,7 +361,6 @@ class QCBLENDER_PT_main(bpy.types.Panel):
                 if 'qc_color_source' in obj:
                     color_source = json.loads(obj['qc_color_source'])
                     layout.label(text='Colors: ' + color_source['quantity'] + ' [' + color_source['unit'] + ']')
-                    layout.label(text='Minimum: red | center: white | maximum: blue')
                     layout.label(text='Magenta: outside valid field domain')
         if obj and obj.get('qc_view_kind'):
             from .graph import view_modifier
@@ -337,13 +380,11 @@ class QCBLENDER_PT_main(bpy.types.Panel):
                         layout.prop(modifier, '["' + item.identifier + '"]', text=item.name)
                         if item.socket_type == 'NodeSocketMaterial':
                             mat = modifier.get(item.identifier)
-                            if mat and mat.get('qc_fog') and mat.use_nodes:
-                                nodes = mat.node_tree.nodes
-                                scale, colors = nodes.get('Optical Scale'), nodes.get('Sign Colors')
-                                if scale:
-                                    layout.prop(scale.outputs[0], 'default_value', text='Opacity Scale')
-                                if colors:
-                                    layout.prop(colors.color_ramp.elements[0], 'color', text='Negative Color')
-                                    layout.prop(colors.color_ramp.elements[-1], 'color', text='Positive Color')
-                                layout.label(text='Opacity: ' + mat['qc_transfer'])
-                                layout.label(text='Optical display; source values unchanged')
+                            draw_material_controls(layout, mat)
+                shown = {modifier.get(item.identifier) for item in modifier.node_group.interface.items_tree
+                         if item.item_type == 'SOCKET' and item.socket_type == 'NodeSocketMaterial'}
+                for node in modifier.node_group.nodes:
+                    for control in node.inputs:
+                        if control.type == 'MATERIAL' and not control.is_linked and control.default_value and control.default_value not in shown:
+                            shown.add(control.default_value)
+                            draw_material_controls(layout, control.default_value)

@@ -136,6 +136,61 @@ class QCBLENDER_OT_add_surface(bpy.types.Operator):
         return {'FINISHED'}
 
 
+class QCBLENDER_OT_new_current_view(bpy.types.Operator):
+    bl_idname = 'qcblender.new_current_view'
+    bl_label = 'Create Current-Version View (Keep Original)'
+    bl_description = 'Create a standard view from the same dataset; preserve the original custom graph'
+    bl_options = {'REGISTER', 'UNDO'}
+
+    @classmethod
+    def poll(cls, context):
+        return context.object is not None and context.object.get('qc_view_kind') in ('atoms', 'field', 'fog', 'slice')
+
+    def execute(self, context):
+        import json
+        from .views import atom_view, field_view
+        from .fog import fog_view
+        from .graph import view_modifier
+        from ..data import load_dataset
+        source = context.object
+        try:
+            directory = bpy.path.abspath(source['qc_dataset'])
+            kind = source['qc_view_kind']
+            if kind == 'atoms':
+                obj = atom_view(directory)
+                obj.parent = source.parent
+            elif kind == 'fog':
+                obj = fog_view(source)
+            elif kind == 'slice':
+                if bpy.ops.qcblender.create_slice() != {'FINISHED'}:
+                    return {'CANCELLED'}
+                obj = context.object
+            else:
+                field = json.loads(source['qc_field'])
+                data = load_dataset(directory)
+                index = next(i for i, f in enumerate(data.metadata['fields']) if f['array'] == field['array'])
+                obj = field_view(directory, source.parent, index)
+                obj.qc_settings.volume.matrix_world = source.qc_settings.volume.matrix_world.copy()
+            obj.matrix_world = source.matrix_world.copy()
+            # Only transfer matching public parameters, never replace either graph.
+            old, new = view_modifier(source), view_modifier(obj)
+            values = {s.name: old.get(s.identifier, s.default_value) for s in old.node_group.interface.items_tree
+                      if s.item_type == 'SOCKET' and s.in_out == 'INPUT' and hasattr(s, 'default_value')}
+            for item in new.node_group.interface.items_tree:
+                if item.item_type == 'SOCKET' and item.in_out == 'INPUT' and item.name in values:
+                    if kind == 'fog' and item.socket_type == 'NodeSocketMaterial':
+                        continue  # Keep the current transfer graph; the original material remains on the original view.
+                    value = values[item.name]
+                    if item.socket_type == 'NodeSocketMaterial' and value:
+                        value = value.copy()
+                    new[item.identifier] = value
+            activate(context, obj)
+        except (ValueError, KeyError, OSError, StopIteration) as error:
+            self.report({'ERROR'}, str(error))
+            return {'CANCELLED'}
+        return {'FINISHED'}
+
+
 class QCBLENDER_PT_layers(bpy.types.Panel):
     bl_label = 'Display Layers'
     bl_idname = 'QCBLENDER_PT_layers'
@@ -147,6 +202,8 @@ class QCBLENDER_PT_layers(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         layout.ui_units_x = 18
+        row = layout.row(align=True)
+        row.operator('qcblender.new_current_view', text='New Current-Version View', icon='DUPLICATE')
         row = layout.row(align=True)
         row.operator('qcblender.add_surface_layer', text='Surface')
         row.operator('qcblender.create_fog', text='Fog')

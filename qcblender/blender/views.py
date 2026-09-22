@@ -183,7 +183,7 @@ def field_view(directory, parent=None, index=0):
     socket(tree, 'Wire Radius', 'NodeSocketFloat', default=.012, minimum=.0001)
     socket(tree, 'Point Radius', 'NodeSocketFloat', default=.025, minimum=.0001)
     socket(tree, 'Quality', 'NodeSocketInt', default=2, minimum=1)
-    signed = field['quantity'] in ('orbital_amplitude', 'spin_density', 'unknown_scalar', 'electrostatic_potential')
+    signed = field['quantity'] not in ('electron_number_density', 'alpha_density', 'beta_density')
     socket(tree, 'Positive Phase', 'NodeSocketBool', default=True)
     socket(tree, 'Negative Phase', 'NodeSocketBool', default=signed)
     socket(tree, 'Adaptivity', 'NodeSocketFloat', default=0, minimum=0)
