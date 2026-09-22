@@ -1,0 +1,9 @@
+[
+  {
+    "name": "gbasis",
+    "commit": "071969c900d6d7a9fbbdfe193c65ba3be177fbdf",
+    "url": "https://codeload.github.com/theochem/gbasis/zip/071969c900d6d7a9fbbdfe193c65ba3be177fbdf",
+    "sha256": "42c80656a3a744ad528d69c6cb5a7c805c1278ce3d560f822f8a3ca3848e43d4",
+    "packaging": "Python modules only; optional libcint wrapper/native sources excluded"
+  }
+]
