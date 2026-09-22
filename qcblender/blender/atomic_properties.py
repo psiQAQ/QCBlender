@@ -7,6 +7,7 @@ import numpy as np
 from ..data import load_dataset
 from .scalars import scalar_material, add_legend, color_fraction
 from .views import material, socket
+from .graph import view_modifier
 
 _charge_items = {}
 
@@ -92,12 +93,12 @@ class QCBLENDER_OT_color_charge(bpy.types.Operator):
         obj.data.attributes['qc_charge'].data.foreach_set('value', data.arrays[prop['array']])
         obj.data.update()
         obj['qc_charge_method'] = self.method
-        tree = obj.modifiers[0].node_group
+        tree = view_modifier(obj).node_group
         if not tree.get('qc_charge_mapping'):
             for name, value in [('Charge Minimum', self.minimum), ('Charge Center', (self.minimum + self.maximum) / 2),
                                 ('Charge Maximum', self.maximum)]:
                 item = socket(tree, name, 'NodeSocketFloat', default=value)
-                obj.modifiers[0][item.identifier] = value
+                view_modifier(obj)[item.identifier] = value
             nodes, links = tree.nodes, tree.links
             inputs = next(n for n in nodes if n.type == 'GROUP_INPUT')
             output = next(n for n in nodes if n.type == 'GROUP_OUTPUT')
@@ -131,11 +132,11 @@ class QCBLENDER_OT_color_charge(bpy.types.Operator):
             for item in tree.interface.items_tree:
                 if item.item_type == 'SOCKET' and item.in_out == 'INPUT':
                     if item.name == 'Charge Minimum':
-                        obj.modifiers[0][item.identifier] = self.minimum
+                        view_modifier(obj)[item.identifier] = self.minimum
                     elif item.name == 'Charge Center':
-                        obj.modifiers[0][item.identifier] = (self.minimum + self.maximum) / 2
+                        view_modifier(obj)[item.identifier] = (self.minimum + self.maximum) / 2
                     elif item.name == 'Charge Maximum':
-                        obj.modifiers[0][item.identifier] = self.maximum
+                        view_modifier(obj)[item.identifier] = self.maximum
         obj.update_tag()
         return {'FINISHED'}
 

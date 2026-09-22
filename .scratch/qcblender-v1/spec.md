@@ -9,6 +9,7 @@
 - [M4 振动、IR 与方法特定能量](issues/05-m4-vibration-energy.md)
 - [M5 发布与工程验收](issues/06-m5-release.md)
 - [M6 可组合节点与显示层](issues/07-m6-display-layers.md)
+- [M7 可组合科学场显示](issues/08-m7-composable-views.md)
 
 主 Agent 汇总任务与验收，子 Agent 仅修改各自分配文件。必要依赖在仓库内构建/收集并随扩展分发，用户无外部 Python 环境要求。开发输出放 outputs/，原始用户资料保持忽略。
 

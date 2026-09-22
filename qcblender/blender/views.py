@@ -7,6 +7,7 @@ import bpy
 import numpy as np
 
 from ..data import load_dataset, volume_cache
+from .graph import tag_view
 
 
 def socket(tree, name, kind, direction='INPUT', default=None, minimum=None):
@@ -24,6 +25,7 @@ def material(name, color, attribute=None):
     mat.use_nodes = True
     shader = mat.node_tree.nodes.get('Principled BSDF')
     shader.inputs['Base Color'].default_value = color
+    shader.inputs['Alpha'].default_value = color[3]
     shader.inputs['Roughness'].default_value = 0.35
     if attribute:
         node = mat.node_tree.nodes.new('ShaderNodeAttribute')
@@ -73,7 +75,7 @@ def atom_view(directory):
         obj['qc_charge_method'] = prop['method']
     bond_source = mesh.attributes.new('qc_bond_source', 'INT', 'EDGE')
     bond_source.data.foreach_set('value', np.ones(len(edges), dtype=np.int32))
-    tree = bpy.data.node_groups.new('QC Style Atoms and Bonds v1', 'GeometryNodeTree')
+    tree = bpy.data.node_groups.new('QC Atoms View v2', 'GeometryNodeTree')
     tree.is_modifier = True
     socket(tree, 'Geometry', 'NodeSocketGeometry')
     socket(tree, 'Atom Radius', 'NodeSocketFloat', default=0.25, minimum=0.001)
@@ -82,50 +84,35 @@ def atom_view(directory):
     socket(tree, 'Element (0 = all)', 'NodeSocketInt', default=0, minimum=0)
     socket(tree, 'First Atom (1-based)', 'NodeSocketInt', default=1, minimum=1)
     socket(tree, 'Last Atom (0 = all)', 'NodeSocketInt', default=0, minimum=0)
+    socket(tree, 'Style (0 ball-stick, 1 space-fill, 2 bonds)', 'NodeSocketInt', default=0, minimum=0)
+    socket(tree, 'VDW Scale', 'NodeSocketFloat', default=1., minimum=.01)
+    socket(tree, 'Quality', 'NodeSocketInt', default=2, minimum=1)
+    socket(tree, 'Material', 'NodeSocketMaterial', default=material('QC Elements', (.35, .35, .35, 1), 'qc_element_color'))
     socket(tree, 'Geometry', 'NodeSocketGeometry', 'OUTPUT')
     nodes, links = tree.nodes, tree.links
     inputs = nodes.new('NodeGroupInput')
     output = nodes.new('NodeGroupOutput')
-    selected = atom_selection(tree, inputs)
-    invert = nodes.new('FunctionNodeBooleanMath')
-    invert.operation = 'NOT'
-    links.new(selected, invert.inputs[0])
-    delete = nodes.new('GeometryNodeDeleteGeometry')
-    delete.domain = 'POINT'
-    links.new(inputs.outputs['Geometry'], delete.inputs['Geometry'])
-    links.new(invert.outputs[0], delete.inputs['Selection'])
-    sphere = nodes.new('GeometryNodeMeshIcoSphere')
-    sphere.inputs['Subdivisions'].default_value = 2
-    links.new(inputs.outputs['Atom Radius'], sphere.inputs['Radius'])
-    instances = nodes.new('GeometryNodeInstanceOnPoints')
-    links.new(delete.outputs['Geometry'], instances.inputs['Points'])
-    links.new(sphere.outputs['Mesh'], instances.inputs['Instance'])
-    realize = nodes.new('GeometryNodeRealizeInstances')
-    links.new(instances.outputs['Instances'], realize.inputs['Geometry'])
-    curves = nodes.new('GeometryNodeMeshToCurve')
-    links.new(delete.outputs['Geometry'], curves.inputs['Mesh'])
-    circle = nodes.new('GeometryNodeCurvePrimitiveCircle')
-    circle.inputs['Resolution'].default_value = 8
-    links.new(inputs.outputs['Bond Radius'], circle.inputs['Radius'])
-    tubes = nodes.new('GeometryNodeCurveToMesh')
-    links.new(curves.outputs['Curve'], tubes.inputs['Curve'])
-    links.new(circle.outputs['Curve'], tubes.inputs['Profile Curve'])
-    join = nodes.new('GeometryNodeJoinGeometry')
-    links.new(realize.outputs['Geometry'], join.inputs['Geometry'])
-    links.new(tubes.outputs['Mesh'], join.inputs['Geometry'])
-    mat = material('QC Elements', (0.35, 0.35, 0.35, 1), 'qc_element_color')
-    smooth = nodes.new('GeometryNodeSetShadeSmooth')
-    links.new(join.outputs['Geometry'], smooth.inputs['Geometry'])
-    assign = nodes.new('GeometryNodeSetMaterial')
-    assign.inputs['Material'].default_value = mat
-    links.new(smooth.outputs['Geometry'], assign.inputs['Geometry'])
-    links.new(assign.outputs['Geometry'], output.inputs['Geometry'])
+    from .assets import selection_group, atom_style_group
+    from ..radii import VDW_RADII
+    radii = mesh.attributes.new('qc_vdw_radius', 'FLOAT', 'POINT')
+    radii.data.foreach_set('value', [VDW_RADII.get(int(z), 0.) for z in data.arrays['atomic_numbers']])
+    obj['qc_vdw_missing'] = json.dumps(sorted({int(z) for z in data.arrays['atomic_numbers'] if int(z) not in VDW_RADII}))
+    selected = nodes.new('GeometryNodeGroup')
+    selected.node_tree = selection_group()
+    for name in ('Selection', 'Element (0 = all)', 'First Atom (1-based)', 'Last Atom (0 = all)'):
+        links.new(inputs.outputs[name], selected.inputs[name])
+    style = nodes.new('GeometryNodeGroup')
+    style.node_tree = atom_style_group()
+    for name in ('Geometry', 'Atom Radius', 'Bond Radius', 'VDW Scale', 'Quality', 'Material', 'Style (0 ball-stick, 1 space-fill, 2 bonds)'):
+        links.new(inputs.outputs[name], style.inputs[name])
+    links.new(selected.outputs['Selection'], style.inputs['Selection'])
+    links.new(style.outputs['Geometry'], output.inputs['Geometry'])
     for index, node in enumerate(nodes):
         node.location = (index % 4 * 220, -(index // 4) * 240)
     obj.modifiers.new('QC Atoms and Bonds', 'NODES').node_group = tree
-    tree.asset_mark()
     from .properties import setup_properties
     setup_properties(obj, data)
+    tag_view(tree)
     obj['qc_view_kind'] = 'atoms'
     bpy.context.view_layer.objects.active = obj
     obj.select_set(True)
@@ -186,10 +173,16 @@ def field_view(directory, parent=None, index=0):
     if parent:
         obj.parent = parent
         source.parent = parent
-    tree = bpy.data.node_groups.new('QC Isosurface v1', 'GeometryNodeTree')
+    tree = bpy.data.node_groups.new('QC Isosurface View v2', 'GeometryNodeTree')
     tree.is_modifier = True
     threshold = 0.05 if field['quantity'] in ('orbital_amplitude', 'spin_density') else 0.02
     socket(tree, 'Isovalue', 'NodeSocketFloat', default=threshold, minimum=1e-7)
+    socket(tree, 'Link Thresholds', 'NodeSocketBool', default=True)
+    socket(tree, 'Negative Isovalue', 'NodeSocketFloat', default=threshold, minimum=1e-7)
+    socket(tree, 'Style (0 solid, 1 wire, 2 points)', 'NodeSocketInt', default=0, minimum=0)
+    socket(tree, 'Wire Radius', 'NodeSocketFloat', default=.012, minimum=.0001)
+    socket(tree, 'Point Radius', 'NodeSocketFloat', default=.025, minimum=.0001)
+    socket(tree, 'Quality', 'NodeSocketInt', default=2, minimum=1)
     signed = field['quantity'] in ('orbital_amplitude', 'spin_density', 'unknown_scalar', 'electrostatic_potential')
     socket(tree, 'Positive Phase', 'NodeSocketBool', default=True)
     socket(tree, 'Negative Phase', 'NodeSocketBool', default=signed)
@@ -204,7 +197,8 @@ def field_view(directory, parent=None, index=0):
     style = nodes.new('GeometryNodeGroup')
     style.node_tree = isosurface_group()
     links.new(info.outputs['Geometry'], style.inputs['Volume'])
-    for name in ('Isovalue', 'Positive Phase', 'Negative Phase', 'Adaptivity', 'Smooth Normals'):
+    for name in ('Isovalue', 'Link Thresholds', 'Negative Isovalue', 'Positive Phase', 'Negative Phase', 'Adaptivity', 'Smooth Normals',
+                 'Style (0 solid, 1 wire, 2 points)', 'Wire Radius', 'Point Radius', 'Quality'):
         links.new(inputs.outputs[name], style.inputs[name])
     for label, color in [('Positive', (0.1, 0.3, 0.8, 1)), ('Negative', (0.85, 0.12, 0.08, 1))]:
         name = label + ' Material'
@@ -214,6 +208,7 @@ def field_view(directory, parent=None, index=0):
     for number, node in enumerate(nodes):
         node.location = (number * 240, 0)
     obj.modifiers.new('QC Isosurface', 'NODES').node_group = tree
+    tag_view(tree)
     bpy.context.view_layer.objects.active = obj
     obj.select_set(True)
     return obj
@@ -221,15 +216,21 @@ def field_view(directory, parent=None, index=0):
 
 def isosurface_group():
     """Reusable signed isosurfaces of QC grids; bindings belong to the caller."""
-    asset_id = 'qc.isosurface.v1'
+    asset_id = 'qc.isosurface.v2'
     existing = next((group for group in bpy.data.node_groups
                      if group.bl_idname == 'GeometryNodeTree' and group.get('qc_asset_id') == asset_id), None)
     if existing is not None:
         return existing
-    tree = bpy.data.node_groups.new('QC Style Isosurface v1', 'GeometryNodeTree')
+    tree = bpy.data.node_groups.new('QC Style Isosurface v2', 'GeometryNodeTree')
     tree['qc_asset_id'] = asset_id
     socket(tree, 'Volume', 'NodeSocketGeometry')
     socket(tree, 'Isovalue', 'NodeSocketFloat', default=.05, minimum=1e-7)
+    socket(tree, 'Link Thresholds', 'NodeSocketBool', default=True)
+    socket(tree, 'Negative Isovalue', 'NodeSocketFloat', default=.05, minimum=1e-7)
+    socket(tree, 'Style (0 solid, 1 wire, 2 points)', 'NodeSocketInt', default=0, minimum=0)
+    socket(tree, 'Wire Radius', 'NodeSocketFloat', default=.012, minimum=.0001)
+    socket(tree, 'Point Radius', 'NodeSocketFloat', default=.025, minimum=.0001)
+    socket(tree, 'Quality', 'NodeSocketInt', default=2, minimum=1)
     socket(tree, 'Positive Phase', 'NodeSocketBool', default=True)
     socket(tree, 'Negative Phase', 'NodeSocketBool', default=True)
     socket(tree, 'Adaptivity', 'NodeSocketFloat', default=0, minimum=0)
@@ -237,6 +238,8 @@ def isosurface_group():
     socket(tree, 'Positive Material', 'NodeSocketMaterial')
     socket(tree, 'Negative Material', 'NodeSocketMaterial')
     socket(tree, 'Geometry', 'NodeSocketGeometry', 'OUTPUT')
+    socket(tree, 'Positive', 'NodeSocketGeometry', 'OUTPUT')
+    socket(tree, 'Negative', 'NodeSocketGeometry', 'OUTPUT')
     nodes, links = tree.nodes, tree.links
     inputs, output = nodes.new('NodeGroupInput'), nodes.new('NodeGroupOutput')
     join = nodes.new('GeometryNodeJoinGeometry')
@@ -262,7 +265,15 @@ def isosurface_group():
         links.new(inputs.outputs['Volume'], grid.inputs['Volume'])
         surface = nodes.new('GeometryNodeGridToMesh')
         links.new(grid.outputs['Grid'], surface.inputs['Grid'])
-        links.new(inputs.outputs['Isovalue'], surface.inputs['Threshold'])
+        threshold = inputs.outputs['Isovalue']
+        if name == 'qc_negative':
+            choose = nodes.new('GeometryNodeSwitch')
+            choose.input_type = 'FLOAT'
+            links.new(inputs.outputs['Link Thresholds'], choose.inputs['Switch'])
+            links.new(inputs.outputs['Isovalue'], choose.inputs['True'])
+            links.new(inputs.outputs['Negative Isovalue'], choose.inputs['False'])
+            threshold = choose.outputs['Output']
+        links.new(threshold, surface.inputs['Threshold'])
         links.new(inputs.outputs['Adaptivity'], surface.inputs['Adaptivity'])
         delete = nodes.new('GeometryNodeDeleteGeometry')
         delete.domain = 'POINT'
@@ -270,12 +281,19 @@ def isosurface_group():
         links.new(invalid.outputs[0], delete.inputs['Selection'])
         assign = nodes.new('GeometryNodeSetMaterial')
         links.new(inputs.outputs[label.replace('Phase', 'Material')], assign.inputs['Material'])
-        links.new(delete.outputs['Geometry'], assign.inputs['Geometry'])
+        from .assets import surface_style_group
+        representation = nodes.new('GeometryNodeGroup')
+        representation.node_tree = surface_style_group()
+        links.new(delete.outputs['Geometry'], representation.inputs['Geometry'])
+        for control in ('Style (0 solid, 1 wire, 2 points)', 'Wire Radius', 'Point Radius', 'Quality'):
+            links.new(inputs.outputs[control], representation.inputs[control])
+        links.new(representation.outputs['Geometry'], assign.inputs['Geometry'])
         switch = nodes.new('GeometryNodeSwitch')
         switch.input_type = 'GEOMETRY'
         links.new(inputs.outputs[label], switch.inputs['Switch'])
         links.new(assign.outputs['Geometry'], switch.inputs['True'])
         links.new(switch.outputs['Output'], join.inputs['Geometry'])
+        links.new(switch.outputs['Output'], output.inputs[label.split()[0]])
     for index, node in enumerate(nodes):
         node.location = (index % 5 * 220, -(index // 5) * 240)
     tree.asset_mark()

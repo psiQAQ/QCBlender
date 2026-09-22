@@ -1,5 +1,9 @@
 # 开发任务已迁移
 
+2026-09-23：M7 公共节点与常用样式首批真实 Blender 检查通过；阶段证据见 M7 任务。开发问题记录入口为 `docs/DEVELOPMENT_PITFALLS.md`，后续持续追加已复现问题与复验状态。
+
+2026-09-23：已批准 M7 可组合科学场显示，开始节点接口解耦；实施及验收状态统一记录在 `.scratch/qcblender-v1/issues/08-m7-composable-views.md`。
+
 2026-09-23：用户确认的 M6 追加范围技术验收完成：公共等值面/体积雾、显示层管理、独立样式与振动/IR 复制、真实渲染和 GUI 撤销/重做。状态与证据以 `.scratch/qcblender-v1/issues/07-m6-display-layers.md` 为准；独立用户与发布验收归 M5。
 
 复建验收发现并修复 Blender 宿主的 Windows 长路径缓存读取；原失败配置复验和 20 项科学回归通过，最新包摘要与边界见 M5 任务记录。

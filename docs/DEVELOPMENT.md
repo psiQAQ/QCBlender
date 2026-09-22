@@ -94,3 +94,6 @@ $env:BLENDER_USER_RESOURCES = "$PWD/outputs/blender-acceptance"
 最后一条需 GUI，脚本自动检查撤销/重做、截取显示层面板并退出本次 Blender；继续使用上述隔离配置。`outputs/layer-acceptance/report.json` 汇总结果。振动复制检查重新导入真实 Gaussian 样本，不依赖其他会话生成的旧缓存权限。
 
 完成相应检查后运行 `& $blenderPython -I tools/qualify_package.py`，核对最终 ZIP 与当前源码、随包 wheel 哈希，并汇总已有报告。它不代替上述 Blender 验收命令。
+## 开发问题记录
+
+实际故障、处理和复验状态见 [开发问题与复验记录](DEVELOPMENT_PITFALLS.md)。新增记录须区分已复现故障、静态发现和待验证推断。

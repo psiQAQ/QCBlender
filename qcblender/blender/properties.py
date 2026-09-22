@@ -7,6 +7,7 @@ from bpy.props import CollectionProperty, IntProperty, PointerProperty, StringPr
 import numpy as np
 
 from ..data import load_dataset
+from .graph import view_modifier
 
 
 def select_mode(settings, context):
@@ -96,14 +97,14 @@ def setup_properties(obj, data):
 
 def add_animation_nodes(obj):
     from .views import socket
-    tree = obj.modifiers[0].node_group
+    tree = view_modifier(obj).node_group
     for name, kind, default in [('Amplitude (angstrom)', 'NodeSocketFloat', .2),
                                  ('Phase', 'NodeSocketFloat', 0.),
                                  ('Cycles per second', 'NodeSocketFloat', 1.),
                                  ('Animate', 'NodeSocketBool', False)]:
         item = socket(tree, name, kind, default=default)
         # Existing modifiers receive zero when a socket is first created, before its default changes.
-        obj.modifiers[0][item.identifier] = default
+        view_modifier(obj)[item.identifier] = default
     nodes, links = tree.nodes, tree.links
     inputs = next(node for node in nodes if node.type == 'GROUP_INPUT')
     consumers = [link.to_socket for link in list(inputs.outputs['Geometry'].links)]
@@ -156,7 +157,7 @@ def add_animation_nodes(obj):
 
 def add_mode_vectors(obj, displacement, inputs):
     from .views import material, socket
-    modifier = obj.modifiers[0]
+    modifier = view_modifier(obj)
     tree = modifier.node_group
     for name, kind, value in [('Show Displacement Vectors', 'NodeSocketBool', False),
                               ('Vector Radius', 'NodeSocketFloat', .03)]:

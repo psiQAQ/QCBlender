@@ -320,7 +320,12 @@ class QCBLENDER_PT_main(bpy.types.Panel):
                     layout.label(text='Minimum: red | center: white | maximum: blue')
                     layout.label(text='Magenta: outside valid field domain')
         if obj and obj.get('qc_view_kind'):
-            modifier = next((m for m in obj.modifiers if m.type == 'NODES' and m.node_group), None)
+            from .graph import view_modifier
+            try:
+                modifier = view_modifier(obj)
+            except ValueError as error:
+                layout.label(text=str(error), icon='INFO')
+                modifier = None
             if modifier:
                 values = {item.name: modifier.get(item.identifier) for item in modifier.node_group.interface.items_tree
                           if item.item_type == 'SOCKET' and item.in_out == 'INPUT' and item.identifier in modifier}

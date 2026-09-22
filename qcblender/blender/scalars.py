@@ -8,6 +8,7 @@ import numpy as np
 from ..association import compare_sources
 from ..data import load_dataset
 from .views import bind, material, socket
+from .graph import view_modifier, tag_view, geometry_output
 
 
 def scalar_material():
@@ -18,10 +19,21 @@ def scalar_material():
     valid = nodes.new('ShaderNodeAttribute')
     valid.attribute_name = 'qc_sample_valid'
     ramp = nodes.new('ShaderNodeValToRGB')
+    ramp['qc_role'] = 'color_ramp'
     ramp.color_ramp.elements[0].color = (.8, .03, .02, 1)
     ramp.color_ramp.elements[1].color = (.03, .18, .8, 1)
     ramp.color_ramp.elements.new(.5).color = (.95, .95, .95, 1)
-    links.new(value.outputs['Fac'], ramp.inputs['Fac'])
+    invert = nodes.new('ShaderNodeValue')
+    invert['qc_role'] = 'color_invert'
+    invert.label = 'Reverse color map (0 or 1)'
+    reverse = nodes.new('ShaderNodeMath')
+    reverse.operation = 'SUBTRACT'
+    links.new(invert.outputs[0], reverse.inputs[0])
+    links.new(value.outputs['Fac'], reverse.inputs[1])
+    absolute = nodes.new('ShaderNodeMath')
+    absolute.operation = 'ABSOLUTE'
+    links.new(reverse.outputs[0], absolute.inputs[0])
+    links.new(absolute.outputs[0], ramp.inputs['Fac'])
     missing = nodes.new('ShaderNodeMixRGB')
     missing.inputs[1].default_value = (1, 0, 1, 1)
     links.new(valid.outputs['Fac'], missing.inputs[0])
@@ -62,7 +74,7 @@ def color_fraction(tree, inputs, value, minimum, center, maximum):
 
 def add_legend(obj, color_material, minimum, center, maximum, title):
     """Legend geometry reads the same range sockets and material as the colored view."""
-    modifier = obj.modifiers[0]
+    modifier = view_modifier(obj)
     tree = modifier.node_group
     nodes, links = tree.nodes, tree.links
     for name, kind, value in [('Show Legend', 'NodeSocketBool', False),
@@ -148,7 +160,7 @@ def add_mapping(target, source, low, high):
     volume = source.qc_settings.volume
     if volume is None:
         raise ValueError('Source field has no bound volume')
-    modifier = target.modifiers[0]
+    modifier = view_modifier(target)
     tree = modifier.node_group
     if tree.get('qc_color_mapping'):
         raise ValueError('This view already has a scalar mapping; edit its node inputs')
@@ -157,46 +169,33 @@ def add_mapping(target, source, low, high):
         modifier[item.identifier] = value
     nodes, links = tree.nodes, tree.links
     inputs = next(n for n in nodes if n.type == 'GROUP_INPUT')
-    output = next(n for n in nodes if n.type == 'GROUP_OUTPUT')
-    geometry = output.inputs['Geometry'].links[0].from_socket
+    output = geometry_output(tree)
+    geometry = output.links[0].from_socket
     info = nodes.new('GeometryNodeObjectInfo')
     info.transform_space = 'RELATIVE'
     info.inputs['Object'].default_value = volume
     position = nodes.new('GeometryNodeInputPosition')
-    samples = []
-    for name in ('qc_value', 'qc_valid'):
-        grid = nodes.new('GeometryNodeGetNamedGrid')
-        grid.inputs['Name'].default_value = name
-        links.new(info.outputs['Geometry'], grid.inputs['Volume'])
-        sample = nodes.new('GeometryNodeSampleGrid')
-        sample.inputs['Interpolation'].default_value = 'Trilinear'
-        links.new(grid.outputs['Grid'], sample.inputs['Grid'])
-        links.new(position.outputs['Position'], sample.inputs['Position'])
-        samples.append(sample.outputs['Value'])
-    valid = nodes.new('ShaderNodeMath')
-    valid.operation = 'GREATER_THAN'
-    valid.inputs[1].default_value = .999999
-    links.new(samples[1], valid.inputs[0])
-    fraction = color_fraction(tree, inputs, samples[0], 'Color Minimum', 'Color Center', 'Color Maximum')
-    for name, value, kind in [('qc_scalar_value', samples[0], 'FLOAT'),
-                               ('qc_sample_valid', valid.outputs[0], 'BOOLEAN'),
-                               ('qc_color_fraction', fraction, 'FLOAT')]:
-        store = nodes.new('GeometryNodeStoreNamedAttribute')
-        store.data_type, store.domain = kind, 'POINT'
-        store.inputs['Name'].default_value = name
-        links.new(geometry, store.inputs['Geometry'])
-        links.new(value, store.inputs['Value'])
-        geometry = store.outputs['Geometry']
-    assign = nodes.new('GeometryNodeSetMaterial')
+    from .assets import sample_group, color_group
+    sampler = nodes.new('GeometryNodeGroup')
+    sampler.node_tree = sample_group()
+    links.new(info.outputs['Geometry'], sampler.inputs['Volume'])
+    links.new(position.outputs['Position'], sampler.inputs['Position'])
+    assign = nodes.new('GeometryNodeGroup')
+    assign.node_tree = color_group()
+    links.new(sampler.outputs['Value'], assign.inputs['Value'])
+    links.new(sampler.outputs['Valid'], assign.inputs['Valid'])
+    for name in ('Color Minimum', 'Color Center', 'Color Maximum'):
+        links.new(inputs.outputs[name], assign.inputs[name])
     color_material = scalar_material()
     assign.inputs['Material'].default_value = color_material
     links.new(geometry, assign.inputs['Geometry'])
-    links.new(assign.outputs['Geometry'], output.inputs['Geometry'])
+    links.new(assign.outputs['Geometry'], output)
     field = json.loads(source['qc_field'])
     title = {'electrostatic_potential': 'ESP', 'orbital_amplitude': 'MO amplitude',
              'electron_number_density': 'Electron density', 'spin_density': 'Spin density'}.get(field['quantity'], field['quantity'])
     add_legend(target, color_material, 'Color Minimum', 'Color Center', 'Color Maximum', title + ' [' + field['unit'] + ']')
     tree['qc_color_mapping'] = True
+    tag_view(tree)
     target['qc_color_source'] = json.dumps({'source': source['qc_source_sha256'],
                                            'quantity': field['quantity'], 'unit': field['unit'],
                                            'interpolation': 'trilinear', 'missing_color': 'magenta'})
@@ -276,16 +275,12 @@ class QCBLENDER_OT_slice(bpy.types.Operator):
         socket(tree, 'Geometry', 'NodeSocketGeometry', 'OUTPUT')
         nodes, links = tree.nodes, tree.links
         inputs, output = nodes.new('NodeGroupInput'), nodes.new('NodeGroupOutput')
-        grid = nodes.new('GeometryNodeMeshGrid')
-        links.new(inputs.outputs['Width'], grid.inputs['Size X'])
-        links.new(inputs.outputs['Height'], grid.inputs['Size Y'])
-        links.new(inputs.outputs['Resolution'], grid.inputs['Vertices X'])
-        links.new(inputs.outputs['Resolution'], grid.inputs['Vertices Y'])
-        transform = nodes.new('GeometryNodeTransform')
-        links.new(grid.outputs['Mesh'], transform.inputs['Geometry'])
-        links.new(inputs.outputs['Center'], transform.inputs['Translation'])
-        links.new(inputs.outputs['Rotation'], transform.inputs['Rotation'])
-        links.new(transform.outputs['Geometry'], output.inputs['Geometry'])
+        from .assets import slice_group
+        slice_node = nodes.new('GeometryNodeGroup')
+        slice_node.node_tree = slice_group()
+        for name in ('Center', 'Rotation', 'Width', 'Height', 'Resolution'):
+            links.new(inputs.outputs[name], slice_node.inputs[name])
+        links.new(slice_node.outputs['Geometry'], output.inputs['Geometry'])
         obj.modifiers.new('QC Slice', 'NODES').node_group = tree
         try:
             add_mapping(obj, source, self.minimum, self.maximum)

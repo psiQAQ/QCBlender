@@ -25,4 +25,5 @@ GBasis wheel 内保留 Python 源码与原始许可文本；SciPy 二进制及�
 其 LICENSE 声明静态链接 GCC runtime，许可为 GPL-3.0-or-later WITH GCC-exception-3.1；相关许可文本保留在该 wheel 中。
 `backend-wheel.json` 随扩展保存 GBasis wheel 的版本、文件名和 SHA-256，与 `dependencies.lock.json` 合起来覆盖全部随包 wheels。
 构建工具 uv、build、setuptools 只用于开发。
+`qcblender/radii.py` 的范德华半径表提取自 MolecularNodes contributors 的 `molecularnodes/assets/data.py`，固定 commit `5ad56c9cf33c4f82ceb3ca507d26d0cab6f7203c`，GPL-3.0-or-later；修改为从皮米转换至埃的数值表。原始文件和许可证保留于 MolecularNodes 子模块；插件无 MolecularNodes 运行时依赖。
 对外发布前须完成所有组件的许可材料复核；当前产物用于本地开发验收。
