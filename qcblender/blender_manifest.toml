@@ -1,0 +1,16 @@
+schema_version = "1.0.0"
+id = "qcblender"
+version = "0.0.1"
+name = "QCBlender"
+tagline = "Quantum chemistry fields controlled by geometry nodes"
+maintainer = "QCBlender contributors"
+type = "add-on"
+blender_version_min = "5.1.1"
+blender_version_max = "5.2.0"
+license = ["SPDX:GPL-3.0-or-later"]
+platforms = ["windows-x64"]
+tags = ["Import-Export", "Node"]
+wheels = []
+
+[permissions]
+files = "Read calculation files and save scientific data and caches"
