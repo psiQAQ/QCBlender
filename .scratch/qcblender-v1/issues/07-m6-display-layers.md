@@ -1,7 +1,7 @@
 # M6 可组合节点与显示层
 
 Status: ready-for-agent
-Execution: in_progress
+Execution: complete
 Owner: root
 Blocked by: 04
 
@@ -17,6 +17,8 @@ Blocked by: 04
 几何与标量检查、实际界面/渲染检查、工程冷启动分别记录 Passed / Failed / Not Run。公共节点从源码生成，支持 Blender 5.1.1，不引入 MolecularNodes 5.2 的运行时依赖。排序表示显示层组织顺序；三维遮挡遵循 Blender 深度和材质规则。
 
 ## Comments
+
+2026-09-23：追加范围技术验收完成。显示层增删/排序/视口与渲染可见性、网格/外层节点/材质独立复制、子对象变换保留 Passed；冷重开与 GUI 撤销/重做 Passed，窄侧栏控件调整后已检查面板截图。真实 Gaussian 水分子振动样本重新导入后，复制层的模式选择和 IR 高亮独立 Passed。等值面冷重开及标量采样回归通过。运行入口见 DEVELOPMENT.md；独立用户认可与对外发布继续归 M5。
 
 2026-09-23：体积雾真实 Cycles 渲染 Passed：不透明度为零时无可见体素，连续透明度和正负颜色均有效，场缓存摘要不变；保存配套工程后冷重开图像一致（outputs/fog-acceptance/report.json）。显示层增删、复制、排序/可见性和冷重开 Passed，GUI 复制撤销/重做 Passed；正在调整窄侧栏布局并补齐最终回归与包资格。
 

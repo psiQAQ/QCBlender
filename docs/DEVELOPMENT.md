@@ -82,4 +82,15 @@ $env:BLENDER_USER_RESOURCES = "$PWD/outputs/blender-acceptance"
 
 `outputs/fog-acceptance/report.json` 记录正负颜色、零不透明度、连续透明度、缓存不变和保存后渲染一致性。
 
+显示层检查分为数据/节点操作、冷重开和实际 GUI 撤销：
+
+```powershell
+& $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/verify_layers.py
+& $blender --background --offline-mode --disable-autoexec 'outputs/layer-acceptance/layers.blend' --python-exit-code 1 --python tools/verify_layers.py -- --reopen-layers
+& $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_layers.py -- --vibration-layers
+& $blender --offline-mode --disable-autoexec 'outputs/layer-acceptance/layers.blend' --python-exit-code 1 --python tools/verify_layers_gui.py
+```
+
+最后一条需 GUI，脚本自动检查撤销/重做、截取显示层面板并退出本次 Blender；继续使用上述隔离配置。`outputs/layer-acceptance/report.json` 汇总结果。振动复制检查重新导入真实 Gaussian 样本，不依赖其他会话生成的旧缓存权限。
+
 完成相应检查后运行 `& $blenderPython -I tools/qualify_package.py`，核对最终 ZIP 与当前源码、随包 wheel 哈希，并汇总已有报告。它不代替上述 Blender 验收命令。

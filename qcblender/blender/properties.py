@@ -233,6 +233,7 @@ def ir_spectrum(parent, frequencies, intensities):
     obj.parent = parent
     obj.location = (4, 0, 0)
     obj['qc_frequency_scale'] = '1000 cm^-1 per Blender unit'
+    obj['qc_view_kind'] = 'spectrum'
     obj['qc_intensity_scale'] = height_scale
     obj['qc_intensity_unit'] = 'km/mol'
     tree = bpy.data.node_groups.new('QC IR Sticks v1', 'GeometryNodeTree')

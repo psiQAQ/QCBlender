@@ -214,7 +214,8 @@ class QCBLENDER_OT_map_scalar(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object and 'qc_field' in context.object and len(context.selected_objects) == 2
+        return (context.object and context.object.get('qc_view_kind') in ('field', 'slice')
+                and len(context.selected_objects) == 2)
 
     def invoke(self, context, event):
         return context.window_manager.invoke_props_dialog(self)
@@ -265,6 +266,7 @@ class QCBLENDER_OT_slice(bpy.types.Operator):
         bind(obj, bpy.path.abspath(source['qc_dataset']), data)
         obj['qc_field'] = source['qc_field']
         obj['qc_view_kind'] = 'slice'
+        obj.qc_settings.volume = source.qc_settings.volume
         tree = bpy.data.node_groups.new('QC Slice v1', 'GeometryNodeTree')
         socket(tree, 'Center', 'NodeSocketVector', default=tuple(corners.mean(axis=0)))
         socket(tree, 'Rotation', 'NodeSocketVector', default=(0, 0, 0))

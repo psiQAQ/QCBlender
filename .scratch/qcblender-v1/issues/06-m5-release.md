@@ -15,6 +15,8 @@ Blocked by: 01, 02, 03, 04, 05
 
 ## Comments
 
+2026-09-23：M6 新增公共等值面/体积雾与完整显示层管理后，原生离线安装、字段采样/冷重开、体积渲染/冷重开、独立材质与模式/IR 复制、GUI 撤销/重做 Passed；面板截图已检查。当前 ZIP 50,406,906 字节，SHA-256 `ac799835e4a9292ec5b6a6a08bc5a5700a73c277caced0cb391c7c9123ef56b7`。`outputs/qualification.json` 已核对工作区源码及 11 个随包 wheel，并纳入三份新增报告。独立用户复做、VMD/VESTA 外部图像对照和发布复核仍未完成。
+
 2026-09-22：从已提交源码的独立复建揭示 Blender 宿主的 Win32 长路径限制：289 字符缓存数组存在但读取失败，实际重复场缓存未命中。现于科学存储/复制/归档层采用扩展 Windows 路径，对外路径保持原格式。原失败配置的缓存、冷重开、保存失败回滚与恢复复验 Passed；新增 tools/verify_storage_paths.py 在 Blender 中验证真实长路径，20 项科学回归 Passed。当前 ZIP 50,401,929 bytes，SHA-256 e2edbd8aff841a9a491f8e0ab093b1c7247d03e138c041ff054064f3a0a927b0；资格汇总 Passed。复建条件和失败定位记入 docs/CHANGELOG.md。独立用户认可及外部视觉对照继续未完成。
 
 2026-09-22：已有开发已按逻辑单元本地提交：01ca63f 仓库约定与参考子模块、a19d2d5 设计与路线、7e9c29a 科学数据层与求值、21e4221 Blender 功能与工程持久化、91d8257 离线构建与验收。核对 Git HEAD 中 17 个科学样本原始字节，SHA-256 全部匹配来源记录；tools/qualify_package.py 对当前 ZIP 的源码、wheel 校验和与已记录技术验收汇总 Passed。未推送；M5 剩余验收边界保持不变。

@@ -167,6 +167,7 @@ class QCBLENDER_OT_dipole(bpy.types.Operator):
         context.collection.objects.link(obj)
         obj.parent = parent
         obj['qc_dipole_source'] = json.dumps(prop)
+        obj['qc_view_kind'] = 'dipole'
         obj['qc_dipole_debye'] = vector.tolist()
         obj['qc_display_anchor'] = 'source coordinate origin'
         tree = bpy.data.node_groups.new('QC Vector Glyph v1', 'GeometryNodeTree')

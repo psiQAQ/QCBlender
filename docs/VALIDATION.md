@@ -1,6 +1,6 @@
 # 0.0.1 候选的支持范围与验证
 
-日期：2026-09-22。平台：Windows 11 x64，Blender 5.1.1，CPython 3.13.9，NumPy 2.3.4，OpenVDB 13。当前是本地开发验收候选，尚未对外发布；独立用户验收未签署。
+日期：2026-09-23。平台：Windows 11 x64，Blender 5.1.1，CPython 3.13.9，NumPy 2.3.4，OpenVDB 13。当前是本地开发验收候选，尚未对外发布；独立用户验收未签署。
 
 ## 输入和科学边界
 
@@ -28,6 +28,9 @@ GBasis 来源固定在 `science-sources.lock.json`，当前 wheel 为 `0.1.0+qcb
 | 网格与远场 | Passed | `outputs/scientific-convergence.json`：LiH+ 密度/自旋步长与范围分开变化，半宽 8 bohr、步长 0.1 bohr 得 2.99994998 个电子；200 bohr 的 rΦ=0.99993221，趋向 +1 |
 | 全新配置离线安装 | Passed | `outputs/acceptance/extension.json`；后台库来源、GUI 不导入求值依赖、取消、注册/注销、缓存复用 |
 | 双相面与显示阈值 | Passed | 阈值改变表面网格，正/负面独立，VDB 哈希不变；`outputs/acceptance/mo8.png` 已作视觉检查 |
+| 公共等值面资产 | Passed | `outputs/node-assets/report.json`：无对象/材质绑定的共享资产，独立阈值与源平移、保留原分支、资产库导出和重载 |
+| 体积雾 | Passed | `outputs/fog-acceptance/report.json`：真实 Cycles 渲染的正负颜色、零/连续不透明度、缓存摘要不变及冷重开渲染一致；图片已检查 |
+| 显示层管理 | Passed | `outputs/layer-acceptance/report.json`：增删、复制、排序/可见性、独立材质及模式/IR，保存重开和 GUI 撤销/重做；面板截图已检查 |
 | 双场与切片 | Passed | `outputs/scalar-probe/result.json`：斜轴线性场采样最大误差约 1.08e-6，对象变换后约 2.27e-6；域外 289 个切片点全为无效 |
 | 原子、图例和关联 | Passed | `outputs/visual-acceptance/result.json`：元素/编号选择、真实密度/ESP、与范围联动的图例、刚体配准、平衡距离、Cube 显式单位；渲染已检查 |
 | 电荷/偶极/振动/IR | Passed | `outputs/acceptance/recovery.json`、`outputs/vibration-probe.json`：Mulliken、偶极方向/比例/零向量、3 个水分子模式、真实位移方程、位移箭头、IR 高亮 |
