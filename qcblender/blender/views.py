@@ -173,7 +173,7 @@ def field_view(directory, parent=None, index=0):
     if parent:
         obj.parent = parent
         source.parent = parent
-    tree = bpy.data.node_groups.new('QC Isosurface View v2', 'GeometryNodeTree')
+    tree = bpy.data.node_groups.new('QC Isosurface View v3', 'GeometryNodeTree')
     tree.is_modifier = True
     threshold = 0.05 if field['quantity'] in ('orbital_amplitude', 'spin_density') else 0.02
     socket(tree, 'Isovalue', 'NodeSocketFloat', default=threshold, minimum=1e-7)
@@ -186,6 +186,8 @@ def field_view(directory, parent=None, index=0):
     signed = field['quantity'] not in ('electron_number_density', 'alpha_density', 'beta_density')
     socket(tree, 'Positive Phase', 'NodeSocketBool', default=True)
     socket(tree, 'Negative Phase', 'NodeSocketBool', default=signed)
+    socket(tree, 'Positive Opacity', 'NodeSocketFloat', default=1., minimum=0.)
+    socket(tree, 'Negative Opacity', 'NodeSocketFloat', default=1., minimum=0.)
     socket(tree, 'Adaptivity', 'NodeSocketFloat', default=0, minimum=0)
     socket(tree, 'Smooth Normals', 'NodeSocketBool', default=True)
     socket(tree, 'Geometry', 'NodeSocketGeometry', 'OUTPUT')
@@ -197,12 +199,16 @@ def field_view(directory, parent=None, index=0):
     style = nodes.new('GeometryNodeGroup')
     style.node_tree = isosurface_group()
     links.new(info.outputs['Geometry'], style.inputs['Volume'])
-    for name in ('Isovalue', 'Link Thresholds', 'Negative Isovalue', 'Positive Phase', 'Negative Phase', 'Adaptivity', 'Smooth Normals',
+    for name in ('Isovalue', 'Link Thresholds', 'Negative Isovalue', 'Positive Phase', 'Negative Phase', 'Positive Opacity', 'Negative Opacity', 'Adaptivity', 'Smooth Normals',
                  'Style (0 solid, 1 wire, 2 points)', 'Wire Radius', 'Point Radius', 'Quality'):
         links.new(inputs.outputs[name], style.inputs[name])
     for label, color in [('Positive', (0.1, 0.3, 0.8, 1)), ('Negative', (0.85, 0.12, 0.08, 1))]:
         name = label + ' Material'
-        socket(tree, name, 'NodeSocketMaterial', default=material('QC ' + label + ' Phase', color))
+        mat = material('QC ' + label + ' Phase', color)
+        opacity = mat.node_tree.nodes.new('ShaderNodeAttribute')
+        opacity.attribute_name = 'qc_opacity'
+        mat.node_tree.links.new(opacity.outputs['Fac'], mat.node_tree.nodes['Principled BSDF'].inputs['Alpha'])
+        socket(tree, name, 'NodeSocketMaterial', default=mat)
         links.new(inputs.outputs[name], style.inputs[name])
     links.new(style.outputs['Geometry'], output.inputs['Geometry'])
     for number, node in enumerate(nodes):
@@ -216,12 +222,12 @@ def field_view(directory, parent=None, index=0):
 
 def isosurface_group():
     """Reusable signed isosurfaces of QC grids; bindings belong to the caller."""
-    asset_id = 'qc.isosurface.v2'
+    asset_id = 'qc.isosurface.v3'
     existing = next((group for group in bpy.data.node_groups
                      if group.bl_idname == 'GeometryNodeTree' and group.get('qc_asset_id') == asset_id), None)
     if existing is not None:
         return existing
-    tree = bpy.data.node_groups.new('QC Style Isosurface v2', 'GeometryNodeTree')
+    tree = bpy.data.node_groups.new('QC Style Isosurface v3', 'GeometryNodeTree')
     tree['qc_asset_id'] = asset_id
     socket(tree, 'Volume', 'NodeSocketGeometry')
     socket(tree, 'Isovalue', 'NodeSocketFloat', default=.05, minimum=1e-7)
@@ -233,6 +239,8 @@ def isosurface_group():
     socket(tree, 'Quality', 'NodeSocketInt', default=2, minimum=1)
     socket(tree, 'Positive Phase', 'NodeSocketBool', default=True)
     socket(tree, 'Negative Phase', 'NodeSocketBool', default=True)
+    socket(tree, 'Positive Opacity', 'NodeSocketFloat', default=1., minimum=0.)
+    socket(tree, 'Negative Opacity', 'NodeSocketFloat', default=1., minimum=0.)
     socket(tree, 'Adaptivity', 'NodeSocketFloat', default=0, minimum=0)
     socket(tree, 'Smooth Normals', 'NodeSocketBool', default=True)
     socket(tree, 'Positive Material', 'NodeSocketMaterial')
@@ -287,7 +295,12 @@ def isosurface_group():
         links.new(delete.outputs['Geometry'], representation.inputs['Geometry'])
         for control in ('Style (0 solid, 1 wire, 2 points)', 'Wire Radius', 'Point Radius', 'Quality'):
             links.new(inputs.outputs[control], representation.inputs[control])
-        links.new(representation.outputs['Geometry'], assign.inputs['Geometry'])
+        opacity = nodes.new('GeometryNodeStoreNamedAttribute')
+        opacity.data_type, opacity.domain = 'FLOAT', 'POINT'
+        opacity.inputs['Name'].default_value = 'qc_opacity'
+        links.new(inputs.outputs[label.replace('Phase', 'Opacity')], opacity.inputs['Value'])
+        links.new(representation.outputs['Geometry'], opacity.inputs['Geometry'])
+        links.new(opacity.outputs['Geometry'], assign.inputs['Geometry'])
         switch = nodes.new('GeometryNodeSwitch')
         switch.input_type = 'GEOMETRY'
         links.new(inputs.outputs[label], switch.inputs['Switch'])

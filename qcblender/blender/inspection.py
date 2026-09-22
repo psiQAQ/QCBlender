@@ -7,7 +7,7 @@ import numpy as np
 
 from ..data import load_dataset
 from .assets import asset, math
-from .graph import insert_geometry, tag_view, view_modifier
+from .graph import arrange, insert_geometry, tag_view, view_modifier
 from .views import socket
 
 CLIP_INPUTS = [
@@ -56,7 +56,7 @@ def clip_group():
     tree.links.new(source.outputs['Geometry'], delete.inputs['Geometry'])
     tree.links.new(math(tree, 'SUBTRACT', 1, keep), delete.inputs['Selection'])
     tree.links.new(delete.outputs['Geometry'], output.inputs['Geometry'])
-    return tree
+    return arrange(tree)
 
 
 def add_clip(obj):

@@ -1,7 +1,7 @@
 # M7 可组合科学场显示
 
-Status: ready-for-agent
-Execution: in_progress
+Status: ready-for-human
+Execution: complete
 
 ## Accepted scope
 
@@ -19,6 +19,9 @@ Execution: in_progress
 独立用户视觉验收不由 Agent 代签。
 
 ## Comments
+
+- 最终技术验收 Passed：节点组合、实际 Gaussian 三种表面渲染、体积曲线/裁剪渲染、游标/斜轴采样、密度/ESP、振动/IR、工程冷重开和 GUI 撤销重做。20 项科学回归 Passed；最终 ZIP 与源码及全部 wheel 摘要匹配。`outputs/qualification.json` 汇总证据。包 50,416,340 bytes，SHA-256 `89af04ad4f5ed975a60d3e981c85b9cd285ee201af7b09afd5a8f9fc7e95570d`。
+- 已记录限制：表面裁剪按网格顶点、不封口；游标值为三线性插值；Blender 字体依赖警告仍可出现但已验证图例渲染。独立用户使用及 VMD/VESTA 外部视觉对照继续归 M5，未代签。
 
 - 第二批：裁剪、体积颜色/不透明度曲线、游标采样、显式保留原图的新建版本、外部标量名称/单位已实现。解析斜轴场、无效体素、源对象旋转与非均匀缩放、旧图连接保留 Passed；体积曲线和裁剪真实渲染 Passed。科学回归 20/20 Passed。完整最新版打包与 GUI/振动回归仍进行中。
 

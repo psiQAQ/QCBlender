@@ -86,7 +86,7 @@ else:
         evaluated.to_mesh_clear()
     modifier[sockets['Show Legend']] = True
     obj.update_tag()
-    bpy.context.scene.render.filepath = str(ROOT / 'outputs/visual-acceptance/cold-density-esp.png')
+    bpy.context.scene.render.filepath = str(Path(bpy.data.filepath).parent / 'cold-density-esp.png')
     bpy.ops.render.render(write_still=True)
     report.update(legend_range='Passed', field_and_color_source_bindings='Passed', sampled_attributes='Passed')
 path = ROOT / 'outputs/acceptance' / (Path(bpy.data.filepath).stem + '-cold-view.json')

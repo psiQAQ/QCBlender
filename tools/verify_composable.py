@@ -96,6 +96,18 @@ set_input(surface, 'Negative Isovalue', .2)
 assert len(mesh_points(surface)) < len(solid)
 add_mapping(surface, surface, -.3, .3)
 assert len(mesh_points(surface)) > 0
+set_input(surface, 'Negative Opacity', .25)
+surface.update_tag()
+bpy.context.view_layer.update()
+evaluated = surface.evaluated_get(bpy.context.evaluated_depsgraph_get())
+geometry = evaluated.to_mesh()
+try:
+    coords = np.array([v.co[:] for v in geometry.vertices])
+    opacity = np.array([v.value for v in geometry.attributes['qc_opacity'].data])
+    np.testing.assert_allclose(opacity[coords[:, 0] < 0], .25)
+    np.testing.assert_allclose(opacity[coords[:, 0] > 0], 1.)
+finally:
+    evaluated.to_mesh_clear()
 from qcblender.blender.inspection import add_clip, sample_point
 add_clip(surface)
 set_input(surface, 'Plane Enabled', True)
@@ -154,6 +166,7 @@ report = {'status': 'Passed', 'blender': bpy.app.version_string, 'atom_styles': 
           'modifier_reorder': 'Passed', 'preserved_branch': 'Passed', 'unbound_assets': 'Passed',
           'signed_surface_styles': 'Passed', 'independent_thresholds': 'Passed', 'mapping': 'Passed',
           'plane_box_clip': 'Passed', 'point_sampling': 'Passed', 'volume_transfer_graph': 'Passed',
-          'affine_sampling_invalid_regions': 'Passed', 'cursor_world_transform': 'Passed', 'keep_original_upgrade': 'Passed'}
+          'affine_sampling_invalid_regions': 'Passed', 'cursor_world_transform': 'Passed', 'keep_original_upgrade': 'Passed',
+          'phase_opacity_after_mapping': 'Passed'}
 (OUT / 'report.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
 print(json.dumps(report))

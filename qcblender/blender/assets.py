@@ -2,6 +2,7 @@
 import bpy
 
 from .views import socket
+from .graph import arrange
 
 
 def asset(key, title, inputs, outputs=(('Geometry', 'NodeSocketGeometry'),)):
@@ -48,7 +49,7 @@ def sample_group():
         if target == 'Valid':
             value = math(tree, 'GREATER_THAN', value, .999999)
         tree.links.new(value, output.inputs[target])
-    return tree
+    return arrange(tree)
 
 
 def selection_group():
@@ -59,6 +60,7 @@ def selection_group():
         [('Selection', 'NodeSocketBool')])
     if source is not None:
         tree.links.new(atom_selection(tree, source), output.inputs['Selection'])
+        arrange(tree)
     return tree
 
 
@@ -95,7 +97,7 @@ def surface_style_group():
         links.new(alternative, switch.inputs['True'])
         geometry = switch.outputs['Output']
     links.new(geometry, output.inputs['Geometry'])
-    return tree
+    return arrange(tree)
 
 
 def atom_style_group():
@@ -152,7 +154,7 @@ def atom_style_group():
     links.new(smooth.outputs['Geometry'], assign.inputs['Geometry'])
     links.new(source.outputs['Material'], assign.inputs['Material'])
     links.new(assign.outputs['Geometry'], output.inputs['Geometry'])
-    return tree
+    return arrange(tree)
 
 
 def slice_group():
@@ -170,12 +172,12 @@ def slice_group():
     tree.links.new(source.outputs['Center'], transform.inputs['Translation'])
     tree.links.new(source.outputs['Rotation'], transform.inputs['Rotation'])
     tree.links.new(transform.outputs['Geometry'], output.inputs['Geometry'])
-    return tree
+    return arrange(tree)
 
 
 def color_group():
     from .scalars import color_fraction
-    tree, source, output = asset('qc.color_scalar.v1', 'QC Map Scalar Colors', [
+    tree, source, output = asset('qc.color_scalar.v2', 'QC Map Scalar Colors v2', [
         ('Geometry', 'NodeSocketGeometry', None), ('Value', 'NodeSocketFloat', 0.),
         ('Valid', 'NodeSocketBool', True), ('Color Minimum', 'NodeSocketFloat', -.05),
         ('Color Center', 'NodeSocketFloat', 0.), ('Color Maximum', 'NodeSocketFloat', .05),
@@ -183,10 +185,18 @@ def color_group():
     if source is None:
         return tree
     fraction = color_fraction(tree, source, source.outputs['Value'], 'Color Minimum', 'Color Center', 'Color Maximum')
+    opacity = tree.nodes.new('GeometryNodeInputNamedAttribute')
+    opacity.data_type = 'FLOAT'
+    opacity.inputs['Name'].default_value = 'qc_opacity'
+    alpha = tree.nodes.new('GeometryNodeSwitch')
+    alpha.input_type = 'FLOAT'
+    alpha.inputs['False'].default_value = 1.
+    tree.links.new(opacity.outputs['Exists'], alpha.inputs['Switch'])
+    tree.links.new(opacity.outputs['Attribute'], alpha.inputs['True'])
     geometry = source.outputs['Geometry']
     for name, kind, value in [('qc_scalar_value', 'FLOAT', source.outputs['Value']),
                               ('qc_sample_valid', 'BOOLEAN', source.outputs['Valid']),
-                              ('qc_color_fraction', 'FLOAT', fraction)]:
+                              ('qc_color_fraction', 'FLOAT', fraction), ('qc_opacity', 'FLOAT', alpha.outputs['Output'])]:
         store = tree.nodes.new('GeometryNodeStoreNamedAttribute')
         store.data_type, store.domain = kind, 'POINT'
         store.inputs['Name'].default_value = name
@@ -197,4 +207,4 @@ def color_group():
     tree.links.new(source.outputs['Material'], assign.inputs['Material'])
     tree.links.new(geometry, assign.inputs['Geometry'])
     tree.links.new(assign.outputs['Geometry'], output.inputs['Geometry'])
-    return tree
+    return arrange(tree)

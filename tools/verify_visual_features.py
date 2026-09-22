@@ -15,7 +15,7 @@ jobs = importlib.import_module(MODULE + '.blender.jobs')
 views = importlib.import_module(MODULE + '.blender.views')
 project = importlib.import_module(MODULE + '.blender.project')
 storage = importlib.import_module(MODULE + '.data')
-OUT = ROOT / 'outputs/visual-acceptance'
+OUT = ROOT / 'outputs/visual-acceptance-v2'
 OUT.mkdir(parents=True, exist_ok=True)
 
 
@@ -53,21 +53,18 @@ directory = finish(jobs.Job('import', source=str(ROOT / 'tests/data/chemtools/ch
 atoms = views.atom_view(directory)
 modifier, tree = atoms.modifiers[0], atoms.modifiers[0].node_group
 inputs = sockets(atoms)
-output = next(n for n in tree.nodes if n.type == 'GROUP_OUTPUT')
-original = output.inputs['Geometry'].links[0].from_socket
-selected = next(n for n in tree.nodes if n.bl_idname == 'GeometryNodeDeleteGeometry')
-tree.links.new(selected.outputs['Geometry'], output.inputs['Geometry'])
+modifier[inputs['Style (0 ball-stick, 1 space-fill, 2 bonds)']] = 1
 try:
-    assert len(mesh(atoms)) == 5
+    assert len(mesh(atoms)) == 5 * 42
     modifier[inputs['Element (0 = all)']] = 6
-    assert len(mesh(atoms)) == 1
+    assert len(mesh(atoms)) == 42
     modifier[inputs['Element (0 = all)']] = 0
     modifier[inputs['First Atom (1-based)']] = 2
     modifier[inputs['Last Atom (0 = all)']] = 3
-    assert len(mesh(atoms)) == 2
+    assert len(mesh(atoms)) == 2 * 42
 finally:
     modifier[inputs['First Atom (1-based)']], modifier[inputs['Last Atom (0 = all)']] = 1, 0
-    tree.links.new(original, output.inputs['Geometry'])
+    modifier[inputs['Style (0 ball-stick, 1 space-fill, 2 bonds)']] = 0
 
 surfaces = []
 for quantity in ('electron_number_density', 'electrostatic_potential'):
@@ -144,6 +141,12 @@ declared_data = storage.load_dataset(declared)
 np.testing.assert_array_equal(unknown_data.arrays['cube_0'], declared_data.arrays['cube_0'])
 assert declared_data.metadata['fields'][0]['unit'] == 'hartree/e'
 assert declared_data.metadata['fields'][0]['interpretation'] == 'user_assigned'
+custom = finish(jobs.Job('declare_field', dataset=str(unknown), field_array='cube_0',
+                        quantity='custom', custom_quantity='External ELF', custom_unit='dimensionless'))
+custom_data = storage.load_dataset(custom)
+assert custom_data.metadata['fields'][0]['quantity'] == 'External ELF'
+assert custom_data.metadata['fields'][0]['unit'] == 'dimensionless'
+np.testing.assert_array_equal(unknown_data.arrays['cube_0'], custom_data.arrays['cube_0'])
 
 scene = bpy.context.scene
 camera = bpy.data.objects.new('QC ESP camera', bpy.data.cameras.new('QC ESP camera'))

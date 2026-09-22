@@ -196,8 +196,8 @@ def add_mode_vectors(obj, displacement, inputs):
     align.axis = 'Z'
     links.new(vector.outputs['Vector'], align.inputs['Vector'])
     instances = nodes.new('GeometryNodeInstanceOnPoints')
-    selected_atoms = next(n for n in nodes if n.bl_idname == 'GeometryNodeDeleteGeometry')
-    links.new(selected_atoms.outputs['Geometry'], instances.inputs['Points'])
+    style = next(n for n in nodes if n.type == 'GROUP' and n.node_tree.get('qc_asset_id') == 'qc.atom_style.v1')
+    links.new(style.inputs['Geometry'].links[0].from_socket, instances.inputs['Points'])
     links.new(assign.outputs['Geometry'], instances.inputs['Instance'])
     links.new(scale.outputs['Vector'], instances.inputs['Scale'])
     links.new(align.outputs['Rotation'], instances.inputs['Rotation'])
@@ -205,7 +205,11 @@ def add_mode_vectors(obj, displacement, inputs):
     positive.operation = 'GREATER_THAN'
     positive.inputs[1].default_value = 1e-10
     links.new(length.outputs['Value'], positive.inputs[0])
-    links.new(positive.outputs[0], instances.inputs['Selection'])
+    selected = nodes.new('FunctionNodeBooleanMath')
+    selected.operation = 'AND'
+    links.new(positive.outputs[0], selected.inputs[0])
+    links.new(style.inputs['Selection'].links[0].from_socket, selected.inputs[1])
+    links.new(selected.outputs[0], instances.inputs['Selection'])
     realize = nodes.new('GeometryNodeRealizeInstances')
     links.new(instances.outputs['Instances'], realize.inputs['Geometry'])
     switch = nodes.new('GeometryNodeSwitch')

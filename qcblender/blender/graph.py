@@ -50,3 +50,21 @@ def insert_geometry(tree, group, input_name='Geometry', output_name='Geometry'):
     tree.links.new(previous, node.inputs[input_name])
     tree.links.new(node.outputs[output_name], output)
     return node
+
+
+def arrange(tree):
+    """Lay out a newly built graph by dependency depth; never rearrange saved user graphs."""
+    pending = list(tree.nodes)
+    depths, counts = {}, {}
+    while pending:
+        ready = [n for n in pending if all(l.from_node in depths for s in n.inputs for l in s.links)]
+        if not ready:
+            ready = [pending[0]]
+        for node in ready:
+            depth = max((depths.get(l.from_node, -1) + 1 for s in node.inputs for l in s.links), default=0)
+            row = counts.get(depth, 0)
+            node.location = (depth * 240, -row * 240)
+            node.width = 190
+            depths[node], counts[depth] = depth, row + 1
+            pending.remove(node)
+    return tree

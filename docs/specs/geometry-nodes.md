@@ -124,7 +124,7 @@ IR 棒状谱/模式表选择是 UI 行为，切换后只更新当前位移属性
 新建视图使用共享公共节点与独立实例包装层。原子选择、原子样式、等值面、表面表现、标量采样、标量颜色映射、平面切片和裁剪均为独立资产。等值面除合并 Geometry 外另提供 Positive / Negative 输出，可各自连接后续分支。使用 Blender 原生 Join Geometry 组合分支，处理次序由连线决定。
 
 - 原子 Style：0 球棍、1 范德华空间填充、2 仅键；表面 Style：0 实体、1 线框、2 表面顶点球。表面点不是电子或概率抽样。
-- 正负相位独立显隐、材质颜色与 Alpha；Link Thresholds 默认联动 ±Isovalue，关闭后 Negative Isovalue 单独控制负相位幅度阈值。
+- 正负相位独立显隐、材质颜色与 Opacity；`qc_opacity` 属性保持映射后的相位透明度。Link Thresholds 默认联动 ±Isovalue，关闭后 Negative Isovalue 单独控制负相位幅度阈值。
 - Map Colors 将另一个所选场采样到活动表面；生成场不变。数值最小/中心/最大保持用户指定，颜色反转和 Color Ramp 同时作用于表面与图例。
 - Fog 材质的 Color Ramp 按数值范围映射；Opacity multiplier 灰度曲线按 `abs(value)/Opacity Range`（非负密度使用 `max(value,0)`）控制光学强度，另有阈值和整体倍率。这些参数不改写源物理量。
 - Clip 的平面与范围盒使用显示对象局部埃坐标；平面保留法向量的正侧。表面按网格顶点裁剪，边界精度取决于网格分辨率，不封口；体积在材质采样位置裁剪。

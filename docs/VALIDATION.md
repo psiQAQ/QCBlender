@@ -8,7 +8,7 @@
 | --- | --- |
 | FCHK | IOData 适配；坐标/原子顺序、SP、球谐/笛卡尔、Alpha/Beta、占据、轨道能量、可用 SCF 密度和性质保留。FCHK 本身不证明计算收敛 |
 | Log | cclib 性质 + 自有能量事件适配；G03/G09/G16 样本、Link1 job、正常/异常/截断状态分别处理。多构型 job 不自动把电荷/偶极/模式绑到最后构型 |
-| Cube | 单/多 MO、交错、非立方斜轴、坐标单位、损坏数据检查；普通标量保持未知，允许显式声明已有原子单位，不做猜测或隐式换算 |
+| Cube | 单/多 MO、交错、非立方斜轴、坐标单位、损坏数据检查；普通标量保持未知，可显式声明内置量或外部物理量名称/单位，不做猜测或隐式换算 |
 | 内置场 | 实值、非周期、全电子 HF/DFT；RHF/UHF/ROHF、UB3LYP 实例。MO、总/Alpha/Beta/自旋密度、核与电子密度 ESP |
 | 基组 | SP、球谐/笛卡尔 d/f 和实际 nMO<nAO 回归；g 的 Python 基组不变量另行检查。h 及以上、ECP、幽灵中心、广义/复轨道显式拒绝 |
 | 理论层次 | 已确认 SCF 轨道和密度一致才求值。方法白名单见 `evaluate.prepare`；白名单是入口边界，不代表每个泛函/版本组合都有独立参考 |
@@ -29,12 +29,13 @@ GBasis 来源固定在 `science-sources.lock.json`，当前 wheel 为 `0.1.0+qcb
 | 全新配置离线安装 | Passed | `outputs/acceptance/extension.json`；后台库来源、GUI 不导入求值依赖、取消、注册/注销、缓存复用 |
 | 双相面与显示阈值 | Passed | 阈值改变表面网格，正/负面独立，VDB 哈希不变；`outputs/acceptance/mo8.png` 已作视觉检查 |
 | 公共等值面资产 | Passed | `outputs/node-assets/report.json`：无对象/材质绑定的共享资产，独立阈值与源平移、保留原分支、资产库导出和重载 |
+| 可组合节点与常用样式 | Passed | `outputs/composable/report.json`：三种原子/表面样式、修改器重排、保留分支/旧图、映射后独立相位透明度、平面/盒裁剪、斜轴与无效域游标采样；真实 Gaussian 三种表面渲染已检查 |
 | 体积雾 | Passed | `outputs/fog-acceptance/report.json`：真实 Cycles 渲染的正负颜色、零/连续不透明度、缓存摘要不变及冷重开渲染一致；图片已检查 |
 | 显示层管理 | Passed | `outputs/layer-acceptance/report.json`：增删、复制、排序/可见性、独立材质及模式/IR，保存重开和 GUI 撤销/重做；面板截图已检查 |
 | 双场与切片 | Passed | `outputs/scalar-probe/result.json`：斜轴线性场采样最大误差约 1.08e-6，对象变换后约 2.27e-6；域外 289 个切片点全为无效 |
-| 原子、图例和关联 | Passed | `outputs/visual-acceptance/result.json`：元素/编号选择、真实密度/ESP、与范围联动的图例、刚体配准、平衡距离、Cube 显式单位；渲染已检查 |
+| 原子、图例和关联 | Passed | `outputs/visual-acceptance-v2/result.json`：元素/编号选择、真实密度/ESP、与范围联动的图例、刚体配准、平衡距离、Cube 显式单位及外部场声明；渲染已检查 |
 | 电荷/偶极/振动/IR | Passed | `outputs/acceptance/recovery.json`、`outputs/vibration-probe.json`：Mulliken、偶极方向/比例/零向量、3 个水分子模式、真实位移方程、位移箭头、IR 高亮 |
-| 动画导出 | Passed | `outputs/animation-acceptance/result.json`；原生 Blender 渲染 4 张 PNG，图注保留频率及非物理播放速度，源科学数组完全不变；已检查代表帧 |
+| 动画导出 | Passed | `outputs/animation-acceptance-v2/result.json`；原生 Blender 渲染 4 张 PNG，图注保留频率及非物理播放速度，源科学数组完全不变；已检查代表帧 |
 | 保存、中文路径、迁移恢复 | Passed | 配套 `.blend + .qcdata`、ZIP、移动后冷启动、缺 VDB 重建、按 manifest 摘要重定位；数组和表面保持一致 |
 | 保存失败的回滚 | Passed | `outputs/acceptance/failed-save.json`：真实 Blender 保存失败后，先前场景索引与内存中的对象/体文件引用保留 |
 | Windows 长路径数组 | Passed | `outputs/acceptance/storage-paths.json`：Blender 宿主内超过 260 字符的数组路径可读取、复制复用和归档；深层隔离配置中的实际重复场缓存命中 |

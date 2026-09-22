@@ -58,8 +58,8 @@ $env:BLENDER_USER_RESOURCES = "$PWD/outputs/blender-acceptance"
 & $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/verify_project_recovery.py
 & $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_visual_features.py
 & $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_animation.py
-& $blender --background --offline-mode --disable-autoexec 'outputs/animation-acceptance/water-mode.blend' --python-exit-code 1 --python tools/verify_saved_views.py
-& $blender --background --offline-mode --disable-autoexec 'outputs/visual-acceptance/density-esp.blend' --python-exit-code 1 --python tools/verify_saved_views.py
+& $blender --background --offline-mode --disable-autoexec 'outputs/animation-acceptance-v2/water-mode.blend' --python-exit-code 1 --python tools/verify_saved_views.py
+& $blender --background --offline-mode --disable-autoexec 'outputs/visual-acceptance-v2/density-esp.blend' --python-exit-code 1 --python tools/verify_saved_views.py
 & $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/verify_failed_save.py
 & $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/probe_scalar_views.py
 & $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/benchmark_fields.py
@@ -96,6 +96,8 @@ $env:BLENDER_USER_RESOURCES = "$PWD/outputs/blender-acceptance"
 完成相应检查后运行 `& $blenderPython -I tools/qualify_package.py`，核对最终 ZIP 与当前源码、随包 wheel 哈希，并汇总已有报告。它不代替上述 Blender 验收命令。
 
 可组合节点的快速真实 Blender 检查：`& $blender --background --factory-startup --offline-mode --python-exit-code 1 --python tools/verify_composable.py`。它覆盖样式切换、分支保留、修改器重排、独立阈值、裁剪、斜轴和无效域采样、游标变换与保留旧图的新建操作，输出 `outputs/composable/report.json`。体积裁剪与曲线需同时运行 `verify_fog.py` 的真实渲染检查。
+
+随后在已安装扩展的隔离配置运行 `& $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/verify_composable_render.py`，将实体、线框与表面点的实际渲染证据追加至同一报告，再执行包资格汇总。
 
 ## 开发问题记录
 

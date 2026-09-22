@@ -10,7 +10,7 @@ from mathutils import Vector
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'outputs/animation-acceptance'
+OUT = ROOT / 'outputs/animation-acceptance-v2'
 OUT.mkdir(parents=True, exist_ok=True)
 MODULE = 'bl_ext.user_default.qcblender'
 bpy.ops.preferences.addon_enable(module=MODULE)

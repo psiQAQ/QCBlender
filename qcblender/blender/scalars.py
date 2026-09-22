@@ -11,9 +11,13 @@ from .views import bind, material, socket
 from .graph import view_modifier, tag_view, geometry_output
 
 
-def scalar_material():
+def scalar_material(opacity_attribute=False):
     mat = material('QC scalar color map', (.5, .5, .5, 1))
     nodes, links = mat.node_tree.nodes, mat.node_tree.links
+    if opacity_attribute:
+        opacity = nodes.new('ShaderNodeAttribute')
+        opacity.attribute_name = 'qc_opacity'
+        links.new(opacity.outputs['Fac'], nodes.get('Principled BSDF').inputs['Alpha'])
     value = nodes.new('ShaderNodeAttribute')
     value.attribute_name = 'qc_color_fraction'
     valid = nodes.new('ShaderNodeAttribute')
@@ -186,7 +190,7 @@ def add_mapping(target, source, low, high):
     links.new(sampler.outputs['Valid'], assign.inputs['Valid'])
     for name in ('Color Minimum', 'Color Center', 'Color Maximum'):
         links.new(inputs.outputs[name], assign.inputs[name])
-    color_material = scalar_material()
+    color_material = scalar_material(opacity_attribute=True)
     assign.inputs['Material'].default_value = color_material
     links.new(geometry, assign.inputs['Geometry'])
     links.new(assign.outputs['Geometry'], output)
@@ -213,7 +217,7 @@ class QCBLENDER_OT_map_scalar(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return (context.object and context.object.get('qc_view_kind') in ('field', 'slice')
+        return (context.object and context.object.get('qc_view_kind') in ('field', 'slice', 'atoms')
                 and len(context.selected_objects) == 2)
 
     def invoke(self, context, event):

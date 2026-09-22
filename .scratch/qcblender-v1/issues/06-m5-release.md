@@ -11,6 +11,8 @@ Blocked by: 01, 02, 03, 04, 05
 
 ## 验收
 
+2026-09-23 M7 技术候选：包 `outputs/dist/qcblender-0.0.1.zip`，50,416,340 bytes，SHA-256 `89af04ad4f5ed975a60d3e981c85b9cd285ee201af7b09afd5a8f9fc7e95570d`。可组合节点、相位透明度、多种样式、体积曲线、裁剪与游标采样技术验收 Passed；节点、渲染、振动/IR、冷重开与 GUI 证据纳入 `outputs/qualification.json`。独立用户认可与发布仍未完成。
+
 主设计V01–V08技术验收均通过；交付ZIP和可复现证据。独立用户认可另行记录，Agent不能代签。
 
 ## Comments

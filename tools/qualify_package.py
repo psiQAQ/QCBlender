@@ -28,11 +28,12 @@ with zipfile.ZipFile(archive_path) as archive:
     assert json.loads(archive.read('backend-wheel.json')) == backend
 evidence = {}
 for relative in ('science-reference.json', 'scientific-convergence.json', 'field-performance.json',
-                 'acceptance/extension.json', 'acceptance/recovery.json', 'visual-acceptance/result.json',
+                 'acceptance/extension.json', 'acceptance/recovery.json', 'visual-acceptance-v2/result.json',
                  'acceptance/failed-save.json', 'acceptance/storage-paths.json', 'acceptance/water-mode-cold-view.json',
                  'acceptance/density-esp-cold-view.json',
-                 'animation-acceptance/result.json', 'scalar-probe/result.json', 'vibration-probe.json',
-                 'node-assets/report.json', 'fog-acceptance/report.json', 'layer-acceptance/report.json'):
+                 'animation-acceptance-v2/result.json', 'scalar-probe/result.json', 'vibration-probe.json',
+                 'node-assets/report.json', 'fog-acceptance/report.json', 'layer-acceptance/report.json',
+                 'composable/report.json'):
     path = ROOT / 'outputs' / relative
     report = json.loads(path.read_text(encoding='utf-8'))
     assert report['status'] == 'Passed', relative
@@ -42,6 +43,10 @@ assert evidence['fog-acceptance/report.json']['report']['cold_open_render'] == '
 assert evidence['layer-acceptance/report.json']['report']['cold_open'] == 'Passed'
 assert evidence['layer-acceptance/report.json']['report']['undo'] == 'Passed'
 assert evidence['layer-acceptance/report.json']['report']['vibration_copy_independence'] == 'Passed'
+assert evidence['fog-acceptance/report.json']['report']['plane_box_clip_render'] == 'Passed'
+assert evidence['fog-acceptance/report.json']['report']['opacity_curve_render'] == 'Passed'
+assert evidence['composable/report.json']['report']['phase_opacity_after_mapping'] == 'Passed'
+assert evidence['composable/report.json']['report']['surface_style_render'] == 'Passed'
 report = {'status': 'Passed', 'scope': 'Local automated technical qualification; independent user acceptance pending',
           'archive': archive_path.name, 'bytes': archive_path.stat().st_size, 'sha256': digest,
           'backend': backend, 'source_matches_archive': 'Passed', 'wheel_checksums': 'Passed',

@@ -47,7 +47,12 @@ def check():
             phase = 2
             return 2.0
         with bpy.context.temp_override(area=area):
-            bpy.ops.screen.screenshot(filepath=str(OUT / 'display-layers.png'))
+            bpy.ops.screen.screenshot(filepath=str(OUT / ('display-layers.png' if phase == 2 else 'display-controls.png')))
+        if phase == 2:
+            with bpy.context.temp_override(area=area, region=region):
+                bpy.ops.wm.call_panel(name='QCBLENDER_PT_main', keep_open=True)
+            phase = 3
+            return 2.0
         report = json.loads((OUT / 'report.json').read_text(encoding='utf-8'))
         report['undo'] = 'Passed'
         report['gui_screenshot'] = 'display-layers.png'
