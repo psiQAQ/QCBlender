@@ -13,9 +13,12 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'outputs/complex-examples'
 SOURCES = OUT / 'sources'
 MODULE = 'bl_ext.user_default.qcblender'
-if MODULE not in bpy.context.preferences.addons:
+repo = next(r for r in bpy.context.preferences.extensions.repos if r.module == 'user_default')
+if not (Path(repo.directory) / 'qcblender/blender_manifest.toml').is_file():
     bpy.ops.extensions.package_install_files(filepath=str(ROOT / 'outputs/dist/qcblender-0.0.1.zip'),
                                             repo='user_default', enable_on_install=True, overwrite=True)
+else:
+    bpy.ops.preferences.addon_enable(module=MODULE)
 readers = importlib.import_module(MODULE + '.readers')
 storage = importlib.import_module(MODULE + '.data')
 
@@ -99,4 +102,23 @@ report['external_preparation'] = {'status': 'Passed', 'backend': 'qc-gbasis ' + 
     'cube_roundtrip': 'Passed', 'rdg_formula': '|grad(rho)| / (2*(3*pi^2)^(1/3)*rho^(4/3))',
     'signed_density': 'sign(second eigenvalue of ascending density Hessian)*rho',
     'display_density_window_electron_bohr3': [1e-6, .05], 'outside_window_display_value': 10., 'files': files}
+# NCIPLOT's archived density file stores 100*sign(lambda2)*rho, not raw rho.
+reference = readers.read_source(SOURCES / 'chemtools-h2o_dimer_pbe_sto3g-dens.cube')
+reference_rdg = readers.read_source(SOURCES / 'chemtools-h2o_dimer_pbe_sto3g-grad.cube')
+np.testing.assert_allclose(reference.arrays['positions'], coords, atol=3e-7)
+field = reference.metadata['fields'][0]
+xyz = (np.array(field['origin']) + np.indices(field['shape']).reshape(3, -1).T @ np.array(field['steps'])) / storage.BOHR_ANGSTROM
+ref_rho = evaluate_density(dm, basis, xyz)
+ref_signed = np.sign(np.linalg.eigvalsh(evaluate_density_hessian(dm, basis, xyz))[:, 1]) * ref_rho
+ref_s = np.linalg.norm(evaluate_density_gradient(dm, basis, xyz), axis=1) / (2*(3*np.pi**2)**(1/3)*ref_rho**(4/3))
+printed_signed = reference.arrays['cube_0'].ravel() / 100
+printed_s = reference_rdg.arrays['cube_0'].ravel()
+unfiltered = printed_s < 99
+np.testing.assert_allclose(printed_signed, ref_signed, atol=5e-6, rtol=1e-4)
+np.testing.assert_allclose(printed_s[unfiltered], ref_s[unfiltered], atol=2e-4, rtol=1e-4)
+report['external_preparation']['nciplot_reference'] = {
+    'status': 'Passed', 'density_scale_removed': 100,
+    'signed_density_max_abs_error': float(np.max(np.abs(printed_signed-ref_signed))),
+    'rdg_max_abs_error_unfiltered': float(np.max(np.abs(printed_s[unfiltered]-ref_s[unfiltered]))),
+    'excluded_rdg_sentinel_points': int((~unfiltered).sum())}
 (OUT / 'source-inspection.json').write_text(json.dumps(report, indent=2), encoding='utf-8')

@@ -21,6 +21,7 @@ GBasis 来源固定在 `science-sources.lock.json`，当前 wheel 为 `0.1.0+qcb
 
 | 项目 | 状态 | 证据 |
 | --- | --- | --- |
+| 复杂案例集 | Passed | DVB阳离子/振动、色氨酸、水二聚体，4组可迁移工程、8张代表图、48帧MP4；[操作及复建](COMPLEX_EXAMPLES.md)，独立人工验收仍未完成 |
 | 解析/归一化/科学回归 | Passed | 20 项测试，`outputs/science-reference.json`；含路径逃逸/损坏摘要拒绝、并发不可变数据复制 |
 | MO 独立参考 | Passed | CH4 UHF/cc-pVDZ，27 点 Fortran 参考，Alpha/Beta MO 8/9 最大绝对误差约 4.85e-9 |
 | 密度/ESP 独立参考 | Passed | 同一 CH4 的 Gaussian Cubegen 18 点：密度最大误差 8.44e-7 electron/bohr^3，ESP 4.61e-6 hartree/e；只证明对应样本 |

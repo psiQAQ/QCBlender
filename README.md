@@ -8,6 +8,7 @@
 
 - [安装与操作指南](docs/USER_GUIDE.md)
 - [当前支持范围与验收结果](docs/VALIDATION.md)
+- [复杂案例、演示与复建](docs/COMPLEX_EXAMPLES.md)
 - [开发构建和复现命令](docs/DEVELOPMENT.md)
 
 - [首版范围、架构与开发路线](docs/QCBLENDER_V1_DESIGN.md)
