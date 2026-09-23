@@ -1,0 +1,62 @@
+[
+  {
+    "file": "dvb_un_sp.fchk",
+    "url": "https://raw.githubusercontent.com/cclib/cclib/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data/FChk/basicGaussian16/dvb_un_sp.fchk",
+    "license": "BSD-3-Clause",
+    "sha256": "32ed4471dc01913f1a6d5e7b5238745ea4489d98fd19a989fe56c254b7c05972"
+  },
+  {
+    "file": "dvb_ir.out",
+    "url": "https://raw.githubusercontent.com/cclib/cclib/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data/Gaussian/basicGaussian16/dvb_ir.out",
+    "license": "BSD-3-Clause",
+    "sha256": "bc1a21de15ada135d5188b11d44226389022d92488ddfa8163ba7d4d713e5061"
+  },
+  {
+    "file": "Trp_polar.fchk",
+    "url": "https://raw.githubusercontent.com/cclib/cclib/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data/FChk/basicGaussian16/Trp_polar.fchk",
+    "license": "BSD-3-Clause",
+    "sha256": "04a1cd071eb66ec4aeeffd0f6a198e2294ad9ef483d3ce3beaf94a839a81e88d"
+  },
+  {
+    "file": "Trp_polar.log",
+    "url": "https://raw.githubusercontent.com/cclib/cclib/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data/Gaussian/basicGaussian16/Trp_polar.log",
+    "license": "BSD-3-Clause",
+    "sha256": "42bf0641a49d6944847b0368ca35d3ff5367e31abd22f3821bb1d009ae3ca82b"
+  },
+  {
+    "file": "LICENSE",
+    "url": "https://raw.githubusercontent.com/cclib/cclib/f90be37ffa1ab4cfec97495bdd01d670ca329f17/LICENSE",
+    "license": "BSD-3-Clause",
+    "sha256": "a9ed52f8c54cfefc4c9a02681e074eb7082fb29137db0b7977f40ca6ebf667a4"
+  },
+  {
+    "file": "chemtools-h2o_dimer_pbe_sto3g-dens.cube",
+    "url": "https://raw.githubusercontent.com/theochem/chemtools/47c9fe255848b8dbc6f589beb738421f76401885/chemtools/data/h2o_dimer_pbe_sto3g-dens.cube",
+    "license": "GPL-3.0-or-later",
+    "sha256": "c033795323068422872bb65d221f72e30e83e3d3d4b18dc41fd20ee2d6a6aefc"
+  },
+  {
+    "file": "chemtools-h2o_dimer_pbe_sto3g-elf.cube",
+    "url": "https://raw.githubusercontent.com/theochem/chemtools/47c9fe255848b8dbc6f589beb738421f76401885/chemtools/data/h2o_dimer_pbe_sto3g-elf.cube",
+    "license": "GPL-3.0-or-later",
+    "sha256": "beae4dae9dfe77e539768bbf1fee4b7e6c598c681489402dcd251adb45a88a23"
+  },
+  {
+    "file": "chemtools-h2o_dimer_pbe_sto3g-grad.cube",
+    "url": "https://raw.githubusercontent.com/theochem/chemtools/47c9fe255848b8dbc6f589beb738421f76401885/chemtools/data/h2o_dimer_pbe_sto3g-grad.cube",
+    "license": "GPL-3.0-or-later",
+    "sha256": "33ff13185dc4d97e70788c344049b55422a403100c88836c238f802df26a577d"
+  },
+  {
+    "file": "chemtools-h2o_dimer_pbe_sto3g.fchk",
+    "url": "https://raw.githubusercontent.com/theochem/chemtools/47c9fe255848b8dbc6f589beb738421f76401885/chemtools/data/h2o_dimer_pbe_sto3g.fchk",
+    "license": "GPL-3.0-or-later",
+    "sha256": "d3801a7a8b13c1a5b106440e5eefab2e6e76b0f1e47181a33270406154efe03e"
+  },
+  {
+    "file": "chemtools-LICENSE",
+    "url": "https://raw.githubusercontent.com/theochem/chemtools/47c9fe255848b8dbc6f589beb738421f76401885/LICENSE",
+    "license": "GPL-3.0-or-later",
+    "sha256": "d62f065830aa3739cc031156b9690805c7b2e811b4a178c8b4acd8725d561c94"
+  }
+]
