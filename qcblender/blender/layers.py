@@ -1,11 +1,13 @@
 """Scene display layers use native objects, node inputs and Blender undo."""
+import json
+
 import bpy
 from bpy.props import EnumProperty, StringProperty
 
 
 def display_layers(scene):
     return sorted((obj for obj in scene.objects
-                   if obj.get('qc_view_kind') in ('atoms', 'field', 'slice', 'fog', 'dipole', 'spectrum')),
+                   if obj.get('qc_view_kind') in ('atoms', 'field', 'slice', 'fog', 'dipole', 'spectrum', 'scatter', 'nbo', 'analysis')),
                   key=lambda obj: (obj.get('qc_layer_order', 0), obj.name))
 
 
@@ -15,6 +17,69 @@ def activate(context, obj):
     obj.hide_set(False)
     obj.select_set(True)
     context.view_layer.objects.active = obj
+
+
+def hydrogen_keep_ids(text, numbers):
+    selected = set()
+    for item in text.replace(' ', '').split(','):
+        parts = item.split('-')
+        if not item or len(parts) > 2 or any(not part.isdecimal() for part in parts):
+            raise ValueError('Use hydrogen numbers such as 2,4-6')
+        first, last = int(parts[0]), int(parts[-1])
+        if first < 1 or last > len(numbers) or first > last:
+            raise ValueError('Hydrogen number is outside the molecule or the range is reversed')
+        for number in range(first, last + 1):
+            if numbers[number - 1] != 1:
+                raise ValueError(f'Atom {number} is not hydrogen')
+            selected.add(number)
+    return selected
+
+
+class QCBLENDER_OT_hydrogen_visibility(bpy.types.Operator):
+    bl_idname = 'qcblender.hydrogen_visibility'
+    bl_label = 'Hydrogen Visibility'
+    bl_options = {'REGISTER', 'UNDO'}
+
+    mode: EnumProperty(items=[('HIDE', 'Hide H', ''), ('KEEP', 'Keep selected H', ''),
+                              ('RESTORE', 'Show all', '')])
+    keep: StringProperty(name='Hydrogen atom numbers (1-based)', default='')
+
+    @classmethod
+    def poll(cls, context):
+        return context.object is not None and context.object.get('qc_view_kind') == 'atoms'
+
+    def invoke(self, context, event):
+        if self.mode == 'KEEP':
+            self.keep = context.object.get('qc_hydrogen_keep', '')
+            return context.window_manager.invoke_props_dialog(self)
+        return self.execute(context)
+
+    def draw(self, context):
+        self.layout.prop(self, 'keep')
+
+    def execute(self, context):
+        from ..data import load_dataset
+        from .views import ensure_atom_visibility
+
+        obj = context.object
+        try:
+            data = load_dataset(bpy.path.abspath(obj['qc_dataset']))
+            numbers = data.arrays['atomic_numbers'].tolist()
+            if len(obj.data.vertices) != len(numbers):
+                raise ValueError('Atom mesh no longer matches the source calculation')
+            keep = hydrogen_keep_ids(self.keep, numbers) if self.mode == 'KEEP' else set()
+            visible = [self.mode == 'RESTORE' or number != 1 or index in keep
+                       for index, number in enumerate(numbers, 1)]
+            attr = ensure_atom_visibility(obj)
+            attr.data.foreach_set('value', visible)
+            obj.data.update()
+            obj.update_tag()
+            obj['qc_hydrogen_visibility'] = self.mode
+            obj['qc_hydrogen_keep'] = ','.join(map(str, sorted(keep)))
+        except (ValueError, OSError, KeyError) as error:
+            self.report({'ERROR'}, str(error))
+            return {'CANCELLED'}
+        return {'FINISHED'}
 
 
 def copy_layer(source, collection):
@@ -81,6 +146,9 @@ class QCBLENDER_OT_layer_action(bpy.types.Operator):
         elif self.action == 'VISIBILITY':
             obj.hide_set(not obj.hide_get())
         elif self.action == 'DUPLICATE':
+            if obj.get('qc_irc'):
+                self.report({'ERROR'}, 'Duplicate the source FCHK manifest to create another IRC path')
+                return {'CANCELLED'}
             copied = copy_layer(obj, context.collection)
             layers.insert(layers.index(obj) + 1, copied)
             for index, layer in enumerate(layers):
@@ -159,6 +227,12 @@ class QCBLENDER_OT_new_current_view(bpy.types.Operator):
             if kind == 'atoms':
                 obj = atom_view(directory)
                 obj.parent = source.parent
+                if source.data.attributes.get('qc_atom_visible'):
+                    values = [point.value for point in source.data.attributes['qc_atom_visible'].data]
+                    obj.data.attributes['qc_atom_visible'].data.foreach_set('value', values)
+                    for key in ('qc_hydrogen_visibility', 'qc_hydrogen_keep'):
+                        if key in source:
+                            obj[key] = source[key]
             elif kind == 'fog':
                 obj = fog_view(source)
             elif kind == 'slice':
@@ -224,4 +298,9 @@ class QCBLENDER_PT_layers(bpy.types.Panel):
                                        ('UP', '', 'TRIA_UP'), ('DOWN', '', 'TRIA_DOWN')]:
                 operator = row.operator('qcblender.layer_action', text=text, icon=icon)
                 operator.target, operator.action = obj.name, action
+            if obj.get('qc_view_kind') == 'atoms':
+                row = layout.row(align=True)
+                for mode, label in [('HIDE', 'Hide H'), ('KEEP', 'Keep H...'), ('RESTORE', 'Show all')]:
+                    row.operator('qcblender.hydrogen_visibility', text=label).mode = mode
+                layout.label(text='Hydrogen: ' + obj.get('qc_hydrogen_visibility', 'RESTORE'))
         layout.label(text='Select a layer; edit its inputs below')

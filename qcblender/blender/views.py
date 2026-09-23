@@ -58,6 +58,8 @@ def atom_view(directory):
                          ('qc_atomic_number', data.arrays['atomic_numbers'])]:
         attr = mesh.attributes.new(name, 'INT', 'POINT')
         attr.data.foreach_set('value', values)
+    visible = mesh.attributes.new('qc_atom_visible', 'BOOLEAN', 'POINT')
+    visible.data.foreach_set('value', [True] * len(positions))
     positions_attr = mesh.attributes.new('qc_equilibrium_position', 'FLOAT_VECTOR', 'POINT')
     positions_attr.data.foreach_set('vector', positions.ravel())
     colors = {1: (0.85, 0.85, 0.85, 1), 6: (0.12, 0.16, 0.20, 1), 7: (0.12, 0.22, 0.8, 1),
@@ -114,9 +116,42 @@ def atom_view(directory):
     setup_properties(obj, data)
     tag_view(tree)
     obj['qc_view_kind'] = 'atoms'
+    ensure_atom_visibility(obj)
     bpy.context.view_layer.objects.active = obj
     obj.select_set(True)
     return obj
+
+
+def ensure_atom_visibility(obj):
+    """Add a per-view visibility gate while preserving the original atom selection."""
+    from .graph import view_modifier
+
+    mesh = obj.data
+    if mesh.attributes.get('qc_atom_visible') is None:
+        attr = mesh.attributes.new('qc_atom_visible', 'BOOLEAN', 'POINT')
+        attr.data.foreach_set('value', [True] * len(mesh.vertices))
+    tree = view_modifier(obj).node_group
+    if tree.get('qc_atom_visibility'):
+        return mesh.attributes['qc_atom_visible']
+    styles = [node for node in tree.nodes if node.type == 'GROUP' and node.node_tree
+              and node.node_tree.get('qc_asset_id') == 'qc.atom_style.v1']
+    if len(styles) != 1:
+        raise ValueError('Expected one QC atom style group in the selected view')
+    socket = styles[0].inputs['Selection']
+    previous = socket.links[0].from_socket if socket.links else None
+    attr = tree.nodes.new('GeometryNodeInputNamedAttribute')
+    attr.data_type = 'BOOLEAN'
+    attr.inputs['Name'].default_value = 'qc_atom_visible'
+    gate = tree.nodes.new('ShaderNodeMath')
+    gate.operation = 'MULTIPLY'
+    if previous:
+        tree.links.new(previous, gate.inputs[0])
+    else:
+        gate.inputs[0].default_value = float(socket.default_value)
+    tree.links.new(attr.outputs['Attribute'], gate.inputs[1])
+    tree.links.new(gate.outputs[0], socket)
+    tree['qc_atom_visibility'] = 1
+    return mesh.attributes['qc_atom_visible']
 
 
 def atom_selection(tree, inputs):
