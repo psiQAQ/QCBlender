@@ -1,6 +1,6 @@
 # v1 人工验收样本清单
 
-本清单固定当前 `0.0.1` 候选的本地输入。SHA-256 是原始文件字节摘要；验收前用 `Get-FileHash <路径> -Algorithm SHA256` 复核。样本不得随扩展 ZIP 分发。已找到的文件位于忽略目录 `outputs/`，来源锁见 [`tests/data/complex-example-sources.json`](../../tests/data/complex-example-sources.json) 和 [`tests/data/local-log-downloads.json`](../../tests/data/local-log-downloads.json)。
+本清单固定当前 `0.0.1` 候选的本地输入。SHA-256 是原始文件字节摘要；验收前用 `Get-FileHash <路径> -Algorithm SHA256` 复核。样本不得随扩展 ZIP 分发。已找到的文件位于忽略目录 `outputs/`；S01–S08 的已有来源锁见 [`tests/data/complex-example-sources.json`](../../tests/data/complex-example-sources.json) 和 [`tests/data/local-log-downloads.json`](../../tests/data/local-log-downloads.json)。
 
 | ID | 本地路径（相对仓库根） | 固定公开来源、版本和许可 | SHA-256 | 计算条件 / 用途 |
 | --- | --- | --- | --- | --- |
@@ -12,6 +12,9 @@
 | S06 | `outputs/complex-examples/sources/chemtools-h2o_dimer_pbe_sto3g-dens.cube` | [ChemTools 47c9fe2](https://github.com/theochem/chemtools/blob/47c9fe255848b8dbc6f589beb738421f76401885/chemtools/data/h2o_dimer_pbe_sto3g-dens.cube)，仓库 GPL-3.0-or-later | `c033795323068422872bb65d221f72e30e83e3d3d4b18dc41fd20ee2d6a6aefc` | 与 S05 同构型；NCIPLOT 输出，数值为 **100 × sign(λ₂)ρ**，不能直接标成普通电子密度 |
 | S07 | `outputs/complex-examples/sources/chemtools-h2o_dimer_pbe_sto3g-grad.cube` | [ChemTools 47c9fe2](https://github.com/theochem/chemtools/blob/47c9fe255848b8dbc6f589beb738421f76401885/chemtools/data/h2o_dimer_pbe_sto3g-grad.cube)，仓库 GPL-3.0-or-later | `33ff13185dc4d97e70788c344049b55422a403100c88836c238f802df26a577d` | 同构型的 NCIPLOT RDG 场，部分点为过滤哨兵；不能当作 IGMH/IRI |
 | S08 | `outputs/log-examples/water_neutral_nbo_opt_freq.out` | [cclib-data a16cc80](https://github.com/cclib/cclib-data/blob/a16cc80ea29e8baec60abd0df346ce6862f52531/Gaussian/Gaussian16/water_neutral_nbo_opt_freq.out)；该数据仓库未找到可确认的独立许可，**发布许可待核** | `9493d24655fb261a2c945d292ad517567f3024996594a25f678199df74017519` | Gaussian 16 A.03、Gaussian NBO 3.1；HF/STO-3G opt/freq/pop=nbo；选 job 2、NBO 块 1，7 个 NBO 与 2 个 E(2) |
+| S09 | `outputs/v1-acceptance/sources/igmh-phenol/phenol_di-dg_inter.cub` | [xyzrender 69a219f](https://github.com/aligfellow/xyzrender/blob/69a219f6474eae20886726c2270806e27de98e77/examples/structures/phenol_di-dg_inter.cub)，仓库 MIT；该数据更早的生成来源未说明 | `c2e200ac5783698d260056a24a193daaa06f46f5a3e156cd5250fd224ce5d0de` | 苯酚二聚体、26 原子；Multiwfn 生成的 IGMH `δg_inter`；92×75×77 网格，原值范围 `0–0.0357952`；理论级别、片段和 Multiwfn 版本待核 |
+| S10 | `outputs/v1-acceptance/sources/igmh-phenol/phenol_di-dg_intra.cub` | [xyzrender 69a219f](https://github.com/aligfellow/xyzrender/blob/69a219f6474eae20886726c2270806e27de98e77/examples/structures/phenol_di-dg_intra.cub)，仓库 MIT；更早来源待核 | `160c93255985ecd8c3790e0d8988fa869c912f7f1c3a8609a0b3c8da38a5622e` | 同构型/同网格的 IGMH `δg_intra`，原值范围约 `1.12507e-10–0.733392`；计算条件待核 |
+| S11 | `outputs/v1-acceptance/sources/igmh-phenol/phenol_di-sl2r.cub` | [xyzrender 69a219f](https://github.com/aligfellow/xyzrender/blob/69a219f6474eae20886726c2270806e27de98e77/examples/structures/phenol_di-sl2r.cub)，仓库 MIT；更早来源待核 | `ed2fc856d75eee59268304cadd05cbba0827aaf2abe52eff7f2c88837d886911` | 同构型/同网格 `sign(λ₂)ρ` 着色场，原值范围 `-146.966–0.282149`；色域应取局部范围而非全局极值，单位约定待核 |
 
 别名检查只改变扩展名，不改变内容：`outputs/v1-acceptance/aliases/water_dimer.fch` 是 S05 的逐字节副本，摘要同 S05；`outputs/v1-acceptance/aliases/water_dimer_density.cub` 是 S06 的逐字节副本，摘要同 S06；`outputs/v1-acceptance/aliases/water_neutral_nbo_opt_freq.log` 是 S08 的逐字节副本，摘要同 S08。缺失时在仓库根目录 PowerShell 执行：
 
@@ -22,13 +25,26 @@ Copy-Item outputs/complex-examples/sources/chemtools-h2o_dimer_pbe_sto3g-dens.cu
 Copy-Item outputs/log-examples/water_neutral_nbo_opt_freq.out outputs/v1-acceptance/aliases/water_neutral_nbo_opt_freq.log
 ```
 
+S09–S11 如在本机缺失，可从固定提交重新取得；在仓库根目录 PowerShell 执行后，逐个核对上表摘要：
+
+```powershell
+$igmhDir = 'outputs/v1-acceptance/sources/igmh-phenol'
+$igmhRevision = '69a219f6474eae20886726c2270806e27de98e77'
+New-Item -ItemType Directory -Force $igmhDir | Out-Null
+foreach ($name in @('phenol_di-dg_inter.cub', 'phenol_di-dg_intra.cub', 'phenol_di-sl2r.cub')) {
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/aligfellow/xyzrender/$igmhRevision/examples/structures/$name" -OutFile "$igmhDir/$name"
+    Get-FileHash "$igmhDir/$name" -Algorithm SHA256
+}
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/aligfellow/xyzrender/$igmhRevision/LICENSE" -OutFile "$igmhDir/LICENSE"
+```
+
 ## 尚缺的真实分析结果
 
-下列项目**没有**可供本轮科学验收的真实结果集。检索过 MolStudio 子模块、IGMH_Toolbox 源码与公开资料；方法说明、文件名示例、构造格式样本及本仓库生成的 RDG 均不能替代该分析的原始输出。取得新样本后，在此表增补直接 URL、不可变版本、许可、每个文件的 SHA-256、程序版本、方法/基组、构型、片段或表面定义以及输出单位，再按 [SOP](SOP.md) 操作。没有这些材料时维持 `Not Run`。
+下列项目**没有完整的**可供本轮科学验收的真实结果集。检索过 MolStudio 子模块、IGMH_Toolbox 源码与公开资料；方法说明、文件名示例、构造格式样本及本仓库生成的 RDG 均不能替代该分析的原始输出。S09–S11 是真实 Multiwfn Cube，已用当前 Cube 解析器确认 26 原子、相同原子顺序/坐标与 92×75×77 网格；[上游示例文档](https://xyzrender.readthedocs.io/en/latest/examples/nci_surf.html)将其用于 IGMH 画面，但没有给出原始波函数、片段划分、版本和单位证据。它们可做真实场的导入预检，**不能单独完成科学签署**。取得新样本后，在此表增补直接 URL、不可变版本、许可、每个文件的 SHA-256、程序版本、方法/基组、构型、片段或表面定义以及输出单位，再按 [SOP](SOP.md) 操作。没有这些材料时维持 `Not Run`。
 
 | 功能 | 需要成套取得的真实输出 | 当前状态 |
 | --- | --- | --- |
-| IGMH 与 IRI | 各一套几何场 Cube + 同网格 `sign(λ₂)ρ` Cube；记录片段、程序版本、网格和数值单位 | Not Run |
+| IGMH 与 IRI | IGMH 有 S09–S11 真场，但缺原始波函数/理论级别、片段、程序版本及单位证据；IRI 仍缺几何场 + 同网格着色 Cube | Not Run |
 | ESP 表面 | 同一参考构型的 `surfanalysis.pdb` 类极值文件 + 面积分布文本；记录等密度面定义和两种单位 | Not Run |
 | AIM | 同一参考构型的 `CPs.pdb` + `paths.pdb`，如有则加 `CPprop.txt` | Not Run |
 | IRC | 同一路径每步完整 FCHK + `step,fchk` 清单；逐步能量必须来自对应 FCHK | Not Run |

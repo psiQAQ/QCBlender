@@ -15,3 +15,5 @@ SOP 覆盖 `.fchk/.fch`、`.log/.out`、`.cube/.cub` 和所有专用输入角色
 ## Comments
 
 2026-09-23：已建立 `docs/v1-acceptance/SOP.md`、`SOURCES.md`，固定当前 ZIP `adf7760c647be303cd69f43b4b928d42411031d1bdfe3f25466bb15aded245fc`。S01–S08 与 `.fch/.cub` 逐字节别名已核对。NBO 来自 cclib-data，但独立许可未确认；不纳入发布包。IGMH/IRI、ESP 表面、AIM、IRC/Mayer、ETS-NOCV、NOCV pair 缺成套真实输出，科学验收 `Not Run`。本任务待补齐来源后完成。
+
+2026-09-23：补充 xyzrender 固定提交 `69a219f` 的 S09–S11 真实 Multiwfn IGMH Cube，三文件 SHA、26 原子和 92×75×77 的共同原子/网格已核对。其原始波函数、片段、Multiwfn 版本和单位未随示例给出，IRI 双场仍缺；C07 保持 `Not Run`。
