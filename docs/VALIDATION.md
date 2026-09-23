@@ -2,6 +2,8 @@
 
 日期：2026-09-23。平台：Windows 11 x64，Blender 5.1.1，CPython 3.13.9，NumPy 2.3.4，OpenVDB 13。当前是本地开发验收候选，尚未对外发布；独立用户验收未签署。
 
+独立人工复做使用 [v1 验收 SOP](v1-acceptance/SOP.md)；真实输入、许可与缺样本状态见 [样本清单](v1-acceptance/SOURCES.md)。该清单的所有人工结果初始为 `Not Run`。
+
 ## 输入和科学边界
 
 | 能力 | 当前实现与证据边界 |
