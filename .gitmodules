@@ -2,3 +2,6 @@
 	path = submodules/MolecularNodes
 	url = https://github.com/BradyAJohnston/MolecularNodes.git
 	shallow = true
+[submodule "submodules/GXNU-MolStudio"]
+	path = submodules/GXNU-MolStudio
+	url = https://cnb.cool/chem311/GXNU-MolStudio
