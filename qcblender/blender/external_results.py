@@ -1,0 +1,287 @@
+"""Native Blender views for imported ESP, AIM, and ETS-NOCV records."""
+import json
+from pathlib import Path
+import uuid
+
+import bpy
+from bpy.props import EnumProperty, StringProperty
+
+
+def store_analysis(data):
+    from ..data import save_dataset
+    location = bpy.utils.user_resource('DATAFILES', path='qcblender/analyses', create=True)
+    if not location:
+        raise OSError('Blender user data directory is unavailable')
+    root = Path(location)
+    directory = root / uuid.uuid4().hex
+    save_dataset(data, directory)
+    return directory
+
+
+def point_view(directory, data, parent, points, name, color, role):
+    from .views import bind, material
+    mesh = bpy.data.meshes.new(name)
+    mesh.from_pydata([point['position_angstrom'] for point in points], [], [])
+    mesh.update()
+    obj = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(obj)
+    obj.parent = parent
+    bind(obj, directory, data)
+    obj['qc_view_kind'] = 'analysis'
+    obj['qc_analysis_role'] = role
+    obj['qc_analysis_index'] = 1
+    tree = bpy.data.node_groups.new(name + ' points', 'GeometryNodeTree')
+    tree.is_modifier = True
+    tree.interface.new_socket(name='Geometry', in_out='INPUT', socket_type='NodeSocketGeometry')
+    tree.interface.new_socket(name='Geometry', in_out='OUTPUT', socket_type='NodeSocketGeometry')
+    nodes, links = tree.nodes, tree.links
+    inputs, output = nodes.new('NodeGroupInput'), nodes.new('NodeGroupOutput')
+    dots = nodes.new('GeometryNodeMeshToPoints')
+    dots.mode = 'VERTICES'
+    dots.inputs['Radius'].default_value = .065
+    assign = nodes.new('GeometryNodeSetMaterial')
+    assign.inputs['Material'].default_value = material(name, color)
+    links.new(inputs.outputs['Geometry'], dots.inputs['Mesh'])
+    links.new(dots.outputs['Points'], assign.inputs['Geometry'])
+    links.new(assign.outputs['Geometry'], output.inputs['Geometry'])
+    obj.modifiers.new('QC Point Markers', 'NODES').node_group = tree
+    return obj
+
+
+def area_view(directory, data, parent):
+    from .views import bind, material
+    bins = data.metadata['analysis']['area_bins']
+    centers = [row['center'] for row in bins]
+    areas = [row['area'] for row in bins]
+    low, width, height = min(centers), max(centers) - min(centers), max(areas)
+    width = width or 1
+    height = height or 1
+    vertices, faces = [], []
+    half_bar_width = min(.4, 1.6 / len(bins))
+    for index, (center, area) in enumerate(zip(centers, areas)):
+        x = (center - low) / width * 4
+        y = area / height * 3
+        start = len(vertices)
+        vertices.extend([(x-half_bar_width, 0, 0), (x+half_bar_width, 0, 0),
+                         (x+half_bar_width, 0, y), (x-half_bar_width, 0, y)])
+        faces.append((start, start+1, start+2, start+3))
+    mesh = bpy.data.meshes.new('QC ESP area distribution')
+    mesh.from_pydata(vertices, [], faces)
+    mesh.update()
+    mesh.materials.append(material('QC ESP area bars', (.16, .47, .78, 1)))
+    obj = bpy.data.objects.new('QC ESP area distribution', mesh)
+    bpy.context.collection.objects.link(obj)
+    obj.parent = parent
+    obj.location = (0, -5, 0)
+    bind(obj, directory, data)
+    obj['qc_view_kind'] = 'analysis'
+    obj['qc_analysis_role'] = 'esp_area'
+    obj['qc_analysis_index'] = 1
+    obj['qc_chart'] = json.dumps({'x_min': low, 'x_max': max(centers), 'y_max': max(areas),
+                                  'x_unit': data.metadata['analysis']['distribution_center_unit'],
+                                  'y_unit': data.metadata['analysis']['area_unit']})
+    return obj
+
+
+def path_view(directory, data, parent):
+    from .views import bind, material
+    curve = bpy.data.curves.new('QC AIM bond paths', 'CURVE')
+    curve.dimensions = '3D'
+    curve.bevel_depth = .012
+    curve.bevel_resolution = 2
+    for path in data.metadata['analysis']['paths']:
+        spline = curve.splines.new('POLY')
+        spline.points.add(len(path['points_angstrom']) - 1)
+        for point, coordinates in zip(spline.points, path['points_angstrom']):
+            point.co = (*coordinates, 1)
+    curve.materials.append(material('QC AIM paths', (.13, .71, .42, 1)))
+    obj = bpy.data.objects.new('QC AIM bond paths', curve)
+    bpy.context.collection.objects.link(obj)
+    obj.parent = parent
+    bind(obj, directory, data)
+    obj['qc_view_kind'] = 'analysis'
+    obj['qc_analysis_role'] = 'aim_paths'
+    obj['qc_analysis_index'] = 1
+    return obj
+
+
+def table_view(directory, data, parent, name, role):
+    from .views import bind
+    mesh = bpy.data.meshes.new(name + ' records')
+    obj = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(obj)
+    obj.parent = parent
+    bind(obj, directory, data)
+    obj['qc_view_kind'] = 'analysis'
+    obj['qc_analysis_role'] = role
+    obj['qc_analysis_index'] = 1
+    return obj
+
+
+class QCBLENDER_OT_import_esp(bpy.types.Operator):
+    bl_idname = 'qcblender.import_esp_analysis'
+    bl_label = 'Import ESP Surface Results'
+    bl_options = {'REGISTER', 'UNDO'}
+
+    extrema_path: StringProperty(name='Extrema PDB', subtype='FILE_PATH')
+    area_path: StringProperty(name='Area distribution text', subtype='FILE_PATH')
+    surface_definition: StringProperty(name='Surface definition', default='electron density 0.001 e/bohr^3')
+    extrema_unit: StringProperty(name='Extrema value unit', default='kcal/mol')
+    center_unit: StringProperty(name='Distribution center unit', default='kcal/mol')
+    area_unit: StringProperty(name='Area unit', default='angstrom^2')
+
+    @classmethod
+    def poll(cls, context):
+        if context.object is None or 'qc_field' not in context.object:
+            return False
+        return json.loads(context.object['qc_field'])['quantity'] == 'electrostatic_potential'
+
+    def invoke(self, context, event):
+        return context.window_manager.invoke_props_dialog(self, width=560)
+
+    def draw(self, context):
+        for name in ('extrema_path', 'area_path', 'surface_definition', 'extrema_unit', 'center_unit', 'area_unit'):
+            self.layout.prop(self, name)
+
+    def execute(self, context):
+        from ..analysis_data import import_esp
+        from ..data import load_dataset
+        try:
+            parent = context.object
+            reference = load_dataset(bpy.path.abspath(parent['qc_dataset']))
+            data = import_esp(reference, bpy.path.abspath(self.extrema_path), bpy.path.abspath(self.area_path),
+                              self.surface_definition, self.extrema_unit, self.center_unit, self.area_unit)
+            data.metadata['analysis']['surface_field'] = json.loads(parent['qc_field'])
+            directory = store_analysis(data)
+            points = data.metadata['analysis']['extrema']
+            for kind, color in [('maximum', (.95, .6, .12, 1)), ('minimum', (.12, .65, .94, 1))]:
+                selected = [point for point in points if point['kind'] == kind]
+                if selected:
+                    point_view(directory, data, parent, selected, 'QC ESP ' + kind, color, 'esp_' + kind)
+            area_view(directory, data, parent)
+        except (ValueError, OSError, KeyError, MemoryError) as error:
+            self.report({'ERROR'}, str(error))
+            return {'CANCELLED'}
+        return {'FINISHED'}
+
+
+class QCBLENDER_OT_import_aim(bpy.types.Operator):
+    bl_idname = 'qcblender.import_aim_analysis'
+    bl_label = 'Import AIM Topology'
+    bl_options = {'REGISTER', 'UNDO'}
+
+    cps_path: StringProperty(name='CPs PDB', subtype='FILE_PATH')
+    paths_path: StringProperty(name='Paths PDB', subtype='FILE_PATH')
+    properties_path: StringProperty(name='CP properties text (optional)', subtype='FILE_PATH')
+
+    @classmethod
+    def poll(cls, context):
+        return context.object is not None and 'qc_dataset' in context.object
+
+    def invoke(self, context, event):
+        return context.window_manager.invoke_props_dialog(self, width=560)
+
+    def draw(self, context):
+        for name in ('cps_path', 'paths_path', 'properties_path'):
+            self.layout.prop(self, name)
+
+    def execute(self, context):
+        from ..analysis_data import import_aim
+        from ..data import load_dataset
+        try:
+            parent = context.object
+            reference = load_dataset(bpy.path.abspath(parent['qc_dataset']))
+            props = bpy.path.abspath(self.properties_path) if self.properties_path.strip() else None
+            data = import_aim(reference, bpy.path.abspath(self.cps_path), bpy.path.abspath(self.paths_path), props)
+            directory = store_analysis(data)
+            colors = {'C': (.9, .15, .9, 1), 'N': (.12, .8, .22, 1),
+                      'O': (.9, .8, .1, 1), 'F': (.12, .8, .85, 1)}
+            for kind, color in colors.items():
+                selected = [point for point in data.metadata['analysis']['critical_points'] if point['type'] == kind]
+                if selected:
+                    point_view(directory, data, parent, selected, 'QC AIM CP ' + kind, color, 'aim_' + kind)
+            path_view(directory, data, parent)
+        except (ValueError, OSError, KeyError, MemoryError) as error:
+            self.report({'ERROR'}, str(error))
+            return {'CANCELLED'}
+        return {'FINISHED'}
+
+
+class QCBLENDER_OT_import_ets(bpy.types.Operator):
+    bl_idname = 'qcblender.import_ets_nocv'
+    bl_label = 'Import ETS-NOCV Pair Table'
+    bl_options = {'REGISTER', 'UNDO'}
+
+    output_path: StringProperty(name='ETS-NOCV output text', subtype='FILE_PATH')
+    energy_unit: EnumProperty(name='Pair energy unit', items=[('kcal/mol', 'kcal/mol', ''), ('hartree', 'hartree', '')])
+
+    @classmethod
+    def poll(cls, context):
+        return context.object is not None and 'qc_dataset' in context.object
+
+    def invoke(self, context, event):
+        return context.window_manager.invoke_props_dialog(self)
+
+    def draw(self, context):
+        self.layout.prop(self, 'output_path')
+        self.layout.prop(self, 'energy_unit')
+
+    def execute(self, context):
+        from ..analysis_data import import_ets
+        from ..data import load_dataset
+        try:
+            parent = context.object
+            reference = load_dataset(bpy.path.abspath(parent['qc_dataset']))
+            data = import_ets(reference, bpy.path.abspath(self.output_path), self.energy_unit)
+            directory = store_analysis(data)
+            table_view(directory, data, parent, 'QC ETS-NOCV pairs', 'ets_nocv')
+        except (ValueError, OSError, KeyError, MemoryError) as error:
+            self.report({'ERROR'}, str(error))
+            return {'CANCELLED'}
+        return {'FINISHED'}
+
+
+class QCBLENDER_PT_external_results(bpy.types.Panel):
+    bl_label = 'External Analysis Records'
+    bl_idname = 'QCBLENDER_PT_external_results'
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_category = 'QCBlender'
+
+    @classmethod
+    def poll(cls, context):
+        return (context.object is not None and context.object.get('qc_analysis_role') in
+                ('esp_maximum', 'esp_minimum', 'esp_area', 'aim_C', 'aim_N', 'aim_O', 'aim_F',
+                 'aim_paths', 'ets_nocv'))
+
+    def draw(self, context):
+        from ..data import load_dataset
+        obj = context.object
+        analysis = load_dataset(bpy.path.abspath(obj['qc_dataset'])).metadata['analysis']
+        role = obj['qc_analysis_role']
+        layout = self.layout
+        layout.label(text=analysis['kind'] + ': ' + role)
+        layout.prop(obj, '["qc_analysis_index"]', text='Record (1-based)')
+        index = int(obj['qc_analysis_index']) - 1
+        if role.startswith('esp_') and role != 'esp_area':
+            records = [row for row in analysis['extrema'] if row['kind'] == role[4:]]
+            unit = analysis['extrema_unit']
+        elif role == 'esp_area':
+            records, unit = analysis['area_bins'], analysis['area_unit']
+            layout.label(text='Surface: ' + analysis['surface_definition'])
+            layout.label(text=f"Total area: {analysis['area_sum']:.6g} {unit}")
+        elif role.startswith('aim_') and role != 'aim_paths':
+            records = [row for row in analysis['critical_points'] if row['type'] == role[4:]]
+            unit = 'angstrom'
+        elif role == 'aim_paths':
+            records, unit = analysis['paths'], 'angstrom'
+        else:
+            records, unit = analysis['pairs'], analysis['energy_unit']
+        layout.label(text=f'{len(records)} records | {unit}')
+        if 0 <= index < len(records):
+            for key, value in records[index].items():
+                layout.label(text=f'{key}: {value}'[:110])
+            if role.startswith('aim_') and role != 'aim_paths':
+                properties = analysis['properties'].get(str(records[index]['serial']), {})
+                for key, value in properties.items():
+                    layout.label(text=f'{key}: {value}'[:110])

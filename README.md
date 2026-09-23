@@ -7,6 +7,8 @@
 本地安装包：`outputs/dist/qcblender-0.0.1.zip`。在 Blender 的 Preferences → Get Extensions → 菜单 → Install from Disk 选择该 ZIP 并启用，进入 3D Viewport 的 QCBlender 侧栏。用户不需要安装 Python、pip 或 Gaussian；从二进制 CHK 导出 FCHK 时才需要自己已有的 Gaussian `formchk`。
 
 - [安装与操作指南](docs/USER_GUIDE.md)
+- [外部分析结果导入（开发候选）](docs/EXTERNAL_ANALYSIS_IMPORT.md)
+- [GXNU MolStudio 源码对照与功能取舍](docs/research/gxnu-molstudio-comparison.md)
 - [当前支持范围与验收结果](docs/VALIDATION.md)
 - [复杂案例、演示与复建](docs/COMPLEX_EXAMPLES.md)
 - [开发构建和复现命令](docs/DEVELOPMENT.md)
@@ -21,3 +23,5 @@
 - [体数据节点可行性检查](tools/probe_volume_nodes.py)
 
 `submodules/MolecularNodes` 是固定版本的参考源码。该子模块已采用深度 1 的浅克隆；其完整依赖与运行环境不属于 QCBlender 当前运行环境。
+
+`submodules/GXNU-MolStudio` 固定在 `6f3e859`，仅作为源码对照；运行时不调用或打包其外部分析与渲染程序。

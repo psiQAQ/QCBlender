@@ -7,7 +7,7 @@
 1. 在 Blender Preferences → Get Extensions 的菜单中选择 **Install from Disk**，安装 `outputs/dist/qcblender-0.0.1.zip` 并启用。
 2. 在 Add-ons 中展开 QCBlender，可用 **Check Scientific Runtime** 检查随包组件。
 3. 在 3D Viewport 按 N 打开侧栏，选择 **QCBlender → Import**。导入 `.fchk/.fch`、`.cube/.cub` 或 Gaussian `.log/.out`。
-4. Log 的 **Gaussian Log job number** 从 1 开始；优化后频率计算通常属于另一个 Link1 job，应选择包含频率的 job。当前不播放优化轨迹。
+4. Log 的 **Gaussian Log job number** 从 1 开始；优化后频率计算通常属于另一个 Link1 job，应选择包含频率的 job。Log 不自动展开优化轨迹；外部 IRC FCHK 序列的开发候选入口见[导入说明](EXTERNAL_ANALYSIS_IMPORT.md)。
 
 坐标统一为 Å，1 Blender 单位表示 1 Å。原子之间的连线由元素半径和距离推断，不代表计算所得键级。原始电荷、坐标、轨道和场保存在科学数据中；对象移动和节点样式不会修改它们。
 

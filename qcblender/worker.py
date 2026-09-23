@@ -47,9 +47,60 @@ def main():
             diagnostics = importlib.import_module(args.module + '.diagnostics')
             report = diagnostics.check_runtime()
             report['status'] = 'succeeded' if report['ok'] else 'failed'
-        elif request['action'] in ('import', 'evaluate', 'rebuild_cache', 'declare_field'):
+        elif request['action'] in ('import', 'import_pair', 'import_nbo', 'import_nocv', 'evaluate', 'rebuild_cache', 'declare_field'):
             storage = importlib.import_module(args.module + '.data')
-            if request['action'] == 'import':
+            if request['action'] == 'import_nocv':
+                source = Path(request['source'])
+                if source.stat().st_size > 512 * 1024**2:
+                    raise MemoryError('Source exceeds 512 MiB import limit')
+                snapshot = directory / 'input' / source.name
+                snapshot.parent.mkdir()
+                shutil.copy2(source, snapshot)
+                table_dir = Path(request['table_dataset'])
+                digest = hashlib.sha256((table_dir / 'manifest.json').read_bytes()).hexdigest()
+                if digest != request['table_sha256']:
+                    raise ValueError('ETS-NOCV table changed during import')
+                nocv = importlib.import_module(args.module + '.nocv')
+                data = nocv.import_nocv(snapshot, storage.load_dataset(table_dir),
+                                        request['pair_number'], request['spin'], request['unit'])
+            elif request['action'] == 'import_nbo':
+                source = Path(request['source'])
+                if source.stat().st_size > 512 * 1024**2:
+                    raise MemoryError('Source exceeds 512 MiB import limit')
+                snapshot = directory / 'input' / source.name
+                snapshot.parent.mkdir()
+                shutil.copy2(source, snapshot)
+                reference_dir = Path(request['reference_dataset'])
+                digest = hashlib.sha256((reference_dir / 'manifest.json').read_bytes()).hexdigest()
+                if digest != request['reference_sha256']:
+                    raise ValueError('Reference calculation changed during import')
+                nbo = importlib.import_module(args.module + '.nbo')
+                data = nbo.associated_nbo(snapshot, request['job_index'], request['block_index'], reference_dir)
+            elif request['action'] == 'import_pair':
+                external = importlib.import_module(args.module + '.external_fields')
+                paths = [Path(request[key]) for key in ('geometry_source', 'color_source')]
+                if any(path.stat().st_size > 512 * 1024**2 for path in paths):
+                    raise MemoryError('Source exceeds 512 MiB import limit')
+                snapshot = directory / 'input'
+                snapshot.mkdir()
+                copied = []
+                for index, path in enumerate(paths):
+                    target = snapshot / f'{index}-{path.name}'
+                    shutil.copy2(path, target)
+                    copied.append(target)
+                data = external.pair_cubes(*copied, request['method'],
+                                           request['geometry_unit'], request['color_unit'])
+                data.metadata['source']['filename'] = paths[0].name
+                data.metadata['analysis']['geometry_source']['filename'] = paths[0].name
+                data.metadata['analysis']['color_source']['filename'] = paths[1].name
+                reference_dir = Path(request['reference_dataset'])
+                reference_digest = hashlib.sha256((reference_dir / 'manifest.json').read_bytes()).hexdigest()
+                if reference_digest != request['reference_sha256']:
+                    raise ValueError('Reference calculation changed during import')
+                association = importlib.import_module(args.module + '.association')
+                data.metadata['analysis']['reference'] = association.compare_sources(
+                    storage.load_dataset(reference_dir), data)
+            elif request['action'] == 'import':
                 readers = importlib.import_module(args.module + '.readers')
                 source = Path(request['source'])
                 if source.stat().st_size > 512 * 1024**2:

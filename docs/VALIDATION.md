@@ -13,7 +13,7 @@
 | 基组 | SP、球谐/笛卡尔 d/f 和实际 nMO<nAO 回归；g 的 Python 基组不变量另行检查。h 及以上、ECP、幽灵中心、广义/复轨道显式拒绝 |
 | 理论层次 | 已确认 SCF 轨道和密度一致才求值。方法白名单见 `evaluate.prepare`；白名单是入口边界，不代表每个泛函/版本组合都有独立参考 |
 | 能量 | HF/DFT、MP2、CCSD(T)、DSDPBEP86、明确标记选态的 TD，保留参考/目标/校正/热力学和源位置；多步或冲突不自动取最后值 |
-| 后续范围 | B2PLYP 目标规则仍为候选；CASSCF、复合方法等不宣称完整解析。相关方法密度、WFN/WFX、轨迹/IRC、ORCA、周期系统后续交付 |
+| 后续范围 | B2PLYP 目标规则仍为候选；CASSCF、复合方法等不宣称完整解析。相关方法密度、WFN/WFX、ORCA、周期系统后续交付；外部 IRC FCHK 路径导入尚待真实结果验收 |
 
 GBasis 来源固定在 `science-sources.lock.json`，当前 wheel 为 `0.1.0+qcblender.071969c.pure1`，只打包 Python 数值路径。SciPy 等随包 wheels 固定 SHA-256，NumPy/OpenVDB 使用 Blender 自带版本；运行时不调用外部 Python/pip。
 
@@ -46,6 +46,20 @@ GBasis 来源固定在 `science-sources.lock.json`，当前 wheel 为 `0.1.0+qcb
 | 对外发布 | Not Run | 其他平台、任意第三方扩展组合、所有科学方法不在本轮验收范围；许可材料尚待发布复核 |
 
 复现命令见 [DEVELOPMENT.md](DEVELOPMENT.md)。`tools/qualify_package.py` 核对 ZIP 中 Python 与工作区源码一致、wheel 摘要、排除原生 GBasis，并汇总报告及精确 ZIP 摘要到 `outputs/qualification.json`。它核对证据，不自动运行 Blender 检查；修改代码后必须重建并执行相关检查。
+
+## 外部分析导入的本轮检查
+
+| 功能片 | 当前状态 | 已有证据与缺口 |
+| --- | --- | --- |
+| 显示快捷控制 | Passed（技术） | Blender 5.1.1 实际节点显隐、无氢、非法编号、独立复制、源 manifest 不变、保存重开及 GUI 撤销/重做；`tools/verify_atom_visibility.py`、`tools/verify_visibility_gui.py` |
+| IGMH / IRI | Not Run（科学样本） | 成对 Cube 解析、错原子/网格/单位、散点/着色面、离线 worker 与冷重开已检查；未取得真实 IGMH 和 IRI 配对结果 |
+| ESP 极值/面积 | Not Run（科学样本） | PDB/面积格式、原生点和面积图、Blender 导入、冷重开与 GUI 撤销/重做仅用构造样本检查；未核对真实表面结果 |
+| NBO / E(2) | Passed（所测样本） | 真实 Gaussian 16 水分子 Log 的三个 NBO 块、7 条轨道与 2 条 E(2)、多构型拒绝、单构型关联、离线 worker、冷重开及 GUI 导入撤销/重做；仍需独立用户复做 |
+| AIM | Not Run（科学样本） | CP、路径、属性格式与 Blender 导入、冷重开、GUI 撤销/重做仅用构造样本检查 |
+| IRC FCHK 路径 | Not Run（科学样本） | 显式步序、缺步拒绝、构型/能量切换及冷重开用派生 FCHK 检查；未核对真实 IRC |
+| IRC Mayer 键级 | Not Run（科学样本） | 按步/原子对导入、曲线和冷重开用构造文本检查；未核对真实 Mayer 输出 |
+| ETS-NOCV 表 | Not Run（科学样本） | pair/自旋/单位解析和 Blender 导入、冷重开、GUI 撤销/重做用构造文本检查；未核对真实闭壳层/开壳层输出 |
+| NOCV 场 | Not Run（科学样本） | pair/自旋绑定、带符号 Cube 和冷重开用其他实际数值 Cube 检查；未核对真实 NOCV 场 |
 
 ## 性能观测
 
