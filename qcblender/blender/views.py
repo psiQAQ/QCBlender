@@ -19,11 +19,21 @@ def socket(tree, name, kind, direction='INPUT', default=None, minimum=None):
     return result
 
 
+def node_by_type(nodes, kind):
+    return next((node for node in nodes if node.bl_idname == kind), None)
+
+
 def material(name, color, attribute=None):
     mat = bpy.data.materials.new(name)
     mat.diffuse_color = color
     mat.use_nodes = True
-    shader = mat.node_tree.nodes.get('Principled BSDF')
+    shader = node_by_type(mat.node_tree.nodes, 'ShaderNodeBsdfPrincipled')
+    if shader is None:
+        shader = mat.node_tree.nodes.new('ShaderNodeBsdfPrincipled')
+        output = node_by_type(mat.node_tree.nodes, 'ShaderNodeOutputMaterial')
+        if output is None:
+            output = mat.node_tree.nodes.new('ShaderNodeOutputMaterial')
+        mat.node_tree.links.new(shader.outputs['BSDF'], output.inputs['Surface'])
     shader.inputs['Base Color'].default_value = color
     shader.inputs['Alpha'].default_value = color[3]
     shader.inputs['Roughness'].default_value = 0.35
@@ -242,7 +252,8 @@ def field_view(directory, parent=None, index=0):
         mat = material('QC ' + label + ' Phase', color)
         opacity = mat.node_tree.nodes.new('ShaderNodeAttribute')
         opacity.attribute_name = 'qc_opacity'
-        mat.node_tree.links.new(opacity.outputs['Fac'], mat.node_tree.nodes['Principled BSDF'].inputs['Alpha'])
+        shader = node_by_type(mat.node_tree.nodes, 'ShaderNodeBsdfPrincipled')
+        mat.node_tree.links.new(opacity.outputs['Fac'], shader.inputs['Alpha'])
         socket(tree, name, 'NodeSocketMaterial', default=mat)
         links.new(inputs.outputs[name], style.inputs[name])
     links.new(style.outputs['Geometry'], output.inputs['Geometry'])

@@ -7,17 +7,19 @@ import numpy as np
 
 from ..association import compare_sources
 from ..data import load_dataset
-from .views import bind, material, socket
+from .views import bind, material, node_by_type, socket
 from .graph import view_modifier, tag_view, geometry_output
 
 
 def scalar_material(opacity_attribute=False):
     mat = material('QC scalar color map', (.5, .5, .5, 1))
     nodes, links = mat.node_tree.nodes, mat.node_tree.links
+    shader = node_by_type(nodes, 'ShaderNodeBsdfPrincipled')
+    output = node_by_type(nodes, 'ShaderNodeOutputMaterial')
     if opacity_attribute:
         opacity = nodes.new('ShaderNodeAttribute')
         opacity.attribute_name = 'qc_opacity'
-        links.new(opacity.outputs['Fac'], nodes.get('Principled BSDF').inputs['Alpha'])
+        links.new(opacity.outputs['Fac'], shader.inputs['Alpha'])
     value = nodes.new('ShaderNodeAttribute')
     value.attribute_name = 'qc_color_fraction'
     valid = nodes.new('ShaderNodeAttribute')
@@ -42,16 +44,16 @@ def scalar_material(opacity_attribute=False):
     missing.inputs[1].default_value = (1, 0, 1, 1)
     links.new(valid.outputs['Fac'], missing.inputs[0])
     links.new(ramp.outputs['Color'], missing.inputs[2])
-    links.new(missing.outputs[0], nodes.get('Principled BSDF').inputs['Base Color'])
+    links.new(missing.outputs[0], shader.inputs['Base Color'])
     legend = nodes.new('ShaderNodeAttribute')
     legend.attribute_name = 'qc_legend'
     emission = nodes.new('ShaderNodeEmission')
     links.new(missing.outputs[0], emission.inputs['Color'])
     mix = nodes.new('ShaderNodeMixShader')
     links.new(legend.outputs['Fac'], mix.inputs[0])
-    links.new(nodes.get('Principled BSDF').outputs['BSDF'], mix.inputs[1])
+    links.new(shader.outputs['BSDF'], mix.inputs[1])
     links.new(emission.outputs['Emission'], mix.inputs[2])
-    links.new(mix.outputs[0], nodes.get('Material Output').inputs['Surface'])
+    links.new(mix.outputs[0], output.inputs['Surface'])
     return mat
 
 
@@ -120,7 +122,8 @@ def add_legend(obj, color_material, minimum, center, maximum, title):
     text_material = material('QC legend text', (.015, .015, .015, 1))
     emission = text_material.node_tree.nodes.new('ShaderNodeEmission')
     emission.inputs['Color'].default_value = (.015, .015, .015, 1)
-    text_material.node_tree.links.new(emission.outputs[0], text_material.node_tree.nodes['Material Output'].inputs['Surface'])
+    output = node_by_type(text_material.node_tree.nodes, 'ShaderNodeOutputMaterial')
+    text_material.node_tree.links.new(emission.outputs[0], output.inputs['Surface'])
     for label, offset in [(minimum, (-1, -.28, 0)), (center, (-.2, -.28, 0)),
                            (maximum, (.65, -.28, 0)), (None, (-1, .2, 0))]:
         text = nodes.new('GeometryNodeStringToCurves')

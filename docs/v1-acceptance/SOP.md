@@ -1,6 +1,6 @@
 # QCBlender 0.0.1 独立人工验收 SOP
 
-适用 **Windows x64 + Blender 5.1.1**。候选 ZIP：`outputs/dist/qcblender-0.0.1.zip`，50,440,285 字节，SHA-256 `adf7760c647be303cd69f43b4b928d42411031d1bdfe3f25466bb15aded245fc`。这是当前技术候选的固定快照；ZIP 摘要变化时停止并重建本清单。全部案例当前状态为 **Not Run**，只有实际操作和复核的使用者填写结果、日期和签名。Agent 已有的技术报告不构成人工签署。
+适用 **Windows x64 + Blender 5.1.1**。候选 ZIP：`outputs/dist/qcblender-0.0.1.zip`，50,440,399 字节，SHA-256 `524ed52f4b71f8ce01ea7d4e702acb7847a956d6b69e40cad28e3b089282951d`。这是当前技术候选的固定快照；ZIP 摘要变化时停止并重建本清单。全部案例当前状态为 **Not Run**，只有实际操作和复核的使用者填写结果、日期和签名。Agent 已有的技术报告不构成人工签署。
 
 [样本清单](SOURCES.md)列出 S01–S11 的 URL、版本、许可、摘要和已知计算条件。先在仓库根目录 PowerShell 检查 ZIP 和本次所用的每个样本：`Get-FileHash <路径> -Algorithm SHA256`。摘要不符则停在该例。`outputs/v1-acceptance/` 是本地忽略目录；每例在 `outputs/v1-acceptance/cases/CNN/` 留存同名 `CNN.png`、`CNN.blend`、`CNN.qcdata/`。记录型案例的 `CNN.png` 须拍到可读的 QCBlender 面板和关联分子，不假造三维数值场。可另加 PNG，但不能替代这些固定文件。
 

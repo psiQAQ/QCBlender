@@ -15,7 +15,9 @@ def draw_material_controls(layout, mat):
     if not mat or not mat.use_nodes:
         return
     nodes = mat.node_tree.nodes
-    shader = nodes.get('Principled BSDF')
+    from .views import node_by_type
+
+    shader = node_by_type(nodes, 'ShaderNodeBsdfPrincipled')
     if shader:
         for name in ('Base Color', 'Alpha', 'Roughness'):
             if not shader.inputs[name].is_linked:
