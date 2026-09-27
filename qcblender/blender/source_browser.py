@@ -161,8 +161,31 @@ def color_mapping(obj):
     geometry_links = colors[0].outputs['Geometry'].links
     joins = [link.to_node for link in geometry_links
              if link.to_node.bl_idname == 'GeometryNodeJoinGeometry']
-    if len(geometry_links) != 1 or len(joins) != 1 or len(output.links) != 1 or output.links[0].from_node != joins[0]:
+    if len(geometry_links) != 1 or len(joins) != 1 or len(output.links) != 1:
         raise ValueError('Color geometry is not connected through the supported legend')
+    clip_nodes = [n for n in tree.nodes if n.bl_idname == 'GeometryNodeGroup'
+                  and n.node_tree and n.node_tree.get('qc_asset_id') == 'qc.clip.v1']
+    if bool(tree.get('qc_clipping')) != bool(clip_nodes) or len(clip_nodes) > 1:
+        raise ValueError('Clipping graph is missing or ambiguous')
+    clip = clip_nodes[0] if clip_nodes else None
+    if clip:
+        controls = ('Plane Enabled', 'Plane Origin', 'Plane Normal', 'Box Enabled', 'Box Minimum', 'Box Maximum')
+        if any(len(clip.inputs[name].links) != 1 or
+               clip.inputs[name].links[0].from_node.type != 'GROUP_INPUT' or
+               clip.inputs[name].links[0].from_socket != clip.inputs[name].links[0].from_node.outputs[name]
+               for name in controls):
+            raise ValueError('Clipping controls differ from the supported QC graph')
+        if len(clip.inputs['Geometry'].links) != 1 or len(clip.outputs['Geometry'].links) != 1:
+            raise ValueError('Clipping geometry is disconnected or ambiguous')
+    join_output = joins[0].outputs['Geometry']
+    displayed = output.links[0].from_socket
+    color_input = colors[0].inputs['Geometry'].links[0].from_socket
+    if displayed != join_output:
+        if (clip is None or displayed != clip.outputs['Geometry']
+                or clip.inputs['Geometry'].links[0].from_socket != join_output):
+            raise ValueError('Color geometry has an unsupported node after the legend')
+    elif clip and color_input != clip.outputs['Geometry']:
+        raise ValueError('Clipping node is not in the supported color geometry chain')
     title_path = [('Curve Instances', 'GeometryNodeRealizeInstances'),
                   ('Geometry', 'GeometryNodeFillCurve'),
                   ('Mesh', 'GeometryNodeTransform'),
