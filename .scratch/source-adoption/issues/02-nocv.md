@@ -16,3 +16,9 @@ Blocked by: none
 ## Comments
 
 2026-09-27：用户批准；主代理负责 Blender 和最终状态。子代理将提交号、测试命令和结果追加于此。
+
+2026-09-27：解析与纯 Python 测试提交 `3970ab2`。Passed：在 `adopt-nocv` 工作树设置 `QCBLENDER_REFERENCE_ROOT=D:\workspace\QCBlender`，运行 `C:\Program Files\Blender Foundation\Blender 5.1\5.1\python\bin\python.exe -I tests/test_science_nocv_status.py`，5 项测试通过；真实 COBH3 表读出 9 对，pair 1 为 -77.88 kcal/mol。`git diff --cached --check` Passed。Not Run：Blender 安装包导入、场景完整性、保存移动冷重开，由主代理验收。状态保持 claimed。
+
+2026-09-27：按 Spec 评审补充提交 `0f3f968`。Passed：同一表前所有显式单位声明均检查；真实九对表前附加 hartree/eV 声明分别因冲突/不支持而拒绝。真实 stdout 未计算段仅保留较早的 `NOCV orbital energies are not calculated` 声明时专门报未计算，后续已计算表仍读出 9 对。上述纯 Python 命令复跑 6 项通过；`git diff --cached --check` 通过。Blender 项仍为 Not Run，状态保持 claimed。
+
+2026-09-27：按 Standards 评审补充提交 `aa8d489`。Passed：单位声明不清除同一表的未计算状态。真实 stdout 第 91 行较早声明保留、第 96 行同义提示移除，再向全零表前插入 kcal/mol 声明仍报未计算；接续真实已计算表读出 9 对。相同纯 Python 命令复跑 6 项通过，`git diff --cached --check` 通过。Blender 项仍为 Not Run，状态保持 claimed。
