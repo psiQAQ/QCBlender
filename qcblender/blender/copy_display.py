@@ -160,6 +160,125 @@ def _mapping(obj, modifier, sockets):
     return scalar, charge
 
 
+def _display_path(obj, modifier, kind, sockets, mapping):
+    """Require copied inputs to feed the standard displayed geometry branch."""
+    from .graph import geometry_output
+
+    tree = modifier.node_group
+
+    def linked(input_socket):
+        if len(input_socket.links) != 1:
+            raise ValueError('QC display geometry has an unsupported connection')
+        return input_socket.links[0].from_socket
+
+    def group(asset_id):
+        matches = [node for node in tree.nodes if node.bl_idname == 'GeometryNodeGroup'
+                   and node.node_tree and node.node_tree.get('qc_asset_id') == asset_id]
+        if len(matches) != 1:
+            raise ValueError('QC display asset is missing or ambiguous')
+        return matches[0]
+
+    inputs = [node for node in tree.nodes if node.type == 'GROUP_INPUT']
+    if len(inputs) != 1:
+        raise ValueError('QC display input is ambiguous')
+    inputs = inputs[0]
+    asset = 'qc.atom_style.v1' if kind == 'atoms' else next(iter(CORE_ASSETS[kind]))
+    style = group(asset)
+    clip_nodes = [node for node in tree.nodes if node.bl_idname == 'GeometryNodeGroup'
+                  and node.node_tree and node.node_tree.get('qc_asset_id') == 'qc.clip.v1']
+    if len(clip_nodes) != int(bool(tree.get('qc_clipping'))):
+        raise ValueError('QC clipping graph is missing or ambiguous')
+    clip = clip_nodes[0] if clip_nodes else None
+    used_clip = False
+
+    def unclipped(socket):
+        nonlocal used_clip
+        if clip and socket == clip.outputs['Geometry']:
+            if used_clip or any(linked(clip.inputs[name]) != inputs.outputs[name] for name in CLIP):
+                raise ValueError('QC clipping controls have changed')
+            used_clip = True
+            return linked(clip.inputs['Geometry'])
+        return socket
+
+    if mapping[0]:
+        # color_volume() already validates the scalar group, legend and final output.
+        displayed = linked(group('qc.color_scalar.v2').inputs['Geometry'])
+    else:
+        displayed = linked(geometry_output(tree))
+    displayed = unclipped(displayed)
+
+    if mapping[1]:
+        join = displayed.node
+        if join.bl_idname != 'GeometryNodeJoinGeometry' or displayed != join.outputs['Geometry']:
+            raise ValueError('QC charge display is disconnected')
+        branches = [link.from_socket for link in join.inputs['Geometry'].links]
+        legends = [socket for socket in branches if socket.node.bl_idname == 'GeometryNodeSwitch'
+                   and socket == socket.node.outputs['Output']]
+        assignments = [socket.node for socket in branches if socket.node.bl_idname == 'GeometryNodeSetMaterial'
+                       and socket == socket.node.outputs['Geometry']
+                       and not socket.node.inputs['Material'].is_linked
+                       and _has_role(socket.node.inputs['Material'].default_value, 'color_ramp')]
+        if len(branches) != 2 or len(legends) != 1 or len(assignments) != 1:
+            raise ValueError('QC charge legend has an unsupported branch')
+        assign = assignments[0]
+        if linked(legends[0].node.inputs['Switch']) != inputs.outputs['Show Legend']:
+            raise ValueError('QC charge legend control is disconnected')
+        displayed = linked(assign.inputs['Geometry'])
+        for attribute in ('qc_sample_valid', 'qc_color_fraction'):
+            node = displayed.node
+            if (node.bl_idname != 'GeometryNodeStoreNamedAttribute'
+                    or displayed != node.outputs['Geometry']
+                    or node.inputs['Name'].default_value != attribute):
+                raise ValueError('QC charge color branch has changed')
+            displayed = linked(node.inputs['Geometry'])
+        displayed = unclipped(displayed)
+
+    if kind == 'atoms' and 'Show Displacement Vectors' in sockets:
+        join = displayed.node
+        if join.bl_idname != 'GeometryNodeJoinGeometry' or displayed != join.outputs['Geometry']:
+            raise ValueError('QC displacement branch is disconnected')
+        branches = [link.from_socket for link in join.inputs['Geometry'].links]
+        vectors = [socket for socket in branches if socket.node.bl_idname == 'GeometryNodeSwitch'
+                   and socket == socket.node.outputs['Output']]
+        if len(branches) != 2 or len(vectors) != 1 or style.outputs['Geometry'] not in branches:
+            raise ValueError('QC displacement branch has changed')
+        if linked(vectors[0].node.inputs['Switch']) != inputs.outputs['Show Displacement Vectors']:
+            raise ValueError('QC displacement control is disconnected')
+        displayed = style.outputs['Geometry']
+
+    if displayed != style.outputs['Geometry'] or (clip is not None and not used_clip and not mapping[0]):
+        raise ValueError('QC style is not connected to the displayed geometry')
+
+    controls = GEOMETRY[kind]
+    if kind == 'atoms':
+        controls += ('Material',)
+    elif kind == 'field':
+        controls += ('Isovalue', 'Negative Isovalue', 'Link Thresholds', 'Positive Phase', 'Negative Phase',
+                     'Positive Opacity', 'Negative Opacity', 'Positive Material', 'Negative Material')
+    elif kind == 'fog':
+        controls += ('Material',)
+    if any(linked(style.inputs[name]) != inputs.outputs[name] for name in controls):
+        raise ValueError('QC display controls are disconnected from the style')
+    if kind == 'atoms':
+        geometry = linked(style.inputs['Geometry'])
+        if 'Show Displacement Vectors' in sockets:
+            position = geometry.node
+            if (position.bl_idname != 'GeometryNodeSetPosition' or geometry != position.outputs['Geometry']
+                    or linked(position.inputs['Geometry']) != inputs.outputs['Geometry']):
+                raise ValueError('QC atom geometry input has changed')
+        elif geometry != inputs.outputs['Geometry']:
+            raise ValueError('QC atom geometry input has changed')
+        if not style.inputs['Selection'].links:
+            raise ValueError('QC atom selection is disconnected')
+    if kind in ('field', 'fog'):
+        volume = linked(style.inputs['Volume']).node
+        if (volume.bl_idname != 'GeometryNodeObjectInfo'
+                or volume.outputs['Geometry'] != linked(style.inputs['Volume'])
+                or volume.transform_space != 'RELATIVE'
+                or volume.inputs['Object'].default_value != obj.qc_settings.volume):
+            raise ValueError('QC displayed volume differs from its bound source')
+
+
 def _has_role(mat, role):
     return mat and mat.use_nodes and any(node.get('qc_role') == role for node in mat.node_tree.nodes)
 
@@ -289,6 +408,7 @@ def _state(obj):
     modifier = view_modifier(obj)
     sockets = _inputs(modifier, kind)
     mapping = _mapping(obj, modifier, sockets)
+    _display_path(obj, modifier, kind, sockets, mapping)
     values = {name: modifier.get(item.identifier, getattr(item, 'default_value', None))
               for name, item in sockets.items()}
     materials = _materials(obj, modifier, sockets, mapping)
