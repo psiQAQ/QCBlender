@@ -1,7 +1,7 @@
 # D 场值线剖面、曲线和 CSV
 
 Triage: ready-for-agent
-Status: pending
+Status: claimed
 Type: task
 Blocked by: 01
 
@@ -22,3 +22,7 @@ Blocked by: 01
 ## Comments
 
 2026-09-27：用户选择曲线＋CSV；A 集成通过后启动，避免共享基线冲突。
+
+2026-09-27：A 已 resolved；D 在 `feat/adopt-profile` 工作树领取，纯 Python 开发与验证中，Blender 验收由主代理执行。
+
+2026-09-27：实现提取共享三线性采样，新增派生线剖面、独立断线曲线和从保存数组导出的 CSV。Passed：纯 Python 斜轴线性场、端点/距离、几何和色场源坐标、域外/无效掩码、相邻有效段、Dataset 冷加载 CSV，3/3 专用测试与 2/2 项目存储回归；`compileall`、`git diff --check`。Not Run：Blender 安装场景、真实几何/色场、图像、原生撤销/重做和移动冷重开，由主代理验收后改为 resolved。
