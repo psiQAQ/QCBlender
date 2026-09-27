@@ -364,6 +364,7 @@ class QCBLENDER_PT_main(bpy.types.Panel):
         row.operator('qcblender.color_charge', text='Charge', icon='MATERIAL')
         row.operator('qcblender.show_dipole', text='Dipole', icon='EMPTY_ARROWS')
         row.operator('qcblender.measure_distance', text='Distance')
+        layout.operator('qcblender.create_framed_camera', text='Create Framed QC Camera', icon='CAMERA_DATA')
         layout.operator('qcblender.save_project', icon='FILE_TICK')
         layout.operator('qcblender.archive_project', icon='PACKAGE')
         layout.operator('qcblender.rebuild_cache', icon='FILE_REFRESH')
