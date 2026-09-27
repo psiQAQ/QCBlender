@@ -149,27 +149,29 @@ def ets_nocv_pairs(path, energy_unit):
     lines = Path(path).read_text(encoding='utf-8', errors='replace').splitlines()
     pattern = re.compile(r'^\s*(\d+)\s+(' + r'[+-]?\d+\.\d+' + r')\s+(\d+)\s+([+-]?\d+\.\d+)\s+([+-]?\d+\.\d+)\s+(\d+)\s+([+-]?\d+\.\d+)\s+([+-]?\d+\.\d+)\s*$')
     rows, spin, in_table = [], 'Total', False
-    declared_unit, not_evaluated, placeholder = None, False, False
+    declared_units, not_evaluated, placeholder = [], False, False
     for number, line in enumerate(lines, 1):
         lower = line.lower()
-        if 'energies of nocv orbitals have not been evaluated' in lower:
+        if ('energies of nocv orbitals have not been evaluated' in lower
+                or 'nocv orbital energies are not calculated' in lower):
             not_evaluated = True
         unit_note = re.search(r'\b(?:all\s+)?energies?\s+(?:are\s+given\s+in|in|unit\s*(?:is|:))\s+(\S+)', line, re.I)
         if unit_note:
-            declared_unit = unit_note[1].rstrip('.,;').lower()
+            declared_units.append(unit_note[1].rstrip('.,;').lower())
             not_evaluated = False
         if 'Alpha NOCV orbitals' in line:
             spin = 'Alpha'
         elif 'Beta NOCV orbitals' in line:
             spin = 'Beta'
         if re.search(r'Pair\s+Energy\s*\|\s*Orbital\s+Eigenvalue\s+Energy', line):
-            if declared_unit and declared_unit not in ('kcal/mol', 'hartree'):
-                raise ValueError(f'ETS-NOCV table line {number} declares unsupported energy unit {declared_unit}')
-            if declared_unit and declared_unit != energy_unit:
-                raise ValueError(f'ETS-NOCV table line {number} declares {declared_unit}, not {energy_unit}')
+            for declared_unit in declared_units:
+                if declared_unit not in ('kcal/mol', 'hartree'):
+                    raise ValueError(f'ETS-NOCV table line {number} declares unsupported energy unit {declared_unit}')
+                if declared_unit != energy_unit:
+                    raise ValueError(f'ETS-NOCV table line {number} declares {declared_unit}, not {energy_unit}')
             in_table = not not_evaluated
             placeholder |= not_evaluated
-            declared_unit, not_evaluated = None, False
+            declared_units, not_evaluated = [], False
             continue
         match = pattern.match(line) if in_table else None
         if match:

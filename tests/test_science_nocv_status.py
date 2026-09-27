@@ -12,6 +12,7 @@ from qcblender.external_results import ets_nocv_pairs
 
 REFERENCE_ROOT = Path(os.environ.get('QCBLENDER_REFERENCE_ROOT', ROOT))
 REAL_TABLE = REFERENCE_ROOT / 'outputs/v1-acceptance/sources/c10-c13/multiwfn-cobh3-20260927/COBH3-ETS-NOCV.txt'
+REAL_STDOUT = REAL_TABLE.with_name('stdout.txt')
 HEADER = 'Pair Energy | Orbital Eigenvalue Energy | Orbital Eigenvalue Energy'
 ROW = '1 -2.50 6 0.12000 -3.10 7 -0.12000 0.60'
 PLACEHOLDER = 'Note: Energies of NOCV orbitals have not been evaluated, so they are all zero'
@@ -44,6 +45,16 @@ class NocvEnergyStatus(unittest.TestCase):
         self.assertEqual(len(self.parse([PLACEHOLDER,
                                          'Note: All energies are given in kcal/mol', HEADER, ROW])), 1)
 
+    def test_real_stdout_earlier_uncalculated_notice(self):
+        lines = REAL_STDOUT.read_text(encoding='utf-8').splitlines()
+        start = next(i for i, line in enumerate(lines) if 'NOCV orbital energies are not calculated' in line)
+        end = next(i for i in range(start, len(lines)) if 'Sum of NOCV eigenvalues:' in lines[i])
+        section = [line for line in lines[start:end]
+                   if 'Energies of NOCV orbitals have not been evaluated' not in line]
+        with self.assertRaisesRegex(ValueError, 'have not been evaluated'):
+            self.parse(section)
+        self.assertEqual(len(self.parse([*section, *REAL_TABLE.read_text(encoding='utf-8').splitlines()])), 9)
+
     def test_zero_values_need_an_explicit_placeholder_statement_to_be_skipped(self):
         zero = '1 0.00 6 0.12000 0.00 7 -0.12000 0.00'
         self.assertEqual(self.parse(['Note: All energies are given in kcal/mol', HEADER, zero])[0]['pair_energy'], 0)
@@ -60,6 +71,13 @@ class NocvEnergyStatus(unittest.TestCase):
             with self.subTest(note=note, unit=unit):
                 with self.assertRaisesRegex(ValueError, error):
                     self.parse([note, HEADER, ROW], unit)
+        real_lines = REAL_TABLE.read_text(encoding='utf-8').splitlines()
+        for note, error in (('Note: All energies are given in hartree', 'declares hartree, not kcal/mol'),
+                            ('Note: All energies are given in eV', 'unsupported energy unit ev')):
+            with self.subTest(earlier_note=note):
+                with self.assertRaisesRegex(ValueError, error):
+                    self.parse([note, *real_lines])
+        self.assertEqual(len(self.parse(['Note: All energies are given in kcal/mol', *real_lines])), 9)
 
     def test_spin_pair_identity_and_conflicting_duplicates(self):
         rows = self.parse(['Alpha NOCV orbitals', HEADER, ROW,
