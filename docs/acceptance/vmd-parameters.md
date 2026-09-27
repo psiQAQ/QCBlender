@@ -30,7 +30,9 @@
 
 `edges/edges.json` 验证真实 C07 IGMH/IRI 的几何/着色角色及各自 Cube 摘要；IGMH worker 读取 `sign_lambda2_rho` 色场范围 `−123.65 / 0 / 0.278699 electron/bohr^3`。解析场经实际 Geometry Nodes 求值，表面和切片的同值映射及端点饱和正确；物理零值、掩码非零值和域外点的有效性不同。`edges/valid-zero.png`、`edges/invalid-outside.png` 验证零值按色标显示、无效值为洋红色。
 
-同名不同 SHA、同源不同 `selected_job` 的字段候选与实际选择，使用明确标注的合成 Dataset 验证。真实 Gaussian 多段字段链路为 **Not Run**：现有 Log reader 导入构型与性质，不提供场求值所需的基组/MO 数组；本轮未扩大输入支持，不能把合成身份测试写成真实量化计算。
+真实 `water_neutral_nbo_opt_freq.out`（SHA-256 `9493d24655fb261a2c945d292ad517567f3024996594a25f678199df74017519`）的两个计算段分别由已安装候选的 worker 导入。显示层按同一源 SHA 和不同 job 身份分组；从第 1 段向第 2 段复制参数后，目标模式编号、振幅、相位、原子选择、对象位置、源行记录及数组均保留。`real-log-views/checks.json` 的复制和原地/移动冷重开 **Passed**，两个 job 的原文起始行为 1、1091。
+
+同名不同 SHA、同源不同 `selected_job` 的**字段候选**与实际选择，使用明确标注的合成 Dataset 验证。真实 Gaussian 多段字段链路为 **Not Run**：现有 Log reader 导入构型与性质，不提供场求值所需的基组/MO 数组；本轮未扩大输入支持，不能把合成字段身份测试写成真实量化计算。
 
 最终科学回归 **48 项 Passed**、复制策略 **7 项 Passed**；独立配置离线安装、运行库及 worker 检查 Passed。`features/evidence.blend` 和 `evidence.qcdata/` 保存 30 个视图、11 份 Dataset；关闭验收窗口后，两个新进程分别打开原工程和 `features/moved 中文 path/` 副本。来源、科学数组摘要、节点/材质值和对象变换一致，两次重新渲染通过。原生面板/对话框截图记录绘制结果，不能代替 Computer Use 点击。
 
@@ -41,5 +43,7 @@
 `04-copy-r2` 的位置断言曾读取未更新的依赖图，修正脚本后确认对象变换保留；`04-copy-r3` 的样本访问受不同进程安全上下文限制，`04-copy-r4` 使用一致用户上下文。各旧目录及复现记录保留，不作为最终通过证据。
 
 Computer Use 未完成的原因是桌面访问失败：`GetCursorPos: Access denied (0x80070005)`；恢复尝试的截取仍返回 `IGraphicsCaptureItemInterop.CreateForMonitor: Could not capture the given monitor (0x80070057)`。待桌面解锁且显示会话可访问后，补验分组控件、着色选择、范围按钮、复制对话框及错误提示。MCP 操作已完成；整批待验，尚未创建通过标签。已合并工作树和分支保留，待最终验收后归档。
+
+续跑再次枚举了实际窗口并尝试恢复已保存的 Blender 窗口，仍报 `GetCursorPos 0x80070005`；刷新后窗口仍最小化，未执行按钮输入。记录在最终候选的 `desktop-recheck.json`。
 
 独立人工复做与签署：**Not Run**。VMD 实际运行及外部视觉对照：**Not Run**。
