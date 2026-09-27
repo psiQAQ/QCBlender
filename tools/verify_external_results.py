@@ -55,11 +55,20 @@ else:
     positions = reference.arrays['positions'].tolist()
     extrema = OUT / 'synthetic-extrema.pdb'
     extrema.write_text(pdb_line(1, 'C', 1, [0.0, 1.5, 0.2], 8.2) +
-                       pdb_line(2, 'O', 1, [0.0, -1.5, 0.2], -6.1), encoding='utf-8')
+                       pdb_line(1, 'O', 1, [0.0, -1.5, 0.2], -6.1), encoding='utf-8')
     area = OUT / 'synthetic-area.txt'
     area.write_text('Center Area Percentage\n-2.0 1.5 30.0\n2.0 3.5 70.0\n', encoding='utf-8')
     esp = import_esp(reference, extrema, area, 'density 0.001 e/bohr^3', 'kcal/mol', 'kcal/mol', 'angstrom^2')
     assert len(esp.metadata['analysis']['extrema']) == 2
+    assert [(row['kind'], row['serial']) for row in esp.metadata['analysis']['extrema']] == [('maximum', 1), ('minimum', 1)]
+    duplicate = OUT / 'duplicate-extrema.pdb'
+    duplicate.write_text(extrema.read_text(encoding='utf-8') + pdb_line(1, 'C', 1, [1, 0, 0], 2), encoding='utf-8')
+    try:
+        esp_extrema(duplicate)
+    except ValueError as error:
+        assert 'same kind' in str(error)
+    else:
+        raise AssertionError('Repeated serial within the same extremum kind accepted')
     esp_dir = OUT / 'esp.qcdata'
     save_dataset(esp, esp_dir)
     point_view(esp_dir, esp, parent, [esp.metadata['analysis']['extrema'][0]],

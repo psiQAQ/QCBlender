@@ -43,8 +43,8 @@ def esp_extrema(path):
         result.append({'serial': row['serial'], 'kind': 'maximum' if label == 'C' else 'minimum',
                        'position_angstrom': row['position_angstrom'], 'value': value,
                        'source_line': row['line']})
-    if len({item['serial'] for item in result}) != len(result):
-        raise ValueError('ESP extrema serial numbers are repeated')
+    if len({(item['kind'], item['serial']) for item in result}) != len(result):
+        raise ValueError('ESP extrema serial numbers are repeated within the same kind')
     return result
 
 
