@@ -5,3 +5,4 @@ docs/GPT-Web-Chat/
 docs/sobereva/
 # Public issue attachment is downloaded locally; repository license does not establish its license.
 /tests/data/cclib/issue746-dsdpbep86.log
+submodules/Multiwfn/

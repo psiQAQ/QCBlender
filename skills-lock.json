@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "aromatic-skill": {
+      "source": "yuyukurikawa/MulTiwFn-skills",
+      "sourceType": "github",
+      "skillPath": "skills/aromatic-skill/SKILL.md",
+      "computedHash": "a8cfa754f382f962f833596e538486c77e8a5add1e478b19ef00f77f4f4fc475"
+    },
     "ask-matt": {
       "source": "mattpocock/skills",
       "sourceType": "github",
@@ -42,6 +48,12 @@
       "sourceType": "github",
       "skillPath": "skills/engineering/domain-modeling/SKILL.md",
       "computedHash": "336547f3ff285e822fc70b69b170dc58bceef9c8ed5fad18de0046287d6be837"
+    },
+    "esp-surface-analysis": {
+      "source": "yuyukurikawa/MulTiwFn-skills",
+      "sourceType": "github",
+      "skillPath": "skills/esp-surface-skill/SKILL.md",
+      "computedHash": "9b6af1be6b45f03e1c5568b9898eee05897dc7ab07102c47c1ec07397b63eab5"
     },
     "git-guardrails-claude-code": {
       "source": "mattpocock/skills",
@@ -91,6 +103,12 @@
       "skillPath": "skills/engineering/improve-codebase-architecture/SKILL.md",
       "computedHash": "016f12709bff30a27419e8add978a9be70f5ca1fb6738b3be6793038e0aba631"
     },
+    "input-skill": {
+      "source": "yuyukurikawa/MulTiwFn-skills",
+      "sourceType": "github",
+      "skillPath": "skills/input-skill/SKILL.md",
+      "computedHash": "052e2662ec0230c9425cbd769bc887af0543e380fb0ea05da8d77112c56744cb"
+    },
     "loop-me": {
       "source": "mattpocock/skills",
       "sourceType": "github",
@@ -102,6 +120,12 @@
       "sourceType": "github",
       "skillPath": "skills/misc/migrate-to-shoehorn/SKILL.md",
       "computedHash": "7d31e494a384d1a5b88d1dec6e1f50e673ef1a60f7b0b6e92babfbb242f79b62"
+    },
+    "molecular-orbital-visualization": {
+      "source": "yuyukurikawa/MulTiwFn-skills",
+      "sourceType": "github",
+      "skillPath": "skills/orb-visualize-skill/SKILL.md",
+      "computedHash": "c1d7ec0bf07f0e0a0f17b8efb6ba175d820e0df601e3aa6614069fd0cdd82187"
     },
     "pr": {
       "source": "mattpocock/skills",
