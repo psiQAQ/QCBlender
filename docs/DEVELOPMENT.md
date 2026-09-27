@@ -95,6 +95,8 @@ $env:BLENDER_USER_RESOURCES = "$PWD/outputs/blender-acceptance"
 
 完成相应检查后运行 `& $blenderPython -I tools/qualify_package.py`，核对最终 ZIP 与当前源码、随包 wheel 哈希，并汇总已有报告。它不代替上述 Blender 验收命令。
 
+独立候选使用 `--candidate <ZIP> --installed-dir <安装目录> --evidence-index <批次索引.json> --output <报告.json>`。索引记录 `candidate_sha256`，并在 `checks` 中为每份报告记录相对 `path`、报告 `sha256` 和同一 `candidate_sha256`；报告必须位于该批次目录且状态为 `Passed`。科学回归可用 `run_science_tests.py --output <批次目录/science.json>` 单独保存。每批重新运行对应检查，资格工具核对文件与摘要，不替代验收范围判断。
+
 可组合节点的快速真实 Blender 检查：`& $blender --background --factory-startup --offline-mode --python-exit-code 1 --python tools/verify_composable.py`。它覆盖样式切换、分支保留、修改器重排、独立阈值、裁剪、斜轴和无效域采样、游标变换与保留旧图的新建操作，输出 `outputs/composable/report.json`。体积裁剪与曲线需同时运行 `verify_fog.py` 的真实渲染检查。
 
 随后在已安装扩展的隔离配置运行 `& $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/verify_composable_render.py`，将实体、线框与表面点的实际渲染证据追加至同一报告，再执行包资格汇总。
