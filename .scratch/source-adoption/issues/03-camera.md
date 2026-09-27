@@ -18,3 +18,7 @@ Blocked by: none
 ## Comments
 
 2026-09-27：本轮明确纳入正交自动取景；透视、灯光预设和自动排版仍后置。子代理不运行 Blender；运行期接口可静态阅读本机 API 文档。
+
+2026-09-27：已在 `feat/adopt-camera` 实现 `qcblender.create_framed_camera`。纯数学拟合使用 VIEW_3D 当前方向、render/pixel aspect 和每侧默认 5% 边距；运行期先验证选中 QC 显示视图的已求值边界（包括 Geometry Nodes 实例），雾在自身边界缺失时读取绑定体积，全部验证后才新建带 `qc_camera` 标记的正交相机并设为 `scene.camera`。纯 Python 专用测试 Passed；Blender 原子、等值面、雾、隐藏对象、撤销及保存冷重开 Not Run，由主代理验收。任务保持 claimed。
+
+2026-09-27：参与取景的 QC 视图若有 modifier 的 `show_viewport` 与 `show_render` 不一致，操作符在创建相机前报错，要求先匹配两项开关。纯数学四项测试 Passed；Blender 两种开关组合 Not Run，由主代理验收。
