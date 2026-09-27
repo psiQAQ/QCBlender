@@ -1,10 +1,10 @@
 # MolStudio 对照与外部分析结果导入
 
-Status: claimed
+Status: resolved
 
 ## Problem Statement
 
-QCBlender 已完成首版 M7 技术验收，但尚未提供 MolStudio 所展示的若干分析结果浏览工作流。用户需要一份以当前开发状态为基准的源码对照，并在 QCBlender 中逐期导入和显示自己已经计算好的结果。
+QCBlender 已实现本规格的九片外部结果导入与显示，真实样本及 Agent 技术验收 Passed。独立人工验收与发布验收另行维护。
 
 ## Solution
 
