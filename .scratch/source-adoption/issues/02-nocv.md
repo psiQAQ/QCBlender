@@ -16,3 +16,5 @@ Blocked by: none
 ## Comments
 
 2026-09-27：用户批准；主代理负责 Blender 和最终状态。子代理将提交号、测试命令和结果追加于此。
+
+2026-09-27：解析与纯 Python 测试提交 `3970ab2`。Passed：在 `adopt-nocv` 工作树设置 `QCBLENDER_REFERENCE_ROOT=D:\workspace\QCBlender`，运行 `C:\Program Files\Blender Foundation\Blender 5.1\5.1\python\bin\python.exe -I tests/test_science_nocv_status.py`，5 项测试通过；真实 COBH3 表读出 9 对，pair 1 为 -77.88 kcal/mol。`git diff --cached --check` Passed。Not Run：Blender 安装包导入、场景完整性、保存移动冷重开，由主代理验收。状态保持 claimed。
