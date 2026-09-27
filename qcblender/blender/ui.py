@@ -53,13 +53,15 @@ def draw_material_controls(layout, mat, section='材质', unit=''):
                     (other.outputs[0].default_value for other in nodes if other.get('qc_control') == 'Box Enabled'), False):
                 continue
             if node.bl_idname == 'ShaderNodeCombineXYZ':
-                layout.label(text=node['qc_control'] + ' [视图局部 Å]')
+                label = (' [视图局部方向，无量纲]' if node['qc_control'] == 'Plane Normal'
+                         else ' [视图局部 Å]')
+                layout.label(text=node['qc_control'] + label)
                 row = layout.row(align=True)
                 for item in node.inputs:
                     row.prop(item, 'default_value', text=item.name)
             else:
                 label = node['qc_control']
-                if label in ('Color Minimum', 'Color Maximum', 'Display Threshold'):
+                if label in ('Color Minimum', 'Color Maximum', 'Display Threshold', 'Opacity Range'):
                     label += f' [{unit or "单位未知"}]'
                 layout.prop(node.outputs[0], 'default_value', text=label)
     if mat.get('qc_fog') and section == '材质':
@@ -369,11 +371,13 @@ class QCBLENDER_OT_set_view_style(bpy.types.Operator):
 
     def execute(self, context):
         from .graph import view_modifier
+        from .parameters import STYLE_SOCKETS
 
         try:
             modifier = view_modifier(context.object)
             valid = any(item.item_type == 'SOCKET' and item.in_out == 'INPUT'
-                        and item.name.startswith('Style (') and item.identifier == self.socket_id
+                        and item.name == STYLE_SOCKETS[context.object['qc_view_kind']]
+                        and item.identifier == self.socket_id
                         for item in modifier.node_group.interface.items_tree)
             if not valid or self.socket_id not in modifier:
                 raise ValueError('Selected QC style input is unavailable')
@@ -388,7 +392,7 @@ class QCBLENDER_OT_set_view_style(bpy.types.Operator):
 def draw_view_parameters(layout, obj):
     """Show only controls relevant to the current view; all edits target native nodes."""
     from .graph import view_modifier
-    from .parameters import GROUPS, STYLES, socket_group, socket_label
+    from .parameters import GROUPS, STYLES, STYLE_SOCKETS, socket_group, socket_label
 
     source = layout.box()
     source.label(text='数据来源')
@@ -399,6 +403,10 @@ def draw_view_parameters(layout, obj):
     if field:
         source.label(text=f"字段: {field['quantity']} [{field['unit']}]")
         source.label(text='网格: ' + ' × '.join(map(str, field['shape'])))
+        if field.get('steps'):
+            source.label(text='源网格步长（只读，Å；与显示精细度独立）')
+            for axis, step in zip('XYZ', field['steps']):
+                source.label(text=f"{axis}: (" + ', '.join(f'{value:.4g}' for value in step) + ')')
         if field.get('method'):
             source.label(text='方法: ' + field['method'])
         if field.get('orbital'):
@@ -447,7 +455,7 @@ def draw_view_parameters(layout, obj):
                 if prefix + ' Center' in values and not values[prefix + ' Minimum'] < values[prefix + ' Center'] < values[prefix + ' Maximum']:
                     box.label(text=prefix + ': 最小值 < 中心值 < 最大值', icon='ERROR')
         for item in grouped:
-            if item.name.startswith('Style (') and obj.get('qc_view_kind') in STYLES:
+            if item.name == STYLE_SOCKETS.get(obj.get('qc_view_kind')):
                 row = box.row(align=True)
                 row.label(text='样式')
                 for value, label in enumerate(STYLES[obj['qc_view_kind']]):

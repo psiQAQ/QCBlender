@@ -6,6 +6,10 @@ STYLES = {
     'atoms': ('球棍', '空间填充', '键线'),
     'field': ('实面', '线框', '点'),
 }
+STYLE_SOCKETS = {
+    'atoms': 'Style (0 ball-stick, 1 space-fill, 2 bonds)',
+    'field': 'Style (0 solid, 1 wire, 2 points)',
+}
 
 _GEOMETRY = {
     'Selection', 'Element (0 = all)', 'First Atom (1-based)', 'Last Atom (0 = all)',
@@ -29,7 +33,7 @@ def socket_group(name, kind, values, quantity=''):
     field_style = 'Style (0 solid, 1 wire, 2 points)' in values
     if name == 'Geometry':
         return None
-    if name.startswith('Style ('):
+    if name in STYLE_SOCKETS.values():
         return '几何表示'
     if name in ('Atom Radius',) and style != 0:
         return None
@@ -72,6 +76,12 @@ def socket_group(name, kind, values, quantity=''):
 
 
 def socket_label(name, quantity='', unit=''):
+    if name == 'Quality':
+        return '显示精细度'
+    if name == 'Resolution':
+        return '显示采样数/轴'
+    if name == 'Plane Normal':
+        return 'Plane Normal [视图局部方向，无量纲]'
     if name == 'Positive Phase':
         return '显示正相位' if quantity == 'orbital_amplitude' else '显示正值'
     if name == 'Negative Phase':
@@ -100,5 +110,6 @@ if __name__ == '__main__':
     assert socket_group('Negative Isovalue', 'NodeSocketFloat', field, 'orbital_amplitude') == '几何表示'
     assert socket_group('Plane Origin', 'NodeSocketVector', {'Plane Enabled': False}) is None
     assert socket_group('custom_input', 'NodeSocketFloat', {}) == '高级参数'
+    assert socket_group('Style (custom)', 'NodeSocketInt', {}) == '高级参数'
     assert socket_label('Negative Phase', 'orbital_amplitude') == '显示负相位'
     assert socket_label('Isovalue', unit='hartree/e').endswith('[hartree/e]')
