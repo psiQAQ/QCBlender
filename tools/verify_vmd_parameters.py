@@ -53,6 +53,48 @@ def hashes():
     return result
 
 
+def display_state(obj):
+    modifier, names = controls(obj)
+    inputs, materials = {}, set()
+    for item in modifier.node_group.interface.items_tree:
+        if item.item_type != 'SOCKET' or item.in_out != 'INPUT' or not hasattr(item, 'default_value'):
+            continue
+        value = modifier.get(item.identifier, item.default_value)
+        if isinstance(value, bpy.types.Material):
+            materials.add(value)
+            inputs[item.name] = {'material': value.name}
+        elif isinstance(value, (str, bool, float, int)) or value is None:
+            inputs[item.name] = value
+        elif hasattr(value, 'to_list'):
+            inputs[item.name] = value.to_list()
+        elif hasattr(value, '__iter__'):
+            inputs[item.name] = list(value)
+    for node in modifier.node_group.nodes:
+        for socket in node.inputs:
+            if socket.type == 'MATERIAL' and not socket.is_linked and socket.default_value:
+                materials.add(socket.default_value)
+    material_states = {}
+    for mat in materials:
+        state = {}
+        for node in mat.node_tree.nodes if mat.use_nodes else ():
+            role = node.get('qc_role') or node.get('qc_control')
+            if role and node.bl_idname == 'ShaderNodeValToRGB':
+                ramp = node.color_ramp
+                state[role] = [ramp.interpolation, ramp.color_mode, ramp.hue_interpolation,
+                               [(e.position, list(e.color)) for e in ramp.elements]]
+            elif role and node.bl_idname == 'ShaderNodeValue':
+                state[role] = node.outputs[0].default_value
+            elif role and node.bl_idname == 'ShaderNodeCombineXYZ':
+                state[role] = [s.default_value for s in node.inputs]
+            elif node.bl_idname == 'ShaderNodeBsdfPrincipled':
+                state[node.name] = {name: list(node.inputs[name].default_value)
+                    if name == 'Base Color' else node.inputs[name].default_value
+                    for name in ('Base Color', 'Alpha', 'Roughness') if not node.inputs[name].is_linked}
+        material_states[mat.name] = state
+    return json.loads(json.dumps({'inputs': inputs, 'materials': material_states,
+                                  'transform': [list(row) for row in obj.matrix_world]}))
+
+
 def render(path):
     scene = bpy.context.scene
     scene.render.engine = 'CYCLES'
@@ -77,8 +119,9 @@ def save_evidence(out, report):
     report['arrays'] = hashes()
     report['objects'] = {obj.name: {'kind': obj.get('qc_view_kind'),
         'source': obj.get('qc_source_sha256'), 'field': obj.get('qc_field'),
-        'color': obj.get('qc_color_source'), 'counts': mesh_count(obj)}
-        for obj in bpy.context.scene.objects if obj.get('qc_view_kind') in ('atoms', 'field', 'slice')}
+        'color': obj.get('qc_color_source'), 'display': display_state(obj),
+        'counts': mesh_count(obj) if obj.get('qc_view_kind') != 'fog' else None}
+        for obj in bpy.context.scene.objects if obj.get('qc_view_kind') in ('atoms', 'field', 'slice', 'fog')}
     module('blender.project').save_project(out / 'evidence.blend')
     moved = out / 'moved 中文 path'
     moved.mkdir(exist_ok=True)
@@ -221,7 +264,10 @@ def check_reopen(out):
         assert obj.get('qc_source_sha256') == expected['source']
         assert obj.get('qc_field') == expected['field']
         assert obj.get('qc_color_source') == expected['color']
-        assert mesh_count(obj) == expected['counts']
+        if expected['counts'] is not None:
+            assert mesh_count(obj) == expected['counts']
+        if 'display' in expected:
+            assert display_state(obj) == expected['display'], name
         assert Path(bpy.path.abspath(obj['qc_dataset'])).resolve().is_relative_to(Path(bpy.data.filepath).parent)
     moved = 'moved 中文 path' in bpy.data.filepath
     key = 'moved_cold_open' if moved else 'cold_open'
