@@ -101,9 +101,37 @@ def source_group(obj):
     return key, label
 
 
-def color_volume(obj):
-    from .graph import view_modifier
+def bound_field(obj):
+    """Read a scene-bound field's identity from its saved metadata, without arrays."""
+    if obj.get('qc_view_kind') not in ('field', 'slice') or not obj.get('qc_dataset') or not obj.get('qc_field'):
+        raise ValueError('Choose a bound scalar field view')
+    volume = obj.qc_settings.volume
+    if (volume is None or volume.get('qc_view_kind') != 'volume'
+            or binding_key(volume) != binding_key(obj)
+            or volume.get('qc_source_sha256') != obj.get('qc_source_sha256')):
+        raise ValueError('Field volume differs from the selected view')
+    field = object_record(obj, 'qc_field')
+    if object_record(volume, 'qc_field') != field:
+        raise ValueError('Field volume metadata differs from the selected view')
+    meta = read_metadata(obj)
+    if (field not in meta.get('fields', [])
+            or obj.get('qc_source_sha256') != meta['source'].get('sha256')):
+        raise ValueError('Field differs from the saved dataset identity')
+    source = field_source(meta, field)
+    digest = source.get('sha256') if isinstance(source, dict) else None
+    if (not isinstance(digest, str) or len(digest) != 64
+            or any(char not in '0123456789abcdefABCDEF' for char in digest)
+            or not isinstance(source.get('filename'), str)):
+        raise ValueError('Field-specific source identity is missing')
+    return volume, field, meta, source
+
+
+def color_mapping(obj):
+    """Resolve the one QC scalar sampler, color group and legend on a saved view."""
+    from .graph import geometry_output, view_modifier
     tree = view_modifier(obj).node_group
+    if not tree.get('qc_color_mapping') or not obj.get('qc_color_source'):
+        raise ValueError('View has no supported QC scalar mapping')
     colors = [n for n in tree.nodes if n.bl_idname == 'GeometryNodeGroup'
               and n.node_tree and n.node_tree.get('qc_asset_id') == 'qc.color_scalar.v2']
     if len(colors) != 1:
@@ -114,13 +142,55 @@ def color_volume(obj):
     sampler = links[0].from_node
     if sampler.bl_idname != 'GeometryNodeGroup' or not sampler.node_tree or sampler.node_tree.get('qc_asset_id') != 'qc.sample.v1':
         raise ValueError('Color sampling source is not a supported scalar sampler')
+    if links[0].from_socket != sampler.outputs['Value'] or len(colors[0].inputs['Geometry'].links) != 1:
+        raise ValueError('Color sampling or receiving geometry was customized')
+    valid = colors[0].inputs['Valid'].links
+    if len(valid) != 1 or valid[0].from_node != sampler or valid[0].from_socket != sampler.outputs['Valid']:
+        raise ValueError('Color validity link is not the supported scalar sampler')
     links = sampler.inputs['Volume'].links
-    if len(links) != 1 or links[0].from_node.bl_idname != 'GeometryNodeObjectInfo':
+    if len(links) != 1 or links[0].from_node.bl_idname != 'GeometryNodeObjectInfo' or links[0].from_socket != links[0].from_node.outputs['Geometry']:
         raise ValueError('Color volume node link is missing')
-    volume = links[0].from_node.inputs['Object'].default_value
-    if volume is None:
+    info = links[0].from_node
+    if info.transform_space != 'RELATIVE' or info.inputs['Object'].default_value is None:
         raise ValueError('Color volume object is missing')
-    return volume
+    position = sampler.inputs['Position'].links
+    if (len(position) != 1 or position[0].from_node.bl_idname != 'GeometryNodeInputPosition'
+            or position[0].from_socket != position[0].from_node.outputs['Position']):
+        raise ValueError('Color sampling position is unsupported')
+    output = geometry_output(tree)
+    geometry_links = colors[0].outputs['Geometry'].links
+    joins = [link.to_node for link in geometry_links
+             if link.to_node.bl_idname == 'GeometryNodeJoinGeometry']
+    if len(geometry_links) != 1 or len(joins) != 1 or len(output.links) != 1 or output.links[0].from_node != joins[0]:
+        raise ValueError('Color geometry is not connected through the supported legend')
+    title_path = [('Curve Instances', 'GeometryNodeRealizeInstances'),
+                  ('Geometry', 'GeometryNodeFillCurve'),
+                  ('Mesh', 'GeometryNodeTransform'),
+                  ('Geometry', 'GeometryNodeSetMaterial'),
+                  ('Geometry', 'GeometryNodeJoinGeometry'),
+                  ('Geometry', 'GeometryNodeTransform'),
+                  ('Geometry', 'GeometryNodeSwitch'),
+                  ('Output', 'GeometryNodeJoinGeometry')]
+    titles = []
+    for title in tree.nodes:
+        if title.bl_idname != 'GeometryNodeStringToCurves' or title.label != 'QC Legend Title' or title.inputs['String'].links:
+            continue
+        node = title
+        for output_name, next_type in title_path:
+            links = node.outputs[output_name].links
+            if len(links) != 1 or links[0].to_node.bl_idname != next_type:
+                break
+            node = links[0].to_node
+        else:
+            if node == joins[0]:
+                titles.append(title)
+    if len(titles) != 1:
+        raise ValueError('Color legend title is missing, customized or ambiguous')
+    return info, titles[0]
+
+
+def color_volume(obj):
+    return color_mapping(obj)[0].inputs['Object'].default_value
 
 
 def object_record(obj, key):
@@ -171,6 +241,11 @@ def source_details(obj):
             if volume.get('qc_source_sha256') != color.get('source') or any(field.get(k) != color.get(k) for k in ('quantity', 'unit')):
                 raise ValueError('Linked color field differs from the recorded source or quantity')
             color_meta = refresh_source(volume)
+            if color.get('field_source') and color['field_source'] != field_source(color_meta, field):
+                raise ValueError('Linked color field provenance differs from the recorded source')
+            if color.get('field') and color['field'] != {key: field.get(key) for key in
+                                                           ('array', 'quantity', 'unit', 'orbital', 'spin', 'source_number')}:
+                raise ValueError('Linked color field identity differs from the recorded field')
             entries.append(('Color source', field_source(color_meta, field)))
             entries.append(('Color field', dict(selected_job=color_meta.get('selected_job'),
                 **{k: field.get(k) for k in ('quantity', 'unit', 'array', 'orbital', 'spin', 'source_number')})))

@@ -2,7 +2,7 @@
 import json
 
 import bpy
-from bpy.props import FloatProperty, IntProperty
+from bpy.props import EnumProperty, FloatProperty, IntProperty, StringProperty
 import numpy as np
 
 from ..association import compare_sources
@@ -124,6 +124,7 @@ def add_legend(obj, color_material, minimum, center, maximum, title):
     emission.inputs['Color'].default_value = (.015, .015, .015, 1)
     material_output = node_by_type(text_material.node_tree.nodes, 'ShaderNodeOutputMaterial')
     text_material.node_tree.links.new(emission.outputs[0], material_output.inputs['Surface'])
+    title_node = None
     for label, offset in [(minimum, (-1, -.28, 0)), (center, (-.2, -.28, 0)),
                            (maximum, (.65, -.28, 0)), (None, (-1, .2, 0))]:
         text = nodes.new('GeometryNodeStringToCurves')
@@ -137,6 +138,7 @@ def add_legend(obj, color_material, minimum, center, maximum, title):
         else:
             text.label = 'QC Legend Title'
             text.inputs['String'].default_value = title
+            title_node = text
         realize = nodes.new('GeometryNodeRealizeInstances')
         links.new(text.outputs['Curve Instances'], realize.inputs['Geometry'])
         fill = nodes.new('GeometryNodeFillCurve')
@@ -159,24 +161,44 @@ def add_legend(obj, color_material, minimum, center, maximum, title):
     links.new(original, join.inputs['Geometry'])
     links.new(show.outputs['Output'], join.inputs['Geometry'])
     links.new(join.outputs['Geometry'], output.inputs['Geometry'])
+    return title_node
+
+
+def color_title(field):
+    name = {'electrostatic_potential': 'ESP', 'orbital_amplitude': 'MO amplitude',
+            'electron_number_density': 'Electron density', 'spin_density': 'Spin density'}.get(
+                field['quantity'], field['quantity'])
+    return name + ' [' + field['unit'] + ']'
+
+
+def color_record(source, field, field_source):
+    return json.dumps({'source': source['qc_source_sha256'], 'field_source': dict(field_source),
+                       'field_dataset_sha256': source['qc_dataset_sha256'],
+                       'field': {key: field.get(key) for key in
+                                 ('array', 'quantity', 'unit', 'orbital', 'spin', 'source_number')},
+                       'quantity': field['quantity'], 'unit': field['unit'],
+                       'interpolation': 'trilinear', 'missing_color': 'magenta'})
 
 
 def add_mapping(target, source, low, high):
     if not np.isfinite([low, high]).all() or low >= high:
         raise ValueError('Color minimum must be finite and below color maximum')
-    volume = source.qc_settings.volume
-    if volume is None:
-        raise ValueError('Source field has no bound volume')
+    from .source_browser import bound_field
+    volume, field, _, field_source = bound_field(source)
     modifier = view_modifier(target)
     tree = modifier.node_group
-    if tree.get('qc_color_mapping'):
-        raise ValueError('This view already has a scalar mapping; edit its node inputs')
+    if (tree.get('qc_color_mapping') or target.get('qc_color_source')
+            or any(n.bl_idname == 'GeometryNodeGroup' and n.node_tree
+                   and n.node_tree.get('qc_asset_id') == 'qc.color_scalar.v2' for n in tree.nodes)):
+        raise ValueError('This view already has a scalar mapping; use Select Color Field to replace it')
+    output = geometry_output(tree)
+    if len(output.links) != 1 or sum(n.type == 'GROUP_INPUT' for n in tree.nodes) != 1:
+        raise ValueError('Target view has no unique supported geometry input and output')
     for name, value in [('Color Minimum', low), ('Color Center', (low + high) / 2), ('Color Maximum', high)]:
         item = socket(tree, name, 'NodeSocketFloat', default=value)
         modifier[item.identifier] = value
     nodes, links = tree.nodes, tree.links
     inputs = next(n for n in nodes if n.type == 'GROUP_INPUT')
-    output = geometry_output(tree)
     geometry = output.links[0].from_socket
     info = nodes.new('GeometryNodeObjectInfo')
     info.transform_space = 'RELATIVE'
@@ -197,18 +219,159 @@ def add_mapping(target, source, low, high):
     assign.inputs['Material'].default_value = color_material
     links.new(geometry, assign.inputs['Geometry'])
     links.new(assign.outputs['Geometry'], output)
-    field = json.loads(source['qc_field'])
-    title = {'electrostatic_potential': 'ESP', 'orbital_amplitude': 'MO amplitude',
-             'electron_number_density': 'Electron density', 'spin_density': 'Spin density'}.get(field['quantity'], field['quantity'])
-    add_legend(target, color_material, 'Color Minimum', 'Color Center', 'Color Maximum', title + ' [' + field['unit'] + ']')
+    add_legend(target, color_material, 'Color Minimum', 'Color Center', 'Color Maximum', color_title(field))
     tree['qc_color_mapping'] = True
     tag_view(tree)
-    target['qc_color_source'] = json.dumps({'source': source['qc_source_sha256'],
-                                           'quantity': field['quantity'], 'unit': field['unit'],
-                                           'interpolation': 'trilinear', 'missing_color': 'magenta'})
+    target['qc_color_source'] = color_record(source, field, field_source)
     for index, node in enumerate(nodes):
         node.location = (index % 6 * 220, -(index // 6) * 240)
     target.update_tag()
+
+
+def compare_color_sources(target, source):
+    """Use the same scientific association check for first binding and replacement."""
+    from .source_browser import bound_field, read_metadata
+    bound_field(source)
+    read_metadata(target)
+    reference = load_dataset(bpy.path.abspath(target['qc_dataset']))
+    if target.get('qc_source_sha256') != reference.metadata['source']['sha256']:
+        raise ValueError('Target view differs from its saved source identity')
+    associated = json.loads(source.parent.get('qc_association', '{}')) if source.parent else {}
+    explicit_alignment = (associated.get('reference_source') == target['qc_source_sha256']
+                          and associated.get('moving_source') == source['qc_source_sha256'])
+    return compare_sources(reference, load_dataset(bpy.path.abspath(source['qc_dataset'])),
+                           allow_rigid=explicit_alignment)
+
+
+def replace_mapping(target, source):
+    from .source_browser import bound_field, color_mapping, field_source, object_record, read_metadata
+    volume, field, _, field_source = bound_field(source)
+    info, title = color_mapping(target)
+    previous_volume = info.inputs['Object'].default_value
+    previous = object_record(target, 'qc_color_source')
+    previous_field = object_record(previous_volume, 'qc_field')
+    if (previous_volume.get('qc_source_sha256') != previous.get('source')
+            or any(previous_field.get(key) != previous.get(key) for key in ('quantity', 'unit'))
+            or previous.get('field_dataset_sha256', previous_volume.get('qc_dataset_sha256'))
+               != previous_volume.get('qc_dataset_sha256')
+            or previous.get('field') and previous['field'] != {key: previous_field.get(key) for key in
+                                                                ('array', 'quantity', 'unit', 'orbital', 'spin', 'source_number')}
+            or previous.get('field_source') and previous['field_source'] != field_source(
+                read_metadata(previous_volume), previous_field)):
+        raise ValueError('Existing color mapping differs from its saved binding')
+    old_title = title.inputs['String'].default_value
+    old_binding = target['qc_color_source']
+    try:
+        info.inputs['Object'].default_value = volume
+        title.inputs['String'].default_value = color_title(field)
+        target['qc_color_source'] = color_record(source, field, field_source)
+        target.update_tag()
+    except Exception:
+        info.inputs['Object'].default_value = previous_volume
+        title.inputs['String'].default_value = old_title
+        target['qc_color_source'] = old_binding
+        raise
+
+
+_color_choices = []
+
+
+def color_field_choices(self, context):
+    from .source_browser import bound_field
+    _color_choices.clear()
+    if context is None or context.scene is None:
+        return _color_choices
+    for obj in context.scene.objects:
+        try:
+            _, field, meta, source = bound_field(obj)
+        except (ValueError, OSError, KeyError, TypeError):
+            continue
+        job = meta.get('selected_job')
+        segment = f' | Job {job + 1}' if type(job) is int and job >= 0 else ''
+        orbital = field.get('orbital')
+        orbital_label = (f' | {orbital.get("spin", "?")} MO {orbital.get("source_number", "?")}'
+                         if isinstance(orbital, dict) else '')
+        label = (f'{obj.name}: {field["quantity"]} [{field["unit"]}]'
+                 f' | {source.get("filename", "unknown")} | {source["sha256"][:12]}'
+                 f'{segment}{orbital_label}')
+        _color_choices.append((obj.name, label, source['sha256']))
+    return _color_choices
+
+
+class QCBLENDER_OT_select_color_field(bpy.types.Operator):
+    bl_idname = 'qcblender.select_color_field'
+    bl_label = 'Select Color Field'
+    bl_options = {'REGISTER', 'UNDO'}
+    source_name: EnumProperty(name='Field', items=color_field_choices)
+    target_name: StringProperty(options={'HIDDEN'})
+    minimum: FloatProperty(name='Color minimum (field unit)', default=-.05)
+    maximum: FloatProperty(name='Color maximum (field unit)', default=.05)
+
+    @classmethod
+    def poll(cls, context):
+        return (context.object is not None and context.object.get('qc_view_kind') in ('field', 'slice', 'atoms')
+                and bool(context.object.get('qc_dataset')))
+
+    def invoke(self, context, event):
+        choices = color_field_choices(self, context)
+        if not choices:
+            self.report({'ERROR'}, 'No bound scalar field views are available in this scene')
+            return {'CANCELLED'}
+        self.target_name = context.object.name
+        self.source_name = choices[0][0]
+        return context.window_manager.invoke_props_dialog(self, width=680)
+
+    def draw(self, context):
+        from .source_browser import bound_field
+        layout = self.layout
+        layout.prop(self, 'source_name')
+        source = context.scene.objects.get(self.source_name)
+        if source is not None:
+            try:
+                _, field, meta, source_record = bound_field(source)
+            except (ValueError, OSError, KeyError, TypeError) as error:
+                layout.label(text=str(error), icon='ERROR')
+            else:
+                box = layout.box()
+                box.label(text='Source file: ' + str(source_record.get('filename', 'unknown')))
+                box.label(text='SHA-256: ' + source_record['sha256'])
+                job = meta.get('selected_job')
+                box.label(text=f'Calculation: Job {job + 1}' if type(job) is int and job >= 0
+                          else 'Calculation: not recorded')
+                jobs = meta.get('jobs', [])
+                if type(job) is int and 0 <= job < len(jobs):
+                    segment = jobs[job]
+                    box.label(text=f'Route: {segment.get("route", "not recorded")} | status: {segment.get("status", "unknown")}')
+                    box.label(text=f'Source lines: {segment.get("line_start", "?")}–{segment.get("line_end", "?")}')
+                box.label(text=f'Field: {field["quantity"]} [{field["unit"]}] | array {field["array"]}')
+                orbital = field.get('orbital')
+                if isinstance(orbital, dict):
+                    box.label(text=f'Orbital: {orbital.get("spin", "unknown")} MO {orbital.get("source_number", "unknown")}')
+                    box.label(text=f'Occupation: {orbital.get("occupation", "unknown")} | Energy: {orbital.get("energy_hartree", "unknown")} Eh')
+                elif field.get('orbital_source_number') is not None:
+                    box.label(text=f'Orbital source number: {field["orbital_source_number"]}')
+        layout.prop(self, 'minimum')
+        layout.prop(self, 'maximum')
+        layout.label(text='Range is used only for the first mapping; replacement keeps the current range')
+
+    def execute(self, context):
+        target = context.object
+        try:
+            if target is None or (self.target_name and target.name != self.target_name):
+                raise ValueError('Active target changed while choosing the color field')
+            source = context.scene.objects.get(self.source_name)
+            if source is None:
+                raise ValueError('Selected color field view is no longer in this scene')
+            compare_color_sources(target, source)
+            tree = view_modifier(target).node_group
+            if tree.get('qc_color_mapping') or target.get('qc_color_source'):
+                replace_mapping(target, source)
+            else:
+                add_mapping(target, source, self.minimum, self.maximum)
+        except (ValueError, OSError, KeyError, TypeError) as error:
+            self.report({'ERROR'}, str(error))
+            return {'CANCELLED'}
+        return {'FINISHED'}
 
 
 class QCBLENDER_OT_map_scalar(bpy.types.Operator):
@@ -232,11 +395,7 @@ class QCBLENDER_OT_map_scalar(bpy.types.Operator):
         try:
             if 'qc_field' not in source:
                 raise ValueError('Select two scalar field views, with the receiving surface active')
-            associated = json.loads(source.parent.get('qc_association', '{}')) if source.parent else {}
-            explicit_alignment = (associated.get('reference_source') == target['qc_source_sha256']
-                                  and associated.get('moving_source') == source['qc_source_sha256'])
-            compare_sources(load_dataset(bpy.path.abspath(target['qc_dataset'])),
-                            load_dataset(bpy.path.abspath(source['qc_dataset'])), allow_rigid=explicit_alignment)
+            compare_color_sources(target, source)
             add_mapping(target, source, self.minimum, self.maximum)
         except (ValueError, OSError, KeyError) as error:
             self.report({'ERROR'}, str(error))
