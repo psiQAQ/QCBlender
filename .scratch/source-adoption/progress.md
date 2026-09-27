@@ -3,7 +3,7 @@
 | 阶段 | 状态 | 证据 |
 | --- | --- | --- |
 | 共同基线 | Passed | 9397a90 资料忽略、a297044 文档状态、685a0b3 优化轨迹；既有候选摘要核对通过 |
-| A AIM | Not Run | 开发已领取，待主代理实际验收 |
+| A AIM | Passed | `outputs/source-adoption/01-aim/qualification.json`；30/30 科学检查、GUI、真实 C09、原地及移动冷重开 |
 | B ETS-NOCV | Not Run | 开发已领取，待主代理实际验收 |
 | C 自动取景 | Not Run | 开发已领取，待主代理实际验收 |
 | D 线剖面 | Not Run | A 验收通过后领取 |

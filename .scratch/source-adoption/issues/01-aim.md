@@ -1,7 +1,7 @@
 # A AIM 属性关联校验
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Type: task
 Blocked by: none
 
@@ -14,6 +14,8 @@ Blocked by: none
 纯 Python：真实 C09 59 条 CP 正常；类型/坐标冲突、容差边界、缺字段、损坏内容分别检查。主代理：C09 真实导入和来源/属性核对；错误输入场景不增对象；诊断可见；保存移动冷重开。
 
 ## Comments
+
+2026-09-27：主代理实际 Blender 5.1.1 验收 Passed。30/30 科学回归；独立配置原生安装及离线 worker；真实 C09 59 CP/58 路径、类型/坐标/非有限错误不增对象、缺字段诊断；PNG、原地与移动目录新进程冷重开后数组和来源身份不变。Computer Use 确认按钮、对话框、属性面板、拒绝提示、撤销及 Edit > Redo；MCP 辅助填路径、检查数据和保存证据。记录见 `docs/acceptance/source-adoption.md`；候选与安装副本一致，资格报告 Passed。
 
 2026-09-27：用户批准；主代理负责 Blender 和最终状态。子代理将提交号、测试命令和结果追加于此。
 
