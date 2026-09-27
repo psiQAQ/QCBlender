@@ -166,6 +166,9 @@ class QCBLENDER_OT_layer_action(bpy.types.Operator):
             if remaining:
                 activate(context, remaining[min(index, len(remaining) - 1)])
         else:
+            from .source_browser import source_group
+            key = source_group(obj)[0]
+            layers = [layer for layer in layers if source_group(layer)[0] == key]
             index = layers.index(obj)
             destination = index + (-1 if self.action == 'UP' else 1)
             if 0 <= destination < len(layers):
@@ -281,15 +284,18 @@ class QCBLENDER_PT_layers(bpy.types.Panel):
         row.operator('qcblender.add_surface_layer', text='Surface')
         row.operator('qcblender.create_fog', text='Fog')
         row.operator('qcblender.create_slice', text='Slice')
+        from .source_browser import source_group
+        row = layout.row(align=True)
+        row.operator('qcblender.refresh_sources', text='Refresh Sources', icon='FILE_REFRESH')
+        row.operator('qcblender.source_details', text='Source Details', icon='INFO')
+        groups = {}
         for obj in display_layers(context.scene):
-            row = layout.row(align=True)
-            select = row.operator('qcblender.layer_action', text='', icon='RESTRICT_SELECT_OFF',
-                                  depress=obj == context.object)
-            select.target, select.action = obj.name, 'SELECT'
-            row.prop(obj, 'name', text='')
-            operator = row.operator('qcblender.layer_action', text='', icon='HIDE_ON' if obj.hide_get() else 'HIDE_OFF')
-            operator.target, operator.action = obj.name, 'VISIBILITY'
-            row.prop(obj, 'hide_render', text='', icon='RESTRICT_RENDER_ON' if obj.hide_render else 'RESTRICT_RENDER_OFF')
+            key, label = source_group(obj)
+            groups.setdefault(key, (label, []))[1].append(obj)
+        for label, objects in groups.values():
+            layout.label(text=label, icon='FILE')
+            for obj in objects:
+                draw_layer_row(layout, context, obj)
         obj = context.object
         if obj in display_layers(context.scene):
             row = layout.row(align=True)
@@ -303,3 +309,14 @@ class QCBLENDER_PT_layers(bpy.types.Panel):
                     row.operator('qcblender.hydrogen_visibility', text=label).mode = mode
                 layout.label(text='Hydrogen: ' + obj.get('qc_hydrogen_visibility', 'RESTORE'))
         layout.label(text='Select a layer; edit its inputs below')
+
+
+def draw_layer_row(layout, context, obj):
+    row = layout.row(align=True)
+    select = row.operator('qcblender.layer_action', text='', icon='RESTRICT_SELECT_OFF',
+                          depress=obj == context.object)
+    select.target, select.action = obj.name, 'SELECT'
+    row.prop(obj, 'name', text='')
+    operator = row.operator('qcblender.layer_action', text='', icon='HIDE_ON' if obj.hide_get() else 'HIDE_OFF')
+    operator.target, operator.action = obj.name, 'VISIBILITY'
+    row.prop(obj, 'hide_render', text='', icon='RESTRICT_RENDER_ON' if obj.hide_render else 'RESTRICT_RENDER_OFF')

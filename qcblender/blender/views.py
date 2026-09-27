@@ -48,6 +48,8 @@ def bind(obj, directory, data):
     obj['qc_dataset'] = str(Path(directory).resolve())
     obj['qc_dataset_sha256'] = hashlib.sha256((Path(directory) / 'manifest.json').read_bytes()).hexdigest()
     obj['qc_source_sha256'] = data.metadata['source']['sha256']
+    obj['qc_source_filename'] = data.metadata['source'].get('filename', '未记录')
+    obj['qc_source_job'] = data.metadata.get('selected_job', -1)
     obj['qc_schema'] = '0.1'
     obj['qc_coordinate_unit'] = 'angstrom'
     obj['qc_diagnostics'] = json.dumps(data.metadata.get('diagnostics', []))
