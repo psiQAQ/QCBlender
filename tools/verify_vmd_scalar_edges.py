@@ -41,14 +41,15 @@ def evaluated_samples(obj):
         evaluated.to_mesh_clear()
 
 
-def analytic_view(out, number):
+def analytic_view(out, number, job=None):
     """Two real but explicitly synthetic Dataset sources with the same filename."""
     data_module = base.module('data')
     values = np.broadcast_to(np.arange(3, dtype=np.float64)[:, None, None], (3, 3, 3)).copy()
     values += number * .1
+    job = number if job is None else job
     valid = np.ones((3, 3, 3), dtype=bool)
     valid[1, 0, 0] = False
-    directory = out / 'datasets' / f'analytic-job-{number + 1}'
+    directory = out / 'datasets' / f'analytic-source-{number + 1}-job-{job + 1}'
     directory.mkdir(parents=True, exist_ok=True)
     source_bytes = f'analytic VMD edge fixture {number}\n'.encode('ascii')
     (directory / 'synthetic-grid.txt').write_bytes(source_bytes)
@@ -59,7 +60,7 @@ def analytic_view(out, number):
     data = data_module.Dataset({
         'source': {'filename': 'synthetic-grid.txt', 'sha256': hashlib.sha256(source_bytes).hexdigest(),
                    'parser': 'analytic fixture'},
-        'coordinate_unit': 'angstrom', 'selected_job': number,
+        'coordinate_unit': 'angstrom', 'selected_job': job,
         'jobs': [{'id': f'analytic-{i + 1}', 'route': 'analytic fixture', 'status': 'complete'}
                  for i in range(2)], 'fields': [field], 'diagnostics': []},
         {'atomic_numbers': np.array([1], dtype=np.int32),
@@ -68,7 +69,7 @@ def analytic_view(out, number):
     field['vdb_sha256'] = hashlib.sha256((directory / 'field.vdb').read_bytes()).hexdigest()
     data_module.save_dataset(data, directory)
     obj = base.module('blender.views').field_view(directory)
-    obj.name = f'VMD analytic Job {number + 1}'
+    obj.name = f'VMD analytic source {number + 1} Job {job + 1}'
     obj.hide_render = True
     return obj
 
@@ -121,8 +122,13 @@ def check_edges(out):
         assert ('synthetic-grid.txt' in row['label'] and row['source']['sha256'][:12] in row['label']
                 and f'Job {number}' in row['label'])
     assert browser.source_group(first)[0] != browser.source_group(second)[0]
+    same_source = analytic_view(out, 0, job=1)
+    c = next(row for row in scalars.color_field_candidates(bpy.context) if row['name'] == same_source.name)
+    assert c['source'] == a['source'] and c['job'] != a['job']
+    assert browser.source_group(first)[0] != browser.source_group(same_source)[0]
     report['checks']['same_filename_distinct_source_and_job_labels'] = 'Passed'
-    report['candidate_labels'] = [a['label'], b['label']]
+    report['candidate_labels'] = [a['label'], b['label'], c['label']]
+    report['identity_fixture'] = 'Synthetic metadata tests file and calculation identity independently; not a Gaussian calculation.'
     before_arrays = base.hashes()
 
     # Both views sample the same analytic x field through installed QC GN assets.
