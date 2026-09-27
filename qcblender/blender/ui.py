@@ -12,32 +12,59 @@ ADDON_ID = __package__.rsplit('.', 1)[0]
 _operations = {}
 
 
-def draw_material_controls(layout, mat):
+def _material_section(node):
+    role = node.get('qc_role')
+    if role in ('color_ramp', 'color_invert'):
+        return '颜色映射'
+    if role == 'opacity_ramp':
+        return '材质'
+    control = node.get('qc_control', '')
+    if control.startswith(('Plane ', 'Box ')):
+        return '空间观察'
+    if control.startswith('Color '):
+        return '颜色映射'
+    if control == 'Display Threshold':
+        return '几何表示'
+    return '材质' if control else None
+
+
+def draw_material_controls(layout, mat, section='材质', unit=''):
     if not mat or not mat.use_nodes:
         return
     nodes = mat.node_tree.nodes
     from .views import node_by_type
 
     shader = node_by_type(nodes, 'ShaderNodeBsdfPrincipled')
-    if shader:
+    if shader and section == '材质':
         for name in ('Base Color', 'Alpha', 'Roughness'):
             if not shader.inputs[name].is_linked:
                 layout.prop(shader.inputs[name], 'default_value', text=name)
     for node in nodes:
-        if node.get('qc_role') in ('color_ramp', 'opacity_ramp'):
+        if node.get('qc_role') in ('color_ramp', 'opacity_ramp') and section == _material_section(node):
             layout.label(text='Opacity multiplier' if node['qc_role'] == 'opacity_ramp' else 'Color map')
             layout.template_color_ramp(node, 'color_ramp', expand=True)
-        elif node.get('qc_role') == 'color_invert':
+        elif node.get('qc_role') == 'color_invert' and section == '颜色映射':
             layout.prop(node.outputs[0], 'default_value', text='Reverse (0 or 1)')
-        elif node.get('qc_control'):
+        elif node.get('qc_control') and section == _material_section(node):
+            if node['qc_control'] in ('Plane Origin', 'Plane Normal') and not next(
+                    (other.outputs[0].default_value for other in nodes if other.get('qc_control') == 'Plane Enabled'), False):
+                continue
+            if node['qc_control'] in ('Box Minimum', 'Box Maximum') and not next(
+                    (other.outputs[0].default_value for other in nodes if other.get('qc_control') == 'Box Enabled'), False):
+                continue
             if node.bl_idname == 'ShaderNodeCombineXYZ':
-                layout.label(text=node['qc_control'])
+                label = (' [视图局部方向，无量纲]' if node['qc_control'] == 'Plane Normal'
+                         else ' [视图局部 Å]')
+                layout.label(text=node['qc_control'] + label)
                 row = layout.row(align=True)
                 for item in node.inputs:
                     row.prop(item, 'default_value', text=item.name)
             else:
-                layout.prop(node.outputs[0], 'default_value', text=node['qc_control'])
-    if mat.get('qc_fog'):
+                label = node['qc_control']
+                if label in ('Color Minimum', 'Color Maximum', 'Display Threshold', 'Opacity Range'):
+                    label += f' [{unit or "单位未知"}]'
+                layout.prop(node.outputs[0], 'default_value', text=label)
+    if mat.get('qc_fog') and section == '材质':
         layout.label(text='Optical display; source values unchanged')
 
 
@@ -330,6 +357,119 @@ class QCBLENDER_OT_declare_field(AsyncOperation, bpy.types.Operator):
         self.report({'INFO'}, 'Saved explicit user-assigned quantity and units; array values unchanged')
 
 
+class QCBLENDER_OT_set_view_style(bpy.types.Operator):
+    bl_idname = 'qcblender.set_view_style'
+    bl_label = 'Set QC View Style'
+    bl_options = {'REGISTER', 'UNDO'}
+
+    socket_id: StringProperty(options={'HIDDEN'})
+    style: IntProperty(min=0, max=2, options={'HIDDEN'})
+
+    @classmethod
+    def poll(cls, context):
+        return context.object is not None and context.object.get('qc_view_kind') in ('atoms', 'field')
+
+    def execute(self, context):
+        from .graph import view_modifier
+        from .parameters import STYLE_SOCKETS
+
+        try:
+            modifier = view_modifier(context.object)
+            valid = any(item.item_type == 'SOCKET' and item.in_out == 'INPUT'
+                        and item.name == STYLE_SOCKETS[context.object['qc_view_kind']]
+                        and item.identifier == self.socket_id
+                        for item in modifier.node_group.interface.items_tree)
+            if not valid or self.socket_id not in modifier:
+                raise ValueError('Selected QC style input is unavailable')
+            modifier[self.socket_id] = self.style
+            context.object.update_tag()
+        except ValueError as error:
+            self.report({'ERROR'}, str(error))
+            return {'CANCELLED'}
+        return {'FINISHED'}
+
+
+def draw_view_parameters(layout, obj):
+    """Show only controls relevant to the current view; all edits target native nodes."""
+    from .graph import view_modifier
+    from .parameters import GROUPS, STYLES, STYLE_SOCKETS, socket_group, socket_label
+
+    source = layout.box()
+    source.label(text='数据来源')
+    source.label(text='文件: ' + obj.get('qc_source_filename', '未记录'))
+    if obj.get('qc_source_job', -1) >= 0:
+        source.label(text='计算段: ' + str(obj['qc_source_job'] + 1))
+    field = json.loads(obj['qc_field']) if 'qc_field' in obj else {}
+    if field:
+        source.label(text=f"字段: {field['quantity']} [{field['unit']}]")
+        source.label(text='网格: ' + ' × '.join(map(str, field['shape'])))
+        if field.get('steps'):
+            source.label(text='源网格步长（只读，Å；与显示精细度独立）')
+            for axis, step in zip('XYZ', field['steps']):
+                source.label(text=f"{axis}: (" + ', '.join(f'{value:.4g}' for value in step) + ')')
+        if field.get('method'):
+            source.label(text='方法: ' + field['method'])
+        if field.get('orbital'):
+            mo = field['orbital']
+            source.label(text=f"{mo['spin']} MO {mo['source_number']} | occupation {mo['occupation']:.6g}")
+            source.label(text=f"轨道能量: {mo['energy_hartree']} Hartree")
+        if field.get('interpretation') == 'user_assigned':
+            source.label(text='量与单位由用户指定')
+    if 'qc_color_source' in obj:
+        color = json.loads(obj['qc_color_source'])
+        source.label(text=f"着色场: {color['quantity']} [{color['unit']}]")
+        source.label(text='有效域外显示洋红色')
+
+    try:
+        modifier = view_modifier(obj)
+    except ValueError as error:
+        layout.label(text=str(error), icon='INFO')
+        return
+    items = [item for item in modifier.node_group.interface.items_tree
+             if item.item_type == 'SOCKET' and item.in_out == 'INPUT' and item.identifier in modifier]
+    values = {item.name: modifier.get(item.identifier) for item in items}
+    quantity = field.get('quantity', '')
+    color_unit = (json.loads(obj['qc_color_source'])['unit'] if 'qc_color_source' in obj else field.get('unit', ''))
+    materials = [modifier.get(item.identifier) for item in items
+                 if item.socket_type == 'NodeSocketMaterial'
+                 and socket_group(item.name, item.socket_type, values, quantity)]
+    for node in modifier.node_group.nodes:
+        for control in node.inputs:
+            if control.type == 'MATERIAL' and not control.is_linked and control.default_value and control.default_value not in materials:
+                materials.append(control.default_value)
+
+    for group in GROUPS:
+        grouped = [item for item in items if socket_group(item.name, item.socket_type, values, quantity) == group]
+        material_controls = (group == '材质' and any(materials)) or any(
+            _material_section(node) == group
+            for mat in materials if mat and mat.use_nodes for node in mat.node_tree.nodes)
+        if not grouped and not material_controls:
+            continue
+        box = layout.box()
+        box.label(text=group)
+        if group == '空间观察' and (any(item.name.startswith(('Plane ', 'Box ')) for item in grouped)
+                                  or any(mat and mat.get('qc_fog') for mat in materials)):
+            box.label(text='裁剪坐标：视图局部坐标；位置与范围单位为 Å')
+        if group == '颜色映射':
+            for prefix in ('Color', 'Charge'):
+                if prefix + ' Center' in values and not values[prefix + ' Minimum'] < values[prefix + ' Center'] < values[prefix + ' Maximum']:
+                    box.label(text=prefix + ': 最小值 < 中心值 < 最大值', icon='ERROR')
+        for item in grouped:
+            if item.name == STYLE_SOCKETS.get(obj.get('qc_view_kind')):
+                row = box.row(align=True)
+                row.label(text='样式')
+                for value, label in enumerate(STYLES[obj['qc_view_kind']]):
+                    button = row.operator('qcblender.set_view_style', text=label,
+                                          depress=modifier.get(item.identifier) == value)
+                    button.socket_id, button.style = item.identifier, value
+            else:
+                box.prop(modifier, '["' + item.identifier + '"]',
+                         text=socket_label(item.name, quantity, color_unit if item.name.startswith('Color ') else field.get('unit', '')))
+        for mat in materials:
+            if mat:
+                draw_material_controls(box, mat, group, color_unit)
+
+
 class QCBLENDER_PT_main(bpy.types.Panel):
     bl_label = 'QCBlender'
     bl_idname = 'QCBLENDER_PT_main'
@@ -426,49 +566,8 @@ class QCBLENDER_PT_main(bpy.types.Panel):
                 layout.label(text=f"Last sample: {probe['value']:.8g} {probe['unit']}")
                 layout.label(text='Source angstrom: ' + ', '.join(f'{v:.4g}' for v in probe['source_position_angstrom']))
                 layout.label(text='Trilinear grid interpolation; click to refresh')
-            if 'qc_field' in obj:
-                field = json.loads(obj['qc_field'])
-                layout.label(text=field['quantity'])
-                layout.label(text='Unit: ' + field['unit'])
-                layout.label(text='Grid: ' + ' x '.join(map(str, field['shape'])))
-                if field.get('method'):
-                    layout.label(text='Method: ' + field['method'])
-                if field.get('interpretation') == 'user_assigned':
-                    layout.label(text='Quantity/unit explicitly assigned by user')
-                if field.get('orbital'):
-                    mo = field['orbital']
-                    layout.label(text=f"{mo['spin']} MO {mo['source_number']} | occupation {mo['occupation']:.6g}")
-                    layout.label(text=f"Energy: {mo['energy_hartree']} Hartree")
-                if 'qc_color_source' in obj:
-                    color_source = json.loads(obj['qc_color_source'])
-                    layout.label(text='Colors: ' + color_source['quantity'] + ' [' + color_source['unit'] + ']')
-                    layout.label(text='Magenta: outside valid field domain')
         if obj and (obj.get('qc_view_kind') in ('atoms', 'field', 'slice', 'fog', 'dipole', 'spectrum', 'scatter')
                     or obj.get('qc_view_kind') == 'analysis' and obj.get('qc_analysis_role') in
                     ('esp_maximum', 'esp_minimum', 'aim_C', 'aim_N', 'aim_O', 'aim_F',
                      'irc_cursor', 'irc_mayer_cursor')):
-            from .graph import view_modifier
-            try:
-                modifier = view_modifier(obj)
-            except ValueError as error:
-                layout.label(text=str(error), icon='INFO')
-                modifier = None
-            if modifier:
-                values = {item.name: modifier.get(item.identifier) for item in modifier.node_group.interface.items_tree
-                          if item.item_type == 'SOCKET' and item.in_out == 'INPUT' and item.identifier in modifier}
-                for prefix in ('Color', 'Charge'):
-                    if prefix + ' Center' in values and not values[prefix + ' Minimum'] < values[prefix + ' Center'] < values[prefix + ' Maximum']:
-                        layout.label(text=prefix + ': require minimum < center < maximum', icon='ERROR')
-                for item in modifier.node_group.interface.items_tree:
-                    if item.item_type == 'SOCKET' and item.in_out == 'INPUT' and item.identifier in modifier:
-                        layout.prop(modifier, '["' + item.identifier + '"]', text=item.name)
-                        if item.socket_type == 'NodeSocketMaterial':
-                            mat = modifier.get(item.identifier)
-                            draw_material_controls(layout, mat)
-                shown = {modifier.get(item.identifier) for item in modifier.node_group.interface.items_tree
-                         if item.item_type == 'SOCKET' and item.socket_type == 'NodeSocketMaterial'}
-                for node in modifier.node_group.nodes:
-                    for control in node.inputs:
-                        if control.type == 'MATERIAL' and not control.is_linked and control.default_value and control.default_value not in shown:
-                            shown.add(control.default_value)
-                            draw_material_controls(layout, control.default_value)
+            draw_view_parameters(layout, obj)
