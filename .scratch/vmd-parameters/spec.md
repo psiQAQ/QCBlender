@@ -31,6 +31,8 @@ Type: task
 
 同源多视图、同名不同源、不同计算段、密度/ESP；常量、无有效点、取消、源变化；单位不匹配、未知字段、共享材质、自定义图；错误无副作用；撤销/重做、保存、移动冷重开；数组摘要不变。Computer Use 确认新入口，MCP 重复操作和数值核对。每包独立 ZIP、安装副本和证据，状态统一 Passed / Failed / Not Run。
 
+当前记录：四包已集成，最终候选 `outputs/vmd-parameters/04-copy-r4/` 的自动技术检查 Passed；Computer Use 和整批验收 Not Run。不同计算段字段身份经合成 Dataset 的真实 Blender 路径验证；真实 Gaussian 多段字段链路未验证，现有 Log reader 不提供基组/MO 场求值数据。详情见 `docs/acceptance/vmd-parameters.md`，不能用合成身份测试替代真实计算证据。
+
 ## 后续
 
 空间观察、图例出图、局部结构与测量只记录路线；不增加跨工程预设、新格式、新科学算法、运行依赖。人工签署与外部视觉对照后置。参考资料在忽略的 submodules/VMD；研究结论可跟踪。
