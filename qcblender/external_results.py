@@ -149,15 +149,27 @@ def ets_nocv_pairs(path, energy_unit):
     lines = Path(path).read_text(encoding='utf-8', errors='replace').splitlines()
     pattern = re.compile(r'^\s*(\d+)\s+(' + r'[+-]?\d+\.\d+' + r')\s+(\d+)\s+([+-]?\d+\.\d+)\s+([+-]?\d+\.\d+)\s+(\d+)\s+([+-]?\d+\.\d+)\s+([+-]?\d+\.\d+)\s*$')
     rows, spin, in_table = [], 'Total', False
+    declared_unit, not_evaluated, placeholder = None, False, False
     for number, line in enumerate(lines, 1):
+        lower = line.lower()
+        if 'energies of nocv orbitals have not been evaluated' in lower:
+            not_evaluated = True
+        unit_note = re.search(r'\b(?:all\s+)?energies?\s+(?:are\s+given\s+in|in|unit\s*(?:is|:))\s+(\S+)', line, re.I)
+        if unit_note:
+            declared_unit = unit_note[1].rstrip('.,;').lower()
+            not_evaluated = False
         if 'Alpha NOCV orbitals' in line:
             spin = 'Alpha'
         elif 'Beta NOCV orbitals' in line:
             spin = 'Beta'
         if re.search(r'Pair\s+Energy\s*\|\s*Orbital\s+Eigenvalue\s+Energy', line):
-            nearby = '\n'.join(lines[max(0, number - 30):number]).lower()
-            printed_unit = 'kcal/mol' if 'all energies are given in kcal/mol' in nearby else 'hartree'
-            in_table = printed_unit == energy_unit
+            if declared_unit and declared_unit not in ('kcal/mol', 'hartree'):
+                raise ValueError(f'ETS-NOCV table line {number} declares unsupported energy unit {declared_unit}')
+            if declared_unit and declared_unit != energy_unit:
+                raise ValueError(f'ETS-NOCV table line {number} declares {declared_unit}, not {energy_unit}')
+            in_table = not not_evaluated
+            placeholder |= not_evaluated
+            declared_unit, not_evaluated = None, False
             continue
         match = pattern.match(line) if in_table else None
         if match:
@@ -180,5 +192,7 @@ def ets_nocv_pairs(path, energy_unit):
         else:
             unique[key] = row
     if not unique:
+        if placeholder:
+            raise ValueError('ETS-NOCV orbital energies have not been evaluated; pair energies are placeholders')
         raise ValueError('ETS-NOCV table has no pair rows')
     return list(unique.values())
