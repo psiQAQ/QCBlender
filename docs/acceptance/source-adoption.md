@@ -2,6 +2,8 @@
 
 本记录由 Agent 执行；独立人工验收、外部视觉对照及发布批准为 Not Run。共同开发基线为 `ee9b8d6250a69786711403bbcc28905e10b78846`（main）。参考依据见 [研究记录](../research/source-adoption.md)。各候选和证据独立保存在 `outputs/source-adoption/`，既有候选不覆盖。
 
+四批分别具有本地附注技术标签 `qa/source-adoption-20260927-01` 至 `04`；第 04 个指向验收提交 `b2c227c`。四个开发分支均已合入 main，工作树在保全 42 份有效输出并逐文件核对摘要后移除，分支和标签保留。归档清单见 `outputs/source-adoption/worktree-archive/manifest.json`。未推送或发布。
+
 ## 01 AIM
 
 状态：**Passed**。源码集成 `1e1ea10`；资格检查源码提交 `03d5c19`。候选 `01-aim/dist/qcblender-0.0.1.zip`，SHA-256 `09d7c3b4ea99fe3d9f114bf3576cd91111c8c8dca19396e6782debff7b809000`。安装在 `01-aim/profile/extensions/user_default/qcblender`，Windows x64 / Blender 5.1.1 / 简体中文。

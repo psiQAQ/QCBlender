@@ -8,4 +8,5 @@
 | C 自动取景 | Passed | `outputs/source-adoption/03-camera/qualification.json`；40/40 科学检查、相机投影、GUI、原地及移动冷重开 |
 | D 线剖面专项 | Passed | 最终候选 `52e485b4…`；45/45 科学检查、干净安装、真实几何/色场、斜轴断线、CSV、复制、GUI、原地/移动冷重开；`04-profile/qualification.json` |
 | 最终完整技术 SOP | Passed | `04-profile/final-sop/final-sop-summary.json`；C01–C13 六栏、N01–N18、35 个源摘要和 26 次独立进程冷重开；旧候选与证据保留于 `prior-r1/`、`prior-r2/` |
+| 本地标签与工作树归档 | Passed | 四个 `qa/source-adoption-20260927-01` 至 `04` 附注标签；42 份有效输出逐文件保全在 `outputs/source-adoption/worktree-archive/`，四工作树移除，分支保留；Git 连通性检查通过 |
 | 独立人工与外部视觉对照 | Not Run | 后置，不由技术报告代签 |
