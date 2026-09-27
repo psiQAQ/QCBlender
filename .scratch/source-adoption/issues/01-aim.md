@@ -25,3 +25,5 @@ Blocked by: none
 $env:QCBLENDER_REFERENCE_ROOT='D:\workspace\QCBlender'
 & 'C:\Program Files\Blender Foundation\Blender 5.1\5.1\python\bin\python.exe' -I -c "import sys,unittest; sys.path[:0]=[r'D:\workspace\QCBlender\.worktrees\adopt-aim',r'D:\workspace\QCBlender\outputs\science']; suite=unittest.defaultTestLoader.discover('tests',pattern='test_science_aim_association.py'); result=unittest.TextTestRunner(verbosity=2).run(suite); sys.exit(not result.wasSuccessful())"
 ```
+
+2026-09-27：Spec 复核修复提交 `6986169`。真实 C09 属性表中同一 CP 的错误 `CP_type` 后接正确 `CP_type`、错误 `Position (Angstrom)` 后接正确坐标，以及无冒号裸行 `Position (Angstrom)`，修复前均被接受；现均拒绝。以上命令复验 **Passed：5/5**；`git diff --check` **Passed**。Blender 项仍 **Not Run**，Status 保持 claimed。
