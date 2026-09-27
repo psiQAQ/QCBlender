@@ -1,5 +1,6 @@
 """Native offline installation, worker, geometry and cold-open acceptance probe."""
 import hashlib
+import argparse
 import importlib
 import json
 from pathlib import Path
@@ -10,7 +11,12 @@ import zipfile
 import bpy
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'outputs/acceptance'
+parser = argparse.ArgumentParser()
+parser.add_argument('--output-dir', type=Path, default=ROOT / 'outputs/acceptance')
+parser.add_argument('--candidate', type=Path, default=ROOT / 'outputs/dist/qcblender-0.0.1.zip')
+parser.add_argument('--reopen', action='store_true')
+args = parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
+OUT = args.output_dir.resolve()
 OUT.mkdir(parents=True, exist_ok=True)
 MODULE = 'bl_ext.user_default.qcblender'
 REPORT = OUT / 'extension.json'
@@ -62,7 +68,7 @@ if '--reopen' in sys.argv:
 else:
     assert Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to(ROOT / 'outputs')
     assert bpy.ops.extensions.package_install_files(
-        filepath=str(ROOT / 'outputs/dist/qcblender-0.0.1.zip'), repo='user_default',
+        filepath=str(args.candidate.resolve()), repo='user_default',
         enable_on_install=True, overwrite=True) == {'FINISHED'}
     jobs = importlib.import_module(MODULE + '.blender.jobs')
     views = importlib.import_module(MODULE + '.blender.views')

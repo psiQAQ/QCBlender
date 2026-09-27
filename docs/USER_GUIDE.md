@@ -7,7 +7,9 @@
 1. 在 Blender Preferences → Get Extensions 的菜单中选择 **Install from Disk**，安装 `outputs/dist/qcblender-0.0.1.zip` 并启用。
 2. 在 Add-ons 中展开 QCBlender，可用 **Check Scientific Runtime** 检查随包组件。
 3. 在 3D Viewport 按 N 打开侧栏，选择 **QCBlender → Import**。导入 `.fchk/.fch`、`.cube/.cub` 或 Gaussian `.log/.out`。
-4. Log 的 **Gaussian Log job number** 从 1 开始；优化后频率计算通常属于另一个 Link1 job，应选择包含频率的 job。Log 不自动展开优化轨迹；外部 IRC FCHK 序列的开发候选入口见[导入说明](EXTERNAL_ANALYSIS_IMPORT.md)。
+4. 结果浏览开发候选中的 Log/Out 导入先异步显示 **Choose Gaussian Calculation**。选择计算段，核对 route、终止状态、原文行区间、能量和显式几何提示，再确认导入；取消不会创建科学 Dataset 或场景对象。预览后源文件改变时须重新预览。优化后频率计算通常属于另一个 Link1 job，应选择包含频率的段；缺少显式几何时不从其他段继承。脚本/MCP 的 `job_number` 仍从 1 开始，worker 的 `job_index` 从 0 开始。Log 不自动展开优化轨迹；外部 IRC FCHK 序列入口见[导入说明](EXTERNAL_ANALYSIS_IMPORT.md)。
+
+结果浏览功能使用独立候选 `outputs/result-browser/dist/qcblender-0.0.1.zip`，技术证据见[结果浏览验收记录](RESULT_BROWSER.md)。固定 SOP 包 `outputs/dist/qcblender-0.0.1.zip` 继续保留原段号导入流程。
 
 坐标统一为 Å，1 Blender 单位表示 1 Å。原子之间的连线由元素半径和距离推断，不代表计算所得键级。原始电荷、坐标、轨道和场保存在科学数据中；对象移动和节点样式不会修改它们。
 
@@ -53,6 +55,10 @@ ESP 来自核与电子密度库仑势；距核小于 0.02 bohr 的点标为无�
 频率 job 导入后在 **Vibration / IR** 列表选择模式，IR 棒状图同步突出显示。**Animate** 开启动画，**Amplitude (angstrom)** 控制最大原子显示位移，**Phase** 控制相位，**Cycles per second** 控制播放速度。位移来自真实正常模式；每个模式统一归一化到最大原子位移为 1 后供显示。播放速度不是物理振动频率，源频率始终以 cm^-1 保留。**Show Displacement Vectors** 显示位移方向/幅度；负频率标注 imaginary。
 
 ## 保存、移动与导出
+
+结果浏览开发候选的 **Display Layers** 按源文件 SHA-256 和计算段分组。选择显示层后点击 **Source Details**，通过 **Source record** 分别查看几何来源、计算段、场量及单位、着色来源和外部分析关联。详情只读；计算段编号从 1 开始，完整摘要用于区分同名文件。IR 谱图和偶极沿其父原子对象读取来源。
+
+**Refresh Sources** 按需刷新关联数据的 metadata。旧工程刷新前可能显示“未记录”并保守分组；没有记录的信息不作推断，缺失或损坏的关联显示错误。刷新与查看详情不加载科学数组；显示层的复制、显隐、排序和节点编辑继续使用原有操作。
 
 使用 **Save Portable QC Project** 保存 `.blend` 和同名 `.qcdata/`。两者必须一起移动。`.qcdata` 包含数值数组、来源/单位和可重建的 VDB 显示缓存；`.blend` 保存节点、材质、选择和动画设置。
 
