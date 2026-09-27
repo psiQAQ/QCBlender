@@ -1,12 +1,12 @@
 # QCBlender 0.0.1 独立人工验收 SOP
 
-适用 **Windows x64 + Blender 5.1.1**。候选 ZIP：`outputs/dist/qcblender-0.0.1.zip`，50,440,399 字节，SHA-256 `524ed52f4b71f8ce01ea7d4e702acb7847a956d6b69e40cad28e3b089282951d`。这是当前技术候选的固定快照；ZIP 摘要变化时停止并重建本清单。全部案例当前状态为 **Not Run**，只有实际操作和复核的使用者填写结果、日期和签名。Agent 已有的技术报告不构成人工签署。
+适用 **Windows x64 + Blender 5.1.1**。候选 ZIP：`outputs/dist/qcblender-0.0.1.zip`，50,440,466 字节，SHA-256 `03311fdeb0c83a38a546ebddedee1fe05e8dcb7260b53c889dd9fee3fa7ee231`。这是当前技术候选的固定快照；ZIP 摘要变化时停止并重建本清单。全部案例当前状态为 **Not Run**，只有实际操作和复核的使用者填写结果、日期和签名。Agent 已有的技术报告不构成人工签署。
 
-[样本清单](SOURCES.md)列出 S01–S11 的 URL、版本、许可、摘要和已知计算条件。先在仓库根目录 PowerShell 检查 ZIP 和本次所用的每个样本：`Get-FileHash <路径> -Algorithm SHA256`。摘要不符则停在该例。`outputs/v1-acceptance/` 是本地忽略目录；每例在 `outputs/v1-acceptance/cases/CNN/` 留存同名 `CNN.png`、`CNN.blend`、`CNN.qcdata/`。记录型案例的 `CNN.png` 须拍到可读的 QCBlender 面板和关联分子，不假造三维数值场。可另加 PNG，但不能替代这些固定文件。
+[样本清单](SOURCES.md)列出 S01–S35 的 URL、版本、许可、摘要和已知计算条件。先在仓库根目录 PowerShell 检查 ZIP 和本次所用的每个样本：`Get-FileHash <路径> -Algorithm SHA256`。摘要不符则停在该例。`outputs/v1-acceptance/` 是本地忽略目录；每例在 `outputs/v1-acceptance/cases/CNN/` 留存同名 `CNN.png`、`CNN.blend`、`CNN.qcdata/`。记录型案例的 `CNN.png` 须拍到可读的 QCBlender 面板和关联分子，不假造三维数值场。可另加 PNG，但不能替代这些固定文件。
 
 ## 0. 安装与通用操作
 
-1. 在 Blender 5.1.1 的 **Preferences → Get Extensions → Install from Disk** 选择上述 ZIP，启用 QCBlender；在 3D Viewport 按 `N`，打开 **QCBlender** 页，点击 **Check Scientific Runtime**。记录操作系统、Blender 精确版本、ZIP 摘要及检查结果。
+1. 在 Blender 5.1.1 的 **Preferences → Get Extensions → Install from Disk** 选择上述 ZIP，启用 QCBlender；转到 **Preferences → Add-ons（插件）**，展开 **QCBlender**，点击其偏好设置中的 **Check Scientific Runtime**。检查完成后返回 3D Viewport，按 `N` 打开 **QCBlender** 页。记录操作系统、Blender 精确版本、ZIP 摘要及检查结果。
 2. 每例开始前打开新场景。进入 **QCBlender → Import** 选择案例文件。`.log/.out` 还要选择从 1 开始的 **Gaussian Log job number**。等待完成，选择新原子或场视图。原子编号从 1 开始，坐标是 Å，1 Blender 单位 = 1 Å。
 3. 在 QCBlender 面板和源文件核对原子数、顺序、元素、坐标、计算方法/基组、源摘要、量名、单位及具体数值。FCHK/Log 的源总能量用 Hartree；电荷用 `e`；偶极用 Debye；频率用 `cm^-1`，IR 强度用 `km/mol`。数值按源文件输出精度比较，不凭颜色或轮廓判断数值正确。
 4. 选中视图，在 **Geometry Nodes 修改器** 或侧栏编辑下面指定节点输入；截图或记下修改前后数值与视觉变化。用 Blender 原生相机/灯光和 **Render → Render Image**，`Image → Save As` 保存指定 PNG。图注或旁注写源文件 SHA、量名/单位、阈值、网格、颜色范围和色彩管理。
@@ -27,13 +27,13 @@
 | **C04 ESP / 电荷 / 偶极**；S03 + S04；A | **Import** S03；在原子对象 **Generate Field → Electrostatic potential** 和 **Electron density**。核对 27 原子、RHF/STO-3G、总能量约 `-673.5905711573 Eh`；ESP 是 `hartree/e`，密度 `electron/bohr^3`；**Charge** 只选源中确有的方法，核对至少两原子电荷和 `e`；**Dipole** 核对三分量及 Debye，检查 S04 对应偶极（换算后）。核附近无效 ESP 不当零值。 | 密度表面 `Isovalue=0.004 electron/bohr^3`；选 ESP 表面再 Shift 选密度为活动对象，点 **Map Colors**，色域 `-0.05/0/+0.05 hartree/e`，开图例；偶极显示比例可用 `1.5 Å/D`。另 **Slice** ESP，保存 `C04-esp.png`、`C04-charge.png`、`C04-dipole.png`、`C04-slice.png` 与总览 `C04.png/.blend/.qcdata/`。 |
 | **C05 显示快捷控制**；S01；A | 选 S01 原子视图，在 **Display Layers** 依次点 **Hide H → Keep H...**（填一个真实氢的源编号）→ **Show all**；核对被保留原子确为氢且其他氢隐藏。 | 原子数和 `.qcdata` 原始原子数组始终不变；撤销/重做各一次，保存前后画面 `C05.png/.blend/.qcdata/`。 |
 | **C06 NBO `.out`**；S08；A，许可待核 | **Import** S08、job 2，选其原子视图，再 **Import NBO Records** 同一文件、job 2、block 1。核对 7 条 NBO、2 条 E(2)，占据、NBO 能量、原子编号、E(2) 的 `kcal/mol` 及原文行；NBO 不与 canonical MO 自动映射。job 1 的优化段有多构型，不作为最终几何关联。 | 在 **NBO Records** 面板逐条选择，证据 PNG 中至少一条 NBO 和一条 E(2) 可读；保存 `C06.png/.blend/.qcdata/`。再次用 `.log` 逐字节别名导入 NBO 只验证扩展名入口，记录其摘要仍为 S08；按本表后的命令创建别名。 |
-| **C07 IGMH 与 IRI 双 Cube**；S09+S11 为 IGMH 预检，IRI 尚缺；M | IGMH 预检可先 **Import** S11 作为参考，选其原子视图，点 **Import IGMH / IRI**，几何场 S09、着色场 S11；S10 可另验片段内场。先核清两个场的单位，再在对话框填单位，不用默认值代替来源证据。IRI 另需真实双 Cube。对两法核对原子顺序、坐标、网格、片段定义、原值和单位；故意交换不匹配网格，应拒绝。S09–S11 缺波函数理论级别、片段、版本和单位证据，不能签署科学通过。 | 改几何等值、色域及散点节点；表面位置由几何场决定，颜色由第二场决定，散点横纵轴有量名/单位。分别保存 `C07-igmh.png`、`C07-iri.png`、`C07-scatter.png`、总览 `C07.png/.blend/.qcdata/`；目前 **Not Run**。 |
-| **C08 ESP 表面极值/面积**；同构型极值 PDB + 面积分布文本；M | 先创建 C04 ESP 场，保持其场视图为活动对象，点 **ESP Surface**，填表面定义、极值单位、分布中心单位、面积单位。核对每个最大/最小值、坐标、面积各 bin、总面积及 PDB B-factor 约定；与场单位不同要明确换算依据。 | 点/面积分布应与所选 ESP 场关联；选点在 **External Analysis Records** 查询数值。保存 `C08-extrema.png`、`C08-area.png`、总览 `C08.png/.blend/.qcdata/`；目前 **Not Run**。 |
-| **C09 AIM 点/路径/属性**；`CPs.pdb` + `paths.pdb` + 可选 `CPprop.txt`；M | 选同构型原子视图，点 **AIM**，逐项指定文件。核对 C/N/O/F 临界点类型、坐标、路径组、可用属性原值/单位和原子关联；不含属性时只验点/路径，不补造值。 | 显隐各类点和路径，选点在 **External Analysis Records** 查询；保存 `C09-points.png`、`C09-paths.png`、总览 `C09.png/.blend/.qcdata/`；目前 **Not Run**。 |
-| **C10 IRC 步序 CSV/FCHK**；同一路径多步 FCHK + `step,fchk` CSV；M | CSV 必须 UTF-8、首行 `step,fchk`、从 1 连续且按预期反应方向排序。点 **IRC FCHK Path** 选择清单，逐步点 **IRC Path → Previous/Next**；核对每步原子身份/坐标、`Eh` 能量与源 FCHK、曲线游标及端点。故意重复编号/换原子应拒绝。 | 切步后原子构型和能量游标同步移动；保存 `C10-curve.png`、`C10-steps.png`、总览 `C10.png/.blend/.qcdata/`；目前 **Not Run**。 |
-| **C11 逐步 Mayer**；C10 路径 + `step,mayer_output` CSV 与逐步真实文本；M | 选 IRC 根原子对象，点 **IRC Path → Import Mayer Results**，填 CSV。核对步数、原子对源编号、每步 Mayer 值（无量纲）与原文；在记录对象改原子对并点 **Plot Selected Mayer Pair**。缺步/原子对集合冲突应拒绝。 | 选步游标与键级曲线同步；保存 `C11-curve.png`、`C11-records.png`、总览 `C11.png/.blend/.qcdata/`；目前 **Not Run**。 |
-| **C12 ETS-NOCV 表**；真实原始输出文本 + 参考构型；M | 选参考原子视图，点 **ETS-NOCV Table**，指定文本和文件**实际使用**的 `kcal/mol` 或 `hartree`；核对 pair 编号、自旋、成对轨道编号、能量、原文行号及来源 SHA。 | **External Analysis Records** 表可逐行查询；仅展示记录与关联分子。保存 `C12.png/.blend/.qcdata/`；目前 **Not Run**。 |
-| **C13 NOCV pair Cube**；C12 表 + 对应 pair 的带符号 Cube；M | 选 C12 表对象，点 **NOCV Pair Cube**，填 pair 号、自旋、Cube 和已有单位；与 C12 行及参考构型逐项核对，选不存在的 pair/错误自旋应拒绝。 | 正负形变密度相分别显隐、独立阈值，源数值保留；保存 `C13-positive.png`、`C13-negative.png`、总览 `C13.png/.blend/.qcdata/`；目前 **Not Run**。 |
+| **C07 IGMH 与 IRI 双 Cube**；S12 参考波函数、S25/S26 IGMH、S27/S28 IRI；A | 先 **Import** S12，选参考原子视图，点 **Import IGMH / IRI**。IGMH 使用 S25/S26，片段 1–13 与 14–26，几何单位 `electron/bohr^4`；IRI 使用 S27/S28，a=1.1，几何单位 `a.u. (electron^-0.1 bohr^-0.7)`；着色均为 `electron/bohr^3`。核对 26 原子、122×66×66 网格、来源 SHA 和原值；故意配入不匹配网格应拒绝。参数和完整日志见样本清单。 | 改几何等值、色域及散点节点；表面位置由几何场决定，颜色由第二场决定，散点横纵轴有量名/单位。分别保存 `C07-igmh.png`、`C07-iri.png`、`C07-scatter.png`、总览 `C07.png/.blend/.qcdata/`；目前 **Not Run**。 |
+| **C08 ESP 表面极值/面积**；S03 同构型、S29 极值 PDB、S30 原始面积 stdout；A | 先创建 C04 ESP 场，保持其场视图为活动对象，点 **ESP Surface**，填表面定义、极值单位、分布中心单位、面积单位。核对每个最大/最小值、坐标、面积各 bin、总面积及 PDB B-factor 约定；与场单位不同要明确换算依据。 | 点/面积分布应与所选 ESP 场关联；选点在 **External Analysis Records** 查询数值。保存 `C08-extrema.png`、`C08-area.png`、总览 `C08.png/.blend/.qcdata/`；目前 **Not Run**。 |
+| **C09 AIM 点/路径/属性**；S03 同构型、S31 `CPs.pdb`、S32 `paths.pdb`、S33 `CPprop.txt`；A | 选同构型原子视图，点 **AIM**，逐项指定文件。核对 C/N/O/F 临界点类型、坐标、路径组、可用属性原值/单位和原子关联；不含属性时只验点/路径，不补造值。 | 显隐各类点和路径，选点在 **External Analysis Records** 查询；保存 `C09-points.png`、`C09-paths.png`、总览 `C09.png/.blend/.qcdata/`；目前 **Not Run**。 |
+| **C10 IRC 步序 CSV/FCHK**；S16–S18 真实逐步 FCHK 与 `outputs/v1-acceptance/sources/c10-c13/peroxide-irc-pyscf/steps.csv`；A | CSV 必须 UTF-8、首行 `step,fchk`、从 1 连续且按预期反应方向排序。点 **IRC FCHK Path** 选择清单，逐步点 **IRC Path → Previous/Next**；核对每步原子身份/坐标、`Eh` 能量与源 FCHK、曲线游标及端点。故意重复编号/换原子应拒绝。 | 切步后原子构型和能量游标同步移动；保存 `C10-curve.png`、`C10-steps.png`、总览 `C10.png/.blend/.qcdata/`；目前 **Not Run**。 |
+| **C11 逐步 Mayer**；C10 路径、S22–S24 同计算 Mayer 与样本清单内 CSV；A | 选 IRC 根原子对象，点 **IRC Path → Import Mayer Results**，填 CSV。核对步数、原子对源编号、每步 Mayer 值（无量纲）与原文；在记录对象改原子对并点 **Plot Selected Mayer Pair**。缺步/原子对集合冲突应拒绝。 | 选步游标与键级曲线同步；保存 `C11-curve.png`、`C11-records.png`、总览 `C11.png/.blend/.qcdata/`；目前 **Not Run**。 |
+| **C12 ETS-NOCV 表**；S19 参考构型、S34 同次真实最终表；A | 选参考原子视图，点 **ETS-NOCV Table**，指定文本和文件**实际使用**的 `kcal/mol` 或 `hartree`；核对 pair 编号、自旋、成对轨道编号、能量、原文行号及来源 SHA。 | **External Analysis Records** 表可逐行查询；仅展示记录与关联分子。保存 `C12.png/.blend/.qcdata/`；目前 **Not Run**。 |
+| **C13 NOCV pair Cube**；C12 表、S35 pair 1 Total；A | 选 C12 表对象，点 **NOCV Pair Cube**，填 pair 号、自旋、Cube 和已有单位；与 C12 行及参考构型逐项核对，选不存在的 pair/错误自旋应拒绝。 | 正负形变密度相分别显隐、独立阈值，源数值保留；保存 `C13-positive.png`、`C13-negative.png`、总览 `C13.png/.blend/.qcdata/`；目前 **Not Run**。 |
 
 为 C06 检查 `.log` 别名时，在仓库根目录 PowerShell 执行：
 
@@ -73,7 +73,7 @@ Get-FileHash outputs/v1-acceptance/aliases/water_neutral_nbo_opt_freq.log -Algor
 
 ## 3. 结果与用户签署
 
-下表只由实际验收者填写。每格写 `Passed / Failed / Not Run`，并在 `实测/证据` 填核心数值、PNG/场景文件、截图或缺陷编号。**缺真实样本的 C07–C13 目前必须保留 Not Run 且签名为空**；即使用户已操作别的案例，也不能把整体状态改为通过。
+下表只由实际验收者填写。每格写 `Passed / Failed / Not Run`，并在 `实测/证据` 填核心数值、PNG/场景文件、截图或缺陷编号。**真实样本已齐备，但独立人工操作仍为 Not Run 且签名为空**；Agent 技术记录不能替代本表。
 
 | 案例 | 导入 | 源数值/单位 | 节点前后 | PNG | 保存重开 | 移动冷重开 | 实测/证据/缺陷 | 用户签名与日期 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -83,13 +83,13 @@ Get-FileHash outputs/v1-acceptance/aliases/water_neutral_nbo_opt_freq.log -Algor
 | C04 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run |  |  |
 | C05 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run |  |  |
 | C06 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run |  |  |
-| C07 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 缺 IGMH/IRI 真实输出 |  |
-| C08 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 缺 ESP 表面真实输出 |  |
-| C09 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 缺 AIM 真实输出 |  |
-| C10 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 缺 IRC 真实逐步 FCHK |  |
-| C11 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 缺逐步 Mayer 真实输出 |  |
-| C12 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 缺 ETS-NOCV 真实输出 |  |
-| C13 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 缺 NOCV pair 真实 Cube |  |
+| C07 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run |  |  |
+| C08 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run |  |  |
+| C09 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run |  |  |
+| C10 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run |  |  |
+| C11 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run |  |  |
+| C12 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run |  |  |
+| C13 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run |  |  |
 
 | 节点检查 | 结果 | 修改前 → 修改后 / 截图 / 缺陷 | 验收者签名与日期 |
 | --- | --- | --- | --- |
@@ -112,7 +112,7 @@ Get-FileHash outputs/v1-acceptance/aliases/water_neutral_nbo_opt_freq.log -Algor
 | N17 | Not Run |  |  |
 | N18 | Not Run |  |  |
 
-最终签署仅在 **C01–C13 全部 Passed、N01–N18 逐项 Passed、九片真实样本齐全且修复后重做、科学回归/干净环境离线安装/移动冷重开/包摘要均 Passed** 时填写：
+最终签署仅在 **C01–C13 全部 Passed、N01–N18 逐项 Passed、所需真实样本齐全且修复后重做、科学回归/干净环境离线安装/移动冷重开/包摘要均 Passed** 时填写：
 
 - 使用者对成品图和科学解释的总体结论：`Not Run`
 - 候选 ZIP SHA-256：`________________`

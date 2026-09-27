@@ -2,6 +2,17 @@
 
 仅记录实际观察到的问题。每条保留触发条件、原因证据、处理及复验状态；未验证的解释不作为结论。
 
+## 2026-09-27：SOP 复跑缺陷
+
+| 编号 | 触发与原因 | 修复及复验 |
+| --- | --- | --- |
+| UI-01 | 默认窄侧栏的显示层按钮被固定 `ui_units_x` 裁切 | 取消固定布局宽度；新进程默认侧栏 GUI 确认 Passed |
+| UI-02 | `add_legend` 用材质输出变量覆盖几何输出，连接 Geometry 时抛出 KeyError | 分开变量；中文图例回归、GUI Map Colors、Charge/Slice 复验 Passed |
+| PORT-01 | VDB 绝对路径令移动后的工程继续依赖原目录 | 保存相对路径并刷新体积缓存；首次保存、Save As、失败回滚及移动冷重开 Passed |
+| ESP-01 | Multiwfn 最大/最小值各自从 1 编号，全局 serial 去重误拒绝真实输出 | 按 `(kind, serial)` 去重；同类重复仍拒绝，真实 19 点导入及 GUI 重试 Passed |
+
+固定候选、逐例结果及原始日志见 [Agent 技术复跑记录](v1-acceptance/AGENT-REPLAY.md)。独立人工验收由 SOP 单独记录。
+
 ## 2026-09-23：Blender 5.1 视频输出设置
 
 - 触发：48 帧振动 PNG 已输出，设置 `image_settings.file_format = 'FFMPEG'` 时抛出枚举错误。

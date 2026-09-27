@@ -38,18 +38,102 @@ foreach ($name in @('phenol_di-dg_inter.cub', 'phenol_di-dg_intra.cub', 'phenol_
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/aligfellow/xyzrender/$igmhRevision/LICENSE" -OutFile "$igmhDir/LICENSE"
 ```
 
-## 尚缺的真实分析结果
+## 本轮补充的真实波函数与 IRC 输入
 
-下列项目**没有完整的**可供本轮科学验收的真实结果集。检索过 MolStudio 子模块、IGMH_Toolbox 源码与公开资料；方法说明、文件名示例、构造格式样本及本仓库生成的 RDG 均不能替代该分析的原始输出。S09–S11 是真实 Multiwfn Cube，已用当前 Cube 解析器确认 26 原子、相同原子顺序/坐标与 92×75×77 网格；[上游示例文档](https://xyzrender.readthedocs.io/en/latest/examples/nci_surf.html)将其用于 IGMH 画面，但没有给出原始波函数、片段划分、版本和单位证据。它们可做真实场的导入预检，**不能单独完成科学签署**。取得新样本后，在此表增补直接 URL、不可变版本、许可、每个文件的 SHA-256、程序版本、方法/基组、构型、片段或表面定义以及输出单位，再按 [SOP](SOP.md) 操作。没有这些材料时维持 `Not Run`。
+以下是本轮已下载或真实计算生成的输入，原件位于忽略目录。核查依据见 [C07–C09 来源研究](../research/sop-real-sources-c07-c09.md)和 [C10–C13 来源与生成记录](../research/sop-real-sources-c10-c13.md)。波函数齐全不等于外部分析输出已经生成，也不替代 GUI、渲染、冷重开或人工签署。
 
-| 功能 | 需要成套取得的真实输出 | 当前状态 |
+| ID | 本地路径（相对仓库根） | 固定公开来源、版本和许可 | SHA-256 | 计算条件 / 用途 |
+| --- | --- | --- | --- | --- |
+| S12 | `outputs/v1-acceptance/sources/c07-c09-research/file/PhenolDimer.fchk` | [作者 IRI 教程输入档](http://sobereva.com/attach/598/file.zip)，Last-Modified 2021-05-31；未附独立数据许可，仅供本地验收 | `3a4b03c8afa4b18ad28820b10d4c40503aa539ada196a33958a633118943b252` | Gaussian 16 A.03；B3LYP-D3(BJ)/6-311G**；26 原子、中性单重态、100 电子、324 基函数；`Total Energy=-615.1617590953192 Eh`，FCHK 坐标为 Bohr；C07 IGMH/IRI 后处理输入，生成场见 S25–S28 |
+| S13 | `outputs/v1-acceptance/sources/c07-c09-research/IGMH_tutorial/file/AT.wfn` | [作者 IGMH 教程](http://sobereva.com/multiwfn/res/IGMH_tutorial.zip)，Last-Modified 2025-11-24；未附独立数据许可，仅供本地验收 | `42e50ba8160bb4be8c327277f5818460b33ab67b5ade2dba52595307f3505c6d` | 30 原子 AT 碱基对、68 占据轨道；WFN 不含完整计算 route，方法/基组需结合随包教程和原始计算记录核实；教程片段为 `15–29` 与补集，坐标为 Bohr；备用后处理输入 |
+| S14 | `outputs/v1-acceptance/sources/c07-c09-research/IRI_tutorial/phenol_dimer.wfn` | [作者 IRI 教程](http://sobereva.com/multiwfn/res/IRI_tutorial.zip)，Last-Modified 2025-06-28；未附独立数据许可，仅供本地验收 | `4147284f300a348a92761081e09efa2dd7bd080993f7c28162fbd51e35b64c53` | 26 原子、50 占据轨道，坐标为 Bohr；WFN 未声明方法/基组，尚未与 S12 建立逐数组计算身份核对；备用后处理输入 |
+| S15 | `outputs/v1-acceptance/sources/c10-c13/source-peroxide_irc.fchk` | [qc-iodata 1.0.1 官方 wheel](https://files.pythonhosted.org/packages/1c/44/20396e1a1096076a04452db27caf3d97b18fe848a21772b9b439b46bb7af/qc_iodata-1.0.1-py3-none-any.whl) 内 `iodata/test/data/peroxide_irc.fchk`；wheel 匹配项目依赖锁，随包 LGPL v3，样本未单列许可 | `a11036281c4a5257f67d29a580126a6153e96cec2a6fd00216aef05f80f3ec6f` | H₂O₂ IRC，RHF/STO-3G，中性单重态，4 原子 `[8,8,1,1]`、18 电子、21 构型；原 Gaussian 精确版本未给出；坐标为 Bohr、能量为 Eh，反应坐标单位未声明 |
+| S16 | `outputs/v1-acceptance/sources/c10-c13/peroxide-irc-pyscf/step-001.fchk` | S15 的原构型 12；本机 PySCF 2.13.1 真实单点，IOData 1.0.1 导出；源数据许可同 S15，本地产物不随扩展分发 | `df38dd4180f7068f6c099eb3b7cfdfae8a585992d1e91b6216af526a005496d4` | RHF/STO-3G，4 原子、中性单重态；SCF 收敛；FCHK 能量 `-148.750534 Eh`，坐标为 Bohr；C10 step 1、C11 对应波函数 |
+| S17 | `outputs/v1-acceptance/sources/c10-c13/peroxide-irc-pyscf/step-002.fchk` | S15 的原构型 1（TS）；生成程序、许可边界同 S16 | `a48eed63f663c4025fc39a36e0407a0d467857673c0c289e36dc441346fe748a` | 同 S16 理论条件；SCF 收敛；FCHK 能量 `-148.750432 Eh`，坐标为 Bohr；C10 step 2、C11 对应波函数 |
+| S18 | `outputs/v1-acceptance/sources/c10-c13/peroxide-irc-pyscf/step-003.fchk` | S15 的原构型 2；生成程序、许可边界同 S16 | `b1005a583c1b73fe770dd3afd874cad0b40561b4a319301c78123653874946c4` | 同 S16 理论条件；SCF 收敛；FCHK 能量 `-148.750528 Eh`，坐标为 Bohr；C10 step 3、C11 对应波函数 |
+| S19 | `outputs/v1-acceptance/sources/c10-c13/multiwfn-data/Multiwfn_2026.9.20_bin_Linux_noGUI/examples/ETS-NOCV/COBH3/COBH3.fch` | [Multiwfn 2026.9.20 官方包](http://sobereva.com/multiwfn/misc/Multiwfn_2026.9.20_bin_Linux_noGUI.zip)内示例；仅提取数据，Linux 程序未运行；自定义程序许可、示例未单列许可，仅供本地验收 | `1b6d2fb92be7f8a364a9410764b411837e7762b33ef00d46373aebe63fc45dbc` | RB3LYP/6-31G(d)，中性单重态；6 原子 C/O/B/H/H/H、22 电子；总能量 `-139.9711700998564 Eh`，坐标为 Bohr；C12/C13 参考构型及整体波函数 |
+| S20 | `outputs/v1-acceptance/sources/c10-c13/multiwfn-data/Multiwfn_2026.9.20_bin_Linux_noGUI/examples/ETS-NOCV/COBH3/CO.fch` | 同 S19 官方版本和许可边界 | `24a77a144ffef788e2bf4b4f0cc6af91e33d2db9323a94291915fcae7d6158aa` | RB3LYP/6-31G(d)，中性单重态；CO 片段、14 电子；坐标为 Bohr；与 S19 关联的 ETS-NOCV 片段输入 |
+| S21 | `outputs/v1-acceptance/sources/c10-c13/multiwfn-data/Multiwfn_2026.9.20_bin_Linux_noGUI/examples/ETS-NOCV/COBH3/BH3.fch` | 同 S19 官方版本和许可边界 | `f7934c013e878d63057de92232a14331cae3a640ba72c4efaa63b22cbb40e9dd` | RB3LYP/6-31G(d)，中性单重态；BH₃ 片段、8 电子；坐标为 Bohr；S20/S21 拼合与 S19 原子顺序一致，最大坐标差 `2.3e-7 Bohr` |
+
+S12–S14 的原始 Gaussian 运行日志未随所用归档提供；S12 本轮 Multiwfn 后处理日志已保存，见下文 C07 证据。S12 的 Gaussian 版本、route 与能量直接取自 FCHK，不据此补写优化收敛过程。其余下载的研究备用波函数及每个归档成员的摘要保存在 `c07-c09-research/extracted-manifest.json`，未选为本轮案例输入。
+
+源归档也固定摘要：`c07-c09-research/iri-blog-files.zip` 为 `77878e0b602faf3939c80e17c3559f59ea43fc4eee311bb22acefe1870f05f57`，`IGMH_tutorial.zip` 为 `8b54bf3e4fa34ea9e95eb08b176f0f52dc32f3a907c0dddc97d31094c54ee7e8`，`IRI_tutorial.zip` 为 `b40e2dee6d979877c980fb63fe83528a91b76f7e08641bdb1ccb6809e0ce74f5`；`c10-c13/Multiwfn_2026.9.20_bin_Linux_noGUI.zip` 为 `6347413e5d066508f2b121cfb269a66f8ea9b7247720b1794ad2bafe45b63cc3`。这里的目录均相对 `outputs/v1-acceptance/sources/`。下载版本与响应头见两份来源研究链接的本地 manifest。
+
+C10 的导入入口为 `outputs/v1-acceptance/sources/c10-c13/peroxide-irc-pyscf/steps.csv`，SHA-256 为 `e364c78eb296bb63048f6ce6b64226b4ada40bce553e7bc2e05c70d8b198f1ba`。清单按原反应坐标递增排列 `12 → 1 → 2`，对应 `-0.105685976 → 0 → 0.105689581`；保留原值且不补写未声明的反应坐标单位。这是原 21 构型中跨 TS 的三个相邻点，三份完整波函数均由对应构型重新计算。
+
+S16–S18 的共同生成设置为 RHF/STO-3G、charge 0、spin 0、`conv_tol=1e-10`、`max_cycle=100`、2 线程、关闭对称性。完整精度电子总能量依次为 `-148.75053390766712`、`-148.75043183918416`、`-148.75052755326928 Eh`；FCHK 写入精度造成最大 `4.4674e-7 Eh` 舍入差，界面以表中 FCHK 源值为比较基准。脚本 `c10-c13/generate_irc_pyscf.py`、每步 `step-NNN-input.json`、`step-NNN-scf.log`、CHK、Molden 和最终 FCHK 均保留；生成及读回证据为 `peroxide-irc-pyscf/generation-report.json`，SHA-256 `c7949ca9ecfebbee00adc4fa359f1de59dc678231115ea44eb9606a48e60f0fc`，全部日志摘要见 `c10-c13/download-and-generation-hashes.json`。三步 SCF、波函数完整性及当前 IRC 解析检查为 **Passed**；这项记录不覆盖 GUI 等验收项。
+
+本轮 C11 已使用对应 S16–S18 的收敛 PySCF CHK 计算真实 Mayer 键级，生成器是 **PySCF 2.13.1 + NumPy 2.5.0 + 本机 `generate_mayer_pyscf.py`**，解释器为 Python 3.13.14，沿用上述 RHF/STO-3G、中性闭壳层条件。每步输出四个原子的全部六个不同原子对，阈值为 `0.0`，单位为 **dimensionless（无量纲）**，数值打印至小数点后 12 位。文本使用 **Multiwfn-compatible syntax**；当前 `step_sources.format='multiwfn-output'` 表示解析语法，实际 producer 以文件头和本清单为准，**C11 Mayer 数值由 PySCF 与本机脚本生成**。
+
+| ID | 本地路径（相对仓库根） | 来源、生成器与许可边界 | SHA-256 | 计算条件 / 用途 |
+| --- | --- | --- | --- | --- |
+| S22 | `outputs/v1-acceptance/sources/c10-c13/peroxide-irc-pyscf/step-001-mayer-pyscf.txt` | 对应 S16 的真实 PySCF CHK，由上述本机脚本直接计算并记录；本地产物，输入来源与许可边界同 S15–S18，不随扩展分发 | `7604ef384afdccd1f6ac23a1e8b62e25da228237c1943dfe116cfbdce4022acc` | C11 step 1，原 IRC 构型 12；6 对 Mayer 值；1–2（O–O）为 `0.973154936561`；1,337 字节 |
+| S23 | `outputs/v1-acceptance/sources/c10-c13/peroxide-irc-pyscf/step-002-mayer-pyscf.txt` | 对应 S17 的真实 PySCF CHK；生成器和许可边界同 S22 | `5595c1e555f74a0afbfda1223ddbd6f7261138ad5288d86cf3ef2b7f82de149b` | C11 step 2，原 IRC 构型 1（TS）；6 对 Mayer 值；1–2 为 `0.973065423000`；1,336 字节 |
+| S24 | `outputs/v1-acceptance/sources/c10-c13/peroxide-irc-pyscf/step-003-mayer-pyscf.txt` | 对应 S18 的真实 PySCF CHK；生成器和许可边界同 S22 | `051f4298de40c8287c5344cc0eb6bb6965461851b37e7fcc4600d993740e669f` | C11 step 3，原 IRC 构型 2；6 对 Mayer 值；1–2 为 `0.973149074227`；1,336 字节 |
+
+闭壳层 Mayer 公式为 `B_AB = Σ_(μ∈A) Σ_(ν∈B) (PS)_μν (PS)_νμ`，其中 `P = C diag(n) Cᵀ` 是占据数为 2/0 的总电子 AO 密度，`S` 是同一非正交 AO 基的重叠矩阵；RHF 自旋密度为零。公式核对依据为 [ORCA 6.1 官方手册 5.1.4、式 5.13](https://www.faccts.de/docs/orca/6.1/manual/contents/spectroscopyproperties/population.html#mayer-population-analysis)及其引用的 [Mayer 原始论文](https://doi.org/10.1016/0009-2614(83)80005-0)。原子编号与 C10 相同：1/2 为 O，3/4 为 H；每步顺序固定为 `1–2, 1–3, 1–4, 2–3, 2–4, 3–4`。
+
+C11 清单、逐步完整矩阵记录和汇总报告的实际摘要已于 2026-09-27 复核。下表路径相对 `outputs/v1-acceptance/sources/c10-c13/`；S22–S24 的文件头和逐步 JSON 另记录输入 CHK、对应 FCHK、SCF 日志、生成输入及脚本 SHA。
+
+| 文件 | 字节数 | SHA-256 |
 | --- | --- | --- |
-| IGMH 与 IRI | IGMH 有 S09–S11 真场，但缺原始波函数/理论级别、片段、程序版本及单位证据；IRI 仍缺几何场 + 同网格着色 Cube | Not Run |
-| ESP 表面 | 同一参考构型的 `surfanalysis.pdb` 类极值文件 + 面积分布文本；记录等密度面定义和两种单位 | Not Run |
-| AIM | 同一参考构型的 `CPs.pdb` + `paths.pdb`，如有则加 `CPprop.txt` | Not Run |
-| IRC | 同一路径每步完整 FCHK + `step,fchk` 清单；逐步能量必须来自对应 FCHK | Not Run |
-| Mayer | 与已验收 IRC 每步对应的真实 Mayer 输出 + `step,mayer_output` 清单 | Not Run |
-| ETS-NOCV | 含 pair、自旋、轨道号、成对能量的原始分析输出及对应参考构型 | Not Run |
-| NOCV 场 | 与已验收 ETS 行明确对应的带符号 pair Cube | Not Run |
+| `peroxide-irc-pyscf/mayer-pyscf.csv` | 103 | `3627fbb0c0e271882dd9852c94efd3f6691f724bb9636465edcfe52d362d65fc` |
+| `generate_mayer_pyscf.py` | 10,200 | `9816f0ddd877c909c88d3c50ae44aaf5b81cb3dcf1741e36b555d5800fea4fb0` |
+| `peroxide-irc-pyscf/step-001-mayer-pyscf.json` | 22,734 | `d7b4a4eb15fbc6aa21a56a844ce21b4f311266b132e1cb6636aa86fdfe4b5936` |
+| `peroxide-irc-pyscf/step-002-mayer-pyscf.json` | 22,906 | `1efdee43dfc4d839b6fcf445fbcbf5cb78ef5942e7f032a04ae1c781000a0631` |
+| `peroxide-irc-pyscf/step-003-mayer-pyscf.json` | 22,836 | `637d3e664cfca82d6c183c1350df99d9d1f240d636781916774e2b589b6195e4` |
+| `peroxide-irc-pyscf/mayer-pyscf-report.json` | 1,285 | `2a29ad17150b07023085fd9340695bcbe7583a9d6b9b952fa40dfecfa234027a` |
+
+三步共 18 个 Mayer 值的矩阵运算与逐项标量求和交叉核对为 **Passed**，最大差 `2.220446049250313e-16`。对应 CHK/FCHK 的原子、坐标、AO 顺序、占据和波函数身份核对为 **Passed**；FCHK 输出舍入引起的 MO 系数最大差小于 `5e-10`、密度矩阵差小于 `5.9e-9`、重叠矩阵差小于 `1.5e-9`，Mayer 最大差为 `4.537944020555074e-9`；能量舍入界限仍采用上述 C10 记录。完整矩阵与未舍入数值保存在三份 JSON。当前 `mayer_orders` 和 `import_irc_mayer` 读回三步、每步六对为 **Passed**，文本舍入误差不超过 `5.1e-13`。这些检查覆盖真实数值与解析，不代替 SOP GUI、渲染、冷重开和人工验收。
+
+## 本轮 Multiwfn 真实分析输出
+
+以下 **11 个实际分析导入文件**于 2026-09-27 用用户提供并授权的 `submodules/Multiwfn/Multiwfn_2026.9.20_bin_Win64/Multiwfn.exe` 生成，版本为 **2026.9.20、Windows x64、4 线程**；EXE SHA-256 为 `64d9660cf859a94882a3df80d840cef8f80493e402b32993cc0cea068ca35421`。程序及相关源码、2026.9.1 手册的摘要保存在各生成目录的 provenance/run 报告中。[Multiwfn 许可](http://sobereva.com/multiwfn/download.html)允许免费学术/商业使用，规定引用 [Lu and Chen (2012)](https://doi.org/10.1002/jcc.22885)与 [Lu (2024)](https://doi.org/10.1063/5.0216272)；程序许可不代替 S12、S19–S21 示例数据的独立再分发许可。下列本地产物均不随扩展分发。
+
+| ID | 本地路径（相对仓库根） | 来源、生成器与许可边界 | SHA-256 | 计算条件 / 用途 |
+| --- | --- | --- | --- | --- |
+| S25 | `outputs/v1-acceptance/sources/c07-c09-research/phenol-2026-09-27/igmh/dg_inter.cub` | S12 的真实波函数；上述 Multiwfn；[作者 IGMH 方法与教程](http://sobereva.com/621)，数据许可边界同 S12 | `3d8c044dbbac7a08f18f7bb6a4fa1a71628157c24d3b781bcb0da993bcc99695` | C07 IGMH 几何场；片段 `1–13 / 14–26`，`δg_inter`、`electron/bohr^4`；122×66×66 同网格；范围 `0–0.0500603` |
+| S26 | `outputs/v1-acceptance/sources/c07-c09-research/phenol-2026-09-27/igmh/sl2r.cub` | 同 S25 输入、生成器与许可边界，同次 IGMH 运行 | `ec9afd0600e60144281a5ba9e6fdae626dbe9f6d5f180702d28c75053a214514` | C07 IGMH 颜色场；`sign(λ₂)ρ`、`electron/bohr^3`；网格与 S25 相同，范围 `-123.65–0.278699` |
+| S27 | `outputs/v1-acceptance/sources/c07-c09-research/phenol-2026-09-27/iri/func2.cub` | S12 的真实波函数；上述 Multiwfn；[作者 IRI 定义与输入](http://sobereva.com/598)，数据许可边界同 S12 | `a08baaa600115d4321c826be6c1783ecc17649a3b52728f363cbe5faf7e41a1f` | C07 IRI 几何场；`a=1.1`，`a.u. (electron^-0.1 bohr^-0.7)`；122×66×66 网格；范围 `0.0444571–149.276` |
+| S28 | `outputs/v1-acceptance/sources/c07-c09-research/phenol-2026-09-27/iri/func1.cub` | 同 S27 输入、生成器与许可边界，同次 IRI 运行 | `ec9afd0600e60144281a5ba9e6fdae626dbe9f6d5f180702d28c75053a214514` | C07 IRI 颜色场；`sign(λ₂)ρ`、`electron/bohr^3`；与 S27 同网格；与 S26 字节及数组相同 |
+| S29 | `outputs/v1-acceptance/sources/multiwfn-local/C08/surfanalysis.pdb` | S03（cclib f90be37、BSD-3-Clause）；上述 Multiwfn；[作者 ESP 表面说明](http://sobereva.com/443)，本地产物 | `ac23f9279c968f9e89cdc8069fb060c0dabfbf3a3aeab74a3f437b6d22c6057d` | C08 极值；RHF/STO-3G、S03 原构型；11 最大值/8 最小值，B-factor 为 `kcal/mol`、坐标 Å；表面 `ρ=0.001 electron/bohr^3` |
+| S30 | `outputs/v1-acceptance/sources/multiwfn-local/C08/stdout.log` | 同 S29 的完整原始 stdout；[作者面积统计说明](http://sobereva.com/196)，输入许可边界同 S03 | `5c16de7d68ab340f673efbb7808a3748b35af8e05cdd9fb1dac942cc7614f85e` | C08 面积分布导入；40 bins、`-100–100 kcal/mol`、宽度 5；中心为 `kcal/mol`、面积为 `Å²`、百分比为 `%`；打印面积之和 `228.2405 Å²` |
+| S31 | `outputs/v1-acceptance/sources/multiwfn-local/C09/CPs.pdb` | S03（cclib f90be37、BSD-3-Clause）；上述 Multiwfn；[作者 AIM 拓扑说明](http://sobereva.com/445)，本地产物 | `b268ee3391a647ee4efe5c833aca2abe2705c037b21bccd358488c3b136f9c80` | C09 密度 CP；27 个 `(3,-3)`、29 个 `(3,-1)`、3 个 `(3,+1)`、0 个 `(3,+3)`；C/N/O/F 为类型标记；坐标 Å |
+| S32 | `outputs/v1-acceptance/sources/multiwfn-local/C09/paths.pdb` | 同 S31 波函数与运行，输入许可边界同 S03 | `4f4e33b008055a24f59f8b359db033ed817efba8618a2aca963402212715f79b` | C09 路径；58 条，按 PDB residue 号分组；坐标 Å，与 S31 对应 |
+| S33 | `outputs/v1-acceptance/sources/multiwfn-local/C09/CPprop.txt` | 同 S31 波函数与运行，输入许可边界同 S03 | `130a93c85feb8bbc059d93ea1c4ed3cc6c9f443b1f1695faa8ed1d67b84e8bc8` | C09 原始性质表；59 CP、类型/编号与 S31 对应；密度 `electron/bohr^3`、Laplacian `electron/bohr^5`、能量密度 `Hartree/bohr^3`；位置同时给 Bohr/Å，含原始 ESP |
+| S34 | `outputs/v1-acceptance/sources/c10-c13/multiwfn-cobh3-20260927/COBH3-ETS-NOCV.txt` | S19 整体与 S20/S21 片段；上述 Multiwfn；[作者 ETS-NOCV 教程](http://sobereva.com/609)，数据许可边界同 S19–S21 | `59fd8d65aebf2bdfb809fc5d84eba621065398895b4faab1c9a78b470c699c70` | C12 最终能量表；RB3LYP/6-31G(d)；9 个显著 pair，`abs(λ)≥0.001`，自旋 Total，能量 `kcal/mol`；pair 1 为 `-77.88`、轨道 1/51、特征值 ±0.56514；使用实际复合物 KS 矩阵近似 |
+| S35 | `outputs/v1-acceptance/sources/c10-c13/multiwfn-cobh3-20260927/COBH3-NOCV-pair1.cub` | 同 S34 的同次分析、同一 Total/pair 1；数据许可边界同 S19–S21 | `bf22e918358bc7353e8d7a7b0e5d00667e6262d83005d21fd9c8879b9c5b5495` | C13 signed pair density；`λ+ψ1²+λ−ψ51²`、`electron/bohr^3`；74×92×78 网格；范围 `-0.409774–0.0834129`；与 S19 原构型对应 |
+
+C07 的四个 Cube 均为 7,618,853 字节。IGMH 菜单为 `20 → 11`，IRI 为 `20 → 4`；两组均选择中等网格（名义 512000 点）、分子包围盒各方向延伸 `2 Bohr`，实际 531432 点，计算间距 `0.18859124989632603 Bohr`（Cube 头打印 `0.188591`），原点 `(-11.336526, -6.170854, -6.194976) Bohr`。局部设置为 `nthreads=4`、`IGMvdwscl=0`、`IRI_rhocut=0`、`uservar=0`，保留完整 IGMH 和 `a=1.1` 的未屏蔽 IRI 场。原值单位从本地同版本源码及手册定义核对。生成目录内 `recipe.json`、`run-records.json`、`provenance.json`、各分析的 `stdin.txt/settings.ini/stdout.log`、`verification.json` 与 `sha256.json` 固定本轮条件；`dg.cub`、`dg_intra.cub` 作为加和核查证据保留。两组读取/配对及 8 个固定点的 IOData+GBasis 独立 IRI/带符号密度核查 **Passed**。
+
+C08/C09 沿用 S03 原始 RHF/STO-3G 波函数、中性单重态、27 原子/108 电子，无构型变换。C08 表面网格间距 `0.25 Bohr`、形状 `91×65×93`；表面整体面积原值 `228.24053 Å²`。同目录 `surfanalysis.txt` 保存更高精度极值（范围 `-44.973471–34.841007 kcal/mol`），S29 与其逐项符合 PDB 打印精度。原生 Multiwfn 的最大/最小值编号分别从 1 开始，身份键为 `(kind, serial)`。C09 密度拓扑的 Euler 检查为 `27−29+3−0=1`；S33 原始 RDG 在高密度点可为默认 `RDG_maxrho=0.05` 设置产生的 100 哨兵值，按原值保留。两个生成目录均保存 `input.txt/settings.ini/stdout.log/run.json`；各输出字节摘要在 `run.json`。19 点 ESP、59 CP 的密度/Hessian 独立核查及当前解析均 **Passed**，证据为 `c07-c09-research/c08-c09-verification/verification.json`。
+
+C12/C13 使用 S19–S21 的字节相同 Windows 示例副本：`c10-c13/multiwfn-cobh3-20260927/COBH3.fch`、`CO.fch`、`BH3.fch`。片段拼合与参考构型最大坐标差 `1.2172e-7 Å`。主功能 23 载入两个片段后，`-2` 根据实际复合物 KS 矩阵求能量，`-4` 导出 S34；它是手册 3.26.2 所述近似，不能将 pair 能量总和当作严格过渡态矩阵 `F_TS` 的 `ΔE_orb`。C12 导入单份最终 S34，完整 stdout 中同时保留求能量前后的表，不直接作为最终表导入。C13 通过同次运行的 `7 → 1` 导出 Total/pair 1，使用中等网格、3 Bohr 延伸、531024 点，步长 `0.127656 Bohr`、原点 `(-5.207033, -6.130225, -4.914148) Bohr`。同网格轨道 1/51 Cube 仅作逐体素公式核查，全部体素在打印误差界限内 **Passed**；实际 pair 净积分 `-0.002055601515 electron`，保留有限网格误差，不声称网格收敛或重新归一化。S34 的 9 行能量和 S35 的导入/关联检查均 **Passed**。
+
+原始日志与来源摘要如下，路径相对 `outputs/v1-acceptance/sources/`；完整命令流、设置、原值和科学核查见两份来源研究。
+
+| 证据 | 本地路径 | SHA-256 |
+| --- | --- | --- |
+| C07 IGMH 原始日志 | `c07-c09-research/phenol-2026-09-27/igmh/stdout.log` | `746a7d1eb82a9b2438240ac56ffe28a2efb1fd32b8e2a43cd07a1f207702b553` |
+| C07 IRI 原始日志 | `c07-c09-research/phenol-2026-09-27/iri/stdout.log` | `ea47aaa7d21a17031fc11638fd154093139308dda00e737e16760fc146a98bc0` |
+| C07 全文件摘要 | `c07-c09-research/phenol-2026-09-27/sha256.json` | `57ed1d93e479082a90bfc49432e09440a0da8270fbd31d4a2939a37520fee9be` |
+| C08 原始日志 | `multiwfn-local/C08/stdout.log`（S30） | `5c16de7d68ab340f673efbb7808a3748b35af8e05cdd9fb1dac942cc7614f85e` |
+| C09 原始日志 | `multiwfn-local/C09/stdout.log` | `d060c6b3c5ae7628be91ee593d3134cc5573a3a0866e42c359f7f3268390a60f` |
+| C12/C13 原始日志 | `c10-c13/multiwfn-cobh3-20260927/stdout.txt` | `0c8c3c844c1b0d1146b64dc595b04c49a66d46982cbb6033ae3aff7d1fe73c10` |
+| C12/C13 全文件摘要 | `c10-c13/multiwfn-cobh3-20260927/sha256-manifest.json` | `dcca792828b913c42e66ce88717ef4db04efcaffe7171a0004a9dfb3eef4baa0` |
+
+## 外部分析结果与验收状态
+
+C07–C13 的本轮真实输入与分析结果现已取得，固定清单共 **35 项（S01–S35）**。下表只汇总样本及科学解析状态；Blender GUI、节点、PNG、保存/移动/冷重开和独立人工签署继续按 [SOP](SOP.md) 分别记录。S09–S11 保留为早期预检材料：其生成参数仍不全，也未与 S12 建立计算身份关联；本轮 C07 科学核对使用 S25–S28。[上游示例说明](https://xyzrender.readthedocs.io/en/latest/examples/nci_surf.html)
+
+| 功能 | 本轮导入文件与参考构型 | 样本及科学解析状态 |
+| --- | --- | --- |
+| IGMH 与 IRI（C07） | S12 参考波函数；IGMH 几何/颜色为 S25/S26，IRI 几何/颜色为 S27/S28。生成目录两份 `PhenolDimer.fchk` 均与 S12 字节相同 | Passed |
+| ESP 表面（C08） | S03 参考；S29 `surfanalysis.pdb` 为极值，S30 `stdout.log` 为面积分布；单位及表面定义见上文 | Passed |
+| AIM（C09） | S03 参考；S31 `CPs.pdb`、S32 `paths.pdb`、S33 `CPprop.txt`，59 CP/58 路径，原值及实际单位见上文 | Passed |
+| IRC（C10） | `c10-c13/peroxide-irc-pyscf/steps.csv` 导入 S16–S18；原 S15 的三个相邻构型，逐步能量取自各 FCHK | Passed |
+| Mayer（C11） | `c10-c13/peroxide-irc-pyscf/mayer-pyscf.csv` 导入 S22–S24，对应 S16–S18；PySCF 与本机脚本生成，每步六对、无量纲 | Passed |
+| ETS-NOCV（C12） | S19 参考（计算目录 `COBH3.fch` 字节相同）；S34 单份最终表，输入片段为 S20/S21 的字节相同副本；9 个显著 Total pair | Passed |
+| NOCV 场（C13） | 绑定 S34 的 Total/pair 1，导入 S35 带符号 pair density Cube，参考构型同 S19 | Passed |
 
 S08 的许可未核清前，验收可在本地使用；不得把该数据文件加入发布包或公开案例附件。`S01–S07` 的仓库许可与文件来源是可审查线索，公开再分发仍须按各许可处理。检索线索：[IGMH_Toolbox 源码](https://github.com/houcheng-gxnu/IGMH_Toolbox)、[Multiwfn 手册中的 ESP 文件定义](https://mgcf.cchem.berkeley.edu/mgcf/Multiwfn_3.8_dev.pdf)。
