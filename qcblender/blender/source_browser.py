@@ -188,6 +188,12 @@ def source_details(obj):
             entries.append(('External source', source))
     if obj.get('qc_optimization_record'):
         entries.append(('Optimization step', object_record(obj, 'qc_optimization_record')))
+    if meta.get('profile'):
+        profile = meta['profile']
+        entries.append(('Profile source', profile['source_record']))
+        entries.append(('Profile field', profile['field']))
+        entries.append(('Profile sampling', {key: value for key, value in profile.items()
+                                            if key not in ('source_record', 'field')}))
     if obj.get('qc_association'):
         entries.append(('Geometry association', object_record(obj, 'qc_association')))
     return entries

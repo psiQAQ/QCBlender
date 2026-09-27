@@ -102,13 +102,17 @@ class QCBLENDER_OT_create_line_profile(bpy.types.Operator):
         return context.object is not None and context.object.get('qc_view_kind') in ('field', 'slice')
 
     def invoke(self, context, event):
+        try:
+            profile_source(context.object, 'COLOR')
+        except (ValueError, OSError, KeyError, TypeError):
+            self.field_role = 'GEOMETRY'
         return context.window_manager.invoke_props_dialog(self)
 
     def draw(self, context):
         try:
             profile_source(context.object, 'COLOR')
         except (ValueError, OSError, KeyError, TypeError):
-            pass
+            self.layout.label(text='Sample field: Geometry')
         else:
             self.layout.prop(self, 'field_role')
         self.layout.prop(self, 'samples')
@@ -116,6 +120,8 @@ class QCBLENDER_OT_create_line_profile(bpy.types.Operator):
     def execute(self, context):
         obj = context.object
         try:
+            if 'qc_profile_start' not in obj:
+                raise ValueError('Mark a profile start on this view first')
             marked = json.loads(obj['qc_profile_start'])
             if (marked['dataset_sha256'] != obj['qc_dataset_sha256'] or marked['field'] != obj['qc_field'] or
                     marked['color_source'] != obj.get('qc_color_source', '')):

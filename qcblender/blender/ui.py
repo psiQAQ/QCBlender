@@ -360,6 +360,17 @@ class QCBLENDER_PT_main(bpy.types.Panel):
         row = layout.row(align=True)
         row.operator('qcblender.add_clipping', text='Clip', icon='MOD_BOOLEAN')
         row.operator('qcblender.probe_field', text='Read at Cursor', icon='PIVOT_CURSOR')
+        if context.object and context.object.get('qc_view_kind') in ('field', 'slice'):
+            row = layout.row(align=True)
+            row.operator('qcblender.mark_profile_start', text='Mark Profile Start')
+            create = row.row(align=True)
+            create.enabled = 'qc_profile_start' in context.object
+            create.operator('qcblender.create_line_profile', text='Create Line Profile')
+        if context.object and context.object.get('qc_view_kind') == 'profile':
+            layout.operator('qcblender.export_line_profile', icon='EXPORT')
+            chart = json.loads(context.object['qc_chart'])
+            layout.label(text=f"Distance: 0–{chart['x_max']:.6g} Å | {chart['y_unit']}")
+            layout.label(text=f"{chart['valid_count']}/{chart['sample_count']} valid samples")
         row = layout.row(align=True)
         row.operator('qcblender.color_charge', text='Charge', icon='MATERIAL')
         row.operator('qcblender.show_dipole', text='Dipole', icon='EMPTY_ARROWS')

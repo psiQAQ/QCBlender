@@ -9,7 +9,7 @@ from ..framing import fit_orthographic
 
 
 _DISPLAY_KINDS = {'atoms', 'field', 'slice', 'fog', 'dipole', 'spectrum',
-                  'scatter', 'nbo', 'analysis'}
+                  'scatter', 'nbo', 'analysis', 'profile'}
 
 
 def _render_collection_enabled(obj, layer_collection):

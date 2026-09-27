@@ -7,7 +7,7 @@ from bpy.props import EnumProperty, StringProperty
 
 def display_layers(scene):
     return sorted((obj for obj in scene.objects
-                   if obj.get('qc_view_kind') in ('atoms', 'field', 'slice', 'fog', 'dipole', 'spectrum', 'scatter', 'nbo', 'analysis')),
+                   if obj.get('qc_view_kind') in ('atoms', 'field', 'slice', 'fog', 'dipole', 'spectrum', 'scatter', 'nbo', 'analysis', 'profile')),
                   key=lambda obj: (obj.get('qc_layer_order', 0), obj.name))
 
 
