@@ -85,7 +85,7 @@ def save_evidence(out, report):
     shutil.copytree(out / 'evidence.qcdata', moved / 'evidence.qcdata', dirs_exist_ok=True)
     report['cold_open'] = 'Not Run'
     report['moved_cold_open'] = 'Not Run'
-    report['status'] = 'Passed'
+    report['status'] = 'Not Run'
     (out / 'checks.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
 
 
@@ -130,6 +130,7 @@ def check_reopen(out):
     key = 'moved_cold_open' if moved else 'cold_open'
     report[key + '_pixels'] = render(out / (key + '.png'))
     report[key] = 'Passed'
+    report['status'] = ('Passed' if report['cold_open'] == report['moved_cold_open'] == 'Passed' else 'Not Run')
     (out / 'checks.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
     return {key: 'Passed'}
 
