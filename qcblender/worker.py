@@ -47,6 +47,15 @@ def main():
             diagnostics = importlib.import_module(args.module + '.diagnostics')
             report = diagnostics.check_runtime()
             report['status'] = 'succeeded' if report['ok'] else 'failed'
+        elif request['action'] == 'inspect_source':
+            source = Path(request['source'])
+            if source.stat().st_size > 512 * 1024**2:
+                raise MemoryError('Source exceeds 512 MiB import limit')
+            snapshot = directory / 'input' / source.name
+            snapshot.parent.mkdir()
+            shutil.copy2(source, snapshot)
+            gaussian = importlib.import_module(args.module + '.gaussian_log')
+            report = dict(gaussian.inspect_log(snapshot), status='succeeded')
         elif request['action'] in ('import', 'import_pair', 'import_nbo', 'import_nocv', 'evaluate', 'rebuild_cache', 'declare_field'):
             storage = importlib.import_module(args.module + '.data')
             if request['action'] == 'import_nocv':
@@ -108,6 +117,9 @@ def main():
                 snapshot = directory / 'input' / source.name
                 snapshot.parent.mkdir()
                 shutil.copy2(source, snapshot)
+                expected = request.get('source_sha256')
+                if expected and hashlib.sha256(snapshot.read_bytes()).hexdigest() != expected:
+                    raise ValueError('Source changed after preview; preview the file again')
                 data = readers.read_source(snapshot, job_index=request.get('job_index', 0))
             else:
                 digest = hashlib.sha256((Path(request['dataset']) / 'manifest.json').read_bytes()).hexdigest()

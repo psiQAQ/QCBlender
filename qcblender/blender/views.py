@@ -48,6 +48,8 @@ def bind(obj, directory, data):
     obj['qc_dataset'] = str(Path(directory).resolve())
     obj['qc_dataset_sha256'] = hashlib.sha256((Path(directory) / 'manifest.json').read_bytes()).hexdigest()
     obj['qc_source_sha256'] = data.metadata['source']['sha256']
+    obj['qc_source_filename'] = data.metadata['source'].get('filename', '未记录')
+    obj['qc_source_job'] = data.metadata.get('selected_job', -1)
     obj['qc_schema'] = '0.1'
     obj['qc_coordinate_unit'] = 'angstrom'
     obj['qc_diagnostics'] = json.dumps(data.metadata.get('diagnostics', []))
@@ -126,6 +128,11 @@ def atom_view(directory):
     setup_properties(obj, data)
     tag_view(tree)
     obj['qc_view_kind'] = 'atoms'
+    trajectory = data.metadata.get('optimization')
+    if trajectory:
+        obj['qc_optimization_status'] = trajectory['status']
+        obj['qc_optimization_available'] = trajectory['status'] == 'available'
+        obj['qc_optimization_reason'] = trajectory.get('reason', '')
     ensure_atom_visibility(obj)
     bpy.context.view_layer.objects.active = obj
     obj.select_set(True)

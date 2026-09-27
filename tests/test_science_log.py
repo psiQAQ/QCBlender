@@ -6,7 +6,7 @@ import unittest
 
 import numpy as np
 
-from qcblender.gaussian_log import energy_events, read_log, select_energy
+from qcblender.gaussian_log import energy_events, inspect_log, read_log, select_energy, summarize_jobs
 from qcblender.data import load_dataset, save_dataset
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,6 +14,29 @@ DATA = Path(__file__).parent / 'data/cclib'
 
 
 class GaussianLog(unittest.TestCase):
+    def test_preview_matches_real_multijob_import_without_geometry_inheritance(self):
+        path = ROOT / 'outputs/log-examples/water_neutral_nbo_opt_freq.out'
+        preview = inspect_log(path)
+        self.assertGreaterEqual(len(preview['jobs']), 2)
+        for index in range(len(preview['jobs'])):
+            try:
+                data = read_log(path, index)
+            except ValueError as error:
+                self.assertIn('explicit geometry', str(error))
+            else:
+                self.assertEqual(preview['jobs'], data.metadata['jobs'])
+                self.assertEqual(preview['source']['sha256'], data.metadata['source']['sha256'])
+                self.assertEqual(data.metadata['selected_job'], index)
+        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+            missing = Path(directory) / 'missing.log'
+            missing.write_text(' # HF/STO-3G\n\n Error termination\n', encoding='utf-8')
+            job = inspect_log(missing)['jobs'][0]
+            self.assertEqual(job['status'], 'failed')
+            self.assertFalse(job['explicit_geometry'])
+            with self.assertRaisesRegex(ValueError, 'explicit geometry'):
+                read_log(missing)
+        self.assertEqual(summarize_jobs([' # HF/STO-3G\n'])[0]['status'], 'incomplete')
+
     @classmethod
     def setUpClass(cls):
         for record in json.loads((DATA / 'sources.json').read_text(encoding='utf-8')):

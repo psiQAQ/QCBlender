@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--blender', type=Path)
+    parser.add_argument('--output-dir', type=Path, default=ROOT / 'outputs' / 'dist')
     args = parser.parse_args()
     runtime = ROOT / 'outputs' / 'blender-runtime.json'
     blender = args.blender or Path(json.loads(runtime.read_text(encoding='utf-8'))['binary_path'])
@@ -23,7 +24,7 @@ def main():
     if not backend_record.exists():
         raise RuntimeError('Build and qualify the science backend before packaging')
     packages = lock['packages'] + [json.loads(backend_record.read_text(encoding='utf-8'))]
-    output = ROOT / 'outputs' / 'dist'
+    output = args.output_dir.resolve()
     output.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='extension-stage-', dir=ROOT / 'outputs') as directory:
         stage = Path(directory) / 'qcblender'

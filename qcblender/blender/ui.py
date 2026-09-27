@@ -1,6 +1,7 @@
 import json
 import hashlib
 import textwrap
+from functools import lru_cache
 from pathlib import Path
 
 import bpy
@@ -124,20 +125,78 @@ class QCBLENDER_OT_import(AsyncOperation, bpy.types.Operator, ImportHelper):
     filename_ext = '.fchk'
     filter_glob: StringProperty(default='*.fchk;*.fch;*.cube;*.cub;*.log;*.out', options={'HIDDEN'})
     job_number: IntProperty(name='Gaussian Log job number', default=1, min=1)
+    source_sha256: StringProperty(options={'HIDDEN'})
+
+    def invoke(self, context, event):
+        self._preview_gui = True
+        return ImportHelper.invoke(self, context, event)
 
     def begin(self, context):
         from .jobs import Job
-        return Job('import', source=str(Path(self.filepath).resolve(strict=True)), job_index=self.job_number - 1)
+        self._inspecting = getattr(self, '_preview_gui', False) and Path(self.filepath).suffix.lower() in ('.log', '.out')
+        return Job('inspect_source' if self._inspecting else 'import',
+                   source=str(Path(self.filepath).resolve(strict=True)), job_index=self.job_number - 1,
+                   source_sha256=self.source_sha256)
 
     def accept(self, context, report):
         from .views import atom_view, field_view
         from ..data import load_dataset
+        if self._inspecting:
+            bpy.ops.qcblender.choose_log_job('INVOKE_DEFAULT', filepath=self.filepath,
+                                           summary=json.dumps(report))
+            return
         directory = self._job.directory / 'dataset'
         obj = atom_view(directory)
         data = load_dataset(directory)
         for index in range(len(data.metadata.get('fields', []))):
             field_view(directory, obj, index)
         self.report({'INFO'}, 'Imported Gaussian data; 1 Blender unit = 1 angstrom')
+
+
+@lru_cache(maxsize=16)
+def cached_job_choices(summary):
+    # Blender retains references to dynamic enum strings beyond the callback.
+    jobs = json.loads(summary)['jobs'] if summary else []
+    return [(str(i), f"{i+1}: {job['status']} | {job['route'] or '未记录'}",
+             f"Lines {job['line_start']}–{job['line_end']}") for i, job in enumerate(jobs)]
+
+
+def job_choices(self, context):
+    return cached_job_choices(self.summary)
+
+
+class QCBLENDER_OT_choose_log_job(bpy.types.Operator):
+    bl_idname = 'qcblender.choose_log_job'
+    bl_label = 'Choose Gaussian Calculation'
+    filepath: StringProperty(options={'HIDDEN'})
+    summary: StringProperty(options={'HIDDEN'})
+    job: EnumProperty(name='Calculation', items=job_choices)
+
+    def invoke(self, context, event):
+        self.job = '0'
+        return context.window_manager.invoke_props_dialog(self, width=640)
+
+    def draw(self, context):
+        layout = self.layout
+        layout.prop(self, 'job')
+        record = json.loads(self.summary)['jobs'][int(self.job)]
+        layout.label(text=f"Lines {record['line_start']}–{record['line_end']} | {record['status']}")
+        for line in textwrap.wrap(record['route'] or '未记录', width=85):
+            layout.label(text=line)
+        layout.label(text='Explicit geometry: ' + ('detected; validated on import' if record['explicit_geometry'] else 'not detected'))
+        selection = record['energy_selection']
+        energy = next((e for e in record['energies'] if e['id'] == selection.get('record_id')), None)
+        layout.label(text=f"Energy: {energy['value_hartree']} Hartree" if energy else 'Energy: ' + selection['status'])
+        if not energy and record['energies']:
+            layout.label(text=f"Last records ({len(record['energies'])} total; not a selected final energy):")
+            for item in record['energies'][-3:]:
+                layout.label(text=f"L{item['line_start']} {item['method']} / {item['kind']}: {item['value_hartree']} Hartree")
+        layout.label(text='Import keeps this calculation status; no geometry inheritance')
+
+    def execute(self, context):
+        report = json.loads(self.summary)
+        return bpy.ops.qcblender.import_calculation('EXEC_DEFAULT', filepath=self.filepath,
+            job_number=int(self.job)+1, source_sha256=report['source']['sha256'])
 
 
 class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):

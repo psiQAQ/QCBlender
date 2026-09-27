@@ -2,11 +2,12 @@
 
 核查日期：2026-09-27。研究输入为 [Multiwfn 调研](../GPT-Web-Chat/multiwfn.md)与[可视化软件调研](../GPT-Web-Chat/visualization-sw.md)，原文仅保存在本地忽略目录，不纳入提交历史。
 
-**近期顺序：导入前选择计算段 → 数据来源浏览 → 集成验收。** 现有 IOData/cclib、GBasis、OpenVDB 和 Geometry Nodes 已承担核心功能；新参考项目的价值需要落实到具体缺口。VTK 保留为固定版本的源码参考，本轮不改变产品代码、数据格式或运行依赖。
+**近期顺序：文档状态同步（完成）→ Gaussian 优化轨迹浏览与技术验证（Passed）→ 独立人工验收及外部视觉对照（Not Run）。** 现有 IOData/cclib、GBasis、OpenVDB 和 Geometry Nodes 已承担核心功能；新参考项目的价值需要落实到具体缺口。VTK 保留为固定版本的源码参考，未引入 VTK 产品代码或运行依赖。
 
 ## 1. 比较基准与证据边界
 
-- **当前基准**：主分支 `ce56c50`，固定 SOP 候选 SHA-256 为 `03311fdeb0c83a38a546ebddedee1fe05e8dcb7260b53c889dd9fee3fa7ee231`。C01–C13 六栏技术检查、N01–N18、35 个真实样本摘要和 26 次冷重开均 Passed，见 [技术复跑记录](../v1-acceptance/AGENT-REPLAY.md)。
+- **固定 SOP 基准**：技术复跑基线 `ce56c50`，固定 SOP 候选 SHA-256 为 `03311fdeb0c83a38a546ebddedee1fe05e8dcb7260b53c889dd9fee3fa7ee231`。C01–C13 六栏技术检查、N01–N18、35 个真实样本摘要和 26 次冷重开均 Passed，见 [技术复跑记录](../v1-acceptance/AGENT-REPLAY.md)。
+- **结果浏览基准**：`065a444`、`2402bc9`、`5496f67` 已完成计算段选择、来源浏览及技术验证，见 [结果浏览记录](../RESULT_BROWSER.md)。
 - **验收边界**：独立人工 SOP 仍为 Not Run；发布前置条件不变。技术复跑与后续功能开发分别记录。
 - **架构**：[ADR 0001](../adr/0001-self-contained-extension.md)的单扩展和科学数据/显示分离保持不变。VTK、MolecularNodes 仅作固定源码参考，不进入产品运行依赖。
 - **来源**：两份调研原文保留在本地 `docs/GPT-Web-Chat/`，研究验证记录在忽略的 `outputs/visualization-adoption/`。
@@ -17,9 +18,9 @@
 | --- | --- | --- |
 | Gaussian Log/FCHK/Cube 入口 | [read_source](../../qcblender/readers.py#L124)已分派 IOData、cclib 和有界 Cube 读取器；[read_log](../../qcblender/gaussian_log.py#L179)保留计算段、方法、终止状态、能量及原文行号。 | `.mwfn`、Molden、ORCA 尚非当前入口；新增格式须有实际输入需求和可验收字段，暂不改内部模型。 |
 | 内置 MO、密度和 ESP | [prepare/evaluate_field](../../qcblender/evaluate.py#L35)检查方法、占据、密度矩阵和基组，分块求值并支持取消；[轨道选择](../../qcblender/data.py#L53)使用自旋、占据和能量。 | 能力限于明确的方法集合和已验证组合；ECP、ghost、最高 g 以上角动量及受限分数占据等仍被拒绝。补数值对照，不引入新的 SCF 引擎。 |
-| 科学数据与显示分离 | [Dataset 与保存](../../qcblender/data.py#L87)已有 metadata、float64 数组、来源哈希、形状/单位/有效域及内容寻址存储；[worker](../../qcblender/worker.py#L136)已有求值缓存。 | 可迁移工程已通过技术复验；当前缺口是用户查看来源的入口，不需要重建统一数据框架。 |
-| 双场着色、切片和多视图 | [add_mapping](../../qcblender/blender/scalars.py#L164)独立绑定几何与色场；[采样节点](../../qcblender/blender/assets.py#L34)、[显示层](../../qcblender/blender/layers.py#L8)和[等值面](../../qcblender/blender/views.py#L198)均已存在。 | 改善数据/视图分组和角色提示；继续验收重复视图、坐标变换、无效域和冷重开。 |
-| 计算结果浏览 | [导入入口](../../qcblender/blender/ui.py#L120)由用户输入计算段整数，导入成功即创建对象；[侧栏](../../qcblender/blender/ui.py#L317)已有能量和振动列表。 | 缺少导入前的计算段摘要选择。`read_log` 仅把选中段的最后构型写入 positions；完整优化步浏览需要另行保存步数据，不能只加一个界面列表就宣称支持。 |
+| 科学数据与显示分离 | [Dataset 与保存](../../qcblender/data.py#L87)已有 metadata、float64 数组、来源哈希、形状/单位/有效域及内容寻址存储；[worker](../../qcblender/worker.py#L136)已有求值缓存。 | 可迁移工程和来源浏览已通过技术验证；只读详情按需读取 metadata，不加载科学数组。 |
+| 双场着色、切片和多视图 | [add_mapping](../../qcblender/blender/scalars.py#L164)独立绑定几何与色场；[采样节点](../../qcblender/blender/assets.py#L34)、[显示层](../../qcblender/blender/layers.py#L8)和[等值面](../../qcblender/blender/views.py#L198)均已存在。 | 按来源分组和字段角色详情已完成；复制、坐标变换、无效域和冷重开保持为回归检查。 |
+| 计算结果浏览 | [导入入口](../../qcblender/blender/ui.py)已提供异步计算段摘要和确认导入，来源详情可查看计算身份与原文位置。 | 选中 Gaussian 段内的离散优化轨迹已完成；范围与证据见 [技术记录](../OPTIMIZATION_TRAJECTORY.md)。 |
 | IGMH/IRI、ESP、AIM、IRC/Mayer、ETS-NOCV/NOCV | [双场导入](../../qcblender/external_fields.py#L11)、[离散分析数据](../../qcblender/analysis_data.py#L12)、[IRC](../../qcblender/irc.py#L39)与[NOCV](../../qcblender/nocv.py#L8)已有显式关联、单位和来源记录。 | C07–C13 真实输出已通过本轮技术验收；新增变体仍须分别验证解析、显示与科学值。 |
 | 周期体系 | 当前 [Grid](../../qcblender/evaluate.py#L13)能保存完整仿射网格，原子构型与显示变换已有约束。 | 仿射网格不等于周期物理能力。晶胞、周期镜像和跨边界连接按后续需求开展。 |
 
@@ -68,18 +69,17 @@ IGMH/IRI 当前要求两场同网格，这是该导入器的合同；一般表�
 
 [官方手册](https://jp-minerals.org/vesta/en/doc/VESTAch2.html)描述结构、多等值面、第二物理量着色和切片；[数据编辑章节](https://jp-minerals.org/vesta/en/doc/VESTAch6.html)区分晶胞、结构和体数据。近期可用这些概念审查当前关联和显示变换；周期晶胞、超胞、跨边界连接待实际需求再进入实现。[官方许可页](https://jp-minerals.org/vesta/en/download.html)对再分发有明确限制，本轮采用公开资料作为参考。
 
-## 4. P0/P1/P2 落地路线
+## 4. 当前落地路线
 
-P0 工程迁移和真实样本技术验收已由 [v1 验收任务](../../.scratch/v1-acceptance/spec.md)完成。下一阶段只实现两个 P1；表中 P2 为有明确需求后才启动的候选方向。
-
-| 优先级与任务 | 最小方案、影响位置与前置条件 | 可观察的完成条件 |
+| 顺序 | 状态 | 范围与证据 |
 | --- | --- | --- |
-| **P1：导入前选择计算段** | 从 `split_jobs`、route 和 energy 记录整理摘要，显示源段号、方法/任务、终止状态、行区间及可用数据；选中后继续走 `read_source(..., job_index=...)` 和现有异步导入。先完成段选择，再评估逐步构型。 | 多 Link1、正常/失败/未完成段均可识别；取消预览不创建对象；选择第 n 段得到对应能量与构型，缺显式几何时保持拒绝；错误段不会默认显示为成功计算。 |
-| **P1：按数据来源组织已有视图** | 在现有侧栏/显示层上增加来源分组与字段摘要，复用 dataset、field array/源编号、`qc_view_kind` 和颜色来源。查看来源时显示文件哈希、段号/原文行号、量名/单位和关联方式。 | 同一数据多个阈值/材质视图共享科学数组；几何场与色场可分别追溯；移动、复制、显隐和重开后身份保持；修改显示参数不触发重新解析或求值。 |
-| **P2：针对真实需求扩展输入与交换** | 有用户实际 `.mwfn`/Molden/ORCA/VTK 输入输出时，先检查已有 IOData/cclib 能力，再确定最小字段适配；科学类型和单位映射到当前 Dataset。 | 至少一组真实代表样本与一个不支持情形；原子、MO/自旋/占据、基组约定、网格方向和单位均有对照；缺字段明确报告，旧 `.qcdata` 仍能读取。 |
-| **P2：算法性能或周期能力专项** | 仅在现有等值面/采样测得瓶颈，或出现明确周期用例后开展；分别审查 VTK 算法、打包成本，或晶胞/镜像/结构—场变换。 | 性能对照使用同一输入、阈值与精度，记录耗时、峰值内存和表面误差；周期能力用真实晶胞和边界数据验证。具体收益及成本成立后再决定依赖与架构变更。 |
+| 固定 SOP 技术复跑 | Passed | C01–C13、N01–N18 与真实样本，见 [技术记录](../v1-acceptance/AGENT-REPLAY.md) |
+| 计算段选择、来源浏览 | Passed | 三项任务均 resolved，见 [结果浏览记录](../RESULT_BROWSER.md) |
+| Gaussian 优化轨迹浏览 | Passed | 独立视图逐步构型、能量、收敛与来源；25/25 科学回归、GUI/MCP、独立候选和移动冷重开，见 [技术记录](../OPTIMIZATION_TRAJECTORY.md) |
+| 独立人工验收、外部视觉对照 | Not Run | 在优化轨迹及技术验证之后执行，记录确切候选；人工签名由用户完成 |
+| 发布机制 | Not Run | 继续受人工验收和候选资格门槛约束 |
 
-执行顺序为计算段选择 → 来源浏览 → 集成验收。格式、周期和算法替换由明确需求触发。每个任务复用对应现有检查；新增用例只针对真实缺口，不把软件功能目录直接转换成待办。
+ORCA、`.mwfn`、周期体系及新的分析类型按后续实际需求另行立项。Molden、VTK 交换和算法性能替换也不自动进入本轮任务；只有真实输入或测量结果证明缺口时再评估。
 
 ## 5. 研究阶段验证与复核方法
 

@@ -1,8 +1,12 @@
 # 0.0.1 候选的支持范围与验证
 
-日期：2026-09-23。平台：Windows 11 x64，Blender 5.1.1，CPython 3.13.9，NumPy 2.3.4，OpenVDB 13。当前是本地开发验收候选，尚未对外发布；独立用户验收未签署。
+状态同步：2026-09-27。平台：Windows 11 x64，Blender 5.1.1，CPython 3.13.9，NumPy 2.3.4，OpenVDB 13。当前是本地开发验收候选，尚未对外发布；独立用户验收未签署。
 
 独立人工复做使用 [v1 验收 SOP](v1-acceptance/SOP.md)；真实输入、许可与缺样本状态见 [样本清单](v1-acceptance/SOURCES.md)。该清单的所有人工结果初始为 `Not Run`。
+
+固定 SOP 候选的 C01–C13 六栏、N01–N18 及真实样本技术复跑 **Passed**，见 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md)。结果浏览独立候选的技术验证 **Passed**，见 [结果浏览技术记录](RESULT_BROWSER.md)，科学回归为 21/21。[优化轨迹独立候选](OPTIMIZATION_TRAJECTORY.md)的技术验证 **Passed**，科学回归为 25/25，已检查 GUI/MCP、渲染和移动冷重开。下表早期专项证据保留其原测试范围，不代表对后续候选重新执行了全部检查。
+
+当前顺序：文档同步（完成）→ [Gaussian 优化轨迹浏览](OPTIMIZATION_TRAJECTORY.md)与技术验证（Passed）→ 独立人工验收及外部视觉对照 → 发布机制。人工验收及外部视觉对照保持 **Not Run**，安排在本轮开发之后。ORCA、`.mwfn`、周期体系和新分析类型仅按后续需求立项。
 
 ## 输入和科学边界
 
@@ -15,7 +19,7 @@
 | 基组 | SP、球谐/笛卡尔 d/f 和实际 nMO<nAO 回归；g 的 Python 基组不变量另行检查。h 及以上、ECP、幽灵中心、广义/复轨道显式拒绝 |
 | 理论层次 | 已确认 SCF 轨道和密度一致才求值。方法白名单见 `evaluate.prepare`；白名单是入口边界，不代表每个泛函/版本组合都有独立参考 |
 | 能量 | HF/DFT、MP2、CCSD(T)、DSDPBEP86、明确标记选态的 TD，保留参考/目标/校正/热力学和源位置；多步或冲突不自动取最后值 |
-| 后续范围 | B2PLYP 目标规则仍为候选；CASSCF、复合方法等不宣称完整解析。相关方法密度、WFN/WFX、ORCA、周期系统后续交付；外部 IRC FCHK 路径导入尚待真实结果验收 |
+| 后续范围 | B2PLYP 目标规则仍为候选；CASSCF、复合方法等不宣称完整解析。相关方法密度、WFN/WFX、ORCA、`.mwfn`、周期体系及新分析类型仅按后续需求立项；外部 IRC FCHK 路径已通过 C10 真实结果技术验收 |
 
 GBasis 来源固定在 `science-sources.lock.json`，当前 wheel 为 `0.1.0+qcblender.071969c.pure1`，只打包 Python 数值路径。SciPy 等随包 wheels 固定 SHA-256，NumPy/OpenVDB 使用 Blender 自带版本；运行时不调用外部 Python/pip。
 
@@ -54,14 +58,14 @@ GBasis 来源固定在 `science-sources.lock.json`，当前 wheel 为 `0.1.0+qcb
 | 功能片 | 当前状态 | 已有证据与缺口 |
 | --- | --- | --- |
 | 显示快捷控制 | Passed（技术） | Blender 5.1.1 实际节点显隐、无氢、非法编号、独立复制、源 manifest 不变、保存重开及 GUI 撤销/重做；`tools/verify_atom_visibility.py`、`tools/verify_visibility_gui.py` |
-| IGMH / IRI | Not Run（科学样本） | 成对 Cube 解析、错原子/网格/单位、散点/着色面、离线 worker 与冷重开已检查；未取得真实 IGMH 和 IRI 配对结果 |
-| ESP 极值/面积 | Not Run（科学样本） | PDB/面积格式、原生点和面积图、Blender 导入、冷重开与 GUI 撤销/重做仅用构造样本检查；未核对真实表面结果 |
+| IGMH / IRI | Passed | C07 真实配对 Cube、字段角色、源值、节点、渲染与冷重开；见 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md) |
+| ESP 极值/面积 | Passed | C08 同构型真实 ESP 表面、极值及面积分布，单位与面积对照、渲染和冷重开；见 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md) |
 | NBO / E(2) | Passed（所测样本） | 真实 Gaussian 16 水分子 Log 的三个 NBO 块、7 条轨道与 2 条 E(2)、多构型拒绝、单构型关联、离线 worker、冷重开及 GUI 导入撤销/重做；仍需独立用户复做 |
-| AIM | Not Run（科学样本） | CP、路径、属性格式与 Blender 导入、冷重开、GUI 撤销/重做仅用构造样本检查 |
-| IRC FCHK 路径 | Not Run（科学样本） | 显式步序、缺步拒绝、构型/能量切换及冷重开用派生 FCHK 检查；未核对真实 IRC |
-| IRC Mayer 键级 | Not Run（科学样本） | 按步/原子对导入、曲线和冷重开用构造文本检查；未核对真实 Mayer 输出 |
-| ETS-NOCV 表 | Not Run（科学样本） | pair/自旋/单位解析和 Blender 导入、冷重开、GUI 撤销/重做用构造文本检查；未核对真实闭壳层/开壳层输出 |
-| NOCV 场 | Not Run（科学样本） | pair/自旋绑定、带符号 Cube 和冷重开用其他实际数值 Cube 检查；未核对真实 NOCV 场 |
+| AIM | Passed | C09 真实 CP、路径和属性关联，数值、显示及冷重开；见 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md) |
+| IRC FCHK 路径 | Passed | C10 同一真实 IRC 的逐步 FCHK、构型/能量、错误步序拒绝和冷重开；见 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md) |
+| IRC Mayer 键级 | Passed | C11 真实逐步 Mayer 输出、原子对关联、缺步拒绝和冷重开；见 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md) |
+| ETS-NOCV 表 | Passed | C12 真实同次分析的 pair 表和参考构型，数值、单位、错误身份拒绝及冷重开；限已测样本；见 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md) |
+| NOCV 场 | Passed | C13 对应真实 pair Cube、带符号形变密度、错误 pair/自旋拒绝及冷重开；见 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md) |
 
 ## 性能观测
 

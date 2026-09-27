@@ -10,7 +10,8 @@ Status: claimed
 
 1. [01 样本来源与清单](issues/01-sources-and-sop.md)：S01–S35 真实样本已固定，摘要与来源核对 Passed。
 2. [04 Agent 技术复跑](issues/04-agent-replay.md)：C01–C13 六栏与 N01–N18 Passed；技术证据不替代独立人工签署。
-3. [02 独立人工验收](issues/02-human-acceptance.md)：使用者操作、渲染、冷重开与签署；Agent 可整理/修复并要求重做受影响例，不代签。
-4. [03 发布机制](issues/03-release-mechanism.md)：仅在 02 全部通过后领取；先本地实现并验证工作流，再按明确批准执行对外动作。
+3. [优化轨迹浏览](../optimization-trajectory/spec.md)及技术验证已 Passed；人工阶段须确定确切候选，安排 VMD/VESTA 同输入同参数外部视觉对照；当前为 Not Run。
+4. [02 独立人工验收](issues/02-human-acceptance.md)：使用者操作、渲染、冷重开与签署；Agent 可整理/修复并要求重做受影响例，不代签。
+5. [03 发布机制](issues/03-release-mechanism.md)：仅在 02 全部通过后领取；先本地实现并验证工作流，再按明确批准执行对外动作。
 
-任一案例 `Failed` 或 `Not Run`，或许可/包资格未通过时，维持候选状态，不推送发布标签、不公开 Release、不上传 Blender Extensions。本轮提交仅包含 SOP 技术复跑和工作流迁移相关文件。
+任一案例 `Failed` 或 `Not Run`，或许可/包资格未通过时，维持候选状态，不推送发布标签、不公开 Release、不上传 Blender Extensions。后续功能候选和固定 SOP 候选分别保留证据；人工验收必须记录实际使用的候选摘要。
