@@ -5,3 +5,7 @@
 [submodule "submodules/GXNU-MolStudio"]
 	path = submodules/GXNU-MolStudio
 	url = https://cnb.cool/chem311/GXNU-MolStudio
+[submodule "submodules/VTK"]
+	path = submodules/VTK
+	url = https://gitlab.kitware.com/vtk/vtk.git
+	shallow = true
