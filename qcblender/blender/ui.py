@@ -401,7 +401,7 @@ def draw_view_parameters(layout, obj):
         source.label(text='计算段: ' + str(obj['qc_source_job'] + 1))
     field = json.loads(obj['qc_field']) if 'qc_field' in obj else {}
     if field:
-        source.label(text=f"字段: {field['quantity']} [{field['unit']}]")
+        source.label(text=f"几何场: {field['quantity']} [{field['unit']}]")
         source.label(text='网格: ' + ' × '.join(map(str, field['shape'])))
         if field.get('steps'):
             source.label(text='源网格步长（只读，Å；与显示精细度独立）')
@@ -418,6 +418,9 @@ def draw_view_parameters(layout, obj):
     if 'qc_color_source' in obj:
         color = json.loads(obj['qc_color_source'])
         source.label(text=f"着色场: {color['quantity']} [{color['unit']}]")
+        if color.get('field_source'):
+            source.label(text='着色文件: ' + color['field_source'].get('filename', '未记录'))
+            source.label(text='SHA-256: ' + color['field_source'].get('sha256', '未记录'))
         source.label(text='有效域外显示洋红色')
 
     try:
@@ -443,7 +446,8 @@ def draw_view_parameters(layout, obj):
         material_controls = (group == '材质' and any(materials)) or any(
             _material_section(node) == group
             for mat in materials if mat and mat.use_nodes for node in mat.node_tree.nodes)
-        if not grouped and not material_controls:
+        color_binding = group == '颜色映射' and obj.get('qc_view_kind') in ('atoms', 'field', 'slice')
+        if not grouped and not material_controls and not color_binding:
             continue
         box = layout.box()
         box.label(text=group)
@@ -451,6 +455,8 @@ def draw_view_parameters(layout, obj):
                                   or any(mat and mat.get('qc_fog') for mat in materials)):
             box.label(text='裁剪坐标：视图局部坐标；位置与范围单位为 Å')
         if group == '颜色映射':
+            if color_binding:
+                box.operator('qcblender.select_color_field', text='选择／替换着色场')
             for prefix in ('Color', 'Charge'):
                 if prefix + ' Center' in values and not values[prefix + ' Minimum'] < values[prefix + ' Center'] < values[prefix + ' Maximum']:
                     box.label(text=prefix + ': 最小值 < 中心值 < 最大值', icon='ERROR')
