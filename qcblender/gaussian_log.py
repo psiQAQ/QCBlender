@@ -227,6 +227,12 @@ def read_log(path, job_index=0):
                 'calculation_status': selected['status'], 'geometry_source': 'last parsed orientation in selected job',
                 'energies': selected['energies'], 'energy_selection': selected['energy_selection'],
                 'fields': [], 'charges': [], 'diagnostics': []}
+    from .optimization import optimization_records
+    trajectory = optimization_records(section, start + 1, selected, parsed)
+    if trajectory is not None:
+        metadata['optimization'] = trajectory
+        if trajectory['status'] == 'available':
+            arrays['optimization_positions'] = np.asarray(parsed.atomcoords, dtype=np.float64)
     metadata['thermochemistry'] = []
     for offset, line in enumerate(section):
         condition = re.search(r'Temperature\s+(' + NUMBER + r')\s+Kelvin\.\s+Pressure\s+(' + NUMBER + r')\s+Atm', line)

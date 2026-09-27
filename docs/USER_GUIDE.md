@@ -7,7 +7,7 @@
 1. 在 Blender Preferences → Get Extensions 的菜单中选择 **Install from Disk**，安装 `outputs/dist/qcblender-0.0.1.zip` 并启用。
 2. 在 Add-ons 中展开 QCBlender，可用 **Check Scientific Runtime** 检查随包组件。
 3. 在 3D Viewport 按 N 打开侧栏，选择 **QCBlender → Import**。导入 `.fchk/.fch`、`.cube/.cub` 或 Gaussian `.log/.out`。
-4. 结果浏览开发候选中的 Log/Out 导入先异步显示 **Choose Gaussian Calculation**。选择计算段，核对 route、终止状态、原文行区间、能量和显式几何提示，再确认导入；取消不会创建科学 Dataset 或场景对象。预览后源文件改变时须重新预览。优化后频率计算通常属于另一个 Link1 job，应选择包含频率的段；缺少显式几何时不从其他段继承。脚本/MCP 的 `job_number` 仍从 1 开始，worker 的 `job_index` 从 0 开始。Log 不自动展开优化轨迹；外部 IRC FCHK 序列入口见[导入说明](EXTERNAL_ANALYSIS_IMPORT.md)。
+4. 结果浏览开发候选中的 Log/Out 导入先异步显示 **Choose Gaussian Calculation**。选择计算段，核对 route、终止状态、原文行区间、能量和显式几何提示，再确认导入；取消不会创建科学 Dataset 或场景对象。预览后源文件改变时须重新预览。优化后频率计算通常属于另一个 Link1 job，应选择包含频率的段；缺少显式几何时不从其他段继承。脚本/MCP 的 `job_number` 仍从 1 开始，worker 的 `job_index` 从 0 开始。优化轨迹开发候选在导入后提供独立逐步视图，见下文；外部 IRC FCHK 序列入口见[导入说明](EXTERNAL_ANALYSIS_IMPORT.md)。
 
 结果浏览功能使用独立候选 `outputs/result-browser/dist/qcblender-0.0.1.zip`，技术证据见[结果浏览验收记录](RESULT_BROWSER.md)。固定 SOP 包 `outputs/dist/qcblender-0.0.1.zip` 继续保留原段号导入流程。
 
@@ -53,6 +53,14 @@ ESP 来自核与电子密度库仑势；距核小于 0.02 bohr 的点标为无�
 侧栏能量列表保留方法、总量/校正类型、来源位置和角色。MP2、CCSD(T)、DSDPBEP86、具备明确选态标记的 TD 输出分别保留目标值与参考 SCF；热校正、ZPE、焓和自由能单列。只有正常终止且目标唯一时自动选择。多个计算步、正文/archive 冲突或尚未验证的方法显示候选/诊断，不自动选最后一条 SCF。
 
 频率 job 导入后在 **Vibration / IR** 列表选择模式，IR 棒状图同步突出显示。**Animate** 开启动画，**Amplitude (angstrom)** 控制最大原子显示位移，**Phase** 控制相位，**Cycles per second** 控制播放速度。位移来自真实正常模式；每个模式统一归一化到最大原子位移为 1 后供显示。播放速度不是物理振动频率，源频率始终以 cm^-1 保留。**Show Displacement Vectors** 显示位移方向/幅度；负频率标注 imaginary。
+
+## Gaussian 优化轨迹浏览
+
+使用[优化轨迹独立候选](OPTIMIZATION_TRAJECTORY.md)，导入含 `Opt` 的 Log/Out 并选择计算段。选中原子视图，在 **Optimization Trajectory → Create Optimization View** 创建位于原视图旁边的独立视图。通过 **Previous / Next / Choose Step** 切换，查看步号、该步能量、计算终止状态、收敛数值/阈值及原文位置。**Source Details → Optimization step** 保留当前步的完整记录。
+
+坐标为 Å，能量为 Hartree；收敛表保留 Gaussian 打印的内部单位声明，不按显示坐标单位换算。缺失或歧义能量明确显示状态；失败或截断日志只能浏览具有明确步号和构型的已有记录。扫描、重启、QST2/QST3 和复合路径当前显示不可用及原因；普通导入仍保留原行为。
+
+优化步是离散迭代，不代表物理时间。轨迹视图不携带最终构型的电荷、偶极、振动或空间场，原视图保留这些已核实的属性。默认空间填充显示；若改用球棍，键连接是第 1 步推断的固定显示连接，不是逐步键级。复制后可独立切步，保存和搬移方式与其他 QC 工程相同。旧工程没有逐步数组时，需要从原始 Log/Out 重新导入。
 
 ## 保存、移动与导出
 

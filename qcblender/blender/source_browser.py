@@ -186,6 +186,8 @@ def source_details(obj):
                 entries.append((key, analysis[key]))
         for source in analysis.get('sources', []):
             entries.append(('External source', source))
+    if obj.get('qc_optimization_record'):
+        entries.append(('Optimization step', object_record(obj, 'qc_optimization_record')))
     if obj.get('qc_association'):
         entries.append(('Geometry association', object_record(obj, 'qc_association')))
     return entries

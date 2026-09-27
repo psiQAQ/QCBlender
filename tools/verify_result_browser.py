@@ -15,6 +15,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
 parser.add_argument('--output-dir', type=Path, default=ROOT / 'outputs/result-browser/verification')
+parser.add_argument('--candidate', type=Path, default=ROOT / 'outputs/result-browser/dist/qcblender-0.0.1.zip')
 parser.add_argument('--reopen', action='store_true')
 args = parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 OUT = args.output_dir.resolve()
@@ -38,7 +39,7 @@ if '--reopen' not in sys.argv:
     if repo is None:
         bpy.context.preferences.extensions.repos.new(name='User Default', module='user_default')
     assert bpy.ops.extensions.package_install_files(
-        filepath=str(ROOT / 'outputs/result-browser/dist/qcblender-0.0.1.zip'),
+        filepath=str(args.candidate.resolve()),
         repo='user_default', enable_on_install=True, overwrite=True) == {'FINISHED'}
     bpy.ops.wm.save_userpref()
 else:

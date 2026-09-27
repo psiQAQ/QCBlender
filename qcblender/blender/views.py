@@ -128,6 +128,11 @@ def atom_view(directory):
     setup_properties(obj, data)
     tag_view(tree)
     obj['qc_view_kind'] = 'atoms'
+    trajectory = data.metadata.get('optimization')
+    if trajectory:
+        obj['qc_optimization_status'] = trajectory['status']
+        obj['qc_optimization_available'] = trajectory['status'] == 'available'
+        obj['qc_optimization_reason'] = trajectory.get('reason', '')
     ensure_atom_visibility(obj)
     bpy.context.view_layer.objects.active = obj
     obj.select_set(True)
