@@ -16,3 +16,12 @@ Blocked by: none
 ## Comments
 
 2026-09-27：用户批准；主代理负责 Blender 和最终状态。子代理将提交号、测试命令和结果追加于此。
+
+2026-09-27：AIM 校验与专用测试提交 `16139eb`。Passed：真实 C09 59 CP / 58 路径、`CP_type` / `CP type`、类型与坐标冲突、逐轴容差两侧、缺字段诊断、损坏与非有限字段，4 个纯 Python 测试通过；`git diff --check` 通过。Not Run：Blender C09 导入、错误输入不增对象、诊断可见、保存移动冷重开，由主代理验收。
+
+测试命令（PowerShell，工作目录 `D:\workspace\QCBlender\.worktrees\adopt-aim`；主目录样本与科学库只读）：
+
+```powershell
+$env:QCBLENDER_REFERENCE_ROOT='D:\workspace\QCBlender'
+& 'C:\Program Files\Blender Foundation\Blender 5.1\5.1\python\bin\python.exe' -I -c "import sys,unittest; sys.path[:0]=[r'D:\workspace\QCBlender\.worktrees\adopt-aim',r'D:\workspace\QCBlender\outputs\science']; suite=unittest.defaultTestLoader.discover('tests',pattern='test_science_aim_association.py'); result=unittest.TextTestRunner(verbosity=2).run(suite); sys.exit(not result.wasSuccessful())"
+```
