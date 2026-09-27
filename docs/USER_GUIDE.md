@@ -11,6 +11,8 @@
 
 结果浏览功能使用独立候选 `outputs/result-browser/dist/qcblender-0.0.1.zip`，技术证据见[结果浏览验收记录](RESULT_BROWSER.md)。固定 SOP 包 `outputs/dist/qcblender-0.0.1.zip` 继续保留原段号导入流程。
 
+本轮 AIM/NOCV 校验、正交取景和场值线剖面使用 `outputs/source-adoption/04-profile/dist/qcblender-0.0.1.zip`，其中也包含结果浏览和优化轨迹功能。候选摘要及验证范围见[源码借鉴技术记录](acceptance/source-adoption.md)；安装方式与上述步骤相同。
+
 坐标统一为 Å，1 Blender 单位表示 1 Å。原子之间的连线由元素半径和距离推断，不代表计算所得键级。原始电荷、坐标、轨道和场保存在科学数据中；对象移动和节点样式不会修改它们。
 
 `.chk` 不能直接读取。在已有 Gaussian 的机器上执行 `formchk calculation.chk calculation.fchk`，再导入生成的 FCHK。本扩展不提供 Gaussian 可执行文件。

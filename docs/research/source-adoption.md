@@ -12,6 +12,6 @@
 
 VTK 一手说明：[vtkProbeFilter](https://vtk.org/doc/nightly/html/classvtkProbeFilter.html)。链接为文档入口，实施依据以固定本地源码为准。原始手册及下载材料维持软件目录级忽略；研究结论可进入 Git。
 
-只读 Python 核查：真实 C09 有 59 条 CP，类型一致，最大逐轴 PDB/CPprop 差为 0.000499959833 Å。当前 NOCV 解析可将带明确未计算声明的占位零表以 hartree 收入，并可误收显式 eV 声明；本轮需修复。正常真实 COBH3 九对的 pair 1 为 -77.88 kcal/mol。
+真实 C09 有 59 条 CP，类型一致，最大逐轴 PDB/CPprop 差为 0.000499959833 Å。实现逐项检查已记录的 CP 类型与坐标，并拒绝损坏字段；缺字段保留明确诊断。NOCV 解析按表识别明确的未计算声明，跳过占位表，拒绝不支持或冲突的单位；不会按数值全零推断未计算。正常真实 COBH3 九对的 pair 1 为 -77.88 kcal/mol。实现与安装验证见 [技术验收](../acceptance/source-adoption.md)。
 
 算法性能替换、表面碎片过滤和新科学输入不纳入本轮；已有斜轴、有效域、双相及双场显示保持回归边界。

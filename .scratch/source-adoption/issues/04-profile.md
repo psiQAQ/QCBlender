@@ -1,7 +1,7 @@
 # D 场值线剖面、曲线和 CSV
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Type: task
 Blocked by: 01
 
@@ -18,6 +18,10 @@ Blocked by: 01
 ## 验收
 
 纯 Python：斜轴线性解析场、端点、距离、零长、域外和掩码、CSV。主代理：真实几何场/色场、变换、断线、源身份、复制、原生撤销/重做、数组不变、渲染、保存移动冷重开后 CSV 一致。
+
+## Answer
+
+主代理在最终候选 `52e485b4c4b6df4afc02b372d8ed18e6622f45dc931ba9bd210f583d3b02139c` 完成真实几何/色场、斜轴断线、源距离、CSV、独立复制、GUI 撤销/MCP 重做、保存与移动冷重开。45/45 科学回归、干净配置安装、A/B/C 回归、最终 C01–C13 六栏及 N01–N18 全部 Passed。来源身份正确绑定成对 Cube；修复记录/曲线视图的图控件误报。证据见 [技术验收](../../../docs/acceptance/source-adoption.md)，资格报告 `outputs/source-adoption/04-profile/qualification.json`。人工签署与外部视觉对照仍为 Not Run。
 
 ## Comments
 

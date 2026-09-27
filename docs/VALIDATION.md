@@ -6,7 +6,9 @@
 
 固定 SOP 候选的 C01–C13 六栏、N01–N18 及真实样本技术复跑 **Passed**，见 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md)。结果浏览独立候选的技术验证 **Passed**，见 [结果浏览技术记录](RESULT_BROWSER.md)，科学回归为 21/21。[优化轨迹独立候选](OPTIMIZATION_TRAJECTORY.md)的技术验证 **Passed**，科学回归为 25/25，已检查 GUI/MCP、渲染和移动冷重开。下表早期专项证据保留其原测试范围，不代表对后续候选重新执行了全部检查。
 
-当前顺序：文档同步（完成）→ [Gaussian 优化轨迹浏览](OPTIMIZATION_TRAJECTORY.md)与技术验证（Passed）→ 独立人工验收及外部视觉对照 → 发布机制。人工验收及外部视觉对照保持 **Not Run**，安排在本轮开发之后。ORCA、`.mwfn`、周期体系和新分析类型仅按后续需求立项。
+[源码借鉴最终候选](acceptance/source-adoption.md)的 AIM/NOCV 关联校验、正交自动取景和场值线剖面技术验收 **Passed**；45/45 科学回归、干净配置安装、GUI/MCP、C01–C13 六栏与 N01–N18 全部通过，证据绑定该独立 ZIP。
+
+当前顺序：文档同步、Gaussian 优化轨迹及四项源码借鉴（技术 Passed）→ 独立人工验收及外部视觉对照 → 发布机制。人工验收及外部视觉对照保持 **Not Run**，安排在本轮开发之后。ORCA、`.mwfn`、周期体系和新分析类型仅按后续需求立项。
 
 ## 输入和科学边界
 
