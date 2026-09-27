@@ -1,7 +1,7 @@
 # B ETS-NOCV 能量状态
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Type: task
 Blocked by: none
 
@@ -14,6 +14,8 @@ Blocked by: none
 纯 Python：真实 COBH3 九对（pair 1 -77.88 kcal/mol）、仅占位、先占位后已计算、合法零值、单位缺失/错误/冲突。主代理：C12/C13 安装包路径导入、错误提示和场景完整性、保存移动冷重开。
 
 ## Comments
+
+2026-09-27：主代理 Blender 5.1.1 验收 Passed；36/36 科学回归、独立安装及移动冷重开、真实 COBH3 九对及 pair1 -77.88 kcal/mol 保持一致，占位表拒绝、占位后计算表读取、合法零值、缺单位使用用户指定值、单位冲突/不支持拒绝且场景不变。真实 C13 Cube 数组一致、pair/自旋错误拒绝、相位/阈值渲染、原地与移动冷重开来源和数组不变。Computer Use 确认表格及 Cube 入口、属性面板和占位错误。证据 `outputs/source-adoption/02-nocv/qualification.json`；研究和缺陷修复见下方记录。
 
 2026-09-27：用户批准；主代理负责 Blender 和最终状态。子代理将提交号、测试命令和结果追加于此。
 
