@@ -245,7 +245,7 @@ def compare_color_sources(target, source):
 
 def replace_mapping(target, source):
     from .source_browser import bound_field, color_mapping, field_source, object_record, read_metadata
-    volume, field, _, field_source = bound_field(source)
+    volume, field, _, new_field_source = bound_field(source)
     info, title = color_mapping(target)
     previous_volume = info.inputs['Object'].default_value
     previous = object_record(target, 'qc_color_source')
@@ -264,7 +264,7 @@ def replace_mapping(target, source):
     try:
         info.inputs['Object'].default_value = volume
         title.inputs['String'].default_value = color_title(field)
-        target['qc_color_source'] = color_record(source, field, field_source)
+        target['qc_color_source'] = color_record(source, field, new_field_source)
         target.update_tag()
     except Exception:
         info.inputs['Object'].default_value = previous_volume
