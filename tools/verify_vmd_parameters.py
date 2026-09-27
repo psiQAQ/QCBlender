@@ -11,6 +11,7 @@ import bpy
 import numpy as np
 
 MODULE = 'bl_ext.user_default.qcblender'
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def module(name):
@@ -116,6 +117,102 @@ def check_panel(out):
     return report
 
 
+def real_fields(out):
+    reference = ROOT / 'outputs/source-adoption/04-profile/final-sop/cases/C04/C04.qcdata/datasets'
+    views = {}
+    for path in sorted(reference.glob('*/manifest.json')):
+        metadata = json.loads(path.read_text(encoding='utf-8'))['metadata']
+        fields = metadata.get('fields', [])
+        if not fields or fields[0]['quantity'] in views:
+            continue
+        directory = out / 'datasets' / path.parent.name
+        shutil.copytree(path.parent, directory, dirs_exist_ok=True)
+        obj = module('blender.views').field_view(directory)
+        views[fields[0]['quantity']] = obj
+        obj.hide_render = True
+    return views
+
+
+def expect_error(action, message):
+    try:
+        outcome = action()
+    except (RuntimeError, ValueError) as error:
+        assert message.lower() in str(error).lower(), str(error)
+        return str(error)
+    assert outcome == {'CANCELLED'}, outcome
+    return 'CANCELLED'
+
+
+def check_binding(out):
+    out.mkdir(parents=True, exist_ok=True)
+    for obj in bpy.context.scene.objects:
+        if obj.type not in ('LIGHT', 'CAMERA'):
+            obj.hide_render = True
+    fields = real_fields(out)
+    density, esp = fields['electron_number_density'], fields['electrostatic_potential']
+    density.name, esp.name = 'VMD density surface', 'VMD ESP source'
+    density.hide_render = False
+    activate(density)
+    modifier, names = controls(density)
+    modifier[names['Isovalue']] = .004
+    original = hashes()
+    assert bpy.ops.qcblender.select_color_field(source_name=esp.name, minimum=-.05, maximum=.05) == {'FINISHED'}
+    browser, scalars = module('blender.source_browser'), module('blender.scalars')
+    info, title = browser.color_mapping(density)
+    assert info.inputs['Object'].default_value == esp.qc_settings.volume
+    assert 'ESP [hartree/e]' == title.inputs['String'].default_value
+    modifier, names = controls(density)
+    modifier[names['Legend Position']] = (2.7, -.4, .1)
+    initial = tuple(modifier[names[name]] for name in ('Color Minimum', 'Color Center', 'Color Maximum'))
+    assert bpy.ops.qcblender.select_color_field(source_name=density.name) == {'FINISHED'}
+    assert browser.color_volume(density) == density.qc_settings.volume
+    assert title.inputs['String'].default_value == 'Electron density [electron/bohr^3]'
+    assert tuple(modifier[names[name]] for name in ('Color Minimum', 'Color Center', 'Color Maximum')) == initial
+    np.testing.assert_allclose(modifier[names['Legend Position']], (2.7, -.4, .1))
+    assert bpy.ops.qcblender.select_color_field(source_name=esp.name) == {'FINISHED'}
+    module('blender.inspection').add_clip(density)
+    assert browser.color_volume(density) == esp.qc_settings.volume
+    assert bpy.ops.qcblender.select_color_field(source_name=esp.name) == {'FINISHED'}
+    copied = module('blender.layers').copy_layer(density, bpy.context.collection)
+    copied.hide_render = True
+    assert browser.color_volume(copied) == esp.qc_settings.volume
+    # Unknown extra mapping is rejected without changing the previous binding.
+    record = density['qc_color_source']
+    tree = modifier.node_group
+    extra = tree.nodes.new('GeometryNodeGroup')
+    extra.node_tree = module('blender.assets').color_group()
+    count = len(tree.nodes)
+    error = expect_error(lambda: bpy.ops.qcblender.select_color_field(source_name=density.name), 'ambiguous')
+    assert density['qc_color_source'] == record and len(tree.nodes) == count
+    assert info.inputs['Object'].default_value == esp.qc_settings.volume
+    tree.nodes.remove(extra)
+    # Original selection-based operator and a slice still use the same field binding.
+    target = module('blender.views').field_view(Path(bpy.path.abspath(density['qc_dataset'])))
+    target.hide_render = True
+    activate(target)
+    esp.select_set(True)
+    module('blender.inspection').add_clip(target)
+    assert bpy.ops.qcblender.map_scalar() == {'FINISHED'}
+    assert browser.color_volume(target) == esp.qc_settings.volume
+    activate(esp)
+    assert bpy.ops.qcblender.create_slice(resolution=21) == {'FINISHED'}
+    sliced = bpy.context.object
+    sliced.hide_render = True
+    assert browser.color_volume(sliced) == esp.qc_settings.volume
+    assert hashes() == original
+    activate(density)
+    area = next(area for area in bpy.context.screen.areas if area.type == 'VIEW_3D')
+    region = next(region for region in area.regions if region.type == 'WINDOW')
+    with bpy.context.temp_override(area=area, region=region):
+        assert bpy.ops.qcblender.create_framed_camera() == {'FINISHED'}
+    report = {'create_replace': 'Passed', 'range_and_legend_preserved': 'Passed',
+              'legacy_selection_and_slice': 'Passed', 'clip_before_and_after': 'Passed',
+              'custom_graph_rejected': error, 'arrays_unchanged': 'Passed',
+              'render_pixels': render(out / 'evidence.png')}
+    save_evidence(out, report)
+    return report
+
+
 def check_reopen(out):
     report = json.loads((out / 'checks.json').read_text(encoding='utf-8'))
     assert hashes() == report['arrays']
@@ -138,9 +235,9 @@ def check_reopen(out):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--out', type=Path, required=True)
-    parser.add_argument('--check', choices=['panel', 'reopen'], required=True)
+    parser.add_argument('--check', choices=['panel', 'binding', 'reopen'], required=True)
     args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
     bpy.ops.preferences.addon_enable(module=MODULE)
     assert Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to(args.out.parent.resolve())
-    result = check_panel(args.out) if args.check == 'panel' else check_reopen(args.out)
+    result = {'panel': check_panel, 'binding': check_binding, 'reopen': check_reopen}[args.check](args.out)
     print(json.dumps(result, ensure_ascii=False))
