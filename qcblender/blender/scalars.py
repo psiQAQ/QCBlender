@@ -122,8 +122,8 @@ def add_legend(obj, color_material, minimum, center, maximum, title):
     text_material = material('QC legend text', (.015, .015, .015, 1))
     emission = text_material.node_tree.nodes.new('ShaderNodeEmission')
     emission.inputs['Color'].default_value = (.015, .015, .015, 1)
-    output = node_by_type(text_material.node_tree.nodes, 'ShaderNodeOutputMaterial')
-    text_material.node_tree.links.new(emission.outputs[0], output.inputs['Surface'])
+    material_output = node_by_type(text_material.node_tree.nodes, 'ShaderNodeOutputMaterial')
+    text_material.node_tree.links.new(emission.outputs[0], material_output.inputs['Surface'])
     for label, offset in [(minimum, (-1, -.28, 0)), (center, (-.2, -.28, 0)),
                            (maximum, (.65, -.28, 0)), (None, (-1, .2, 0))]:
         text = nodes.new('GeometryNodeStringToCurves')

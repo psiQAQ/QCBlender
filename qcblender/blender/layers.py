@@ -275,7 +275,6 @@ class QCBLENDER_PT_layers(bpy.types.Panel):
 
     def draw(self, context):
         layout = self.layout
-        layout.ui_units_x = 18
         row = layout.row(align=True)
         row.operator('qcblender.new_current_view', text='New Current-Version View', icon='DUPLICATE')
         row = layout.row(align=True)

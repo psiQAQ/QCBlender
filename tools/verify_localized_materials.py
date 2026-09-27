@@ -9,8 +9,8 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from qcblender.blender.scalars import scalar_material
-from qcblender.blender.views import atom_view, node_by_type
+from qcblender.blender.scalars import add_legend, scalar_material
+from qcblender.blender.views import atom_view, node_by_type, socket
 from qcblender.data import Dataset, save_dataset
 import qcblender
 
@@ -36,4 +36,11 @@ for mat in (bpy.data.materials['QC Elements'], scalar_material(opacity_attribute
     assert shader is not None and output is not None
     assert output.inputs['Surface'].is_linked
 assert bpy.data.materials['QC Elements'].node_tree.nodes.get('Principled BSDF') is None
+tree = obj.modifiers[0].node_group
+for name, value in [('Color Minimum', -1.), ('Color Center', 0.), ('Color Maximum', 1.)]:
+    item = socket(tree, name, 'NodeSocketFloat', default=value)
+    obj.modifiers[0][item.identifier] = value
+add_legend(obj, scalar_material(), 'Color Minimum', 'Color Center', 'Color Maximum', 'Scalar [unit]')
+output = next(n for n in tree.nodes if n.type == 'GROUP_OUTPUT')
+assert output.inputs['Geometry'].links[0].from_node.bl_idname == 'GeometryNodeJoinGeometry'
 print('LOCALIZED_MATERIALS_PASSED')
