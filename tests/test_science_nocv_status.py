@@ -42,8 +42,8 @@ class NocvEnergyStatus(unittest.TestCase):
         rows = self.parse([PLACEHOLDER, HEADER, ROW, '',
                            'Note: All energies are given in kcal/mol', HEADER, ROW])
         self.assertEqual([(row['pair'], row['source_line']) for row in rows], [(1, 7)])
-        self.assertEqual(len(self.parse([PLACEHOLDER,
-                                         'Note: All energies are given in kcal/mol', HEADER, ROW])), 1)
+        with self.assertRaisesRegex(ValueError, 'have not been evaluated'):
+            self.parse([PLACEHOLDER, 'Note: All energies are given in kcal/mol', HEADER, ROW])
 
     def test_real_stdout_earlier_uncalculated_notice(self):
         lines = REAL_STDOUT.read_text(encoding='utf-8').splitlines()
@@ -51,6 +51,10 @@ class NocvEnergyStatus(unittest.TestCase):
         end = next(i for i in range(start, len(lines)) if 'Sum of NOCV eigenvalues:' in lines[i])
         section = [line for line in lines[start:end]
                    if 'Energies of NOCV orbitals have not been evaluated' not in line]
+        with self.assertRaisesRegex(ValueError, 'have not been evaluated'):
+            self.parse(section)
+        header = next(i for i, line in enumerate(section) if 'Pair  Energy |' in line)
+        section.insert(header, 'Note: All energies are given in kcal/mol')
         with self.assertRaisesRegex(ValueError, 'have not been evaluated'):
             self.parse(section)
         self.assertEqual(len(self.parse([*section, *REAL_TABLE.read_text(encoding='utf-8').splitlines()])), 9)

@@ -158,7 +158,6 @@ def ets_nocv_pairs(path, energy_unit):
         unit_note = re.search(r'\b(?:all\s+)?energies?\s+(?:are\s+given\s+in|in|unit\s*(?:is|:))\s+(\S+)', line, re.I)
         if unit_note:
             declared_units.append(unit_note[1].rstrip('.,;').lower())
-            not_evaluated = False
         if 'Alpha NOCV orbitals' in line:
             spin = 'Alpha'
         elif 'Beta NOCV orbitals' in line:
