@@ -1,7 +1,7 @@
 # M1 数据导入与已有场
 
-Status: ready-for-agent
-Execution: complete
+Triage: ready-for-agent
+Status: resolved
 Owner: root
 Blocked by: 01
 

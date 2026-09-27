@@ -1,7 +1,7 @@
 # M6 可组合节点与显示层
 
-Status: ready-for-agent
-Execution: complete
+Triage: ready-for-agent
+Status: resolved
 Owner: root
 Blocked by: 04
 

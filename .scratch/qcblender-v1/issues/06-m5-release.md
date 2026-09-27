@@ -1,7 +1,7 @@
 # M5 发布与工程验收
 
-Status: ready-for-human
-Execution: in_progress
+Triage: ready-for-human
+Status: claimed
 Owner: root
 Blocked by: 01, 02, 03, 04, 05
 

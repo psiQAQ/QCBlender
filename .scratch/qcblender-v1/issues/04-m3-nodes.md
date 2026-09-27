@@ -1,7 +1,7 @@
 # M3 几何节点配方
 
-Status: ready-for-agent
-Execution: complete
+Triage: ready-for-agent
+Status: resolved
 Owner: root
 Blocked by: 02, 03
 

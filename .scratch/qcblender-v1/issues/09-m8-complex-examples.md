@@ -1,7 +1,7 @@
 # M8 复杂案例集与首版可视化验收
 
-Status: ready-for-human
-Execution: complete
+Triage: ready-for-human
+Status: resolved
 
 ## 目标
 

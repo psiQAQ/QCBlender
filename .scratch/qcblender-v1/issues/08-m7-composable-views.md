@@ -1,7 +1,7 @@
 # M7 可组合科学场显示
 
-Status: ready-for-human
-Execution: complete
+Triage: ready-for-human
+Status: resolved
 
 ## Accepted scope
 

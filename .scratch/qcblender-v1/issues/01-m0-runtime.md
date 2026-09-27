@@ -1,7 +1,7 @@
 # M0 科学后端与安装资格验证
 
-Status: ready-for-agent
-Execution: complete
+Triage: ready-for-agent
+Status: resolved
 Owner: root
 Blocked by: none
 

@@ -1,7 +1,7 @@
 # 04 NBO 记录
 
+Triage: ready-for-human
 Status: resolved
-Execution: technical_acceptance_passed
 Blocked by: none
 
 ## Delivery

@@ -1,7 +1,7 @@
 # M2 内置波函数求值
 
-Status: ready-for-agent
-Execution: complete
+Triage: ready-for-agent
+Status: resolved
 Owner: root
 Blocked by: 01, 02
 

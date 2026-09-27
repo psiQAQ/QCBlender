@@ -8,8 +8,9 @@ Status: claimed
 
 ## 顺序
 
-1. [01 样本来源与清单](issues/01-sources-and-sop.md)：当前可复做样本已固定；其余真实样本缺口开放。
-2. [02 独立人工验收](issues/02-human-acceptance.md)：使用者操作、渲染、冷重开与签署；Agent 可整理/修复并要求重做受影响例，不代签。
-3. [03 发布机制](issues/03-release-mechanism.md)：仅在 02 全部通过后领取；先本地实现并验证工作流，再按明确批准执行对外动作。
+1. [01 样本来源与清单](issues/01-sources-and-sop.md)：S01–S35 真实样本已固定，摘要与来源核对 Passed。
+2. [04 Agent 技术复跑](issues/04-agent-replay.md)：C01–C13 六栏与 N01–N18 Passed；技术证据不替代独立人工签署。
+3. [02 独立人工验收](issues/02-human-acceptance.md)：使用者操作、渲染、冷重开与签署；Agent 可整理/修复并要求重做受影响例，不代签。
+4. [03 发布机制](issues/03-release-mechanism.md)：仅在 02 全部通过后领取；先本地实现并验证工作流，再按明确批准执行对外动作。
 
-任一案例 `Failed` 或 `Not Run`，或许可/包资格未通过时，维持候选状态，不推送发布标签、不公开 Release、不上传 Blender Extensions。现有未跟踪 `docs/multiwfn.md` 与 `docs/visualization-sw.md` 不纳入本任务提交。
+任一案例 `Failed` 或 `Not Run`，或许可/包资格未通过时，维持候选状态，不推送发布标签、不公开 Release、不上传 Blender Extensions。本轮提交仅包含 SOP 技术复跑和工作流迁移相关文件。

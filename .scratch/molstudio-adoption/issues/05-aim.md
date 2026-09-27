@@ -1,7 +1,7 @@
 # 05 AIM 拓扑结果
 
-Status: needs-info
-Execution: implemented_real_sample_pending
+Triage: ready-for-human
+Status: resolved
 Blocked by: none
 
 ## Delivery
@@ -16,3 +16,5 @@ Blocked by: none
 ## Comments
 
 构造 CP/路径/属性文本的解析、孤立属性拒绝、Blender 导入操作、原生点/路径视图、冷重开及 GUI 撤销/重做通过。缺真实 AIM 输出，科学验收 `Not Run`。
+
+2026-09-27：真实样本及 Agent 技术检查已补齐并 Passed，详见 [SOP 复跑任务](../../v1-acceptance/issues/04-agent-replay.md) 和 [样本来源](../../../docs/v1-acceptance/SOURCES.md)。上方 Comments 为历史记录；独立人工验收由 v1-acceptance 任务 02 维护。

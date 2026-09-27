@@ -1,8 +1,8 @@
 # 03 v1.0.0 发布机制
 
-Status: ready-for-agent
+Triage: ready-for-agent
+Status: pending
 Type: task
-Execution: pending
 Blocked by: 02
 
 ## 工作

@@ -1,7 +1,7 @@
 # 02 IGMH/IRI 结果
 
-Status: needs-info
-Execution: implemented_real_sample_pending
+Triage: ready-for-human
+Status: resolved
 Blocked by: none
 
 ## Delivery
@@ -16,3 +16,5 @@ Blocked by: none
 ## Comments
 
 成对 Cube 导入、网格/原子/单位冲突、Blender 场和散点视图、离线 worker、保存重开已用其他真实数值 Cube 检查。缺真实 IGMH 与 IRI 成对输出，科学验收 `Not Run`；界面撤销/重做仍需补证。
+
+2026-09-27：真实样本及 Agent 技术检查已补齐并 Passed，详见 [SOP 复跑任务](../../v1-acceptance/issues/04-agent-replay.md) 和 [样本来源](../../../docs/v1-acceptance/SOURCES.md)。上方 Comments 为历史记录；独立人工验收由 v1-acceptance 任务 02 维护。

@@ -1,7 +1,7 @@
 # M4 振动、IR 与方法特定能量
 
-Status: ready-for-agent
-Execution: complete
+Triage: ready-for-agent
+Status: resolved
 Owner: root
 Blocked by: 02, 04
 

@@ -44,7 +44,7 @@ QCBlender 已完成首版 M7 技术验收，但尚未提供 MolStudio 所展示�
 
 ## Issues
 
-实现已落地。01 和 04 完成技术验收；04 使用真实 Gaussian 16 Log 完成解析、关联、Blender 显示、冷重开及 GUI 撤销/重做。02、03、05—09 缺少对应真实外部分析结果，科学验收为 `Not Run`；构造或借用数值样本的接口检查不替代科学验收。独立用户验收及发布验收仍由用户完成。
+01–09 实现已落地，真实样本及 Agent 技术验收 Passed。来源、参数、逐例 GUI/数值/节点/渲染及冷重开证据见 [SOP 复跑任务](../v1-acceptance/issues/04-agent-replay.md)。独立用户验收及发布验收仍由用户完成。
 
 - [01 显示快捷控制](issues/01-atom-visibility.md)
 - [02 IGMH/IRI 结果](issues/02-igmh-iri.md)
