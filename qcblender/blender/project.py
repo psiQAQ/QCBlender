@@ -108,13 +108,17 @@ def save_project(filepath):
             for source, destination in mapping.items():
                 if original.is_relative_to(source):
                     previous_volumes[volume] = volume.filepath
-                    volume.filepath = str(destination / original.relative_to(source))
+                    cache = destination / original.relative_to(source)
+                    volume.filepath = bpy.path.relpath(str(cache), start=None if bpy.data.filepath else str(target.parent))
                     break
         os.replace(pending, index)
         index_published = True
         result = bpy.ops.wm.save_as_mainfile(filepath=str(target), check_existing=False)
         if result != {'FINISHED'}:
             raise RuntimeError('Blender did not save the project')
+        for volume in previous_volumes:
+            volume.grids.unload()
+            volume.update_tag()
     except Exception:
         for obj, old in previous_objects.items():
             obj['qc_dataset'] = old

@@ -12,6 +12,15 @@ bpy.ops.preferences.addon_enable(module=MODULE)
 storage = importlib.import_module(MODULE + '.data')
 report = {'status': 'Passed', 'file': bpy.data.filepath}
 
+for obj in bpy.data.objects:
+    if obj.type != 'VOLUME' or 'qc_dataset' not in obj:
+        continue
+    dataset = Path(bpy.path.abspath(obj['qc_dataset'])).resolve()
+    cache = Path(bpy.path.abspath(obj.data.filepath)).resolve()
+    assert obj.data.filepath.startswith('//'), (obj.name, obj.data.filepath)
+    assert cache.is_relative_to(dataset) and cache.is_file(), (obj.name, cache, dataset)
+report['portable_volume_paths'] = 'Passed'
+
 def inputs(obj):
     return {s.name: s.identifier for s in obj.modifiers[0].node_group.interface.items_tree
             if s.item_type == 'SOCKET' and s.in_out == 'INPUT'}
