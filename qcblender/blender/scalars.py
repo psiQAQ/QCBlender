@@ -188,6 +188,8 @@ def add_mapping(target, source, low, high):
     volume, field, _, field_source = bound_field(source)
     modifier = view_modifier(target)
     tree = modifier.node_group
+    if tree.get('qc_charge_mapping'):
+        raise ValueError('This view already uses atomic charge for color; use a separate atom view for scalar mapping')
     if (tree.get('qc_color_mapping') or target.get('qc_color_source')
             or any(n.bl_idname == 'GeometryNodeGroup' and n.node_tree
                    and n.node_tree.get('qc_asset_id') == 'qc.color_scalar.v2' for n in tree.nodes)):

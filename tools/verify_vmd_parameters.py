@@ -280,6 +280,7 @@ def check_copy(out):
         for ref_kind, owner, key in copying._state(target)['materials']['scalar_map'][1]:
             assert ref_kind == 'node'
             owner.default_value = source_mat
+    bpy.context.view_layer.update()
     before = {obj.name: (obj['qc_field'], obj['qc_color_source'], [list(row) for row in obj.matrix_world])
               for obj in (first, second)}
     activate(source)
@@ -340,12 +341,54 @@ def check_copy(out):
     assert target_nodes['Opacity Scale'].outputs[0].default_value == 31
     assert target_nodes['Plane Enabled'].outputs[0].default_value == 1
     assert target_nodes['Plane Origin'].inputs[0].default_value == 2
+    # Atomic selection is local to the target, including legacy saved charge views.
+    atoms = next(obj for obj in bpy.context.scene.objects if obj.get('qc_view_kind') == 'atoms')
+    activate(atoms)
+    module('blender.atomic_properties').charge_items(None, bpy.context)
+    assert bpy.ops.qcblender.color_charge(method='mulliken', minimum=-.4, maximum=.4) == {'FINISHED'}
+    am, an = controls(atoms)
+    assert json.loads(am.node_group['qc_sockets']) == an
+    atom_target = layers.copy_layer(atoms, bpy.context.collection)
+    atom_target.hide_render = True
+    tm, tn = controls(atom_target)
+    tm[tn['First Atom (1-based)']] = 2
+    tm[tn['Last Atom (0 = all)']] = 4
+    tm[tn['Legend Position']] = (5., 6., 7.)
+    legacy_keys = {name: key for name, key in tn.items()
+                   if name not in (*copying.CHARGE_RANGE, 'Show Legend', 'Legend Position')}
+    tm.node_group['qc_sockets'] = json.dumps(legacy_keys)
+    am[an['Atom Radius']] = .32
+    activate(atoms)
+    atom_target.select_set(True)
+    assert bpy.ops.qcblender.copy_display_parameters() == {'FINISHED'}
+    assert tm[tn['Atom Radius']] == am[an['Atom Radius']]
+    assert tm[tn['First Atom (1-based)']] == 2 and tm[tn['Last Atom (0 = all)']] == 4
+    np.testing.assert_allclose(tm[tn['Legend Position']], (5, 6, 7))
+    assert copying._state(atoms)['materials']['charge_map'][0] != copying._state(atom_target)['materials']['charge_map'][0]
+    atom_before = display_state(atoms)
+    expect_error(lambda: module('blender.scalars').add_mapping(atoms, esp, -.05, .05), 'atomic charge')
+    assert display_state(atoms) == atom_before
+    # Slice dimensions transfer without moving the target plane.
+    sliced = next(obj for obj in bpy.context.scene.objects if obj.get('qc_view_kind') == 'slice')
+    slice_target = layers.copy_layer(sliced, bpy.context.collection)
+    slice_target.hide_render = True
+    slm, sln = controls(sliced)
+    stm, stn = controls(slice_target)
+    slm[sln['Width']], slm[sln['Height']], slm[sln['Resolution']] = 7., 8., 31
+    stm[stn['Center']] = (1., 2., 3.)
+    activate(sliced)
+    slice_target.select_set(True)
+    assert bpy.ops.qcblender.copy_display_parameters() == {'FINISHED'}
+    assert stm[stn['Width']] == 7 and stm[stn['Height']] == 8 and stm[stn['Resolution']] == 31
+    np.testing.assert_allclose(stm[stn['Center']], (1, 2, 3))
+    assert hashes() == copied_report['arrays']
     activate(source)
     source.hide_render = False
     report = {key: value for key, value in copied_report.items() if key not in ('objects', 'arrays')}
     report.update(copy_groups='Passed', independent_materials='Passed', target_identity_and_layout='Passed',
                   all_target_preflight='Passed', appearance_geometry_cross_quantity='Passed',
-                  renamed_graph='Passed', custom_graph_rejection='Passed', fog_clip_preserved='Passed')
+                  renamed_graph='Passed', custom_graph_rejection='Passed', fog_clip_preserved='Passed',
+                  charge_and_legacy_copy='Passed', atom_selection_preserved='Passed', slice_plane_preserved='Passed')
     report['render_pixels'] = render(out / 'evidence.png')
     save_evidence(out, report)
     return report

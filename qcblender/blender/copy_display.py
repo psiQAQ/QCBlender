@@ -114,9 +114,15 @@ def _inputs(modifier, kind):
         raise ValueError('Only current standard QC view graphs support parameter copying')
     sockets = {item.name: item for item in tree.interface.items_tree
                if item.item_type == 'SOCKET' and item.in_out == 'INPUT'}
+    recorded = json.loads(tree.get('qc_sockets', '{}'))
+    identities = {name: item.identifier for name, item in sockets.items()}
+    # Existing charge views may predate registration of the added charge controls.
+    legacy_charge = (kind == 'atoms' and tree.get('qc_charge_mapping')
+                     and set(identities) - set(recorded) <= set(CHARGE_RANGE + ('Show Legend', 'Legend Position'))
+                     and all(identities.get(name) == identifier for name, identifier in recorded.items()))
     if (len(sockets) != sum(item.item_type == 'SOCKET' and item.in_out == 'INPUT'
                             for item in tree.interface.items_tree)
-            or json.loads(tree.get('qc_sockets', '{}')) != {name: item.identifier for name, item in sockets.items()}):
+            or recorded != identities and not legacy_charge):
         raise ValueError('QC graph socket identities have changed')
     allowed = set(GEOMETRY[kind] + APPEARANCE[kind] + NUMERICAL[kind] + EXTRA)
     for name, item in sockets.items():
