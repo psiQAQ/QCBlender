@@ -1,5 +1,7 @@
 """Attach precomputed external analysis records to an explicit QC geometry."""
+import math
 from pathlib import Path
+import re
 
 import numpy as np
 
@@ -61,13 +63,52 @@ def import_aim(reference, cps_path, paths_path, properties_path=None):
     check_text_sources([cps_path, paths_path] + ([properties_path] if properties_path else []))
     cps = aim_points(cps_path)
     paths = aim_paths(paths_path)
+    if properties_path:
+        lines = Path(properties_path).read_text(encoding='utf-8', errors='replace').splitlines()
+        for number, line in enumerate(lines, 1):
+            stripped = line.strip()
+            if (re.match(r'-+\s*CP\s+\d+', stripped)
+                    and not re.search(r'CP\s+\d+,\s*Type\s*\([^)]+\)', stripped)):
+                raise ValueError(f'AIM property line {number} has a malformed CP header')
+            if (re.match(r'Critical point\s+\d+', stripped)
+                    and not re.match(r'Critical point\s+\d+\s*:', stripped)):
+                raise ValueError(f'AIM property line {number} has a malformed CP header')
+            if re.match(r'(?:CP_type|CP type|Position \(Angstrom\))(?=\s|:)', stripped):
+                value = stripped.partition(':')[2].strip()
+                if not value or value == 'unknown':
+                    raise ValueError(f'AIM property line {number} has a malformed field')
     properties = aim_properties(properties_path, {point['serial'] for point in cps}) if properties_path else {}
+    cp_types = {'C': '(3,-3)', 'N': '(3,-1)', 'O': '(3,+1)', 'F': '(3,+3)'}
+    unverified_type = unverified_position = 0
+    for point in cps:
+        record = properties.get(point['serial'], {})
+        labels = [record[key] for key in ('CP_type', 'CP type') if key in record and record[key] != 'unknown']
+        if not labels:
+            unverified_type += 1
+        elif any(label != cp_types[point['type']] for label in labels):
+            raise ValueError(f"AIM CP {point['serial']} property type conflicts with CPs.pdb or is malformed")
+        position = record.get('Position (Angstrom)')
+        if position is None:
+            unverified_position += 1
+        else:
+            try:
+                values = [float(value) for value in str(position).split()]
+            except ValueError as error:
+                raise ValueError(f"AIM CP {point['serial']} property position is malformed") from error
+            if len(values) != 3 or not all(math.isfinite(value) for value in values):
+                raise ValueError(f"AIM CP {point['serial']} property position is malformed or nonfinite")
+            if any(abs(a - b) > 0.0005001 for a, b in zip(values, point['position_angstrom'])):
+                raise ValueError(f"AIM CP {point['serial']} property position conflicts with CPs.pdb")
     check = spatial_check([point['position_angstrom'] for point in cps] +
                           [position for path in paths for position in path['points_angstrom']], reference)
     files = [cps_path, paths_path] + ([properties_path] if properties_path else [])
-    return analysis_dataset(reference, 'AIM', files,
+    data = analysis_dataset(reference, 'AIM', files,
                             {'critical_points': cps, 'paths': paths, 'properties': properties,
                              'spatial_check': check, 'coordinate_unit': 'angstrom'})
+    for field, count in (('type', unverified_type), ('position', unverified_position)):
+        if count:
+            data.metadata['diagnostics'].append(f'AIM CP property {field} unverified for {count} CP(s): field absent')
+    return data
 
 
 def import_ets(reference, output_path, energy_unit):
