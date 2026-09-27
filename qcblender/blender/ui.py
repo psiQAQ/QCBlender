@@ -457,6 +457,11 @@ def draw_view_parameters(layout, obj):
         if group == '颜色映射':
             if color_binding:
                 box.operator('qcblender.select_color_field', text='选择／替换着色场')
+            if obj.get('qc_color_source'):
+                row = box.row(align=True)
+                row.operator('qcblender.symmetric_color_range', text='零中心对称')
+                row.operator('qcblender.read_color_range', text='读取有效范围')
+                box.label(text='超范围：端点颜色；无效采样：洋红色')
             for prefix in ('Color', 'Charge'):
                 if prefix + ' Center' in values and not values[prefix + ' Minimum'] < values[prefix + ' Center'] < values[prefix + ' Maximum']:
                     box.label(text=prefix + ': 最小值 < 中心值 < 最大值', icon='ERROR')

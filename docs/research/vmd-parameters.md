@@ -39,11 +39,11 @@ MO 振幅的正负是波函数相位；密度差、NOCV 形变密度等有符号
 
 ## 原文与验证状态
 
-官方网页、源码页及 2016-10-07 量子可视化教程 PDF 的本地原文在忽略目录 `submodules/VMD/`；逐项 URL、版本、使用章节、UTC 获取时间、大小和 SHA-256 见同目录 `sources.json`。本地索引 SHA-256：`e94980c1efc40af2aaef28090442424d863ae5931185984c7f981c67097c2b1c`；21 份原文逐项哈希匹配。关键文件为 `download.html`、`guide-index.html`、`representations.html`、`isosurface.html`、`orbital.html`、`slice.html`、`coloring.html`、`color-scale.html`、`orbital-source.html`、`LICENSE.html`、`plugin-license.html`；完整索引保留于本地，不提交下载原文。该索引是截至上述获取时间的快照，在线发布状态可能变化。
+官方网页、源码页及 2016-10-07 量子可视化教程 PDF 的本地原文在忽略目录 `submodules/VMD/`；逐项 URL、版本、使用章节、UTC 获取时间、大小和 SHA-256 见同目录 `sources.json`。本地索引 SHA-256：`e809f09311e3c1bb90dbe3cb3d95238d991f2b60827fa7671c57708f76af17b9`；26 份原文逐项哈希匹配。关键文件为 `download.html`、`guide-index.html`、`representations.html`、`isosurface.html`、`orbital.html`、`slice.html`、`coloring.html`、`color-scale.html`、`orbital-source.html`、`LICENSE.html`、`plugin-license.html`；完整索引保留于本地，不提交下载原文。该索引是截至上述获取时间的快照，在线发布状态可能变化。
 
 | 检查 | 状态 | 范围 |
 | --- | --- | --- |
-| 官方资料核对与本地原文 SHA-256 | Passed | 21 项与 `sources.json` 匹配；本文的版本及参数结论按对应官方章节限定。 |
+| 官方资料核对与本地原文 SHA-256 | Passed | 26 项与 `sources.json` 匹配；本文的版本及参数结论按对应官方章节限定。 |
 | 纯 Python 范围单元检查 | Passed | `tests/test_science_field_ranges.py` 在范围工作包中通过；这不代表四项集成已通过。 |
 | QCBlender 四项完整 UI/worker 集成、真实文件与冷重开 | Not Run | 由主集成完成后按规格逐项验证。 |
 | VMD 2.0.0 和 Blender 实际界面/渲染对照 | Not Run | 本文是官方资料研究，无 VMD/Blender 运行证据。 |
