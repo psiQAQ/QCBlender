@@ -278,7 +278,7 @@ def _check_range(values, prefix):
 
 def _state(obj):
     kind = obj.get('qc_view_kind')
-    if kind not in KINDS:
+    if kind not in CORE_ASSETS:
         raise ValueError(f'{obj.name}: unsupported QC view type {kind!r}')
     modifier = view_modifier(obj)
     sockets = _inputs(modifier, kind)

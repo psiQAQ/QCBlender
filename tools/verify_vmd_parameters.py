@@ -256,6 +256,101 @@ def check_binding(out):
     return report
 
 
+def check_copy(out):
+    copied_report = check_binding(out)
+    source = bpy.data.objects['VMD density surface']
+    esp = bpy.data.objects['VMD ESP source']
+    layers, copying = module('blender.layers'), module('blender.copy_display')
+    first, second = [layers.copy_layer(source, bpy.context.collection) for _ in range(2)]
+    first.name, second.name = 'VMD copy target A', 'VMD copy target B'
+    first.location.x, second.location.x = 4, -4
+    first.hide_render = second.hide_render = True
+    sm, names = controls(source)
+    sm[names['Isovalue']] = .008
+    sm[names['Style (0 solid, 1 wire, 2 points)']] = 1
+    sm[names['Wire Radius']] = .025
+    module('blender.color_ranges').apply_range(source, (-.08, 0, .08))
+    fm, fn = controls(first)
+    fm.node_group.name = 'User renamed standard QC graph'
+    fm[fn['Legend Position']] = (8., 9., 10.)
+    fm[fn['Plane Origin']] = (.2, .3, .4)
+    # Both target maps share the source material before the copy.
+    source_mat = copying._state(source)['materials']['scalar_map'][0]
+    for target in (first, second):
+        for ref_kind, owner, key in copying._state(target)['materials']['scalar_map'][1]:
+            assert ref_kind == 'node'
+            owner.default_value = source_mat
+    before = {obj.name: (obj['qc_field'], obj['qc_color_source'], [list(row) for row in obj.matrix_world])
+              for obj in (first, second)}
+    activate(source)
+    first.select_set(True)
+    second.select_set(True)
+    assert bpy.ops.qcblender.copy_display_parameters() == {'FINISHED'}
+    clones = [copying._state(obj)['materials']['scalar_map'][0] for obj in (first, second)]
+    assert len({source_mat.as_pointer(), *(mat.as_pointer() for mat in clones)}) == 3
+    for obj in (first, second):
+        modifier, keys = controls(obj)
+        assert modifier[keys['Isovalue']] == sm[names['Isovalue']]
+        assert modifier[keys['Style (0 solid, 1 wire, 2 points)']] == 1
+        assert (obj['qc_field'], obj['qc_color_source'], [list(row) for row in obj.matrix_world]) == before[obj.name]
+    np.testing.assert_allclose(fm[fn['Legend Position']], (8, 9, 10))
+    np.testing.assert_allclose(fm[fn['Plane Origin']], (.2, .3, .4))
+    ramps = [next(n.color_ramp for n in mat.node_tree.nodes if n.get('qc_role') == 'color_ramp')
+             for mat in (source_mat, *clones)]
+    original_colors = [list(ramp.elements[0].color) for ramp in ramps]
+    ramps[1].elements[0].color = (.2, .8, .1, 1)
+    assert list(ramps[0].elements[0].color) == original_colors[0]
+    assert list(ramps[2].elements[0].color) == original_colors[2]
+    # A later incompatible target must prevent writes to an earlier compatible one.
+    module('blender.scalars').add_mapping(esp, esp, -.05, .05)
+    first_before = display_state(first)
+    activate(source)
+    first.select_set(True)
+    esp.select_set(True)
+    expect_error(lambda: bpy.ops.qcblender.copy_display_parameters(), 'quantity or unit')
+    assert display_state(first) == first_before
+    esp_before = json.loads(esp['qc_field'])
+    assert bpy.ops.qcblender.copy_display_parameters(geometry=False, numerical=False) == {'FINISHED'}
+    assert json.loads(esp['qc_field']) == esp_before
+    assert bpy.ops.qcblender.copy_display_parameters(appearance=False, numerical=False) == {'FINISHED'}
+    # A changed public interface is rejected before updating any target.
+    extra = module('blender.views').socket(fm.node_group, 'Custom control', 'NodeSocketFloat', default=1)
+    module('blender.graph').tag_view(fm.node_group)
+    activate(source)
+    second.select_set(True)
+    first.select_set(True)
+    second_before = display_state(second)
+    expect_error(lambda: bpy.ops.qcblender.copy_display_parameters(), 'Unsupported QC graph input')
+    assert display_state(second) == second_before
+    fm.node_group.interface.remove(extra)
+    module('blender.graph').tag_view(fm.node_group)
+    # Fog transfers preserve target clipping, even though controls live in a material.
+    fog = module('blender.fog').fog_view(source)
+    fog.hide_render = True
+    fog_target = layers.copy_layer(fog, bpy.context.collection)
+    source_nodes = copying._material_nodes(copying._state(fog)['materials']['Material'][0])
+    target_nodes = copying._material_nodes(copying._state(fog_target)['materials']['Material'][0])
+    source_nodes['Opacity Scale'].outputs[0].default_value = 31
+    target_nodes['Plane Enabled'].outputs[0].default_value = 1
+    target_nodes['Plane Origin'].inputs[0].default_value = 2
+    activate(fog)
+    fog_target.select_set(True)
+    assert bpy.ops.qcblender.copy_display_parameters() == {'FINISHED'}
+    target_nodes = copying._material_nodes(copying._state(fog_target)['materials']['Material'][0])
+    assert target_nodes['Opacity Scale'].outputs[0].default_value == 31
+    assert target_nodes['Plane Enabled'].outputs[0].default_value == 1
+    assert target_nodes['Plane Origin'].inputs[0].default_value == 2
+    activate(source)
+    source.hide_render = False
+    report = {key: value for key, value in copied_report.items() if key not in ('objects', 'arrays')}
+    report.update(copy_groups='Passed', independent_materials='Passed', target_identity_and_layout='Passed',
+                  all_target_preflight='Passed', appearance_geometry_cross_quantity='Passed',
+                  renamed_graph='Passed', custom_graph_rejection='Passed', fog_clip_preserved='Passed')
+    report['render_pixels'] = render(out / 'evidence.png')
+    save_evidence(out, report)
+    return report
+
+
 def check_reopen(out):
     report = json.loads((out / 'checks.json').read_text(encoding='utf-8'))
     assert hashes() == report['arrays']
@@ -281,9 +376,9 @@ def check_reopen(out):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--out', type=Path, required=True)
-    parser.add_argument('--check', choices=['panel', 'binding', 'reopen'], required=True)
+    parser.add_argument('--check', choices=['panel', 'binding', 'copy', 'reopen'], required=True)
     args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
     bpy.ops.preferences.addon_enable(module=MODULE)
     assert Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to(args.out.parent.resolve())
-    result = {'panel': check_panel, 'binding': check_binding, 'reopen': check_reopen}[args.check](args.out)
+    result = {'panel': check_panel, 'binding': check_binding, 'copy': check_copy, 'reopen': check_reopen}[args.check](args.out)
     print(json.dumps(result, ensure_ascii=False))
