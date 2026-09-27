@@ -16,6 +16,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--blender', type=Path)
     parser.add_argument('--output-dir', type=Path, default=ROOT / 'outputs' / 'dist')
+    parser.add_argument('--wheels-dir', type=Path, default=ROOT / 'outputs' / 'wheels')
     args = parser.parse_args()
     runtime = ROOT / 'outputs' / 'blender-runtime.json'
     blender = args.blender or Path(json.loads(runtime.read_text(encoding='utf-8'))['binary_path'])
@@ -32,7 +33,7 @@ def main():
         wheels = stage / 'wheels'
         wheels.mkdir()
         for package in packages:
-            path = ROOT / 'outputs' / 'wheels' / package['filename']
+            path = args.wheels_dir / package['filename']
             if hashlib.sha256(path.read_bytes()).hexdigest() != package['sha256']:
                 raise ValueError(f'Wheel checksum mismatch: {path.name}')
             shutil.copy2(path, wheels / path.name)

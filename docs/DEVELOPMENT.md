@@ -20,6 +20,8 @@ $uv = 'C:/Users/ustcw/.local/bin/uv.exe'
 
 产物为 `outputs/dist/qcblender-0.0.1.zip`。ZIP 含所需 wheels 与许可文本，运行时不调用 pip/uv、不下载包；NumPy/OpenVDB 使用宿主版本。`THIRD_PARTY.md` 记录源码许可事实和发行材料要求。
 
+独立候选使用 `build_extension.py --output-dir <批次目录/dist>`。已有锁定 wheel 存放在其他本地目录时可指定 `--wheels-dir <目录>`；仍逐个核对锁文件摘要，不下载或更新依赖。
+
 ## 科学验收
 
 将随包 wheels 安装到仓库专用测试目录，保留宿主 NumPy。这里是开发验证命令，不是最终用户安装步骤。
