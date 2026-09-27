@@ -43,6 +43,15 @@ def sample_profile(reference, field, start, end, world_start, world_end, manifes
         raise ValueError('Profile endpoints must differ in source angstrom coordinates')
     if role not in ('GEOMETRY', 'COLOR'):
         raise ValueError('Unsupported profile field role')
+    source_role = field.get('role')
+    if source_role is None:
+        source_record = reference.metadata['source']
+    else:
+        if source_role not in ('geometry', 'color'):
+            raise ValueError('Unsupported paired field source role')
+        source_record = reference.metadata.get('analysis', {}).get(source_role + '_source')
+        if not isinstance(source_record, dict) or not source_record.get('sha256'):
+            raise ValueError('Paired field source record is missing: ' + source_role)
     values = reference.arrays[field['array']]
     mask = reference.arrays[field['valid_mask']]
     positions = np.linspace(endpoints[0], endpoints[1], count)
@@ -59,7 +68,7 @@ def sample_profile(reference, field, start, end, world_start, world_end, manifes
         raise ValueError('Profile has no adjacent valid samples')
     profile = {'field_role': role, 'field': field, 'sample_count': count,
                'source_manifest_sha256': manifest_sha256,
-               'source_record': reference.metadata['source'], 'start_source_angstrom': endpoints[0].tolist(),
+               'source_record': source_record, 'start_source_angstrom': endpoints[0].tolist(),
                'end_source_angstrom': endpoints[1].tolist(), 'start_world': world[0].tolist(),
                'end_world': world[1].tolist(), 'interpolation': 'trilinear'}
     digest = hashlib.sha256(json.dumps(profile, sort_keys=True, ensure_ascii=False).encode('utf-8')).hexdigest()

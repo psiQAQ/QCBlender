@@ -114,6 +114,26 @@ class LineProfile(unittest.TestCase):
             self.assertEqual(target.read_text(encoding='utf-8'), 'previous export\n')
             self.assertEqual(list(Path(temporary).iterdir()), [target])
 
+    def test_paired_field_uses_its_own_cube_source(self):
+        start, end = self.positions[0, 1, 1], self.positions[4, 1, 1]
+        geometry = dict(self.field, role='geometry')
+        color = dict(self.field, array='color', role='color')
+        self.reference.arrays['color'] = 2 * self.reference.arrays['scalar']
+        self.reference.metadata['fields'] = [geometry, color]
+        sources = {'geometry_source': {'filename': 'geometry.cube', 'sha256': 'a' * 64},
+                   'color_source': {'filename': 'color.cube', 'sha256': 'c' * 64}}
+        self.reference.metadata['analysis'] = sources
+        geometry_profile = sample_profile(self.reference, geometry, start, end, start, end,
+                                          'b' * 64, 'GEOMETRY', 5)
+        color_profile = sample_profile(self.reference, color, start, end, start, end,
+                                       'b' * 64, 'COLOR', 5)
+        self.assertEqual(geometry_profile.metadata['profile']['source_record'], sources['geometry_source'])
+        self.assertEqual(color_profile.metadata['profile']['source_record'], sources['color_source'])
+        self.assertNotEqual(geometry_profile.metadata['source']['sha256'], color_profile.metadata['source']['sha256'])
+        del sources['color_source']
+        with self.assertRaisesRegex(ValueError, 'Paired field source record is missing: color'):
+            sample_profile(self.reference, color, start, end, start, end, 'b' * 64, 'COLOR', 5)
+
 
 if __name__ == '__main__':
     unittest.main()
