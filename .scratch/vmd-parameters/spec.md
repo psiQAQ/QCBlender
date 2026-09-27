@@ -21,7 +21,7 @@ Type: task
 01 面板：新 parameters.py 与 ui.py；主代理负责后续新 operator 入口集成。
 02 映射：scalars.py、source_browser.py，必要时 graph.py；暴露显式入口及唯一映射解析，复用现有 sample/color assets，不加载数组来绘制候选列表。
 03 范围：field_ranges.py、worker.py、专用纯 Python 测试。内部 action `field_range` 接收 dataset、dataset_sha256、field_array；成功结果含 minimum/center/maximum/valid_count/quantity/unit/field_array/dataset_sha256。
-04 复制：第一包验收后另派子代理；公共图/UI 由主代理集成。
+04 复制：第一包代码及 MCP/科学回归通过后另派子代理；公共图/UI 由主代理集成。桌面访问故障只暂停 Computer Use，作为整批最终验收待补项；不阻止其余独立实现，补齐前不记录整批 Passed 或创建通过标签。
 
 子代理使用 GPT-6 sol/high，各自工作树仅提交分配文件。不启动 Blender、不调用 bpy/MCP、不安装依赖。主代理按 01→02→03→04 集成并实际 Blender 验收。
 
