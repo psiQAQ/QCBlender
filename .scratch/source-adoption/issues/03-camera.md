@@ -1,7 +1,7 @@
 # C 创建正交取景相机
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Type: task
 Blocked by: none
 
@@ -16,6 +16,8 @@ Blocked by: none
 纯 Python：非方画幅、旋转、多对象、单点/零跨度、5% 边距、无效坐标。主代理：真实原子/等值面/雾、多视图、隐藏对象、当前视角、横竖渲染、旧相机不变、撤销/重做、保存与移动冷重开。
 
 ## Comments
+
+2026-09-27：主代理已完成 Blender 5.1.1 实际验收，Passed。40/40 科学回归、独立安装；原子、等值面、雾、多视图、变换、横竖画幅与像素比例的原生相机投影均在 5% 边距内；渲染隐藏及内部源排除，旧相机/灯光/对象变换保留；两种修改器开关冲突、空几何/仅隐藏对象拒绝且不新增相机。Computer Use 按钮、原生撤销、相机画面与错误提示，MCP 重做恢复状态；原地及移动后冷重开和渲染 Passed。`outputs/source-adoption/03-camera/qualification.json` 核对源码、ZIP、安装副本一致。
 
 2026-09-27：本轮明确纳入正交自动取景；透视、灯光预设和自动排版仍后置。子代理不运行 Blender；运行期接口可静态阅读本机 API 文档。
 

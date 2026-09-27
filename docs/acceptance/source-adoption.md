@@ -37,7 +37,10 @@ GUI 动作用 Computer Use 完成；重复导入、计数、数组摘要及便�
 
 ## 后续批次
 
+第三批 **03 自动取景 Passed**，源码集成 `63080f2`、UI `8593411`，资格检查提交 `8924b74`。候选 `03-camera/dist/qcblender-0.0.1.zip`，SHA-256 `f48c53e7de332994bf7cd226b4301ed6b08e1c996d0971e1f826e9038b55e603`；安装路径 `03-camera/profile/extensions/user_default/qcblender`。
+
+`03-camera/qualification.json` 核对源码、ZIP、安装副本和 wheels；`science.json` 40/40 Passed；`offline/extension.json` 干净安装及离线回归 Passed。`framing/camera.json` 和逐场景 PNG 记录原子、等值面、雾、多视图、变换、横竖画幅及像素比例的原生投影检查，全部顶点在默认 5% 边距内；隐藏对象及内部源排除、旧相机/灯光/变换保留。空几何与不一致的修改器开关明确拒绝。`framing/camera.blend` 及 `framing/moved/` 分别在新进程重开并渲染，相机和数组身份保持一致。`gui.json`、`GUI-camera.png`、`GUI-camera-error.png` 保存 Computer Use 按钮/撤销/错误提示，以及 MCP 重做和状态核对的证据。
+
 | 批次 | 技术验收 |
 | --- | --- |
-| 03 自动取景 | Not Run |
 | 04 线剖面及最终完整 SOP | Not Run |
