@@ -443,7 +443,7 @@ class QCBLENDER_PT_main(bpy.types.Panel):
                     color_source = json.loads(obj['qc_color_source'])
                     layout.label(text='Colors: ' + color_source['quantity'] + ' [' + color_source['unit'] + ']')
                     layout.label(text='Magenta: outside valid field domain')
-        if obj and obj.get('qc_view_kind'):
+        if obj and obj.get('qc_view_kind') and obj.get('qc_view_kind') != 'profile':
             from .graph import view_modifier
             try:
                 modifier = view_modifier(obj)
