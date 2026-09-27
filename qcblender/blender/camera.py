@@ -83,6 +83,10 @@ class QCBLENDER_OT_create_framed_camera(bpy.types.Operator):
                     selected = [active]
             if not selected:
                 raise ValueError('Select a renderable QC display view')
+            for obj in selected:
+                for modifier in obj.modifiers:
+                    if modifier.show_viewport != modifier.show_render:
+                        raise ValueError(f'{obj.name}: modifier {modifier.name} has different viewport/render visibility; match both before framing')
             render = context.scene.render
             aspect = (render.resolution_x * render.pixel_aspect_x /
                       (render.resolution_y * render.pixel_aspect_y))
