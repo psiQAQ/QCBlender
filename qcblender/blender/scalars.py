@@ -1,5 +1,6 @@
 """Native grid sampling, signed color maps and planar scalar slices."""
 import json
+from functools import lru_cache
 
 import bpy
 from bpy.props import EnumProperty, FloatProperty, IntProperty, StringProperty
@@ -273,17 +274,14 @@ def replace_mapping(target, source):
         raise
 
 
-_color_choices = []
-
-
-def color_field_choices(self, context):
+def color_field_candidates(context):
     from .source_browser import bound_field
-    _color_choices.clear()
+    candidates = []
     if context is None or context.scene is None:
-        return _color_choices
+        return candidates
     for obj in context.scene.objects:
         try:
-            _, field, meta, source = bound_field(obj)
+            volume, field, meta, source = bound_field(obj)
         except (ValueError, OSError, KeyError, TypeError):
             continue
         job = meta.get('selected_job')
@@ -294,8 +292,24 @@ def color_field_choices(self, context):
         label = (f'{obj.name}: {field["quantity"]} [{field["unit"]}]'
                  f' | {source.get("filename", "unknown")} | {source["sha256"][:12]}'
                  f'{segment}{orbital_label}')
-        _color_choices.append((obj.name, label, source['sha256']))
-    return _color_choices
+        jobs = meta.get('jobs', [])
+        candidates.append({'name': obj.name, 'label': label, 'source': source,
+                           'field': field, 'field_record': obj['qc_field'],
+                           'job': job, 'job_record': jobs[job] if type(job) is int and 0 <= job < len(jobs) else None,
+                           'object_pointer': obj.as_pointer(), 'volume_pointer': volume.as_pointer(),
+                           'dataset_sha256': obj['qc_dataset_sha256']})
+    return candidates
+
+
+@lru_cache(maxsize=32)
+def cached_color_choices(summary):
+    # Blender retains dynamic Enum strings after the items callback returns.
+    return [(row['name'], row['label'], row['source']['sha256']) for row in json.loads(summary)]
+
+
+def color_field_choices(self, context):
+    summary = self.candidate_summary or json.dumps(color_field_candidates(context))
+    return cached_color_choices(summary)
 
 
 class QCBLENDER_OT_select_color_field(bpy.types.Operator):
@@ -304,6 +318,8 @@ class QCBLENDER_OT_select_color_field(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
     source_name: EnumProperty(name='Field', items=color_field_choices)
     target_name: StringProperty(options={'HIDDEN'})
+    target_pointer: StringProperty(options={'HIDDEN'})
+    candidate_summary: StringProperty(options={'HIDDEN'})
     minimum: FloatProperty(name='Color minimum (field unit)', default=-.05)
     maximum: FloatProperty(name='Color maximum (field unit)', default=.05)
 
@@ -313,55 +329,63 @@ class QCBLENDER_OT_select_color_field(bpy.types.Operator):
                 and bool(context.object.get('qc_dataset')))
 
     def invoke(self, context, event):
-        choices = color_field_choices(self, context)
-        if not choices:
+        candidates = color_field_candidates(context)
+        if not candidates:
             self.report({'ERROR'}, 'No bound scalar field views are available in this scene')
             return {'CANCELLED'}
         self.target_name = context.object.name
-        self.source_name = choices[0][0]
+        self.target_pointer = str(context.object.as_pointer())
+        self.candidate_summary = json.dumps(candidates)
+        self.source_name = candidates[0]['name']
         return context.window_manager.invoke_props_dialog(self, width=680)
 
     def draw(self, context):
-        from .source_browser import bound_field
         layout = self.layout
         layout.prop(self, 'source_name')
-        source = context.scene.objects.get(self.source_name)
-        if source is not None:
-            try:
-                _, field, meta, source_record = bound_field(source)
-            except (ValueError, OSError, KeyError, TypeError) as error:
-                layout.label(text=str(error), icon='ERROR')
-            else:
-                box = layout.box()
-                box.label(text='Source file: ' + str(source_record.get('filename', 'unknown')))
-                box.label(text='SHA-256: ' + source_record['sha256'])
-                job = meta.get('selected_job')
-                box.label(text=f'Calculation: Job {job + 1}' if type(job) is int and job >= 0
-                          else 'Calculation: not recorded')
-                jobs = meta.get('jobs', [])
-                if type(job) is int and 0 <= job < len(jobs):
-                    segment = jobs[job]
-                    box.label(text=f'Route: {segment.get("route", "not recorded")} | status: {segment.get("status", "unknown")}')
-                    box.label(text=f'Source lines: {segment.get("line_start", "?")}–{segment.get("line_end", "?")}')
-                box.label(text=f'Field: {field["quantity"]} [{field["unit"]}] | array {field["array"]}')
-                orbital = field.get('orbital')
-                if isinstance(orbital, dict):
-                    box.label(text=f'Orbital: {orbital.get("spin", "unknown")} MO {orbital.get("source_number", "unknown")}')
-                    box.label(text=f'Occupation: {orbital.get("occupation", "unknown")} | Energy: {orbital.get("energy_hartree", "unknown")} Eh')
-                elif field.get('orbital_source_number') is not None:
-                    box.label(text=f'Orbital source number: {field["orbital_source_number"]}')
+        candidates = json.loads(self.candidate_summary) if self.candidate_summary else color_field_candidates(context)
+        selected = next((row for row in candidates if row['name'] == self.source_name), None)
+        if selected:
+            field, source_record = selected['field'], selected['source']
+            box = layout.box()
+            box.label(text='Source file: ' + source_record['filename'])
+            box.label(text='SHA-256: ' + source_record['sha256'])
+            job = selected['job']
+            box.label(text=f'Calculation: Job {job + 1}' if type(job) is int and job >= 0
+                      else 'Calculation: not recorded')
+            if selected['job_record']:
+                segment = selected['job_record']
+                box.label(text=f'Route: {segment.get("route", "not recorded")} | status: {segment.get("status", "unknown")}')
+                box.label(text=f'Source lines: {segment.get("line_start", "?")}–{segment.get("line_end", "?")}')
+            box.label(text=f'Field: {field["quantity"]} [{field["unit"]}] | array {field["array"]}')
+            orbital = field.get('orbital')
+            if isinstance(orbital, dict):
+                box.label(text=f'Orbital: {orbital.get("spin", "unknown")} MO {orbital.get("source_number", "unknown")}')
+                box.label(text=f'Occupation: {orbital.get("occupation", "unknown")} | Energy: {orbital.get("energy_hartree", "unknown")} Eh')
+            elif field.get('orbital_source_number') is not None:
+                box.label(text=f'Orbital source number: {field["orbital_source_number"]}')
         layout.prop(self, 'minimum')
         layout.prop(self, 'maximum')
         layout.label(text='Range is used only for the first mapping; replacement keeps the current range')
 
     def execute(self, context):
+        from .source_browser import bound_field
         target = context.object
         try:
-            if target is None or (self.target_name and target.name != self.target_name):
+            if target is None or (self.target_name and target.name != self.target_name) or (
+                    self.target_pointer and str(target.as_pointer()) != self.target_pointer):
                 raise ValueError('Active target changed while choosing the color field')
+            candidates = json.loads(self.candidate_summary) if self.candidate_summary else color_field_candidates(context)
+            selected = next((row for row in candidates if row['name'] == self.source_name), None)
             source = context.scene.objects.get(self.source_name)
-            if source is None:
-                raise ValueError('Selected color field view is no longer in this scene')
+            if source is None or selected is None:
+                raise ValueError('Selected color field view is no longer available')
+            volume, field, _, field_source = bound_field(source)
+            if (source.as_pointer() != selected['object_pointer']
+                    or volume.as_pointer() != selected['volume_pointer']
+                    or source['qc_dataset_sha256'] != selected['dataset_sha256']
+                    or source['qc_field'] != selected['field_record']
+                    or field != selected['field'] or field_source != selected['source']):
+                raise ValueError('Selected color field changed while the dialog was open')
             compare_color_sources(target, source)
             tree = view_modifier(target).node_group
             if tree.get('qc_color_mapping') or target.get('qc_color_source'):
