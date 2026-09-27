@@ -73,10 +73,23 @@ class AimAssociation(unittest.TestCase):
                                self.source, count=1, flags=re.M),
                         re.sub(r'^ Position \(Angstrom\):', ' Position (Angstrom)',
                                self.source, count=1, flags=re.M),
+                        re.sub(r'^ Position \(Angstrom\):.*$', 'Position (Angstrom)',
+                               self.source, count=1, flags=re.M),
                         re.sub(r'^ Position \(Angstrom\):.*$', ' Position (Angstrom): nan 0 0',
                                self.source, count=1, flags=re.M)):
             with self.subTest(changed=changed[:100]):
                 with self.assertRaisesRegex(ValueError, '(CP 1.*(malformed|nonfinite)|malformed (CP header|field))'):
+                    self.import_properties(changed)
+
+    def test_repeated_fields_cannot_hide_conflicts(self):
+        wrong_type_then_correct = self.source.replace(
+            ' Corresponding nucleus:', ' CP_type: (3,-1)\n CP_type: (3,-3)\n Corresponding nucleus:', 1)
+        wrong_position_then_correct = self.source.replace(
+            ' Position (Angstrom):',
+            ' Position (Angstrom): 999 999 999\n Position (Angstrom):', 1)
+        for changed in (wrong_type_then_correct, wrong_position_then_correct):
+            with self.subTest(changed=changed[:150]):
+                with self.assertRaisesRegex(ValueError, 'repeated|conflicts'):
                     self.import_properties(changed)
 
 

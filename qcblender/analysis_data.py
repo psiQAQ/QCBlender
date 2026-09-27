@@ -65,15 +65,26 @@ def import_aim(reference, cps_path, paths_path, properties_path=None):
     paths = aim_paths(paths_path)
     if properties_path:
         lines = Path(properties_path).read_text(encoding='utf-8', errors='replace').splitlines()
+        current, seen_fields = None, set()
         for number, line in enumerate(lines, 1):
             stripped = line.strip()
-            if (re.match(r'-+\s*CP\s+\d+', stripped)
-                    and not re.search(r'CP\s+\d+,\s*Type\s*\([^)]+\)', stripped)):
-                raise ValueError(f'AIM property line {number} has a malformed CP header')
-            if (re.match(r'Critical point\s+\d+', stripped)
-                    and not re.match(r'Critical point\s+\d+\s*:', stripped)):
-                raise ValueError(f'AIM property line {number} has a malformed CP header')
-            if re.match(r'(?:CP_type|CP type|Position \(Angstrom\))(?=\s|:)', stripped):
+            legacy = re.match(r'-+\s*CP\s+(\d+)', stripped)
+            modern = re.match(r'Critical point\s+(\d+)', stripped)
+            if legacy:
+                if not re.search(r'CP\s+\d+,\s*Type\s*\([^)]+\)', stripped):
+                    raise ValueError(f'AIM property line {number} has a malformed CP header')
+                current = int(legacy[1])
+                seen_fields.add((current, 'type'))
+            if modern:
+                if not re.match(r'Critical point\s+\d+\s*:', stripped):
+                    raise ValueError(f'AIM property line {number} has a malformed CP header')
+                current = int(modern[1])
+            field = re.match(r'(CP_type|CP type|Position \(Angstrom\))(?=\s|:|$)', stripped)
+            if field:
+                kind = 'position' if field[1].startswith('Position') else 'type'
+                if current is None or (current, kind) in seen_fields:
+                    raise ValueError(f'AIM property line {number} has an unassigned or repeated {kind} field')
+                seen_fields.add((current, kind))
                 value = stripped.partition(':')[2].strip()
                 if not value or value == 'unknown':
                     raise ValueError(f'AIM property line {number} has a malformed field')
