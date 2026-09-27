@@ -212,8 +212,26 @@ def color_mapping(obj):
     return info, titles[0]
 
 
+def mapped_field(obj):
+    """Validate the recorded field as well as the mapping graph before using it."""
+    volume = color_mapping(obj)[0].inputs['Object'].default_value
+    field = object_record(volume, 'qc_field')
+    meta = read_metadata(volume)
+    recorded = object_record(obj, 'qc_color_source')
+    identity = {key: field.get(key) for key in ('array', 'quantity', 'unit', 'orbital', 'spin', 'source_number')}
+    if (field not in meta.get('fields', [])
+            or volume.get('qc_source_sha256') != meta['source'].get('sha256')
+            or volume.get('qc_source_sha256') != recorded.get('source')
+            or any(field.get(key) != recorded.get(key) for key in ('quantity', 'unit'))
+            or recorded.get('field_dataset_sha256', volume.get('qc_dataset_sha256')) != volume.get('qc_dataset_sha256')
+            or recorded.get('field') and recorded['field'] != identity
+            or recorded.get('field_source') and recorded['field_source'] != field_source(meta, field)):
+        raise ValueError('Existing color mapping differs from its saved binding')
+    return volume, field, meta
+
+
 def color_volume(obj):
-    return color_mapping(obj)[0].inputs['Object'].default_value
+    return mapped_field(obj)[0]
 
 
 def object_record(obj, key):

@@ -7,7 +7,7 @@ from bpy.props import FloatProperty
 
 from .graph import view_modifier
 from .jobs import Job
-from .source_browser import binding_key, color_mapping, read_metadata
+from .source_browser import binding_key, color_mapping, mapped_field
 from .ui import AsyncOperation
 
 RANGE_NAMES = ('Color Minimum', 'Color Center', 'Color Maximum')
@@ -48,13 +48,7 @@ def apply_range(obj, values):
 
 
 def color_source(obj):
-    volume = color_mapping(obj)[0].inputs['Object'].default_value
-    meta = read_metadata(volume)
-    field = json.loads(volume['qc_field'])
-    recorded = json.loads(obj['qc_color_source'])
-    if (field not in meta.get('fields', []) or volume['qc_source_sha256'] != recorded['source']
-            or any(field[key] != recorded[key] for key in ('quantity', 'unit'))):
-        raise ValueError('Color field differs from its saved source binding')
+    volume, field, _ = mapped_field(obj)
     token = (volume.as_pointer(), binding_key(volume), volume['qc_field'], obj['qc_color_source'])
     return volume, field, token
 

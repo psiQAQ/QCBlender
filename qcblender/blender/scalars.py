@@ -245,21 +245,10 @@ def compare_color_sources(target, source):
 
 
 def replace_mapping(target, source):
-    from .source_browser import bound_field, color_mapping, field_source, object_record, read_metadata
+    from .source_browser import bound_field, color_mapping, mapped_field
     volume, field, _, new_field_source = bound_field(source)
     info, title = color_mapping(target)
-    previous_volume = info.inputs['Object'].default_value
-    previous = object_record(target, 'qc_color_source')
-    previous_field = object_record(previous_volume, 'qc_field')
-    if (previous_volume.get('qc_source_sha256') != previous.get('source')
-            or any(previous_field.get(key) != previous.get(key) for key in ('quantity', 'unit'))
-            or previous.get('field_dataset_sha256', previous_volume.get('qc_dataset_sha256'))
-               != previous_volume.get('qc_dataset_sha256')
-            or previous.get('field') and previous['field'] != {key: previous_field.get(key) for key in
-                                                                ('array', 'quantity', 'unit', 'orbital', 'spin', 'source_number')}
-            or previous.get('field_source') and previous['field_source'] != field_source(
-                read_metadata(previous_volume), previous_field)):
-        raise ValueError('Existing color mapping differs from its saved binding')
+    previous_volume, _, _ = mapped_field(target)
     old_title = title.inputs['String'].default_value
     old_binding = target['qc_color_source']
     try:
