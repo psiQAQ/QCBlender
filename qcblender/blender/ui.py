@@ -423,6 +423,9 @@ def draw_view_parameters(layout, obj):
             source.label(text='SHA-256: ' + color['field_source'].get('sha256', '未记录'))
         source.label(text='有效域外显示洋红色')
 
+    if obj.get('qc_view_kind') in ('atoms', 'field', 'slice', 'fog'):
+        layout.operator('qcblender.copy_display_parameters', text='应用显示参数到选中视图')
+
     try:
         modifier = view_modifier(obj)
     except ValueError as error:
