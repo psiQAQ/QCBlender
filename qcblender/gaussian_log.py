@@ -176,13 +176,8 @@ def select_energy(records, status):
     return dict(result, record_id=targets[0]['id'], status='available', reason='Unique method-specific result in a normally terminated job')
 
 
-def read_log(path, job_index=0):
-    from cclib.parser import Gaussian
-    path = Path(path)
-    lines = path.read_text(encoding='utf-8', errors='replace').splitlines(keepends=True)
+def summarize_jobs(lines):
     spans = split_jobs(lines)
-    if type(job_index) is not int or not 0 <= job_index < len(spans):
-        raise ValueError(f'Choose a Gaussian job from 1 to {len(spans)}')
     jobs = []
     for index, (start, end) in enumerate(spans):
         section = lines[start:end]
@@ -192,7 +187,30 @@ def read_log(path, job_index=0):
         job_id = f'job{index+1}'
         energies = energy_events(section, start+1, job_id, route, status)
         jobs.append({'id': job_id, 'line_start': start+1, 'line_end': end, 'route': route,
-                     'status': status, 'energies': energies, 'energy_selection': select_energy(energies, status)})
+                     'status': status, 'energies': energies, 'energy_selection': select_energy(energies, status),
+                     'explicit_geometry': any('orientation:' in line.lower() for line in section)})
+    return jobs
+
+
+def inspect_log(path):
+    path = Path(path)
+    if path.suffix.lower() not in ('.log', '.out'):
+        raise ValueError('Calculation preview requires a Gaussian Log/Out file')
+    if path.stat().st_size > 512 * 1024**2:
+        raise MemoryError('Source exceeds the current 512 MiB import limit')
+    lines = path.read_text(encoding='utf-8', errors='replace').splitlines(keepends=True)
+    return {'source': source_record(path, 'gaussian-log', 'qcblender.gaussian_log 0.1'),
+            'jobs': summarize_jobs(lines)}
+
+
+def read_log(path, job_index=0):
+    from cclib.parser import Gaussian
+    path = Path(path)
+    lines = path.read_text(encoding='utf-8', errors='replace').splitlines(keepends=True)
+    spans = split_jobs(lines)
+    if type(job_index) is not int or not 0 <= job_index < len(spans):
+        raise ValueError(f'Choose a Gaussian job from 1 to {len(spans)}')
+    jobs = summarize_jobs(lines)
     start, end = spans[job_index]
     section = lines[start:end]
     parsed = Gaussian(StringIO(''.join(section)), loglevel=logging.ERROR).parse()
