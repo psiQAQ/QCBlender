@@ -2,6 +2,9 @@
 import csv
 import hashlib
 import json
+import os
+from pathlib import Path
+import tempfile
 
 import numpy as np
 
@@ -54,7 +57,8 @@ def sample_profile(reference, field, start, end, world_start, world_end, manifes
             pass
     if not valid_runs(valid):
         raise ValueError('Profile has no adjacent valid samples')
-    profile = {'field_role': role, 'field': field, 'source_manifest_sha256': manifest_sha256,
+    profile = {'field_role': role, 'field': field, 'sample_count': count,
+               'source_manifest_sha256': manifest_sha256,
                'source_record': reference.metadata['source'], 'start_source_angstrom': endpoints[0].tolist(),
                'end_source_angstrom': endpoints[1].tolist(), 'start_world': world[0].tolist(),
                'end_world': world[1].tolist(), 'interpolation': 'trilinear'}
@@ -75,10 +79,19 @@ def sample_profile(reference, field, start, end, world_start, world_end, manifes
 def export_profile_csv(data, path):
     field = data.metadata['profile']['field']
     arrays = data.arrays
-    with open(path, 'w', encoding='utf-8', newline='') as stream:
-        writer = csv.writer(stream)
-        writer.writerow(('distance_angstrom', 'x_angstrom', 'y_angstrom', 'z_angstrom', 'value', 'unit', 'valid'))
-        for distance, position, value, valid in zip(arrays['profile_distance'], arrays['profile_positions'],
-                                                    arrays['profile_values'], arrays['profile_valid'], strict=True):
-            writer.writerow((float(distance), *map(float, position), float(value) if valid else '',
-                             field['unit'], int(valid)))
+    target = Path(path)
+    pending = None
+    try:
+        with tempfile.NamedTemporaryFile('w', encoding='utf-8', newline='', dir=target.parent,
+                                         prefix='.profile-', suffix='.csv.pending', delete=False) as stream:
+            pending = Path(stream.name)
+            writer = csv.writer(stream)
+            writer.writerow(('distance_angstrom', 'x_angstrom', 'y_angstrom', 'z_angstrom', 'value', 'unit', 'valid'))
+            for distance, position, value, valid in zip(arrays['profile_distance'], arrays['profile_positions'],
+                                                        arrays['profile_values'], arrays['profile_valid'], strict=True):
+                writer.writerow((float(distance), *map(float, position), float(value) if valid else '',
+                                 field['unit'], int(valid)))
+        os.replace(pending, target)
+    finally:
+        if pending is not None:
+            pending.unlink(missing_ok=True)

@@ -45,6 +45,8 @@ class LineProfile(unittest.TestCase):
                                             self.field, start), arrays['profile_values'][0])
         self.assertEqual(data.metadata['source']['kind'], 'derived')
         self.assertEqual(data.metadata['profile']['source_manifest_sha256'], 'b' * 64)
+        self.assertEqual(data.metadata['profile']['sample_count'], 5)
+        self.assertNotEqual(data.metadata['source']['sha256'], self.profile(start, end, 7).metadata['source']['sha256'])
 
     def test_invalid_domain_mask_gaps_and_csv_reopen(self):
         self.reference.arrays['scalar_valid'][2, :, :] = False
@@ -97,6 +99,20 @@ class LineProfile(unittest.TestCase):
         self.assertEqual(color_data.metadata['profile']['field_role'], 'COLOR')
         np.testing.assert_allclose(color_data.arrays['profile_values'],
                                    2 * self.profile(start, end).arrays['profile_values'])
+
+    def test_failed_csv_write_keeps_previous_file(self):
+        start, end = self.positions[0, 1, 1], self.positions[4, 1, 1]
+        data = self.profile(start, end)
+        output = ROOT / 'outputs/science-profile'
+        output.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=output) as temporary:
+            target = Path(temporary) / 'profile.csv'
+            target.write_text('previous export\n', encoding='utf-8')
+            data.arrays['profile_positions'] = data.arrays['profile_positions'][:2]
+            with self.assertRaisesRegex(ValueError, r'zip\(\) argument'):
+                export_profile_csv(data, target)
+            self.assertEqual(target.read_text(encoding='utf-8'), 'previous export\n')
+            self.assertEqual(list(Path(temporary).iterdir()), [target])
 
 
 if __name__ == '__main__':
