@@ -14,11 +14,11 @@ class MeasurementTests(unittest.TestCase):
         for expression in ('1,1', '0,2', '1,4', '1-2', ''):
             with self.assertRaises(ValueError):
                 parse_source_atom_numbers(expression, 3)
-        self.assertEqual(geometry_label({'kind': 'source', 'step': None}), '源构型')
+        self.assertEqual(geometry_label({'kind': 'source', 'step': None}), 'Source geometry')
         self.assertEqual(geometry_label({'kind': 'optimization', 'step': 3}), 'Optimization Step 3')
         self.assertEqual(geometry_label({'kind': 'irc', 'step': 2}), 'IRC Step 2')
         self.assertEqual(measurement_text('DISTANCE', [1, 2], 1.23456,
-                         {'kind': 'source', 'step': None}, 4), '1-2 · 源构型: 1.2346 Å')
+                         {'kind': 'source', 'step': None}, 4), '1-2 · Source geometry: 1.2346 Å')
         self.assertIn('Optimization Step 3: undefined', measurement_text('DIHEDRAL', [1, 2, 3, 4],
                       None, {'kind': 'optimization', 'step': 3}, 2, 'terminal arm lies on central axis'))
         with self.assertRaises(ValueError):
@@ -53,6 +53,7 @@ class MeasurementTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 measure(kind, points, atoms)
         points[0] = points[1]
+        self.assertEqual(measure('DISTANCE', points, [1, 2]), 0.)
         with self.assertRaisesRegex(ValueError, 'zero-length arm'):
             measure('ANGLE', points, [1, 2, 3])
 

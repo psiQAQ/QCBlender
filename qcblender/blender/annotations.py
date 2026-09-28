@@ -180,7 +180,8 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
         return _atom_view(context) is not None
 
     def invoke(self, context, event):
-        self.decimals = 4 if self.kind in ('ATOM', 'DISTANCE') else 2
+        if not self.properties.is_property_set('decimals', ghost=False):
+            self.decimals = 4 if self.kind in ('ATOM', 'DISTANCE') else 2
         self.atoms = '1' if self.kind == 'ATOM' else ','.join(str(i) for i in range(1, ATOM_COUNTS[self.kind] + 1))
         return context.window_manager.invoke_props_dialog(self)
 
@@ -208,8 +209,10 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
                 measure(self.kind, positions, numbers)
             symbols = [_symbol(int(owner.data.attributes['qc_atomic_number'].data[n - 1].value))
                        for n in numbers]
+            decimals = self.decimals if self.properties.is_property_set('decimals', ghost=False) else (
+                4 if self.kind in ('ATOM', 'DISTANCE') else 2)
             settings = {'kind': self.kind, 'size': self.size, 'color': list(self.color),
-                        'offset': list(self.offset), 'decimals': self.decimals,
+                        'offset': list(self.offset), 'decimals': decimals,
                         'show_leader': self.show_leader, 'line_width': self.line_width, 'visible': self.visible,
                         'source_sha256': record['source_sha256'], 'selected_job': record['selected_job'],
                         'dataset_sha256': record['dataset_sha256']}

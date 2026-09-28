@@ -23,7 +23,7 @@ def geometry_label(record):
     """Short visible context for a saved scientific geometry record."""
     kind, step = record['kind'], record['step']
     if kind == 'source' and step is None:
-        return '源构型'
+        return 'Source geometry'
     if kind in ('optimization', 'irc') and type(step) is int and step > 0:
         return f'{"Optimization" if kind == "optimization" else "IRC"} Step {step}'
     raise ValueError('Annotation geometry kind or step is invalid')
@@ -66,10 +66,7 @@ def measure(kind, positions, source_atom_numbers):
     if not np.isfinite(points).all():
         raise ValueError('Measurement coordinates must be finite')
     if kind == 'DISTANCE':
-        distance = float(np.linalg.norm(points[1] - points[0]))
-        if distance <= 1e-12:
-            raise ValueError('Distance is undefined: coincident atoms')
-        return distance
+        return float(np.linalg.norm(points[1] - points[0]))
     first, second = points[0] - points[1], points[2] - points[1]
     if kind == 'ANGLE':
         if min(np.linalg.norm(first), np.linalg.norm(second)) <= 1e-12:
