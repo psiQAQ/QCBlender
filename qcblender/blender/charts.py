@@ -236,7 +236,7 @@ def _state(obj):
         if any(name not in items or items[name] not in modifier for name in names):
             raise ValueError('The scalar display range is missing from this slice')
         minimum, midpoint, maximum = (float(modifier[items[name]]) for name in names)
-        if not all(math.isfinite(value) for value in (minimum, midpoint, maximum)) or minimum >= maximum:
+        if not all(math.isfinite(value) for value in (minimum, midpoint, maximum)) or not minimum < midpoint < maximum:
             raise ValueError('Scalar display range must be finite and increasing')
         plane['mapping_range'] = {'minimum': minimum, 'center': midpoint, 'maximum': maximum}
     settings = {key: obj.get(key) for key in ('qc_contour_source', 'qc_contour_levels',

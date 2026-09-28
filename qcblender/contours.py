@@ -30,7 +30,7 @@ def levels_from_samples(values, valid, explicit='', mapping_range=None):
         low, center, high = (float(mapping_range[key]) for key in ('minimum', 'center', 'maximum'))
     except (KeyError, TypeError, ValueError) as error:
         raise ValueError('Selected field display range is incomplete') from error
-    if not all(np.isfinite((low, center, high))) or low >= high:
+    if not all(np.isfinite((low, center, high))) or not low < center < high:
         raise ValueError('Selected field display range must be finite and increasing')
     return np.linspace(low, high, 11, dtype=np.float64)[1:-1].tolist()
 
