@@ -30,7 +30,7 @@
 | ESP 单位冲突拒绝且场景完整、声明位置和五列面积区间 | Passed | `final-sop/cases/C08/metadata-check.json` |
 | 第一批最终资格 | Passed | `qualification.json`、`evidence-index.json`；源码、安装副本、ZIP 和 wheel 摘要一致 |
 | 等值线与剖面集成 | Passed | 第三批候选，见下表 |
-| 外部浏览集成 | Not Run | 独立分支待顺序集成 |
+| 外部浏览集成 | Failed | 第四批已集成；专项运行通过，追加审查缺陷待修复和重新资格验证 |
 | 最终 C01–C13 六栏及 N01–N18 | Not Run | 在最终候选执行 |
 
 运行故障与复验方法见 [开发注意事项](DEVELOPMENT_PITFALLS.md)。本记录不替代 SOP 独立人工签署。
