@@ -126,9 +126,9 @@ class QCBLENDER_OT_import_esp(bpy.types.Operator):
     extrema_path: StringProperty(name='Extrema PDB', subtype='FILE_PATH')
     area_path: StringProperty(name='Area distribution text', subtype='FILE_PATH')
     surface_definition: StringProperty(name='Surface definition', default='electron density 0.001 e/bohr^3')
-    extrema_unit: StringProperty(name='Extrema value unit', default='kcal/mol')
-    center_unit: StringProperty(name='Distribution center unit', default='kcal/mol')
-    area_unit: StringProperty(name='Area unit', default='angstrom^2')
+    extrema_unit: StringProperty(name='Extrema value unit (optional with PDB REMARK)', default='')
+    center_unit: StringProperty(name='Distribution center unit', default='')
+    area_unit: StringProperty(name='Area unit (optional with table note)', default='')
 
     @classmethod
     def poll(cls, context):
@@ -142,6 +142,8 @@ class QCBLENDER_OT_import_esp(bpy.types.Operator):
     def draw(self, context):
         for name in ('extrema_path', 'area_path', 'surface_definition', 'extrema_unit', 'center_unit', 'area_unit'):
             self.layout.prop(self, name)
+        self.layout.label(text='ESP values: a.u., eV or kcal/mol; area: angstrom^2 or bohr^2')
+        self.layout.label(text='Center unit is always user assigned; source declarations are checked on import')
 
     def execute(self, context):
         from ..analysis_data import import_esp

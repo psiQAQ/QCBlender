@@ -102,7 +102,8 @@ def main():
                     shutil.copy2(path, target)
                     copied.append(target)
                 data = external.pair_cubes(*copied, request['method'],
-                                           request['geometry_unit'], request['color_unit'])
+                                           request['geometry_unit'], request['color_unit'],
+                                           request.get('iri_exponent'))
                 data.metadata['source']['filename'] = paths[0].name
                 data.metadata['analysis']['geometry_source']['filename'] = paths[0].name
                 data.metadata['analysis']['color_source']['filename'] = paths[1].name
