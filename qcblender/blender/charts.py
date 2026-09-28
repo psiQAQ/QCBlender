@@ -120,26 +120,33 @@ def _contour_parts(carrier):
 
 
 def _original_visibility(part):
-    return (bool(part.get('qc_contour_restore_viewport', part.hide_get())),
-            bool(part.get('qc_contour_restore_render', part.hide_render)))
+    return (bool(part.get('qc_contour_restore_viewport',
+                          part.get('qc_layer_restore_viewport', part.hide_get()))),
+            bool(part.get('qc_contour_restore_render',
+                          part.get('qc_layer_restore_render', part.hide_render))))
 
 
 def _save_visibility(part):
     if 'qc_contour_restore_viewport' not in part:
-        part['qc_contour_restore_viewport'] = part.hide_get()
-        part['qc_contour_restore_render'] = part.hide_render
+        part['qc_contour_restore_viewport'] = part.get('qc_layer_restore_viewport', part.hide_get())
+        part['qc_contour_restore_render'] = part.get('qc_layer_restore_render', part.hide_render)
 
 
 def _hide_contours(obj):
+    from .layers import sync_chart_children
+
     carrier = _carrier(obj)
     if carrier:
         for part in _contour_parts(carrier):
             _save_visibility(part)
             part.hide_set(True)
             part.hide_render = True
+        sync_chart_children(obj)
 
 
 def _restore_contours(obj, identity):
+    from .layers import sync_chart_children
+
     carrier = _carrier(obj)
     if carrier is None or carrier.get('qc_contour_identity') != identity:
         return
@@ -160,6 +167,7 @@ def _restore_contours(obj, identity):
             label.hide_render = bool(label['qc_contour_restore_render'])
             del label['qc_contour_restore_viewport']
             del label['qc_contour_restore_render']
+    sync_chart_children(obj)
 
 
 def cleanup_contours(obj):
@@ -572,14 +580,21 @@ class QCBLENDER_PT_profile_axes(bpy.types.Panel):
 
 
 def _watch_contours():
+    from .layers import sync_chart_children
+
     for obj in bpy.data.objects:
+        if obj.get('qc_view_kind') in ('slice', 'profile'):
+            sync_chart_children(obj)
         if obj.get('qc_view_kind') != 'slice' or not obj.get('qc_contour_enabled'):
             continue
         pointer = obj.as_pointer()
         try:
             _, _, identity = _state(obj)
-        except (ValueError, KeyError, TypeError, ReferenceError):
+        except (ValueError, KeyError, TypeError, ReferenceError) as error:
             _hide_contours(obj)
+            status = f"Contour unavailable: {str(error) or type(error).__name__}"
+            if obj.get('qc_contour_status') != status:
+                obj['qc_contour_status'] = status
             continue
         child = _carrier(obj)
         if (identity == obj.get('qc_contour_identity') and child is not None

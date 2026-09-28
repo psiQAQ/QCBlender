@@ -86,6 +86,9 @@ def copy_profile_ticks(source, target, collection):
                 copied.data.materials[index] = materials[mat]
         collection.objects.link(copied)
         copied.parent = target
+    from .layers import sync_chart_children
+
+    sync_chart_children(target)
 
 
 def apply_profile_layout(obj, data):
@@ -133,6 +136,9 @@ def apply_profile_layout(obj, data):
         label(caption, (-.62, 0., y-.06))
     label('Distance (Å)', (layout['width']/2-.5, 0., -.55))
     label(data.metadata['profile']['field']['unit'], (-.62, 0., layout['height']+.18))
+    from .layers import sync_chart_children
+
+    sync_chart_children(obj)
     chart = json.loads(obj['qc_chart'])
     chart.update(x_min=layout['x_range'][0], x_max=layout['x_range'][1],
                  y_min=layout['y_range'][0], y_max=layout['y_range'][1])
