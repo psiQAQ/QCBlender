@@ -84,6 +84,13 @@ def _bound(state, prefix, end):
     return getattr(state, prefix + '_' + end) if getattr(state, prefix + '_' + end + '_on') else None
 
 
+def _scatter_parameters(state):
+    x_field, y_field = (0, 1) if state.swap_axes else (1, 0)
+    return {'x_field': x_field, 'y_field': y_field,
+            'x_min': _bound(state, 'x', 'low'), 'x_max': _bound(state, 'x', 'high'),
+            'y_min': _bound(state, 'y', 'low'), 'y_max': _bound(state, 'y', 'high')}
+
+
 def _source_identity(obj, meta):
     return {'dataset_sha256': obj['qc_dataset_sha256'],
             'source_sha256': meta['source']['sha256'], 'role': obj.get('qc_analysis_role', obj.get('qc_view_kind'))}
@@ -102,9 +109,12 @@ def _records(analysis, role, state):
         return area_selection(analysis, low, high, state.area_range_mode)
     if role.startswith(('esp_', 'aim_')) and role != 'aim_paths':
         chosen = state.esp_kind if role.startswith('esp_') else state.aim_type
-        kind = None if chosen == 'ALL' else chosen
-        result = {'indexes': point_selection(analysis, state.source_number or None, kind, low, high,
-                                            state.aim_numeric_key if role.startswith('aim_') else None)}
+        source_kind = role.split('_', 1)[1]
+        kind = source_kind if chosen == 'ALL' else chosen
+        indexes = point_selection(analysis, state.source_number or None, kind, low, high,
+                                  state.aim_numeric_key if role.startswith('aim_') else None)
+        result = {'indexes': indexes if kind == source_kind else [],
+                  'type_mismatch': kind != source_kind}
         if role.startswith('aim_'):
             result['value_key'] = state.aim_numeric_key
         return result
@@ -123,16 +133,6 @@ def _records(analysis, role, state):
         return dict(selected, orbital_sort=state.nbo_orbital_sort,
                     interaction_sort=state.nbo_interaction_sort)
     raise ValueError('No record browser for this object')
-
-
-def _point_peers(obj):
-    if not obj.parent:
-        return [obj]
-    prefix = 'esp_' if obj['qc_analysis_role'].startswith('esp_') else 'aim_'
-    return [child for child in obj.parent.children
-            if child.get('qc_dataset_sha256') == obj.get('qc_dataset_sha256')
-            and child.get('qc_analysis_role', '').startswith(prefix)
-            and child.get('qc_analysis_role') not in ('esp_area', 'aim_paths')]
 
 
 def _focus(context, obj, row, state, analysis):
@@ -178,6 +178,8 @@ def _focus(context, obj, row, state, analysis):
     label.location = (state.marker_size * 1.5, 0, 0)
     label.hide_set(not state.show_labels)
     label.hide_render = not state.show_labels
+    from .layers import sync_chart_children
+    sync_chart_children(obj)
     world = obj.matrix_world @ Vector(row['position_angstrom'])
     for area in context.screen.areas if context.screen is not None else ():
         if area.type == 'VIEW_3D':
@@ -198,10 +200,8 @@ class QCBLENDER_OT_apply_result_filter(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        obj = context.object
-        return obj is not None and (obj.get('qc_analysis_role') in
-            ('esp_maximum', 'esp_minimum', 'esp_area', 'aim_C', 'aim_N', 'aim_O', 'aim_F', 'ets_nocv')
-            or obj.get('qc_view_kind') == 'nbo')
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'result_filter')
 
     def execute(self, context):
         from .source_browser import read_metadata
@@ -216,14 +216,11 @@ class QCBLENDER_OT_apply_result_filter(bpy.types.Operator):
             if role.startswith(('esp_', 'aim_')) and role != 'esp_area':
                 key = 'extrema' if analysis['kind'] == 'ESP' else 'critical_points'
                 indexes = result['indexes']
-                for peer in _point_peers(obj):
-                    peer_kind = peer['qc_analysis_role'].split('_', 1)[1]
-                    selected = [analysis[key][i]['position_angstrom'] for i in indexes
-                                if analysis[key][i].get('kind', analysis[key][i].get('type')) == peer_kind]
-                    mesh = _writable_mesh(peer)
-                    mesh.clear_geometry()
-                    mesh.from_pydata(selected if state.show_points else [], [], [])
-                    mesh.update()
+                selected = [analysis[key][i]['position_angstrom'] for i in indexes]
+                mesh = _writable_mesh(obj)
+                mesh.clear_geometry()
+                mesh.from_pydata(selected if state.show_points else [], [], [])
+                mesh.update()
                 marker = next((child for child in obj.children if child.get('qc_result_focus')), None)
                 if indexes and state.row_index <= len(indexes):
                     _focus(context, obj, analysis[key][indexes[state.row_index - 1]], state, analysis)
@@ -280,11 +277,10 @@ class QCBLENDER_OT_apply_result_filter(bpy.types.Operator):
                 else:
                     self.report({'INFO'}, 'No existing NOCV field view matches this pair and spin')
             _save_state(obj, meta, result)
-            if role.startswith(('esp_', 'aim_')) and role != 'esp_area':
-                for peer in _point_peers(obj):
-                    peer['qc_result_displaystate'] = obj['qc_result_displaystate']
-                    peer['qc_result_source_identity'] = json.dumps(_source_identity(peer, meta), sort_keys=True)
-            self.report({'INFO'}, 'Result display updated; source records unchanged')
+            if result.get('type_mismatch'):
+                self.report({'INFO'}, 'Selected type belongs to another display layer; this layer has no matches')
+            else:
+                self.report({'INFO'}, 'Result display updated; source records unchanged')
         except (ValueError, OSError, KeyError, TypeError) as error:
             self.report({'ERROR'}, str(error))
             return {'CANCELLED'}
@@ -298,61 +294,86 @@ class QCBLENDER_OT_filter_result_scatter(AsyncOperation, bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and context.object.get('qc_view_kind') == 'scatter'
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'result_scatter')
 
     def begin(self, context):
         from .jobs import Job
         from .source_browser import read_metadata
 
-        self._view = context.object
-        self._meta = read_metadata(self._view)
-        path = Path(bpy.path.abspath(self._view['qc_dataset'])).resolve(strict=True)
+        view = context.object
+        meta = read_metadata(view)
+        self._target_name = view.name
+        self._target_pointer = view.as_pointer()
+        self._binding = (view['qc_dataset'], view['qc_dataset_sha256'],
+                         view.get('qc_source_sha256'), view.get('qc_view_kind'))
+        self._source_identity = _source_identity(view, meta)
+        self._field_identity = json.dumps(meta['fields'], sort_keys=True)
+        parent = view.parent
+        self._parent_pointer = parent.as_pointer() if parent else None
+        self._parent_binding = ((parent.get('qc_dataset'), parent.get('qc_dataset_sha256'),
+                                 parent.get('qc_source_sha256'), parent.get('qc_field'))
+                                if parent else None)
+        path = Path(bpy.path.abspath(view['qc_dataset'])).resolve(strict=True)
         digest = hashlib.sha256((path / 'manifest.json').read_bytes()).hexdigest()
-        if digest != self._view['qc_dataset_sha256']:
+        if digest != view['qc_dataset_sha256']:
             raise ValueError('Scatter source changed after binding')
-        self._digest = digest
-        state = self._view.qc_result_browser
-        x_field, y_field = (0, 1) if state.swap_axes else (1, 0)
-        self._request = {'dataset': str(path), 'dataset_sha256': digest,
-            'x_field': x_field, 'y_field': y_field,
-            'x_min': _bound(state, 'x', 'low'), 'x_max': _bound(state, 'x', 'high'),
-            'y_min': _bound(state, 'y', 'low'), 'y_max': _bound(state, 'y', 'high')}
+        self._request = dict(dataset=str(path), dataset_sha256=digest,
+                             **_scatter_parameters(view.qc_result_browser))
         return Job('result_scatter', **self._request)
 
     def accept(self, context, report):
         import numpy as np
+        from ..result_filters import verified_scatter_points
+        from .source_browser import read_metadata
 
-        if self._view.name not in bpy.data.objects:
-            raise ValueError('Scatter view was removed during filtering')
-        path = Path(bpy.path.abspath(self._view['qc_dataset']))
-        if hashlib.sha256((path / 'manifest.json').read_bytes()).hexdigest() != self._digest:
+        view = bpy.data.objects.get(self._target_name)
+        if view is None or view.as_pointer() != self._target_pointer:
+            raise ValueError('Scatter view was removed or renamed during filtering')
+        if ((view.get('qc_dataset'), view.get('qc_dataset_sha256'),
+             view.get('qc_source_sha256'), view.get('qc_view_kind')) != self._binding):
+            raise ValueError('Scatter view binding changed during filtering')
+        parent = view.parent
+        if ((parent.as_pointer() if parent else None) != self._parent_pointer
+                or ((parent.get('qc_dataset'), parent.get('qc_dataset_sha256'),
+                     parent.get('qc_source_sha256'), parent.get('qc_field')) if parent else None)
+                != self._parent_binding):
+            raise ValueError('Scatter source object changed during filtering')
+        controls = _scatter_parameters(view.qc_result_browser)
+        if controls != {key: self._request[key] for key in controls}:
+            raise ValueError('Scatter axes or filters changed during filtering')
+        path = Path(bpy.path.abspath(view['qc_dataset'])).resolve(strict=True)
+        if (str(path) != self._request['dataset']
+                or hashlib.sha256((path / 'manifest.json').read_bytes()).hexdigest()
+                != self._request['dataset_sha256']):
             raise ValueError('Scatter source changed during filtering')
+        meta = read_metadata(view)
+        if (_source_identity(view, meta) != self._source_identity
+                or json.dumps(meta['fields'], sort_keys=True) != self._field_identity):
+            raise ValueError('Scatter field identity changed during filtering')
         points_path = self._job.directory / 'scatter.npy'
-        points = np.load(points_path, allow_pickle=False)
-        if (points.ndim != 2 or points.shape[1] != 2 or len(points) != report['displayed_count']
-                or len(points) > 50000 or not np.isfinite(points).all()
-                or report['matching_count'] < len(points)
-                or (report['x_field'], report['y_field']) != (self._request['x_field'], self._request['y_field'])):
-            raise ValueError('Worker returned invalid scatter points')
-        fields = self._meta['fields']
+        points = verified_scatter_points(points_path, report,
+                                         self._request['x_field'], self._request['y_field'])
+        fields = meta['fields']
         minimum = points.min(axis=0) if len(points) else np.zeros(2)
         maximum = points.max(axis=0) if len(points) else np.zeros(2)
         span = maximum - minimum
         span[span == 0] = 1
         scaled = (points - minimum) / span * 4
-        mesh = _writable_mesh(self._view)
+        mesh = _writable_mesh(view)
         mesh.clear_geometry()
         mesh.from_pydata([(float(x), 0, float(y)) for x, y in scaled], [], [])
         mesh.update()
         x_field, y_field = self._request['x_field'], self._request['y_field']
-        self._view['qc_scatter'] = json.dumps({'x_quantity': fields[x_field]['quantity'],
+        view['qc_scatter'] = json.dumps({'x_quantity': fields[x_field]['quantity'],
             'x_unit': fields[x_field]['unit'], 'y_quantity': fields[y_field]['quantity'],
             'y_unit': fields[y_field]['unit'], 'minimum': minimum.tolist(),
-            'maximum': maximum.tolist(), 'sample_count': len(points), 'axis_scale': 'linear'})
+            'maximum': maximum.tolist(), 'sample_count': len(points),
+            'matching_count': report['matching_count'], 'axis_scale': 'linear'})
         display = {key: self._request[key] for key in ('x_field', 'y_field',
                    'x_min', 'x_max', 'y_min', 'y_max')}
-        _save_state(self._view, self._meta, dict(display, matching_count=report['matching_count'],
-                                                 displayed_count=report['displayed_count']))
+        _save_state(view, meta, dict(display, matching_count=report['matching_count'],
+                                     displayed_count=report['displayed_count']))
         self.report({'INFO'}, f"Scatter: {report['matching_count']} matched, {report['displayed_count']} displayed")
 
 
@@ -373,7 +394,7 @@ class QCBLENDER_PT_result_browser(bpy.types.Panel):
                 'aim_C', 'aim_N', 'aim_O', 'aim_F', 'aim_paths', 'ets_nocv'))
 
     def draw(self, context):
-        from .capabilities import record
+        from .capabilities import action_button, record
         from .source_browser import cached_metadata
 
         obj, layout = context.object, self.layout
@@ -405,14 +426,14 @@ class QCBLENDER_PT_result_browser(bpy.types.Panel):
                 row.prop(state, axis + '_low', text=axis.upper() + ' from')
                 row.prop(state, axis + '_high_on', text='')
                 row.prop(state, axis + '_high', text='to')
-            layout.operator('qcblender.filter_result_scatter')
+            action_button(layout, context, 'result_scatter', 'qcblender.filter_result_scatter', '更新散点')
             if saved:
                 layout.label(text=f"Matched {saved.get('matching_count', 0)} | displayed {saved.get('displayed_count', 0)}")
             return
         if role != 'esp_area':
             layout.prop(state, 'source_number', text='Source number' if role != 'ets_nocv' else 'Pair number')
         if role.startswith(('esp_', 'aim_')) and role != 'esp_area':
-            layout.prop(state, 'esp_kind' if role.startswith('esp_') else 'aim_type')
+            layout.label(text=f"Source type: {role.split('_', 1)[1]} | switch layer for other types")
             if role.startswith('esp_'):
                 _draw_range(layout, state, 'value', f"ESP value [{analysis.get('extrema_unit', 'unit unknown')}]")
             else:
@@ -448,7 +469,7 @@ class QCBLENDER_PT_result_browser(bpy.types.Panel):
             _draw_range(layout, state, 'value', f"Pair energy [{analysis.get('energy_unit', 'unit unknown')}]")
             layout.prop(state, 'sort_by')
         layout.prop(state, 'row_index')
-        layout.operator('qcblender.apply_result_filter')
+        action_button(layout, context, 'result_filter', 'qcblender.apply_result_filter', '应用筛选')
         if saved:
             if role == 'esp_area':
                 layout.label(text=f"Applied selection: {saved.get('selection_mode', 'center')}")
@@ -473,6 +494,8 @@ class QCBLENDER_PT_result_browser(bpy.types.Panel):
                     layout.label(text=f"{row['donor']} → {row['acceptor']} | E(2) {row['e2_kcal_mol']:.6g} kcal/mol")
                     _draw_source_record(layout, row)
             else:
+                if saved.get('type_mismatch'):
+                    layout.label(text='Selected type belongs to another display layer', icon='INFO')
                 layout.label(text=f"Matching records: {len(saved.get('indexes', []))}")
                 indexes = saved.get('indexes', [])
                 if indexes and state.row_index <= len(indexes):

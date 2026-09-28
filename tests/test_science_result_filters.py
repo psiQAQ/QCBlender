@@ -12,7 +12,7 @@ from qcblender.external_results import (aim_points, aim_properties, esp_area, es
                                         ets_nocv_pairs)
 from qcblender.result_filters import (area_selection, nbo_selection, nocv_selection,
                                       point_label, point_selection, scatter_report,
-                                      scatter_selection)
+                                      scatter_selection, verified_scatter_points)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -65,10 +65,17 @@ class ResultFilters(unittest.TestCase):
                        'y_min': 0, 'y_max': .05}
             report = scatter_report(request, directory)
             points = np.load(directory / 'scatter.npy', allow_pickle=False)
+            np.testing.assert_array_equal(
+                verified_scatter_points(directory / 'scatter.npy', report, 1, 0), points)
             self.assertEqual(len(points), report['displayed_count'])
             self.assertLessEqual(len(points), 50000)
             self.assertGreaterEqual(report['matching_count'], len(points))
             self.assertTrue(np.all((-0.05 <= points[:, 0]) & (points[:, 0] <= 0.05)))
+            with self.assertRaisesRegex(ValueError, 'invalid scatter points'):
+                verified_scatter_points(directory / 'scatter.npy',
+                                        dict(report, displayed_count=len(points) + 1), 1, 0)
+            with self.assertRaisesRegex(ValueError, 'SHA-256'):
+                verified_scatter_points(directory / 'scatter.npy', dict(report, scatter_sha256='0' * 64), 1, 0)
             with self.assertRaisesRegex(ValueError, 'changed'):
                 scatter_report(dict(request, dataset_sha256='0' * 64), directory)
         np.testing.assert_array_equal(data.arrays[data.metadata['fields'][0]['array']], original)

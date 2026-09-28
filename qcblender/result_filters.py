@@ -1,5 +1,6 @@
 """Read-only selection of external result records and paired-field samples."""
 import hashlib
+from io import BytesIO
 import math
 from pathlib import Path
 
@@ -64,8 +65,29 @@ def scatter_report(request, directory, cancelled=lambda: False):
                                  request.get('y_min'), request.get('y_max'))
     if cancelled():
         raise RuntimeError('Scatter filtering cancelled')
-    np.save(Path(directory) / 'scatter.npy', selected['points'], allow_pickle=False)
-    return {key: selected[key] for key in ('matching_count', 'displayed_count', 'x_field', 'y_field')}
+    points_path = Path(directory) / 'scatter.npy'
+    np.save(points_path, selected['points'], allow_pickle=False)
+    report = {key: selected[key] for key in ('matching_count', 'displayed_count', 'x_field', 'y_field')}
+    report['scatter_sha256'] = hashlib.sha256(points_path.read_bytes()).hexdigest()
+    return report
+
+
+def verified_scatter_points(path, report, x_field, y_field):
+    """Load exactly the worker bytes named by its result report."""
+    raw = Path(path).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != report.get('scatter_sha256'):
+        raise ValueError('Worker scatter array differs from its reported SHA-256')
+    points = np.load(BytesIO(raw), allow_pickle=False)
+    if (not isinstance(points, np.ndarray) or points.dtype.kind != 'f'
+            or points.ndim != 2 or points.shape[1] != 2
+            or type(report.get('matching_count')) is not int
+            or type(report.get('displayed_count')) is not int
+            or not 0 <= report['displayed_count'] <= report['matching_count']
+            or len(points) != report['displayed_count'] or len(points) > 50000
+            or not np.isfinite(points).all()
+            or (report.get('x_field'), report.get('y_field')) != (x_field, y_field)):
+        raise ValueError('Worker returned invalid scatter points')
+    return points
 
 
 def point_selection(analysis, serial=None, kind=None, value_min=None, value_max=None,
