@@ -21,11 +21,40 @@ def _unit(vector):
     return vector / length
 
 
+def validate_configuration(field_positions, field_numbers, atom_positions, atom_numbers,
+                           field_to_view, atom_to_view, field_source, atom_source,
+                           field_job, atom_job, association=None):
+    """Require the selected atom geometry to coincide with the field's configuration."""
+    if not field_source or not atom_source:
+        raise ValueError('Field or atom source identity is missing')
+    if field_source == atom_source:
+        if field_job != atom_job:
+            raise ValueError('Atom view and field select different calculations')
+        tolerance = 1e-5
+    else:
+        record = association or {}
+        if (record.get('status') != 'geometry_matched'
+                or record.get('reference_source') != field_source
+                or record.get('moving_source') != atom_source
+                or record.get('atom_mapping') != list(range(len(atom_numbers)))):
+            raise ValueError('Atom view has no verified association with this field')
+        tolerance = record.get('tolerance_angstrom')
+        if not isinstance(tolerance, (int, float)) or not np.isfinite(tolerance) or tolerance <= 0:
+            raise ValueError('Association tolerance is invalid')
+    if (not np.array_equal(field_numbers, atom_numbers)
+            or len(field_numbers) == 0):
+        raise ValueError('Atom identities or ordering differ from the field configuration')
+    field = _points_in_view(field_positions, field_to_view)
+    atoms = _points_in_view(atom_positions, atom_to_view)
+    if field.shape != atoms.shape or np.linalg.norm(field - atoms, axis=1).max() > tolerance + 1e-9:
+        raise ValueError('Selected atom geometry differs from the field configuration')
+
+
 def plane_frame(field, mode, source_to_view, position=.5, atoms=None, source_numbers=None,
                 atom_to_view=None):
     """Return center, XYZ column axes, width and height for a grid section.
 
-    `atoms` is the associated configuration in the field's source coordinates.
+    `atoms` is the associated configuration in its own source coordinates.
     Source numbers are one-based; the original array order is authoritative.
     """
     shape = np.asarray(field['shape'], dtype=int)

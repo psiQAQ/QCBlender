@@ -4,7 +4,7 @@ import unittest
 
 import numpy as np
 
-from qcblender.planes import plane_frame
+from qcblender.planes import plane_frame, validate_configuration
 
 
 class PlaneFrames(unittest.TestCase):
@@ -51,6 +51,33 @@ class PlaneFrames(unittest.TestCase):
         broken[2, 2] = 0
         with self.assertRaises(ValueError):
             plane_frame(self.field, 'ij', broken)
+
+    def test_configuration_requires_current_geometry_and_exact_association(self):
+        positions = np.array([[0., 0., 0.], [1., 0., 0.], [0., 1., 0.]])
+        numbers = np.array([6, 1, 1])
+        matrix = np.eye(4)
+        check = lambda atoms, source='field', job=0, association=None: validate_configuration(
+            positions, numbers, atoms, numbers, matrix, matrix, 'field', source, 0, job, association)
+        check(positions)
+        with self.assertRaisesRegex(ValueError, 'different calculations'):
+            check(positions, job=1)
+        moved = positions.copy()
+        moved[0, 0] = .1
+        with self.assertRaisesRegex(ValueError, 'geometry differs'):
+            check(moved)
+        association = {'reference_source': 'field', 'moving_source': 'atoms',
+                       'status': 'geometry_matched', 'atom_mapping': [0, 1, 2],
+                       'tolerance_angstrom': .001}
+        check(positions, source='atoms', association=association)
+        translated = np.eye(4)
+        translated[0, 3] = .2
+        validate_configuration(positions, numbers, positions - [.2, 0, 0], numbers,
+                               matrix, translated, 'field', 'atoms', 0, 0, association)
+        with self.assertRaisesRegex(ValueError, 'no verified association'):
+            check(positions, source='atoms', association={**association, 'reference_source': 'other'})
+        with self.assertRaisesRegex(ValueError, 'geometry differs'):
+            validate_configuration(positions, numbers, positions, numbers, matrix, translated,
+                                   'field', 'atoms', 0, 0, association)
 
 
 if __name__ == '__main__':
