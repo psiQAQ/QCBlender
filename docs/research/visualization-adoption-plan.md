@@ -28,6 +28,8 @@
 
 ### Multiwfn：优先补外部结果的语义与验收
 
+参数交互首批已完成：原生界面分工、单位/区间语义、点击探针与切片、等值线与剖面排版、外部记录过滤和定位。2026-09-28 最终候选的 69 项科学回归和 C01–C13、N01–N18 技术复跑 Passed，见 [参数研究](multiwfn-parameters.md)和[验收记录](../MULTIWFN_PARAMETERS.md)。下表保留各来源的科学约束与后续变体验证边界。
+
 作者[官方下载页](http://sobereva.com/multiwfn/download.html)列出日期版 `2026.9.20` 和源码归档包，采用自定义许可；本轮未确认官方 Git 入口。参考版本、输入波函数、分析参数和实际输出需要共同记录。已有 `analysis.sources`、`reference_source`、用户关联和原文行号可复用，生成程序的版本和参数不能从文件后缀推断。[现有记录入口](../../qcblender/analysis_data.py#L12)
 
 | 入口 | 官方输出中的具体约定 | 应补的验收场景 |

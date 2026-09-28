@@ -37,5 +37,5 @@
 | 本地 PDF、源码及 LICENSE 的版本/摘要/页码/行号核对 | Passed | 只读本地原件，原件保持忽略。 |
 | Multiwfn 2026.9.20 GUI 与输出重跑 | Not Run | 此轮只读原件，已有真实样本运行另见 `docs/research/sop-real-sources-c10-c13.md`。 |
 | QCBlender 原生面板、资产、探针与切片技术验收 | Passed | 前两批已安装候选及保存/移动冷重开见 [技术记录](../MULTIWFN_PARAMETERS.md)。 |
-| 等值线、剖面与外部浏览最终集成 | Not Run | 依次在独立候选上验收。 |
+| 等值线、剖面与外部浏览最终集成 | Passed | 第三批和最终 `04-results-r2` 独立候选；69 项科学回归、C01–C13 六栏和 N01–N18 全部通过，见 [技术记录](../MULTIWFN_PARAMETERS.md)。 |
 | 独立人工验收与跨软件视觉对照 | Not Run | 单独后置维护。 |

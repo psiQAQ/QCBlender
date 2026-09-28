@@ -1,7 +1,7 @@
 # Multiwfn 参数与 Blender 界面
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 
 ## 目标与界面分工
 
@@ -37,3 +37,5 @@ GUI/MCP 共用操作符，保留原脚本入口；新增只读能力与等值线
 ## Comments
 
 2026-09-28：按用户补充收紧 N-Panel 职责，持久属性分别进入对象/材质/渲染原生位置。计划可调整，科学范围/依赖/已有工程风险变化需用户确认。
+
+实施与技术验收完成，四批候选及本地标签分别保留。最终 `04-results-r2` 的 69 项科学检查、C01–C13 六栏、N01–N18 和双冷重开 Passed；详细证据见 `docs/MULTIWFN_PARAMETERS.md`。独立人工验收和外部视觉对照继续后置。后续新增需求沿用独立分支，不扩展本规格已完成范围。
