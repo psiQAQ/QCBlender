@@ -3,6 +3,7 @@ import argparse
 import importlib.util
 from itertools import combinations
 import json
+import math
 from pathlib import Path
 import sys
 
@@ -99,6 +100,17 @@ def moving_pair(owner, kind, other_step):
                                               - other[list(ids)].mean(axis=0)))
     assert np.linalg.norm(current[list(pair)].mean(axis=0) - other[list(pair)].mean(axis=0)) > 1e-6
     return ','.join(str(index + 1) for index in pair)
+
+
+def evaluated_vertices(owner):
+    owner.update_tag()
+    bpy.context.view_layer.update()
+    evaluated = owner.evaluated_get(bpy.context.evaluated_depsgraph_get())
+    mesh = evaluated.to_mesh()
+    try:
+        return np.array([vertex.co[:] for vertex in mesh.vertices])
+    finally:
+        evaluated.to_mesh_clear()
 
 
 def check_annotations(out):
@@ -241,14 +253,54 @@ def check_annotations(out):
     assert snapshot(irc) == irc_before
     assert evidence.hashes() == before_arrays
 
+    # The second real Gaussian job has the frequency modes used by its GN displacement.
+    mn_spec = importlib.util.spec_from_file_location('mn_evidence', ROOT / 'tools/verify_mn_parameters.py')
+    mn_evidence = importlib.util.module_from_spec(mn_spec)
+    mn_spec.loader.exec_module(mn_evidence)
+    directory = mn_evidence.import_source(ROOT / 'outputs/log-examples/water_neutral_nbo_opt_freq.out', job_index=1)
+    water = module('blender.views').atom_view(directory)
+    water.name = 'MN real water vibration Job 2'
+    vibration_arrays = evidence.hashes()
+    assert water.get('qc_optimization_step') is None and len(water.qc_settings.modes) > 1
+    water_label = add(water, 'DISTANCE', '1,2')[0]
+    water_before = snapshot(water)
+    source_positions, source_record = module('blender.geometry').current_geometry(water)
+    initial_scale = water.scale.copy()
+    water.scale = (1.7, .65, 1.25)
+    assert_values(water)
+    assert snapshot(water) == water_before
+    np.testing.assert_array_equal(module('blender.geometry').current_geometry(water)[0], source_positions)
+    water.scale = initial_scale
+    water.qc_settings.active_mode = 1
+    data = module('data').load_dataset(bpy.path.abspath(water['qc_dataset']))
+    assert np.max(np.abs(data.arrays['mode_display_displacements'][1])) > 0
+    modifier, sockets = evidence.controls(water)
+    modifier[sockets['Amplitude (angstrom)']] = .75
+    modifier[sockets['Animate']] = False
+    modifier[sockets['Phase']] = 0.
+    still = evaluated_vertices(water)
+    modifier[sockets['Phase']] = math.pi / 2
+    displaced = evaluated_vertices(water)
+    assert still.shape == displaced.shape and len(still) > 0
+    assert np.max(np.linalg.norm(displaced - still, axis=1)) > 1e-5
+    modifier[sockets['Animate']] = True
+    assert_values(water)
+    assert snapshot(water) == water_before
+    modifier[sockets['Animate']] = False
+    assert json.loads(water_label['qc_annotation'])['geometry'] == source_record
+    np.testing.assert_array_equal(module('blender.geometry').current_geometry(water)[0], source_positions)
+    assert evidence.hashes() == vibration_arrays
+
     report = {'checks': {'four_kinds_and_defaults': 'Passed', 'source_values_and_transform': 'Passed',
         'optimization_and_irc_steps': 'Passed', 'copy_edit_remove': 'Passed',
         'upgrade_step_selection_labels': 'Passed', 'error_transaction': 'Passed',
         'parameter_copy_preserves_labels': 'Passed',
         'style_visibility_and_face_camera': 'Passed',
         'corrupt_annotation_step_transaction': 'Passed',
+        'nonuniform_scale_science_invariant': 'Passed',
+        'real_vibration_science_invariant': 'Passed',
         'synthetic_degenerate_fixture': 'Passed'}, 'errors': errors,
-        'annotations': {obj.name: snapshot(obj) for obj in (methane, optimization, upgraded, irc)},
+        'annotations': {obj.name: snapshot(obj) for obj in (methane, optimization, upgraded, irc, water)},
         'render_pixels': evidence.render(out / 'evidence.png')}
     evidence.save_evidence(out, report)
     return report
