@@ -114,25 +114,51 @@ def _carrier(obj):
     return next((item for item in obj.children if 'qc_contour_owner' in item), None)
 
 
+def _contour_parts(carrier):
+    return (carrier, *(child for child in carrier.children if child.get('qc_contour_label')))
+
+
+def _original_visibility(part):
+    return (bool(part.get('qc_contour_restore_viewport', part.hide_get())),
+            bool(part.get('qc_contour_restore_render', part.hide_render)))
+
+
+def _save_visibility(part):
+    if 'qc_contour_restore_viewport' not in part:
+        part['qc_contour_restore_viewport'] = part.hide_get()
+        part['qc_contour_restore_render'] = part.hide_render
+
+
 def _hide_contours(obj):
-    child = _carrier(obj)
-    if child:
-        if 'qc_contour_restore_viewport' not in child:
-            child['qc_contour_restore_viewport'] = child.hide_get()
-            child['qc_contour_restore_render'] = child.hide_render
-        child.hide_set(True)
-        child.hide_render = True
+    carrier = _carrier(obj)
+    if carrier:
+        for part in _contour_parts(carrier):
+            _save_visibility(part)
+            part.hide_set(True)
+            part.hide_render = True
 
 
 def _restore_contours(obj, identity):
-    child = _carrier(obj)
-    if (child is None or child.get('qc_contour_identity') != identity
-            or 'qc_contour_restore_viewport' not in child):
+    carrier = _carrier(obj)
+    if carrier is None or carrier.get('qc_contour_identity') != identity:
         return
-    child.hide_set(bool(child['qc_contour_restore_viewport']))
-    child.hide_render = bool(child['qc_contour_restore_render'])
-    del child['qc_contour_restore_viewport']
-    del child['qc_contour_restore_render']
+    if 'qc_contour_restore_viewport' in carrier:
+        carrier.hide_set(bool(carrier['qc_contour_restore_viewport']))
+        carrier.hide_render = bool(carrier['qc_contour_restore_render'])
+        del carrier['qc_contour_restore_viewport']
+        del carrier['qc_contour_restore_render']
+    parent_hidden = carrier.hide_get(), carrier.hide_render
+    for label in _contour_parts(carrier)[1:]:
+        if any(parent_hidden):
+            _save_visibility(label)
+            original = _original_visibility(label)
+            label.hide_set(original[0] or parent_hidden[0])
+            label.hide_render = original[1] or parent_hidden[1]
+        elif 'qc_contour_restore_viewport' in label:
+            label.hide_set(bool(label['qc_contour_restore_viewport']))
+            label.hide_render = bool(label['qc_contour_restore_render'])
+            del label['qc_contour_restore_viewport']
+            del label['qc_contour_restore_render']
 
 
 def cleanup_contours(obj):
@@ -288,6 +314,7 @@ def _draw_contours(target, source, plane, report):
         v = (v - u * u.dot(v)).normalized()
         normal = u.cross(v)
         orientation = Matrix((u, v, normal)).transposed().to_euler()
+        label_offset = normal * max(.002, min(.03, curve.bevel_depth))
         unit = json.loads(source['qc_field'])['unit']
         for level, line in longest:
             font = bpy.data.curves.new('QC contour label', 'FONT')
@@ -296,9 +323,10 @@ def _draw_contours(target, source, plane, report):
             label = bpy.data.objects.new('QC contour label', font)
             bpy.context.collection.objects.link(label)
             label.parent = carrier
-            label.location = line[len(line)//2]
+            label.location = Vector(line[len(line)//2]) + label_offset
             label.rotation_euler = orientation
             label['qc_contour_label'] = True
+            label['qc_contour_level'] = float(level)
     return carrier
 
 
@@ -382,14 +410,28 @@ class QCBLENDER_OT_update_contours(AsyncOperation, bpy.types.Operator):
         if hashlib.sha256(path.read_bytes()).hexdigest() != self._source['qc_dataset_sha256']:
             raise ValueError('Contour dataset changed before attachment')
         previous = _carrier(target)
-        viewport_hidden = bool(previous.get('qc_contour_restore_viewport', previous.hide_get())) if previous else False
-        render_hidden = bool(previous.get('qc_contour_restore_render', previous.hide_render)) if previous else False
+        carrier_visibility = _original_visibility(previous) if previous else (False, False)
+        label_visibility = {}
+        if previous:
+            for label in previous.children:
+                if label.get('qc_contour_label'):
+                    visibility = _original_visibility(label)
+                    label_visibility[label.data.body] = visibility
+                    if 'qc_contour_level' in label:
+                        label_visibility[float(label['qc_contour_level'])] = visibility
         cleanup_contours(target)
         carrier = _draw_contours(target, self._source, plane, report)
-        carrier.hide_set(viewport_hidden)
-        carrier.hide_render = render_hidden
+        carrier.hide_set(carrier_visibility[0])
+        carrier.hide_render = carrier_visibility[1]
+        for label in carrier.children:
+            if label.get('qc_contour_label'):
+                visibility = label_visibility.get(float(label['qc_contour_level']),
+                                                  label_visibility.get(label.data.body, (False, False)))
+                label.hide_set(visibility[0])
+                label.hide_render = visibility[1]
         target['qc_contour_child'] = carrier.name
         target['qc_contour_identity'] = self._identity
+        _restore_contours(target, self._identity)
         target['qc_contour_status'] = (
             f"{len(report['levels'])} levels; {report['valid_count']}/{report['sample_count']} valid samples")
         self.report({'INFO'}, f"Updated {len(report['levels'])} contour levels")
