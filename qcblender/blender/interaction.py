@@ -43,6 +43,21 @@ def _control_digest(obj, configuration=None):
     return hashlib.sha256(json.dumps(values).encode('ascii')).hexdigest()
 
 
+def save_plane_definition(obj, mode, position=.5, source_numbers=None, configuration=None):
+    """Save the definition after assigning the existing slice modifier inputs."""
+    if mode == 'FREE':
+        record = {'mode': 'FREE'}
+    elif mode in ('ij', 'jk', 'ki', 'atoms'):
+        if mode == 'atoms' and (configuration is None or source_numbers is None):
+            raise ValueError('Associated atom plane needs its configuration and source numbers')
+        record = {'mode': mode, 'position': position, 'source_numbers': source_numbers,
+                  'configuration': configuration.name if configuration is not None else '',
+                  'control_digest': _control_digest(obj, configuration)}
+    else:
+        raise ValueError('Unknown plane definition')
+    obj['qc_plane_definition'] = json.dumps(record)
+
+
 def _plane_record(obj):
     try:
         record = json.loads(obj.get('qc_plane_definition', '{}'))
@@ -220,7 +235,7 @@ class QCBLENDER_OT_define_plane(bpy.types.Operator):
         try:
             modifier, sockets = slice_controls(obj)
             if self.mode == 'FREE':
-                obj['qc_plane_definition'] = json.dumps({'mode': 'FREE'})
+                save_plane_definition(obj, 'FREE')
                 return {'FINISHED'}
             volume, field, _, _ = bound_field(obj)
             source_to_view = obj.matrix_world.inverted() @ volume.matrix_world
@@ -246,9 +261,8 @@ class QCBLENDER_OT_define_plane(bpy.types.Operator):
             rotation = Matrix(axes.tolist()).to_euler('XYZ')
             for name, value in (('Center', center), ('Rotation', rotation), ('Width', width), ('Height', height)):
                 modifier[sockets[name]] = tuple(float(v) for v in value) if name in ('Center', 'Rotation') else float(value)
-            obj['qc_plane_definition'] = json.dumps({'mode': self.mode, 'position': self.position,
-                                                       'source_numbers': numbers, 'configuration': self.configuration.name if self.mode == 'atoms' else '',
-                                                       'control_digest': _control_digest(obj, self.configuration if self.mode == 'atoms' else None)})
+            save_plane_definition(obj, self.mode, self.position, numbers,
+                                  self.configuration if self.mode == 'atoms' else None)
             obj.data.update()
             obj.update_tag()
         except (ValueError, OSError, KeyError, TypeError, np.linalg.LinAlgError) as error:
@@ -293,6 +307,13 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
             del self._target['qc_probe']
         self._pending = None
         self._area = context.area
+        self._region = next((region for region in self._area.regions if region.type == 'WINDOW'), None)
+        self._view = self._area.spaces.active.region_3d
+        if self._region is None or self._view is None:
+            if self._old_probe is not None:
+                self._target['qc_probe'] = self._old_probe
+            self.report({'ERROR'}, '3D viewport window is unavailable')
+            return {'CANCELLED'}
         self._hud = 'QC probe: click active surface; Enter saves; Esc restores'
         self._handle = bpy.types.SpaceView3D.draw_handler_add(_probe_draw, (self,), 'WINDOW', 'POST_PIXEL')
         context.window_manager.modal_handler_add(self)
@@ -345,10 +366,14 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
         try:
             self._check_binding(context)
             field = self._field
-            region, view = context.region, context.region_data
-            coord = (event.mouse_region_x, event.mouse_region_y)
-            origin = view3d_utils.region_2d_to_origin_3d(region, view, coord)
-            direction = view3d_utils.region_2d_to_vector_3d(region, view, coord)
+            region = self._region
+            coord = (event.mouse_x - region.x, event.mouse_y - region.y)
+            if not (0 <= coord[0] < region.width and 0 <= coord[1] < region.height):
+                self._hud = 'QC probe: no hit in the 3D viewport window'
+                self._area.tag_redraw()
+                return {'RUNNING_MODAL'}
+            origin = view3d_utils.region_2d_to_origin_3d(region, self._view, coord)
+            direction = view3d_utils.region_2d_to_vector_3d(region, self._view, coord)
             evaluated = self._target.evaluated_get(context.evaluated_depsgraph_get())
             inverse = evaluated.matrix_world.inverted()
             hit, local, _, _ = evaluated.ray_cast(inverse @ origin, (inverse.to_3x3() @ direction).normalized())
@@ -400,12 +425,30 @@ class QCBLENDER_WST_slice(bpy.types.WorkSpaceTool):
     bl_widget = QCBLENDER_GGT_slice.bl_idname
 
 
+_registered_tools = []
+
+
 def register_tool():
-    bpy.utils.register_class(QCBLENDER_GGT_slice)
-    if _sync_plane_labels not in bpy.app.handlers.depsgraph_update_post:
+    if bpy.app.background:
+        return
+    if _registered_tools:
+        if len(_registered_tools) == 3 and _sync_plane_labels in bpy.app.handlers.depsgraph_update_post:
+            return
+        raise RuntimeError('QC viewport tools are only partly registered')
+    try:
+        bpy.utils.register_class(QCBLENDER_GGT_slice)
+        _registered_tools.append('gizmo')
+        bpy.utils.register_tool(QCBLENDER_WST_probe, after={'builtin.cursor'}, separator=True)
+        _registered_tools.append('probe')
+        bpy.utils.register_tool(QCBLENDER_WST_slice, after={QCBLENDER_WST_probe.bl_idname})
+        _registered_tools.append('slice')
         bpy.app.handlers.depsgraph_update_post.append(_sync_plane_labels)
-    bpy.utils.register_tool(QCBLENDER_WST_probe, after={'builtin.cursor'}, separator=True)
-    bpy.utils.register_tool(QCBLENDER_WST_slice, after={QCBLENDER_WST_probe.bl_idname})
+    except Exception as error:
+        try:
+            unregister_tool()
+        except Exception as cleanup:
+            raise ExceptionGroup('QC viewport tool registration and rollback failed', [error, cleanup]) from error
+        raise
 
 
 def unregister_tool():
@@ -413,6 +456,17 @@ def unregister_tool():
         bpy.app.handlers.depsgraph_update_post.remove(_sync_plane_labels)
     if bpy.app.timers.is_registered(_sync_plane_labels_timer):
         bpy.app.timers.unregister(_sync_plane_labels_timer)
-    bpy.utils.unregister_tool(QCBLENDER_WST_slice)
-    bpy.utils.unregister_tool(QCBLENDER_WST_probe)
-    bpy.utils.unregister_class(QCBLENDER_GGT_slice)
+    errors = []
+    for name, unregister in (('slice', lambda: bpy.utils.unregister_tool(QCBLENDER_WST_slice)),
+                             ('probe', lambda: bpy.utils.unregister_tool(QCBLENDER_WST_probe)),
+                             ('gizmo', lambda: bpy.utils.unregister_class(QCBLENDER_GGT_slice))):
+        if name not in _registered_tools:
+            continue
+        try:
+            unregister()
+        except Exception as error:
+            errors.append(error)
+        else:
+            _registered_tools.remove(name)
+    if errors:
+        raise ExceptionGroup('QC viewport tool unregister failed', errors)
