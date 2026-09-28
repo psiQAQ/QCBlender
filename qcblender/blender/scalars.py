@@ -493,7 +493,8 @@ class QCBLENDER_OT_slice(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and 'qc_field' in context.object
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'slice')
 
     def invoke(self, context, event):
         return context.window_manager.invoke_props_dialog(self)

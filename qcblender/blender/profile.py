@@ -71,7 +71,8 @@ class QCBLENDER_OT_mark_profile_start(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and context.object.get('qc_view_kind') in ('field', 'slice')
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'profile_start')
 
     def execute(self, context):
         obj = context.object
@@ -99,7 +100,8 @@ class QCBLENDER_OT_create_line_profile(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and context.object.get('qc_view_kind') in ('field', 'slice')
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'profile')
 
     def invoke(self, context, event):
         try:

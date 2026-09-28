@@ -307,16 +307,10 @@ class QCBLENDER_PT_layers(bpy.types.Panel):
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'QCBlender'
-    bl_order = -1
+    bl_order = 2
 
     def draw(self, context):
         layout = self.layout
-        row = layout.row(align=True)
-        row.operator('qcblender.new_current_view', text='New Current-Version View', icon='DUPLICATE')
-        row = layout.row(align=True)
-        row.operator('qcblender.add_surface_layer', text='Surface')
-        row.operator('qcblender.create_fog', text='Fog')
-        row.operator('qcblender.create_slice', text='Slice')
         from .source_browser import source_group
         row = layout.row(align=True)
         row.operator('qcblender.refresh_sources', text='Refresh Sources', icon='FILE_REFRESH')
@@ -336,30 +330,7 @@ class QCBLENDER_PT_layers(bpy.types.Panel):
                                        ('UP', '', 'TRIA_UP'), ('DOWN', '', 'TRIA_DOWN')]:
                 operator = row.operator('qcblender.layer_action', text=text, icon=icon)
                 operator.target, operator.action = obj.name, action
-            if obj.get('qc_view_kind') == 'atoms':
-                row = layout.row(align=True)
-                for mode, label in [('HIDE', 'Hide H'), ('KEEP', 'Keep H...'), ('RESTORE', 'Show all')]:
-                    row.operator('qcblender.hydrogen_visibility', text=label).mode = mode
-                layout.label(text='Hydrogen: ' + obj.get('qc_hydrogen_visibility', 'RESTORE'))
-                box = layout.box()
-                box.label(text='局部选择（源原子编号）')
-                row = box.row(align=True)
-                row.operator('qcblender.local_selection', text='设置局部选择')
-                row.operator('qcblender.local_selection_layer', text='创建局部显示层')
-                if obj.get('qc_local_selection_record'):
-                    try:
-                        record = json.loads(obj['qc_local_selection_record'])
-                        box.label(text='固定集合: ' + ','.join(map(str, record['fixed_numbers'])))
-                        source = record['source']
-                        box.label(text=f"集合计算于 {source['kind']} / {source['step'] or '源构型'}")
-                    except (ValueError, KeyError, TypeError):
-                        box.label(text='局部选择记录损坏', icon='ERROR')
-                    row = box.row(align=True)
-                    row.operator('qcblender.local_selection', text='按当前步重新计算').mode = 'RECOMPUTE'
-                    row.operator('qcblender.local_selection', text='清除局部限制').mode = 'CLEAR'
-        from .annotations import draw_annotations
-        draw_annotations(layout, context)
-        layout.label(text='Select a layer; edit its inputs below')
+        layout.operator('qcblender.open_properties', text='查看对象属性', icon='PROPERTIES').editor = 'OBJECT'
 
 
 def draw_layer_row(layout, context, obj):
@@ -367,7 +338,7 @@ def draw_layer_row(layout, context, obj):
     select = row.operator('qcblender.layer_action', text='', icon='RESTRICT_SELECT_OFF',
                           depress=obj == context.object)
     select.target, select.action = obj.name, 'SELECT'
-    row.prop(obj, 'name', text='')
+    row.label(text=obj.name)
     operator = row.operator('qcblender.layer_action', text='', icon='HIDE_ON' if obj.hide_get() else 'HIDE_OFF')
     operator.target, operator.action = obj.name, 'VISIBILITY'
     row.prop(obj, 'hide_render', text='', icon='RESTRICT_RENDER_ON' if obj.hide_render else 'RESTRICT_RENDER_OFF')

@@ -244,9 +244,11 @@ class QCBLENDER_OT_import_ets(bpy.types.Operator):
 class QCBLENDER_PT_external_results(bpy.types.Panel):
     bl_label = 'External Analysis Records'
     bl_idname = 'QCBLENDER_PT_external_results'
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'QCBlender'
+    bl_space_type = 'PROPERTIES'
+    bl_region_type = 'WINDOW'
+    bl_context = 'object'
+    bl_parent_id = 'QCBLENDER_PT_object'
+    bl_options = {'DEFAULT_CLOSED'}
 
     @classmethod
     def poll(cls, context):
@@ -255,9 +257,13 @@ class QCBLENDER_PT_external_results(bpy.types.Panel):
                  'aim_paths', 'ets_nocv'))
 
     def draw(self, context):
-        from ..data import load_dataset
+        from .source_browser import cached_metadata
         obj = context.object
-        analysis = load_dataset(bpy.path.abspath(obj['qc_dataset'])).metadata['analysis']
+        analysis = cached_metadata(obj).get('analysis')
+        if not analysis:
+            self.layout.label(text='来源未读取或关联断裂，请刷新来源', icon='INFO')
+            self.layout.operator('qcblender.refresh_sources')
+            return
         role = obj['qc_analysis_role']
         layout = self.layout
         layout.label(text=analysis['kind'] + ': ' + role)

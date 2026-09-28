@@ -73,7 +73,8 @@ class QCBLENDER_OT_color_charge(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and context.object.get('qc_view_kind') == 'atoms'
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'charge')
 
     def invoke(self, context, event):
         items = charge_items(self, context)
@@ -152,7 +153,8 @@ class QCBLENDER_OT_dipole(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and context.object.get('qc_view_kind') == 'atoms'
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'dipole')
 
     def execute(self, context):
         parent = context.object

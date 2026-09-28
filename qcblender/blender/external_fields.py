@@ -118,9 +118,11 @@ class QCBLENDER_OT_import_paired_field(AsyncOperation, bpy.types.Operator):
 class QCBLENDER_PT_paired_scatter(bpy.types.Panel):
     bl_label = 'IGMH / IRI Scatter'
     bl_idname = 'QCBLENDER_PT_paired_scatter'
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'QCBlender'
+    bl_space_type = 'PROPERTIES'
+    bl_region_type = 'WINDOW'
+    bl_context = 'object'
+    bl_parent_id = 'QCBLENDER_PT_object'
+    bl_options = {'DEFAULT_CLOSED'}
 
     @classmethod
     def poll(cls, context):

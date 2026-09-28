@@ -12,6 +12,20 @@ from ..data import SCHEMA, filesystem_path
 _metadata = {}
 
 
+def cached_metadata(obj):
+    """Read the last explicitly refreshed metadata without filesystem access."""
+    return _metadata.get(binding_key(obj), {}) if obj is not None else {}
+
+
+@bpy.app.handlers.persistent
+def refresh_loaded_sources(_unused=None):
+    _metadata.clear()
+    for obj in bpy.data.objects:
+        source = source_object(obj)
+        if source.get('qc_dataset') and binding_key(source) not in _metadata:
+            refresh_source(source)
+
+
 def source_object(obj):
     if not obj.get('qc_dataset') and (obj.get('qc_view_kind') in ('spectrum', 'dipole') or 'qc_annotation' in obj):
         if obj.parent and obj.parent.get('qc_view_kind') == 'atoms':

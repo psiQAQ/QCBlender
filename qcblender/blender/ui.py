@@ -249,7 +249,8 @@ class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and 'qc_dataset' in context.object
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'generate')
 
     def invoke(self, context, event):
         from ..data import load_dataset
@@ -327,8 +328,8 @@ class QCBLENDER_OT_declare_field(AsyncOperation, bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return (context.object is not None and 'qc_field' in context.object
-                and json.loads(context.object['qc_field'])['quantity'] == 'unknown_scalar')
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'declare')
 
     def invoke(self, context, event):
         return context.window_manager.invoke_props_dialog(self)
@@ -389,43 +390,13 @@ class QCBLENDER_OT_set_view_style(bpy.types.Operator):
         return {'FINISHED'}
 
 
-def draw_view_parameters(layout, obj):
+def draw_view_parameters(layout, obj, section=None):
     """Show only controls relevant to the current view; all edits target native nodes."""
     from .graph import view_modifier
     from .parameters import GROUPS, STYLES, STYLE_SOCKETS, socket_group, socket_label
 
-    source = layout.box()
-    source.label(text='数据来源')
-    source.label(text='文件: ' + obj.get('qc_source_filename', '未记录'))
-    if obj.get('qc_source_job', -1) >= 0:
-        source.label(text='计算段: ' + str(obj['qc_source_job'] + 1))
-    field = json.loads(obj['qc_field']) if 'qc_field' in obj else {}
-    if field:
-        source.label(text=f"几何场: {field['quantity']} [{field['unit']}]")
-        source.label(text='网格: ' + ' × '.join(map(str, field['shape'])))
-        if field.get('steps'):
-            source.label(text='源网格步长（只读，Å；与显示精细度独立）')
-            for axis, step in zip('XYZ', field['steps']):
-                source.label(text=f"{axis}: (" + ', '.join(f'{value:.4g}' for value in step) + ')')
-        if field.get('method'):
-            source.label(text='方法: ' + field['method'])
-        if field.get('orbital'):
-            mo = field['orbital']
-            source.label(text=f"{mo['spin']} MO {mo['source_number']} | occupation {mo['occupation']:.6g}")
-            source.label(text=f"轨道能量: {mo['energy_hartree']} Hartree")
-        if field.get('interpretation') == 'user_assigned':
-            source.label(text='量与单位由用户指定')
-    if 'qc_color_source' in obj:
-        color = json.loads(obj['qc_color_source'])
-        source.label(text=f"着色场: {color['quantity']} [{color['unit']}]")
-        if color.get('field_source'):
-            source.label(text='着色文件: ' + color['field_source'].get('filename', '未记录'))
-            source.label(text='SHA-256: ' + color['field_source'].get('sha256', '未记录'))
-        source.label(text='有效域外显示洋红色')
-
-    if obj.get('qc_view_kind') in ('atoms', 'field', 'slice', 'fog'):
-        layout.operator('qcblender.copy_display_parameters', text='应用显示参数到选中视图')
-
+    from .capabilities import record
+    field = record(obj, 'qc_field')
     try:
         modifier = view_modifier(obj)
     except ValueError as error:
@@ -435,7 +406,7 @@ def draw_view_parameters(layout, obj):
              if item.item_type == 'SOCKET' and item.in_out == 'INPUT' and item.identifier in modifier]
     values = {item.name: modifier.get(item.identifier) for item in items}
     quantity = field.get('quantity', '')
-    color_unit = (json.loads(obj['qc_color_source'])['unit'] if 'qc_color_source' in obj else field.get('unit', ''))
+    color_unit = record(obj, 'qc_color_source').get('unit', field.get('unit', ''))
     materials = [modifier.get(item.identifier) for item in items
                  if item.socket_type == 'NodeSocketMaterial'
                  and socket_group(item.name, item.socket_type, values, quantity)]
@@ -445,6 +416,8 @@ def draw_view_parameters(layout, obj):
                 materials.append(control.default_value)
 
     for group in GROUPS:
+        if section is not None and group != section:
+            continue
         grouped = [item for item in items if socket_group(item.name, item.socket_type, values, quantity) == group]
         material_controls = (group == '材质' and any(materials)) or any(
             _material_section(node) == group
@@ -452,8 +425,9 @@ def draw_view_parameters(layout, obj):
         color_binding = group == '颜色映射' and obj.get('qc_view_kind') in ('atoms', 'field', 'slice')
         if not grouped and not material_controls and not color_binding:
             continue
-        box = layout.box()
-        box.label(text=group)
+        box = layout if section else layout.box()
+        if section is None:
+            box.label(text=group)
         if group == '图例排版':
             box.label(text='尺寸属于视图本地布局单位')
             if not modifier.node_group.get('qc_legend_layout'):
@@ -486,106 +460,3 @@ def draw_view_parameters(layout, obj):
         for mat in materials:
             if mat:
                 draw_material_controls(box, mat, group, color_unit)
-
-
-class QCBLENDER_PT_main(bpy.types.Panel):
-    bl_label = 'QCBlender'
-    bl_idname = 'QCBLENDER_PT_main'
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'QCBlender'
-
-    def draw(self, context):
-        layout = self.layout
-        row = layout.row(align=True)
-        row.operator('qcblender.import_calculation', text='Import', icon='IMPORT')
-        row.operator('qcblender.associate_sources', text='Associate', icon='CON_TRACKTO')
-        layout.operator('qcblender.import_paired_field', text='Import IGMH / IRI', icon='VOLUME_DATA')
-        layout.operator('qcblender.import_nbo', text='Import NBO Records', icon='TEXT')
-        row = layout.row(align=True)
-        row.operator('qcblender.import_esp_analysis', text='ESP Surface')
-        row.operator('qcblender.import_aim_analysis', text='AIM')
-        layout.operator('qcblender.import_ets_nocv', text='ETS-NOCV Table')
-        layout.operator('qcblender.import_nocv_field', text='NOCV Pair Cube')
-        layout.operator('qcblender.import_irc_path', text='IRC FCHK Path')
-        row = layout.row(align=True)
-        row.operator('qcblender.generate_field', text='Generate Field', icon='VOLUME_DATA')
-        row.operator('qcblender.declare_field', text='Identify Cube', icon='INFO')
-        row = layout.row(align=True)
-        row.operator('qcblender.map_scalar', text='Map Colors', icon='COLOR')
-        row.operator('qcblender.create_slice', text='Slice', icon='MESH_PLANE')
-        row.operator('qcblender.create_fog', text='Fog', icon='VOLUME_DATA')
-        row = layout.row(align=True)
-        row.operator('qcblender.add_clipping', text='Clip', icon='MOD_BOOLEAN')
-        row.operator('qcblender.probe_field', text='Read at Cursor', icon='PIVOT_CURSOR')
-        if context.object and context.object.get('qc_view_kind') in ('field', 'slice'):
-            row = layout.row(align=True)
-            row.operator('qcblender.mark_profile_start', text='Mark Profile Start')
-            create = row.row(align=True)
-            create.enabled = 'qc_profile_start' in context.object
-            create.operator('qcblender.create_line_profile', text='Create Line Profile')
-        if context.object and context.object.get('qc_view_kind') == 'profile':
-            layout.operator('qcblender.export_line_profile', icon='EXPORT')
-            chart = json.loads(context.object['qc_chart'])
-            layout.label(text=f"Distance: 0–{chart['x_max']:.6g} Å | {chart['y_unit']}")
-            layout.label(text=f"{chart['valid_count']}/{chart['sample_count']} valid samples")
-        row = layout.row(align=True)
-        row.operator('qcblender.color_charge', text='Charge', icon='MATERIAL')
-        row.operator('qcblender.show_dipole', text='Dipole', icon='EMPTY_ARROWS')
-        row.operator('qcblender.measure_distance', text='Distance')
-        layout.operator('qcblender.create_framed_camera', text='Create Framed QC Camera', icon='CAMERA_DATA')
-        layout.operator('qcblender.save_project', icon='FILE_TICK')
-        layout.operator('qcblender.archive_project', icon='PACKAGE')
-        layout.operator('qcblender.rebuild_cache', icon='FILE_REFRESH')
-        layout.operator('qcblender.relocate_dataset', icon='FILE_FOLDER')
-        if _operations:
-            for operation, manager in _operations.values():
-                progress = operation._job.progress()
-                layout.label(text=f"{progress['phase']}: {progress['fraction']:.0%} (Esc cancels)", icon='TIME')
-        obj = context.object
-        if obj and 'qc_dataset' in obj:
-            layout.label(text='Coordinates: angstrom')
-            for diagnostic in json.loads(obj.get('qc_diagnostics', '[]')):
-                box = layout.box()
-                for line in textwrap.wrap(diagnostic, width=max(24, int(context.region.width / 8))):
-                    box.label(text=line)
-            if 'qc_calculation_status' in obj:
-                layout.label(text='Calculation: ' + obj['qc_calculation_status'])
-            settings = obj.qc_settings
-            if settings.modes:
-                layout.label(text='Vibration / IR (source values)')
-                layout.template_list('QCBLENDER_UL_modes', '', settings, 'modes', settings, 'active_mode', rows=5)
-                if 'qc_mode_frequency_cm-1' in obj:
-                    layout.label(text=f"Frequency: {obj['qc_mode_frequency_cm-1']:.4f} cm^-1")
-                if 'qc_mode_ir_km_mol' in obj:
-                    layout.label(text=f"IR: {obj['qc_mode_ir_km_mol']:.4f} km/mol")
-            if settings.energies:
-                layout.label(text='Energy records (Hartree)')
-                if 'qc_energy_selection' in obj:
-                    choice = json.loads(obj['qc_energy_selection'])
-                    layout.label(text='Target: ' + choice['status'])
-                layout.template_list('QCBLENDER_UL_energies', '', settings, 'energies', settings, 'active_energy', rows=4)
-                if 0 <= settings.active_energy < len(settings.energies):
-                    record = json.loads(settings.energies[settings.active_energy].record)
-                    layout.label(text=f"Value: {record['value_hartree']:.10f} Eh")
-                    layout.label(text='Kind: ' + record['kind'])
-                    method = record['method'] or 'unknown'
-                    layout.label(text='Method: ' + (method if not method.startswith('#') else 'see source route'))
-                    if record.get('state'):
-                        layout.label(text='State: ' + str(record['state']['source_number']))
-                    layout.label(text='Source: ' + str(record.get('line_start', record.get('source_field', 'unknown'))))
-                    layout.label(text=str(record.get('raw_label', record['kind'])))
-            if 'qc_charge_method' in obj:
-                layout.label(text='Charges: ' + obj['qc_charge_method'])
-            if obj.get('qc_vdw_missing', '[]') != '[]':
-                layout.label(text='Missing VDW radii: ' + obj['qc_vdw_missing'], icon='ERROR')
-            if 'qc_probe' in obj:
-                probe = json.loads(obj['qc_probe'])
-                layout.label(text=f"Last sample: {probe['value']:.8g} {probe['unit']}")
-                layout.label(text='Source angstrom: ' + ', '.join(f'{v:.4g}' for v in probe['source_position_angstrom']))
-                layout.label(text='Trilinear grid interpolation; click to refresh')
-        if obj and (obj.get('qc_view_kind') in ('atoms', 'field', 'slice', 'fog', 'dipole', 'spectrum', 'scatter')
-                    or obj.get('qc_view_kind') == 'analysis' and obj.get('qc_analysis_role') in
-                    ('esp_maximum', 'esp_minimum', 'aim_C', 'aim_N', 'aim_O', 'aim_F',
-                     'irc_cursor', 'irc_mayer_cursor')):
-            draw_view_parameters(layout, obj)

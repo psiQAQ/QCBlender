@@ -128,9 +128,11 @@ class QCBLENDER_OT_optimization_step(bpy.types.Operator):
 class QCBLENDER_PT_optimization(bpy.types.Panel):
     bl_label = 'Optimization Trajectory'
     bl_idname = 'QCBLENDER_PT_optimization'
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'QCBlender'
+    bl_space_type = 'PROPERTIES'
+    bl_region_type = 'WINDOW'
+    bl_context = 'object'
+    bl_parent_id = 'QCBLENDER_PT_object'
+    bl_options = {'DEFAULT_CLOSED'}
 
     @classmethod
     def poll(cls, context):

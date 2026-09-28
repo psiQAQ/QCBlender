@@ -12,7 +12,7 @@ _registered = []
 def discover():
     from . import blender
     bases = (bpy.types.Panel, bpy.types.Operator, bpy.types.PropertyGroup,
-             bpy.types.AddonPreferences, bpy.types.UIList)
+             bpy.types.AddonPreferences, bpy.types.UIList, bpy.types.Menu)
     classes = set()
     for info in pkgutil.walk_packages(blender.__path__, blender.__name__ + '.'):
         module = importlib.import_module(info.name)

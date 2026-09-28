@@ -83,7 +83,8 @@ class QCBLENDER_OT_clip(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and context.object.get('qc_view_kind') in ('field', 'slice', 'atoms')
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'clip')
 
     def execute(self, context):
         try:
@@ -100,7 +101,8 @@ class QCBLENDER_OT_probe(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and context.object.qc_settings.volume is not None
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'probe')
 
     def execute(self, context):
         obj = context.object
