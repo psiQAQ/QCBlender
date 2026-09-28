@@ -11,10 +11,39 @@ def display_layers(scene):
                   key=lambda obj: (obj.get('qc_layer_order', 0), obj.name))
 
 
+def sync_chart_children(obj):
+    """Keep generated chart parts behind their layer without losing individual hide choices."""
+    kind = obj.get('qc_view_kind')
+    if kind == 'profile':
+        parts = (child for child in obj.children if child.get('qc_profile_tick'))
+    elif kind == 'slice':
+        carriers = (child for child in obj.children if 'qc_contour_owner' in child)
+        parts = (part for carrier in carriers for part in
+                 (carrier, *(child for child in carrier.children if child.get('qc_contour_label'))))
+    else:
+        return
+    for part in parts:
+        if obj.hide_get():
+            if 'qc_layer_restore_viewport' not in part:
+                part['qc_layer_restore_viewport'] = part.get('qc_contour_restore_viewport', part.hide_get())
+            part.hide_set(True)
+        elif 'qc_layer_restore_viewport' in part:
+            part.hide_set(bool(part['qc_layer_restore_viewport']) or 'qc_contour_restore_viewport' in part)
+            del part['qc_layer_restore_viewport']
+        if obj.hide_render:
+            if 'qc_layer_restore_render' not in part:
+                part['qc_layer_restore_render'] = part.get('qc_contour_restore_render', part.hide_render)
+            part.hide_render = True
+        elif 'qc_layer_restore_render' in part:
+            part.hide_render = bool(part['qc_layer_restore_render']) or 'qc_contour_restore_render' in part
+            del part['qc_layer_restore_render']
+
+
 def activate(context, obj):
     for previous in context.selected_objects:
         previous.select_set(False)
     obj.hide_set(False)
+    sync_chart_children(obj)
     obj.select_set(True)
     context.view_layer.objects.active = obj
 
@@ -142,7 +171,7 @@ class QCBLENDER_OT_layer_action(bpy.types.Operator):
     target: StringProperty()
     action: EnumProperty(items=[('SELECT', 'Select', ''), ('DUPLICATE', 'Duplicate', ''),
         ('REMOVE', 'Remove', ''), ('UP', 'Move up', ''), ('DOWN', 'Move down', ''),
-        ('VISIBILITY', 'Toggle viewport', '')])
+        ('VISIBILITY', 'Toggle viewport', ''), ('RENDER', 'Toggle render', '')])
 
     def execute(self, context):
         layers = display_layers(context.scene)
@@ -154,6 +183,10 @@ class QCBLENDER_OT_layer_action(bpy.types.Operator):
             activate(context, obj)
         elif self.action == 'VISIBILITY':
             obj.hide_set(not obj.hide_get())
+            sync_chart_children(obj)
+        elif self.action == 'RENDER':
+            obj.hide_render = not obj.hide_render
+            sync_chart_children(obj)
         elif self.action == 'DUPLICATE':
             if obj.get('qc_irc'):
                 self.report({'ERROR'}, 'Duplicate the source FCHK manifest to create another IRC path')
@@ -370,4 +403,6 @@ def draw_layer_row(layout, context, obj):
     row.prop(obj, 'name', text='')
     operator = row.operator('qcblender.layer_action', text='', icon='HIDE_ON' if obj.hide_get() else 'HIDE_OFF')
     operator.target, operator.action = obj.name, 'VISIBILITY'
-    row.prop(obj, 'hide_render', text='', icon='RESTRICT_RENDER_ON' if obj.hide_render else 'RESTRICT_RENDER_OFF')
+    operator = row.operator('qcblender.layer_action', text='',
+                            icon='RESTRICT_RENDER_ON' if obj.hide_render else 'RESTRICT_RENDER_OFF')
+    operator.target, operator.action = obj.name, 'RENDER'

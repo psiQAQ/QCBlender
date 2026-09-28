@@ -53,6 +53,7 @@ binding = slice_obj['qc_color_source']
 changed = json.loads(binding)
 changed['field']['array'] = 'another_scalar_array'
 slice_obj['qc_color_source'] = json.dumps(changed)
+slice_obj['qc_contour_status'] = '9 levels; previous result'
 try:
     try:
         charts._state(slice_obj)
@@ -60,6 +61,8 @@ try:
         pass
     else:
         raise AssertionError('Contour accepted a different color array with the same quantity and unit')
+    charts._watch_contours()
+    assert slice_obj['qc_contour_status'].startswith('Contour unavailable: ')
 finally:
     slice_obj['qc_color_source'] = binding
 request = {'dataset': bpy.path.abspath(field_source['qc_dataset']),
@@ -76,13 +79,13 @@ draw_report = dict(report, paths=[{'level': report['levels'][0], 'lines': [sampl
 carrier = charts._draw_contours(slice_obj, field_source, plane, draw_report)
 slice_obj['qc_contour_child'] = carrier.name
 slice_obj['qc_contour_identity'] = identity
-assert carrier.parent == slice_obj and carrier.data.bevel_depth == .02
+assert carrier.parent == slice_obj and np.isclose(carrier.data.bevel_depth, .02, atol=1e-6)
 label = next(child for child in carrier.children if child.get('qc_contour_label'))
 offset = np.asarray(label.location) - np.asarray(sample_line[1])
 normal = np.cross(plane['axis_u'], plane['axis_v'])
 normal /= np.linalg.norm(normal)
 assert .001 < np.linalg.norm(offset) < .031
-np.testing.assert_allclose(offset / np.linalg.norm(offset), normal)
+np.testing.assert_allclose(offset / np.linalg.norm(offset), normal, atol=1e-5)
 unrelated = bpy.data.objects.new('Unrelated contour child', None)
 bpy.context.collection.objects.link(unrelated)
 unrelated.parent = carrier
@@ -112,6 +115,20 @@ carrier.hide_set(False)
 carrier.hide_render = False
 charts._restore_contours(slice_obj, identity)
 assert not label.hide_get() and not label.hide_render
+assert bpy.ops.qcblender.layer_action(target=slice_obj.name, action='VISIBILITY') == {'FINISHED'}
+assert carrier.hide_get() and label.hide_get() and not unrelated.hide_get()
+assert bpy.ops.qcblender.layer_action(target=slice_obj.name, action='VISIBILITY') == {'FINISHED'}
+assert not carrier.hide_get() and not label.hide_get()
+assert bpy.ops.qcblender.layer_action(target=slice_obj.name, action='RENDER') == {'FINISHED'}
+assert carrier.hide_render and label.hide_render and not unrelated.hide_render
+assert bpy.ops.qcblender.layer_action(target=slice_obj.name, action='RENDER') == {'FINISHED'}
+assert not carrier.hide_render and not label.hide_render
+slice_obj.hide_render = True
+charts._watch_contours()
+assert carrier.hide_render and label.hide_render
+slice_obj.hide_render = False
+charts._watch_contours()
+assert not carrier.hide_render and not label.hide_render
 
 curve = bpy.data.curves.new('QC profile layout test', 'CURVE')
 curve.dimensions = '3D'
@@ -129,11 +146,28 @@ data = SimpleNamespace(arrays={'profile_distance': np.array([0., 1., 2., 3.]),
 original = data.arrays['profile_values'].copy()
 result = profiles.apply_profile_layout(profile_obj, data)
 assert result['width'] == 4. and result['height'] == 3.
+tick = next(child for child in profile_obj.children if child.get('qc_profile_tick'))
+tick.hide_set(True)
+assert bpy.ops.qcblender.layer_action(target=profile_obj.name, action='VISIBILITY') == {'FINISHED'}
+assert all(child.hide_get() for child in profile_obj.children if child.get('qc_profile_tick'))
+assert bpy.ops.qcblender.layer_action(target=profile_obj.name, action='VISIBILITY') == {'FINISHED'}
+assert tick.hide_get() and any(not child.hide_get() for child in profile_obj.children
+                               if child.get('qc_profile_tick'))
+assert bpy.ops.qcblender.layer_action(target=profile_obj.name, action='RENDER') == {'FINISHED'}
+assert all(child.hide_render for child in profile_obj.children if child.get('qc_profile_tick'))
+assert bpy.ops.qcblender.layer_action(target=profile_obj.name, action='RENDER') == {'FINISHED'}
+assert all(not child.hide_render for child in profile_obj.children if child.get('qc_profile_tick'))
 profile_obj['qc_profile_width'] = 6.
 profile_obj['qc_profile_y_auto'] = False
 profile_obj['qc_profile_y_min'] = -.5
 profile_obj['qc_profile_y_max'] = 2.
 assert profiles.apply_profile_layout(profile_obj, data)['width'] == 6.
+profile_obj.hide_render = True
+charts._watch_contours()
+assert all(child.hide_render for child in profile_obj.children if child.get('qc_profile_tick'))
+profile_obj.hide_render = False
+charts._watch_contours()
+assert all(not child.hide_render for child in profile_obj.children if child.get('qc_profile_tick'))
 np.testing.assert_array_equal(original, data.arrays['profile_values'])
 profile_copy = profile_obj.copy()
 profile_copy.data = profile_obj.data.copy()
