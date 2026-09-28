@@ -43,7 +43,7 @@ def hashes():
     result = {}
     for obj in bpy.context.scene.objects:
         if obj.get('qc_dataset'):
-            path = Path(bpy.path.abspath(obj['qc_dataset']))
+            path = module('data').filesystem_path(bpy.path.abspath(obj['qc_dataset']))
             raw = (path / 'manifest.json').read_bytes()
             digest = hashlib.sha256(raw).hexdigest()
             assert digest == obj['qc_dataset_sha256']
@@ -126,7 +126,8 @@ def save_evidence(out, report):
     moved = out / 'moved 中文 path'
     moved.mkdir(exist_ok=True)
     shutil.copy2(out / 'evidence.blend', moved / 'evidence.blend')
-    shutil.copytree(out / 'evidence.qcdata', moved / 'evidence.qcdata', dirs_exist_ok=True)
+    filesystem_path = module('data').filesystem_path
+    shutil.copytree(filesystem_path(out / 'evidence.qcdata'), filesystem_path(moved / 'evidence.qcdata'), dirs_exist_ok=True)
     report['cold_open'] = 'Not Run'
     report['moved_cold_open'] = 'Not Run'
     report['status'] = 'Not Run'
