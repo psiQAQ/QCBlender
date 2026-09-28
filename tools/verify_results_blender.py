@@ -13,6 +13,7 @@ from pathlib import Path
 import shutil
 import sys
 import time
+from unittest.mock import patch
 
 import bpy
 import numpy as np
@@ -276,6 +277,24 @@ def check_c08():
     assert selected['displayed_source_percentage'] == sum(bins[i]['percentage'] for i in selected['indexes'])
     assert all(('begin' in row and 'end' in row) or ('begin' not in row and 'end' not in row) for row in bins)
     assert source_arrays() == before
+    annotations = module('blender.annotations')
+    original_copy_annotations = annotations.copy_annotations
+
+    def fail_on_focus(source, target, collection):
+        if source.get('qc_result_focus'):
+            raise ValueError('Injected focus copy failure')
+        return original_copy_annotations(source, target, collection)
+
+    scene_before_failure = set(bpy.data.objects.keys())
+    with patch.object(annotations, 'copy_annotations', side_effect=fail_on_focus):
+        try:
+            module('blender.layers').copy_layer(minimum, bpy.context.collection)
+        except ValueError as copy_error:
+            assert 'Injected focus copy failure' in str(copy_error)
+        else:
+            raise AssertionError('Focus copy unexpectedly succeeded during injected failure')
+    assert set(bpy.data.objects.keys()) == scene_before_failure
+    assert source_arrays() == before
     copied = module('blender.layers').copy_layer(minimum, bpy.context.collection)
     copied.name = 'QC copied ESP result'
     copied_name = copied.name
@@ -289,12 +308,24 @@ def check_c08():
     assert not state(copied)['indexes'] and len(copied.data.vertices) == 0
     assert object_snapshot(minimum) == original_display
     copied_marker_name = copied_markers[0].name
+    from mathutils import Matrix
+    user_child = bpy.data.objects.new('QC user note under focus', None)
+    bpy.context.collection.objects.link(user_child)
+    user_child.parent = copied_markers[0]
+    user_child.matrix_world = Matrix.Translation((1.2, -2.3, 3.4)) @ Matrix.Rotation(.37, 4, 'Z')
+    user_world = np.array(user_child.matrix_world)
+    user_name = user_child.name
+    copied_parent = copied.parent
     assert bpy.ops.qcblender.layer_action(target=copied_name, action='REMOVE') == {'FINISHED'}
     assert copied_name not in bpy.data.objects and marker.name in bpy.data.objects
     assert copied_marker_name not in bpy.data.objects
+    assert user_name in bpy.data.objects and user_child.parent == copied_parent
+    np.testing.assert_allclose(np.array(user_child.matrix_world), user_world, rtol=0, atol=1e-6)
     assert source_arrays() == before
     return {'point_error': error, 'hidden_owner_restore': 'Passed',
-            'area': selected, 'copy_remove': 'Passed'}
+            'area': selected, 'copy_failure_cleanup': 'Passed', 'copy_remove': 'Passed',
+            'user_child': {'name': user_name, 'parent': copied_parent.name if copied_parent else None,
+                           'matrix_world': user_world.tolist()}}
 
 
 def check_c09():
@@ -455,6 +486,11 @@ def reopen(case, out):
     assert blend.name == 'evidence.blend' and blend.parent in (out.resolve(), (out / 'moved 中文 path').resolve())
     actual = snapshot()
     assert actual == report['expected'], 'Saved result state, source arrays, or focus children changed after cold open'
+    if case == 'C08':
+        saved_child = report['checks']['user_child']
+        child = bpy.data.objects.get(saved_child['name'])
+        assert child is not None and (child.parent.name if child.parent else None) == saved_child['parent']
+        np.testing.assert_allclose(np.array(child.matrix_world), saved_child['matrix_world'], rtol=0, atol=1e-6)
     for obj in bpy.context.scene.objects:
         if obj.get('qc_dataset'):
             dataset = Path(bpy.path.abspath(obj['qc_dataset'])).resolve()
