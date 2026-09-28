@@ -215,9 +215,10 @@ class QCBLENDER_OT_local_selection(bpy.types.Operator):
     def invoke(self, context, event):
         if self.mode in ('CLEAR', 'RECOMPUTE', 'INVERT'):
             return self.execute(context)
-        return context.window_manager.invoke_props_dialog(self)
+        return context.window_manager.invoke_props_dialog(self, width=460)
 
     def draw(self, context):
+        self.layout.use_property_split = True
         self.layout.prop(self, 'mode')
         if self.mode not in ('CLEAR', 'RECOMPUTE', 'INVERT'):
             self.layout.prop(self, 'numbers')
@@ -251,9 +252,10 @@ class QCBLENDER_OT_local_selection_layer(bpy.types.Operator):
         return context.object is not None and context.object.get('qc_view_kind') == 'atoms'
 
     def invoke(self, context, event):
-        return context.window_manager.invoke_props_dialog(self)
+        return context.window_manager.invoke_props_dialog(self, width=460)
 
     def draw(self, context):
+        self.layout.use_property_split = True
         self.layout.prop(self, 'numbers')
         self.layout.prop(self, 'use_radius')
         if self.use_radius:
