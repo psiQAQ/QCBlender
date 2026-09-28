@@ -13,7 +13,7 @@ _metadata = {}
 
 
 def source_object(obj):
-    if not obj.get('qc_dataset') and obj.get('qc_view_kind') in ('spectrum', 'dipole'):
+    if not obj.get('qc_dataset') and (obj.get('qc_view_kind') in ('spectrum', 'dipole') or 'qc_annotation' in obj):
         if obj.parent and obj.parent.get('qc_view_kind') == 'atoms':
             return obj.parent
     return obj
@@ -258,6 +258,9 @@ def source_details(obj):
     entries = [('Geometry / data source', dict(field_source(meta, view_field),
         calculation_status=meta.get('calculation_status'), selected_job=meta.get('selected_job'),
         coordinate_unit=meta.get('coordinate_unit')))]
+    if 'qc_annotation' in obj:
+        entries.append(('Scene annotation', object_record(obj, 'qc_annotation')))
+        entries.append(('View association', {'association': 'parent atom view', 'object': source_object(obj).name}))
     if obj.get('qc_view_kind') in ('spectrum', 'dipole'):
         entries.append(('View association', {'association': 'parent atom view', 'object': source_object(obj).name}))
         if obj.get('qc_dipole_source'):
@@ -304,6 +307,8 @@ def source_details(obj):
             entries.append(('External source', source))
     if obj.get('qc_optimization_record'):
         entries.append(('Optimization step', object_record(obj, 'qc_optimization_record')))
+    if obj.get('qc_local_selection_record'):
+        entries.append(('Fixed local display selection', object_record(obj, 'qc_local_selection_record')))
     if meta.get('profile'):
         profile = meta['profile']
         entries.append(('Profile source', profile['source_record']))
@@ -347,7 +352,7 @@ class QCBLENDER_OT_source_details(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and bool(context.object.get('qc_view_kind') or context.object.get('qc_dataset'))
+        return context.object is not None and bool(context.object.get('qc_view_kind') or context.object.get('qc_dataset') or context.object.get('qc_annotation'))
 
     def invoke(self, context, event):
         try:

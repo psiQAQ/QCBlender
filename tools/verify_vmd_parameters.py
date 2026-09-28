@@ -43,7 +43,7 @@ def hashes():
     result = {}
     for obj in bpy.context.scene.objects:
         if obj.get('qc_dataset'):
-            path = Path(bpy.path.abspath(obj['qc_dataset']))
+            path = module('data').filesystem_path(bpy.path.abspath(obj['qc_dataset']))
             raw = (path / 'manifest.json').read_bytes()
             digest = hashlib.sha256(raw).hexdigest()
             assert digest == obj['qc_dataset_sha256']
@@ -95,15 +95,14 @@ def display_state(obj):
                                   'transform': [list(row) for row in obj.matrix_world]}))
 
 
-def render(path):
+def render(path, transparent=True, resolution=(480, 360)):
     scene = bpy.context.scene
     scene.render.engine = 'CYCLES'
     scene.cycles.device = 'CPU'
     scene.cycles.samples = 12
-    scene.render.resolution_x = 480
-    scene.render.resolution_y = 360
+    scene.render.resolution_x, scene.render.resolution_y = resolution
     scene.render.resolution_percentage = 100
-    scene.render.film_transparent = True
+    scene.render.film_transparent = transparent
     scene.render.image_settings.color_mode = 'RGBA'
     scene.render.filepath = str(path)
     bpy.ops.render.render(write_still=True)
@@ -126,7 +125,8 @@ def save_evidence(out, report):
     moved = out / 'moved 中文 path'
     moved.mkdir(exist_ok=True)
     shutil.copy2(out / 'evidence.blend', moved / 'evidence.blend')
-    shutil.copytree(out / 'evidence.qcdata', moved / 'evidence.qcdata', dirs_exist_ok=True)
+    filesystem_path = module('data').filesystem_path
+    shutil.copytree(filesystem_path(out / 'evidence.qcdata'), filesystem_path(moved / 'evidence.qcdata'), dirs_exist_ok=True)
     report['cold_open'] = 'Not Run'
     report['moved_cold_open'] = 'Not Run'
     report['status'] = 'Not Run'
@@ -409,7 +409,9 @@ def check_reopen(out):
         assert Path(bpy.path.abspath(obj['qc_dataset'])).resolve().is_relative_to(Path(bpy.data.filepath).parent)
     moved = 'moved 中文 path' in bpy.data.filepath
     key = 'moved_cold_open' if moved else 'cold_open'
-    report[key + '_pixels'] = render(out / (key + '.png'))
+    scene = bpy.context.scene
+    report[key + '_pixels'] = render(out / (key + '.png'), transparent=scene.render.film_transparent,
+                                    resolution=(scene.render.resolution_x, scene.render.resolution_y))
     report[key] = 'Passed'
     report['status'] = ('Passed' if report['cold_open'] == report['moved_cold_open'] == 'Passed' else 'Not Run')
     (out / 'checks.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')

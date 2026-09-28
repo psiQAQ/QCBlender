@@ -83,6 +83,10 @@ class QCBLENDER_OT_hydrogen_visibility(bpy.types.Operator):
 
 
 def copy_layer(source, collection):
+    from .annotations import copy_annotations, prepare_annotations
+    if any('qc_annotation' in child for child in source.children):
+        from .geometry import current_geometry
+        prepare_annotations(source, *current_geometry(source))
     obj = source.copy()
     obj.data = source.data.copy()
     collection.objects.link(obj)
@@ -123,6 +127,11 @@ def copy_layer(source, collection):
                 copied.data = label.data.copy()
                 collection.objects.link(copied)
                 copied.parent = spectrum
+    try:
+        copy_annotations(source, obj, collection)
+    except (ValueError, KeyError, OSError, TypeError):
+        bpy.data.objects.remove(obj, do_unlink=True)
+        raise
     return obj
 
 
@@ -149,12 +158,18 @@ class QCBLENDER_OT_layer_action(bpy.types.Operator):
             if obj.get('qc_irc'):
                 self.report({'ERROR'}, 'Duplicate the source FCHK manifest to create another IRC path')
                 return {'CANCELLED'}
-            copied = copy_layer(obj, context.collection)
+            try:
+                copied = copy_layer(obj, context.collection)
+            except (ValueError, KeyError, OSError, TypeError) as error:
+                self.report({'ERROR'}, str(error))
+                return {'CANCELLED'}
             layers.insert(layers.index(obj) + 1, copied)
             for index, layer in enumerate(layers):
                 layer['qc_layer_order'] = index
             activate(context, copied)
         elif self.action == 'REMOVE':
+            from .annotations import remove_annotations
+            remove_annotations(obj)
             index = layers.index(obj)
             # Keep scientific source objects and other display layers in place.
             for child in list(obj.children):
@@ -224,18 +239,32 @@ class QCBLENDER_OT_new_current_view(bpy.types.Operator):
         from .graph import view_modifier
         from ..data import load_dataset
         source = context.object
+        created = None
+        before = set(context.scene.objects)
         try:
             directory = bpy.path.abspath(source['qc_dataset'])
             kind = source['qc_view_kind']
             if kind == 'atoms':
+                from .geometry import current_geometry
+                from .atom_selection import copy_selection
+                if source.get('qc_irc'):
+                    raise ValueError('Creating a current-version IRC view cannot preserve the full path; keep the current view')
+                current_geometry(source)
                 obj = atom_view(directory)
+                created = obj
                 obj.parent = source.parent
+                if source.get('qc_optimization_step') is not None:
+                    from .optimization import set_step
+                    set_step(obj, load_dataset(directory), source['qc_optimization_step'])
                 if source.data.attributes.get('qc_atom_visible'):
                     values = [point.value for point in source.data.attributes['qc_atom_visible'].data]
                     obj.data.attributes['qc_atom_visible'].data.foreach_set('value', values)
                     for key in ('qc_hydrogen_visibility', 'qc_hydrogen_keep'):
                         if key in source:
                             obj[key] = source[key]
+                copy_selection(source, obj)
+                from .annotations import copy_annotations
+                copy_annotations(source, obj, obj.users_collection[0])
             elif kind == 'fog':
                 obj = fog_view(source)
             elif kind == 'slice':
@@ -262,7 +291,11 @@ class QCBLENDER_OT_new_current_view(bpy.types.Operator):
                         value = value.copy()
                     new[item.identifier] = value
             activate(context, obj)
-        except (ValueError, KeyError, OSError, StopIteration) as error:
+        except (ValueError, KeyError, OSError, StopIteration, TypeError) as error:
+            if created is not None:
+                for item in set(context.scene.objects) - before:
+                    bpy.data.objects.remove(item, do_unlink=True)
+                activate(context, source)
             self.report({'ERROR'}, str(error))
             return {'CANCELLED'}
         return {'FINISHED'}
@@ -308,6 +341,24 @@ class QCBLENDER_PT_layers(bpy.types.Panel):
                 for mode, label in [('HIDE', 'Hide H'), ('KEEP', 'Keep H...'), ('RESTORE', 'Show all')]:
                     row.operator('qcblender.hydrogen_visibility', text=label).mode = mode
                 layout.label(text='Hydrogen: ' + obj.get('qc_hydrogen_visibility', 'RESTORE'))
+                box = layout.box()
+                box.label(text='局部选择（源原子编号）')
+                row = box.row(align=True)
+                row.operator('qcblender.local_selection', text='设置局部选择')
+                row.operator('qcblender.local_selection_layer', text='创建局部显示层')
+                if obj.get('qc_local_selection_record'):
+                    try:
+                        record = json.loads(obj['qc_local_selection_record'])
+                        box.label(text='固定集合: ' + ','.join(map(str, record['fixed_numbers'])))
+                        source = record['source']
+                        box.label(text=f"集合计算于 {source['kind']} / {source['step'] or '源构型'}")
+                    except (ValueError, KeyError, TypeError):
+                        box.label(text='局部选择记录损坏', icon='ERROR')
+                    row = box.row(align=True)
+                    row.operator('qcblender.local_selection', text='按当前步重新计算').mode = 'RECOMPUTE'
+                    row.operator('qcblender.local_selection', text='清除局部限制').mode = 'CLEAR'
+        from .annotations import draw_annotations
+        draw_annotations(layout, context)
         layout.label(text='Select a layer; edit its inputs below')
 
 

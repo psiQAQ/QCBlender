@@ -15,10 +15,15 @@ def load_bound_dataset(obj):
 
 
 def set_step(obj, data, step):
+    from ..geometry import scientific_geometry
+    from .geometry import current_geometry
+    from .annotations import prepare_annotations, apply_annotations
+    current_geometry(obj, data)
     trajectory = data.metadata['optimization']
     if not 1 <= step <= len(trajectory['steps']):
         raise ValueError('Optimization step is outside the imported trajectory')
-    positions = data.arrays[trajectory['array']][step - 1]
+    positions, record = scientific_geometry(data, 'optimization', step)
+    record['dataset_sha256'] = obj['qc_dataset_sha256']
     if obj.type != 'MESH' or obj.mode != 'OBJECT' or len(obj.data.vertices) != len(positions):
         raise ValueError('Atom mesh no longer matches the optimization trajectory')
     for name, kind in (('qc_equilibrium_position', 'FLOAT_VECTOR'), ('qc_atom_id', 'INT'), ('qc_atomic_number', 'INT')):
@@ -29,12 +34,14 @@ def set_step(obj, data, step):
             [v.value for v in obj.data.attributes['qc_atomic_number'].data] != data.arrays['atomic_numbers'].tolist()):
         raise ValueError('Optimization atom identities or ordering changed')
     serialized = json.dumps(trajectory['steps'][step - 1])
+    prepared = prepare_annotations(obj, positions, record)
     obj.data.vertices.foreach_set('co', positions.ravel())
     obj.data.attributes['qc_equilibrium_position'].data.foreach_set('vector', positions.ravel())
     obj.data.update()
     obj['qc_optimization_step'] = step
     obj['qc_optimization_count'] = len(trajectory['steps'])
     obj['qc_optimization_record'] = serialized
+    apply_annotations(prepared)
     obj.update_tag()
 
 

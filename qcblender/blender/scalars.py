@@ -10,6 +10,7 @@ from ..association import compare_sources
 from ..data import load_dataset
 from .views import bind, material, node_by_type, socket
 from .graph import view_modifier, tag_view, geometry_output
+from .legend_layout import LAYOUT
 
 
 def scalar_material(opacity_attribute=False):
@@ -79,29 +80,82 @@ def color_fraction(tree, inputs, value, minimum, center, maximum):
     return choose.outputs['Output']
 
 
-def add_legend(obj, color_material, minimum, center, maximum, title):
+def add_legend(obj, color_material, minimum, center, maximum, title, *, tree=None, text_material=None,
+               destination=None):
     """Legend geometry reads the same range sockets and material as the colored view."""
     modifier = view_modifier(obj)
-    tree = modifier.node_group
+    tree = modifier.node_group if tree is None else tree
     nodes, links = tree.nodes, tree.links
     for name, kind, value in [('Show Legend', 'NodeSocketBool', False),
-                              ('Legend Position', 'NodeSocketVector', (3., 0., 0.))]:
-        item = socket(tree, name, kind, default=value)
-        modifier[item.identifier] = value
+                              ('Legend Position', 'NodeSocketVector', (3., 0., 0.)),
+                              ('Legend Length', 'NodeSocketFloat', 2.),
+                              ('Legend Width', 'NodeSocketFloat', .18),
+                              ('Legend Text Size', 'NodeSocketFloat', .16),
+                              ('Legend Decimals', 'NodeSocketInt', 5),
+                              ('Legend Vertical', 'NodeSocketBool', False),
+                              ('Legend Rotation', 'NodeSocketVector', (0., 0., 0.))]:
+        existing = [entry for entry in tree.interface.items_tree
+                    if entry.item_type == 'SOCKET' and entry.in_out == 'INPUT' and entry.name == name]
+        if existing:
+            if len(existing) != 1 or existing[0].socket_type != kind:
+                raise ValueError('Existing legend input is ambiguous: ' + name)
+            item = existing[0]
+        else:
+            item = socket(tree, name, kind, default=value,
+                          minimum=0.001 if name in ('Legend Length', 'Legend Width', 'Legend Text Size') else
+                          0 if name == 'Legend Decimals' else None)
+        if tree == modifier.node_group and not existing:
+            modifier[item.identifier] = value
     inputs = next(n for n in nodes if n.type == 'GROUP_INPUT')
     output = next(n for n in nodes if n.type == 'GROUP_OUTPUT')
-    original = output.inputs['Geometry'].links[0].from_socket
+    destination = output.inputs['Geometry'] if destination is None else destination
+    original = destination.links[0].from_socket
+
+    def math_node(operation, *args):
+        node = nodes.new('ShaderNodeMath')
+        node.operation = operation
+        for index, arg in enumerate(args):
+            if isinstance(arg, (int, float)):
+                node.inputs[index].default_value = arg
+            else:
+                links.new(arg, node.inputs[index])
+        return node.outputs[0]
+
+    def component(coefficients):
+        parts = [math_node('MULTIPLY', inputs.outputs[name], factor)
+                 for name, factor in zip(('Legend Length', 'Legend Width', 'Legend Text Size'), coefficients[:3])
+                 if factor]
+        if coefficients[3]:
+            parts.append(coefficients[3])
+        result = parts[0]
+        for part in parts[1:]:
+            result = math_node('ADD', result, part)
+        return result
+
+    def offset(label):
+        vectors = []
+        for orientation in ('horizontal', 'vertical'):
+            vector = nodes.new('ShaderNodeCombineXYZ')
+            for axis, coefficients in zip(('X', 'Y'), LAYOUT[orientation][label]):
+                links.new(component(coefficients), vector.inputs[axis])
+            vectors.append(vector.outputs['Vector'])
+        choice = nodes.new('GeometryNodeSwitch')
+        choice.input_type = 'VECTOR'
+        links.new(inputs.outputs['Legend Vertical'], choice.inputs['Switch'])
+        links.new(vectors[0], choice.inputs['False'])
+        links.new(vectors[1], choice.inputs['True'])
+        return choice.outputs['Output']
     grid = nodes.new('GeometryNodeMeshGrid')
-    grid.inputs['Size X'].default_value = 2
-    grid.inputs['Size Y'].default_value = .18
+    links.new(inputs.outputs['Legend Length'], grid.inputs['Size X'])
+    links.new(inputs.outputs['Legend Width'], grid.inputs['Size Y'])
     grid.inputs['Vertices X'].default_value = 65
     grid.inputs['Vertices Y'].default_value = 2
     position = nodes.new('GeometryNodeInputPosition')
     xyz = nodes.new('ShaderNodeSeparateXYZ')
     links.new(position.outputs['Position'], xyz.inputs['Vector'])
     fraction = nodes.new('ShaderNodeMapRange')
-    fraction.inputs['From Min'].default_value = -1
-    fraction.inputs['From Max'].default_value = 1
+    links.new(math_node('MULTIPLY', inputs.outputs['Legend Length'], -.5), fraction.inputs['From Min'])
+    links.new(math_node('MULTIPLY', inputs.outputs['Legend Length'], .5), fraction.inputs['From Max'])
     links.new(xyz.outputs['X'], fraction.inputs['Value'])
     geometry = grid.outputs['Mesh']
     for name, kind, value in [('qc_color_fraction', 'FLOAT', fraction.outputs['Result']),
@@ -118,22 +172,31 @@ def add_legend(obj, color_material, minimum, center, maximum, title):
     assign = nodes.new('GeometryNodeSetMaterial')
     assign.inputs['Material'].default_value = color_material
     links.new(geometry, assign.inputs['Geometry'])
+    vertical = nodes.new('GeometryNodeTransform')
+    vertical.inputs['Rotation'].default_value = (0, 0, 1.5707963267948966)
+    links.new(assign.outputs['Geometry'], vertical.inputs['Geometry'])
+    bar = nodes.new('GeometryNodeSwitch')
+    bar.input_type = 'GEOMETRY'
+    links.new(inputs.outputs['Legend Vertical'], bar.inputs['Switch'])
+    links.new(assign.outputs['Geometry'], bar.inputs['False'])
+    links.new(vertical.outputs['Geometry'], bar.inputs['True'])
     legend = nodes.new('GeometryNodeJoinGeometry')
-    links.new(assign.outputs['Geometry'], legend.inputs['Geometry'])
-    text_material = material('QC legend text', (.015, .015, .015, 1))
-    emission = text_material.node_tree.nodes.new('ShaderNodeEmission')
-    emission.inputs['Color'].default_value = (.015, .015, .015, 1)
-    material_output = node_by_type(text_material.node_tree.nodes, 'ShaderNodeOutputMaterial')
-    text_material.node_tree.links.new(emission.outputs[0], material_output.inputs['Surface'])
+    links.new(bar.outputs['Output'], legend.inputs['Geometry'])
+    if text_material is None:
+        text_material = material('QC legend text', (.015, .015, .015, 1))
+        emission = text_material.node_tree.nodes.new('ShaderNodeEmission')
+        emission.inputs['Color'].default_value = (.015, .015, .015, 1)
+        material_output = node_by_type(text_material.node_tree.nodes, 'ShaderNodeOutputMaterial')
+        text_material.node_tree.links.new(emission.outputs[0], material_output.inputs['Surface'])
     title_node = None
-    for label, offset in [(minimum, (-1, -.28, 0)), (center, (-.2, -.28, 0)),
-                           (maximum, (.65, -.28, 0)), (None, (-1, .2, 0))]:
+    for label, role in [(minimum, 'minimum'), (center, 'center'),
+                        (maximum, 'maximum'), (None, 'title')]:
         text = nodes.new('GeometryNodeStringToCurves')
-        text.inputs['Size'].default_value = .16
+        links.new(inputs.outputs['Legend Text Size'], text.inputs['Size'])
         if label:
             number = nodes.new('FunctionNodeValueToString')
             number.label = label
-            number.inputs['Decimals'].default_value = 5
+            links.new(inputs.outputs['Legend Decimals'], number.inputs['Decimals'])
             links.new(inputs.outputs[label], number.inputs['Value'])
             links.new(number.outputs['String'], text.inputs['String'])
         else:
@@ -145,7 +208,7 @@ def add_legend(obj, color_material, minimum, center, maximum, title):
         fill = nodes.new('GeometryNodeFillCurve')
         links.new(realize.outputs['Geometry'], fill.inputs['Curve'])
         transform = nodes.new('GeometryNodeTransform')
-        transform.inputs['Translation'].default_value = offset
+        links.new(offset(role), transform.inputs['Translation'])
         links.new(fill.outputs['Mesh'], transform.inputs['Geometry'])
         text_assign = nodes.new('GeometryNodeSetMaterial')
         text_assign.inputs['Material'].default_value = text_material
@@ -154,6 +217,7 @@ def add_legend(obj, color_material, minimum, center, maximum, title):
     transform = nodes.new('GeometryNodeTransform')
     links.new(legend.outputs['Geometry'], transform.inputs['Geometry'])
     links.new(inputs.outputs['Legend Position'], transform.inputs['Translation'])
+    links.new(inputs.outputs['Legend Rotation'], transform.inputs['Rotation'])
     show = nodes.new('GeometryNodeSwitch')
     show.input_type = 'GEOMETRY'
     links.new(inputs.outputs['Show Legend'], show.inputs['Switch'])
@@ -161,7 +225,8 @@ def add_legend(obj, color_material, minimum, center, maximum, title):
     join = nodes.new('GeometryNodeJoinGeometry')
     links.new(original, join.inputs['Geometry'])
     links.new(show.outputs['Output'], join.inputs['Geometry'])
-    links.new(join.outputs['Geometry'], output.inputs['Geometry'])
+    links.new(join.outputs['Geometry'], destination)
+    tree['qc_legend_layout'] = 1
     return title_node
 
 
