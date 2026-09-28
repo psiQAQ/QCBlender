@@ -40,6 +40,19 @@ assert bpy.ops.qcblender.color_palette(palette='RWB') == {'FINISHED'}
 charts._contour_defaults(slice_obj)
 slice_obj['qc_contour_enabled'] = True
 field_source, plane, identity = charts._state(slice_obj)
+binding = slice_obj['qc_color_source']
+changed = json.loads(binding)
+changed['field']['array'] = 'another_scalar_array'
+slice_obj['qc_color_source'] = json.dumps(changed)
+try:
+    try:
+        charts._state(slice_obj)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError('Contour accepted a different color array with the same quantity and unit')
+finally:
+    slice_obj['qc_color_source'] = binding
 request = {'dataset': bpy.path.abspath(field_source['qc_dataset']),
            'dataset_sha256': field_source['qc_dataset_sha256'],
            'field': json.loads(field_source['qc_field']), 'plane': plane,
@@ -73,6 +86,14 @@ profile_obj['qc_profile_y_min'] = -.5
 profile_obj['qc_profile_y_max'] = 2.
 assert profiles.apply_profile_layout(profile_obj, data)['width'] == 6.
 np.testing.assert_array_equal(original, data.arrays['profile_values'])
+profile_copy = profile_obj.copy()
+profile_copy.data = profile_obj.data.copy()
+bpy.context.collection.objects.link(profile_copy)
+profiles.copy_profile_ticks(profile_obj, profile_copy, bpy.context.collection)
+assert sum(bool(child.get('qc_profile_tick')) for child in profile_copy.children) == sum(
+    bool(child.get('qc_profile_tick')) for child in profile_obj.children)
+profiles.cleanup_profile_ticks(profile_copy)
+assert not any(child.get('qc_profile_tick') for child in profile_copy.children)
 
 args.out.parent.mkdir(parents=True, exist_ok=True)
 bpy.ops.wm.save_as_mainfile(filepath=str(args.out))

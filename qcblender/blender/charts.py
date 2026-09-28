@@ -169,9 +169,16 @@ def _state(obj):
             raise ValueError('This slice has no bound color field')
         source = color_mapping(obj)[0].inputs['Object'].default_value
         recorded = json.loads(obj['qc_color_source'])
+        field = json.loads(source.get('qc_field') or '{}') if source is not None else {}
+        if not isinstance(recorded, dict) or not isinstance(field, dict):
+            raise ValueError('Bound color field record is invalid')
+        field_identity = {key: field.get(key) for key in
+                          ('array', 'quantity', 'unit', 'orbital', 'spin', 'source_number')}
         if (source is None or source.get('qc_source_sha256') != recorded.get('source')
-                or any(json.loads(source['qc_field'])[key] != recorded[key]
-                       for key in ('quantity', 'unit'))):
+                or recorded.get('field_dataset_sha256', source.get('qc_dataset_sha256'))
+                != source.get('qc_dataset_sha256')
+                or recorded.get('field') and recorded['field'] != field_identity
+                or any(field.get(key) != recorded.get(key) for key in ('quantity', 'unit'))):
             raise ValueError('Bound color field changed')
     elif role == 'GEOMETRY':
         source = obj.qc_settings.volume
@@ -303,13 +310,17 @@ class QCBLENDER_OT_update_contours(AsyncOperation, bpy.types.Operator):
 
     def begin(self, context):
         from .jobs import Job
-        from .source_browser import read_metadata
+        from .source_browser import mapped_field, read_metadata
 
         self._target = context.object
         source, self._plane, self._identity = _state(self._target)
         if self._target.as_pointer() in _pending:
             raise ValueError('Contour update is already running for this slice')
-        read_metadata(source)
+        if self._target.get('qc_contour_source') == 'COLOR':
+            if mapped_field(self._target)[0] != source:
+                raise ValueError('Bound color field changed')
+        else:
+            read_metadata(source)
         self._source = source
         self._target_pointer = self._target.as_pointer()
         self._target_name = self._target.name

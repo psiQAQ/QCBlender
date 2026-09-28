@@ -60,6 +60,28 @@ def profile_curve(directory, data, location):
     return obj
 
 
+def cleanup_profile_ticks(owner):
+    """Remove the generated labels before replacing or deleting a profile view."""
+    for child in tuple(owner.children):
+        if not child.get('qc_profile_tick'):
+            continue
+        text = child.data
+        bpy.data.objects.remove(child, do_unlink=True)
+        if text.users == 0:
+            bpy.data.curves.remove(text)
+
+
+def copy_profile_ticks(source, target, collection):
+    """Copy saved chart labels without reopening its scientific Dataset."""
+    for child in tuple(source.children):
+        if not child.get('qc_profile_tick'):
+            continue
+        copied = child.copy()
+        copied.data = child.data.copy()
+        collection.objects.link(copied)
+        copied.parent = target
+
+
 def apply_profile_layout(obj, data):
     """Rebuild only chart geometry and tick text from the saved profile samples."""
     arrays = data.arrays
@@ -86,12 +108,7 @@ def apply_profile_layout(obj, data):
     for _, y, _ in layout['y_ticks']:
         add_path(((0., 0., y), (-.08, 0., y)))
 
-    for child in tuple(obj.children):
-        if child.get('qc_profile_tick'):
-            text = child.data
-            bpy.data.objects.remove(child, do_unlink=True)
-            if text.users == 0:
-                bpy.data.curves.remove(text)
+    cleanup_profile_ticks(obj)
 
     def label(body, position, size=.14):
         text = bpy.data.curves.new('QC profile label', 'FONT')
