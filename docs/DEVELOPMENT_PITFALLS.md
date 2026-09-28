@@ -7,7 +7,7 @@
 - 注册扩展时 `bpy.data` 可能为 `_RestrictData`，来源缓存初始化需延迟到 timer；load/save handler 仍按保存身份刷新。独立安装和移动冷重开 Passed。
 - 固定对象需要设置 `pin_id` 和 `use_pin_id`；Properties 上下文在可见窗口重绘后更新。后台 `temp_override` 不能替代这项验证。前台重绘与固定对象检查 Passed。
 - 验收时临时替换已注册 Panel.draw 后调用 redraw_timer，Blender 5.1.1 发生 python313.dll 访问异常。改用 `sys.setprofile` 只读观察实际 draw，保留科学数组读取拦截后，同一重绘通过。证据保存在 `outputs/multiwfn-parameters/01-foundation-r4/`。
-- GUI 撤销后修改样式，节点值和已求值网格已变化，视口仍保留旧几何；显式调用显示载体 `Mesh.update()` 后更新正确。样式操作补齐该刷新，最终候选复验待完成；科学数组不参与此更新。
+- GUI 撤销后修改样式，节点值和已求值网格已变化，视口仍保留旧几何；显式调用显示载体 `Mesh.update()` 后更新正确。样式操作补齐该刷新，`01-foundation-r5` 的 GUI 样式切换、撤销和原生菜单重做复验 Passed；科学数组不参与此更新。
 
 ## 2026-09-27：SOP 复跑缺陷
 
