@@ -3,7 +3,7 @@ import json
 
 import bpy
 
-from .views import socket
+from .views import group_sockets, socket
 from .graph import tag_view
 
 
@@ -111,6 +111,7 @@ def fog_group():
     socket(tree, 'Volume', 'NodeSocketGeometry')
     socket(tree, 'Material', 'NodeSocketMaterial')
     socket(tree, 'Geometry', 'NodeSocketGeometry', 'OUTPUT')
+    group_sockets(tree, (('Source', ('Volume',)), ('Material', ('Material',))))
     inputs = tree.nodes.new('NodeGroupInput')
     assign = tree.nodes.new('GeometryNodeSetMaterial')
     output = tree.nodes.new('NodeGroupOutput')
@@ -118,8 +119,6 @@ def fog_group():
     tree.links.new(inputs.outputs['Material'], assign.inputs['Material'])
     tree.links.new(assign.outputs['Geometry'], output.inputs['Geometry'])
     inputs.location, assign.location, output.location = (0, 0), (240, 0), (480, 0)
-    tree.asset_mark()
-    tree.asset_data.description = 'QC volume display; optical transfer is controlled by the supplied material'
     return tree
 
 

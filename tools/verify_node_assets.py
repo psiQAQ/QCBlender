@@ -31,7 +31,7 @@ group = views.isosurface_group()
 assert first_tree != second_tree
 assert all(next(n for n in tree.nodes if n.type == 'GROUP').node_tree == group
            for tree in (first_tree, second_tree))
-assert group.asset_data is not None and first_tree.asset_data is None
+assert group.asset_data is None and first_tree.asset_data is None
 assert not any(n.bl_idname == 'GeometryNodeObjectInfo' for n in group.nodes)
 assert all(s.socket_type not in ('NodeSocketObject', 'NodeSocketCollection')
            for s in group.interface.items_tree if s.item_type == 'SOCKET')

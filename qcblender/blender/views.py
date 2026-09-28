@@ -19,6 +19,16 @@ def socket(tree, name, kind, direction='INPUT', default=None, minimum=None):
     return result
 
 
+def group_sockets(tree, panels):
+    """Move existing inputs into panels without replacing their identifiers."""
+    items = {(item.name, item.in_out): item for item in tree.interface.items_tree
+             if item.item_type == 'SOCKET'}
+    for title, names in panels:
+        panel = tree.interface.new_panel(title)
+        for index, name in enumerate(names):
+            tree.interface.move_to_parent(items[name, 'INPUT'], panel, index)
+
+
 def node_by_type(nodes, kind):
     return next((node for node in nodes if node.bl_idname == kind), None)
 
@@ -301,6 +311,13 @@ def isosurface_group():
     socket(tree, 'Geometry', 'NodeSocketGeometry', 'OUTPUT')
     socket(tree, 'Positive', 'NodeSocketGeometry', 'OUTPUT')
     socket(tree, 'Negative', 'NodeSocketGeometry', 'OUTPUT')
+    group_sockets(tree, (
+        ('Source', ('Volume',)),
+        ('Thresholds', ('Isovalue', 'Link Thresholds', 'Negative Isovalue', 'Adaptivity')),
+        ('Representation', ('Style (0 solid, 1 wire, 2 points)', 'Wire Radius', 'Point Radius', 'Quality', 'Smooth Normals')),
+        ('Phases', ('Positive Phase', 'Negative Phase', 'Positive Opacity', 'Negative Opacity')),
+        ('Materials', ('Positive Material', 'Negative Material')),
+    ))
     nodes, links = tree.nodes, tree.links
     inputs, output = nodes.new('NodeGroupInput'), nodes.new('NodeGroupOutput')
     join = nodes.new('GeometryNodeJoinGeometry')
@@ -362,6 +379,4 @@ def isosurface_group():
         links.new(switch.outputs['Output'], output.inputs[label.split()[0]])
     for index, node in enumerate(nodes):
         node.location = (index % 5 * 220, -(index // 5) * 240)
-    tree.asset_mark()
-    tree.asset_data.description = 'Signed QC scalar isosurfaces with validity mask; input coordinates in angstrom'
     return tree
