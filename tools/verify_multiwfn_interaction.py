@@ -223,7 +223,9 @@ def prepare(out):
         moved = out / 'moved 中文 path'
         moved.mkdir(exist_ok=True)
         shutil.copy2(out / 'evidence.blend', moved / 'evidence.blend')
-        shutil.copytree(out / 'evidence.qcdata', moved / 'evidence.qcdata', dirs_exist_ok=True)
+        filesystem_path = module('data').filesystem_path
+        shutil.copytree(filesystem_path(out / 'evidence.qcdata'),
+                        filesystem_path(moved / 'evidence.qcdata'), dirs_exist_ok=True)
         report['portable_save_arrays'] = 'Passed'
     except Exception as error:
         report['status'] = 'Failed'
