@@ -40,23 +40,25 @@ NUMERICAL = {
 FOG_NUMERIC = ('Color Minimum', 'Color Maximum', 'Opacity Range', 'Display Threshold')
 FOG_APPEARANCE = ('Opacity Scale',)
 CLIP = ('Plane Enabled', 'Plane Origin', 'Plane Normal', 'Box Enabled', 'Box Minimum', 'Box Maximum')
+LEGEND_LAYOUT = ('Legend Length', 'Legend Width', 'Legend Text Size', 'Legend Decimals',
+                 'Legend Vertical', 'Legend Rotation')
 EXTRA = ('Geometry', 'Selection', 'Element (0 = all)', 'First Atom (1-based)', 'Last Atom (0 = all)',
          'Center', 'Rotation', 'Width', 'Height', 'Legend Position', 'Amplitude (angstrom)', 'Phase',
-         'Cycles per second', 'Animate', 'Show Displacement Vectors', 'Vector Radius') + CLIP
+         'Cycles per second', 'Animate', 'Show Displacement Vectors', 'Vector Radius') + CLIP + LEGEND_LAYOUT
 SOCKET_TYPES = {
     **{name: 'NodeSocketFloat' for name in (
         'Atom Radius', 'Bond Radius', 'VDW Scale', 'Wire Radius', 'Point Radius', 'Adaptivity',
         'Positive Opacity', 'Negative Opacity', 'Isovalue', 'Negative Isovalue',
         'Width', 'Height', 'Amplitude (angstrom)', 'Phase', 'Cycles per second', 'Vector Radius',
-        *COLOR_RANGE, *CHARGE_RANGE)},
+        'Legend Length', 'Legend Width', 'Legend Text Size', *COLOR_RANGE, *CHARGE_RANGE)},
     **{name: 'NodeSocketInt' for name in (
         STYLE_SOCKETS['atoms'], STYLE_SOCKETS['field'], 'Quality', 'Resolution',
-        'Element (0 = all)', 'First Atom (1-based)', 'Last Atom (0 = all)')},
+        'Element (0 = all)', 'First Atom (1-based)', 'Last Atom (0 = all)', 'Legend Decimals')},
     **{name: 'NodeSocketBool' for name in (
         'Selection', 'Smooth Normals', 'Positive Phase', 'Negative Phase', 'Link Thresholds',
-        'Show Legend', 'Animate', 'Show Displacement Vectors', 'Plane Enabled', 'Box Enabled')},
+        'Show Legend', 'Legend Vertical', 'Animate', 'Show Displacement Vectors', 'Plane Enabled', 'Box Enabled')},
     **{name: 'NodeSocketVector' for name in (
-        'Center', 'Rotation', 'Legend Position', 'Plane Origin', 'Plane Normal', 'Box Minimum', 'Box Maximum')},
+        'Center', 'Rotation', 'Legend Position', 'Legend Rotation', 'Plane Origin', 'Plane Normal', 'Box Minimum', 'Box Maximum')},
     **{name: 'NodeSocketMaterial' for name in ('Material', 'Positive Material', 'Negative Material')},
     'Geometry': 'NodeSocketGeometry',
 }
@@ -118,7 +120,7 @@ def _inputs(modifier, kind):
     identities = {name: item.identifier for name, item in sockets.items()}
     # Existing charge views may predate registration of the added charge controls.
     legacy_charge = (kind == 'atoms' and tree.get('qc_charge_mapping')
-                     and set(identities) - set(recorded) <= set(CHARGE_RANGE + ('Show Legend', 'Legend Position'))
+                     and set(identities) - set(recorded) <= set(CHARGE_RANGE + ('Show Legend', 'Legend Position') + LEGEND_LAYOUT)
                      and all(identities.get(name) == identifier for name, identifier in recorded.items()))
     if (len(sockets) != sum(item.item_type == 'SOCKET' and item.in_out == 'INPUT'
                             for item in tree.interface.items_tree)

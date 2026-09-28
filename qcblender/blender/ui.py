@@ -454,6 +454,10 @@ def draw_view_parameters(layout, obj):
             continue
         box = layout.box()
         box.label(text=group)
+        if group == '图例排版':
+            box.label(text='尺寸属于视图本地布局单位')
+            if not modifier.node_group.get('qc_legend_layout'):
+                box.operator('qcblender.upgrade_legend', text='升级为可调图例')
         if group == '空间观察' and (any(item.name.startswith(('Plane ', 'Box ')) for item in grouped)
                                   or any(mat and mat.get('qc_fog') for mat in materials)):
             box.label(text='裁剪坐标：视图局部坐标；位置与范围单位为 Å')

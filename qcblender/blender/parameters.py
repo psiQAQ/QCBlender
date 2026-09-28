@@ -1,6 +1,8 @@
 """Classify existing view inputs for the QCBlender sidebar."""
 
-GROUPS = ('几何表示', '颜色映射', '材质', '空间观察', '高级参数')
+GROUPS = ('几何表示', '颜色映射', '图例排版', '材质', '空间观察', '高级参数')
+_LEGEND = {'Show Legend', 'Legend Position', 'Legend Length', 'Legend Width',
+           'Legend Text Size', 'Legend Decimals', 'Legend Vertical', 'Legend Rotation'}
 
 STYLES = {
     'atoms': ('球棍', '空间填充', '键线'),
@@ -62,8 +64,8 @@ def socket_group(name, kind, values, quantity=''):
         return None
     if name in ('Box Minimum', 'Box Maximum') and not values.get('Box Enabled', False):
         return None
-    if name == 'Legend Position' and not values.get('Show Legend', False):
-        return None
+    if name in _LEGEND:
+        return '图例排版' if name == 'Show Legend' or values.get('Show Legend', False) else None
     if name in _GEOMETRY:
         return '几何表示'
     if name in _COLOR:
@@ -76,6 +78,11 @@ def socket_group(name, kind, values, quantity=''):
 
 
 def socket_label(name, quantity='', unit=''):
+    if name in _LEGEND:
+        return {'Show Legend': '显示图例', 'Legend Position': '位置 [布局单位]',
+                'Legend Length': '长度 [布局单位]', 'Legend Width': '宽度 [布局单位]',
+                'Legend Text Size': '字号 [布局单位]', 'Legend Decimals': '小数位数',
+                'Legend Vertical': '竖向排列', 'Legend Rotation': '旋转'}[name]
     if name == 'Quality':
         return '显示精细度'
     if name == 'Resolution':
