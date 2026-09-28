@@ -117,8 +117,22 @@ def _carrier(obj):
 def _hide_contours(obj):
     child = _carrier(obj)
     if child:
+        if 'qc_contour_restore_viewport' not in child:
+            child['qc_contour_restore_viewport'] = child.hide_get()
+            child['qc_contour_restore_render'] = child.hide_render
         child.hide_set(True)
         child.hide_render = True
+
+
+def _restore_contours(obj, identity):
+    child = _carrier(obj)
+    if (child is None or child.get('qc_contour_identity') != identity
+            or 'qc_contour_restore_viewport' not in child):
+        return
+    child.hide_set(bool(child['qc_contour_restore_viewport']))
+    child.hide_render = bool(child['qc_contour_restore_render'])
+    del child['qc_contour_restore_viewport']
+    del child['qc_contour_restore_render']
 
 
 def cleanup_contours(obj):
@@ -206,6 +220,24 @@ def _state(obj):
     plane = {'origin': list(inverse @ (obj.matrix_world @ local_origin)),
              'axis_u': list(linear @ local_u), 'axis_v': list(linear @ local_v),
              'resolution': resolution}
+    levels = obj.get('qc_contour_levels', '')
+    if not isinstance(levels, str):
+        raise ValueError('Contour levels must be a string of numbers')
+    if not levels.strip():
+        from .source_browser import color_mapping
+        try:
+            mapped_source = color_mapping(obj)[0].inputs['Object'].default_value
+        except (ValueError, KeyError, TypeError) as error:
+            raise ValueError('Automatic contours need a supported scalar display range') from error
+        if mapped_source != source:
+            raise ValueError('Set explicit contour levels when geometry and color fields differ')
+        names = ('Color Minimum', 'Color Center', 'Color Maximum')
+        if any(name not in items or items[name] not in modifier for name in names):
+            raise ValueError('The scalar display range is missing from this slice')
+        minimum, midpoint, maximum = (float(modifier[items[name]]) for name in names)
+        if not all(math.isfinite(value) for value in (minimum, midpoint, maximum)) or minimum >= maximum:
+            raise ValueError('Scalar display range must be finite and increasing')
+        plane['mapping_range'] = {'minimum': minimum, 'center': midpoint, 'maximum': maximum}
     settings = {key: obj.get(key) for key in ('qc_contour_source', 'qc_contour_levels',
                 'qc_contour_width', 'qc_contour_color', 'qc_contour_labels')}
     settings['qc_contour_color'] = list(settings['qc_contour_color'])
@@ -294,8 +326,7 @@ class QCBLENDER_OT_toggle_contours(bpy.types.Operator):
                     pass
                 else:
                     if identity == child.get('qc_contour_identity'):
-                        child.hide_set(False)
-                        child.hide_render = False
+                        _restore_contours(obj, identity)
         return {'FINISHED'}
 
 
@@ -330,6 +361,7 @@ class QCBLENDER_OT_update_contours(AsyncOperation, bpy.types.Operator):
         job = Job('contours', dataset=bpy.path.abspath(source['qc_dataset']),
                   dataset_sha256=source['qc_dataset_sha256'], field=json.loads(source['qc_field']),
                   plane=self._plane, levels=self._target.get('qc_contour_levels', ''),
+                  mapping_range=self._plane.get('mapping_range'),
                   identity=self._identity)
         _pending[self._target.as_pointer()] = self._identity
         _blocked.pop(self._target.as_pointer(), None)
@@ -338,21 +370,27 @@ class QCBLENDER_OT_update_contours(AsyncOperation, bpy.types.Operator):
     def accept(self, context, report):
         pointer = self._target_pointer
         _pending.pop(pointer, None)
-        if bpy.data.objects.get(self._target_name) != self._target:
+        target = bpy.data.objects.get(self._target_name)
+        if target is None or target.as_pointer() != pointer:
             return
-        source, plane, current = _state(self._target)
+        source, plane, current = _state(target)
         if (pointer != self._target_pointer or source.as_pointer() != self._source_pointer
                 or current != self._identity or report['identity'] != self._identity):
-            _hide_contours(self._target)
+            _hide_contours(target)
             return
         path = Path(bpy.path.abspath(self._source['qc_dataset'])) / 'manifest.json'
         if hashlib.sha256(path.read_bytes()).hexdigest() != self._source['qc_dataset_sha256']:
             raise ValueError('Contour dataset changed before attachment')
-        cleanup_contours(self._target)
-        carrier = _draw_contours(self._target, self._source, plane, report)
-        self._target['qc_contour_child'] = carrier.name
-        self._target['qc_contour_identity'] = self._identity
-        self._target['qc_contour_status'] = (
+        previous = _carrier(target)
+        viewport_hidden = bool(previous.get('qc_contour_restore_viewport', previous.hide_get())) if previous else False
+        render_hidden = bool(previous.get('qc_contour_restore_render', previous.hide_render)) if previous else False
+        cleanup_contours(target)
+        carrier = _draw_contours(target, self._source, plane, report)
+        carrier.hide_set(viewport_hidden)
+        carrier.hide_render = render_hidden
+        target['qc_contour_child'] = carrier.name
+        target['qc_contour_identity'] = self._identity
+        target['qc_contour_status'] = (
             f"{len(report['levels'])} levels; {report['valid_count']}/{report['sample_count']} valid samples")
         self.report({'INFO'}, f"Updated {len(report['levels'])} contour levels")
 
@@ -361,8 +399,9 @@ class QCBLENDER_OT_update_contours(AsyncOperation, bpy.types.Operator):
             pointer = self._target_pointer
             _pending.pop(pointer, None)
             _blocked[pointer] = getattr(self, '_identity', '')
-            if bpy.data.objects.get(self._target_name) == self._target:
-                self._target['qc_contour_status'] = 'Contour update cancelled or failed'
+            target = bpy.data.objects.get(self._target_name)
+            if target is not None and target.as_pointer() == pointer:
+                target['qc_contour_status'] = 'Contour update cancelled or failed'
         super().cancel(context)
 
 
@@ -494,7 +533,10 @@ def _watch_contours():
         except (ValueError, KeyError, TypeError, ReferenceError):
             _hide_contours(obj)
             continue
-        if identity == obj.get('qc_contour_identity') and _carrier(obj) is not None:
+        child = _carrier(obj)
+        if (identity == obj.get('qc_contour_identity') and child is not None
+                and child.get('qc_contour_identity') == identity):
+            _restore_contours(obj, identity)
             continue
         _hide_contours(obj)
         if pointer in _pending or _blocked.get(pointer) == identity:
