@@ -33,6 +33,7 @@ def installed_extension():
     location = Path(package.__file__).resolve()
     assert 'extensions' in location.parts and location.parent != (SCRIPT_ROOT / 'qcblender').resolve(), location
     assert hasattr(bpy.types.Object, 'qc_result_browser'), 'Result browser is not registered'
+    module('blender.source_browser').refresh_loaded_sources()
     return str(location)
 
 
