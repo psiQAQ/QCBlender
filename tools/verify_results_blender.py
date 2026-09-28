@@ -231,6 +231,35 @@ def check_c08():
     marker = focus_children(minimum)[0]
     assert marker.parent == minimum and len(marker.children) == 1
     assert marker.children[0]['qc_result_label']
+    label = marker.children[0]
+    layers = module('blender.layers')
+    minimum.hide_set(True)
+    minimum.hide_render = True
+    layers.sync_chart_children(minimum)
+    browser.show_labels = False
+    with bpy.context.temp_override(object=minimum, active_object=minimum):
+        assert bpy.ops.qcblender.apply_result_filter() == {'FINISHED'}
+    assert marker.hide_get() and label.hide_get() and marker.hide_render and label.hide_render
+    assert not marker['qc_layer_restore_viewport'] and not marker['qc_layer_restore_render']
+    assert label['qc_layer_restore_viewport'] and label['qc_layer_restore_render']
+    browser.show_labels = True
+    with bpy.context.temp_override(object=minimum, active_object=minimum):
+        assert bpy.ops.qcblender.apply_result_filter() == {'FINISHED'}
+    assert not label['qc_layer_restore_viewport'] and not label['qc_layer_restore_render']
+    browser.source_number = max(point['serial'] for point in analysis['extrema']) + 1
+    with bpy.context.temp_override(object=minimum, active_object=minimum):
+        assert bpy.ops.qcblender.apply_result_filter() == {'FINISHED'}
+    assert marker['qc_layer_restore_viewport'] and marker['qc_layer_restore_render']
+    assert label['qc_layer_restore_viewport'] and label['qc_layer_restore_render']
+    minimum.hide_set(False)
+    minimum.hide_render = False
+    layers.sync_chart_children(minimum)
+    assert marker.hide_get() and label.hide_get() and marker.hide_render and label.hide_render
+    browser.source_number = row['serial']
+    active(minimum)
+    assert bpy.ops.qcblender.apply_result_filter() == {'FINISHED'}
+    assert not marker.hide_get() and not label.hide_get()
+    assert not marker.hide_render and not label.hide_render
     browser.value_low_on = browser.value_high_on = True
     browser.value_low, browser.value_high = 1., -1.
     error = reject_without_mutation(minimum, lambda: bpy.ops.qcblender.apply_result_filter())
@@ -264,7 +293,8 @@ def check_c08():
     assert copied_name not in bpy.data.objects and marker.name in bpy.data.objects
     assert copied_marker_name not in bpy.data.objects
     assert source_arrays() == before
-    return {'point_error': error, 'area': selected, 'copy_remove': 'Passed'}
+    return {'point_error': error, 'hidden_owner_restore': 'Passed',
+            'area': selected, 'copy_remove': 'Passed'}
 
 
 def check_c09():
