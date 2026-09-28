@@ -145,13 +145,44 @@ def _records(analysis, role, state):
     raise ValueError('No record browser for this object')
 
 
-def _focus(context, obj, row, state, analysis):
+def _focus_parts(obj):
+    markers = [child for child in obj.children if child.get('qc_result_focus')]
+    if not markers:
+        return None
+    if len(markers) != 1:
+        raise ValueError('Result focus has several markers; edit the custom view separately')
+    marker = markers[0]
+    modifiers = [item for item in marker.modifiers if item.name == 'QC Result Focus']
+    labels = [child for child in marker.children if child.get('qc_result_label')]
+    if (len(modifiers) != 1 or modifiers[0].type != 'NODES'
+            or modifiers[0].node_group is None or len(labels) != 1
+            or labels[0].type != 'FONT' or labels[0].data.users != 1):
+        raise ValueError('Result focus graph or label was changed; edit the custom view separately')
+    tree = modifiers[0].node_group
+    kinds = [node.bl_idname for node in tree.nodes]
+    expected = ['NodeGroupInput', 'GeometryNodeMeshToPoints',
+                'GeometryNodeSetMaterial', 'NodeGroupOutput']
+    if sorted(kinds) != sorted(expected) or tree.users != 1:
+        raise ValueError('Result focus graph was changed or shared; edit the custom view separately')
+    dots = next(node for node in tree.nodes if node.bl_idname == 'GeometryNodeMeshToPoints')
+    radius = [socket for socket in dots.inputs if socket.name == 'Radius']
+    links = {(link.from_node.bl_idname, link.to_node.bl_idname) for link in tree.links}
+    if (dots.mode != 'VERTICES' or len(radius) != 1 or radius[0].is_linked
+            or len(tree.links) != 3
+            or links != {
+                ('NodeGroupInput', 'GeometryNodeMeshToPoints'),
+                ('GeometryNodeMeshToPoints', 'GeometryNodeSetMaterial'),
+                ('GeometryNodeSetMaterial', 'NodeGroupOutput')}):
+        raise ValueError('Result focus graph was changed; edit the custom view separately')
+    return marker, dots, labels[0]
+
+
+def _focus(context, obj, row, state, analysis, parts):
     from mathutils import Vector
     from ..result_filters import point_label
     from .views import material
 
-    marker = next((child for child in obj.children if child.get('qc_result_focus')), None)
-    if marker is None:
+    if parts is None:
         mesh = bpy.data.meshes.new('QC result focus')
         mesh.from_pydata([(0, 0, 0)], [], [])
         marker = bpy.data.objects.new('QC result focus', mesh)
@@ -176,12 +207,11 @@ def _focus(context, obj, row, state, analysis):
         obj.users_collection[0].objects.link(label)
         label.parent = marker
         label['qc_result_label'] = True
+    else:
+        marker, dots, label = parts
     marker.location = Vector(row['position_angstrom'])
-    dots = next(node for node in marker.modifiers['QC Result Focus'].node_group.nodes
-                if node.bl_idname == 'GeometryNodeMeshToPoints')
     dots.inputs['Radius'].default_value = state.marker_size
     _focus_visibility(marker, True)
-    label = next(child for child in marker.children if child.get('qc_result_label'))
     label.data.body = point_label(analysis, row, state.aim_numeric_key)
     label.data.size = state.marker_size * 2
     label.location = (state.marker_size * 1.5, 0, 0)
@@ -225,13 +255,14 @@ class QCBLENDER_OT_apply_result_filter(bpy.types.Operator):
                 key = 'extrema' if analysis['kind'] == 'ESP' else 'critical_points'
                 indexes = result['indexes']
                 selected = [analysis[key][i]['position_angstrom'] for i in indexes]
+                focus = _focus_parts(obj)
                 mesh = _writable_mesh(obj)
                 mesh.clear_geometry()
                 mesh.from_pydata(selected if state.show_points else [], [], [])
                 mesh.update()
-                marker = next((child for child in obj.children if child.get('qc_result_focus')), None)
+                marker = focus[0] if focus else None
                 if indexes and state.row_index <= len(indexes):
-                    _focus(context, obj, analysis[key][indexes[state.row_index - 1]], state, analysis)
+                    _focus(context, obj, analysis[key][indexes[state.row_index - 1]], state, analysis, focus)
                 elif marker:
                     _focus_visibility(marker, False)
                     for child in marker.children:
@@ -265,13 +296,28 @@ class QCBLENDER_OT_apply_result_filter(bpy.types.Operator):
                 if result['interactions']:
                     obj['qc_e2_index'] = result['interactions'][min(state.row_index, len(result['interactions'])) - 1] + 1
             elif role == 'ets_nocv' and result['indexes'] and state.row_index <= len(result['indexes']):
+                if (obj.parent is None
+                        or analysis.get('reference_source') != obj.parent.get('qc_source_sha256')
+                        or meta.get('source', {}).get('sha256') != obj.get('qc_source_sha256')):
+                    raise ValueError('ETS-NOCV table identity is invalid')
                 row = analysis['pairs'][result['indexes'][state.row_index - 1]]
                 matches = []
                 for candidate in context.scene.objects:
-                    if candidate.get('qc_analysis_role') != 'nocv_field' or candidate.get('qc_ets_table_source') != obj.get('qc_source_sha256'):
+                    if (candidate.get('qc_analysis_role') != 'nocv_field'
+                            or candidate.parent != obj.parent
+                            or candidate.get('qc_ets_table_source') != obj.get('qc_source_sha256')):
                         continue
-                    record = read_metadata(candidate).get('analysis', {})
-                    if (record.get('pair', {}).get('pair'), record.get('spin'), record.get('table_source')) == (row['pair'], row['spin'], obj.get('qc_source_sha256')):
+                    candidate_meta = read_metadata(candidate)
+                    if candidate_meta.get('source', {}).get('sha256') != candidate.get('qc_source_sha256'):
+                        raise ValueError('NOCV view source identity is invalid')
+                    record = candidate_meta.get('analysis', {})
+                    if (record.get('pair') != row or record.get('spin') != row['spin']
+                            or record.get('table_source') != obj.get('qc_source_sha256')
+                            or record.get('association', {}).get('reference_source') != obj.get('qc_source_sha256')):
+                        continue
+                    if not candidate.get('qc_ets_table_dataset_sha256'):
+                        raise ValueError('NOCV view has no saved table dataset identity; re-import its pair Cube')
+                    if candidate['qc_ets_table_dataset_sha256'] == obj.get('qc_dataset_sha256'):
                         matches.append(candidate)
                 if len(matches) > 1:
                     raise ValueError('Several NOCV views match this pair and spin; choose a unique view')
@@ -428,12 +474,21 @@ class QCBLENDER_PT_result_browser(bpy.types.Panel):
             saved = {}
         if role == 'scatter':
             layout.prop(state, 'swap_axes')
-            for axis in ('x', 'y'):
+            fields = meta.get('fields', [])
+            if len(fields) != 2:
+                layout.label(text='Scatter field metadata is incomplete', icon='ERROR')
+                return
+            x_field, y_field = (0, 1) if state.swap_axes else (1, 0)
+            for axis, field_index in (('x', x_field), ('y', y_field)):
+                field = fields[field_index]
+                layout.label(text=f"{axis.upper()}: {field.get('quantity') or 'quantity unknown'} "
+                                  f"[{field.get('unit') or 'unit unknown'}]")
                 row = layout.row(align=True)
                 row.prop(state, axis + '_low_on', text='')
                 row.prop(state, axis + '_low', text=axis.upper() + ' from')
                 row.prop(state, axis + '_high_on', text='')
                 row.prop(state, axis + '_high', text='to')
+            layout.label(text='Axis and range edits take effect after Update Scatter')
             action_button(layout, context, 'result_scatter', 'qcblender.filter_result_scatter', '更新散点')
             if saved:
                 layout.label(text=f"Matched {saved.get('matching_count', 0)} | displayed {saved.get('displayed_count', 0)}")
