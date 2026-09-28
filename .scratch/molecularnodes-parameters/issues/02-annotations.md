@@ -11,3 +11,5 @@ Status: claimed
 - 2026-09-28: B 模块与纯数值测试已实现；`measure` 覆盖 source/optimization/IRC、带符号二面角与退化。`update_annotations`、`copy_annotations`、`remove_annotations` 供主代理集成。纯 Python 测试 Passed；Blender 场景、GUI、保存冷重开 Not Run，保持 claimed 待整体验收。
 - 2026-09-28: 测量可见文字补充源构型或 Optimization/IRC Step N；创建和编辑前校验编号、范围及有限的外观参数。纯数值测试增至 5 项 Passed。
 - 2026-09-28: 测量源构型文字改为默认字体可显示的 `Source geometry`；EXEC_DEFAULT 按测量类型应用默认精度并保留显式精度；不同编号原子坐标重合时距离为 0 Å。
+- 2026-09-28: 标注更新拆成无场景写入的 `prepare_annotations` 与 `apply_annotations`；复制预检源/目标身份及原生对象结构并清理失败副本。布局控件明确本地场景单位，选中标注子对象也可操作父 atom view。Blender 场景 Not Run。
+- 2026-09-28: 编号解析拒绝空逗号段；二面角标注记录 B→C 轴、BA/CD 投影和 `atan2` 符号约定。

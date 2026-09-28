@@ -11,7 +11,7 @@ from qcblender.geometry import scientific_geometry
 class MeasurementTests(unittest.TestCase):
     def test_source_numbers_and_visible_geometry_context(self):
         self.assertEqual(parse_source_atom_numbers('1, 3 2', 3), [1, 3, 2])
-        for expression in ('1,1', '0,2', '1,4', '1-2', ''):
+        for expression in ('1,1', '0,2', '1,4', '1-2', '', '1,,2', '1,', ',1'):
             with self.assertRaises(ValueError):
                 parse_source_atom_numbers(expression, 3)
         self.assertEqual(geometry_label({'kind': 'source', 'step': None}), 'Source geometry')
