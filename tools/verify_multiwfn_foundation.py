@@ -290,6 +290,9 @@ def check_socket_identity(report, field):
 
 
 def check_properties_pin(report, field):
+    if bpy.app.background:
+        report['properties_pin_real_area'] = 'Not Run: Properties context needs a visible redraw'
+        return
     screen = bpy.context.screen
     view = next((area for area in screen.areas if area.type == 'VIEW_3D'), None)
     props = next((area for area in screen.areas if area.type == 'PROPERTIES'), None)
@@ -304,9 +307,11 @@ def check_properties_pin(report, field):
         window = next(region for region in view.regions if region.type == 'WINDOW')
         with bpy.context.temp_override(area=view, region=window):
             assert bpy.ops.qcblender.open_properties(editor='OBJECT') == {'FINISHED'}
+        bpy.ops.wm.redraw_timer(type='DRAW_WIN_SWAP', iterations=1)
         assert props.spaces.active.pin_id == field and props.spaces.active.context == 'OBJECT'
         other = next(obj for obj in bpy.context.scene.objects if obj != field and obj.type == 'MESH')
         activate(other)
+        bpy.ops.wm.redraw_timer(type='DRAW_WIN_SWAP', iterations=1)
         props_window = next(region for region in props.regions if region.type == 'WINDOW')
         with bpy.context.temp_override(area=props, region=props_window):
             assert bpy.context.object == field, 'Properties panel did not retain its pinned object'
@@ -330,29 +335,27 @@ def check_gui_draw(report, objects):
     original_load, original_read = data_module.load_dataset, browser.read_metadata
     draws = []
     forbidden_calls = []
-    originals = {}
+    draw_codes = {getattr(bpy.types, 'QCBLENDER_PT_' + name).draw.__code__: name
+                  for name in (*N_PANELS, *OBJECT_PANELS)}
+    previous_profile = sys.getprofile()
+    def observed(frame, event, arg):
+        if event == 'call' and frame.f_code in draw_codes:
+            draws.append(draw_codes[frame.f_code])
     previous_pin, previous_context = props.spaces.active.pin_id, props.spaces.active.context
     try:
         props.spaces.active.pin_id = field
         props.spaces.active.context = 'OBJECT'
-        for name in (*N_PANELS, *OBJECT_PANELS):
-            cls = getattr(bpy.types, 'QCBLENDER_PT_' + name)
-            originals[cls] = cls.draw
-            def observed(panel, context, method=cls.draw, label=name):
-                draws.append(label)
-                return method(panel, context)
-            cls.draw = observed
         def forbidden(*_args, **_kwargs):
             forbidden_calls.append('scientific dataset or manifest read')
             raise AssertionError('UI draw accessed a scientific dataset or manifest')
         data_module.load_dataset = forbidden
         browser.read_metadata = forbidden
+        sys.setprofile(observed)
         area.tag_redraw()
         props.tag_redraw()
         bpy.ops.wm.redraw_timer(type='DRAW_WIN_SWAP', iterations=2)
     finally:
-        for cls, draw in originals.items():
-            cls.draw = draw
+        sys.setprofile(previous_profile)
         data_module.load_dataset, browser.read_metadata = original_load, original_read
         props.spaces.active.pin_id, props.spaces.active.context = previous_pin, previous_context
     assert not forbidden_calls, forbidden_calls

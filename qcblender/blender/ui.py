@@ -384,6 +384,7 @@ class QCBLENDER_OT_set_view_style(bpy.types.Operator):
                 raise ValueError('Selected QC style input is unavailable')
             modifier[self.socket_id] = self.style
             context.object.update_tag()
+            context.object.data.update()
         except ValueError as error:
             self.report({'ERROR'}, str(error))
             return {'CANCELLED'}
