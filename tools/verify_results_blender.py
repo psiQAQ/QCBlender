@@ -147,7 +147,7 @@ def object_snapshot(obj):
                        'radius': next(node.inputs['Radius'].default_value
                                       for node in child.modifiers['QC Result Focus'].node_group.nodes
                                       if node.bl_idname == 'GeometryNodeMeshToPoints'),
-                       'label': [(label.name, label.data.body, label.hide_render)
+                       'label': [[label.name, label.data.body, label.hide_render]
                                  for label in child.children if label.get('qc_result_label')]}
                       for child in focus_children(obj)]}
 
@@ -486,6 +486,8 @@ def reopen(case, out):
     blend = Path(bpy.data.filepath).resolve()
     assert blend.name == 'evidence.blend' and blend.parent in (out.resolve(), (out / 'moved 中文 path').resolve())
     actual = snapshot()
+    if actual != report['expected']:
+        write_report(out / 'cold-mismatch.json', actual)
     assert actual == report['expected'], 'Saved result state, source arrays, or focus children changed after cold open'
     if case == 'C08':
         saved_child = report['checks']['user_child']
