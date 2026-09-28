@@ -5,7 +5,7 @@ import textwrap
 import bpy
 from bpy.props import EnumProperty
 
-from .capabilities import action_button, record
+from .capabilities import action_button, capability, record
 from .source_browser import cached_metadata
 
 
@@ -121,6 +121,7 @@ class QCBLENDER_PT_create(bpy.types.Panel):
             ('profile', 'qcblender.create_line_profile', '创建线剖面'),
             ('dipole', 'qcblender.show_dipole', '创建偶极矢量')]:
             action_button(layout, context, action, operator, text)
+        draw_probe_actions(layout, context)
         if obj.get('qc_view_kind') == 'atoms':
             layout.operator('qcblender.local_selection_layer', text='创建局部显示层')
             for kind, title in [('ATOM', '编号标注'), ('DISTANCE', '距离标注'),
@@ -269,6 +270,16 @@ class QCBLENDER_PT_legend(_ObjectSection, bpy.types.Panel):
 class QCBLENDER_PT_spatial(_ObjectSection, bpy.types.Panel):
     bl_label = '空间观察'
 
+    def draw(self, context):
+        super().draw(context)
+        if context.object.get('qc_view_kind') == 'slice':
+            from .interaction import _plane_record
+            plane = _plane_record(context.object)
+            self.layout.label(text='平面定义: ' + plane.get('mode', 'FREE'))
+            self.layout.operator('qcblender.define_slice_plane', text='按源网格或三个原子定平面')
+            self.layout.label(text='三维视图工具栏：QC Slice Gizmo')
+            self.layout.label(text='Resolution 为切片显示采样点数')
+
 
 class QCBLENDER_PT_advanced(_ObjectSection, bpy.types.Panel):
     bl_label = '高级参数'
@@ -328,6 +339,7 @@ class QCBLENDER_MT_object(bpy.types.Menu):
         layout.operator('qcblender.open_properties', text='对象属性').editor = 'OBJECT'
         action_button(layout, context, 'slice', 'qcblender.create_slice', '创建切片')
         action_button(layout, context, 'probe', 'qcblender.probe_field', '读取游标处场值')
+        draw_probe_actions(layout, context)
         layout.operator('qcblender.create_framed_camera', text='创建取景相机')
         if context.object.get('qc_view_kind') in ('atoms', 'field', 'slice', 'fog'):
             layout.operator('qcblender.copy_display_parameters', text='复制显示参数到选中视图')
@@ -336,3 +348,17 @@ class QCBLENDER_MT_object(bpy.types.Menu):
 def object_context_menu(self, context):
     if is_qc(context):
         self.layout.menu('QCBLENDER_MT_object')
+
+
+def draw_probe_actions(layout, context):
+    relevant, enabled, reason = capability(context, 'probe_click')
+    if not relevant:
+        return
+    row = layout.row()
+    row.enabled = enabled
+    row.operator('qcblender.click_probe', text='点击探针 · 几何场').role = 'GEOMETRY'
+    row = layout.row()
+    row.enabled = enabled and bool(context.object.get('qc_color_source'))
+    row.operator('qcblender.click_probe', text='点击探针 · 绑定色场').role = 'COLOR'
+    if reason:
+        layout.label(text=reason, icon='INFO')

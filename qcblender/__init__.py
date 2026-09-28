@@ -10,9 +10,10 @@ def register():
     bpy.types.Object.qc_settings = bpy.props.PointerProperty(type=QCViewSettings)
     from .blender.source_browser import refresh_loaded_sources
     from .blender.editor_ui import object_context_menu
-    from .blender import asset_library
+    from .blender import asset_library, interaction
     try:
         asset_library.register()
+        interaction.register_tool()
         bpy.app.handlers.load_post.append(refresh_loaded_sources)
         bpy.app.handlers.save_post.append(refresh_loaded_sources)
         bpy.types.VIEW3D_MT_object_context_menu.append(object_context_menu)
@@ -41,7 +42,8 @@ def unregister():
     if _hooks_registered:
         bpy.types.VIEW3D_MT_object_context_menu.remove(object_context_menu)
         _hooks_registered = False
-    from .blender import asset_library
+    from .blender import asset_library, interaction
+    interaction.unregister_tool()
     asset_library.unregister()
     _metadata.clear()
     if hasattr(bpy.types.Object, 'qc_settings'):

@@ -501,10 +501,19 @@ class QCBLENDER_OT_slice(bpy.types.Operator):
 
     def execute(self, context):
         source = context.object
-        data = load_dataset(bpy.path.abspath(source['qc_dataset']))
-        field = json.loads(source['qc_field'])
-        shape, steps, origin = np.array(field['shape']), np.array(field['steps']), np.array(field['origin'])
-        corners = np.array([[i, j, k] for i in (0, shape[0]-1) for j in (0, shape[1]-1) for k in (0, shape[2]-1)]) @ steps + origin
+        from mathutils import Matrix
+        from ..planes import plane_frame
+        from .profile import profile_source
+        try:
+            volume, field = profile_source(source, 'GEOMETRY')
+            data = load_dataset(bpy.path.abspath(source['qc_dataset']))
+            world = source.parent.matrix_world if source.parent else Matrix.Identity(4)
+            center, axes, width, height = plane_frame(
+                field, 'ij', np.asarray(world.inverted() @ volume.matrix_world), .5)
+            rotation = Matrix(axes.tolist()).to_euler('XYZ')
+        except (ValueError, OSError, KeyError, TypeError, np.linalg.LinAlgError) as error:
+            self.report({'ERROR'}, str(error))
+            return {'CANCELLED'}
         mesh = bpy.data.meshes.new('QC slice carrier')
         obj = bpy.data.objects.new('QC scalar slice', mesh)
         bpy.context.collection.objects.link(obj)
@@ -514,10 +523,10 @@ class QCBLENDER_OT_slice(bpy.types.Operator):
         obj['qc_view_kind'] = 'slice'
         obj.qc_settings.volume = source.qc_settings.volume
         tree = bpy.data.node_groups.new('QC Slice v1', 'GeometryNodeTree')
-        socket(tree, 'Center', 'NodeSocketVector', default=tuple(corners.mean(axis=0)))
-        socket(tree, 'Rotation', 'NodeSocketVector', default=(0, 0, 0))
-        socket(tree, 'Width', 'NodeSocketFloat', default=float(np.ptp(corners[:, 0])), minimum=.001)
-        socket(tree, 'Height', 'NodeSocketFloat', default=float(np.ptp(corners[:, 1])), minimum=.001)
+        socket(tree, 'Center', 'NodeSocketVector', default=tuple(center))
+        socket(tree, 'Rotation', 'NodeSocketVector', default=tuple(rotation))
+        socket(tree, 'Width', 'NodeSocketFloat', default=width, minimum=.001)
+        socket(tree, 'Height', 'NodeSocketFloat', default=height, minimum=.001)
         socket(tree, 'Resolution', 'NodeSocketInt', default=self.resolution, minimum=2)
         socket(tree, 'Geometry', 'NodeSocketGeometry', 'OUTPUT')
         nodes, links = tree.nodes, tree.links
@@ -539,4 +548,6 @@ class QCBLENDER_OT_slice(bpy.types.Operator):
             return {'CANCELLED'}
         bpy.context.view_layer.objects.active = obj
         obj.select_set(True)
+        from .interaction import save_plane_definition
+        save_plane_definition(obj, 'ij', .5)
         return {'FINISHED'}
