@@ -17,6 +17,23 @@ LAYOUT = ('Legend Length', 'Legend Width', 'Legend Text Size', 'Legend Decimals'
 DEFAULTS = (2., .18, .16, 5, False, (0., 0., 0.))
 
 
+def render_legend(view, path):
+    view.update_tag()
+    bpy.context.view_layer.update()
+    points = base.module('blender.camera')._view_points(view, bpy.context.evaluated_depsgraph_get())
+    location, scale, clip = base.module('framing').fit_orthographic(points, np.eye(3), 4 / 3, .08)
+    camera = bpy.context.scene.camera
+    camera.rotation_euler = (0, 0, 0)
+    camera.location = location
+    camera.data.type, camera.data.ortho_scale, camera.data.clip_end = 'ORTHO', scale, clip
+    world = bpy.context.scene.world
+    world.use_nodes = True
+    background = next(node for node in world.node_tree.nodes if node.bl_idname == 'ShaderNodeBackground')
+    background.inputs['Color'].default_value = (1, 1, 1, 1)
+    background.inputs['Strength'].default_value = .8
+    return base.render(path, transparent=False, resolution=(1200, 900))
+
+
 def values(obj, names=LAYOUT):
     modifier, sockets = base.controls(obj)
     result = []
@@ -98,10 +115,10 @@ def legacy_fixture(obj):
     original = next(link.from_socket for link in final.inputs['Geometry'].links if link.from_node != show)
     legend = show.inputs['True'].links[0].from_node.inputs['Geometry'].links[0].from_node
     branches = [link.from_node for link in legend.inputs['Geometry'].links]
-    color = next(node.inputs['Material'].default_value for node in branches
-                 if node.inputs['Geometry'].links[0].from_node.bl_idname == 'GeometryNodeSwitch')
+    bar = next(node for node in branches if node.bl_idname == 'GeometryNodeSwitch')
+    color = bar.inputs['False'].links[0].from_node.inputs['Material'].default_value
     text_material = next(node.inputs['Material'].default_value for node in branches
-                         if node.inputs['Geometry'].links[0].from_node.bl_idname == 'GeometryNodeTransform')
+                         if node.bl_idname == 'GeometryNodeSetMaterial')
     title = base.module('blender.source_browser').color_mapping(obj)[1].inputs['String'].default_value
     old_nodes = {final}
 
@@ -210,26 +227,32 @@ def check_legend(out):
     assert np.allclose(values(view)[5], DEFAULTS[5])
     assert graph_text_controls(view, 'Color') == 'ESP [hartree/e]'
     original_range = values(view, ('Color Minimum', 'Color Center', 'Color Maximum'))
+    np.testing.assert_allclose(original_range, (-.05, 0, .05))
     material = base.module('blender.copy_display')._state(view)['materials']['scalar_map'][0]
+    modifier[names['Show Legend']] = False
+    view.update_tag()
+    bpy.context.view_layer.update()
+    bounds = np.array(view.evaluated_get(bpy.context.evaluated_depsgraph_get()).bound_box)
+    modifier[names['Legend Position']] = (float(bounds[:, 0].max()) + 2.5,
+                                          float(bounds[:, 1].mean()), 0)
     modifier[names['Show Legend']] = True
-    modifier[names['Legend Position']] = (2.5, 0, 0)
     report = {'checks': {}, 'bars': {}, 'renders': {}}
     report['bars']['default'] = check_bar(view, 2, .18)
-    report['renders']['default'] = base.render(out / 'default.png')
+    report['renders']['default'] = render_legend(view, out / 'default.png')
     for name, value in {'Legend Length': 3.2, 'Legend Width': .28,
                         'Legend Text Size': .22, 'Legend Decimals': 2}.items():
         modifier[names[name]] = value
     report['bars']['horizontal'] = check_bar(view, 3.2, .28)
-    report['renders']['horizontal'] = base.render(out / 'horizontal.png')
+    report['renders']['horizontal'] = render_legend(view, out / 'horizontal.png')
     modifier[names['Legend Vertical']] = True
     modifier[names['Legend Length']] = 2.6
     modifier[names['Legend Width']] = .2
     report['bars']['vertical'] = check_bar(view, 2.6, .2, vertical=True)
-    report['renders']['vertical'] = base.render(out / 'vertical.png')
+    report['renders']['vertical'] = render_legend(view, out / 'vertical.png')
     modifier[names['Legend Vertical']] = False
     modifier[names['Legend Rotation']] = (0, 0, math.pi / 4)
     report['bars']['rotated'] = check_bar(view, 2.6, .2, rotation=math.pi / 4)
-    report['renders']['rotated'] = base.render(out / 'rotated.png')
+    report['renders']['rotated'] = render_legend(view, out / 'rotated.png')
     assert graph_text_controls(view, 'Color') == 'ESP [hartree/e]'
     assert values(view, ('Color Minimum', 'Color Center', 'Color Maximum')) == original_range
     assert base.module('blender.copy_display')._state(view)['materials']['scalar_map'][0] == material
@@ -282,17 +305,53 @@ def check_legend(out):
     title.inputs['Size'].default_value = .22
     before_graph = (tree.as_pointer(), len(tree.nodes), tuple(item.name for item in tree.interface.items_tree))
     base.activate(custom)
-    assert bpy.ops.qcblender.upgrade_legend() == {'CANCELLED'}
+    base.expect_error(lambda: bpy.ops.qcblender.upgrade_legend(), 'customized')
     assert before_graph == (tree.as_pointer(), len(tree.nodes),
                             tuple(item.name for item in tree.interface.items_tree))
-    assert title.inputs['Size'].default_value == .22
+    assert abs(title.inputs['Size'].default_value - .22) < 1e-6
     report['checks']['custom_legacy_rejected_without_change'] = 'Passed'
+    view.hide_render = True
+    atoms = base.module('blender.views').atom_view(Path(bpy.path.abspath(view['qc_dataset'])))
+    atoms.name = 'MN charge legend'
+    base.activate(atoms)
+    assert bpy.ops.qcblender.color_charge(method='mulliken', minimum=-.4, maximum=.4) == {'FINISHED'}
+    charge_modifier, charge_sockets = base.controls(atoms)
+    charge_modifier[charge_sockets['Show Legend']] = True
+    charge_modifier[charge_sockets['Legend Position']] = (10, 0, 0)
+    np.testing.assert_allclose(values(atoms, ('Charge Minimum', 'Charge Center', 'Charge Maximum')), (-.4, 0, .4))
+    charge_tree = charge_modifier.node_group
+    title = next(n for n in charge_tree.nodes if n.label == 'QC Legend Title')
+    assert title.inputs['String'].default_value == 'mulliken atomic charge [e]'
+    inputs = next(n for n in charge_tree.nodes if n.type == 'GROUP_INPUT')
+    for suffix in ('Minimum', 'Center', 'Maximum'):
+        name = 'Charge ' + suffix
+        number = next(n for n in charge_tree.nodes if n.bl_idname == 'FunctionNodeValueToString' and n.label == name)
+        assert number.inputs['Value'].links[0].from_socket == inputs.outputs[name]
+    check_bar(atoms, 2, .18)
+    report['renders']['charge'] = render_legend(atoms, out / 'charge.png')
+    report['checks']['charge_title_unit_three_points'] = 'Passed'
+    atoms.hide_render = True
+    mo = next(obj for obj in bpy.context.scene.objects if obj.get('qc_view_kind') == 'field'
+              and obj.get('qc_field') and json.loads(obj['qc_field']).get('quantity') == 'orbital_amplitude')
+    base.activate(mo)
+    assert bpy.ops.qcblender.select_color_field(source_name=mo.name, minimum=-.2, maximum=.2) == {'FINISHED'}
+    mo_modifier, mo_sockets = base.controls(mo)
+    mo_modifier[mo_sockets['Show Legend']] = True
+    mo_modifier[mo_sockets['Legend Position']] = (4, 0, 0)
+    assert graph_text_controls(mo, 'Color') == 'MO amplitude [bohr^-3/2]'
+    np.testing.assert_allclose(values(mo, ('Color Minimum', 'Color Center', 'Color Maximum')), (-.2, 0, .2))
+    check_bar(mo, 2, .18)
+    mo.hide_render = False
+    report['renders']['signed_mo'] = render_legend(mo, out / 'signed-mo.png')
+    report['checks']['signed_mo_title_unit_three_points'] = 'Passed'
+    mo.hide_render = True
+    view.hide_render = False
     after = base.hashes()
     assert all(after.get(key) == value for key, value in before.items())
 
     base.activate(view)
     view.hide_render = False
-    report['renders']['final'] = base.render(out / 'evidence.png')
+    report['renders']['final'] = render_legend(view, out / 'evidence.png')
     base.save_evidence(out, report)
     return report
 
@@ -306,7 +365,7 @@ def check_reopen(out):
     assert base.controls(upgraded)[0].node_group.get('qc_legend_layout') == 1
     custom = bpy.data.objects['MN custom legacy rejected']
     assert not base.controls(custom)[0].node_group.get('qc_legend_layout')
-    assert base.module('blender.source_browser').color_mapping(custom)[1].inputs['Size'].default_value == .22
+    assert abs(base.module('blender.source_browser').color_mapping(custom)[1].inputs['Size'].default_value - .22) < 1e-6
     return base.check_reopen(out)
 
 
