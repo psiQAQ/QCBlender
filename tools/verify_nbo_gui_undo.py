@@ -8,6 +8,9 @@ import traceback
 import bpy
 
 ROOT = Path(__file__).resolve().parents[1]
+import sys
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
 OUT = ROOT / 'outputs' / 'nbo-acceptance'
 MODULE = 'bl_ext.user_default.qcblender'
 bpy.ops.preferences.addon_enable(module=MODULE)
@@ -38,7 +41,7 @@ def begin():
             bpy.ops.ed.undo_push(message='QC NBO baseline')
             result = bpy.ops.qcblender.import_nbo(
                 'EXEC_DEFAULT', True,
-                filepath=str(ROOT / 'outputs/log-examples/water_neutral_nbo_opt_freq.out'),
+                filepath=str(input_path('log-examples/water_neutral_nbo_opt_freq.out', ROOT)),
                 job_number=2, block_number=1)
             assert result == {'RUNNING_MODAL'}, result
         bpy.app.timers.register(check, first_interval=.5)

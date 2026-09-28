@@ -3,10 +3,13 @@ import hashlib
 import importlib
 from pathlib import Path
 import time
+import sys
 
 import bpy
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
 MODULE = 'bl_ext.user_default.qcblender'
 assert Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to(ROOT / 'outputs')
 assert bpy.ops.extensions.package_install_files(
@@ -45,7 +48,7 @@ assert paired.metadata['analysis']['reference']['status'] == 'geometry_matched'
 for field in paired.metadata['fields']:
     assert field['vdb_sha256']
 
-log = ROOT / 'outputs' / 'log-examples' / 'water_neutral_nbo_opt_freq.out'
+log = input_path('log-examples/water_neutral_nbo_opt_freq.out')
 reference, digest = identity(ROOT / 'outputs' / 'nbo-acceptance' / 'reference.qcdata')
 nbo = run('import_nbo', source=str(log), job_index=1, block_index=0,
           reference_dataset=reference, reference_sha256=digest)

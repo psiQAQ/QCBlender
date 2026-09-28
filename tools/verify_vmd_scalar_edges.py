@@ -15,12 +15,10 @@ import verify_vmd_parameters as base
 
 
 C07 = {
-    'IGMH': ('d118e51e9fbe71ba3fcd41c90ad7fbdff38defcede73a6fabf23f138acba4345',
-             'dg_inter.cub', '3d8c044dbbac7a08f18f7bb6a4fa1a71628157c24d3b781bcb0da993bcc99695',
+    'IGMH': ('dg_inter.cub', '3d8c044dbbac7a08f18f7bb6a4fa1a71628157c24d3b781bcb0da993bcc99695',
              'sl2r.cub', 'ec9afd0600e60144281a5ba9e6fdae626dbe9f6d5f180702d28c75053a214514',
              'delta_g', 'electron/bohr^4'),
-    'IRI': ('7fad22457236fe2c56fe3343588bc4679a81ff9dfbb4161f2fc1367703c54fa4',
-            'func2.cub', 'a08baaa600115d4321c826be6c1783ecc17649a3b52728f363cbe5faf7e41a1f',
+    'IRI': ('func2.cub', 'a08baaa600115d4321c826be6c1783ecc17649a3b52728f363cbe5faf7e41a1f',
             'func1.cub', 'ec9afd0600e60144281a5ba9e6fdae626dbe9f6d5f180702d28c75053a214514',
             'iri_function', 'a.u. (electron^-0.1 bohr^-0.7)'),
 }
@@ -82,12 +80,10 @@ def check_edges(out):
     views = base.module('blender.views')
     scalars = base.module('blender.scalars')
     report = {'checks': {}, 'c07': {}}
-    evidence = base.ROOT / 'outputs/source-adoption/04-profile/final-sop/cases/C07/C07.qcdata/datasets'
-    for kind, (digest, geo_name, geo_sha, color_name, color_sha, quantity, unit) in C07.items():
-        original = evidence / digest
-        directory = out / 'datasets' / f'C07-{kind}'
-        shutil.copytree(original, directory, dirs_exist_ok=True)
-        assert hashlib.sha256((directory / 'manifest.json').read_bytes()).hexdigest() == digest
+    sys.path.insert(0, str(base.ROOT))
+    from tools.prepare_sop_fixture import paired_dataset
+    for kind, (geo_name, geo_sha, color_name, color_sha, quantity, unit) in C07.items():
+        directory, _ = paired_dataset(kind)
         geometry, color = (views.field_view(directory, index=i) for i in (0, 1))
         geometry.name, color.name = f'C07 {kind} geometry', f'C07 {kind} color'
         geometry.hide_render = color.hide_render = True

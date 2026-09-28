@@ -5,7 +5,7 @@ from pathlib import Path
 from urllib.request import urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
-target = ROOT / 'outputs/log-examples'
+target = ROOT / 'tests/data/local/log-examples'
 target.mkdir(parents=True, exist_ok=True)
 for record in json.loads((ROOT / 'tests/data/local-log-downloads.json').read_text(encoding='utf-8')):
     path = target / record['file']

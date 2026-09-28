@@ -16,7 +16,10 @@ from qcblender.result_filters import (area_selection, nbo_selection, nocv_select
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCES = Path(os.environ.get('QCBLENDER_REFERENCE_ROOT', ROOT)) / 'outputs/v1-acceptance/sources'
+import sys
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
+SOURCES = input_path('sop', Path(os.environ.get('QCBLENDER_REFERENCE_ROOT', ROOT)))
 C07 = SOURCES / 'c07-c09-research/phenol-2026-09-27/igmh'
 C08 = SOURCES / 'multiwfn-local/C08'
 C09 = SOURCES / 'multiwfn-local/C09'

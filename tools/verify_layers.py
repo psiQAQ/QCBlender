@@ -7,6 +7,8 @@ import sys
 import bpy
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
 OUT = ROOT / 'outputs/layer-acceptance'
 OUT.mkdir(parents=True, exist_ok=True)
 MODULE = 'bl_ext.user_default.qcblender'
@@ -31,7 +33,7 @@ if '--vibration-layers' in sys.argv:
     report = json.loads((OUT / 'report.json').read_text(encoding='utf-8'))
     jobs = importlib.import_module(MODULE + '.blender.jobs')
     views = importlib.import_module(MODULE + '.blender.views')
-    job = jobs.Job('import', source=str(ROOT / 'outputs/log-examples/water_neutral_nbo_opt_freq.out'), job_index=1)
+    job = jobs.Job('import', source=str(input_path('log-examples/water_neutral_nbo_opt_freq.out', ROOT)), job_index=1)
     deadline = time.monotonic() + 120
     while (result := job.poll()) is None:
         if time.monotonic() > deadline:

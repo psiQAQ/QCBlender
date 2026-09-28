@@ -9,6 +9,9 @@ import bpy
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
+import sys
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
 MODULE = 'bl_ext.user_default.qcblender'
 bpy.ops.preferences.addon_enable(module=MODULE)
 storage = importlib.import_module(MODULE + '.data')
@@ -65,7 +68,7 @@ assert bpy.ops.qcblender.relocate_dataset(filepath=str(relocated / 'manifest.jso
 assert Path(surface['qc_dataset']) == relocated
 np.testing.assert_array_equal(vertices(surface), expected)
 
-water = finish(jobs.Job('import', source=str(ROOT / 'outputs/log-examples/water_neutral_nbo_opt_freq.out'), job_index=1))
+water = finish(jobs.Job('import', source=str(input_path('log-examples/water_neutral_nbo_opt_freq.out', ROOT)), job_index=1))
 atoms = views.atom_view(water)
 bpy.context.view_layer.objects.active = atoms
 assert bpy.ops.qcblender.color_charge(method='mulliken', minimum=-1, maximum=1) == {'FINISHED'}

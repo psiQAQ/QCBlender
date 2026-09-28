@@ -13,6 +13,8 @@ import bpy
 from mathutils import Vector
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
 parser = argparse.ArgumentParser()
 parser.add_argument('--output-dir', type=Path, required=True)
 parser.add_argument('--reopen', choices=('saved', 'moved'))
@@ -54,7 +56,7 @@ if args.reopen:
     report[args.reopen + '_cold_reopen'] = 'Passed'
 else:
     Job = importlib.import_module(MODULE + '.blender.jobs').Job
-    job = Job('import', source=str(ROOT / 'outputs/complex-examples/sources/Trp_polar.fchk'))
+    job = Job('import', source=str(input_path('complex-examples/Trp_polar.fchk', ROOT)))
     deadline = time.monotonic() + 180
     while True:
         receipt = job.poll()
@@ -70,7 +72,7 @@ else:
         obj.hide_set(True)
     atoms = importlib.import_module(MODULE + '.blender.views').atom_view(job.directory / 'dataset')
     activate(bpy.context, atoms)
-    sources = ROOT / 'outputs/v1-acceptance/sources/multiwfn-local/C09'
+    sources = input_path('sop/multiwfn-local/C09', ROOT)
     arguments = dict(cps_path=str(sources / 'CPs.pdb'), paths_path=str(sources / 'paths.pdb'))
     assert bpy.ops.qcblender.import_aim_analysis(**arguments,
         properties_path=str(sources / 'CPprop.txt')) == {'FINISHED'}

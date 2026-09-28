@@ -6,6 +6,8 @@ import sys
 import bpy
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
 sys.path[:0] = [str(ROOT), str(ROOT / 'outputs' / 'science')]
 import qcblender
 from qcblender.data import load_dataset, save_dataset
@@ -16,7 +18,7 @@ from qcblender.blender.views import atom_view, bind
 
 OUT = ROOT / 'outputs' / 'nbo-acceptance'
 OUT.mkdir(parents=True, exist_ok=True)
-SOURCE = ROOT / 'outputs' / 'log-examples' / 'water_neutral_nbo_opt_freq.out'
+SOURCE = input_path('log-examples/water_neutral_nbo_opt_freq.out')
 qcblender.register()
 
 if '--reopen' in sys.argv:

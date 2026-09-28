@@ -10,3 +10,6 @@ submodules/GaussianView/
 submodules/VMD/
 submodules/MolecularNodes/reference-docs/
 /.worktrees/
+
+# Local scientific inputs retain separate source and license records.
+/tests/data/local/

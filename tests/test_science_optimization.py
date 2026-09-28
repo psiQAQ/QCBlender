@@ -13,7 +13,10 @@ from qcblender.gaussian_log import read_log, summarize_jobs
 from qcblender.optimization import optimization_records
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / 'outputs/log-examples/water_neutral_nbo_opt_freq.out'
+import sys
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
+SOURCE = input_path('log-examples/water_neutral_nbo_opt_freq.out', ROOT)
 
 
 class Optimization(unittest.TestCase):

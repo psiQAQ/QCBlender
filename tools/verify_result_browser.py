@@ -13,10 +13,13 @@ import bpy
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
 parser = argparse.ArgumentParser()
 parser.add_argument('--output-dir', type=Path, default=ROOT / 'outputs/result-browser/verification')
 parser.add_argument('--candidate', type=Path, default=ROOT / 'outputs/result-browser/dist/qcblender-0.0.1.zip')
 parser.add_argument('--reopen', action='store_true')
+parser.add_argument('--use-installed', action='store_true', help='Use the existing isolated installation without reinstalling')
 args = parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 OUT = args.output_dir.resolve()
 OUT.mkdir(parents=True, exist_ok=True)
@@ -34,7 +37,7 @@ def finish(job):
     raise TimeoutError(str(job.directory))
 
 
-if '--reopen' not in sys.argv:
+if not args.reopen and not args.use_installed:
     repo = next((r for r in bpy.context.preferences.extensions.repos if r.module == 'user_default'), None)
     if repo is None:
         bpy.context.preferences.extensions.repos.new(name='User Default', module='user_default')
@@ -64,7 +67,7 @@ if '--reopen' in sys.argv:
             assert {k: hashlib.sha256(v.tobytes()).hexdigest() for k,v in data.arrays.items()} == expected[obj.name]['arrays']
     report['cold_reopen'] = 'Passed'
 else:
-    source = ROOT / 'outputs/log-examples/water_neutral_nbo_opt_freq.out'
+    source = input_path('log-examples/water_neutral_nbo_opt_freq.out', ROOT)
     before = set(bpy.data.objects.keys())
     job = Job('inspect_source', source=str(source))
     preview = finish(job)
@@ -153,9 +156,10 @@ else:
     shutil.copy2(OUT / 'sources.blend', moved / 'sources.blend')
     shutil.copytree(OUT / 'sources.qcdata', moved / 'sources.qcdata', dirs_exist_ok=True)
     report['portable_save'] = 'Passed'
-    # Existing acceptance projects cover geometry/color and external records.
+    # Rebuild real source associations without historical evidence projects.
+    from tools.prepare_sop_fixture import prepare as rebuild
     for case in ('C04', 'C07', 'C08', 'C09', 'C10', 'C11', 'C12', 'C13'):
-        bpy.ops.wm.open_mainfile(filepath=str(ROOT / f'outputs/v1-acceptance/cases/{case}/{case}.blend'))
+        rebuild(case)
         bpy.ops.preferences.addon_enable(module=MODULE)
         count = 0
         for obj in bpy.context.scene.objects:

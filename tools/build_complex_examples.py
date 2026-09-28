@@ -12,6 +12,8 @@ import numpy as np
 from mathutils import Matrix, Vector
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
 OUT = ROOT / 'outputs/complex-examples'
 MODULE = 'bl_ext.user_default.qcblender'
 parser = argparse.ArgumentParser()
@@ -48,7 +50,7 @@ def job(action, **kwargs):
 
 
 def imported(name):
-    return job('import', source=str(OUT / 'sources' / name))
+    return job('import', source=str(input_path('complex-examples/' + name)))
 
 
 def controls(obj):

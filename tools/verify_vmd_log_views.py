@@ -9,6 +9,7 @@ import bpy
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import verify_vmd_parameters as base
+from local_inputs import input_path
 
 
 def finish(job):
@@ -38,7 +39,7 @@ def check(out, reopen=False):
         return base.check_reopen(out)
 
     out.mkdir(parents=True, exist_ok=True)
-    source = base.ROOT / 'outputs/log-examples/water_neutral_nbo_opt_freq.out'
+    source = input_path('log-examples/water_neutral_nbo_opt_freq.out', base.ROOT)
     Job = base.module('blender.jobs').Job
     preview = finish(Job('inspect_source', source=str(source)))
     assert len(preview['jobs']) == 2

@@ -10,6 +10,8 @@ import bpy
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
 spec = importlib.util.spec_from_file_location('qc_evidence', ROOT / 'tools/verify_vmd_parameters.py')
 evidence = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(evidence)
@@ -98,7 +100,7 @@ def check_selection(out):
     assert selection_snapshot(local) == target_state
     assert evidence.hashes() == before
 
-    source = module('blender.views').atom_view(import_source(ROOT / 'outputs/log-examples/water_neutral_nbo_opt_freq.out'))
+    source = module('blender.views').atom_view(import_source(input_path('log-examples/water_neutral_nbo_opt_freq.out', ROOT)))
     evidence.activate(source)
     assert bpy.ops.qcblender.optimization_view() == {'FINISHED'}
     trajectory = bpy.context.object
@@ -117,7 +119,7 @@ def check_selection(out):
     assert bpy.ops.qcblender.local_selection(mode='RECOMPUTE') == {'FINISHED'}
     assert json.loads(trajectory['qc_local_selection_record'])['source']['step'] == 4
 
-    manifest = ROOT / 'outputs/v1-acceptance/sources/c10-c13/peroxide-irc-pyscf/steps.csv'
+    manifest = input_path('sop/c10-c13/peroxide-irc-pyscf/steps.csv', ROOT)
     assert bpy.ops.qcblender.import_irc_path(manifest_path=str(manifest)) == {'FINISHED'}
     irc = next(obj for obj in bpy.context.scene.objects if obj.get('qc_irc'))
     evidence.activate(irc)

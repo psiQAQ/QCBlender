@@ -12,6 +12,8 @@ import bpy
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
 parser = argparse.ArgumentParser()
 parser.add_argument('--output-dir', type=Path, default=ROOT / 'outputs/optimization-trajectory/verification')
 parser.add_argument('--reopen', action='store_true')
@@ -29,7 +31,7 @@ Job = importlib.import_module(MODULE + '.blender.jobs').Job
 
 
 def import_source():
-    job = Job('import', source=str(ROOT / 'outputs/log-examples/water_neutral_nbo_opt_freq.out'), job_index=0)
+    job = Job('import', source=str(input_path('log-examples/water_neutral_nbo_opt_freq.out', ROOT)), job_index=0)
     deadline = time.monotonic() + 120
     while time.monotonic() < deadline:
         result = job.poll()

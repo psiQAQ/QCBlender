@@ -20,6 +20,8 @@ import numpy as np
 
 
 SCRIPT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(SCRIPT_ROOT))
+from tools.local_inputs import input_path
 spec = importlib.util.spec_from_file_location('qc_result_evidence', SCRIPT_ROOT / 'tools/verify_vmd_parameters.py')
 evidence = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(evidence)
@@ -371,7 +373,7 @@ def check_c12(source_root):
     active(table)
     rows = metadata(table)['analysis']['pairs']
     row = next(row for row in rows if row['pair'] == 1 and row['spin'] == 'Total')
-    cube = source_root / 'outputs/v1-acceptance/sources/c10-c13/multiwfn-cobh3-20260927/COBH3-NOCV-pair1.cub'
+    cube = input_path('sop/c10-c13/multiwfn-cobh3-20260927/COBH3-NOCV-pair1.cub', source_root)
     assert cube.is_file(), cube
     job = finish_modal('import_nocv_field', cube_path=str(cube), pair_number=1,
                        spin='Total', unit='electron/bohr^3')
@@ -420,7 +422,7 @@ def check_c12(source_root):
 
 
 def check_nbo(source_root):
-    source = source_root / 'outputs/log-examples/water_neutral_nbo_opt_freq.out'
+    source = input_path('log-examples/water_neutral_nbo_opt_freq.out', source_root)
     assert source.is_file(), source
     job = module('blender.jobs').Job('import', source=str(source), job_index=1)
     deadline = time.monotonic() + 180
@@ -473,23 +475,17 @@ def write_report(path, report):
     path.write_text(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True), encoding='utf-8')
 
 
-def case_fixture(case, source_root):
-    if case in ('C07', 'C08', 'C09'):
-        current = (source_root / 'outputs/multiwfn-parameters/01-foundation-r5/final-sop/cases'
-                   / case / f'{case}.blend')
-        if current.is_file():
-            return current
-    return source_root / f'outputs/v1-acceptance/cases/{case}/{case}.blend'
-
-
-def prepare(case, out, source_root):
+def prepare(case, out, source_root, fixture=None):
     out.mkdir(parents=True, exist_ok=True)
     original = None
     if case != 'NBO':
-        original = case_fixture(case, source_root)
-        assert original.is_file(), original
-        bpy.ops.wm.open_mainfile(filepath=str(original))
-        installed_extension()
+        if fixture:
+            original = fixture.resolve(strict=True)
+            bpy.ops.wm.open_mainfile(filepath=str(original))
+            installed_extension()
+        else:
+            from tools.prepare_sop_fixture import prepare as rebuild
+            rebuild(case, source_root)
     area = next(area for area in bpy.context.screen.areas if area.type == 'VIEW_3D')
     region = next(region for region in area.regions if region.type == 'WINDOW')
     with bpy.context.temp_override(area=area, region=region):
@@ -546,11 +542,12 @@ if __name__ == '__main__':
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--case', choices=CASES, required=True)
     parser.add_argument('--check', choices=('prepare', 'reopen'), required=True)
+    parser.add_argument('--fixture', type=Path, help='Optional existing scene; default rebuilds from inputs')
     parser.add_argument('--source-root', type=Path, default=SCRIPT_ROOT)
     args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
     args.out = args.out.resolve()
     args.source_root = args.source_root.resolve()
     installed_extension()
-    assert Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to(args.out.parent.resolve())
-    outcome = prepare(args.case, args.out, args.source_root) if args.check == 'prepare' else reopen(args.case, args.out)
+    assert Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to((SCRIPT_ROOT / 'outputs').resolve())
+    outcome = prepare(args.case, args.out, args.source_root, args.fixture) if args.check == 'prepare' else reopen(args.case, args.out)
     print(json.dumps(outcome, ensure_ascii=False))

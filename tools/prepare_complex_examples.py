@@ -5,13 +5,16 @@ import json
 from pathlib import Path
 from importlib.metadata import version
 import time
+import sys
 
 import bpy
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'outputs/complex-examples'
-SOURCES = OUT / 'sources'
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
+SOURCES = input_path('complex-examples')
 MODULE = 'bl_ext.user_default.qcblender'
 repo = next(r for r in bpy.context.preferences.extensions.repos if r.module == 'user_default')
 if not (Path(repo.directory) / 'qcblender/blender_manifest.toml').is_file():

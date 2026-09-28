@@ -12,6 +12,8 @@ import numpy as np
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
 spec = importlib.util.spec_from_file_location('qc_evidence', ROOT / 'tools/verify_vmd_parameters.py')
 evidence = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(evidence)
@@ -257,7 +259,7 @@ def check_annotations(out):
     mn_spec = importlib.util.spec_from_file_location('mn_evidence', ROOT / 'tools/verify_mn_parameters.py')
     mn_evidence = importlib.util.module_from_spec(mn_spec)
     mn_spec.loader.exec_module(mn_evidence)
-    directory = mn_evidence.import_source(ROOT / 'outputs/log-examples/water_neutral_nbo_opt_freq.out', job_index=1)
+    directory = mn_evidence.import_source(input_path('log-examples/water_neutral_nbo_opt_freq.out', ROOT), job_index=1)
     water = module('blender.views').atom_view(directory)
     water.name = 'MN real water vibration Job 2'
     vibration_arrays = evidence.hashes()

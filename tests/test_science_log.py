@@ -10,12 +10,15 @@ from qcblender.gaussian_log import energy_events, inspect_log, read_log, select_
 from qcblender.data import load_dataset, save_dataset
 
 ROOT = Path(__file__).resolve().parents[1]
+import sys
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
 DATA = Path(__file__).parent / 'data/cclib'
 
 
 class GaussianLog(unittest.TestCase):
     def test_preview_matches_real_multijob_import_without_geometry_inheritance(self):
-        path = ROOT / 'outputs/log-examples/water_neutral_nbo_opt_freq.out'
+        path = input_path('log-examples/water_neutral_nbo_opt_freq.out', ROOT)
         preview = inspect_log(path)
         self.assertGreaterEqual(len(preview['jobs']), 2)
         for index in range(len(preview['jobs'])):
@@ -108,7 +111,7 @@ class GaussianLog(unittest.TestCase):
             self.assertEqual(restored.metadata, data.metadata)
 
     def test_link1_and_real_double_hybrid_local_examples(self):
-        local = ROOT / 'outputs/log-examples'
+        local = input_path('log-examples', ROOT)
         self.assertTrue((local / 'water_neutral_nbo_opt_freq.out').is_file(), 'Run tools/fetch_log_examples.py')
         for record in json.loads((ROOT / 'tests/data/local-log-downloads.json').read_text(encoding='utf-8')):
             assert hashlib.sha256((local / record['file']).read_bytes()).hexdigest() == record['sha256']

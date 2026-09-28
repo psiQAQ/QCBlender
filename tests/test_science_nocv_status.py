@@ -7,11 +7,12 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
 from qcblender.external_results import ets_nocv_pairs
 
 
 REFERENCE_ROOT = Path(os.environ.get('QCBLENDER_REFERENCE_ROOT', ROOT))
-REAL_TABLE = REFERENCE_ROOT / 'outputs/v1-acceptance/sources/c10-c13/multiwfn-cobh3-20260927/COBH3-ETS-NOCV.txt'
+REAL_TABLE = input_path('sop/c10-c13/multiwfn-cobh3-20260927/COBH3-ETS-NOCV.txt', REFERENCE_ROOT)
 REAL_STDOUT = REAL_TABLE.with_name('stdout.txt')
 HEADER = 'Pair Energy | Orbital Eigenvalue Energy | Orbital Eigenvalue Energy'
 ROW = '1 -2.50 6 0.12000 -3.10 7 -0.12000 0.60'

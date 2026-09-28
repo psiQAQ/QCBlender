@@ -1,7 +1,7 @@
 """Installed C07 chart checks. Run prepare, then reopen saved and moved blends separately.
 
 blender --background --factory-startup --python tools/verify_multiwfn_charts.py -- \
-  --mode prepare --fixture outputs/multiwfn-parameters/01-foundation-r5/final-sop/cases/C07/C07.blend \
+  --mode prepare \
   --out outputs/multiwfn-parameters/03-charts
 blender --background --factory-startup --python tools/verify_multiwfn_charts.py -- \
   --mode reopen --fixture outputs/multiwfn-parameters/03-charts/evidence.blend \
@@ -330,7 +330,7 @@ def reopen(out):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--mode', choices=('prepare', 'reopen'), required=True)
-    parser.add_argument('--fixture', type=Path, required=True)
+    parser.add_argument('--fixture', type=Path)
     parser.add_argument('--out', type=Path, required=True)
     args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
     out = args.out.resolve()
@@ -339,6 +339,13 @@ if __name__ == '__main__':
     assert bpy.ops.preferences.addon_enable(module=evidence.MODULE) == {'FINISHED'}
     installed = Path(module('blender.charts').__file__).resolve()
     assert 'extensions' in installed.parts and installed != ROOT / 'qcblender/blender/charts.py'
-    assert bpy.ops.wm.open_mainfile(filepath=str(args.fixture.resolve(strict=True))) == {'FINISHED'}
+    if args.fixture:
+        assert bpy.ops.wm.open_mainfile(filepath=str(args.fixture.resolve(strict=True))) == {'FINISHED'}
+    elif args.mode == 'prepare':
+        sys.path.insert(0, str(ROOT))
+        from tools.prepare_sop_fixture import prepare as rebuild
+        rebuild('C07')
+    else:
+        parser.error('--fixture is required for reopen')
     result = prepare(out) if args.mode == 'prepare' else reopen(out)
     print(json.dumps(result, ensure_ascii=False))

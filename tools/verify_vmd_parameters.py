@@ -161,17 +161,10 @@ def check_panel(out):
 
 
 def real_fields(out):
-    reference = ROOT / 'outputs/source-adoption/04-profile/final-sop/cases/C04/C04.qcdata/datasets'
-    views = {}
-    for path in sorted(reference.glob('*/manifest.json')):
-        metadata = json.loads(path.read_text(encoding='utf-8'))['metadata']
-        fields = metadata.get('fields', [])
-        if not fields or fields[0]['quantity'] in views:
-            continue
-        directory = out / 'datasets' / path.parent.name
-        shutil.copytree(path.parent, directory, dirs_exist_ok=True)
-        obj = module('blender.views').field_view(directory)
-        views[fields[0]['quantity']] = obj
+    sys.path.insert(0, str(ROOT))
+    from tools.prepare_sop_fixture import real_fields as rebuild
+    views = rebuild()
+    for obj in views.values():
         obj.hide_render = True
     return views
 

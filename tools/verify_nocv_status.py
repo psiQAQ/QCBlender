@@ -12,6 +12,8 @@ import bpy
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
 parser = argparse.ArgumentParser()
 parser.add_argument('--output-dir', type=Path, required=True)
 parser.add_argument('--reopen', choices=('saved', 'moved'))
@@ -63,7 +65,7 @@ if args.reopen:
     bpy.ops.render.render(write_still=True)
     report[args.reopen + '_cold_reopen'] = 'Passed'
 else:
-    source = ROOT / 'outputs/v1-acceptance/sources/c10-c13'
+    source = input_path('sop/c10-c13', ROOT)
     real = source / 'multiwfn-cobh3-20260927'
     fchk = source / 'multiwfn-data/Multiwfn_2026.9.20_bin_Linux_noGUI/examples/ETS-NOCV/COBH3/COBH3.fch'
     job, _ = run_job('import', source=str(fchk))

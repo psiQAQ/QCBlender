@@ -3,11 +3,11 @@
 Run in an isolated Blender 5.1.1 profile with the candidate extension installed:
 
   blender --background --python tools/verify_multiwfn_foundation.py -- \
-    --case core --fixture-blend outputs/vmd-parameters/04-copy-r4/features/evidence.blend \
+    --case core \
     --output-dir outputs/multiwfn-foundation/core
 
-Repeat with --case nbo and outputs/nbo-acceptance/nbo.blend, then --case analysis
-and outputs/external-results/results.blend, using separate output directories.
+Repeat with --case nbo and --case analysis using separate output directories.
+Scenes rebuild from verified inputs; --fixture-blend accepts an existing scene.
 The optional --case gui runs in an isolated visible Blender session with a real
 View3D and Properties area. Computer Use still signs off visual placement.
 """
@@ -139,8 +139,9 @@ def check_broken_source(report, field):
 
 
 def check_unknown_cube(report, output_dir):
-    source = ROOT / 'outputs/visual-acceptance-v2/unknown.cube'
-    assert source.is_file(), source
+    source = output_dir / 'unknown.cube'
+    source.write_text('Scalar quantity unspecified\nSynthetic declaration test\n1 0 0 0\n'
+                      '-2 1 0 0\n-2 0 1 0\n-2 0 0 1\n1 1 0 0 0\n1 2 3 4 5 6 7 8\n', encoding='ascii')
     data = module('cube').read_cube(source)
     assert data.metadata['fields'][0]['quantity'] == 'unknown_scalar'
     directory = output_dir / 'unknown-cube-dataset'
@@ -378,6 +379,16 @@ def main():
         assert args.case != 'gui', 'Open the isolated GUI fixture before --case gui'
         source = args.fixture_blend.resolve(strict=True)
         assert bpy.ops.wm.open_mainfile(filepath=str(source)) == {'FINISHED'}
+    elif args.case != 'gui':
+        sys.path.insert(0, str(ROOT))
+        from tools.prepare_sop_fixture import prepare as rebuild
+        rebuild({'core': 'C04', 'nbo': 'NBO', 'analysis': 'C09'}[args.case])
+        if args.case == 'core':
+            field = next(obj for obj in bpy.context.scene.objects if obj.get('qc_view_kind') == 'field')
+            activate(field)
+            assert bpy.ops.qcblender.create_slice(resolution=21) == {'FINISHED'}
+            activate(field)
+            module('blender.fog').fog_view(field)
     installed = Path(module('blender.editor_ui').__file__).resolve()
     assert 'extensions' in installed.parts and installed != ROOT / 'qcblender/blender/editor_ui.py'
     report = {'case': args.case, 'candidate_module': str(installed),

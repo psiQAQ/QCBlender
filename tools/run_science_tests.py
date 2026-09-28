@@ -19,7 +19,7 @@ result = unittest.TextTestRunner(verbosity=2).run(suite)
 from test_science_reference import METRICS
 report = {'status': 'Passed' if result.wasSuccessful() else 'Failed',
           'tests': result.testsRun, 'failures': len(result.failures), 'errors': len(result.errors),
-          'metrics': METRICS}
+          'skipped': len(result.skipped), 'metrics': METRICS}
 args.output.parent.mkdir(parents=True, exist_ok=True)
 args.output.write_text(json.dumps(report, indent=2), encoding='utf-8')
 print(json.dumps(report, indent=2))

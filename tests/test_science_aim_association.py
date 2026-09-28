@@ -10,9 +10,12 @@ from qcblender.readers import read_source
 
 
 ROOT = Path(__file__).resolve().parents[1]
+import sys
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
 REFERENCE_ROOT = Path(os.environ.get('QCBLENDER_REFERENCE_ROOT', ROOT))
-C09 = REFERENCE_ROOT / 'outputs/v1-acceptance/sources/multiwfn-local/C09'
-FCHK = REFERENCE_ROOT / 'outputs/complex-examples/sources/Trp_polar.fchk'
+C09 = input_path('sop/multiwfn-local/C09', REFERENCE_ROOT)
+FCHK = input_path('complex-examples/Trp_polar.fchk', REFERENCE_ROOT)
 
 
 class AimAssociation(unittest.TestCase):

@@ -5,7 +5,7 @@ from pathlib import Path
 from urllib.request import urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'outputs/complex-examples/sources'
+OUT = ROOT / 'tests/data/local/complex-examples'
 MANIFEST = ROOT / 'tests/data/complex-example-sources.json'
 
 

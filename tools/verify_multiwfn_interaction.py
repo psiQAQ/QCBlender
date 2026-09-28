@@ -1,7 +1,7 @@
 """Installed interaction checks; run prepare, then reopen each saved blend in fresh Blender processes.
 
 blender --background --factory-startup --python tools/verify_multiwfn_interaction.py -- \
-  --mode prepare --fixture outputs/multiwfn-parameters/01-foundation-r5/final-sop/cases/C07/C07.blend \
+  --mode prepare \
   --out outputs/multiwfn-parameters/02-interaction
 blender --background --factory-startup --python tools/verify_multiwfn_interaction.py -- \
   --mode reopen --fixture outputs/multiwfn-parameters/02-interaction/evidence.blend \
@@ -23,11 +23,13 @@ import numpy as np
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import input_path
 spec = importlib.util.spec_from_file_location('qc_evidence', ROOT / 'tools/verify_vmd_parameters.py')
 evidence = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(evidence)
 module = evidence.module
-SOURCE_CUBE = ROOT / 'outputs/v1-acceptance/sources/c07-c09-research/phenol-2026-09-27/igmh/dg_inter.cub'
+SOURCE_CUBE = input_path('sop/c07-c09-research/phenol-2026-09-27/igmh/dg_inter.cub', ROOT)
 
 
 def status(report, name, action):
@@ -264,7 +266,7 @@ def reopen(out):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--mode', choices=('prepare', 'reopen'), required=True)
-    parser.add_argument('--fixture', type=Path, required=True, help='C07 blend, or saved evidence blend for reopen')
+    parser.add_argument('--fixture', type=Path, help='C07 blend, or saved evidence blend for reopen')
     parser.add_argument('--out', type=Path, required=True)
     args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
     out = args.out.resolve()
@@ -273,6 +275,13 @@ if __name__ == '__main__':
     assert bpy.ops.preferences.addon_enable(module=evidence.MODULE) == {'FINISHED'}
     installed = Path(module('blender.interaction').__file__).resolve()
     assert 'extensions' in installed.parts and installed != ROOT / 'qcblender/blender/interaction.py'
-    assert bpy.ops.wm.open_mainfile(filepath=str(args.fixture.resolve(strict=True))) == {'FINISHED'}
+    if args.fixture:
+        assert bpy.ops.wm.open_mainfile(filepath=str(args.fixture.resolve(strict=True))) == {'FINISHED'}
+    elif args.mode == 'prepare':
+        sys.path.insert(0, str(ROOT))
+        from tools.prepare_sop_fixture import prepare as rebuild
+        rebuild('C07')
+    else:
+        parser.error('--fixture is required for reopen')
     result = prepare(out) if args.mode == 'prepare' else reopen(out)
     print(json.dumps(result, ensure_ascii=False))
