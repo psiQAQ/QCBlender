@@ -55,6 +55,7 @@ class QCBLENDER_OT_open_properties(bpy.types.Operator):
         area = areas[0]
         if self.editor in ('OBJECT', 'MATERIAL'):
             area.spaces.active.pin_id = context.object
+            area.spaces.active.use_pin_id = True
         area.spaces.active.context = self.editor
         area.tag_redraw()
         return {'FINISHED'}

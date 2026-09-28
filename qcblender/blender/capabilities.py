@@ -69,6 +69,8 @@ def capability(context, action):
         relevant, ready, reason = atoms, atoms, '请选择 QC 原子视图'
     else:
         raise ValueError('Unknown QC action: ' + action)
+    if relevant and not bound:
+        ready, reason = False, '数据集关联缺失；请恢复数据来源'
     if relevant and bound and 'error' in meta:
         ready, reason = False, meta['error']
     if relevant and obj.mode != 'OBJECT':

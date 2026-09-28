@@ -256,7 +256,12 @@ def check_legacy_assets(report):
         assert len(bpy.context.scene.objects) == count
         assert standard.asset_data is None and custom.asset_data is not None
         assert all(library._group_signature(group) == signatures[group.name] for group in (standard, custom))
-        assert bpy.ops.qcblender.cleanup_legacy_node_assets(preview=json.dumps(preview)) == {'CANCELLED'}
+        try:
+            rejected = bpy.ops.qcblender.cleanup_legacy_node_assets(preview=json.dumps(preview))
+        except RuntimeError as error:
+            assert 'changed since preview' in str(error)
+        else:
+            assert rejected == {'CANCELLED'}
         assert len(bpy.context.scene.objects) == count
         report['legacy_asset_preview_cleanup'] = 'Passed'
     finally:
