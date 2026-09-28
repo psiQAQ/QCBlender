@@ -7,7 +7,7 @@ import numpy as np
 from ..data import load_dataset
 from .scalars import scalar_material, add_legend, color_fraction
 from .views import material, socket
-from .graph import view_modifier
+from .graph import view_modifier, tag_view
 
 _charge_items = {}
 
@@ -85,6 +85,10 @@ class QCBLENDER_OT_color_charge(bpy.types.Operator):
 
     def execute(self, context):
         obj = context.object
+        tree = view_modifier(obj).node_group
+        if tree.get('qc_color_mapping'):
+            self.report({'ERROR'}, 'This view already uses a scalar field for color; use a separate atom view for charges')
+            return {'CANCELLED'}
         data = load_dataset(bpy.path.abspath(obj['qc_dataset']))
         prop = next((c for c in data.metadata['charges'] if c['method'] == self.method), None)
         if prop is None or not np.isfinite([self.minimum, self.maximum]).all() or self.minimum >= self.maximum:
@@ -93,7 +97,6 @@ class QCBLENDER_OT_color_charge(bpy.types.Operator):
         obj.data.attributes['qc_charge'].data.foreach_set('value', data.arrays[prop['array']])
         obj.data.update()
         obj['qc_charge_method'] = self.method
-        tree = view_modifier(obj).node_group
         if not tree.get('qc_charge_mapping'):
             for name, value in [('Charge Minimum', self.minimum), ('Charge Center', (self.minimum + self.maximum) / 2),
                                 ('Charge Maximum', self.maximum)]:
@@ -137,6 +140,7 @@ class QCBLENDER_OT_color_charge(bpy.types.Operator):
                         view_modifier(obj)[item.identifier] = (self.minimum + self.maximum) / 2
                     elif item.name == 'Charge Maximum':
                         view_modifier(obj)[item.identifier] = self.maximum
+        tag_view(tree)
         obj.update_tag()
         return {'FINISHED'}
 

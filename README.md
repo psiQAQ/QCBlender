@@ -11,6 +11,7 @@
 - [计算段选择与来源浏览（独立开发候选）](docs/RESULT_BROWSER.md)
 - [Gaussian 优化轨迹浏览（独立开发候选）](docs/OPTIMIZATION_TRAJECTORY.md)
 - [源码借鉴候选：AIM/NOCV 校验、自动取景与线剖面](docs/acceptance/source-adoption.md)
+- [参数交互候选：分组面板、色场选择、范围与参数复制](docs/acceptance/vmd-parameters.md)
 - [GXNU MolStudio 源码对照与功能取舍](docs/research/gxnu-molstudio-comparison.md)
 - [当前支持范围与验收结果](docs/VALIDATION.md)
 - [复杂案例、演示与复建](docs/COMPLEX_EXAMPLES.md)

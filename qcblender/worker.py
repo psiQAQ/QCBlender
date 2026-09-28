@@ -56,6 +56,10 @@ def main():
             shutil.copy2(source, snapshot)
             gaussian = importlib.import_module(args.module + '.gaussian_log')
             report = dict(gaussian.inspect_log(snapshot), status='succeeded')
+        elif request['action'] == 'field_range':
+            storage = importlib.import_module(args.module + '.data')
+            summarize = importlib.import_module(args.module + '.field_ranges').field_range
+            report = field_range_report(request, storage, summarize, lambda: (directory / 'cancel').exists())
         elif request['action'] in ('import', 'import_pair', 'import_nbo', 'import_nocv', 'evaluate', 'rebuild_cache', 'declare_field'):
             storage = importlib.import_module(args.module + '.data')
             if request['action'] == 'import_nocv':
@@ -197,6 +201,28 @@ def main():
     candidate = directory / 'result.pending.json'
     candidate.write_text(json.dumps(report, indent=2), encoding='utf-8')
     os.replace(candidate, directory / 'result.json')
+
+
+def field_range_report(request, storage, summarize, cancelled):
+    expected = request.get('dataset_sha256')
+    if not isinstance(expected, str) or not expected:
+        raise ValueError('Dataset manifest SHA-256 is required')
+    dataset = Path(request['dataset'])
+    manifest = dataset / 'manifest.json'
+
+    def check_source():
+        if hashlib.sha256(manifest.read_bytes()).hexdigest() != expected:
+            raise ValueError('Dataset changed after the request was created')
+        if cancelled():
+            raise InterruptedError('Request cancelled before publishing results')
+
+    check_source()
+    data = storage.load_dataset(dataset)
+    if cancelled():
+        raise InterruptedError('Request cancelled before publishing results')
+    summary = summarize(data, request['field_array'])
+    check_source()
+    return dict(summary, status='succeeded', dataset_sha256=expected)
 
 
 def write_volume(data, path, index=0):
