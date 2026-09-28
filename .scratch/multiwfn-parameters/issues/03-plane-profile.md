@@ -1,5 +1,5 @@
 Triage: ready-for-agent
-Status: pending
+Status: claimed
 Blocked by: 02
 
 # 等值线、色谱与剖面坐标轴
