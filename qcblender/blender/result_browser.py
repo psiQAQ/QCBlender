@@ -330,7 +330,9 @@ class QCBLENDER_OT_filter_result_scatter(AsyncOperation, bpy.types.Operator):
             'x_unit': fields[x_field]['unit'], 'y_quantity': fields[y_field]['quantity'],
             'y_unit': fields[y_field]['unit'], 'minimum': minimum.tolist(),
             'maximum': maximum.tolist(), 'sample_count': len(points), 'axis_scale': 'linear'})
-        _save_state(self._view, self._meta, dict(self._request, matching_count=report['matching_count'],
+        display = {key: self._request[key] for key in ('x_field', 'y_field',
+                   'x_min', 'x_max', 'y_min', 'y_max')}
+        _save_state(self._view, self._meta, dict(display, matching_count=report['matching_count'],
                                                  displayed_count=report['displayed_count']))
         self.report({'INFO'}, f"Scatter: {report['matching_count']} matched, {report['displayed_count']} displayed")
 
