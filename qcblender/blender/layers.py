@@ -20,6 +20,10 @@ def sync_chart_children(obj):
         carriers = (child for child in obj.children if 'qc_contour_owner' in child)
         parts = (part for carrier in carriers for part in
                  (carrier, *(child for child in carrier.children if child.get('qc_contour_label'))))
+    elif kind == 'analysis':
+        markers = (child for child in obj.children if child.get('qc_result_focus'))
+        parts = (part for marker in markers for part in
+                 (marker, *(child for child in marker.children if child.get('qc_result_label'))))
     else:
         return
     for part in parts:
@@ -159,6 +163,11 @@ def copy_layer(source, collection):
                 copied.parent = spectrum
     try:
         copy_annotations(source, obj, collection)
+        for child in source.children:
+            if child.get('qc_result_focus') or child.get('qc_result_label'):
+                copied = copy_layer(child, collection)
+                copied.parent = obj
+                copied.hide_set(child.hide_get())
         if source.get('qc_view_kind') == 'slice':
             from .charts import copy_contour_settings
             copy_contour_settings(source, obj)
@@ -169,6 +178,23 @@ def copy_layer(source, collection):
         bpy.data.objects.remove(obj, do_unlink=True)
         raise
     return obj
+
+
+def cleanup_result_children(obj):
+    for child in tuple(obj.children):
+        if not (child.get('qc_result_focus') or child.get('qc_result_label')):
+            continue
+        cleanup_result_children(child)
+        data = child.data
+        groups = [modifier.node_group for modifier in child.modifiers
+                  if modifier.type == 'NODES' and modifier.node_group]
+        bpy.data.objects.remove(child, do_unlink=True)
+        if data.users == 0:
+            collection = bpy.data.meshes if isinstance(data, bpy.types.Mesh) else bpy.data.curves
+            collection.remove(data)
+        for group in groups:
+            if group.users == 0:
+                bpy.data.node_groups.remove(group)
 
 
 class QCBLENDER_OT_layer_action(bpy.types.Operator):
@@ -210,6 +236,7 @@ class QCBLENDER_OT_layer_action(bpy.types.Operator):
         elif self.action == 'REMOVE':
             from .annotations import remove_annotations
             remove_annotations(obj)
+            cleanup_result_children(obj)
             if obj.get('qc_view_kind') == 'slice':
                 from .charts import cleanup_contours
                 cleanup_contours(obj)

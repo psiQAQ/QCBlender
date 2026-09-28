@@ -60,6 +60,10 @@ def main():
             storage = importlib.import_module(args.module + '.data')
             contours = importlib.import_module(args.module + '.contours')
             report = contours.contour_report(request, storage.load_dataset, lambda: (directory / 'cancel').exists())
+        elif request['action'] == 'result_scatter':
+            filters = importlib.import_module(args.module + '.result_filters')
+            report = dict(filters.scatter_report(request, directory,
+                          lambda: (directory / 'cancel').exists()), status='succeeded')
         elif request['action'] == 'field_range':
             storage = importlib.import_module(args.module + '.data')
             summarize = importlib.import_module(args.module + '.field_ranges').field_range

@@ -9,12 +9,15 @@ from .ui import AsyncOperation
 
 
 def scatter_view(directory, data, parent):
-    from ..external_fields import scatter_points
+    import numpy as np
+    from ..result_filters import scatter_selection
     from .views import bind, material
 
-    points = scatter_points(data)
-    minimum = points.min(axis=0)
-    span = points.max(axis=0) - minimum
+    selected = scatter_selection(data)
+    points = selected['points']
+    minimum = points.min(axis=0) if len(points) else np.zeros(2)
+    maximum = points.max(axis=0) if len(points) else np.zeros(2)
+    span = maximum - minimum
     span[span == 0] = 1
     scaled = (points - minimum) / span * 4
     mesh = bpy.data.meshes.new('QC field scatter')
@@ -26,11 +29,12 @@ def scatter_view(directory, data, parent):
     obj.location = (0, -5, 0)
     bind(obj, directory, data)
     obj['qc_view_kind'] = 'scatter'
-    obj['qc_scatter'] = json.dumps({'x_quantity': data.metadata['fields'][0]['quantity'],
-                                    'x_unit': data.metadata['fields'][0]['unit'],
-                                    'y_quantity': data.metadata['fields'][1]['quantity'],
-                                    'y_unit': data.metadata['fields'][1]['unit'],
-                                    'minimum': minimum.tolist(), 'maximum': points.max(axis=0).tolist(),
+    obj['qc_scatter'] = json.dumps({'x_quantity': data.metadata['fields'][1]['quantity'],
+                                    'x_unit': data.metadata['fields'][1]['unit'],
+                                    'y_quantity': data.metadata['fields'][0]['quantity'],
+                                    'y_unit': data.metadata['fields'][0]['unit'],
+                                    'minimum': minimum.tolist(), 'maximum': maximum.tolist(),
+                                    'matching_count': selected['matching_count'],
                                     'sample_count': len(points), 'axis_scale': 'linear'})
     tree = bpy.data.node_groups.new('QC scatter points', 'GeometryNodeTree')
     tree.is_modifier = True
@@ -150,6 +154,8 @@ class QCBLENDER_PT_paired_scatter(bpy.types.Panel):
         layout.label(text=record['x_quantity'] + ' [' + record['x_unit'] + ']')
         layout.label(text=record['y_quantity'] + ' [' + record['y_unit'] + ']')
         layout.label(text=f"Valid samples shown: {record['sample_count']}")
+        if 'matching_count' in record:
+            layout.label(text=f"Matching samples: {record['matching_count']}")
         layout.label(text='Axes: linear; grid values unchanged')
         for index, axis in enumerate('xy'):
             layout.label(text=f"{axis}: {record['minimum'][index]:.6g} to {record['maximum'][index]:.6g}")

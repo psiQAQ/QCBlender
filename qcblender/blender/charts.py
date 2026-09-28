@@ -583,7 +583,7 @@ def _watch_contours():
     from .layers import sync_chart_children
 
     for obj in bpy.data.objects:
-        if obj.get('qc_view_kind') in ('slice', 'profile'):
+        if obj.get('qc_view_kind') in ('slice', 'profile', 'analysis'):
             sync_chart_children(obj)
         if obj.get('qc_view_kind') != 'slice' or not obj.get('qc_contour_enabled'):
             continue

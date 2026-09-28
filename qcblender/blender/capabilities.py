@@ -67,6 +67,13 @@ def capability(context, action):
         ready, reason = bool(meta.get('analysis', {}).get('pairs')), '缺少已计算的 NOCV pair 表'
     elif action == 'atoms':
         relevant, ready, reason = atoms, atoms, '请选择 QC 原子视图'
+    elif action == 'result_scatter':
+        relevant = kind == 'scatter'
+        ready, reason = len(meta.get('fields', [])) == 2, '配对场来源缺失；请刷新来源'
+    elif action == 'result_filter':
+        relevant = kind == 'nbo' or (obj is not None and obj.get('qc_analysis_role') in
+            ('esp_maximum', 'esp_minimum', 'esp_area', 'aim_C', 'aim_N', 'aim_O', 'aim_F', 'ets_nocv'))
+        ready, reason = bool(meta.get('analysis')), '分析记录缺失；请刷新来源'
     else:
         raise ValueError('Unknown QC action: ' + action)
     if relevant and not bound:
