@@ -29,7 +29,8 @@
 | C08 / C09 真实记录、撤销重做、保存和移动冷重开 | Passed | `final-sop/cases/C08/`、`C09/` 的 `analysis-check.json` 和 `candidate-run.json` |
 | ESP 单位冲突拒绝且场景完整、声明位置和五列面积区间 | Passed | `final-sop/cases/C08/metadata-check.json` |
 | 第一批最终资格 | Passed | `qualification.json`、`evidence-index.json`；源码、安装副本、ZIP 和 wheel 摘要一致 |
-| 等值线与剖面、外部浏览集成 | Not Run | 独立分支待顺序集成 |
+| 等值线与剖面集成 | Passed | 第三批候选，见下表 |
+| 外部浏览集成 | Not Run | 独立分支待顺序集成 |
 | 最终 C01–C13 六栏及 N01–N18 | Not Run | 在最终候选执行 |
 
 运行故障与复验方法见 [开发注意事项](DEVELOPMENT_PITFALLS.md)。本记录不替代 SOP 独立人工签署。
@@ -55,3 +56,22 @@
 本批标签为 `qa/multiwfn-parameters-2026-09-28-02`。点击探针记录真实字段来源；运行期间绑定或计算身份变化会拒绝保存。切片位置、方向和尺寸进入对象属性的“空间观察”，显示采样数仍在“几何表示”。
 
 继承的 C07 工程会输出 Blender 内置字体 `VFont -> Node` 关系警告；本批可见渲染和两次冷重开均通过。原始日志保留，不将该诊断当作新增功能失败或静默删除。
+
+## 第三批：等值线、色谱与剖面
+
+候选位于 `outputs/multiwfn-parameters/03-charts-r5/`，源码 `50ac4d8`，ZIP SHA-256 为 `ed29271c7a258cdf02cbced537b4a544c80d710d6edec63ae6557bbada09a01e`。
+
+| 检查 | 状态 | 证据 |
+| --- | --- | --- |
+| 科学回归 64 项、独立安装与离线冷重开 | Passed | `science.json`、`offline/extension.json` |
+| 真实 C07 等值线、自动九级范围、源摘要拒绝和任务取消 | Passed | `features/checks.json` |
+| 101 点剖面、排版前后 CSV 与科学数组不变 | Passed | `features/checks.json`、`features/profile-before.csv` |
+| 色谱材质独立、曲线和标签复制、删除清理 | Passed | `features/checks.json` |
+| GUI 开关、异步旧结果丢弃、绑定失效及恢复 | Passed | `gui.json`、`gui-evidence/checks.json` |
+| 全局视口与渲染显隐、子对象用户状态保持 | Passed | `gui-evidence/checks.json` |
+| 两类工程保存、原目录及移动冷重开、重新渲染 | Passed | `features/checks.json`、`gui-evidence/checks.json` |
+| 参数复制、计算段回归、源码与 ZIP/安装副本一致 | Passed | `regression-copy/checks.json`、`regression-jobs/checks.json`、`qualification.json` |
+
+本批标签为 `qa/multiwfn-parameters-2026-09-28-03`。等值线和剖面排版在对象属性，四种色谱预设在材质属性；全局显示层仍在 N 侧栏。数值标签是可编辑的原生文字，不自动避让。默认九级阈值取当前显示范围的内部等间距值；显式阈值允许包含零。无效单元不生成跨越空洞的线段。
+
+旧候选保留了标签更新显隐、全局子对象联动与失效提示恢复的复现证据。完整最终 SOP、独立人工验收及外部视觉对照仍为 Not Run。

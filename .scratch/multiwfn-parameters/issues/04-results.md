@@ -1,5 +1,5 @@
 Triage: ready-for-agent
-Status: pending
+Status: claimed
 Blocked by: 03
 
 # 外部结果浏览

@@ -1,5 +1,5 @@
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Blocked by: 02
 
 # 等值线、色谱与剖面坐标轴
@@ -8,4 +8,4 @@ Blocked by: 02
 
 ## Comments
 
-运行验收 Not Run。
+Passed：`outputs/multiwfn-parameters/03-charts-r5/qualification.json`。源码 `50ac4d8`；真实 C07、64 项科学回归、安装、GUI、CSV、复制/删除、原目录和移动冷重开均已运行。详细范围见 `docs/MULTIWFN_PARAMETERS.md` 第三批。保留 r2–r4 缺陷与复验记录。
