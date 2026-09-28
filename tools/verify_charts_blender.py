@@ -79,6 +79,8 @@ draw_report = dict(report, paths=[{'level': report['levels'][0], 'lines': [sampl
 carrier = charts._draw_contours(slice_obj, field_source, plane, draw_report)
 slice_obj['qc_contour_child'] = carrier.name
 slice_obj['qc_contour_identity'] = identity
+charts._watch_contours()
+assert slice_obj['qc_contour_status'] == 'Contours up to date'
 assert carrier.parent == slice_obj and np.isclose(carrier.data.bevel_depth, .02, atol=1e-6)
 label = next(child for child in carrier.children if child.get('qc_contour_label'))
 offset = np.asarray(label.location) - np.asarray(sample_line[1])

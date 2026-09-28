@@ -600,6 +600,8 @@ def _watch_contours():
         if (identity == obj.get('qc_contour_identity') and child is not None
                 and child.get('qc_contour_identity') == identity):
             _restore_contours(obj, identity)
+            if obj.get('qc_contour_status', '').startswith('Contour unavailable:'):
+                obj['qc_contour_status'] = 'Contours up to date'
             continue
         _hide_contours(obj)
         if pointer in _pending or _blocked.get(pointer) == identity:
