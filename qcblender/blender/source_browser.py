@@ -304,6 +304,8 @@ def source_details(obj):
             entries.append(('External source', source))
     if obj.get('qc_optimization_record'):
         entries.append(('Optimization step', object_record(obj, 'qc_optimization_record')))
+    if obj.get('qc_local_selection_record'):
+        entries.append(('Fixed local display selection', object_record(obj, 'qc_local_selection_record')))
     if meta.get('profile'):
         profile = meta['profile']
         entries.append(('Profile source', profile['source_record']))
