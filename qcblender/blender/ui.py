@@ -15,7 +15,7 @@ _operations = {}
 def _material_section(node):
     role = node.get('qc_role')
     if role in ('color_ramp', 'color_invert'):
-        return '颜色映射'
+        return '材质'
     if role == 'opacity_ramp':
         return '材质'
     control = node.get('qc_control', '')
@@ -43,7 +43,7 @@ def draw_material_controls(layout, mat, section='材质', unit=''):
         if node.get('qc_role') in ('color_ramp', 'opacity_ramp') and section == _material_section(node):
             layout.label(text='Opacity multiplier' if node['qc_role'] == 'opacity_ramp' else 'Color map')
             layout.template_color_ramp(node, 'color_ramp', expand=True)
-        elif node.get('qc_role') == 'color_invert' and section == '颜色映射':
+        elif node.get('qc_role') == 'color_invert' and section == '材质':
             layout.prop(node.outputs[0], 'default_value', text='Reverse (0 or 1)')
         elif node.get('qc_control') and section == _material_section(node):
             if node['qc_control'] in ('Plane Origin', 'Plane Normal') and not next(
@@ -390,18 +390,13 @@ class QCBLENDER_OT_set_view_style(bpy.types.Operator):
         return {'FINISHED'}
 
 
-def draw_view_parameters(layout, obj, section=None):
-    """Show only controls relevant to the current view; all edits target native nodes."""
+def view_parameter_state(obj):
+    """Read node controls only; shared by section visibility and drawing."""
     from .graph import view_modifier
-    from .parameters import GROUPS, STYLES, STYLE_SOCKETS, socket_group, socket_label
-
+    from .parameters import socket_group
     from .capabilities import record
     field = record(obj, 'qc_field')
-    try:
-        modifier = view_modifier(obj)
-    except ValueError as error:
-        layout.label(text=str(error), icon='INFO')
-        return
+    modifier = view_modifier(obj)
     items = [item for item in modifier.node_group.interface.items_tree
              if item.item_type == 'SOCKET' and item.in_out == 'INPUT' and item.identifier in modifier]
     values = {item.name: modifier.get(item.identifier) for item in items}
@@ -414,6 +409,32 @@ def draw_view_parameters(layout, obj, section=None):
         for control in node.inputs:
             if control.type == 'MATERIAL' and not control.is_linked and control.default_value and control.default_value not in materials:
                 materials.append(control.default_value)
+    return modifier, items, values, quantity, color_unit, materials
+
+
+def parameter_section_available(obj, group):
+    from .parameters import socket_group
+    try:
+        modifier, items, values, quantity, unit, materials = view_parameter_state(obj)
+    except ValueError:
+        return False
+    return (any(socket_group(item.name, item.socket_type, values, quantity) == group for item in items)
+            or (group == '材质' and any(materials))
+            or any(_material_section(node) == group for mat in materials if mat and mat.use_nodes
+                   for node in mat.node_tree.nodes)
+            or (group == '颜色映射' and obj.get('qc_view_kind') in ('atoms', 'field', 'slice')))
+
+
+def draw_view_parameters(layout, obj, section=None):
+    """Edit the existing node controls in their native Properties sections."""
+    from .parameters import GROUPS, STYLES, STYLE_SOCKETS, socket_group, socket_label
+    from .capabilities import record
+    field = record(obj, 'qc_field')
+    try:
+        modifier, items, values, quantity, color_unit, materials = view_parameter_state(obj)
+    except ValueError as error:
+        layout.label(text=str(error), icon='INFO')
+        return
 
     for group in GROUPS:
         if section is not None and group != section:

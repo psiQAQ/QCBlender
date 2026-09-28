@@ -33,7 +33,7 @@ def register():
 def unregister():
     libraries = bpy.context.preferences.filepaths.asset_libraries
     for item in tuple(libraries):
-        if item.name.startswith(LIBRARY_NAME) and Path(item.path).resolve() == LIBRARY_DIR.resolve():
+        if item.name in (LIBRARY_NAME, LIBRARY_NAME + ' (extension)') and Path(item.path).resolve() == LIBRARY_DIR.resolve():
             libraries.remove(item)
 
 
@@ -156,7 +156,7 @@ class QCBLENDER_OT_cleanup_legacy_node_assets(bpy.types.Operator):
         if not self.preview:
             self.report({'ERROR'}, 'Preview the assets before tidying')
             return {'CANCELLED'}
-        before = json.loads(self.preview)
+        before = [tuple(row) for row in json.loads(self.preview)]
         current = preview_legacy_assets()
         if current != before:
             self.report({'ERROR'}, 'Node assets changed since preview; preview again')

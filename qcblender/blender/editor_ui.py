@@ -94,8 +94,6 @@ class QCBLENDER_PT_dataset(bpy.types.Panel):
         summary(layout, context.object)
         layout.operator('qcblender.source_details', text='查看完整来源', icon='INFO')
         layout.operator('qcblender.refresh_sources', text='刷新来源', icon='FILE_REFRESH')
-        layout.operator('qcblender.associate_sources', text='关联选中数据源')
-        action_button(layout, context, 'declare', 'qcblender.declare_field', '声明 Cube 物理量与单位')
 
 
 class QCBLENDER_PT_create(bpy.types.Panel):
@@ -170,6 +168,7 @@ class QCBLENDER_PT_project(bpy.types.Panel):
         layout = self.layout
         for operator, text in [('save_project', '保存自包含工程'), ('archive_project', '归档工程'),
                                ('rebuild_cache', '重建显示缓存'), ('relocate_dataset', '重新定位数据'),
+                               ('cleanup_legacy_node_assets', '预览并整理旧 QC 节点资产'),
                                ('check_runtime', '检查科学运行环境')]:
             layout.operator('qcblender.' + operator, text=text)
         obj = context.object
@@ -194,6 +193,8 @@ class QCBLENDER_PT_object(bpy.types.Panel):
         summary(self.layout, context.object)
         self.layout.operator('qcblender.source_details', text='来源详情', icon='INFO')
         self.layout.operator('qcblender.refresh_sources', text='刷新来源')
+        self.layout.operator('qcblender.associate_sources', text='关联选中数据源')
+        action_button(self.layout, context, 'declare', 'qcblender.declare_field', '声明 Cube 物理量与单位')
 
 
 class QCBLENDER_PT_scientific(bpy.types.Panel):
@@ -244,12 +245,8 @@ class _ObjectSection:
     def poll(cls, context):
         if not is_qc(context):
             return False
-        from .graph import view_modifier
-        try:
-            view_modifier(context.object)
-        except ValueError:
-            return False
-        return True
+        from .ui import parameter_section_available
+        return parameter_section_available(context.object, cls.bl_label)
 
     def draw(self, context):
         from .ui import draw_view_parameters
@@ -312,7 +309,8 @@ class QCBLENDER_PT_material(bpy.types.Panel):
 
     @classmethod
     def poll(cls, context):
-        return _ObjectSection.poll(context)
+        from .ui import parameter_section_available
+        return is_qc(context) and parameter_section_available(context.object, '材质')
 
     def draw(self, context):
         from .ui import draw_view_parameters

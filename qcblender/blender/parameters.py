@@ -1,4 +1,4 @@
-"""Classify existing view inputs for the QCBlender sidebar."""
+"""Classify existing view inputs for native Properties sections."""
 
 GROUPS = ('几何表示', '颜色映射', '图例排版', '材质', '空间观察', '高级参数')
 _LEGEND = {'Show Legend', 'Legend Position', 'Legend Length', 'Legend Width',
