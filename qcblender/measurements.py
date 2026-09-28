@@ -6,12 +6,16 @@ import numpy as np
 
 
 ATOM_COUNTS = {'DISTANCE': 2, 'ANGLE': 3, 'DIHEDRAL': 4}
+DIHEDRAL_CONVENTION = 'B→C axis; BA/CD perpendicular projections; atan2((v×w)·axis, v·w); (-180,180] degrees'
 
 
 def parse_source_atom_numbers(expression, atom_count):
     """Read a comma/space separated list of distinct 1-based source numbers."""
+    groups = expression.split(',')
+    if any(not group.strip() for group in groups):
+        raise ValueError('Enter source atom numbers separated by commas')
     try:
-        numbers = [int(piece) for piece in expression.replace(',', ' ').split()]
+        numbers = [int(piece) for group in groups for piece in group.split()]
     except ValueError as error:
         raise ValueError('Enter source atom numbers separated by commas') from error
     if not numbers or len(numbers) != len(set(numbers)) or any(n < 1 or n > atom_count for n in numbers):

@@ -8,7 +8,7 @@ from bpy.props import BoolProperty, EnumProperty, FloatProperty, FloatVectorProp
 from mathutils import Vector
 import numpy as np
 
-from ..measurements import (ATOM_COUNTS, measure, measurement_text, parse_source_atom_numbers,
+from ..measurements import (ATOM_COUNTS, DIHEDRAL_CONVENTION, measure, measurement_text, parse_source_atom_numbers,
                             validate_annotation_style)
 from .geometry import current_geometry
 from .views import material
@@ -16,7 +16,7 @@ from .views import material
 
 def _entries(owner, role=None):
     for child in owner.children:
-        if child.type not in ('FONT', 'CURVE') or 'qc_annotation' not in child:
+        if 'qc_annotation' not in child:
             continue
         entry = json.loads(child['qc_annotation'])
         if role is None or entry['role'] == role:
@@ -39,7 +39,9 @@ def _prepare(entry, positions, record):
         raise ValueError('Annotation source identity differs from the atom view')
     validate_annotation_style(entry)
     atoms = entry['source_atom_numbers']
-    if any(type(number) is not int or number < 1 or number > len(positions) for number in atoms):
+    expected = 1 if entry['kind'] == 'ATOM' else ATOM_COUNTS.get(entry['kind'])
+    if (expected is None or len(atoms) != expected or len(set(atoms)) != expected
+            or any(type(number) is not int or number < 1 or number > len(positions) for number in atoms)):
         raise ValueError('Annotation atom number is outside the current geometry')
     anchor = np.asarray(positions, dtype=float)[np.array(atoms) - 1].mean(axis=0)
     if entry['kind'] == 'ATOM':
@@ -54,6 +56,8 @@ def _prepare(entry, positions, record):
             value, reason = None, str(error)
         body = measurement_text(entry['kind'], atoms, value, record, entry['decimals'], reason)
     entry.update(geometry=record, value=value, undefined_reason=reason)
+    if entry['kind'] == 'DIHEDRAL':
+        entry['convention'] = DIHEDRAL_CONVENTION
     return entry, anchor, body
 
 
@@ -80,38 +84,102 @@ def _apply(label, entry, anchor, body, leader=None):
         line_shader.inputs['Base Color'].default_value = (*entry['color'], 1)
         line_entry.update(geometry=entry['geometry'], value=entry['value'],
                           undefined_reason=entry['undefined_reason'])
+        if entry['kind'] == 'DIHEDRAL':
+            line_entry['convention'] = DIHEDRAL_CONVENTION
         line['qc_annotation'] = json.dumps(line_entry, ensure_ascii=False)
 
 
-def update_annotations(owner, positions, record):
-    """Recompute saved values from real geometry, including undefined steps."""
-    leaders = {entry['id']: (child, entry) for child, entry in _entries(owner, 'LEADER')}
-    prepared = [(child, *_prepare(entry, positions, record), leaders.get(entry['id']))
-                for child, entry in _entries(owner, 'LABEL')]
+def _native_data(child, role):
+    expected = 'FONT' if role == 'LABEL' else 'CURVE'
+    if child.type != expected or child.data.users != 1 or len(child.data.materials) != 1:
+        raise ValueError(f'{child.name}: annotation {role.lower()} needs independent {expected} data and material')
+    mat = child.data.materials[0]
+    if mat is None or mat.users != 1 or not mat.use_nodes or mat.node_tree is None:
+        raise ValueError(f'{child.name}: annotation material must be independent and use nodes')
+    shaders = [node for node in mat.node_tree.nodes if node.bl_idname == 'ShaderNodeBsdfPrincipled']
+    if len(shaders) != 1 or shaders[0].inputs.get('Base Color') is None:
+        raise ValueError(f'{child.name}: annotation material needs one Principled shader')
+    if role == 'LEADER':
+        splines = child.data.splines
+        if len(splines) != 1 or splines[0].type != 'POLY' or len(splines[0].points) != 2:
+            raise ValueError(f'{child.name}: annotation leader needs a two-point poly curve')
+
+
+def prepare_annotations(owner, positions, record):
+    """Validate all marked children and compute new values without changing Blender data."""
+    labels, leaders = {}, {}
+    for child, entry in _entries(owner):
+        role, identifier = entry['role'], entry['id']
+        if role not in ('LABEL', 'LEADER') or not isinstance(identifier, str) or not identifier:
+            raise ValueError(f'{child.name}: invalid annotation role or id')
+        group = labels if role == 'LABEL' else leaders
+        if identifier in group:
+            raise ValueError(f'{child.name}: duplicate annotation {role.lower()} id')
+        _native_data(child, role)
+        group[identifier] = child, entry
+    if labels.keys() != leaders.keys():
+        raise ValueError('Annotation labels and leaders must form complete pairs')
+    prepared = []
+    for identifier, (child, entry) in labels.items():
+        line, line_entry = leaders[identifier]
+        if (line_entry['source_atom_numbers'] != entry['source_atom_numbers']
+                or any(line_entry[key] != entry[key] for key in
+                       ('source_sha256', 'selected_job', 'dataset_sha256'))):
+            raise ValueError('Annotation leader identity differs from its label')
+        entry, anchor, body = _prepare(entry, positions, record)
+        line_entry.update(geometry=entry['geometry'], value=entry['value'],
+                          undefined_reason=entry['undefined_reason'])
+        if entry['kind'] == 'DIHEDRAL':
+            line_entry['convention'] = DIHEDRAL_CONVENTION
+        json.dumps(entry, ensure_ascii=False)
+        json.dumps(line_entry, ensure_ascii=False)
+        prepared.append((child, entry, anchor, body, (line, line_entry)))
+    return prepared
+
+
+def apply_annotations(prepared):
+    """Apply values already checked by prepare_annotations."""
     for child, entry, anchor, body, leader in prepared:
         _apply(child, entry, anchor, body, leader)
 
 
+def update_annotations(owner, positions, record):
+    """Recompute saved values from real geometry, including undefined steps."""
+    apply_annotations(prepare_annotations(owner, positions, record))
+
+
 def copy_annotations(source, target, collection):
     """Copy only this atom view's annotation children, with independent curve and material data."""
-    positions, record = current_geometry(target)
     originals = list(_entries(source))
+    if not originals:
+        return
+    source_positions, source_record = current_geometry(source)
+    prepare_annotations(source, source_positions, source_record)
+    positions, record = current_geometry(target)
+    if (source_record['source_sha256'] != record['source_sha256']
+            or source_record['selected_job'] != record['selected_job']):
+        raise ValueError('Annotation calculation differs from the target atom view')
+    prepare_annotations(target, positions, record)
     for _, entry in originals:
-        if entry['source_sha256'] != record['source_sha256'] or entry['selected_job'] != record['selected_job']:
-            raise ValueError('Annotation calculation differs from the target atom view')
         if entry['role'] == 'LABEL':
             _prepare({**entry, 'dataset_sha256': record['dataset_sha256']}, positions, record)
-    for original, entry in originals:
-        copied = original.copy()
-        copied.data = original.data.copy()
-        for index, mat in enumerate(copied.data.materials):
-            if mat:
+    created = []
+    try:
+        for original, entry in originals:
+            copied = original.copy()
+            created.append(copied)
+            copied.data = original.data.copy()
+            for index, mat in enumerate(copied.data.materials):
                 copied.data.materials[index] = mat.copy()
-        collection.objects.link(copied)
-        copied.parent = target
-        entry['dataset_sha256'] = record['dataset_sha256']
-        copied['qc_annotation'] = json.dumps(entry, ensure_ascii=False)
-    update_annotations(target, positions, record)
+            collection.objects.link(copied)
+            copied.parent = target
+            entry['dataset_sha256'] = record['dataset_sha256']
+            copied['qc_annotation'] = json.dumps(entry, ensure_ascii=False)
+        update_annotations(target, positions, record)
+    except Exception:
+        for child in reversed(created):
+            _delete(child)
+        raise
 
 
 def _delete(child):
@@ -156,6 +224,8 @@ def _create(owner, collection, entry, positions, record):
 
 def _atom_view(context):
     obj = context.object
+    if obj is not None and 'qc_annotation' in obj:
+        obj = obj.parent
     return obj if obj is not None and obj.get('qc_view_kind') == 'atoms' else None
 
 
@@ -167,12 +237,12 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
     kind: EnumProperty(name='Annotation', items=[('ATOM', 'Atom numbers', ''),
                        ('DISTANCE', 'Distance', ''), ('ANGLE', 'Angle', ''), ('DIHEDRAL', 'Dihedral', '')])
     atoms: StringProperty(name='Source atom numbers', default='1,2')
-    size: FloatProperty(name='Text size', default=.16, min=.001)
+    size: FloatProperty(name='Text size (local scene units)', default=.16, min=.001)
     color: FloatVectorProperty(name='Color', subtype='COLOR', size=3, default=(1., .8, .2), min=0, max=1)
-    offset: FloatVectorProperty(name='Offset (Å)', size=3, default=(.2, .2, .2))
+    offset: FloatVectorProperty(name='Offset (local scene units)', size=3, default=(.2, .2, .2))
     decimals: IntProperty(name='Decimal places', default=4, min=0, max=10)
     show_leader: BoolProperty(name='Show leader', default=True)
-    line_width: FloatProperty(name='Leader width', default=.01, min=.0001)
+    line_width: FloatProperty(name='Leader width (local scene units)', default=.01, min=.0001)
     visible: BoolProperty(name='Visible', default=True)
 
     @classmethod
@@ -183,20 +253,22 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
         if not self.properties.is_property_set('decimals', ghost=False):
             self.decimals = 4 if self.kind in ('ATOM', 'DISTANCE') else 2
         self.atoms = '1' if self.kind == 'ATOM' else ','.join(str(i) for i in range(1, ATOM_COUNTS[self.kind] + 1))
-        return context.window_manager.invoke_props_dialog(self)
+        return context.window_manager.invoke_props_dialog(self, width=460)
 
     def draw(self, context):
         layout = self.layout
         layout.prop(self, 'atoms')
-        layout.prop(self, 'size')
-        layout.prop(self, 'color')
-        layout.prop(self, 'offset')
+        row = layout.row()
+        left, right = row.column(), row.column()
+        left.prop(self, 'size')
+        left.prop(self, 'offset')
+        right.prop(self, 'color')
         if self.kind != 'ATOM':
-            layout.prop(self, 'decimals')
-        layout.prop(self, 'show_leader')
+            right.prop(self, 'decimals')
+        right.prop(self, 'show_leader')
         if self.show_leader:
-            layout.prop(self, 'line_width')
-        layout.prop(self, 'visible')
+            right.prop(self, 'line_width')
+        right.prop(self, 'visible')
 
     def execute(self, context):
         owner = _atom_view(context)
@@ -235,12 +307,12 @@ class QCBLENDER_OT_edit_annotation(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     annotation_id: StringProperty()
-    size: FloatProperty(name='Text size', default=.16, min=.001)
+    size: FloatProperty(name='Text size (local scene units)', default=.16, min=.001)
     color: FloatVectorProperty(name='Color', subtype='COLOR', size=3, default=(1., .8, .2), min=0, max=1)
-    offset: FloatVectorProperty(name='Offset (Å)', size=3)
+    offset: FloatVectorProperty(name='Offset (local scene units)', size=3)
     decimals: IntProperty(name='Decimal places', default=4, min=0, max=10)
     show_leader: BoolProperty(name='Show leader', default=True)
-    line_width: FloatProperty(name='Leader width', default=.01, min=.0001)
+    line_width: FloatProperty(name='Leader width (local scene units)', default=.01, min=.0001)
     visible: BoolProperty(name='Visible', default=True)
 
     @classmethod
@@ -248,36 +320,38 @@ class QCBLENDER_OT_edit_annotation(bpy.types.Operator):
         return _atom_view(context) is not None
 
     def invoke(self, context, event):
-        entry = next((entry for _, entry in _entries(context.object, 'LABEL')
+        owner = _atom_view(context)
+        entry = next((entry for _, entry in _entries(owner, 'LABEL')
                       if entry['id'] == self.annotation_id), None)
         if entry is None:
             self.report({'ERROR'}, 'Annotation no longer exists')
             return {'CANCELLED'}
         for name in ('size', 'color', 'offset', 'decimals', 'show_leader', 'line_width', 'visible'):
             setattr(self, name, entry[name])
-        return context.window_manager.invoke_props_dialog(self)
+        return context.window_manager.invoke_props_dialog(self, width=460)
 
     def draw(self, context):
-        for name in ('size', 'color', 'offset', 'decimals', 'show_leader', 'line_width', 'visible'):
+        row = self.layout.row()
+        left, right = row.column(), row.column()
+        for name in ('size', 'offset'):
+            left.prop(self, name)
+        for name in ('color', 'decimals', 'show_leader', 'line_width', 'visible'):
             if name != 'line_width' or self.show_leader:
-                self.layout.prop(self, name)
+                right.prop(self, name)
 
     def execute(self, context):
         owner = _atom_view(context)
-        found = next(((child, entry) for child, entry in _entries(owner, 'LABEL')
-                      if entry['id'] == self.annotation_id), None)
-        if found is None:
-            self.report({'ERROR'}, 'Annotation no longer exists')
-            return {'CANCELLED'}
-        child, entry = found
         try:
             positions, record = current_geometry(owner)
+            prepared = prepare_annotations(owner, positions, record)
+            found = next((item for item in prepared if item[1]['id'] == self.annotation_id), None)
+            if found is None:
+                raise ValueError('Annotation no longer exists')
+            child, entry, _, _, leader = found
             entry.update(size=self.size, color=list(self.color), offset=list(self.offset),
                          decimals=self.decimals, show_leader=self.show_leader,
                          line_width=self.line_width, visible=self.visible)
             entry, anchor, body = _prepare(entry, positions, record)
-            leader = next(((obj, info) for obj, info in _entries(owner, 'LEADER')
-                           if info['id'] == self.annotation_id), None)
             _apply(child, entry, anchor, body, leader)
         except (ValueError, KeyError, OSError, TypeError) as error:
             self.report({'ERROR'}, str(error))
@@ -301,7 +375,7 @@ class QCBLENDER_OT_face_annotations(bpy.types.Operator):
         if camera is None:
             self.report({'ERROR'}, 'Set an active scene camera first')
             return {'CANCELLED'}
-        owner = context.object
+        owner = _atom_view(context)
         rotation = owner.matrix_world.to_quaternion().inverted() @ camera.matrix_world.to_quaternion()
         for child, entry in _entries(owner, 'LABEL'):
             if not self.annotation_id or entry['id'] == self.annotation_id:
@@ -322,7 +396,7 @@ class QCBLENDER_OT_remove_annotation(bpy.types.Operator):
         return _atom_view(context) is not None
 
     def execute(self, context):
-        for child, entry in list(_entries(context.object)):
+        for child, entry in list(_entries(_atom_view(context))):
             if entry['id'] == self.annotation_id:
                 _delete(child)
         return {'FINISHED'}
