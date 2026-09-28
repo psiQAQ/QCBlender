@@ -8,7 +8,8 @@ from bpy.props import BoolProperty, EnumProperty, FloatProperty, FloatVectorProp
 from mathutils import Vector
 import numpy as np
 
-from ..measurements import ATOM_COUNTS, measure
+from ..measurements import (ATOM_COUNTS, measure, measurement_text, parse_source_atom_numbers,
+                            validate_annotation_style)
 from .geometry import current_geometry
 from .views import material
 
@@ -20,16 +21,6 @@ def _entries(owner, role=None):
         entry = json.loads(child['qc_annotation'])
         if role is None or entry['role'] == role:
             yield child, entry
-
-
-def _numbers(expression):
-    try:
-        numbers = [int(piece) for piece in expression.replace(',', ' ').split()]
-    except ValueError as error:
-        raise ValueError('Enter source atom numbers separated by commas') from error
-    if not numbers or any(number < 1 for number in numbers):
-        raise ValueError('Enter positive source atom numbers separated by commas')
-    return numbers
 
 
 def _symbol(number):
@@ -46,6 +37,7 @@ def _prepare(entry, positions, record):
             or entry['dataset_sha256'] != record['dataset_sha256']
             or record['coordinate_unit'] != 'angstrom'):
         raise ValueError('Annotation source identity differs from the atom view')
+    validate_annotation_style(entry)
     atoms = entry['source_atom_numbers']
     if any(type(number) is not int or number < 1 or number > len(positions) for number in atoms):
         raise ValueError('Annotation atom number is outside the current geometry')
@@ -60,11 +52,7 @@ def _prepare(entry, positions, record):
             if 'undefined:' not in str(error):
                 raise
             value, reason = None, str(error)
-        if reason:
-            body = f"{'-'.join(map(str, atoms))}: undefined ({reason})"
-        else:
-            unit = 'Å' if entry['kind'] == 'DISTANCE' else '°'
-            body = f"{'-'.join(map(str, atoms))}: {value:.{entry['decimals']}f} {unit}"
+        body = measurement_text(entry['kind'], atoms, value, record, entry['decimals'], reason)
     entry.update(geometry=record, value=value, undefined_reason=reason)
     return entry, anchor, body
 
@@ -213,11 +201,9 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
         owner = _atom_view(context)
         try:
             positions, record = current_geometry(owner)
-            numbers = _numbers(self.atoms)
+            numbers = parse_source_atom_numbers(self.atoms, len(positions))
             if self.kind != 'ATOM' and len(numbers) != ATOM_COUNTS[self.kind]:
                 raise ValueError(f'{self.kind} needs {ATOM_COUNTS[self.kind]} ordered source atom numbers')
-            if len(set(numbers)) != len(numbers) or max(numbers) > len(positions):
-                raise ValueError('Choose distinct, existing source atom numbers')
             if self.kind != 'ATOM':
                 measure(self.kind, positions, numbers)
             symbols = [_symbol(int(owner.data.attributes['qc_atomic_number'].data[n - 1].value))

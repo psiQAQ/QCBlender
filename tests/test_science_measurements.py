@@ -3,11 +3,37 @@ from types import SimpleNamespace
 
 import numpy as np
 
-from qcblender.measurements import measure
+from qcblender.measurements import (geometry_label, measure, measurement_text, parse_source_atom_numbers,
+                                     validate_annotation_style)
 from qcblender.geometry import scientific_geometry
 
 
 class MeasurementTests(unittest.TestCase):
+    def test_source_numbers_and_visible_geometry_context(self):
+        self.assertEqual(parse_source_atom_numbers('1, 3 2', 3), [1, 3, 2])
+        for expression in ('1,1', '0,2', '1,4', '1-2', ''):
+            with self.assertRaises(ValueError):
+                parse_source_atom_numbers(expression, 3)
+        self.assertEqual(geometry_label({'kind': 'source', 'step': None}), '源构型')
+        self.assertEqual(geometry_label({'kind': 'optimization', 'step': 3}), 'Optimization Step 3')
+        self.assertEqual(geometry_label({'kind': 'irc', 'step': 2}), 'IRC Step 2')
+        self.assertEqual(measurement_text('DISTANCE', [1, 2], 1.23456,
+                         {'kind': 'source', 'step': None}, 4), '1-2 · 源构型: 1.2346 Å')
+        self.assertIn('Optimization Step 3: undefined', measurement_text('DIHEDRAL', [1, 2, 3, 4],
+                      None, {'kind': 'optimization', 'step': 3}, 2, 'terminal arm lies on central axis'))
+        with self.assertRaises(ValueError):
+            geometry_label({'kind': 'irc', 'step': None})
+
+    def test_nonfinite_style_rejected_before_annotation_mutation(self):
+        style = {'size': .16, 'line_width': .01, 'color': [1., .8, .2],
+                 'offset': [.2, .2, .2], 'decimals': 4}
+        validate_annotation_style(style)
+        for name, invalid in [('size', float('nan')), ('line_width', float('inf')),
+                              ('color', [1., float('nan'), 0.]),
+                              ('offset', [0., float('inf'), 0.])]:
+            with self.subTest(name=name), self.assertRaises(ValueError):
+                validate_annotation_style({**style, name: invalid})
+
     def test_values_and_ordered_sign(self):
         points = np.array([[0., 1., 0.], [0., 0., 0.], [1., 0., 0.], [1., 0., 1.]])
         self.assertAlmostEqual(measure('DISTANCE', points, [1, 2]), 1)

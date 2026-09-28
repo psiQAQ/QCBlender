@@ -9,3 +9,4 @@ Status: claimed
 ## Comments
 
 - 2026-09-28: B 模块与纯数值测试已实现；`measure` 覆盖 source/optimization/IRC、带符号二面角与退化。`update_annotations`、`copy_annotations`、`remove_annotations` 供主代理集成。纯 Python 测试 Passed；Blender 场景、GUI、保存冷重开 Not Run，保持 claimed 待整体验收。
+- 2026-09-28: 测量可见文字补充源构型或 Optimization/IRC Step N；创建和编辑前校验编号、范围及有限的外观参数。纯数值测试增至 5 项 Passed。
