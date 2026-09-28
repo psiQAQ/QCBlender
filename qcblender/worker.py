@@ -56,6 +56,10 @@ def main():
             shutil.copy2(source, snapshot)
             gaussian = importlib.import_module(args.module + '.gaussian_log')
             report = dict(gaussian.inspect_log(snapshot), status='succeeded')
+        elif request['action'] == 'contours':
+            storage = importlib.import_module(args.module + '.data')
+            contours = importlib.import_module(args.module + '.contours')
+            report = contours.contour_report(request, storage.load_dataset, lambda: (directory / 'cancel').exists())
         elif request['action'] == 'field_range':
             storage = importlib.import_module(args.module + '.data')
             summarize = importlib.import_module(args.module + '.field_ranges').field_range

@@ -130,6 +130,12 @@ def copy_layer(source, collection):
                 copied.parent = spectrum
     try:
         copy_annotations(source, obj, collection)
+        if source.get('qc_view_kind') == 'slice':
+            from .charts import copy_contour_settings
+            copy_contour_settings(source, obj)
+        elif source.get('qc_view_kind') == 'profile':
+            from .profile import copy_profile_ticks
+            copy_profile_ticks(source, obj, collection)
     except (ValueError, KeyError, OSError, TypeError):
         bpy.data.objects.remove(obj, do_unlink=True)
         raise
@@ -171,6 +177,12 @@ class QCBLENDER_OT_layer_action(bpy.types.Operator):
         elif self.action == 'REMOVE':
             from .annotations import remove_annotations
             remove_annotations(obj)
+            if obj.get('qc_view_kind') == 'slice':
+                from .charts import cleanup_contours
+                cleanup_contours(obj)
+            elif obj.get('qc_view_kind') == 'profile':
+                from .profile import cleanup_profile_ticks
+                cleanup_profile_ticks(obj)
             index = layers.index(obj)
             # Keep scientific source objects and other display layers in place.
             for child in list(obj.children):

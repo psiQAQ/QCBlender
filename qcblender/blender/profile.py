@@ -73,11 +73,17 @@ def cleanup_profile_ticks(owner):
 
 def copy_profile_ticks(source, target, collection):
     """Copy saved chart labels without reopening its scientific Dataset."""
+    materials = dict(zip(source.data.materials, target.data.materials))
     for child in tuple(source.children):
         if not child.get('qc_profile_tick'):
             continue
         copied = child.copy()
         copied.data = child.data.copy()
+        for index, mat in enumerate(copied.data.materials):
+            if mat is not None:
+                if mat not in materials:
+                    materials[mat] = mat.copy()
+                copied.data.materials[index] = materials[mat]
         collection.objects.link(copied)
         copied.parent = target
 

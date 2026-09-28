@@ -4,7 +4,7 @@
 
 ## 原件与许可
 
-原件保留在主工作树本地忽略目录 `submodules/Multiwfn/`；本隔离工作树没有该目录，下面的路径是合入主工作树后的仓库相对路径，当前不能在本工作树点开核验。手册 `Multiwfn_manual_2026.9.1.pdf` SHA-256 为 `418871dc13a9c0860f4f5417935ca2848cb2251f42bce9b26e90a15717c6c9fb`；源码压缩包 `Multiwfn_2026.9.20_src_Win64.7z` 为 `6cb3cd981f56178302bbcfb6936c577d5b56e338df690924d881835298e94eb`；二进制压缩包 `Multiwfn_2026.9.20_bin_Win64.7z` 为 `940b849d2be7baecf78dfeeecda2cef8ec86f38fae0f874f88144fc8ff5fae0a`。PDF 文字用项目已有的本地提取件检索，字体映射不完整处以 Fortran 源码核对。
+原件保留在本地忽略目录 `submodules/Multiwfn/`，下列路径相对于仓库根目录。手册 `Multiwfn_manual_2026.9.1.pdf` SHA-256 为 `418871dc13a9c0860f4f5417935ca2848cb2251f42bce9b26e90a15717c6c9fb`；源码压缩包 `Multiwfn_2026.9.20_src_Win64.7z` 为 `6cb3cd981f56178302bbcfb6936c577d5b56e338df690924d881835298e94eb`；二进制压缩包 `Multiwfn_2026.9.20_bin_Win64.7z` 为 `940b849d2be7baecf78dfeeecda2cef8ec86f38fae0f874f88144fc8ff5fae0a`。PDF 文字用项目已有的本地提取件检索，字体映射不完整处以 Fortran 源码核对。
 
 `Multiwfn_2026.9.20_bin_Win64/LICENSE.txt`（SHA-256 `0846f4144fd66d07a5b17e340863147a6797bbec871114d804ae620ffd7e8360`）允许免费学术和商业使用及分发原始或修改的代码，也对把 Multiwfn 作为商业软件免费组件作说明；出售修改版需先获作者许可。使用 Multiwfn 或把其代码纳入自有代码时，条款要求在论文或代码正文引用 Lu 与 Chen（2012）和 Lu（2024），并声明不保证结果正确。源码解压目录未见单独许可证文件；不能据此把许可简写为某个标准 SPDX 许可证。本任务只借鉴输出含义，独立实现显示与解析，不复制源码或资产。
 
@@ -26,7 +26,7 @@
 
 ## QCBlender 原生界面分工
 
-主工作树正在集成的 `qcblender/blender/editor_ui.py` 将 N-Panel 用于数据集摘要、导入与创建视图、全局显示层及工程操作；持久的科学记录和视图参数进入 Object Properties。对象子面板按几何表示、颜色映射、图例排版、空间观察、高级参数及局部选择显示相关控件，并依活动对象与可用数据决定入口。Material Properties 提供材质参数和着色器节点编辑入口；默认材质节点可独立修改。渲染与输出继续使用 Blender 的 Render、Output 和 Color Management 原生面板。
+`qcblender/blender/editor_ui.py` 将 N-Panel 用于数据集摘要、导入与创建视图、全局显示层及工程操作；持久的科学记录和视图参数进入 Object Properties。对象子面板按几何表示、颜色映射、图例排版、空间观察、高级参数及局部选择显示相关控件，并依活动对象与可用数据决定入口。Material Properties 提供材质参数和着色器节点编辑入口；默认材质节点可独立修改。渲染与输出继续使用 Blender 的 Render、Output 和 Color Management 原生面板。
 
 `qcblender/blender/ui.py` 从现有 Geometry Nodes 输入读取并编辑显示值；界面分组不另存第二套数值。源场的量名、单位、坐标、编号、计算状态和文件摘要属于科学记录，筛选、色谱、等值线、标签与排版属于视图。界面重绘只读取已缓存元数据和当前节点值；重新解析文件、采样数组及完整科学校验留在用户触发的操作和后台任务。本段说明代码分工与设计边界，不能替代 Blender 实际入口、保存重开和视觉验收。
 
@@ -34,6 +34,8 @@
 
 | 检查 | 状态 | 边界 |
 | --- | --- | --- |
-| 本地 PDF、源码及 LICENSE 的版本/摘要/页码/行号核对 | Passed | 只读主工作树本地原件；本隔离工作树未复制原件。 |
+| 本地 PDF、源码及 LICENSE 的版本/摘要/页码/行号核对 | Passed | 只读本地原件，原件保持忽略。 |
 | Multiwfn 2026.9.20 GUI 与输出重跑 | Not Run | 此轮只读原件，已有真实样本运行另见 `docs/research/sop-real-sources-c10-c13.md`。 |
-| QCBlender UI、Blender 保存/重开及人工视觉对照 | Not Run | 由主任务实施与记录。 |
+| QCBlender 原生面板、资产、探针与切片技术验收 | Passed | 前两批已安装候选及保存/移动冷重开见 [技术记录](../MULTIWFN_PARAMETERS.md)。 |
+| 等值线、剖面与外部浏览最终集成 | Not Run | 依次在独立候选上验收。 |
+| 独立人工验收与跨软件视觉对照 | Not Run | 单独后置维护。 |

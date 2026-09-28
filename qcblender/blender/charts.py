@@ -68,11 +68,12 @@ class QCBLENDER_OT_color_palette(bpy.types.Operator):
 
 
 class QCBLENDER_PT_palette(bpy.types.Panel):
-    bl_label = 'QC Scalar Palette'
+    bl_label = 'QCBlender · 色谱预设'
     bl_idname = 'QCBLENDER_PT_palette'
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'
     bl_context = 'material'
+    bl_options = {'DEFAULT_CLOSED'}
 
     @classmethod
     def poll(cls, context):
@@ -87,12 +88,12 @@ class QCBLENDER_PT_palette(bpy.types.Panel):
     def draw(self, context):
         mat, ramp = _mapped_material(context.object)
         self.layout.label(text=mat.name)
-        row = self.layout.row(align=True)
-        for key, title in (('RWB', 'Red White Blue'), ('BWR', 'Blue White Red'),
-                           ('BCY', 'Blue Cyan Yellow'), ('GRAY', 'Gray')):
-            row.operator('qcblender.color_palette', text=title,
+        grid = self.layout.grid_flow(columns=2, align=True)
+        for key, title in (('RWB', '红白蓝'), ('BWR', '蓝白红'),
+                           ('BCY', '蓝青黄'), ('GRAY', '灰度')):
+            grid.operator('qcblender.color_palette', text=title,
                          depress=mat.get('qc_palette', 'RWB') == key).palette = key
-        self.layout.template_color_ramp(ramp, 'color_ramp', expand=True)
+        self.layout.label(text='色带细节在节点材质中编辑')
 
 
 def _contour_defaults(obj):
@@ -367,12 +368,13 @@ class QCBLENDER_OT_update_contours(AsyncOperation, bpy.types.Operator):
 
 
 class QCBLENDER_PT_contours(bpy.types.Panel):
-    bl_label = 'Slice Contours'
+    bl_label = '切片等值线'
     bl_idname = 'QCBLENDER_PT_contours'
     bl_parent_id = 'QCBLENDER_PT_object'
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'
     bl_context = 'object'
+    bl_options = {'DEFAULT_CLOSED'}
 
     @classmethod
     def poll(cls, context):
@@ -382,19 +384,21 @@ class QCBLENDER_PT_contours(bpy.types.Panel):
         obj = context.object
         layout = self.layout
         layout.operator('qcblender.toggle_contours',
-                        text='Disable Contours' if obj.get('qc_contour_enabled') else 'Enable Contours')
+                        text='关闭等值线' if obj.get('qc_contour_enabled') else '开启等值线')
         if not obj.get('qc_contour_enabled'):
             return
-        for key, label in (('qc_contour_levels', 'Levels (blank: 9 automatic)'),
-                           ('qc_contour_width', 'Line width'), ('qc_contour_color', 'Line color'),
-                           ('qc_contour_labels', 'Labels')):
+        for key, label in (('qc_contour_levels', '阈值列表（空白：自动 9 条）'),
+                           ('qc_contour_width', '线宽 [布局单位]'), ('qc_contour_color', '线颜色'),
+                           ('qc_contour_labels', '数值标签')):
             layout.prop(obj, f'["{key}"]', text=label)
         row = layout.row(align=True)
-        for role in ('COLOR', 'GEOMETRY'):
-            button = row.operator('qcblender.contour_source', text=role.title(),
+        for role, title in (('COLOR', '绑定色场'), ('GEOMETRY', '几何场')):
+            sub = row.row(align=True)
+            sub.enabled = role != 'COLOR' or bool(obj.get('qc_color_source'))
+            button = sub.operator('qcblender.contour_source', text=title,
                                   depress=obj.get('qc_contour_source') == role)
             button.role = role
-        layout.operator('qcblender.update_contours')
+        layout.operator('qcblender.update_contours', text='更新等值线')
         if obj.get('qc_contour_status'):
             layout.label(text=obj['qc_contour_status'])
 
@@ -454,12 +458,13 @@ class QCBLENDER_OT_apply_profile_axes(bpy.types.Operator):
 
 
 class QCBLENDER_PT_profile_axes(bpy.types.Panel):
-    bl_label = 'Profile Axes'
+    bl_label = '剖面坐标轴与排版'
     bl_idname = 'QCBLENDER_PT_profile_axes'
     bl_parent_id = 'QCBLENDER_PT_object'
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'
     bl_context = 'object'
+    bl_options = {'DEFAULT_CLOSED'}
 
     @classmethod
     def poll(cls, context):
@@ -469,19 +474,20 @@ class QCBLENDER_PT_profile_axes(bpy.types.Panel):
         obj = context.object
         layout = self.layout
         if 'qc_profile_width' not in obj:
-            layout.operator('qcblender.apply_profile_axes', text='Add Axis Controls')
+            layout.operator('qcblender.apply_profile_axes', text='添加坐标轴控件')
             return
-        for key, title in (('width', 'Width'), ('height', 'Height'), ('line_width', 'Line width')):
+        layout.label(text='图幅与线宽使用本地布局单位')
+        for key, title in (('width', '图幅宽度'), ('height', '图幅高度'), ('line_width', '线宽')):
             layout.prop(obj, f'["qc_profile_{key}"]', text=title)
         for axis in 'xy':
-            layout.prop(obj, f'["qc_profile_{axis}_auto"]', text=axis.upper() + ' automatic')
+            layout.prop(obj, f'["qc_profile_{axis}_auto"]', text=axis.upper() + ' 自动范围')
             if not obj.get(f'qc_profile_{axis}_auto', True):
                 row = layout.row(align=True)
-                row.prop(obj, f'["qc_profile_{axis}_min"]', text='Minimum')
-                row.prop(obj, f'["qc_profile_{axis}_max"]', text='Maximum')
-            layout.prop(obj, f'["qc_profile_{axis}_ticks"]', text=axis.upper() + ' ticks')
-        layout.prop(obj, '["qc_profile_precision"]', text='Decimals')
-        layout.operator('qcblender.apply_profile_axes')
+                row.prop(obj, f'["qc_profile_{axis}_min"]', text='最小值')
+                row.prop(obj, f'["qc_profile_{axis}_max"]', text='最大值')
+            layout.prop(obj, f'["qc_profile_{axis}_ticks"]', text=axis.upper() + ' 刻度数')
+        layout.prop(obj, '["qc_profile_precision"]', text='小数位数')
+        layout.operator('qcblender.apply_profile_axes', text='应用排版')
 
 
 def _watch_contours():
