@@ -46,6 +46,18 @@ class QCBLENDER_PG_result_browser(bpy.types.PropertyGroup):
     e2_high_on: BoolProperty(name='E(2) maximum', default=False)
     e2_low: FloatProperty(name='E(2) from')
     e2_high: FloatProperty(name='E(2) to')
+    nbo_orbital_sort: EnumProperty(name='Orbital order', items=[
+        ('source', 'Source order', ''), ('number', 'Source number', ''),
+        ('type', 'Type, then number', ''),
+        ('occupancy_desc', 'Occupancy, high to low', '')])
+    nbo_interaction_sort: EnumProperty(name='E(2) order', items=[
+        ('source', 'Source order', ''), ('donor', 'Donor, then acceptor', ''),
+        ('acceptor', 'Acceptor, then donor', ''),
+        ('e2_desc', 'E(2), high to low', '')])
+    area_range_mode: EnumProperty(name='Area bin selection', items=[
+        ('center', 'Center in range', 'Select bins whose recorded center is in range'),
+        ('source_interval', 'Recorded interval overlaps range',
+         'Select whole bins whose recorded Begin/End interval overlaps the range')])
     spin: EnumProperty(name='Spin', items=[('ALL', 'All', ''), ('Total', 'Total', ''),
                                             ('Alpha', 'Alpha', ''), ('Beta', 'Beta', '')])
     eigen_side: EnumProperty(name='Eigenvalue', items=[('either', 'Either', ''),
@@ -87,23 +99,29 @@ def _records(analysis, role, state):
 
     low, high = _bound(state, 'value', 'low'), _bound(state, 'value', 'high')
     if role in ('esp_area',):
-        return area_selection(analysis, low, high)
+        return area_selection(analysis, low, high, state.area_range_mode)
     if role.startswith(('esp_', 'aim_')) and role != 'aim_paths':
         chosen = state.esp_kind if role.startswith('esp_') else state.aim_type
         kind = None if chosen == 'ALL' else chosen
-        return {'indexes': point_selection(analysis, state.source_number or None, kind, low, high,
-                                          state.aim_numeric_key if role.startswith('aim_') else None)}
+        result = {'indexes': point_selection(analysis, state.source_number or None, kind, low, high,
+                                            state.aim_numeric_key if role.startswith('aim_') else None)}
+        if role.startswith('aim_'):
+            result['value_key'] = state.aim_numeric_key
+        return result
     if role == 'ets_nocv':
         return {'indexes': nocv_selection(analysis, state.source_number or None,
             None if state.spin == 'ALL' else state.spin,
             _bound(state, 'eigen', 'low'), _bound(state, 'eigen', 'high'), low, high,
             state.eigen_side, state.sort_by)}
     if role == 'nbo':
-        return nbo_selection(analysis, state.source_number or None,
+        selected = nbo_selection(analysis, state.source_number or None,
             None if state.orbital_type == 'ALL' else state.orbital_type,
             _bound(state, 'occupancy', 'low'), _bound(state, 'occupancy', 'high'),
             state.donor or None, state.acceptor or None,
-            _bound(state, 'e2', 'low'), _bound(state, 'e2', 'high'))
+            _bound(state, 'e2', 'low'), _bound(state, 'e2', 'high'),
+            state.nbo_orbital_sort, state.nbo_interaction_sort)
+        return dict(selected, orbital_sort=state.nbo_orbital_sort,
+                    interaction_sort=state.nbo_interaction_sort)
     raise ValueError('No record browser for this object')
 
 
@@ -117,8 +135,9 @@ def _point_peers(obj):
             and child.get('qc_analysis_role') not in ('esp_area', 'aim_paths')]
 
 
-def _focus(context, obj, row, state):
+def _focus(context, obj, row, state, analysis):
     from mathutils import Vector
+    from ..result_filters import point_label
     from .views import material
 
     marker = next((child for child in obj.children if child.get('qc_result_focus')), None)
@@ -154,13 +173,13 @@ def _focus(context, obj, row, state):
     marker.hide_set(False)
     marker.hide_render = False
     label = next(child for child in marker.children if child.get('qc_result_label'))
-    label.data.body = f"{row.get('kind', row.get('type'))} {row['serial']}"
+    label.data.body = point_label(analysis, row, state.aim_numeric_key)
     label.data.size = state.marker_size * 2
     label.location = (state.marker_size * 1.5, 0, 0)
     label.hide_set(not state.show_labels)
     label.hide_render = not state.show_labels
     world = obj.matrix_world @ Vector(row['position_angstrom'])
-    for area in context.screen.areas:
+    for area in context.screen.areas if context.screen is not None else ():
         if area.type == 'VIEW_3D':
             area.spaces.active.region_3d.view_location = world
             break
@@ -207,7 +226,7 @@ class QCBLENDER_OT_apply_result_filter(bpy.types.Operator):
                     mesh.update()
                 marker = next((child for child in obj.children if child.get('qc_result_focus')), None)
                 if indexes and state.row_index <= len(indexes):
-                    _focus(context, obj, analysis[key][indexes[state.row_index - 1]], state)
+                    _focus(context, obj, analysis[key][indexes[state.row_index - 1]], state, analysis)
                 elif marker:
                     marker.hide_set(True)
                     marker.hide_render = True
@@ -351,7 +370,7 @@ class QCBLENDER_PT_result_browser(bpy.types.Panel):
         obj = context.object
         return obj is not None and (obj.get('qc_view_kind') in ('scatter', 'nbo') or
             obj.get('qc_analysis_role') in ('esp_maximum', 'esp_minimum', 'esp_area',
-                'aim_C', 'aim_N', 'aim_O', 'aim_F', 'ets_nocv'))
+                'aim_C', 'aim_N', 'aim_O', 'aim_F', 'aim_paths', 'ets_nocv'))
 
     def draw(self, context):
         from .capabilities import record
@@ -365,6 +384,15 @@ class QCBLENDER_PT_result_browser(bpy.types.Panel):
             return
         analysis = meta.get('analysis', {})
         role = obj.get('qc_analysis_role', obj.get('qc_view_kind'))
+        if role == 'aim_paths':
+            paths = analysis.get('paths', [])
+            layout.label(text=f'{len(paths)} recorded AIM paths')
+            layout.prop(state, 'row_index', text='Path (1-based)')
+            if state.row_index <= len(paths):
+                path = paths[state.row_index - 1]
+                layout.label(text=f"Source residue {path['residue']} | {len(path['points_angstrom'])} points")
+            layout.label(text='Path geometry and visibility use the native object controls')
+            return
         saved = record(obj, 'qc_result_displaystate')
         if saved and record(obj, 'qc_result_source_identity') != _source_identity(obj, meta):
             layout.label(text='Display state belongs to another source; apply the filter again', icon='ERROR')
@@ -395,13 +423,24 @@ class QCBLENDER_PT_result_browser(bpy.types.Panel):
             layout.prop(state, 'show_labels')
             layout.prop(state, 'show_points')
         elif role == 'esp_area':
-            _draw_range(layout, state, 'value', f"Center [{analysis.get('distribution_center_unit', 'unit unknown')}]")
+            layout.prop(state, 'area_range_mode')
+            if (state.area_range_mode == 'source_interval'
+                    and any(row.get('begin') is None or row.get('end') is None
+                            for row in analysis.get('area_bins', []))):
+                layout.label(text='This table has no recorded Begin/End bounds', icon='ERROR')
+            label = ('Recorded interval overlap' if state.area_range_mode == 'source_interval'
+                     else 'Center')
+            _draw_range(layout, state, 'value', f"{label} [{analysis.get('distribution_center_unit', 'unit unknown')}]")
+            if state.area_range_mode == 'source_interval':
+                layout.label(text='Whole source bins are selected; areas are not split')
         elif role == 'nbo':
             layout.prop(state, 'orbital_type')
             _draw_range(layout, state, 'occupancy', 'Occupancy')
+            layout.prop(state, 'nbo_orbital_sort')
             layout.prop(state, 'donor')
             layout.prop(state, 'acceptor')
             _draw_range(layout, state, 'e2', 'E(2) kcal/mol')
+            layout.prop(state, 'nbo_interaction_sort')
         elif role == 'ets_nocv':
             layout.prop(state, 'spin')
             layout.prop(state, 'eigen_side')
@@ -412,33 +451,49 @@ class QCBLENDER_PT_result_browser(bpy.types.Panel):
         layout.operator('qcblender.apply_result_filter')
         if saved:
             if role == 'esp_area':
+                layout.label(text=f"Applied selection: {saved.get('selection_mode', 'center')}")
                 layout.label(text=f"Total {saved.get('total_area', 0):.6g} | displayed {saved.get('displayed_area', 0):.6g} {analysis.get('area_unit', '')}")
                 layout.label(text=f"Source percentages shown: {saved.get('displayed_source_percentage', 0):.6g}%")
                 indexes = saved.get('indexes', [])
                 if indexes and state.row_index <= len(indexes):
                     row = analysis['area_bins'][indexes[state.row_index - 1]]
-                    for field in ('begin', 'end', 'center', 'area', 'percentage'):
+                    for field in ('begin', 'end', 'center', 'area', 'percentage', 'source_line'):
                         value = row.get(field)
                         layout.label(text=f'{field}: {value if value is not None else "not recorded"}')
             elif role == 'nbo':
                 layout.label(text=f"Orbitals {len(saved.get('orbitals', []))} | E(2) {len(saved.get('interactions', []))}")
+                layout.label(text=f"Applied order: {saved.get('orbital_sort', 'source')} / {saved.get('interaction_sort', 'source')}")
                 orbitals, interactions = saved.get('orbitals', []), saved.get('interactions', [])
                 if orbitals and state.row_index <= len(orbitals):
                     row = analysis['orbitals'][orbitals[state.row_index - 1]]
                     layout.label(text=f"Orbital {row['number']} {row['type']} | occupancy {row['occupancy']:.6g}")
+                    _draw_source_record(layout, row)
                 if interactions and state.row_index <= len(interactions):
                     row = analysis['interactions'][interactions[state.row_index - 1]]
                     layout.label(text=f"{row['donor']} → {row['acceptor']} | E(2) {row['e2_kcal_mol']:.6g} kcal/mol")
+                    _draw_source_record(layout, row)
             else:
                 layout.label(text=f"Matching records: {len(saved.get('indexes', []))}")
                 indexes = saved.get('indexes', [])
                 if indexes and state.row_index <= len(indexes):
                     key = 'pairs' if role == 'ets_nocv' else 'extrema' if role.startswith('esp_') else 'critical_points'
                     row = analysis[key][indexes[state.row_index - 1]]
+                    if role.startswith('aim_'):
+                        from ..result_filters import point_label
+                        layout.label(text=point_label(analysis, row, saved.get('value_key')))
                     for field in ('serial', 'kind', 'type', 'value', 'pair', 'spin', 'pair_energy',
-                                  'positive_eigenvalue', 'negative_eigenvalue'):
+                                  'positive_eigenvalue', 'negative_eigenvalue', 'source_line'):
                         if field in row:
                             layout.label(text=f'{field}: {row[field]}')
+
+
+def _draw_source_record(layout, row):
+    if 'source_line' in row:
+        layout.label(text=f"Source line {row['source_line']}")
+    if 'raw_line' in row:
+        raw = row['raw_line']
+        for offset in range(0, len(raw), 72):
+            layout.label(text=raw[offset:offset + 72])
 
 
 def _draw_range(layout, state, prefix, label):

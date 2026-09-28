@@ -98,24 +98,56 @@ def point_selection(analysis, serial=None, kind=None, value_min=None, value_max=
             and matches_value(row)]
 
 
-def area_selection(analysis, center_min=None, center_max=None):
+def point_label(analysis, row, value_key=None):
+    """Describe one source point without inventing an AIM property or unit."""
+    if analysis['kind'] == 'ESP':
+        return f"{row['kind']} {row['serial']} | {row['value']:.6g} {analysis['extrema_unit']}"
+    if analysis['kind'] != 'AIM':
+        raise ValueError('Select an ESP or AIM point')
+    label = f"{row['type']} {row['serial']}"
+    properties = analysis.get('properties', {})
+    recorded = properties.get(str(row['serial']), properties.get(row['serial'], {}))
+    key = value_key or ('Density of all electrons' if 'Density of all electrons' in recorded else None)
+    if key:
+        value = recorded.get(key)
+        if isinstance(value, (int, float)) and math.isfinite(value):
+            label += f' | {key}: {value:.6g}'
+    return label
+
+
+def area_selection(analysis, center_min=None, center_max=None, mode='center'):
     if analysis['kind'] != 'ESP':
         raise ValueError('Select an ESP area table')
-    _range(center_min, center_max, 'Area center')
+    if mode not in ('center', 'source_interval'):
+        raise ValueError('Choose center or recorded source interval filtering')
+    _range(center_min, center_max, 'Area center' if mode == 'center' else 'Source interval')
     bins = analysis['area_bins']
-    indexes = [index for index, row in enumerate(bins)
-               if _limits(row['center'], center_min, center_max)]
+    if mode == 'source_interval':
+        if any(row.get('begin') is None or row.get('end') is None for row in bins):
+            raise ValueError('Source interval bounds were not recorded in this ESP table')
+        indexes = [index for index, row in enumerate(bins)
+                   if (center_min is None or row['end'] >= center_min)
+                   and (center_max is None or row['begin'] <= center_max)]
+    else:
+        indexes = [index for index, row in enumerate(bins)
+                   if _limits(row['center'], center_min, center_max)]
     return {'indexes': indexes, 'total_area': sum(row['area'] for row in bins),
             'displayed_area': sum(bins[index]['area'] for index in indexes),
-            'displayed_source_percentage': sum(bins[index]['percentage'] for index in indexes)}
+            'displayed_source_percentage': sum(bins[index]['percentage'] for index in indexes),
+            'selection_mode': mode}
 
 
 def nbo_selection(analysis, number=None, orbital_type=None, occupancy_min=None,
-                  occupancy_max=None, donor=None, acceptor=None, e2_min=None, e2_max=None):
+                  occupancy_max=None, donor=None, acceptor=None, e2_min=None, e2_max=None,
+                  orbital_sort='source', interaction_sort='source'):
     if analysis['kind'] != 'NBO':
         raise ValueError('Select an NBO result')
     _range(occupancy_min, occupancy_max, 'Occupancy')
     _range(e2_min, e2_max, 'E(2)')
+    if orbital_sort not in ('source', 'number', 'type', 'occupancy_desc'):
+        raise ValueError('Unsupported NBO orbital sort field')
+    if interaction_sort not in ('source', 'donor', 'acceptor', 'e2_desc'):
+        raise ValueError('Unsupported NBO interaction sort field')
     if any(value is not None and value < 1 for value in (number, donor, acceptor)):
         raise ValueError('NBO source numbers must be positive')
     orbitals = [index for index, row in enumerate(analysis['orbitals'])
@@ -129,6 +161,20 @@ def nbo_selection(analysis, number=None, orbital_type=None, occupancy_min=None,
                     and (donor is None or row['donor'] == donor)
                     and (acceptor is None or row['acceptor'] == acceptor)
                     and _limits(row['e2_kcal_mol'], e2_min, e2_max)]
+    if orbital_sort != 'source':
+        def orbital_key(index):
+            row = analysis['orbitals'][index]
+            return ((row['number'], index) if orbital_sort == 'number' else
+                    (row['type'], row['number'], index) if orbital_sort == 'type' else
+                    (-row['occupancy'], row['number'], index))
+        orbitals.sort(key=orbital_key)
+    if interaction_sort != 'source':
+        def interaction_key(index):
+            row = analysis['interactions'][index]
+            return ((row['donor'], row['acceptor'], index) if interaction_sort == 'donor' else
+                    (row['acceptor'], row['donor'], index) if interaction_sort == 'acceptor' else
+                    (-row['e2_kcal_mol'], row['donor'], row['acceptor'], index))
+        interactions.sort(key=interaction_key)
     return {'orbitals': orbitals, 'interactions': interactions}
 
 

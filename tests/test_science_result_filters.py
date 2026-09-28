@@ -11,7 +11,8 @@ from qcblender.external_fields import pair_cubes
 from qcblender.external_results import (aim_points, aim_properties, esp_area, esp_extrema,
                                         ets_nocv_pairs)
 from qcblender.result_filters import (area_selection, nbo_selection, nocv_selection,
-                                      point_selection, scatter_report, scatter_selection)
+                                      point_label, point_selection, scatter_report,
+                                      scatter_selection)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -85,6 +86,12 @@ class ResultFilters(unittest.TestCase):
         area = area_selection(esp, -10, 10)
         self.assertEqual(len(area['indexes']), 4)
         self.assertLess(area['displayed_area'], area['total_area'])
+        intervals = area_selection(esp, -10, 10, mode='source_interval')
+        self.assertTrue(intervals['indexes'])
+        self.assertTrue(all(esp['area_bins'][index]['end'] >= -10 and
+                            esp['area_bins'][index]['begin'] <= 10
+                            for index in intervals['indexes']))
+        self.assertEqual(intervals['total_area'], area['total_area'])
         self.assertEqual(before, esp['area_bins'])
         cps = aim_points(C09 / 'CPs.pdb')
         props = aim_properties(C09 / 'CPprop.txt', {row['serial'] for row in cps})
@@ -116,6 +123,41 @@ class ResultFilters(unittest.TestCase):
                                occupancy_min=1.85, donor=1, acceptor=2, e2_min=5)
         self.assertEqual(result, {'orbitals': [0], 'interactions': [0]})
         self.assertEqual(nbo_selection(analysis, orbital_type='BD*')['interactions'], [0, 1])
+        before = [dict(row) for row in analysis['orbitals']]
+        self.assertEqual(nbo_selection(analysis, orbital_sort='type')['orbitals'], [1, 0, 2])
+        self.assertEqual(nbo_selection(analysis, orbital_sort='occupancy_desc')['orbitals'], [0, 2, 1])
+        self.assertEqual(nbo_selection(analysis, interaction_sort='e2_desc')['interactions'], [0, 1])
+        self.assertEqual(nbo_selection(analysis, interaction_sort='acceptor')['interactions'], [0, 1])
+        reordered = dict(analysis, interactions=[dict(row) for row in analysis['interactions']])
+        reordered['interactions'][0]['e2_kcal_mol'] = 1
+        self.assertEqual(nbo_selection(reordered, interaction_sort='e2_desc')['interactions'], [1, 0])
+        self.assertEqual(analysis['orbitals'], before)
+        with self.assertRaisesRegex(ValueError, 'sort field'):
+            nbo_selection(analysis, orbital_sort='energy')
+
+    def test_recorded_esp_intervals_and_point_labels(self):
+        esp = {'kind': 'ESP', 'extrema_unit': 'kcal/mol', 'area_bins': [
+            {'begin': -2., 'end': -1., 'center': -1.5, 'area': 2., 'percentage': 20.},
+            {'begin': -1., 'end': 0., 'center': -.5, 'area': 3., 'percentage': 30.},
+            {'begin': 0., 'end': 1., 'center': .5, 'area': 5., 'percentage': 50.}]}
+        original = [dict(row) for row in esp['area_bins']]
+        self.assertEqual(area_selection(esp, -.25, .25)['indexes'], [])
+        interval = area_selection(esp, -.25, .25, mode='source_interval')
+        self.assertEqual(interval['indexes'], [1, 2])
+        self.assertEqual((interval['total_area'], interval['displayed_area'],
+                          interval['displayed_source_percentage']), (10., 8., 80.))
+        self.assertEqual(esp['area_bins'], original)
+        with self.assertRaisesRegex(ValueError, 'not recorded'):
+            area_selection({'kind': 'ESP', 'area_bins': [
+                {'begin': None, 'end': None, 'center': 0., 'area': 1., 'percentage': 100.}]},
+                0, 1, mode='source_interval')
+        self.assertEqual(point_label(esp, {'kind': 'minimum', 'serial': 4, 'value': -3.125}),
+                         'minimum 4 | -3.125 kcal/mol')
+        aim = {'kind': 'AIM', 'properties': {'7': {'Density of all electrons': .25}}}
+        self.assertEqual(point_label(aim, {'type': 'N', 'serial': 7}, 'Density of all electrons'),
+                         'N 7 | Density of all electrons: 0.25')
+        self.assertEqual(point_label(aim, {'type': 'N', 'serial': 7}),
+                         'N 7 | Density of all electrons: 0.25')
 
 
 if __name__ == '__main__':
