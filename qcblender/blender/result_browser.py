@@ -96,6 +96,16 @@ def _source_identity(obj, meta):
             'source_sha256': meta['source']['sha256'], 'role': obj.get('qc_analysis_role', obj.get('qc_view_kind'))}
 
 
+def _focus_visibility(part, visible):
+    hidden = not visible
+    if 'qc_layer_restore_viewport' in part:
+        part['qc_layer_restore_viewport'] = hidden
+    if 'qc_layer_restore_render' in part:
+        part['qc_layer_restore_render'] = hidden
+    part.hide_set(hidden)
+    part.hide_render = hidden
+
+
 def _save_state(obj, meta, state):
     obj['qc_result_displaystate'] = json.dumps(state, sort_keys=True)
     obj['qc_result_source_identity'] = json.dumps(_source_identity(obj, meta), sort_keys=True)
@@ -170,14 +180,12 @@ def _focus(context, obj, row, state, analysis):
     dots = next(node for node in marker.modifiers['QC Result Focus'].node_group.nodes
                 if node.bl_idname == 'GeometryNodeMeshToPoints')
     dots.inputs['Radius'].default_value = state.marker_size
-    marker.hide_set(False)
-    marker.hide_render = False
+    _focus_visibility(marker, True)
     label = next(child for child in marker.children if child.get('qc_result_label'))
     label.data.body = point_label(analysis, row, state.aim_numeric_key)
     label.data.size = state.marker_size * 2
     label.location = (state.marker_size * 1.5, 0, 0)
-    label.hide_set(not state.show_labels)
-    label.hide_render = not state.show_labels
+    _focus_visibility(label, state.show_labels)
     from .layers import sync_chart_children
     sync_chart_children(obj)
     world = obj.matrix_world @ Vector(row['position_angstrom'])
@@ -225,12 +233,12 @@ class QCBLENDER_OT_apply_result_filter(bpy.types.Operator):
                 if indexes and state.row_index <= len(indexes):
                     _focus(context, obj, analysis[key][indexes[state.row_index - 1]], state, analysis)
                 elif marker:
-                    marker.hide_set(True)
-                    marker.hide_render = True
+                    _focus_visibility(marker, False)
                     for child in marker.children:
                         if child.get('qc_result_label'):
-                            child.hide_set(True)
-                            child.hide_render = True
+                            _focus_visibility(child, False)
+                    from .layers import sync_chart_children
+                    sync_chart_children(obj)
             elif role == 'esp_area':
                 bins = analysis['area_bins']
                 indexes = result['indexes']
