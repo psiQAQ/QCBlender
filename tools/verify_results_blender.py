@@ -30,7 +30,7 @@ def installed_extension():
     bpy.ops.preferences.addon_enable(module=evidence.MODULE)
     package = importlib.import_module(evidence.MODULE)
     location = Path(package.__file__).resolve()
-    assert not location.is_relative_to(SCRIPT_ROOT), location
+    assert 'extensions' in location.parts and location.parent != (SCRIPT_ROOT / 'qcblender').resolve(), location
     assert hasattr(bpy.types.Object, 'qc_result_browser'), 'Result browser is not registered'
     return str(location)
 
@@ -65,6 +65,35 @@ def finish_modal(operator_id, **kwargs):
         time.sleep(.1)
     operator.cancel(bpy.context)
     raise TimeoutError(f'{operator_id}: {operator._job.directory}')
+
+
+def reject_changed_modal(operator_id, change):
+    """Let a real worker finish, then prove stale UI state cannot publish its result."""
+    operations = module('blender.ui')._operations
+    before = set(operations)
+    assert getattr(bpy.ops.qcblender, operator_id)('EXEC_DEFAULT') == {'RUNNING_MODAL'}
+    added = set(operations) - before
+    assert len(added) == 1
+    operator = operations[added.pop()][0]
+    event = type('TimerEvent', (), {'type': 'TIMER'})()
+    try:
+        change()
+        scene_after_change = {entry.name: object_snapshot(entry) for entry in bpy.context.scene.objects}
+        deadline = time.monotonic() + 240
+        while time.monotonic() < deadline:
+            outcome = operator.modal(bpy.context, event)
+            if outcome != {'RUNNING_MODAL'}:
+                assert outcome == {'CANCELLED'}, (operator_id, outcome)
+                worker = json.loads((operator._job.directory / 'result.json').read_text(encoding='utf-8'))
+                assert worker['status'] == 'succeeded', worker
+                assert scene_after_change == {entry.name: object_snapshot(entry)
+                                              for entry in bpy.context.scene.objects}
+                return operator._job.directory.name
+            time.sleep(.1)
+        raise TimeoutError(f'{operator_id}: {operator._job.directory}')
+    finally:
+        if id(operator) in operations:
+            operator.cancel(bpy.context)
 
 
 def metadata(obj):
@@ -153,6 +182,22 @@ def check_c07():
     assert saved['matching_count'] >= saved['displayed_count'] > 0
     assert 'dataset' not in saved and source_arrays() == before
     unchanged = object_snapshot(scatter)
+    original_swap = browser.swap_axes
+    changed_axes = reject_changed_modal('filter_result_scatter',
+                                        lambda: setattr(browser, 'swap_axes', not original_swap))
+    browser.swap_axes = original_swap
+    original_name = scatter.name
+    renamed = reject_changed_modal('filter_result_scatter',
+                                   lambda: setattr(scatter, 'name', original_name + ' pending'))
+    scatter.name = original_name
+    source = scatter.parent
+    assert source is not None
+    original_source_sha = source.get('qc_source_sha256')
+    assert isinstance(original_source_sha, str)
+    changed_source = reject_changed_modal('filter_result_scatter',
+                                          lambda: source.__setitem__('qc_source_sha256', '0' * 64))
+    source['qc_source_sha256'] = original_source_sha
+    assert object_snapshot(scatter) == unchanged
     job = module('blender.jobs').Job('result_scatter', dataset=str(Path(bpy.path.abspath(scatter['qc_dataset']))),
         dataset_sha256='0' * 64, x_field=0, y_field=1)
     deadline = time.monotonic() + 180
@@ -166,7 +211,8 @@ def check_c07():
         raise TimeoutError('Invalid scatter source digest')
     assert failed['status'] == 'failed' and 'source changed' in failed['error'].lower(), failed
     assert source_arrays() == before and object_snapshot(scatter) == unchanged
-    return {'scatter_job': report, 'bad_digest': 'Passed'}
+    return {'scatter_job': report, 'changed_axes': changed_axes,
+            'renamed_target': renamed, 'changed_source': changed_source, 'bad_digest': 'Passed'}
 
 
 def check_c08():
@@ -207,6 +253,12 @@ def check_c08():
     copied_markers = focus_children(copied)
     assert len(copied_markers) == 1 and copied_markers[0] != marker
     assert len([child for child in copied_markers[0].children if child.get('qc_result_label')]) == 1
+    original_display = object_snapshot(minimum)
+    active(copied)
+    copied.qc_result_browser.source_number = max(row['serial'] for row in analysis['extrema']) + 1
+    assert bpy.ops.qcblender.apply_result_filter() == {'FINISHED'}
+    assert not state(copied)['indexes'] and len(copied.data.vertices) == 0
+    assert object_snapshot(minimum) == original_display
     copied_marker_name = copied_markers[0].name
     assert bpy.ops.qcblender.layer_action(target=copied_name, action='REMOVE') == {'FINISHED'}
     assert copied_name not in bpy.data.objects and marker.name in bpy.data.objects
@@ -326,10 +378,20 @@ def write_report(path, report):
     path.write_text(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True), encoding='utf-8')
 
 
+def case_fixture(case, source_root):
+    if case in ('C07', 'C08', 'C09'):
+        current = (source_root / 'outputs/multiwfn-parameters/01-foundation-r5/final-sop/cases'
+                   / case / f'{case}.blend')
+        if current.is_file():
+            return current
+    return source_root / f'outputs/v1-acceptance/cases/{case}/{case}.blend'
+
+
 def prepare(case, out, source_root):
     out.mkdir(parents=True, exist_ok=True)
+    original = None
     if case != 'NBO':
-        original = source_root / f'outputs/v1-acceptance/cases/{case}/{case}.blend'
+        original = case_fixture(case, source_root)
         assert original.is_file(), original
         bpy.ops.wm.open_mainfile(filepath=str(original))
         installed_extension()
@@ -348,6 +410,7 @@ def prepare(case, out, source_root):
         shutil.copytree(module('data').filesystem_path(out / 'evidence.qcdata'),
                         module('data').filesystem_path(moved / 'evidence.qcdata'), dirs_exist_ok=True)
         report = {'case': case, 'installed_module': str(Path(importlib.import_module(evidence.MODULE).__file__).resolve()),
+                  'fixture': str(original) if original else None,
                   'checks': checks, 'expected': expected, 'prepare': 'Passed',
                   'cold_open': 'Not Run', 'moved_cold_open': 'Not Run', 'status': 'Not Run'}
         write_report(out / 'checks.json', report)
