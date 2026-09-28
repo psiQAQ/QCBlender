@@ -7,7 +7,7 @@ import numpy as np
 
 from .data import Dataset
 from .external_results import (aim_paths, aim_points, aim_properties, esp_area,
-                               esp_extrema, ets_nocv_pairs)
+                               esp_extrema, esp_extrema_unit, ets_nocv_pairs)
 from .readers import source_record
 
 
@@ -46,14 +46,50 @@ def spatial_check(points, reference, margin_angstrom=10):
 
 def import_esp(reference, extrema_path, area_path, surface_definition, value_unit, center_unit, area_unit):
     check_text_sources((extrema_path, area_path))
-    if not all(str(value).strip() and str(value).strip().lower() != 'unknown'
-               for value in (surface_definition, value_unit, center_unit, area_unit)):
-        raise ValueError('ESP surface definition and all value/area units are required')
+    if str(surface_definition).strip().lower() in ('', 'unknown') or not str(center_unit).strip():
+        raise ValueError('ESP surface definition and distribution center unit are required')
+    energy_units = {'kcal/mol': 'kcal/mol', 'ev': 'eV', 'a.u.': 'a.u.'}
+    def energy_unit(value, label):
+        unit = energy_units.get(str(value).strip().lower())
+        if unit is None:
+            raise ValueError(f'ESP {label} must be a.u., eV or kcal/mol')
+        return unit
+
+    declaration = esp_extrema_unit(extrema_path)
+    if value_unit and str(value_unit).strip():
+        value_unit = energy_unit(value_unit, 'extrema unit')
+        if declaration and value_unit != declaration['unit']:
+            raise ValueError(f'ESP extrema unit {value_unit} conflicts with PDB line {declaration["source_line"]}: {declaration["unit"]}')
+    elif declaration:
+        value_unit = declaration['unit']
+    else:
+        raise ValueError('ESP extrema PDB has no B-factor unit declaration; specify the extrema unit')
+    center_unit = energy_unit(center_unit, 'distribution center unit')
+    area_declaration = None
+    for number, line in enumerate(Path(area_path).read_text(encoding='utf-8', errors='replace').splitlines(), 1):
+        if 'area unit' not in line.lower():
+            continue
+        match = re.fullmatch(r'\s*Note:\s*Area unit is in\s+(.+?)\s*', line, re.I)
+        if not match or match[1].lower() != 'angstrom^2':
+            raise ValueError(f'ESP area line {number} has an unsupported area unit declaration')
+        area_declaration = {'unit': 'angstrom^2', 'source_line': number, 'raw': line}
+    if area_unit and str(area_unit).strip():
+        if str(area_unit).strip().lower() not in ('angstrom^2', 'bohr^2'):
+            raise ValueError('ESP area unit must be angstrom^2 or bohr^2')
+        area_unit = str(area_unit).strip().lower()
+        if area_declaration and area_unit != area_declaration['unit']:
+            raise ValueError(f'ESP area unit {area_unit} conflicts with table line {area_declaration["source_line"]}')
+    elif area_declaration:
+        area_unit = area_declaration['unit']
+    else:
+        raise ValueError('ESP area table has no area unit declaration; specify the area unit')
     extrema = esp_extrema(extrema_path)
     bins = esp_area(area_path)
     check = spatial_check([point['position_angstrom'] for point in extrema], reference)
-    result = {'surface_definition': surface_definition.strip(), 'extrema_unit': value_unit.strip(),
-              'distribution_center_unit': center_unit.strip(), 'area_unit': area_unit.strip(),
+    result = {'surface_definition': surface_definition.strip(), 'extrema_unit': value_unit,
+              'extrema_unit_declaration': declaration,
+              'distribution_center_unit': center_unit, 'area_unit': area_unit,
+              'area_unit_declaration': area_declaration,
               'extrema': extrema, 'area_bins': bins, 'spatial_check': check,
               'area_sum': sum(row['area'] for row in bins)}
     return analysis_dataset(reference, 'ESP', [extrema_path, area_path], result)

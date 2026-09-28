@@ -58,8 +58,9 @@ class QCBLENDER_OT_import_paired_field(AsyncOperation, bpy.types.Operator):
     method: EnumProperty(name='Analysis', items=[('IGMH', 'IGMH', ''), ('IRI', 'IRI', '')])
     geometry_source: StringProperty(name='Geometry Cube', subtype='FILE_PATH')
     color_source: StringProperty(name='sign(lambda2)rho Cube', subtype='FILE_PATH')
-    geometry_unit: StringProperty(name='Geometry value unit', default='dimensionless')
-    color_unit: StringProperty(name='Color value unit', default='electron/bohr^3')
+    geometry_unit: StringProperty(name='Geometry value unit', default='')
+    color_unit: StringProperty(name='Color value unit', default='')
+    iri_exponent: FloatProperty(name='IRI density exponent a', default=0.0, min=0.0)
     color_minimum: FloatProperty(name='Color minimum', default=-.05)
     color_maximum: FloatProperty(name='Color maximum', default=.05)
 
@@ -72,7 +73,15 @@ class QCBLENDER_OT_import_paired_field(AsyncOperation, bpy.types.Operator):
 
     def draw(self, context):
         for name in ('method', 'geometry_source', 'color_source', 'geometry_unit',
-                     'color_unit', 'color_minimum', 'color_maximum'):
+                     'color_unit'):
+            self.layout.prop(self, name)
+        if self.method == 'IRI':
+            self.layout.prop(self, 'iri_exponent')
+            self.layout.label(text='Typical IRI: |grad rho| / rho^1.1; declare the exponent used')
+        else:
+            self.layout.label(text='Typical IGMH delta-g: electron/bohr^4')
+        self.layout.label(text='Typical sign(lambda2)rho: electron/bohr^3; Cube units are not declared')
+        for name in ('color_minimum', 'color_maximum'):
             self.layout.prop(self, name)
         self.layout.label(text='Active QC view supplies the calculation and geometry association')
 
@@ -81,6 +90,11 @@ class QCBLENDER_OT_import_paired_field(AsyncOperation, bpy.types.Operator):
         from .jobs import Job
         if self.color_minimum >= self.color_maximum:
             raise ValueError('Color minimum must be below maximum')
+        if any(not unit.strip() or unit.strip().lower() in ('unknown', 'dimensionless')
+               for unit in (self.geometry_unit, self.color_unit)):
+            raise ValueError('Declare both field units from the calculation; Cube headers do not provide them')
+        if self.method == 'IRI' and self.iri_exponent <= 0:
+            raise ValueError('Declare the IRI density exponent from the calculation')
         paths = [Path(bpy.path.abspath(p)).resolve(strict=True)
                  for p in (self.geometry_source, self.color_source)]
         if paths[0] == paths[1]:
@@ -90,6 +104,7 @@ class QCBLENDER_OT_import_paired_field(AsyncOperation, bpy.types.Operator):
         self._reference_digest = hashlib.sha256((self._reference_path / 'manifest.json').read_bytes()).hexdigest()
         return Job('import_pair', geometry_source=str(paths[0]), color_source=str(paths[1]),
                    method=self.method, geometry_unit=self.geometry_unit, color_unit=self.color_unit,
+                   iri_exponent=self.iri_exponent if self.method == 'IRI' else None,
                    reference_dataset=str(self._reference_path), reference_sha256=self._reference_digest)
 
     def accept(self, context, report):

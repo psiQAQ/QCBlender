@@ -48,12 +48,32 @@ def esp_extrema(path):
     return result
 
 
+def esp_extrema_unit(path):
+    """Return the ESP B-factor declaration, if the PDB contains one."""
+    declaration = None
+    for number, line in enumerate(Path(path).read_text(encoding='utf-8', errors='replace').splitlines(), 1):
+        if line[:6].strip().upper() != 'REMARK' or 'unit of b-factor field' not in line.lower():
+            continue
+        match = re.fullmatch(r'REMARK\s+Unit of B-factor field \(i\.e\. ESP\) is\s+(\S+)\s*', line, re.I)
+        if not match or match[1].lower() not in ('kcal/mol', 'ev', 'a.u.'):
+            raise ValueError(f'ESP extrema PDB line {number} has an unsupported or non-ESP B-factor unit declaration')
+        unit = {'kcal/mol': 'kcal/mol', 'ev': 'eV', 'a.u.': 'a.u.'}[match[1].lower()]
+        if declaration and declaration['unit'] != unit:
+            raise ValueError(f'ESP extrema PDB line {number} conflicts with B-factor unit on line {declaration["source_line"]}')
+        declaration = {'unit': unit, 'source_line': number, 'raw': line}
+    return declaration
+
+
 def esp_area(path):
     lines = Path(path).read_text(encoding='utf-8', errors='replace').splitlines()
     header = next((i for i, line in enumerate(lines) if 'Center' in line and 'Area' in line), None)
     if header is None:
         raise ValueError('ESP area table lacks Center/Area header')
-    columns = 5 if 'Begin' in lines[header] and 'End' in lines[header] else 3
+    names = lines[header].split()
+    if names not in (['Begin', 'End', 'Center', 'Area', '%'],
+                     ['Center', 'Area', '%'], ['Center', 'Area', 'Percentage']):
+        raise ValueError('ESP area table header must identify Begin/End/Center/Area/% or Center/Area/%')
+    columns = len(names)
     records = []
     for number, line in enumerate(lines[header + 1:], header + 2):
         clean = line.strip()
@@ -63,16 +83,21 @@ def esp_area(path):
             continue
         values = clean.split()
         if len(values) != columns:
-            if records:
+            if records and not re.match(r'^[+-]?\d', clean):
                 break
             raise ValueError(f'ESP area line {number} has {len(values)} columns; expected {columns}')
         try:
-            center, area, percent = (float(value.replace('D', 'E')) for value in values[-3:])
+            parsed = [float(value.replace('D', 'E')) for value in values]
+            center, area, percent = parsed[-3:]
         except ValueError as error:
             raise ValueError(f'ESP area line {number} has invalid values') from error
-        if not all(math.isfinite(value) for value in (center, area, percent)) or area < 0 or percent < 0:
+        if not all(math.isfinite(value) for value in parsed) or area < 0 or not 0 <= percent <= 100:
             raise ValueError(f'ESP area line {number} has invalid area/percentage')
-        records.append({'center': center, 'area': area, 'percentage': percent, 'source_line': number})
+        begin, end = parsed[:2] if columns == 5 else (None, None)
+        if columns == 5 and not begin < center < end:
+            raise ValueError(f'ESP area line {number} has invalid interval bounds')
+        records.append({'begin': begin, 'end': end, 'center': center, 'area': area,
+                        'percentage': percent, 'source_line': number})
     if not records:
         raise ValueError('ESP area table has no data rows')
     return records
