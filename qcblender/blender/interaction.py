@@ -337,6 +337,8 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
             return {'CANCELLED'}
         self._hud = 'QC probe: click active surface; Enter saves; Esc restores'
         self._handle = bpy.types.SpaceView3D.draw_handler_add(_probe_draw, (self,), 'WINDOW', 'POST_PIXEL')
+        for area in context.screen.areas:
+            area.tag_redraw()
         context.window_manager.modal_handler_add(self)
         if event.type == 'LEFTMOUSE' and event.value == 'PRESS':
             return self.modal(context, event)
@@ -344,7 +346,8 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
 
     def _close(self, context):
         bpy.types.SpaceView3D.draw_handler_remove(self._handle, 'WINDOW')
-        self._area.tag_redraw()
+        for area in context.screen.areas:
+            area.tag_redraw()
 
     def _check_binding(self, context):
         if context.object != self._target or self._target.hide_get():
