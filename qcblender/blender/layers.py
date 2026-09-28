@@ -83,6 +83,10 @@ class QCBLENDER_OT_hydrogen_visibility(bpy.types.Operator):
 
 
 def copy_layer(source, collection):
+    from .annotations import copy_annotations, prepare_annotations
+    if any('qc_annotation' in child for child in source.children):
+        from .geometry import current_geometry
+        prepare_annotations(source, *current_geometry(source))
     obj = source.copy()
     obj.data = source.data.copy()
     collection.objects.link(obj)
@@ -123,6 +127,11 @@ def copy_layer(source, collection):
                 copied.data = label.data.copy()
                 collection.objects.link(copied)
                 copied.parent = spectrum
+    try:
+        copy_annotations(source, obj, collection)
+    except (ValueError, KeyError, OSError, TypeError):
+        bpy.data.objects.remove(obj, do_unlink=True)
+        raise
     return obj
 
 
@@ -149,12 +158,18 @@ class QCBLENDER_OT_layer_action(bpy.types.Operator):
             if obj.get('qc_irc'):
                 self.report({'ERROR'}, 'Duplicate the source FCHK manifest to create another IRC path')
                 return {'CANCELLED'}
-            copied = copy_layer(obj, context.collection)
+            try:
+                copied = copy_layer(obj, context.collection)
+            except (ValueError, KeyError, OSError, TypeError) as error:
+                self.report({'ERROR'}, str(error))
+                return {'CANCELLED'}
             layers.insert(layers.index(obj) + 1, copied)
             for index, layer in enumerate(layers):
                 layer['qc_layer_order'] = index
             activate(context, copied)
         elif self.action == 'REMOVE':
+            from .annotations import remove_annotations
+            remove_annotations(obj)
             index = layers.index(obj)
             # Keep scientific source objects and other display layers in place.
             for child in list(obj.children):
@@ -248,6 +263,8 @@ class QCBLENDER_OT_new_current_view(bpy.types.Operator):
                         if key in source:
                             obj[key] = source[key]
                 copy_selection(source, obj)
+                from .annotations import copy_annotations
+                copy_annotations(source, obj, obj.users_collection[0])
             elif kind == 'fog':
                 obj = fog_view(source)
             elif kind == 'slice':
@@ -340,6 +357,8 @@ class QCBLENDER_PT_layers(bpy.types.Panel):
                     row = box.row(align=True)
                     row.operator('qcblender.local_selection', text='按当前步重新计算').mode = 'RECOMPUTE'
                     row.operator('qcblender.local_selection', text='清除局部限制').mode = 'CLEAR'
+        from .annotations import draw_annotations
+        draw_annotations(layout, context)
         layout.label(text='Select a layer; edit its inputs below')
 
 

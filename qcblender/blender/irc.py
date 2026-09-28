@@ -5,6 +5,11 @@ import bpy
 from bpy.props import EnumProperty, StringProperty
 
 
+def cache_step(root, data, step):
+    root['qc_irc_record'] = json.dumps({'step': step, 'count': len(data.arrays['irc_energies']),
+                                       'energy_hartree': float(data.arrays['irc_energies'][step - 1])})
+
+
 def curve_view(directory, data, parent, values, name, role, y_offset, unit):
     from .views import bind, material
     count = len(values)
@@ -65,6 +70,7 @@ class QCBLENDER_OT_import_irc(bpy.types.Operator):
             root = atom_view(directory)
             root['qc_irc_step'] = 1
             root['qc_irc'] = True
+            cache_step(root, data, 1)
             modifier = view_modifier(root)
             style = next(item for item in modifier.node_group.interface.items_tree
                          if item.item_type == 'SOCKET' and item.name == 'Style (0 ball-stick, 1 space-fill, 2 bonds)')
@@ -92,25 +98,42 @@ class QCBLENDER_OT_irc_step(bpy.types.Operator):
 
     def execute(self, context):
         from ..data import load_dataset
+        from ..geometry import scientific_geometry
+        from .geometry import current_geometry
+        from .annotations import prepare_annotations, apply_annotations
         root = context.object if context.object.get('qc_irc') else context.object.parent
         try:
             data = load_dataset(bpy.path.abspath(root['qc_dataset']))
+            current_geometry(root, data)
             step = int(root['qc_irc_step']) + (1 if self.direction == 'NEXT' else -1)
             if not 1 <= step <= len(data.arrays['irc_energies']):
                 raise ValueError('IRC step is outside the imported path')
-            positions = data.arrays['irc_positions'][step - 1]
+            positions, record = scientific_geometry(data, 'irc', step)
+            record['dataset_sha256'] = root['qc_dataset_sha256']
+            attr = root.data.attributes.get('qc_equilibrium_position')
+            if attr is None or attr.domain != 'POINT' or attr.data_type != 'FLOAT_VECTOR' or len(attr.data) != len(positions):
+                raise ValueError('IRC equilibrium positions are missing or invalid')
+            prepared = prepare_annotations(root, positions, record)
+            cursors = []
+            for child in root.children:
+                if child.get('qc_analysis_role') in ('irc_cursor', 'irc_mayer_cursor'):
+                    role = 'irc_energy' if child['qc_analysis_role'] == 'irc_cursor' else 'irc_mayer_curve'
+                    line = next((item for item in root.children if item.get('qc_analysis_role') == role), None)
+                    if (line is None or line.type != 'CURVE' or len(line.data.splines) != 1
+                            or len(line.data.splines[0].points) != len(data.arrays['irc_energies'])
+                            or child.type != 'MESH' or len(child.data.vertices) != 1):
+                        raise ValueError('IRC chart cursor no longer matches the imported path')
+                    cursors.append((child, line.data.splines[0].points[step - 1].co[:3]))
             root.data.vertices.foreach_set('co', positions.ravel())
             root.data.attributes['qc_equilibrium_position'].data.foreach_set('vector', positions.ravel())
             root.data.update()
             root['qc_irc_step'] = step
-            for child in root.children:
-                if child.get('qc_analysis_role') in ('irc_cursor', 'irc_mayer_cursor'):
-                    line = next((item for item in root.children
-                                 if item.get('qc_analysis_role') == ('irc_energy' if child['qc_analysis_role'] == 'irc_cursor' else 'irc_mayer_curve')), None)
-                    if line is not None:
-                        child.data.vertices[0].co = line.data.splines[0].points[step - 1].co[:3]
-                        child.data.update()
-        except (ValueError, OSError, KeyError) as error:
+            cache_step(root, data, step)
+            for child, coordinate in cursors:
+                child.data.vertices[0].co = coordinate
+                child.data.update()
+            apply_annotations(prepared)
+        except (ValueError, OSError, KeyError, TypeError) as error:
             self.report({'ERROR'}, str(error))
             return {'CANCELLED'}
         return {'FINISHED'}
@@ -183,6 +206,7 @@ class QCBLENDER_OT_plot_irc_mayer(bpy.types.Operator):
             cursor_view(bpy.path.abspath(obj['qc_dataset']), data, root, coordinates[int(root['qc_irc_step']) - 1],
                         'QC Mayer selected step', 'irc_mayer_cursor', -10)
             obj['qc_mayer_pair_index'] = matches[0]
+            obj['qc_mayer_display_values'] = values
         except (ValueError, OSError, KeyError) as error:
             self.report({'ERROR'}, str(error))
             return {'CANCELLED'}
@@ -202,14 +226,16 @@ class QCBLENDER_PT_irc(bpy.types.Panel):
         return obj is not None and (obj.get('qc_irc') or (obj.parent and obj.parent.get('qc_irc')))
 
     def draw(self, context):
-        from ..data import load_dataset
         obj = context.object
         root = obj if obj.get('qc_irc') else obj.parent
-        data = load_dataset(bpy.path.abspath(root['qc_dataset']))
         step = int(root['qc_irc_step'])
         layout = self.layout
-        layout.label(text=f"Step {step} / {len(data.arrays['irc_energies'])}")
-        layout.label(text=f"Energy: {data.arrays['irc_energies'][step-1]:.10f} hartree")
+        record = json.loads(root.get('qc_irc_record', '{}'))
+        layout.label(text=f"Step {step} / {record.get('count', '未记录')}")
+        if record.get('step') == step:
+            layout.label(text=f"Energy: {record['energy_hartree']:.10f} hartree")
+        else:
+            layout.label(text='Energy: 未记录；切步时读取')
         row = layout.row(align=True)
         row.operator('qcblender.irc_step', text='Previous').direction = 'PREV'
         row.operator('qcblender.irc_step', text='Next').direction = 'NEXT'
@@ -219,7 +245,8 @@ class QCBLENDER_PT_irc(bpy.types.Panel):
             layout.prop(obj, '["qc_pair_a"]', text='Atom A (1-based)')
             layout.prop(obj, '["qc_pair_b"]', text='Atom B (1-based)')
             layout.operator('qcblender.plot_irc_mayer', text='Plot Pair')
-            mayer = load_dataset(bpy.path.abspath(obj['qc_dataset']))
-            index = obj.get('qc_mayer_pair_index')
-            if index is not None:
-                layout.label(text=f"Mayer order: {mayer.arrays['mayer_orders'][step-1, index]:.6g}")
+            values = obj.get('qc_mayer_display_values', [])
+            if 1 <= step <= len(values):
+                layout.label(text=f"Mayer order: {values[step-1]:.6g}")
+            else:
+                layout.label(text='Mayer order: 未记录；点击 Plot Pair 读取')
