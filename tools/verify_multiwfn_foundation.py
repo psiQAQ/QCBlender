@@ -315,7 +315,8 @@ def check_properties_pin(report, field):
 def check_gui_draw(report, objects):
     assert not bpy.app.background, 'GUI draw check requires visible Blender'
     area = next((area for area in bpy.context.screen.areas if area.type == 'VIEW_3D'), None)
-    assert area is not None, 'Real View3D area required'
+    props = next((area for area in bpy.context.screen.areas if area.type == 'PROPERTIES'), None)
+    assert area is not None and props is not None, 'Real View3D and Properties areas required'
     field = objects['field']
     activate(field)
     browser = module('blender.source_browser')
@@ -323,9 +324,13 @@ def check_gui_draw(report, objects):
     data_module = module('data')
     original_load, original_read = data_module.load_dataset, browser.read_metadata
     draws = []
+    forbidden_calls = []
     originals = {}
+    previous_pin, previous_context = props.spaces.active.pin_id, props.spaces.active.context
     try:
-        for name in N_PANELS:
+        props.spaces.active.pin_id = field
+        props.spaces.active.context = 'OBJECT'
+        for name in (*N_PANELS, *OBJECT_PANELS):
             cls = getattr(bpy.types, 'QCBLENDER_PT_' + name)
             originals[cls] = cls.draw
             def observed(panel, context, method=cls.draw, label=name):
@@ -333,16 +338,21 @@ def check_gui_draw(report, objects):
                 return method(panel, context)
             cls.draw = observed
         def forbidden(*_args, **_kwargs):
+            forbidden_calls.append('scientific dataset or manifest read')
             raise AssertionError('UI draw accessed a scientific dataset or manifest')
         data_module.load_dataset = forbidden
         browser.read_metadata = forbidden
         area.tag_redraw()
+        props.tag_redraw()
         bpy.ops.wm.redraw_timer(type='DRAW_WIN_SWAP', iterations=2)
     finally:
         for cls, draw in originals.items():
             cls.draw = draw
         data_module.load_dataset, browser.read_metadata = original_load, original_read
-    assert draws, 'No registered QC N-panel was drawn in the real View3D'
+        props.spaces.active.pin_id, props.spaces.active.context = previous_pin, previous_context
+    assert not forbidden_calls, forbidden_calls
+    assert any(name in N_PANELS for name in draws), 'No QC N-panel was drawn in the real View3D'
+    assert any(name in OBJECT_PANELS for name in draws), 'No QC Object Properties panel was drawn'
     report['gui_draw_uses_cached_metadata'] = {'status': 'Passed', 'drawn_panels': sorted(set(draws))}
 
 
