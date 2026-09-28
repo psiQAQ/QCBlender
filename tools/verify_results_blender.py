@@ -69,11 +69,11 @@ def finish_modal(operator_id, **kwargs):
     raise TimeoutError(f'{operator_id}: {operator._job.directory}')
 
 
-def reject_changed_modal(operator_id, change):
+def reject_changed_modal(operator_id, change, **kwargs):
     """Let a real worker finish, then prove stale UI state cannot publish its result."""
     operations = module('blender.ui')._operations
     before = set(operations)
-    assert getattr(bpy.ops.qcblender, operator_id)('EXEC_DEFAULT') == {'RUNNING_MODAL'}
+    assert getattr(bpy.ops.qcblender, operator_id)('EXEC_DEFAULT', **kwargs) == {'RUNNING_MODAL'}
     added = set(operations) - before
     assert len(added) == 1
     operator = operations[added.pop()][0]
@@ -262,6 +262,14 @@ def check_c08():
     assert bpy.ops.qcblender.apply_result_filter() == {'FINISHED'}
     assert not marker.hide_get() and not label.hide_get()
     assert not marker.hide_render and not label.hide_render
+    focus_tree = marker.modifiers['QC Result Focus'].node_group
+    extra_node = focus_tree.nodes.new('GeometryNodeMeshToPoints')
+    try:
+        custom_graph_error = reject_without_mutation(
+            minimum, lambda: bpy.ops.qcblender.apply_result_filter())
+        assert 'focus graph' in custom_graph_error.lower(), custom_graph_error
+    finally:
+        focus_tree.nodes.remove(extra_node)
     browser.value_low_on = browser.value_high_on = True
     browser.value_low, browser.value_high = 1., -1.
     error = reject_without_mutation(minimum, lambda: bpy.ops.qcblender.apply_result_filter())
@@ -323,7 +331,8 @@ def check_c08():
     assert user_name in bpy.data.objects and user_child.parent == copied_parent
     np.testing.assert_allclose(np.array(user_child.matrix_world), user_world, rtol=0, atol=1e-6)
     assert source_arrays() == before
-    return {'point_error': error, 'hidden_owner_restore': 'Passed',
+    return {'point_error': error, 'custom_focus_graph': custom_graph_error,
+            'hidden_owner_restore': 'Passed',
             'area': selected, 'copy_failure_cleanup': 'Passed', 'copy_remove': 'Passed',
             'user_child': {'name': user_name, 'parent': copied_parent.name if copied_parent else None,
                            'matrix_world': user_world.tolist()}}
@@ -367,6 +376,7 @@ def check_c12(source_root):
     job = finish_modal('import_nocv_field', cube_path=str(cube), pair_number=1,
                        spin='Total', unit='electron/bohr^3')
     field = role('nocv_field')
+    assert field['qc_ets_table_dataset_sha256'] == table['qc_dataset_sha256']
     before = source_arrays()
     active(table)
     browser = table.qc_result_browser
@@ -376,6 +386,27 @@ def check_c12(source_root):
     browser.sort_by = 'pair_energy'
     assert bpy.ops.qcblender.apply_result_filter() == {'FINISHED'}
     assert bpy.context.object == field and len(state(table)['indexes']) == 1
+    original_source = table['qc_source_sha256']
+    active(table)
+    stale_import = reject_changed_modal('import_nocv_field',
+        lambda: table.__setitem__('qc_source_sha256', '0' * 64),
+        cube_path=str(cube), pair_number=1, spin='Total', unit='electron/bohr^3')
+    table['qc_source_sha256'] = original_source
+    other_parent = table.parent.copy()
+    bpy.context.collection.objects.link(other_parent)
+    other_table = module('blender.layers').copy_layer(table, bpy.context.collection)
+    other_table.parent = other_parent
+    active(other_table)
+    assert bpy.ops.qcblender.apply_result_filter() == {'FINISHED'}
+    assert bpy.context.object == other_table and len(state(other_table)['indexes']) == 1
+    bpy.data.objects.remove(other_table, do_unlink=True)
+    bpy.data.objects.remove(other_parent, do_unlink=True)
+    saved_table_digest = field['qc_ets_table_dataset_sha256']
+    del field['qc_ets_table_dataset_sha256']
+    active(table)
+    legacy_error = reject_without_mutation(table, lambda: bpy.ops.qcblender.apply_result_filter())
+    assert 'no saved table dataset identity' in legacy_error.lower(), legacy_error
+    field['qc_ets_table_dataset_sha256'] = saved_table_digest
     duplicate = module('blender.layers').copy_layer(field, bpy.context.collection)
     active(table)
     error = reject_without_mutation(table, lambda: bpy.ops.qcblender.apply_result_filter())
@@ -383,7 +414,9 @@ def check_c12(source_root):
     bpy.data.objects.remove(duplicate, do_unlink=True)
     assert bpy.ops.qcblender.apply_result_filter() == {'FINISHED'}
     assert bpy.context.object == field and source_arrays() == before
-    return {'nocv_job': job, 'duplicate_error': error}
+    return {'nocv_job': job, 'stale_import': stale_import,
+            'different_parent': 'Passed', 'legacy_identity': legacy_error,
+            'duplicate_error': error}
 
 
 def check_nbo(source_root):
