@@ -46,6 +46,6 @@ MO 振幅的正负是波函数相位；密度差、NOCV 形变密度等有符号
 | 官方资料核对与本地原文 SHA-256 | Passed | 26 项与 `sources.json` 匹配；本文的版本及参数结论按对应官方章节限定。 |
 | 纯 Python 范围单元检查 | Passed | `tests/test_science_field_ranges.py` 在范围工作包中通过；这不代表四项集成已通过。 |
 | QCBlender 四项实现、worker/MCP、真实文件与冷重开 | Passed | 最终 `04-copy-r4` 的 48 项科学、7 项复制策略、安装及双冷重开通过；样本与合成身份测试边界见[技术记录](../acceptance/vmd-parameters.md)。 |
-| Computer Use 与整批交互验收 | Not Run | 桌面访问失败，原生 MCP 截图不替代点击验收；未创建通过标签。 |
+| Computer Use 与首批技术验收 | Passed | 最终 `04-copy-r4` 完成四包新入口、错误提示、撤销/重做点击，GUI 工程原地和移动冷重开通过；见[技术记录](../acceptance/vmd-parameters.md)。 |
 | VMD 2.0.0 和 Blender 实际界面/渲染对照 | Not Run | 未运行 VMD；本轮 Blender 技术检查不构成跨软件视觉对照。 |
 | 独立人工复做与签署 | Not Run | 技术检查不能代替人工验收。 |

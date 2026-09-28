@@ -4,10 +4,12 @@
 
 | 批次 | 代码 | 科学回归 | 独立安装 | MCP 操作与渲染 | 保存、原地与移动冷重开 | Computer Use | 整批 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 01 分组面板 | Passed | Passed | Passed | Passed | Passed | Not Run | Not Run |
-| 02 显式着色场 | Passed | Passed | Passed | Passed | Passed | Not Run | Not Run |
-| 03 一次性色标范围 | Passed | Passed | Passed | Passed | Passed | Not Run | Not Run |
-| 04 复制显示参数 | Passed | Passed | Passed | Passed | Passed | Not Run | Not Run |
+| 01 分组面板 | Passed | Passed | Passed | Passed | Passed | Passed | Passed |
+| 02 显式着色场 | Passed | Passed | Passed | Passed | Passed | Passed | Passed |
+| 03 一次性色标范围 | Passed | Passed | Passed | Passed | Passed | Passed | Passed |
+| 04 复制显示参数 | Passed | Passed | Passed | Passed | Passed | Passed | Passed |
+
+Computer Use 四项均在最终集成候选 **04-copy-r4** 上执行；表中通过范围是首批四项技术验收。旧候选的单独 GUI 状态不追记为通过，独立人工签署与外部视觉对照继续后置。
 
 各目录均位于 `outputs/vmd-parameters/`，ZIP 为目录内的 `dist/qcblender-0.0.1.zip`。最终集成候选为 **04-copy-r4**，包含四包功能，版本仍为 `0.0.1`；旧验收基线保留。
 
@@ -18,7 +20,7 @@
 | `03-ranges-r2` | `9922acf` | `bfcffa1e1fe1c16301e7a196dc4c92e9beb353251eeb3bfb42c4d84a55400672` |
 | `04-copy-r4` | `1b26f47` | `bcc8bcc564f989aa78eea2bb5c1a170b4fa08a5d67bce1243477b587eee1008e` |
 
-最终 `automated-qualification.json` 核对当前源码、ZIP、安装副本及锁定 wheel 摘要一致；`automated-evidence-index.json` 将通过报告绑定至该 ZIP。它只证明列明的自动技术检查，整体验收以 `acceptance.json` 的 **Not Run** 为准。
+最终 `qualification.json` 核对源码、ZIP、安装副本及锁定 wheel 摘要一致；`evidence-index.json` 将自动检查、GUI 点击和 GUI 工程双冷重开报告绑定至该 ZIP。首批技术验收汇总 `acceptance.json` 为 **Passed**。原有 `automated-qualification.json` 及其索引保留，继续只证明其中列明的自动技术检查。
 
 ## 技术证据
 
@@ -34,16 +36,33 @@
 
 同名不同 SHA、同源不同 `selected_job` 的**字段候选**与实际选择，使用明确标注的合成 Dataset 验证。真实 Gaussian 多段字段链路为 **Not Run**：现有 Log reader 导入构型与性质，不提供场求值所需的基组/MO 数组；本轮未扩大输入支持，不能把合成字段身份测试写成真实量化计算。
 
-最终科学回归 **48 项 Passed**、复制策略 **7 项 Passed**；独立配置离线安装、运行库及 worker 检查 Passed。`features/evidence.blend` 和 `evidence.qcdata/` 保存 30 个视图、11 份 Dataset；关闭验收窗口后，两个新进程分别打开原工程和 `features/moved 中文 path/` 副本。来源、科学数组摘要、节点/材质值和对象变换一致，两次重新渲染通过。原生面板/对话框截图记录绘制结果，不能代替 Computer Use 点击。
+最终科学回归 **48 项 Passed**、复制策略 **7 项 Passed**；独立配置离线安装、运行库及 worker 检查 Passed。`features/evidence.blend` 和 `evidence.qcdata/` 保存 30 个视图、11 份 Dataset；关闭验收窗口后，两个新进程分别打开原工程和 `features/moved 中文 path/` 副本。来源、科学数组摘要、节点/材质值和对象变换一致，两次重新渲染通过。
 
-## 缺陷与待补验收
+## GUI 验收
+
+在 Blender 5.1.1 简体中文独立配置中，通过 Computer Use 实际点击新增入口；MCP 只负责场景准备、数值核对及证据保存。记录为 `gui-checks.json`，PNG 和可重开工程位于 `gui/`。
+
+| 操作 | 观察与核对 | 结果 |
+| --- | --- | --- |
+| 分组参数与命名样式 | 密度表面从线框切为实体，节点样式 1 → 0，求值网格 2370 顶点；密度使用正值标签，轨道显示正相位/负相位。 | Passed |
+| 显式选择着色场 | 选择器显示文件、完整 SHA、字段单位及轨道信息；同构型 ESP 绑定成功且原范围保留。不同分子的 MO 字段被拒绝，原映射与对象数不变。 | Passed |
+| 一次性色标范围 | 输入 R=0.08 得到 −0.08/0/+0.08；点击有效范围读取后得到上述真实 ESP 全网格范围。 | Passed |
+| 显示参数复制 | 三个组选项默认选中；目标样式与色标跟随源，来源和对象变换保留。撤销恢复原值，编辑菜单重做恢复复制结果。不兼容目标报错且双方保持原状。 | Passed |
+
+GUI 操作结束后科学数组摘要与操作前完全一致。另存 `gui/evidence.blend + evidence.qcdata/` 后关闭本次验收进程，再由两个新进程打开原工程和 `gui/moved 中文 path/` 副本：30 个视图、11 份 Dataset 的来源、节点、材质、变换与数组均一致，重新渲染 **Passed**；见 `gui/checks.json`。既有用户 Blender 窗口保留。
+
+四个已合并工作树已归档至 `outputs/vmd-parameters/worktree-archives/`，逐文件摘要记录于 `manifest.json`，对应开发分支保留。主目录继续位于 `feat/vmd-parameters`。
+
+## 验收演进记录
 
 已修复：范围读取的完整色场身份校验、复制预检的失效常量、电荷着色的节点登记与旧工程兼容、自定义分支旁路标准节点。原子视图叠加电荷和网格两种着色会产生歧义图，现已在修改前拒绝。最终候选对受影响路径复验 Passed。
 
 `04-copy-r2` 的位置断言曾读取未更新的依赖图，修正脚本后确认对象变换保留；`04-copy-r3` 的样本访问受不同进程安全上下文限制，`04-copy-r4` 使用一致用户上下文。各旧目录及复现记录保留，不作为最终通过证据。
 
-Computer Use 未完成的原因是桌面访问失败：`GetCursorPos: Access denied (0x80070005)`；恢复尝试的截取仍返回 `IGraphicsCaptureItemInterop.CreateForMonitor: Could not capture the given monitor (0x80070057)`。待桌面解锁且显示会话可访问后，补验分组控件、着色选择、范围按钮、复制对话框及错误提示。MCP 操作已完成；整批待验，尚未创建通过标签。已合并工作树和分支保留，待最终验收后归档。
+桌面访问曾返回 `GetCursorPos 0x80070005` 和监视器捕获 `0x80070057`，当时未执行按钮输入；历史记录保留于 `desktop-recheck.json`。2026-09-28 桌面访问恢复后完成上述 GUI 点击与双冷重开，不再构成技术验收阻塞。
 
-续跑再次枚举了实际窗口并尝试恢复已保存的 Blender 窗口，仍报 `GetCursorPos 0x80070005`；刷新后窗口仍最小化，未执行按钮输入。记录在最终候选的 `desktop-recheck.json`。
+Computer Use 的 `Control_L+Shift_L+z` 输入在本次会话中产生了额外撤销，随后通过 Blender 的“编辑 → 重做”逐步恢复，并由 MCP 比较完整显示状态。重做验收依据菜单操作，不将该工具快捷键结果归因于插件。
+
+## 后置检查
 
 独立人工复做与签署：**Not Run**。VMD 实际运行及外部视觉对照：**Not Run**。

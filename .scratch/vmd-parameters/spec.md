@@ -1,6 +1,6 @@
 # VMD 参数交互首批
 
-Status: claimed
+Status: resolved
 Triage: ready-for-agent
 Type: task
 
@@ -23,7 +23,7 @@ Type: task
 01 面板：新 parameters.py 与 ui.py；主代理负责后续新 operator 入口集成。
 02 映射：scalars.py、source_browser.py，必要时 graph.py；暴露显式入口及唯一映射解析，复用现有 sample/color assets，不加载数组来绘制候选列表。
 03 范围：field_ranges.py、worker.py、专用纯 Python 测试。内部 action `field_range` 接收 dataset、dataset_sha256、field_array；成功结果含 minimum/center/maximum/valid_count/quantity/unit/field_array/dataset_sha256。
-04 复制：第一包代码及 MCP/科学回归通过后另派子代理；公共图/UI 由主代理集成。桌面访问故障只暂停 Computer Use，作为整批最终验收待补项；不阻止其余独立实现，补齐前不记录整批 Passed 或创建通过标签。
+04 复制：第一包代码及 MCP/科学回归通过后另派子代理；公共图/UI 由主代理集成。四包在最终集成候选统一完成 Computer Use 验收；只有整批检查通过后创建本地技术标签。
 
 子代理使用 GPT-6 sol/high，各自工作树仅提交分配文件。不启动 Blender、不调用 bpy/MCP、不安装依赖。主代理按 01→02→03→04 集成并实际 Blender 验收。
 
@@ -31,7 +31,7 @@ Type: task
 
 同源多视图、同名不同源、不同计算段、密度/ESP；常量、无有效点、取消、源变化；单位不匹配、未知字段、共享材质、自定义图；错误无副作用；撤销/重做、保存、移动冷重开；数组摘要不变。Computer Use 确认新入口，MCP 重复操作和数值核对。每包独立 ZIP、安装副本和证据，状态统一 Passed / Failed / Not Run。
 
-当前记录：四包已集成，最终候选 `outputs/vmd-parameters/04-copy-r4/` 的自动技术检查 Passed；Computer Use 和整批验收 Not Run。真实 Gaussian 两段 Log 的显示层身份、参数复制及振动状态保留已通过并完成双冷重开。不同计算段的字段候选身份经合成 Dataset 的实际 Blender 路径验证；真实多段字段链路未验证，现有 Log reader 不提供基组/MO 场求值数据。详情见 `docs/acceptance/vmd-parameters.md`，不能用合成字段身份测试替代真实计算证据。
+当前记录：四包已集成，最终候选 `outputs/vmd-parameters/04-copy-r4/` 的自动技术检查、Computer Use 和首批技术验收均 Passed，GUI 工程双冷重开 Passed。真实 Gaussian 两段 Log 的显示层身份、参数复制及振动状态保留已通过并完成双冷重开。不同计算段的字段候选身份经合成 Dataset 的实际 Blender 路径验证；真实多段字段链路未验证，现有 Log reader 不提供基组/MO 场求值数据。详情见 `docs/acceptance/vmd-parameters.md`，不能用合成字段身份测试替代真实计算证据。四个工作树已保全归档，开发分支保留。
 
 ## 后续
 
