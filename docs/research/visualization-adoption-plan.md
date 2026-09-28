@@ -77,7 +77,8 @@ IGMH/IRI 当前要求两场同网格，这是该导入器的合同；一般表�
 | 计算段选择、来源浏览 | Passed | 三项任务均 resolved，见 [结果浏览记录](../RESULT_BROWSER.md) |
 | Gaussian 优化轨迹浏览 | Passed | 独立视图逐步构型、能量、收敛与来源；25/25 科学回归、GUI/MCP、独立候选和移动冷重开，见 [技术记录](../OPTIMIZATION_TRAJECTORY.md) |
 | AIM/NOCV 校验、自动取景、场值线剖面 | Passed | 四项独立开发、逐批安装验收；最终候选 45/45 科学回归与完整技术 SOP 通过，见[技术记录](../acceptance/source-adoption.md) |
-| VMD 参数交互首批 | Not Run | 四包实现、48 项科学回归、安装、MCP 与双冷重开 Passed；Computer Use 因桌面访问失败待补，整批尚未通过，见[技术记录](../acceptance/vmd-parameters.md) |
+| VMD 参数交互首批 | Passed | 四包实现、48 项科学回归、安装、MCP、Computer Use 与双冷重开通过，见[技术记录](../acceptance/vmd-parameters.md) |
+| MolecularNodes 参数交互首批 | Not Run | 固定局部选择、真实步测量标注和图例排版已明确规格，实施进行中，见[研究记录](molecularnodes-parameters.md) |
 | 独立人工验收、外部视觉对照 | Not Run | 在本轮功能开发及技术验证之后执行，记录确切候选；人工签名由用户完成 |
 | 发布机制 | Not Run | 继续受人工验收和候选资格门槛约束 |
 
