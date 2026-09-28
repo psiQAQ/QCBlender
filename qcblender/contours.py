@@ -9,7 +9,7 @@ import numpy as np
 from .sampling import sample_point
 
 
-def levels_from_samples(values, valid, explicit=''):
+def levels_from_samples(values, valid, explicit='', mapping_range=None):
     samples = np.asarray(values, dtype=np.float64)[np.asarray(valid, dtype=bool)]
     if not len(samples) or not np.isfinite(samples).all():
         raise ValueError('The contour plane has no finite valid samples')
@@ -24,9 +24,14 @@ def levels_from_samples(values, valid, explicit=''):
         if len(set(levels)) != len(levels):
             raise ValueError('Contour levels must be distinct')
         return sorted(levels)
-    low, high = float(samples.min()), float(samples.max())
-    if low == high:
-        return []
+    if not isinstance(mapping_range, dict):
+        raise ValueError('Automatic contours need the selected field display range')
+    try:
+        low, center, high = (float(mapping_range[key]) for key in ('minimum', 'center', 'maximum'))
+    except (KeyError, TypeError, ValueError) as error:
+        raise ValueError('Selected field display range is incomplete') from error
+    if not all(np.isfinite((low, center, high))) or low >= high:
+        raise ValueError('Selected field display range must be finite and increasing')
     return np.linspace(low, high, 11, dtype=np.float64)[1:-1].tolist()
 
 
@@ -163,7 +168,7 @@ def contour_report(request, load_dataset, cancelled=lambda: False):
     plane = request['plane']
     positions = plane_positions(plane['origin'], plane['axis_u'], plane['axis_v'], plane['resolution'])
     values, valid = sample_plane(data, field, positions, cancelled)
-    levels = levels_from_samples(values, valid, request.get('levels', ''))
+    levels = levels_from_samples(values, valid, request.get('levels', ''), request.get('mapping_range'))
     paths = [{'level': level, 'lines': trace_contours(values, valid, positions, level, cancelled)}
              for level in levels]
     return {'status': 'succeeded', 'identity': request['identity'], 'levels': levels,

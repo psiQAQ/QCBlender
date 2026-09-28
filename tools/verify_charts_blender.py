@@ -40,6 +40,14 @@ assert bpy.ops.qcblender.color_palette(palette='RWB') == {'FINISHED'}
 charts._contour_defaults(slice_obj)
 slice_obj['qc_contour_enabled'] = True
 field_source, plane, identity = charts._state(slice_obj)
+modifier, socket_ids = charts.view_modifier(slice_obj), {
+    item.name: item.identifier for item in charts.view_modifier(slice_obj).node_group.interface.items_tree
+    if item.item_type == 'SOCKET' and item.in_out == 'INPUT'}
+minimum_id = socket_ids['Color Minimum']
+saved_minimum = modifier[minimum_id]
+modifier[minimum_id] = saved_minimum - .01
+assert charts._state(slice_obj)[2] != identity
+modifier[minimum_id] = saved_minimum
 binding = slice_obj['qc_color_source']
 changed = json.loads(binding)
 changed['field']['array'] = 'another_scalar_array'
@@ -56,13 +64,26 @@ finally:
 request = {'dataset': bpy.path.abspath(field_source['qc_dataset']),
            'dataset_sha256': field_source['qc_dataset_sha256'],
            'field': json.loads(field_source['qc_field']), 'plane': plane,
-           'levels': '', 'identity': identity}
+           'levels': '', 'mapping_range': plane['mapping_range'], 'identity': identity}
 report = contours.contour_report(request, storage.load_dataset)
-assert report['identity'] == identity and len(report['levels']) in (0, 9)
+assert report['identity'] == identity and len(report['levels']) == 9
+minimum, maximum = (plane['mapping_range'][key] for key in ('minimum', 'maximum'))
+np.testing.assert_allclose(report['levels'], np.linspace(minimum, maximum, 11)[1:-1])
 carrier = charts._draw_contours(slice_obj, field_source, plane, report)
 slice_obj['qc_contour_child'] = carrier.name
 slice_obj['qc_contour_identity'] = identity
 assert carrier.parent == slice_obj and carrier.data.bevel_depth == .02
+charts._hide_contours(slice_obj)
+assert carrier.hide_get() and not carrier['qc_contour_restore_viewport']
+charts._restore_contours(slice_obj, identity)
+assert not carrier.hide_get() and 'qc_contour_restore_viewport' not in carrier
+carrier.hide_set(True)
+carrier.hide_render = True
+charts._hide_contours(slice_obj)
+charts._restore_contours(slice_obj, identity)
+assert carrier.hide_get() and carrier.hide_render, 'User-hidden contour was restored by the watcher'
+carrier.hide_set(False)
+carrier.hide_render = False
 
 curve = bpy.data.curves.new('QC profile layout test', 'CURVE')
 curve.dimensions = '3D'
