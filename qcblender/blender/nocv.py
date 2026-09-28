@@ -20,7 +20,8 @@ class QCBLENDER_OT_import_nocv(AsyncOperation, bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and context.object.get('qc_analysis_role') == 'ets_nocv'
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'nocv_field')
 
     def invoke(self, context, event):
         return context.window_manager.invoke_props_dialog(self, width=520)
