@@ -166,7 +166,8 @@ class QCBLENDER_OT_fog(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and context.object.qc_settings.volume is not None
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'fog')
 
     def execute(self, context):
         fog_view(context.object)

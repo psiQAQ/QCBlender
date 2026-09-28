@@ -46,7 +46,8 @@ class QCBLENDER_OT_hydrogen_visibility(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and context.object.get('qc_view_kind') == 'atoms'
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'atoms')
 
     def invoke(self, context, event):
         if self.mode == 'KEEP':
@@ -200,7 +201,8 @@ class QCBLENDER_OT_add_surface(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and context.object.qc_settings.volume is not None
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'surface')
 
     def execute(self, context):
         import json

@@ -65,7 +65,8 @@ class QCBLENDER_OT_import_paired_field(AsyncOperation, bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and 'qc_dataset' in context.object
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'paired')
 
     def invoke(self, context, event):
         return context.window_manager.invoke_props_dialog(self, width=550)

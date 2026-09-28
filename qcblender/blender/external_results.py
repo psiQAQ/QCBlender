@@ -132,9 +132,8 @@ class QCBLENDER_OT_import_esp(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        if context.object is None or 'qc_field' not in context.object:
-            return False
-        return json.loads(context.object['qc_field'])['quantity'] == 'electrostatic_potential'
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'esp')
 
     def invoke(self, context, event):
         return context.window_manager.invoke_props_dialog(self, width=560)
@@ -176,7 +175,8 @@ class QCBLENDER_OT_import_aim(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and 'qc_dataset' in context.object
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'aim')
 
     def invoke(self, context, event):
         return context.window_manager.invoke_props_dialog(self, width=560)
@@ -217,7 +217,8 @@ class QCBLENDER_OT_import_ets(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and 'qc_dataset' in context.object
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'nocv_table')
 
     def invoke(self, context, event):
         return context.window_manager.invoke_props_dialog(self)
