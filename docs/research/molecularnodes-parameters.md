@@ -20,4 +20,4 @@
 
 固定局部选择 → 源编号与随真实计算步更新的距离/角/二面角场景标注 → 现有图例布局。科学数组、坐标单位、来源身份和工程格式不变。实现和验收合同见 [规格](../../.scratch/molecularnodes-parameters/spec.md)。
 
-源码与官方文档核对 Passed；A 固定局部选择的 Blender 技术验收 Passed，B/C 集成验收 Not Run，见 [技术记录](../MOLECULARNODES_PARAMETERS.md)。MolecularNodes 实际运行对照、独立人工验收与外部视觉对照 Not Run，继续后置。网页存档的逐文件 URL、章节、日期和摘要见本地 `submodules/MolecularNodes/reference-docs/sources.json`。
+源码与官方文档核对 Passed；A 固定局部选择、B 真实步测量标注、C 图例排版及最终候选 C01–C13 六栏、N01–N18 完整技术 SOP 均 Passed，见 [技术记录](../MOLECULARNODES_PARAMETERS.md)。MolecularNodes 实际运行对照、独立人工验收与外部视觉对照 Not Run，继续后置。网页存档的逐文件 URL、章节、日期和摘要见本地 `submodules/MolecularNodes/reference-docs/sources.json`。

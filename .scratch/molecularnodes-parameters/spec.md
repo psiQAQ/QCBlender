@@ -39,4 +39,6 @@ A→B→C 普通合并。每包独立 ZIP、锁定 wheel SHA、源码与安装�
 
 ## Comments
 
+- 2026-09-28 A/B/C 独立候选技术验收 Passed；最终 C 候选完整 C01–C13 六栏和 N01–N18 Passed，证据与候选摘要见 `docs/MOLECULARNODES_PARAMETERS.md`。独立人工签署、MolecularNodes 实际运行及外部视觉对照 Not Run。
+
 - 2026-09-28: 实施启动；基线合并完成；独立 MCP Windows Blender 5.1.1 查询通过。公共接口科学检查待执行，A/B/C Blender 检查 Not Run。
