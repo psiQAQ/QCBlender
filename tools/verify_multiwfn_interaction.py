@@ -70,7 +70,7 @@ def make_cube(out):
     path.write_text('\n'.join(lines) + '\n', encoding='ascii')
     data = module('cube').read_cube(path)
     field = data.metadata['fields'][0]
-    field.update(quantity='electron_number_density', unit='electron/bohr^3', role='geometry',
+    field.update(quantity='electron_number_density', unit='electron/bohr^3',
                  interpretation='user_assigned', vdb='field.vdb')
     directory = out / 'affine-source'
     directory.mkdir(exist_ok=True)
@@ -100,7 +100,7 @@ def check_real_c07():
     np.testing.assert_allclose(sampled, direct, rtol=0, atol=1e-12)
     world = volume.matrix_world @ Vector(point)
     np.testing.assert_allclose(module('profile').source_positions(world, world, volume.matrix_world)[0],
-                               point, rtol=0, atol=1e-9)
+                               point, rtol=0, atol=2e-6)
     return {'source_sha256': source['sha256'], 'sample': sampled, 'unit': field['unit']}
 
 
@@ -179,6 +179,7 @@ def check_planes(out):
     assert bpy.ops.qcblender.create_slice() == {'FINISHED'}
     target = bpy.context.object
     target.name = 'Interaction parameter target'
+    assert bpy.ops.qcblender.define_slice_plane(mode='jk', position=.5) == {'FINISHED'}
     activate(section)
     target.select_set(True)
     assert bpy.ops.qcblender.copy_display_parameters() == {'FINISHED'}
@@ -193,10 +194,11 @@ def check_planes(out):
     sample_point = np.array((1.2, 1.3, 1.4)) @ np.asarray(field['steps'])
     world = volume.matrix_world @ Vector(sample_point)
     source_point = module('profile').source_positions(world, world, volume.matrix_world)[0]
-    np.testing.assert_allclose(source_point, sample_point, atol=1e-9)
+    # Blender Matrix/Vector are float32; retain tight double precision checks above for raw arrays.
+    np.testing.assert_allclose(source_point, sample_point, atol=2e-6)
     value = module('sampling').sample_point(data.arrays[field['array']],
                                              data.arrays[field['valid_mask']], field, source_point)
-    np.testing.assert_allclose(value, 1.2 + 2*1.3 + 3*1.4, atol=1e-9)
+    np.testing.assert_allclose(value, 1.2 + 2*1.3 + 3*1.4, atol=1e-5)
     assert evidence.hashes() == baseline, 'Plane controls changed scientific arrays'
     return {'frames': frames, 'synthetic_sample': value,
             'objects': [section.name, duplicated.name, target.name, atoms.name, source.name]}

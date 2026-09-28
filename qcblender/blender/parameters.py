@@ -17,14 +17,14 @@ _GEOMETRY = {
     'Selection', 'Element (0 = all)', 'First Atom (1-based)', 'Last Atom (0 = all)',
     'Isovalue', 'Link Thresholds', 'Negative Isovalue', 'Positive Phase', 'Negative Phase',
     'Adaptivity', 'Smooth Normals', 'Atom Radius', 'Bond Radius', 'VDW Scale',
-    'Wire Radius', 'Point Radius', 'Quality', 'Center', 'Rotation', 'Width', 'Height',
+    'Wire Radius', 'Point Radius', 'Quality',
     'Resolution', 'Show Displacement Vectors', 'Vector Radius',
 }
 _COLOR = {'Color Minimum', 'Color Center', 'Color Maximum',
           'Charge Minimum', 'Charge Center', 'Charge Maximum', 'Show Legend'}
 _MATERIAL = {'Material', 'Positive Material', 'Negative Material',
              'Positive Opacity', 'Negative Opacity'}
-_SPATIAL = {'Legend Position', 'Plane Enabled', 'Plane Origin', 'Plane Normal',
+_SPATIAL = {'Center', 'Rotation', 'Width', 'Height', 'Legend Position', 'Plane Enabled', 'Plane Origin', 'Plane Normal',
             'Box Enabled', 'Box Minimum', 'Box Maximum'}
 
 
@@ -116,6 +116,7 @@ if __name__ == '__main__':
     assert socket_group('Wire Radius', 'NodeSocketFloat', field) is None
     assert socket_group('Negative Isovalue', 'NodeSocketFloat', field, 'orbital_amplitude') == '几何表示'
     assert socket_group('Plane Origin', 'NodeSocketVector', {'Plane Enabled': False}) is None
+    assert socket_group('Center', 'NodeSocketVector', {}) == '空间观察'
     assert socket_group('custom_input', 'NodeSocketFloat', {}) == '高级参数'
     assert socket_group('Style (custom)', 'NodeSocketInt', {}) == '高级参数'
     assert socket_label('Negative Phase', 'orbital_amplitude') == '显示负相位'
