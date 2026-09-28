@@ -40,7 +40,7 @@ $scienceWheels = $scienceWheels | ForEach-Object { Join-Path "$PWD/outputs/wheel
 & $blenderPython -I tools/qualify_scientific_fields.py
 ```
 
-来源、版本、SHA-256 和许可证随 `tests/data/` 样本保存。许可边界不清晰的公开 Log 只下载到 `outputs/log-examples`，不作为扩展内容分发：
+来源、版本、SHA-256 和许可证随 `tests/data/` 样本保存。许可边界不清晰的公开 Log 只下载到 `tests/data/local/log-examples`，不作为扩展内容分发：
 
 ```powershell
 & $blenderPython -I tools/fetch_log_examples.py
@@ -106,3 +106,18 @@ $env:BLENDER_USER_RESOURCES = "$PWD/outputs/blender-acceptance"
 ## 开发问题记录
 
 实际故障、处理和复验状态见 [开发问题与复验记录](DEVELOPMENT_PITFALLS.md)。新增记录须区分已复现故障、静态发现和待验证推断。
+
+## 输入与阶段产物维护
+
+必要输入统一从 [SOURCES.md](v1-acceptance/SOURCES.md) 和 `tests/data/local-inputs.json` 定位。已有测试环境可直接复用，不必重复安装依赖：
+
+```powershell
+& $blenderPython -I tools/local_inputs.py
+& $blenderPython -I tools/run_science_tests.py --output outputs/current-check/science.json
+```
+
+`verify_results_blender.py --case C07 --check prepare --out <本批目录>`、`verify_multiwfn_interaction.py --mode prepare --out <本批目录>` 和 `verify_multiwfn_charts.py --mode prepare --out <本批目录>` 默认从集中输入重建；`--fixture` 仍可显式读取工程。`verify_multiwfn_foundation.py` 默认重建 core/nbo/analysis 场景，`--fixture-blend` 保持兼容。`verify_result_browser.py --use-installed` 可复用隔离安装，省略此项仍执行安装检查。原地和移动冷重开必须使用同次新生成的 `.blend + .qcdata`。
+
+本文件其余按步骤生成再重开的命令需要先运行对应生成步骤；历史输出不再作为可取得的固定依赖。需要候选时用 `build_extension.py --output-dir <本批目录/dist>` 重建并记录新摘要，再运行 `qualify_package.py --candidate <新ZIP>` 和实际安装检查；已有锁定 wheels、构建解释器及环境保留。
+
+阶段结束后按 [存储维护规则](agents/storage-maintenance.md) 留存用户工程、必要输入和日志。自动清理只覆盖用户已批准类别，清单之外的内容继续保留。

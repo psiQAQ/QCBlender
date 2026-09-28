@@ -4,7 +4,7 @@
 
 ## 打开与展示
 
-安装 `outputs/dist/qcblender-0.0.1.zip` 后打开以下场景。移动场景时必须同时复制同名 `.qcdata` 目录。PNG 和 MP4 可直接查看。
+历史场景和成片已纳入 [产物清理](acceptance/storage-cleanup.md)，下表路径用于定位旧报告，不保证文件仍存在。后续从 [集中输入](v1-acceptance/SOURCES.md) 按本页重建步骤生成场景；所需 ZIP 从当前源码构建并重新验证安装。移动新场景时必须同时复制同名 `.qcdata` 目录。
 
 | 案例 | 场景与成片 | 物理量与参数 |
 | --- | --- | --- |
@@ -39,7 +39,7 @@
 
 ## 来源与外部预处理
 
-[来源清单](../tests/data/complex-example-sources.json) 固定上游提交、URL、SHA-256 和仓库许可证。原始文件及许可证留在忽略的 `outputs/complex-examples/sources`。
+[来源清单](../tests/data/complex-example-sources.json) 固定上游提交、URL、SHA-256 和仓库许可证。原始文件及许可证留在忽略的 `tests/data/local/complex-examples`，统一索引见 [SOURCES.md](v1-acceptance/SOURCES.md)。
 
 - [cclib 测试数据](https://github.com/cclib/cclib/tree/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data)：DVB、色氨酸，BSD-3-Clause 仓库。
 - [ChemTools 数据](https://github.com/theochem/chemtools/tree/47c9fe255848b8dbc6f589beb738421f76401885/chemtools/data)：水二聚体及 NCIPLOT/ELF Cube，GPL-3.0-or-later 仓库。ELF 只登记为可选素材，不宣称新增其内置计算。
