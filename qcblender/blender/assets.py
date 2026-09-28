@@ -1,8 +1,30 @@
 """Unbound, composable geometry assets. All coordinates are in angstrom."""
 import bpy
 
-from .views import socket
+from .views import group_sockets, socket
 from .graph import arrange
+
+
+PANELS = {
+    'qc.sample.v1': (('Source', ('Volume',)), ('Sampling', ('Position',))),
+    'qc.atom_selection.v1': (('Selection', ('Selection', 'Element (0 = all)',
+                                          'First Atom (1-based)', 'Last Atom (0 = all)')),),
+    'qc.surface_style.v1': (('Source', ('Geometry',)),
+                            ('Representation', ('Style (0 solid, 1 wire, 2 points)',
+                                                'Wire Radius', 'Point Radius', 'Quality'))),
+    'qc.atom_style.v1': (('Source', ('Geometry', 'Selection')),
+                         ('Representation', ('Style (0 ball-stick, 1 space-fill, 2 bonds)',
+                                             'Atom Radius', 'Bond Radius', 'VDW Scale', 'Quality')),
+                         ('Material', ('Material',))),
+    'qc.slice.v1': (('Placement', ('Center', 'Rotation')),
+                   ('Grid', ('Width', 'Height', 'Resolution'))),
+    'qc.color_scalar.v2': (('Source', ('Geometry', 'Value', 'Valid')),
+                           ('Range', ('Color Minimum', 'Color Center', 'Color Maximum')),
+                           ('Material', ('Material',))),
+    'qc.clip.v1': (('Source', ('Geometry',)),
+                   ('Plane', ('Plane Enabled', 'Plane Origin', 'Plane Normal')),
+                   ('Box', ('Box Enabled', 'Box Minimum', 'Box Maximum'))),
+}
 
 
 def asset(key, title, inputs, outputs=(('Geometry', 'NodeSocketGeometry'),)):
@@ -15,8 +37,7 @@ def asset(key, title, inputs, outputs=(('Geometry', 'NodeSocketGeometry'),)):
         socket(tree, name, kind, default=default)
     for name, kind in outputs:
         socket(tree, name, kind, 'OUTPUT')
-    tree.asset_mark()
-    tree.asset_data.description = title + '; source data remains unchanged; coordinates in angstrom'
+    group_sockets(tree, PANELS[key])
     return tree, tree.nodes.new('NodeGroupInput'), tree.nodes.new('NodeGroupOutput')
 
 
