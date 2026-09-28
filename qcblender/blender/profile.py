@@ -7,7 +7,8 @@ from bpy_extras.io_utils import ExportHelper
 import numpy as np
 
 from ..data import load_dataset
-from ..profile import export_profile_csv, sample_profile, source_positions, valid_runs
+from ..profile import export_profile_csv, sample_profile, source_positions
+from ..plot_layout import DEFAULT_LAYOUT, profile_layout
 from .source_browser import color_volume, read_metadata
 from .views import bind, material
 
@@ -37,31 +38,100 @@ def profile_source(obj, role):
 def profile_curve(directory, data, location):
     arrays = data.arrays
     valid = arrays['profile_valid']
-    values = arrays['profile_values'][valid]
-    low, high = float(values.min()), float(values.max())
-    span = high - low or 1.
     length = float(arrays['profile_distance'][-1])
     curve = bpy.data.curves.new('QC line profile', 'CURVE')
     curve.dimensions = '3D'
-    curve.bevel_depth = .02
     curve.bevel_resolution = 2
-    for start, stop in valid_runs(valid):
-        spline = curve.splines.new('POLY')
-        spline.points.add(stop - start - 1)
-        for point, distance, value in zip(spline.points, arrays['profile_distance'][start:stop],
-                                          arrays['profile_values'][start:stop]):
-            point.co = (4 * float(distance) / length, 0, 3 * (float(value) - low) / span, 1)
     curve.materials.append(material('QC line profile', (.12, .34, .78, 1)))
     obj = bpy.data.objects.new('QC line profile', curve)
     bpy.context.collection.objects.link(obj)
     obj.location = location
     bind(obj, directory, data)
     obj['qc_view_kind'] = 'profile'
+    for key, value in DEFAULT_LAYOUT.items():
+        obj['qc_profile_' + key] = value
     obj['qc_chart'] = json.dumps({'x': 'distance along profile', 'x_unit': 'angstrom',
                                   'x_min': 0., 'x_max': length, 'y_unit': data.metadata['profile']['field']['unit'],
-                                  'y_min': low, 'y_max': high, 'sample_count': len(valid),
+                                  'y_min': 0., 'y_max': 1., 'sample_count': len(valid),
                                   'valid_count': int(valid.sum())})
+    layout = apply_profile_layout(obj, data)
+    for axis in 'xy':
+        obj['qc_profile_' + axis + '_min'], obj['qc_profile_' + axis + '_max'] = layout[axis + '_range']
     return obj
+
+
+def cleanup_profile_ticks(owner):
+    """Remove the generated labels before replacing or deleting a profile view."""
+    for child in tuple(owner.children):
+        if not child.get('qc_profile_tick'):
+            continue
+        text = child.data
+        bpy.data.objects.remove(child, do_unlink=True)
+        if text.users == 0:
+            bpy.data.curves.remove(text)
+
+
+def copy_profile_ticks(source, target, collection):
+    """Copy saved chart labels without reopening its scientific Dataset."""
+    for child in tuple(source.children):
+        if not child.get('qc_profile_tick'):
+            continue
+        copied = child.copy()
+        copied.data = child.data.copy()
+        collection.objects.link(copied)
+        copied.parent = target
+
+
+def apply_profile_layout(obj, data):
+    """Rebuild only chart geometry and tick text from the saved profile samples."""
+    arrays = data.arrays
+    layout = profile_layout(arrays['profile_distance'], arrays['profile_values'],
+                            arrays['profile_valid'],
+                            {key: obj.get('qc_profile_' + key, value)
+                             for key, value in DEFAULT_LAYOUT.items()})
+    curve = obj.data
+    curve.splines.clear()
+    curve.bevel_depth = layout['line_width']
+
+    def add_path(points):
+        spline = curve.splines.new('POLY')
+        spline.points.add(len(points) - 1)
+        for vertex, position in zip(spline.points, points):
+            vertex.co = (*position, 1.)
+
+    for path in layout['paths']:
+        add_path(path)
+    add_path(((0., 0., 0.), (layout['width'], 0., 0.)))
+    add_path(((0., 0., 0.), (0., 0., layout['height'])))
+    for _, x, _ in layout['x_ticks']:
+        add_path(((x, 0., 0.), (x, 0., -.08)))
+    for _, y, _ in layout['y_ticks']:
+        add_path(((0., 0., y), (-.08, 0., y)))
+
+    cleanup_profile_ticks(obj)
+
+    def label(body, position, size=.14):
+        text = bpy.data.curves.new('QC profile label', 'FONT')
+        text.body, text.size = body, size
+        text.materials.append(curve.materials[0])
+        child = bpy.data.objects.new('QC profile label', text)
+        bpy.context.collection.objects.link(child)
+        child.parent = obj
+        child.location = position
+        child.rotation_euler.x = 1.5707963267948966
+        child['qc_profile_tick'] = True
+
+    for _, x, caption in layout['x_ticks']:
+        label(caption, (x-.1, 0., -.28))
+    for _, y, caption in layout['y_ticks']:
+        label(caption, (-.62, 0., y-.06))
+    label('Distance (Å)', (layout['width']/2-.5, 0., -.55))
+    label(data.metadata['profile']['field']['unit'], (-.62, 0., layout['height']+.18))
+    chart = json.loads(obj['qc_chart'])
+    chart.update(x_min=layout['x_range'][0], x_max=layout['x_range'][1],
+                 y_min=layout['y_range'][0], y_max=layout['y_range'][1])
+    obj['qc_chart'] = json.dumps(chart)
+    return layout
 
 
 class QCBLENDER_OT_mark_profile_start(bpy.types.Operator):
