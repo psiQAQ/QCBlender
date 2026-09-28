@@ -16,7 +16,7 @@ from ..sampling import sample_point
 from .graph import view_modifier
 from .geometry import current_geometry
 from .profile import profile_source
-from .source_browser import bound_field, mapped_field
+from .source_browser import binding_key, bound_field, field_source, mapped_field
 
 
 def slice_controls(obj):
@@ -294,12 +294,31 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
 
     def invoke(self, context, event):
         try:
-            bound_field(context.object)
-            if self.role == 'COLOR':
-                mapped_field(context.object)
             self._target = context.object
+            self._geometry, self._geometry_field, geometry_meta, self._geometry_source = bound_field(self._target)
+            if self.role == 'COLOR':
+                _, _, sample_meta = mapped_field(self._target)
+            else:
+                sample_meta = geometry_meta
             self._source, self._field = profile_source(self._target, self.role)
+            self._field_source = field_source(sample_meta, self._field)
+            if not self._field_source.get('sha256'):
+                raise ValueError('Sampled field source identity is missing')
+            self._geometry_meta = geometry_meta
+            self._sample_meta = sample_meta
+            self._target_binding = binding_key(self._target)
+            self._geometry_binding = binding_key(self._geometry)
+            self._source_binding = binding_key(self._source)
+            self._target_job = self._target.get('qc_source_job', -1)
+            self._geometry_job = self._geometry.get('qc_source_job', -1)
+            self._source_job = self._source.get('qc_source_job', -1)
+            if (self._target_job != geometry_meta.get('selected_job', -1)
+                    or self._geometry_job != geometry_meta.get('selected_job', -1)
+                    or self._source_job != sample_meta.get('selected_job', -1)):
+                raise ValueError('Field calculation identity differs from its Dataset')
             self._data = load_dataset(bpy.path.abspath(self._source['qc_dataset']))
+            if self._data.metadata != sample_meta or binding_key(self._source) != self._source_binding:
+                raise ValueError('Sampled field Dataset changed while the probe started')
         except (ValueError, OSError, KeyError, TypeError) as error:
             self.report({'ERROR'}, str(error))
             return {'CANCELLED'}
@@ -307,6 +326,7 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
         if 'qc_probe' in self._target:
             del self._target['qc_probe']
         self._pending = None
+        self._pending_transforms = None
         self._area = context.area
         self._region = next((region for region in self._area.regions if region.type == 'WINDOW'), None)
         self._view = self._area.spaces.active.region_3d
@@ -329,11 +349,24 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
     def _check_binding(self, context):
         if context.object != self._target or self._target.hide_get():
             raise ValueError('Active surface changed or is hidden')
-        bound_field(self._target)
+        geometry, geometry_field, geometry_meta, geometry_source = bound_field(self._target)
         if self.role == 'COLOR':
-            mapped_field(self._target)
+            _, _, sample_meta = mapped_field(self._target)
+        else:
+            sample_meta = geometry_meta
         source, field = profile_source(self._target, self.role)
-        if source != self._source or field != self._field:
+        if (geometry != self._geometry or geometry_field != self._geometry_field
+                or source != self._source or field != self._field
+                or binding_key(self._target) != self._target_binding
+                or binding_key(geometry) != self._geometry_binding
+                or binding_key(source) != self._source_binding
+                or self._target.get('qc_source_job', -1) != self._target_job
+                or geometry.get('qc_source_job', -1) != self._geometry_job
+                or source.get('qc_source_job', -1) != self._source_job
+                or geometry_meta != self._geometry_meta
+                or geometry_source != self._geometry_source
+                or sample_meta != self._sample_meta
+                or field_source(sample_meta, field) != self._field_source):
             raise ValueError('Field binding changed during probe')
 
     def modal(self, context, event):
@@ -351,8 +384,13 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
                 return {'RUNNING_MODAL'}
             try:
                 self._check_binding(context)
+                if any(not np.array_equal(saved, np.asarray(obj.matrix_world))
+                       for saved, obj in zip(self._pending_transforms,
+                                             (self._target, self._geometry, self._source))):
+                    raise ValueError('Field transform changed after the sample')
             except (ValueError, OSError, KeyError, TypeError) as error:
                 self._pending = None
+                self._pending_transforms = None
                 self._hud = 'QC probe invalid: ' + str(error)
                 self._area.tag_redraw()
                 return {'RUNNING_MODAL'}
@@ -364,6 +402,7 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
         if event.type != 'LEFTMOUSE' or event.value != 'PRESS':
             return {'RUNNING_MODAL'}
         self._pending = None
+        self._pending_transforms = None
         try:
             self._check_binding(context)
             field = self._field
@@ -388,11 +427,15 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
             record = {'value': float(value), 'unit': field['unit'], 'quantity': field['quantity'],
                       'field_role': self.role, 'source_position_angstrom': position.tolist(),
                       'world_position': [float(v) for v in world], 'interpolation': 'trilinear',
-                      'source_sha256': self._source['qc_source_sha256'],
+                      'source_sha256': self._field_source['sha256'],
+                      'field_source': self._field_source,
+                      'dataset_source_sha256': self._source['qc_source_sha256'],
                       'dataset_sha256': self._source['qc_dataset_sha256'],
-                      'source_job': self._source.get('qc_source_job', -1),
+                      'source_job': self._sample_meta.get('selected_job', -1),
                       'field': field}
             self._pending = record
+            self._pending_transforms = tuple(np.asarray(obj.matrix_world).copy()
+                                             for obj in (self._target, self._geometry, self._source))
             xyz = ', '.join(f'{float(v):.4g}' for v in position)
             world_xyz = ', '.join(f'{float(v):.4g}' for v in world)
             self._hud = (f"QC probe valid: {field['quantity']} = {value:.8g} {field['unit']}; Enter saves\n"
