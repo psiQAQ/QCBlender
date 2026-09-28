@@ -175,6 +175,7 @@ def copy_layer(source, collection):
             from .profile import copy_profile_ticks
             copy_profile_ticks(source, obj, collection)
     except (ValueError, KeyError, OSError, TypeError):
+        cleanup_result_children(obj)
         bpy.data.objects.remove(obj, do_unlink=True)
         raise
     return obj
@@ -185,6 +186,10 @@ def cleanup_result_children(obj):
         if not (child.get('qc_result_focus') or child.get('qc_result_label')):
             continue
         cleanup_result_children(child)
+        for attached in tuple(child.children):
+            world = attached.matrix_world.copy()
+            attached.parent = obj
+            attached.matrix_world = world
         data = child.data
         groups = [modifier.node_group for modifier in child.modifiers
                   if modifier.type == 'NODES' and modifier.node_group]
