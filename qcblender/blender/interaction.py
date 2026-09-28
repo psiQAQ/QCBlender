@@ -4,7 +4,7 @@ import json
 
 import bpy
 from bpy.app.handlers import persistent
-from bpy.props import EnumProperty, FloatProperty, IntProperty, PointerProperty
+from bpy.props import EnumProperty, FloatProperty, IntProperty, StringProperty
 from bpy_extras import view3d_utils
 from mathutils import Matrix, Vector
 import numpy as np
@@ -205,7 +205,7 @@ class QCBLENDER_OT_define_plane(bpy.types.Operator):
     atom_1: IntProperty(name='First source atom', default=1, min=1)
     atom_2: IntProperty(name='Second source atom', default=2, min=1)
     atom_3: IntProperty(name='Third source atom', default=3, min=1)
-    configuration: PointerProperty(name='Associated atom view', type=bpy.types.Object)
+    configuration: StringProperty(name='Associated atom view')
 
     @classmethod
     def poll(cls, context):
@@ -217,8 +217,9 @@ class QCBLENDER_OT_define_plane(bpy.types.Operator):
         self.mode = record.get('mode', 'ij')
         self.position = record.get('position', .5)
         numbers = record.get('source_numbers', [1, 2, 3])
-        if len(numbers) == 3:
+        if numbers and len(numbers) == 3:
             self.atom_1, self.atom_2, self.atom_3 = numbers
+        self.configuration = record.get('configuration', '')
         return context.window_manager.invoke_props_dialog(self)
 
     def draw(self, context):
@@ -226,7 +227,7 @@ class QCBLENDER_OT_define_plane(bpy.types.Operator):
         if self.mode in ('ij', 'jk', 'ki'):
             self.layout.prop(self, 'position')
         elif self.mode == 'atoms':
-            self.layout.prop(self, 'configuration')
+            self.layout.prop_search(self, 'configuration', bpy.data, 'objects')
             for name in ('atom_1', 'atom_2', 'atom_3'):
                 self.layout.prop(self, name)
 
@@ -241,7 +242,7 @@ class QCBLENDER_OT_define_plane(bpy.types.Operator):
             source_to_view = obj.matrix_world.inverted() @ volume.matrix_world
             atoms = numbers = atom_to_view = None
             if self.mode == 'atoms':
-                atom_view = self.configuration
+                atom_view = bpy.data.objects.get(self.configuration)
                 if atom_view is None or atom_view.get('qc_view_kind') != 'atoms':
                     raise ValueError('Choose an associated atom view')
                 atom_data = load_dataset(bpy.path.abspath(atom_view['qc_dataset']))
@@ -262,7 +263,7 @@ class QCBLENDER_OT_define_plane(bpy.types.Operator):
             for name, value in (('Center', center), ('Rotation', rotation), ('Width', width), ('Height', height)):
                 modifier[sockets[name]] = tuple(float(v) for v in value) if name in ('Center', 'Rotation') else float(value)
             save_plane_definition(obj, self.mode, self.position, numbers,
-                                  self.configuration if self.mode == 'atoms' else None)
+                                  atom_view if self.mode == 'atoms' else None)
             obj.data.update()
             obj.update_tag()
         except (ValueError, OSError, KeyError, TypeError, np.linalg.LinAlgError) as error:
