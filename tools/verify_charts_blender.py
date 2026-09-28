@@ -39,6 +39,7 @@ assert bpy.ops.qcblender.color_palette(palette='RWB') == {'FINISHED'}
 
 charts._contour_defaults(slice_obj)
 slice_obj['qc_contour_enabled'] = True
+slice_obj['qc_contour_labels'] = True
 field_source, plane, identity = charts._state(slice_obj)
 modifier, socket_ids = charts.view_modifier(slice_obj), {
     item.name: item.identifier for item in charts.view_modifier(slice_obj).node_group.interface.items_tree
@@ -69,21 +70,48 @@ report = contours.contour_report(request, storage.load_dataset)
 assert report['identity'] == identity and len(report['levels']) == 9
 minimum, maximum = (plane['mapping_range'][key] for key in ('minimum', 'maximum'))
 np.testing.assert_allclose(report['levels'], np.linspace(minimum, maximum, 11)[1:-1])
-carrier = charts._draw_contours(slice_obj, field_source, plane, report)
+sample_line = [plane['origin'],
+               list(np.asarray(plane['origin']) + .2 * np.asarray(plane['axis_u']))]
+draw_report = dict(report, paths=[{'level': report['levels'][0], 'lines': [sample_line]}])
+carrier = charts._draw_contours(slice_obj, field_source, plane, draw_report)
 slice_obj['qc_contour_child'] = carrier.name
 slice_obj['qc_contour_identity'] = identity
 assert carrier.parent == slice_obj and carrier.data.bevel_depth == .02
+label = next(child for child in carrier.children if child.get('qc_contour_label'))
+offset = np.asarray(label.location) - np.asarray(sample_line[1])
+normal = np.cross(plane['axis_u'], plane['axis_v'])
+normal /= np.linalg.norm(normal)
+assert .001 < np.linalg.norm(offset) < .031
+np.testing.assert_allclose(offset / np.linalg.norm(offset), normal)
+unrelated = bpy.data.objects.new('Unrelated contour child', None)
+bpy.context.collection.objects.link(unrelated)
+unrelated.parent = carrier
 charts._hide_contours(slice_obj)
 assert carrier.hide_get() and not carrier['qc_contour_restore_viewport']
+assert label.hide_get() and label.hide_render
+assert not unrelated.hide_get() and not unrelated.hide_render
 charts._restore_contours(slice_obj, identity)
 assert not carrier.hide_get() and 'qc_contour_restore_viewport' not in carrier
+assert not label.hide_get() and not label.hide_render
+
+label.hide_set(True)
+label.hide_render = True
+charts._hide_contours(slice_obj)
+charts._restore_contours(slice_obj, identity)
+assert label.hide_get() and label.hide_render, 'User-hidden label was restored by the watcher'
+label.hide_set(False)
+label.hide_render = False
+
 carrier.hide_set(True)
 carrier.hide_render = True
 charts._hide_contours(slice_obj)
 charts._restore_contours(slice_obj, identity)
 assert carrier.hide_get() and carrier.hide_render, 'User-hidden contour was restored by the watcher'
+assert label.hide_get() and label.hide_render, 'Visible label escaped its hidden carrier'
 carrier.hide_set(False)
 carrier.hide_render = False
+charts._restore_contours(slice_obj, identity)
+assert not label.hide_get() and not label.hide_render
 
 curve = bpy.data.curves.new('QC profile layout test', 'CURVE')
 curve.dimensions = '3D'
