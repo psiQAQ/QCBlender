@@ -11,6 +11,18 @@ from qcblender.blender import assets
 group = assets.selection_group()
 assert assets.selection_group() == group
 assert group['qc_asset_id'] == 'qc.atom_selection.v1'
+# Public v1 contract, fixed from the 47fd82c compatibility snapshot.
+expected_interface = [
+    ('Selection', 'Socket_0', 'INPUT', 'NodeSocketBool', True),
+    ('Element (0 = all)', 'Socket_1', 'INPUT', 'NodeSocketInt', 0),
+    ('First Atom (1-based)', 'Socket_2', 'INPUT', 'NodeSocketInt', 1),
+    ('Last Atom (0 = all)', 'Socket_3', 'INPUT', 'NodeSocketInt', 0),
+    ('Selection', 'Socket_4', 'OUTPUT', 'NodeSocketBool', False)]
+actual_interface = sorted(
+    [(s.name, s.identifier, s.in_out, s.socket_type, s.default_value)
+     for s in group.interface.items_tree if s.item_type == 'SOCKET'],
+    key=lambda item: item[1])
+assert actual_interface == expected_interface, actual_interface
 identifiers = [(s.name, s.identifier) for s in group.interface.items_tree
                if s.item_type == 'SOCKET']
 mesh = bpy.data.meshes.new('Selection check')
@@ -30,16 +42,24 @@ tree.links.new(source.outputs['Geometry'], separate.inputs['Geometry'])
 tree.links.new(selection.outputs['Selection'], separate.inputs['Selection'])
 tree.links.new(separate.outputs['Selection'], output.inputs['Geometry'])
 obj.modifiers.new('Selection check', 'NODES').node_group = tree
-for element, first, last, enabled, expected in [
-        (0, 1, 0, True, 3), (6, 1, 0, True, 1), (0, 2, 2, True, 1),
-        (8, 1, 2, True, 0), (0, 3, 2, True, 0), (0, 1, 0, False, 0)]:
+for element, first, last, enabled, expected_ids in [
+        (0, 1, 0, True, [0, 1, 2]), (6, 1, 0, True, [0]),
+        (8, 1, 0, True, [2]), (0, 2, 2, True, [1]),
+        (8, 1, 2, True, []), (0, 3, 2, True, []), (0, 1, 0, False, [])]:
     for name, value in zip(('Element (0 = all)', 'First Atom (1-based)',
                             'Last Atom (0 = all)', 'Selection'), (element, first, last, enabled)):
         selection.inputs[name].default_value = value
     obj.update_tag()
     bpy.context.view_layer.update()
     evaluated = obj.evaluated_get(bpy.context.evaluated_depsgraph_get())
-    assert len(evaluated.data.vertices) == expected
+    assert len(evaluated.data.vertices) == len(expected_ids)
+    actual_ids = []
+    if expected_ids:
+        attribute = evaluated.data.attributes.get('qc_atom_id')
+        assert attribute is not None, 'Source atom IDs missing from selection'
+        assert (attribute.data_type, attribute.domain) == ('INT', 'POINT')
+        actual_ids = sorted(item.value for item in attribute.data)
+    assert actual_ids == expected_ids, (element, first, last, enabled, actual_ids, expected_ids)
 assert identifiers == [(s.name, s.identifier) for s in group.interface.items_tree
                        if s.item_type == 'SOCKET']
 number = assets.math(tree, 'ADD', True, 2.5)
@@ -53,4 +73,4 @@ except TypeError:
     pass
 else:
     raise AssertionError('Non-socket input accepted')
-print('NODE_HELPERS_PASSED: selection, identifiers, reuse, numeric/socket inputs, invalid input')
+print('NODE_HELPERS_PASSED: atom IDs, v1 interface, identifiers, reuse, numeric/socket inputs, invalid input')
