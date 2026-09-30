@@ -1,9 +1,9 @@
 {
   "schema": 1,
-  "date": "2026-09-30",
-  "status": "Not Run",
+  "date": "2026-10-01",
+  "status": "Passed",
   "technical_status": "Passed",
-  "scope": "Automated native qualification completed; integrated Computer Use walkthrough pending",
+  "scope": "Authorized technical acceptance through MCP registered operators, native dialogs, real window captures, C13 rendering and three new visible-process cold reopens; independent user walkthrough and scientific signature Not Run",
   "source": {
     "commit": "90ff9bf799aaa299225cd188ce8f05e1b6baf895",
     "repository_tree": "ef182da3d0e01aea89398d19539218b4da36807e",
@@ -98,7 +98,7 @@
     "sha256": "4a0ac3e46c163dd32a53057ddb2f4e414901d7c56b95d59aa6d17a8df3b739ca",
     "bytes": 50633596,
     "path_basis": "repository root",
-    "availability": "Available; latest technical candidate pending GUI and independent acceptance"
+    "availability": "Available; authorized MCP technical acceptance Passed, independent user acceptance Not Run"
   },
   "samples": {
     "manifest": "docs/v1-acceptance/tutorial-samples.json",
@@ -205,7 +205,7 @@
   "identity": {
     "user_current_batch": "Not Run",
     "agent_computer_use": "Not Run",
-    "new_candidate_mcp_data_checks": "Not Run",
+    "new_candidate_mcp_data_checks": "Passed",
     "native_script_data_checks": "Passed",
     "protected_old_user_session_mcp": "Passed; protection inspection only, not new-candidate acceptance",
     "independent_scientific_signature": {
@@ -213,6 +213,12 @@
       "name": "",
       "date": "",
       "signature": ""
+    },
+    "mcp_operations_and_data_checks": {
+      "status": "Passed",
+      "evidence": "mcp_integrated",
+      "mouse_clicks": "Not Run",
+      "independent_signature": "Not Run"
     }
   },
   "visible": {
@@ -642,7 +648,21 @@
   "historical": {
     "cleanup_index": "docs/acceptance/cleanup-validation.json",
     "state": "Separate historic source/candidate; no Passed inherited",
-    "node_layout_baseline": "Original pre-change baseline and code regression in outputs/runs/public-tutorial/nodes; node branch 94bf280, supplemental source validation"
+    "node_layout_baseline": "Original node branch 94bf280 evidence retained via outputs/evidence/2026-10-01/public-tutorial-mcp/cleanup-prep/preservation-mapping-final.json; old runs paths are historical and may be deleted.",
+    "native_reports_date": "2026-09-30",
+    "native_reports_scope": "Existing reports, command results and coverage counts are retained unchanged; these are not claimed as rerun in the 2026-10-01 MCP batch.",
+    "computer_use_blocker": {
+      "report": "computer-use-blocker.json",
+      "reports_base": "outputs/evidence/2026-09-30/public-tutorial",
+      "status": "Not Run",
+      "current_prerequisite": false,
+      "reason": "Historic unavailable Computer Use native pipe; latest explicit user authorization completes the technical scope through MCP instead."
+    },
+    "cleanup_pending_receipt": {
+      "report": "cleanup-pending.json",
+      "reports_base": "outputs/evidence/2026-09-30/public-tutorial",
+      "scope": "Historic pending receipt retained unchanged; current cleanup tracked separately by Task 06."
+    }
   },
   "reconstruction": [
     "Create a clean worktree at source.commit; use new, short batch paths and explicit BLENDER_USER_CONFIG/EXTENSIONS/DATAFILES.",
@@ -650,20 +670,13 @@
     "Obtain the public package and P02 via tutorial manifest/SOP. Verify every input SHA-256. Original calculation regeneration uses maintainer scripts and existing licensed tools, never plugin runtime dependencies.",
     "Run tracked sample/science/helper/asset/install/legend/profile/camera/optimization/browser tools. Local batch scripts and exact commands are preserved under reports_base; retarget output paths, preserve historical reports.",
     "Build a fresh candidate and rerun installed/cold/moved checks; generate a new evidence-index.json and qualify_package.py report. Do not claim ZIP byte reproducibility or reuse old Passed.",
-    "Resume actual Computer Use steps in the recorded visible process only after host connection recovery; MCP must target the new window. Save independent screenshots and case projects; user/scientific signature stays separate."
+    "Use a fresh visible Blender process for authorized MCP registered operators, actual native File Browser, real window capture/render and project cold-reopen checks; bind candidate/input hashes and preserve raw reports. User click records and independent scientific signatures remain separate."
   ],
   "blockers": [
     {
       "status": "Not Run",
-      "step": "Task 05 actual GUI / screenshot / new-candidate MCP checks",
-      "reason": "Computer Use native pipe is unavailable",
-      "evidence": "computer-use-blocker.json"
-    },
-    {
-      "status": "Not Run",
-      "step": "Task 06 final archive/worktree/branch/cache cleanup",
-      "reason": "Task 05 integrated acceptance not complete; tags/worktrees/profiles retained",
-      "receipt": "cleanup-pending.json"
+      "step": "Task 06 archive tags, normal worktree/branch removal and closing receipt",
+      "reason": "MCP technical acceptance and approved outputs cleanup passed; local repository closing steps in progress"
     }
   ],
   "preferences": {
@@ -676,9 +689,471 @@
     "02": "resolved",
     "03": "resolved",
     "04": "resolved",
-    "05": "claimed",
-    "06": "pending",
+    "05": "resolved",
+    "06": "claimed",
     "07": "resolved"
   },
-  "updated": "2026-10-01"
+  "updated": "2026-10-01",
+  "mcp_integrated": {
+    "date": "2026-10-01",
+    "status": "Passed",
+    "actor": "MCP operations and data checks",
+    "authorization": "Latest user authorization: complete remaining technical work through MCP without Computer Use",
+    "reports_base": "outputs/evidence/2026-10-01/public-tutorial-mcp",
+    "binding": {
+      "source_commit": "90ff9bf799aaa299225cd188ce8f05e1b6baf895",
+      "product_tree": "379d4a0c3dc4b5b42141a3a4423c2387ba8831e0",
+      "candidate_path": "outputs/candidates/current/public-tutorial-90ff9bf/qcblender-0.0.1.zip",
+      "candidate_sha256": "4a0ac3e46c163dd32a53057ddb2f4e414901d7c56b95d59aa6d17a8df3b739ca",
+      "candidate_bytes": 50633596,
+      "installed_python_files_checked": 68,
+      "samples_manifest_sha256": "8bfb6af1a1d12edee97a7fb8fb59a7e903fd19c4dc4eadd8b0babdeef1ca7b1a",
+      "samples_package_sha256": "a4ccfc3ef91921817d17284196ba23ccfb7cce7b1643cdfa41af8e8a6103f85b",
+      "input_sha256": {
+        "P01-o2-uhf": "ef562c4b210e7c380219282d7684370cca1f0e8349dffa1d4388af5831472e36",
+        "P03-water-dimer": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+        "P05-complex": "57f2f6c70b5ff468c2718e27e90827ab5beed175b80952942b8b441f4cf85479",
+        "P05-co": "eeebe9fc4dd4f19d5ef3216573ce39dc70ff0f5b20b7ff92c4abda78ec80eb63",
+        "P05-bh3": "d96b81b4623de934074a49f479690a8631145afafca76d4d5f5717b5863d19d3",
+        "P01-fch": "ef562c4b210e7c380219282d7684370cca1f0e8349dffa1d4388af5831472e36",
+        "P03-fch": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+        "P03-igmh-dg_inter.cub": "daf5a7e79c7dcc67b244f3dc1d2d314795c9f318c931e4f25d36e72ea168a28e",
+        "P03-igmh-sl2r.cub": "18a33c308c868c9f7747128f1a23c04fc69df37fd5b9681aa5dd35ef20997958",
+        "P03-iri-func2.cub": "f56bd9fddaaea4452a73c2d303262d90a34267370ea6ea68019d1f1d16a9bf61",
+        "P03-iri-func1.cub": "98efc19dd7ab101047c8f6176e24bc9651dbd47efae8a605cd2dd43d1754f5f4",
+        "P03-cube": "18a33c308c868c9f7747128f1a23c04fc69df37fd5b9681aa5dd35ef20997958",
+        "P03-esp-surfanalysis.pdb": "88aa4bc279308860e33f7462cd69a279b3eeb976ff2a46aa7797424c84a8673f",
+        "P03-esp-stdout.log": "f06e5c30e3a9fcf8e9f61b63ba1dd828aa3c512b0a5747d3e73877f0b921b7c0",
+        "P03-aim-CPs.pdb": "9d275abfd9128da4128da1d1752999741a62490ff0072fb0b4a11a56d25be1a1",
+        "P03-aim-paths.pdb": "9bf08cc0b4707f9dcc56957e8d125dbbd678a9d44a7e714fb739f65f22f32b7f",
+        "P03-aim-CPprop.txt": "e8381272fb737a522ce07dbbc3dbbc58dbdd1a1207555d10e7abbe474522699d",
+        "P04-steps.csv": "e364c78eb296bb63048f6ce6b64226b4ada40bce553e7bc2e05c70d8b198f1ba",
+        "P04-mayer-pyscf.csv": "3627fbb0c0e271882dd9852c94efd3f6691f724bb9636465edcfe52d362d65fc",
+        "P04-step-001.fchk": "c801d883cea1804103adc3ca5cf217922c531d65f4a0002cb604492e8980cb2d",
+        "P04-step-001-mayer-pyscf.txt": "c3f338abb2e16455520ad6307ac9d0bac3dd91dbd4e042212cc26c9bd1e69732",
+        "P04-step-002.fchk": "9c8cdd3b495694dce0ca59da58d823df2fc892ce70831477f6d0fca24a492219",
+        "P04-step-002-mayer-pyscf.txt": "96967cb1f1aeecfac0684edbb8f7b7d6b99ce92edd95afd54c42ca2793636c34",
+        "P04-step-003.fchk": "d09831388dcae43afdddb490a2aa6a091622849c05491f68617750f457d37d20",
+        "P04-step-003-mayer-pyscf.txt": "5dc0029ac64223d9adf14562092afc17439d18d65542eab0719ecedca06e1014",
+        "P05-ets-nocv.txt": "47e71830f05a745817d4a4c6f857b7bafaa4f5cf51fcede9f208dd13962c29be",
+        "P05-nocv-pair1.cub": "d6d3ec263d5173261791f997eabd78b8112f6685abc3bd851c70deec86a82e33",
+        "P02-water_neutral_nbo_opt_freq.out": "9493d24655fb261a2c945d292ad517567f3024996594a25f678199df74017519"
+      }
+    },
+    "coverage": {
+      "core_cases": {
+        "C01": "Passed",
+        "C02": "Passed",
+        "C03": "Passed",
+        "C04": "Passed",
+        "C05": "Passed",
+        "C06": "Passed",
+        "C07": "Passed",
+        "C08": "Passed",
+        "C09": "Passed",
+        "C10": "Passed",
+        "C11": "Passed",
+        "C12": "Passed",
+        "C13": "Passed"
+      },
+      "node_technical_checks": {
+        "N01": "Passed",
+        "N02": "Passed",
+        "N03": "Passed",
+        "N04": "Passed",
+        "N05": "Passed",
+        "N06": "Passed",
+        "N07": "Passed",
+        "N08": "Passed",
+        "N09": "Passed",
+        "N10": "Passed",
+        "N11": "Passed",
+        "N12": "Passed",
+        "N13": "Passed",
+        "N14": "Passed",
+        "N15": "Passed",
+        "N16": "Passed",
+        "N17": "Passed",
+        "N18": "Passed"
+      },
+      "case_window_captures": "13 real window captures; these are scene snapshots, not proof of every tutorial step or per-case full rendering",
+      "scientific_panel": "Actual QCBLENDER_PT_scientific native draw and window capture via MCP; no user click claim",
+      "rendered_cases": [
+        "C13"
+      ],
+      "log_job2_new_fchk_regression": "Passed; actual choose_log_job, ImportHelper File Browser reset and file.execute through worker/modal",
+      "portable_project": {
+        "status": "Passed",
+        "scientific_objects": 55,
+        "arrays": 1098,
+        "cold_reopen_loaded_volumes": 15
+      },
+      "full_tutorial_mouse_clicks": "Not Run",
+      "independent_user_acceptance": "Not Run",
+      "independent_scientific_signature": "Not Run"
+    },
+    "reports": {
+      "cases.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/cases.json",
+        "sha256": "285d962a5f890da16fc09904e7413d8de8d0fc4520539488ce5fff6fd69be3a3",
+        "bytes": 107279,
+        "reported_status": "Passed"
+      },
+      "nodes-report.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/nodes-report.json",
+        "sha256": "ac45b444c86fc5a39772e93c0742835f2df901c595d6a43cda9dc8462057e609",
+        "bytes": 114430
+      },
+      "screenshots.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/screenshots.json",
+        "sha256": "74b48842e7207bb824295996a3cc1b3c6933cdc5421b9ec5e60ebd63995d2c53",
+        "bytes": 4875
+      },
+      "scientific-panel-screenshot.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/scientific-panel-screenshot.json",
+        "sha256": "e0d48c22068cb2ccd5e774a98af5296452b6846e0b24e908ad9c84dc579fd0eb",
+        "bytes": 372,
+        "reported_status": "Passed"
+      },
+      "render-report.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/render-report.json",
+        "sha256": "ae2037d1c6f74d39ffc336559f62144f50bee44ebc5d91e7a3b3ba3fd41386a7",
+        "bytes": 353,
+        "reported_status": "Passed"
+      },
+      "regression-log-job2.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/regression-log-job2.json",
+        "sha256": "44f01a373c5ea9ef659ca85c5b11bc3f344882b65bf800d888ab3b9758180f56",
+        "bytes": 276,
+        "reported_status": "Passed"
+      },
+      "regression-fchk-dialog.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/regression-fchk-dialog.json",
+        "sha256": "fff09626923aec4751e3808996a35c08f1e93986880e98d798ddd47526a6929b",
+        "bytes": 346,
+        "reported_status": "Passed"
+      },
+      "regression-log-to-fchk.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/regression-log-to-fchk.json",
+        "sha256": "92211cd2820488d3fd5795300970948e66c18302b0e7c5b689408a37b58e0722",
+        "bytes": 737,
+        "reported_status": "Passed"
+      },
+      "save-report.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/save-report.json",
+        "sha256": "41fecf00edd6dd2266ec92594c4191d68bbfb804d14cc98c723db5b6ff67a214",
+        "bytes": 360,
+        "reported_status": "Passed"
+      },
+      "cold-original.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/cold-original.json",
+        "sha256": "6407f2c055455bcf7296380a54dd21dbf351ebab715372ab715de629f95a96cd",
+        "bytes": 9512,
+        "reported_status": "Passed"
+      },
+      "cold-moved.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/cold-moved.json",
+        "sha256": "e680fde10041263a1abdb8d862ff2ee3bbd50f6f3fb945873b41064423ad5092",
+        "bytes": 9534,
+        "reported_status": "Passed"
+      },
+      "cold-unpacked.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/cold-unpacked.json",
+        "sha256": "1482e38074ea674018ce7071fed00239bf08abfa8a9b922541714e1d415fd5c3",
+        "bytes": 9496,
+        "reported_status": "Passed"
+      },
+      "archive-extraction.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/archive-extraction.json",
+        "sha256": "e81b47ff5d4ffd2f92f1256ac2cc78d69798838665c0407f33caf087fd99c388",
+        "bytes": 234,
+        "reported_status": "Passed"
+      },
+      "mcp-connected.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/mcp-connected.json",
+        "sha256": "d4ad70075766abbf62617bbb2d2b31694d154f4f40aa76e70d167b5fd3545dd3",
+        "bytes": 11942
+      },
+      "mcp-process.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/mcp-process.json",
+        "sha256": "8b74fc0399d12cba8bc75b50184209e99408912b6a0da5320742e01d77d35f1f",
+        "bytes": 573
+      },
+      "cold-original-process.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/cold-original-process.json",
+        "sha256": "254ab792fd7ccaf2ff53a3a98f3e2828986f3742cac43e49f6327ed71933139c",
+        "bytes": 496
+      },
+      "cold-moved-process.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/cold-moved-process.json",
+        "sha256": "a2373c8eacad9bab6a368bedde728e1bc1cb9cf8753c5e81489d45c4e38e7eb1",
+        "bytes": 518
+      },
+      "cold-unpacked-process.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/cold-unpacked-process.json",
+        "sha256": "5dede220a132eed2f82cca2c905f4e668e0718c4c33fe184503b69d2f98d3bfc",
+        "bytes": 480
+      },
+      "operator-contracts.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/operator-contracts.json",
+        "sha256": "abf348dbd42b087af0f9fe25e14499c33a502b2cdf88afdd8bb25ffa6e8cde82",
+        "bytes": 4067
+      },
+      "scientific-contract.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/scientific-contract.json",
+        "sha256": "910b5e8946fc33645ba6a6aac26669704ace29b871358473a8fdd2582adda480",
+        "bytes": 19766
+      },
+      "scene-contract.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/scene-contract.json",
+        "sha256": "2be32540ac352d5b58b615753b7c7d0e9942da25fd6d810dc22aac8f00d3d994",
+        "bytes": 21049
+      },
+      "C01-density-identities.json": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/C01-density-identities.json",
+        "sha256": "3ca16fcd8cb6f8509a1bf2aac9807550618fc78473d965432acb1e4ad9c059e4",
+        "bytes": 289,
+        "reported_status": "Passed"
+      }
+    },
+    "screenshots": {
+      "C01": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/screenshots/C01.png",
+        "sha256": "6327015bd283957fcde434947e03adaba2a5ead8d32658b82bfe8ae56c192a68",
+        "active_object": "P01-o2-uhf",
+        "pid": 45576,
+        "method": "Real visible Blender window screenshot via MCP bpy operator; no image editing"
+      },
+      "C02": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/screenshots/C02.png",
+        "sha256": "645d13c4295df5530faff798e62fd61bfe2729693e07bdcd2ad9d5c667def5ef",
+        "active_object": "P02-water_neutral_nbo_opt_freq.out",
+        "pid": 45576,
+        "method": "Real visible Blender window screenshot via MCP bpy operator; no image editing"
+      },
+      "C03": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/screenshots/C03.png",
+        "sha256": "816444f950b0390a4c9e1b295b050d686949195b9221523799fa5f8bd90d16c8",
+        "active_object": "QC sign_lambda2_rho",
+        "pid": 45576,
+        "method": "Real visible Blender window screenshot via MCP bpy operator; no image editing"
+      },
+      "C04": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/screenshots/C04.png",
+        "sha256": "89323c49b1e776264301e5d5cff50284b4187e7ac5ba2ebbc9a4cec39ad5caac",
+        "active_object": "P03-water-dimer",
+        "pid": 45576,
+        "method": "Real visible Blender window screenshot via MCP bpy operator; no image editing"
+      },
+      "C05": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/screenshots/C05.png",
+        "sha256": "3ba0343eca8262e1f9665b0b687a860d374f0e465595024a8ba96d1c2963ad0c",
+        "active_object": "P03-water-dimer",
+        "pid": 45576,
+        "method": "Real visible Blender window screenshot via MCP bpy operator; no image editing"
+      },
+      "C06": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/screenshots/C06.png",
+        "sha256": "a024c8306949b43848bb205e60b7d51626b46dc4e89a03ee61fa346a6468158c",
+        "active_object": "QC NBO: water_neutral_nbo_opt_freq.out",
+        "pid": 45576,
+        "method": "Real visible Blender window screenshot via MCP bpy operator; no image editing"
+      },
+      "C07": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/screenshots/C07.png",
+        "sha256": "4485042b9a17568edbd191c087ecf7ec5d2142fb72f3c0ac0eb2bdf647772934",
+        "active_object": "P03-water-dimer",
+        "pid": 45576,
+        "method": "Real visible Blender window screenshot via MCP bpy operator; no image editing"
+      },
+      "C08": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/screenshots/C08.png",
+        "sha256": "cafa03360df4951d6890003f3b2d7d9a717543923776d64949c4abae3c215e25",
+        "active_object": "QC ESP maximum",
+        "pid": 45576,
+        "method": "Real visible Blender window screenshot via MCP bpy operator; no image editing"
+      },
+      "C09": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/screenshots/C09.png",
+        "sha256": "bb00b61d83f0bb00afff91e353e28e22960367bfd689624ef975119c090ac2f8",
+        "active_object": "QC AIM CP C",
+        "pid": 45576,
+        "method": "Real visible Blender window screenshot via MCP bpy operator; no image editing"
+      },
+      "C10": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/screenshots/C10.png",
+        "sha256": "01c8cfa25d5b1d872709aa0ebecc20a49a4e214bf129f9cee36e436eafcbec42",
+        "active_object": "IRC path",
+        "pid": 45576,
+        "method": "Real visible Blender window screenshot via MCP bpy operator; no image editing"
+      },
+      "C11": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/screenshots/C11.png",
+        "sha256": "e7b2c10b2c657a83471a78b083b819244af74cd9921e63fac88bdcf4f5efaadf",
+        "active_object": "QC IRC Mayer orders",
+        "pid": 45576,
+        "method": "Real visible Blender window screenshot via MCP bpy operator; no image editing"
+      },
+      "C12": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/screenshots/C12.png",
+        "sha256": "a2e2129c90d22347ca8186e6882b563e18078c5146b4bd6b1efbd5c16e005f77",
+        "active_object": "QC ETS-NOCV pairs",
+        "pid": 45576,
+        "method": "Real visible Blender window screenshot via MCP bpy operator; no image editing"
+      },
+      "C13": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/screenshots/C13.png",
+        "sha256": "d43f5324cc75b6df884a752e3cf91fa31a40df9bdac41c89e82f070772cd6866",
+        "active_object": "QC nocv_deformation_density",
+        "pid": 45576,
+        "method": "Real visible Blender window screenshot via MCP bpy operator; no image editing"
+      }
+    },
+    "scientific_panel": {
+      "status": "Passed",
+      "pid": 43868,
+      "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/screenshots/C02-scientific-panel.png",
+      "sha256": "6fbe86ca45940e73cf26a7440d4403cd99d47a471a8172a9df5364ab911df62e",
+      "active": "P02-water_neutral_nbo_opt_freq.out",
+      "method": "Native panel draw and window capture through MCP"
+    },
+    "render": {
+      "status": "Passed",
+      "engine": "BLENDER_WORKBENCH",
+      "resolution": [
+        640,
+        480
+      ],
+      "camera": "QC Framed Camera.003",
+      "scope": "Actual installed-plugin NOCV pair and associated complex, Workbench display rendering",
+      "artifact": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/C13-render.png",
+        "sha256": "f105efea505db0a597174fb0ee7da2e3c42da46fa6e135e42b980e0fa5608344",
+        "bytes": 207217
+      }
+    },
+    "save": {
+      "status": "Passed",
+      "pid": 45576,
+      "project": "outputs/projects/public-tutorial-mcp-20261001/tutorial.blend",
+      "scientific_objects": 55,
+      "arrays": 1098,
+      "method": "Actual Save Portable QC Project operator through MCP",
+      "candidate_sha256": "4a0ac3e46c163dd32a53057ddb2f4e414901d7c56b95d59aa6d17a8df3b739ca"
+    },
+    "cold_reopens": {
+      "cold-original": {
+        "status": "Passed",
+        "method": "MCP data checks in a new visible Blender process",
+        "label": "cold-original",
+        "pid": 7884,
+        "previous_pid": 45576,
+        "project": "outputs/projects/public-tutorial-mcp-20261001/tutorial.blend",
+        "scientific_objects": 55,
+        "arrays": 1098,
+        "loaded_volumes": 15,
+        "candidate_sha256": "4a0ac3e46c163dd32a53057ddb2f4e414901d7c56b95d59aa6d17a8df3b739ca"
+      },
+      "cold-moved": {
+        "status": "Passed",
+        "method": "MCP data checks in a new visible Blender process",
+        "label": "cold-moved",
+        "pid": 43868,
+        "previous_pid": 7884,
+        "project": "outputs/runs/pm/1/moved/中文目录 含空格/tutorial.blend",
+        "scientific_objects": 55,
+        "arrays": 1098,
+        "loaded_volumes": 15,
+        "candidate_sha256": "4a0ac3e46c163dd32a53057ddb2f4e414901d7c56b95d59aa6d17a8df3b739ca"
+      },
+      "cold-unpacked": {
+        "status": "Passed",
+        "method": "MCP data checks in a new visible Blender process",
+        "label": "cold-unpacked",
+        "pid": 34996,
+        "previous_pid": 43868,
+        "project": "outputs/runs/pm/1/unpacked/tutorial.blend",
+        "scientific_objects": 55,
+        "arrays": 1098,
+        "loaded_volumes": 15,
+        "candidate_sha256": "4a0ac3e46c163dd32a53057ddb2f4e414901d7c56b95d59aa6d17a8df3b739ca"
+      }
+    },
+    "additional_artifacts": {
+      "N07-invalid-domain.png": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/N07-invalid-domain.png",
+        "sha256": "09fe8da5777d18d09be96be687b5d451d3d7680dc682dde24aa5f3963e74fb09",
+        "bytes": 6725
+      },
+      "N07-valid-domain.png": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/N07-valid-domain.png",
+        "sha256": "2556caa273c1354974b602880e78106b43d7fb219ccfe967166f19b1c229e95b",
+        "bytes": 6087
+      },
+      "N10-fog-threshold.png": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/N10-fog-threshold.png",
+        "sha256": "6aa026f68ae58783343a42794f40abe4d62f913e7432a2d68ad457b9212ba12a",
+        "bytes": 2821
+      },
+      "N10-fog-visible.png": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/N10-fog-visible.png",
+        "sha256": "9f8921913a603da699512162765f29145633d3c46c7127930b0dadfe19193331",
+        "bytes": 9631
+      },
+      "N10-fog-zero.png": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/N10-fog-zero.png",
+        "sha256": "bb0520b7d6a5a2c5931816302e1afa25523a75288911c8ae95726ff1b2189994",
+        "bytes": 2821
+      },
+      "N17-profile-first.csv": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/N17-profile-first.csv",
+        "sha256": "072f79d69367a03b94ce66ffa2cc74ea3969b0e02895df6e12b0f3e2999c1f50",
+        "bytes": 1335
+      },
+      "N17-profile-second.csv": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/N17-profile-second.csv",
+        "sha256": "072f79d69367a03b94ce66ffa2cc74ea3969b0e02895df6e12b0f3e2999c1f50",
+        "bytes": 1335
+      },
+      "tutorial-project.zip": {
+        "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/tutorial-project.zip",
+        "sha256": "552a595a1cc3020ab4a7b5b2bc76ff1906b9409263c91148f1804519430b7467",
+        "bytes": 37966957
+      }
+    },
+    "limits": [
+      "Registered operators, native file dialogs and data checks are MCP technical evidence; they do not assert mouse clicks or independent scientific approval.",
+      "Only C13 has the recorded complete render. Case captures and technical assertions do not constitute every C/N tutorial step, visual preference or undo sequence.",
+      "Historic native science test counts retain their original report identity and date."
+    ],
+    "qualification": {
+      "status": "Passed",
+      "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/qualification-mcp.json",
+      "sha256": "916f517f3152369acbc8ddeea35d6d323a2c23efb722b141dfe20257046cab47"
+    },
+    "post_cleanup_verification": {
+      "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/post-cleanup-verification.json",
+      "sha256": "1e7091b04d7fdc6abb5fdd2794bfc7f90746dfd00360520ab01ff36fa9d1786d"
+    },
+    "session_protection": {
+      "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/protected-session-final.json",
+      "sha256": "a1f2248276e073ac9f915a1fb6fef14e19eac30b534e36cfd79922575ddf1efd"
+    },
+    "node_layout_view": {
+      "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/node-layout-screenshot.json",
+      "sha256": "7b7046ea7c883c1d70efd7daa89bf4b71250dcefd9f4a1bec65f66bb1955c4b3"
+    },
+    "current_visible": {
+      "status": "Passed",
+      "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/final-visible.json",
+      "sha256": "cf9530fec7f3807fafc6f6b538e7fb81620e99865e872a35b56602c31407e69e",
+      "pid": 21116
+    },
+    "current_visible_screenshot": {
+      "status": "Passed",
+      "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/final-visible-screenshot.json",
+      "sha256": "786ecd5be7e919415254fc55ab5659787db8c8a4bb1cb11c9ca5267e7b978e30",
+      "pid": 21116
+    }
+  }
 }

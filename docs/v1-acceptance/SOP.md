@@ -2,7 +2,7 @@
 
 适用 **Windows x64、Blender 5.1.1**。取得 QCBlender 扩展 ZIP 和本教程指定样本后，即可在 Blender 中完成导入、调整、渲染和保存；安装包包含必要运行库。公开安装包是否可取得见 [README](../../README.md)，来源、许可及获取说明见 [SOURCES](SOURCES.md)。本教程绑定 [冻结样本清单](tutorial-samples.json)；P01/P03/P04/P05 在样本包中，C02/C06 所用 P02 需原站单独获取，其再分发许可未确认。安装包和样本包目前为本地交付，尚无已发布远程下载地址。
 
-本教程保留 **C01–C13** 科学案例和 **N01–N18** 节点/交互检查编号。按钮位置与当前插件界面一致；对话框及部分控件仍使用英文。操作结果只记 **Passed / Failed / Not Run**。用户实际点击、Agent Computer Use 点击、MCP 数据核对、独立科研签署分别记录；Agent 不填写使用者签名。
+本教程保留 **C01–C13** 科学案例和 **N01–N18** 节点/交互检查编号。按钮位置与当前插件界面一致；对话框及部分控件仍使用英文。操作结果只记 **Passed / Failed / Not Run**。用户实际点击、Agent Computer Use 点击、MCP操作与数据核对、独立科研签署分别记录；Agent 不填写使用者签名。
 
 ## 0. 准备、安装与通用操作
 
@@ -313,11 +313,11 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 | --- | --- | --- |
 | User：用户实际操作 | 用户执行的明确点击与反馈；无反馈步骤不推定完成 | Not Run；截图/反馈待填写 |
 | Agent Computer Use | 经授权在可见窗口实际点击；记录安装、进程、活动对象与截图 | Not Run；由根Agent记录 |
-| MCP 数据核对 | 读取候选实例的数组/摘要/进程；准备对象/游标时记录辅助范围 | Not Run；不能作为点击或用户签署 |
+| MCP操作与数据核对 | 经授权调用真实 registered operators、原生文件对话框，核对数组/摘要/进程，记录真实窗口截图、渲染与新进程冷重开；写明实际调用及辅助范围 | 本批技术范围 Passed，见验证索引；鼠标点击与用户签署 Not Run |
 | 原生脚本数据核对 | 维护者的自动化解析/数组/原生operator检查；独立绑定候选与命令 | Not Run；本表由当前批次执行者填写，维护者本轮结果见验证索引 |
 | 独立科研复做与签署 | 独立使用者复做操作，并判断科学记录与成图适用性 | Not Run；姓名/日期留空 |
 
-[cleanup-validation.json](../acceptance/cleanup-validation.json) 记录历史批次技术核查与部分 Agent 点击，以及导入参数错误的历史复验。历史 Passed 不继承到本批；本教程的执行记录须关联本批候选和输入身份；本轮[验证索引](../acceptance/tutorial-validation.json)记录原生技术核对及未完成的实际点击。截图占位由实际操作者补入，技术通过不自动填写本表。安装资格、自动测试、真实点击、科研签署是不同结论。
+[cleanup-validation.json](../acceptance/cleanup-validation.json) 记录历史批次技术核查与部分 Agent 点击，以及导入参数错误的历史复验。历史 Passed 不继承到本批；本教程的执行记录须关联本批候选和输入身份；本轮[验证索引](../acceptance/tutorial-validation.json)分别记录历史原生核对和本批 MCP操作与数据核对。按最新授权，本批 C01–C13 核心检查、N01–N18 技术检查、真实窗口截图、C13 渲染、Log Job 2→新 FCHK 对话框回归，以及原路径、移动路径和解包路径的新进程冷重开均为 Passed；这不代表逐例完整渲染、全部鼠标点击或独立科研签署。用户截图占位由实际操作者补入，技术通过不自动填写本表。安装资格、自动测试、真实点击、科研签署是不同结论。
 
 ### 3.2 独立使用者案例结果
 
