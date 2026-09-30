@@ -52,7 +52,7 @@ Blender 路径按本机安装修改。构建工具写入仓库的 outputs/build-
 
 [来源清单](v1-acceptance/SOURCES.md) 和 tests/data/local-inputs.json 固定来源、许可及 SHA-256。没有必要样本时在本阶段停止，不用旧工程或跳过代替。
 
-可以从已有且许可明确的本地检出复制清单所列原件。设置 sourceRoot 为实际来源；复制前后核对字节，不覆盖不同内容，也不复制旧候选、工程或报告。
+可以从已有本地检出复制清单所列原件。设置 sourceRoot 为实际来源；复制前后核对字节，不覆盖不同内容，也不复制旧候选、工程或报告。清单中仅供本地验收或发布许可待核的样本继续放在忽略目录，不随 ZIP 或 Git 分发。
 
 ~~~powershell
 $copyInputs = @'
@@ -77,7 +77,7 @@ Invoke-QCCheck 'copy-inputs' $blenderPython @('-I', '-c', $copyInputs, $sourceRo
 Invoke-QCCheck 'inputs' $blenderPython @('-I', 'tools/local_inputs.py')
 ~~~
 
-已在当前检出准备原件时，只执行 inputs 检查。QCBLENDER_REFERENCE_ROOT 可显式指向相同清单的输入仓库，但部分日志回归和恢复工具直接读取当前 tests/data/local/log-examples；以上复制方式无需该变量。必要输入不存在、摘要不同或许可未明确时，应记录阻塞。
+已在当前检出准备原件时，只执行 inputs 检查。QCBLENDER_REFERENCE_ROOT 可显式指向相同清单的输入仓库，但部分日志回归和恢复工具直接读取当前 tests/data/local/log-examples；以上复制方式无需该变量。必要输入不存在、摘要不同或超出清单规定用途时，应记录阻塞。
 
 ## 首次环境准备
 
@@ -216,7 +216,8 @@ for name in reports:
 print('EVIDENCE_INDEX_PASSED:', len(checks), digest)
 '@
 Invoke-QCCheck 'index' $blenderPython @('-I', '-c', $makeIndex, $batch, $candidate)
-$installed = "$env:BLENDER_USER_RESOURCES/extensions/.user/user_default/qcblender"
+$installed = "$env:BLENDER_USER_RESOURCES/extensions/user_default/qcblender"
+if (-not (Test-Path -LiteralPath "$installed/__init__.py")) { throw 'Installed extension source directory missing; inspect the installation log' }
 Invoke-QCCheck 'qualification' $blenderPython @('-I', 'tools/qualify_package.py', '--candidate', $candidate, '--installed-dir', $installed, '--evidence-index', "$batch/evidence-index.json", '--output', "$batch/qualification.json")
 ~~~
 
