@@ -18,6 +18,7 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUTS = ROOT / 'outputs'
 REPORTS = OUTPUTS / 'storage-cleanup'
+POLICY = None
 ENVIRONMENTS = {'build-python', 'build-site', 'build-sources', 'reference-tools',
                 'science', 'wheels', 'repaired-wheels', 'unrepaired-wheels',
                 'gbasis-build', 'native-backend-licenses', 'm0-research'}
@@ -57,9 +58,69 @@ def files(directory, skipped):
             skipped.append({'path': entry.path, 'reason': str(error)})
 
 
+def safe_output_path(path):
+    path = Path(path)
+    assert path.is_absolute() and path.resolve().is_relative_to(OUTPUTS.resolve()), 'outside outputs'
+    assert path.resolve() == path, 'aliased path through a link or junction'
+    for ancestor in (path, *path.parents):
+        assert not ancestor.is_symlink() and not ancestor.is_junction(), 'link or junction'
+        if ancestor == OUTPUTS:
+            break
+    return path
+
+
+def load_policy(path):
+    data = json.loads(Path(path).read_text(encoding='utf-8'))
+    groups = {'protected_paths', 'retired_task_roots', 'retired_profiles'}
+    if not isinstance(data, dict) or set(data) - groups:
+        raise ValueError('Unknown cleanup policy fields')
+    result = {}
+    for group in groups:
+        values = data.get(group, [])
+        if not isinstance(values, list):
+            raise ValueError('Policy paths must be lists')
+        result[group] = []
+        for value in values:
+            if not isinstance(value, str):
+                raise ValueError('Policy path must be a string')
+            relative = Path(value)
+            if relative.is_absolute() or not relative.parts or '..' in relative.parts or ':' in value:
+                raise ValueError('Policy paths must be relative descendants of outputs')
+            target = OUTPUTS / relative
+            safe_output_path(target)
+            if target == OUTPUTS:
+                raise ValueError('Policy cannot retire all outputs')
+            result[group].append(target)
+    shared = [OUTPUTS / name for name in ('build-site', 'science', 'wheels', 'evidence', 'projects', 'candidates')]
+    for target in result['retired_profiles'] + result['retired_task_roots']:
+        if any(target == protected or protected.is_relative_to(target) for protected in shared):
+            raise ValueError('Cannot retire shared environments or canonical retained roots')
+    return result
+
+
+def verify_entry(row):
+    path = safe_output_path(row['path'])
+    info = path.stat(follow_symlinks=False)
+    assert info.st_size == row['bytes'] and info.st_mtime_ns == row['mtime_ns'], 'file changed after inventory'
+    assert 'sha256' in row and digest(path) == row['sha256'], 'content changed after inventory'
+    if row['action'] == 'delete':
+        assert not path.is_relative_to(OUTPUTS / 'recovery'), 'protected recovery project'
+        if POLICY is not None:
+            assert classify(path, {})[0] == 'delete', 'policy no longer authorizes deletion'
+    return path
+
+
 def classify(path, migrated):
     rel = path.relative_to(OUTPUTS)
     parts = rel.parts
+    if POLICY is not None:
+        protected = POLICY['protected_paths'] + [REPORTS] + [OUTPUTS / name for name in ('build-site', 'science', 'wheels', 'evidence', 'projects', 'candidates')]
+        if any(path.is_relative_to(root) for root in protected):
+            return 'keep', 'explicit protected path or shared retained root'
+        if any(path.is_relative_to(root) for root in POLICY['retired_profiles']):
+            return 'delete', 'verified ended-session isolated environment'
+        if not any(path.is_relative_to(root) for root in POLICY['retired_task_roots']):
+            return 'keep', 'outside reviewed retired tasks'
     if parts[0] in ('recovery', 'branch-archive'):
         return 'keep', 'preserved project or cleanup evidence'
     if path.name == 'stale-pending' or any(part.startswith('.~stale~') for part in parts):
@@ -84,7 +145,7 @@ def classify(path, migrated):
         return 'delete', 'unreferenced analysis runtime dataset'
     if any(p in ENVIRONMENTS or p in ('extensions', 'config', 'scripts', 'datafiles') for p in parts):
         return 'keep', 'software environment or configuration'
-    if parts[0] not in GENERATED:
+    if parts[0] not in GENERATED and POLICY is None:
         return 'keep', 'unclassified output purpose; retained for review'
     if any(p.endswith('.qcdata') for p in parts):
         return 'delete', 'historical portable dataset'
@@ -123,11 +184,12 @@ def plan():
             action, reason = 'keep', 'Git tracked file'
         row = dict(path=str(path), action=action, reason=reason, bytes=info.st_size,
                    mtime_ns=info.st_mtime_ns)
-        if reason in ('software environment or configuration', 'preserved project or cleanup evidence'):
+        if action == 'delete' or POLICY is not None or reason in ('software environment or configuration', 'preserved project or cleanup evidence'):
             try:
                 row['sha256'] = digest(path)
             except OSError as error:
                 skipped.append(dict(path=str(path), reason=str(error)))
+                row['action'], row['reason'] = 'keep', 'unreadable content; deletion prohibited'
         return row
 
     with gzip.open(REPORTS / 'inventory.jsonl.gz', 'wt', encoding='utf-8') as stream, ThreadPoolExecutor(max_workers=8) as pool:
@@ -138,7 +200,8 @@ def plan():
                 summary[key]['files'] += 1
                 summary[key]['bytes'] += row['bytes']
                 stream.write(json.dumps(row, ensure_ascii=False) + '\n')
-    result = {'categories': dict(summary), 'skipped': skipped, 'status': 'Planned'}
+    result = {'categories': dict(summary), 'skipped': skipped, 'status': 'Planned',
+              'policy': {key: [str(path) for path in paths] for key, paths in POLICY.items()} if POLICY is not None else None}
     (REPORTS / 'summary.json').write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
     print(json.dumps(result['categories'], ensure_ascii=False, indent=2))
 
@@ -146,13 +209,17 @@ def plan():
 def apply():
     # Every target is a manifest file, under this repository, with unchanged stat data.
     failures, removed, protected = [], {'files': 0, 'bytes': 0}, 0
+    saved = json.loads((REPORTS / 'summary.json').read_text(encoding='utf-8'))
+    active = {key: [str(path) for path in paths] for key, paths in POLICY.items()} if POLICY is not None else None
+    assert saved.get('policy') == active, 'policy changed after inventory'
     def verify(row):
-        if row['action'] == 'keep' and 'sha256' in row:
-            try:
-                if digest(Path(row['path'])) != row['sha256']:
-                    return 'protected file changed'
-            except OSError as error:
-                return str(error)
+        try:
+            if row['action'] == 'delete':
+                verify_entry(row)
+            elif 'sha256' in row:
+                assert digest(safe_output_path(row['path'])) == row['sha256'], 'protected file changed'
+        except (OSError, AssertionError) as error:
+            return str(error)
         return None
 
     with gzip.open(REPORTS / 'inventory.jsonl.gz', 'rt', encoding='utf-8') as stream, ThreadPoolExecutor(max_workers=8) as pool:
@@ -167,14 +234,7 @@ def apply():
                         if 'sha256' in row:
                             protected += 1
                         continue
-                    resolved = path.resolve()
-                    assert path.is_absolute() and resolved.is_relative_to(OUTPUTS.resolve()), 'outside outputs'
-                    assert resolved == path, 'aliased path through a link or junction'
-                    assert not path.is_relative_to(OUTPUTS / 'recovery')
-                    info = path.stat(follow_symlinks=False)
-                    assert not getattr(info, 'st_file_attributes', 0) & stat.FILE_ATTRIBUTE_REPARSE_POINT, 'link or junction'
-                    assert info.st_size == row['bytes'] and info.st_mtime_ns == row['mtime_ns'], 'file changed after inventory'
-                    path.unlink()
+                    verify_entry(row).unlink()
                     removed['files'] += 1
                     removed['bytes'] += row['bytes']
                 except (OSError, AssertionError) as error:
@@ -186,6 +246,7 @@ def apply():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(__doc__)
+    parser.add_argument('--policy', type=Path, help='Reviewed task cleanup policy JSON; paths are relative to outputs')
     parser.add_argument('--report-dir', type=Path, default=REPORTS,
                         help='Task record directory inside outputs; retain each completed inventory')
     modes = parser.add_mutually_exclusive_group(required=True)
@@ -199,4 +260,5 @@ if __name__ == '__main__':
         parser.error('This inventory has already been applied; choose a new --report-dir')
     if args.apply and (REPORTS / 'applied.json').exists():
         parser.error('This inventory has already been applied; preserve it and create a new plan')
+    POLICY = load_policy(args.policy) if args.policy else None
     plan() if args.plan else apply()

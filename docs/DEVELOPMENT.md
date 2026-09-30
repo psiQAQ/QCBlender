@@ -2,6 +2,12 @@
 
 在仓库根目录 PowerShell 执行，目标 Windows x64、Blender 5.1.1 / CPython 3.13.9。首次检出先走“首次环境准备”，已有环境走“增量构建准备”，随后进入共同验收流程。当前结果见 [VALIDATION](VALIDATION.md)。最终用户只安装合格扩展 ZIP。
 
+## 工作树与产物收尾
+
+在主仓库 `.worktrees/<任务名>/` 使用独立分支开发，复验后 ff-only 合并本地 main；为任务最终提交创建带注释的 `archive/YYYY-MM-DD/<完整分支名>` 标签，核对保留产物及提交可达性后移除工作树，再删除已合并分支。main 推进时先更新分支并复验。该流程不包含 push。
+
+[产物路由](ARTIFACTS.md) 是现存证据、用户工程、候选及重建方法的唯一查找入口。任务结束后保留最新待验收候选、共用环境及锁定 wheels，迁移必要日志和数据后清理独立测试配置及旧候选，执行边界见[维护规则](agents/storage-maintenance.md)。
+
 ## 本批目录与命令记录
 
 先提交待验证的文档、测试及产品源码，记录实际提交。使用新的短批次名称；批次目录存在时停止，不能覆盖旧证据。以下函数保存每条命令、输出摘要与退出码，成功后才继续；命令成功不自动证明未运行的其他范围。
@@ -10,7 +16,7 @@
 $blender = 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe'
 $blenderPython = 'C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe'
 $repo = (Get-Location).Path
-$batch = "$repo/outputs/qcf1"
+$batch = "$repo/outputs/runs/<任务名>/<新批次>"
 $qa = "$batch/qa"
 $scienceSite = "$repo/outputs/science"
 $wheels = "$repo/outputs/wheels"
