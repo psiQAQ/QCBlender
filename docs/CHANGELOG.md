@@ -4,6 +4,8 @@
 
 ## 2026-09-30 清理复查补丁：技术检查
 
+本地 main 已 fast-forward 合并至 20bfdcd；b48c Git 登记及全部文件已移除，空根目录仍因进程占用保留；f458 因权限拒绝保留。任务 06 保持 claimed，清理总体 Failed，保全与保护对象核对 Passed；收据为 outputs/cleanup-followup-20260930/preservation.json。保全的用户工程已使用主检出归档中的插件环境重新打开为可见 Blender，不再依赖旧工作树内容。未 push。
+
 任务 06 已将 b48c 的 34,459 个文件完整归档并逐文件核对摘要，保存位置为主检出 outputs/cleanup-followup-20260930；用户未保存工程另存为 user-session/未命名.blend + .qcdata 并在新可见进程冷重开通过。f458 的可读文件已归档，但 11 个目录与 3 个 ZIP 仍访问拒绝，保留旧工作树；未改权限或强制删除。合并与当前工作树移除另由任务 06 的执行收据记录。
 
 追加授权修复新文件对话框沿用上一次 Log 预览摘要和计算段的问题；仅在新 GUI invoke 清空摘要并重置计算段，显式预览的来源变化检查保留。新候选 qcf3 的科学、单测、节点、安装、资产、恢复、图例、双冷重开及来源浏览回归 Passed，资格绑定 a7f9b43。经授权通过 MCP + Computer Use 在可见 Blender 完成导入失败顺序、能量与模式、密度剖面、保存和新进程重开及 CSV 检查并截图；指南有效点数定位改为 CSV 的 valid 列。精简[验证索引](acceptance/cleanup-validation.json)进入版本控制；独立科研签署 Not Run。以下记录原技术批次。

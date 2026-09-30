@@ -15,6 +15,12 @@ Blocked by: 05
 
 ## Comments
 
+- 2026-09-30 收尾：main 已 fast-forward 到 20bfdcd，固定资格提交和全部本轮提交可达，标签与源码子模块一致；候选、33 项报告、8 张截图与 CSV 的归档摘要再次核对 Passed。Git 移除 b48c 登记后因长路径错误留下目录；24,533 个残留文件重新核对，并补存 uv 缓存空 .git 标记后，原生长路径操作清理全部文件。当前仅剩被进程占用的空根目录，删除 Failed；未终止宿主、改权限或强制删除。f458 仍登记并保留，删除 Not Run。完整收据位于主检出 outputs/cleanup-followup-20260930/preservation.json。可见 Blender PID 14284 从归档安装环境打开保全的用户工程，MCP 读取 Passed，已脱离旧工作树内容。06 未满足全部条件，保持 claimed。
+
+## Answer
+
+合并、归档、Git 登记清理及保护对象核对 Passed。目录清理尚未完成：f458 有未保全的权限拒绝对象；b48c 仅剩被进程占用的空目录。任务 06 保持 claimed，两个阻塞消除并复核收据前不得 resolved。未 push。
+
 - 2026-09-30：保全 Passed（b48c）：34,459 个文件、1,803,847,778 字节全部复制并逐文件核对源/副本 SHA-256，无链接或读取错误；f458 保全 Failed：14,489 个可读文件已归档，11 个目录和 3 个 ZIP 仍访问拒绝，保留该工作树。主检出归档为 outputs/cleanup-followup-20260930/{b48c,f458}，逐文件映射为 *-preserved.jsonl，完整收据为 preservation.json。
 - 用户原有 PID 24852 的未保存工程已通过可见界面另存到主检出归档 user-session/未命名.blend + .qcdata；新可见 PID 47480 冷重开读取 Dataset、核对已存 manifest 摘要并记录所有科学数组摘要 Passed，证据为归档 qcf3/gui/user-cold-reopen.json 与两张保全截图。原会话及本轮验证进程均已正常退出。合并与当前工作树移除尚待执行，06 保持 claimed。
 

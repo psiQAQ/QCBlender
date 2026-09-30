@@ -607,6 +607,14 @@
       "original_pid": 24852,
       "new_pid": 47480,
       "original_exited": true
+    },
+    "cleanup": {
+      "status": "Failed",
+      "local_merge": "Passed",
+      "merged_commit": "20bfdcd8bb81fd8d84a168203b28ca9fe7703221",
+      "b48c": "Git registration and files removed; empty root remains process-locked",
+      "f458": "Retained: permission-denied evidence unpreserved",
+      "receipt_sha256": "0623ce8380067d97fd65e4707060fb239f5d2ccb7197b953a28e03b29262cdce"
     }
   },
   "rebuild": {
