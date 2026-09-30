@@ -1,6 +1,6 @@
 # 产物查找入口
 
-更新：2026-09-30。任务状态见 `.scratch/`，原始报告负责验证结论；本页路由现存文件、候选、工程、重建方法和阻塞，不改变历史 Passed 或独立人工签署。
+更新：2026-10-01。任务状态见 `.scratch/`，原始报告负责验证结论；本页路由现存文件、候选、工程、重建方法和阻塞，不改变历史 Passed 或独立人工签署。
 
 ## 目录与生命周期
 
@@ -18,17 +18,19 @@
 
 | 任务 / 日期 | 提交或标签 | 证据与主要报告 | 工程、候选与阻塞 | 重建入口 |
 | --- | --- | --- | --- | --- |
+| 公共教程与节点可读性 / 2026-09-30 | 验证`90ff9bf`，已合入main；05 claimed、06 pending，尚无archive标签 | `outputs/evidence/2026-09-30/public-tutorial/`：`integration/r3/qualification-retained.json`、同批命令/报告、`samples/`、`preservation.json`、`cleanup-pending.json`；[索引](acceptance/tutorial-validation.json) | 最新候选`outputs/candidates/current/public-tutorial-90ff9bf/qcblender-0.0.1.zip`；工程`outputs/projects/public-tutorial-90ff9bf/tutorial.blend`及qcdata；可见PID37508使用`outputs/runs/pt/3/p`。Computer Use阻塞，点击/截图/签署Not Run，工作树和未收尾配置保留 | [SOP](v1-acceptance/SOP.md)、manifest、[开发说明](DEVELOPMENT.md)及本批脚本；新批次不得覆盖历史证据 |
 | 工作树与 outputs 维护 / 2026-09-30 | 验证 `aaf20f8`；已合并 `8188a41`，归档 `archive/2026-09-30/chore/output-maintenance` | `outputs/evidence/2026-09-30/output-maintenance/`：`result.json`、`cleanup-safe/{summary,applied}.json`、`before/after.jsonl.gz`、`path-map.jsonl.gz`、`routes.json`、`protection-checks.json`、`closing.json`、`worktree-preservation.json` | 本轮工作树及已合并分支已正常移除；旧权限/占用及未知对象保留，任务 02/03 保持 claimed | 本批命令 JSON（历史参数）；新批次按开发说明；[维护规则](agents/storage-maintenance.md) |
-| 清理复查补丁 qcf3 / 2026-09-30 | 源码 `a7f9b43`；已合并 `20bfdcd` | `outputs/evidence/2026-09-30/cleanup-followup/qcf3/`：`qualification.json`、`evidence-index.json`、`gui/`；[验证索引](acceptance/cleanup-validation.json) | 最新 ZIP 为 `outputs/candidates/current/qcblender-0.0.1.zip`；独立签署 Not Run | [开发说明](DEVELOPMENT.md)；资格与 GUI 覆盖见验证索引 |
+| 清理复查补丁 qcf3 / 2026-09-30 | 源码 `a7f9b43`；已合并 `20bfdcd` | `outputs/evidence/2026-09-30/cleanup-followup/qcf3/`：`qualification.json`、`evidence-index.json`、`gui/`；[验证索引](acceptance/cleanup-validation.json) | 历史 ZIP 暂保留于 `outputs/candidates/current/qcblender-0.0.1.zip`；签署 Not Run，待本轮验收后解除基线引用再清理 | [开发说明](DEVELOPMENT.md)；资格与 GUI 覆盖见验证索引 |
 | 仓库清理 / 2026-09-30 | `47fd82c` | `outputs/evidence/2026-09-30/cleanup-followup/f458/`，按旧相对路径查报告；保全收据 `outputs/evidence/2026-09-30/cleanup-followup/preservation.json` | f458 的 11 个目录、3 个 ZIP 访问拒绝，旧工作树及分支保留；旧 ZIP 不作为可用候选 | 原任务 `.scratch/repository-cleanup/`；原始输入与共用环境 |
 | 输入集中与产物维护 / 2026-09-29 | `archive/2026-09-29/chore/storage-cleanup` | `outputs/evidence/2026-09-30/history/storage-cleanup/`：`applied.json`、`branch-archive.json`、冷重开日志 | 用户保全工程见下表；旧验证不继承为本轮通过 | [历史记录](acceptance/storage-cleanup.md)及当前开发说明 |
 
-待验收候选大小 50,632,953 字节，SHA-256：`1e473b32892eab06d399a7940a14abd947c59a29dca8afc18efc3ccd56655a7a`。本轮重建探针通过安装、生命周期及双冷重开，随后清理其 ZIP、场景和隔离配置；保留命令、摘要和报告，不替换待验收候选，也不宣称 ZIP 字节复现。
+最新待验收教程候选大小50,633,596字节，SHA-256：`4a0ac3e46c163dd32a53057ddb2f4e414901d7c56b95d59aa6d17a8df3b739ca`。公开样本包为`outputs/evidence/2026-09-30/public-tutorial/samples/qcblender-public-tutorial-samples-v1.zip`，SHA-256 `a4ccfc3ef91921817d17284196ba23ccfb7cce7b1643cdfa41af8e8a6103f85b`。运行原件仍在，保全副本摘要映射见`preservation.json`，删除未执行。上轮候选仍在原路径，身份分别维护。上轮维护批次的重建探针通过安装、生命周期及双冷重开，随后清理其 ZIP、场景和隔离配置；保留命令、摘要和报告，不替换待验收候选，也不宣称 ZIP 字节复现。
 
 ## 保全工程与共用环境
 
 | 位置 | 当前核对与用途 |
 | --- | --- |
+| `outputs/projects/public-tutorial-90ff9bf/tutorial.blend` + `tutorial.qcdata/` | 本轮保全，256项副本摘要含候选/样本；42个科学对象绑定、785次数组摘要、12个VDB冷重开Passed；可见PID37508及独立`outputs/runs/pt/3/p`保持活跃保护 |
 | `outputs/projects/user-session-20260930/current.blend` + `current.qcdata/` | 当前可见 Blender 工程；新进程 Dataset/11 项数组核对 Passed，见维护批次 `user-cold.json` |
 | `outputs/projects/cleanup-followup-original/未命名.blend` + 同名 `.qcdata/` | 原任务保全快照，原字节与验证索引摘要一致 |
 | `outputs/projects/recovery/pid3144-preserved/evidence.blend` + `evidence.qcdata/` | 历史用户工程；本轮新进程 4 个 Dataset、数组及 3 个 VDB 摘要和加载 Passed，见 `recovery-cold.json` |
@@ -37,6 +39,7 @@
 | `outputs/wheels/qualified/` | 显式核对的 11 个锁定 wheels 和 `backend-wheel.json`；版本/锁文件不变，见 `qualified-wheels.json`、`environment.json` |
 | `outputs/backend-wheel.json` 与 `outputs/wheels/` 的旧后端 wheel | 默认记录对应的旧 wheel 不可读，原位保留；默认后端路径检查 Failed，不能当作已修复 |
 | `outputs/cleanup-followup-20260930/b48c/outputs/qcf3/profile/` | 可见 Blender PID 14284 仍使用的安装配置；保留至会话正常退出后重新核对，不随旧任务删除 |
+| `outputs/runs/pt/1`、`pt/2`、`outputs/runs/public-tutorial/` | 探索批次和子任务材料共约1.29GB；最终清理未执行，日志/原件归属及保全后按策略处理。`pt/3`为当前验收批次，活跃配置保留 |
 | `outputs/blender-dev/`、`outputs/blender-runtime.json` | 运行时记录引用的现有配置，保留；其引用解除前不清理 |
 | `outputs/build-python/`、`build-sources/`、`gbasis-build/`、`native-backend-licenses/`、`reference-tools/`、`m0-research/`、`visualization-adoption/`、`repaired-wheels/`、`unrepaired-wheels/` | 构建来源、许可证、参考资料或尚待用途确认的环境；保留原路径，不自动归为重复环境 |
 

@@ -148,6 +148,15 @@ Invoke-QCCheck 'helpers' $blender @('--background', '--factory-startup', '--offl
 
 科学报告记录 tests/failures/errors/skipped 和参考误差；核对实际样本与数量，必要样本不能 skipped。节点辅助测试比较实际源原子编号及固定公共接口，范围与上轮十组完整节点图对照分别记录。完整网格收敛实验另由 qualify_scientific_fields.py 执行；未执行记 Not Run。
 
+公共教程批次先从[ARTIFACTS](ARTIFACTS.md)核对公开样本包与输入摘要，再执行解析检查。sourceRoot沿用输入检查中已核对的主检出；包不存在时停止，不从旧报告继承通过。
+
+~~~powershell
+$tutorialPackage = Join-Path $sourceRoot 'outputs/evidence/2026-09-30/public-tutorial/samples/qcblender-public-tutorial-samples-v1.zip'
+Invoke-QCCheck 'tutorial-samples' $blenderPython @('-I', 'tools/verify_tutorial_samples.py', '--reference-root', $sourceRoot, '--package', $tutorialPackage, '--report', "$batch/tutorial-samples.json")
+~~~
+
+`--checkpoints`仅由已有PySCF计算环境执行，解释器/版本单列，不作为插件依赖。完整命令见本轮验证索引；缺必要checkpoint时在该检查停止，新批次不覆盖旧报告。
+
 ## 打包与离线安装
 
 ~~~powershell

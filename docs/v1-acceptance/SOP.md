@@ -313,10 +313,11 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 | --- | --- | --- |
 | User：用户实际操作 | 用户执行的明确点击与反馈；无反馈步骤不推定完成 | Not Run；截图/反馈待填写 |
 | Agent Computer Use | 经授权在可见窗口实际点击；记录安装、进程、活动对象与截图 | Not Run；由根Agent记录 |
-| MCP/脚本数据核对 | 读取数组/摘要/进程；准备对象/游标时明确记录辅助范围 | Not Run；不能作为点击或用户签署 |
+| MCP 数据核对 | 读取候选实例的数组/摘要/进程；准备对象/游标时记录辅助范围 | Not Run；不能作为点击或用户签署 |
+| 原生脚本数据核对 | 维护者的自动化解析/数组/原生operator检查；独立绑定候选与命令 | Not Run；本表由当前批次执行者填写，维护者本轮结果见验证索引 |
 | 独立科研复做与签署 | 独立使用者复做操作，并判断科学记录与成图适用性 | Not Run；姓名/日期留空 |
 
-[cleanup-validation.json](../acceptance/cleanup-validation.json) 记录历史批次技术核查与部分 Agent 点击，以及导入参数错误的历史复验。历史 Passed 不继承到本批；本教程的执行记录须关联本批候选和输入身份，最终验证索引由维护者记录。安装资格、自动测试、真实点击、科研签署是不同结论。
+[cleanup-validation.json](../acceptance/cleanup-validation.json) 记录历史批次技术核查与部分 Agent 点击，以及导入参数错误的历史复验。历史 Passed 不继承到本批；本教程的执行记录须关联本批候选和输入身份；本轮[验证索引](../acceptance/tutorial-validation.json)记录原生技术核对及未完成的实际点击。截图占位由实际操作者补入，技术通过不自动填写本表。安装资格、自动测试、真实点击、科研签署是不同结论。
 
 ### 3.2 独立使用者案例结果
 
