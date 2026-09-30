@@ -7,7 +7,7 @@ import numpy as np
 from ..data import load_dataset
 from .scalars import scalar_material, add_legend, color_fraction
 from .views import material, socket
-from .graph import view_modifier, tag_view
+from .graph import view_modifier, tag_view, frame_nodes
 
 _charge_items = {}
 
@@ -104,6 +104,7 @@ class QCBLENDER_OT_color_charge(bpy.types.Operator):
                 item = socket(tree, name, 'NodeSocketFloat', default=value)
                 view_modifier(obj)[item.identifier] = value
             nodes, links = tree.nodes, tree.links
+            existing_nodes = set(nodes)
             inputs = next(n for n in nodes if n.type == 'GROUP_INPUT')
             output = next(n for n in nodes if n.type == 'GROUP_OUTPUT')
             geometry = output.inputs['Geometry'].links[0].from_socket
@@ -127,7 +128,10 @@ class QCBLENDER_OT_color_charge(bpy.types.Operator):
             assign.inputs['Material'].default_value = color_material
             links.new(geometry, assign.inputs['Geometry'])
             links.new(assign.outputs['Geometry'], output.inputs['Geometry'])
+            frame_nodes(tree, [node for node in nodes if node not in existing_nodes], 'Charge: attributes and colors')
+            existing_nodes = set(nodes)
             add_legend(obj, color_material, 'Charge Minimum', 'Charge Center', 'Charge Maximum', self.method + ' atomic charge [e]')
+            frame_nodes(tree, [node for node in nodes if node not in existing_nodes], 'Legend: range and labels')
             tree['qc_charge_mapping'] = True
         else:
             for node in tree.nodes:

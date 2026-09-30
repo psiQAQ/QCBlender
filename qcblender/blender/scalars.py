@@ -9,7 +9,7 @@ import numpy as np
 from ..association import compare_sources
 from ..data import load_dataset
 from .views import bind, material, node_by_type, socket
-from .graph import view_modifier, tag_view, geometry_output
+from .graph import view_modifier, tag_view, geometry_output, frame_nodes
 from .legend_layout import LAYOUT
 
 
@@ -260,6 +260,7 @@ def add_mapping(target, source, low, high):
     nodes, links = tree.nodes, tree.links
     inputs = next(n for n in nodes if n.type == 'GROUP_INPUT')
     geometry = output.links[0].from_socket
+    existing_nodes = set(nodes)
     info = nodes.new('GeometryNodeObjectInfo')
     info.transform_space = 'RELATIVE'
     info.inputs['Object'].default_value = volume
@@ -279,12 +280,13 @@ def add_mapping(target, source, low, high):
     assign.inputs['Material'].default_value = color_material
     links.new(geometry, assign.inputs['Geometry'])
     links.new(assign.outputs['Geometry'], output)
+    frame_nodes(tree, [node for node in nodes if node not in existing_nodes], 'Scalar: sampling and colors')
+    existing_nodes = set(nodes)
     add_legend(target, color_material, 'Color Minimum', 'Color Center', 'Color Maximum', color_title(field))
+    frame_nodes(tree, [node for node in nodes if node not in existing_nodes], 'Legend: range and labels')
     tree['qc_color_mapping'] = True
     tag_view(tree)
     target['qc_color_source'] = color_record(source, field, field_source)
-    for index, node in enumerate(nodes):
-        node.location = (index % 6 * 220, -(index // 6) * 240)
     target.update_tag()
 
 
@@ -529,6 +531,7 @@ class QCBLENDER_OT_slice(bpy.types.Operator):
         for name in ('Center', 'Rotation', 'Width', 'Height', 'Resolution'):
             links.new(inputs.outputs[name], slice_node.inputs[name])
         links.new(slice_node.outputs['Geometry'], output.inputs['Geometry'])
+        frame_nodes(tree, list(nodes), 'Slice: plane placement', (0, 0))
         obj.modifiers.new('QC Slice', 'NODES').node_group = tree
         try:
             add_mapping(obj, source, self.minimum, self.maximum)

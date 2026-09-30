@@ -7,7 +7,7 @@ from bpy.props import CollectionProperty, IntProperty, PointerProperty, StringPr
 import numpy as np
 
 from ..data import load_dataset
-from .graph import view_modifier
+from .graph import view_modifier, frame_nodes
 
 
 def select_mode(settings, context):
@@ -98,6 +98,7 @@ def setup_properties(obj, data):
 def add_animation_nodes(obj):
     from .views import socket
     tree = view_modifier(obj).node_group
+    existing_nodes = set(tree.nodes)
     for name, kind, default in [('Amplitude (angstrom)', 'NodeSocketFloat', .2),
                                  ('Phase', 'NodeSocketFloat', 0.),
                                  ('Cycles per second', 'NodeSocketFloat', 1.),
@@ -151,8 +152,8 @@ def add_animation_nodes(obj):
     for consumer in consumers:
         links.new(position.outputs['Geometry'], consumer)
     add_mode_vectors(obj, displacement.outputs['Attribute'], inputs)
-    for index, node in enumerate(nodes):
-        node.location = (index % 5 * 220, -(index // 5) * 240)
+    frame_nodes(tree, [node for node in nodes if node not in existing_nodes],
+                'Modes: displacement and animation')
 
 
 def add_mode_vectors(obj, displacement, inputs):

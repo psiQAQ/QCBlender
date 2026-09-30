@@ -68,3 +68,42 @@ def arrange(tree):
             depths[node], counts[depth] = depth, row + 1
             pending.remove(node)
     return tree
+
+
+def frame_nodes(tree, nodes, title, origin=None):
+    """Arrange only the supplied outer-view nodes inside one explanatory frame."""
+    nodes = list(nodes)
+    if not nodes:
+        return
+    if tree.get('qc_asset_id') or any(node.type == 'FRAME' or node.parent for node in nodes):
+        raise ValueError('Layout requires unparented outer-view nodes')
+    if origin is None:
+        right = 0
+        for node in tree.nodes:
+            if node in nodes:
+                continue
+            x = node.location.x
+            parent = node.parent
+            while parent:
+                x += parent.location.x
+                parent = parent.parent
+            right = max(right, x + node.width)
+        origin = (right + 320, 0)
+    frame = tree.nodes.new('NodeFrame')
+    frame.label = title
+    frame.location = origin
+    depths, rows = {}, {}
+    pending = list(nodes)
+    while pending:
+        ready = [node for node in pending if all(link.from_node not in nodes or link.from_node in depths
+                 for socket in node.inputs for link in socket.links)] or [pending[0]]
+        for node in ready:
+            depth = max((depths[link.from_node] + 1 for socket in node.inputs for link in socket.links
+                         if link.from_node in depths), default=0)
+            row = rows.get(depth, 0)
+            node.parent = frame
+            node.location = (depth * 300, -row * 300)
+            node.width = 220
+            depths[node], rows[depth] = depth, row + 1
+            pending.remove(node)
+    return frame

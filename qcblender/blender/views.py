@@ -7,7 +7,7 @@ import bpy
 import numpy as np
 
 from ..data import load_dataset, volume_cache
-from .graph import tag_view
+from .graph import tag_view, frame_nodes
 
 
 def socket(tree, name, kind, direction='INPUT', default=None, minimum=None):
@@ -133,8 +133,6 @@ def atom_view(directory):
         links.new(inputs.outputs[name], style.inputs[name])
     links.new(selected.outputs['Selection'], style.inputs['Selection'])
     links.new(style.outputs['Geometry'], output.inputs['Geometry'])
-    for index, node in enumerate(nodes):
-        node.location = (index % 4 * 220, -(index // 4) * 240)
     obj.modifiers.new('QC Atoms and Bonds', 'NODES').node_group = tree
     from .properties import setup_properties
     setup_properties(obj, data)
@@ -146,6 +144,13 @@ def atom_view(directory):
         obj['qc_optimization_available'] = trajectory['status'] == 'available'
         obj['qc_optimization_reason'] = trajectory.get('reason', '')
     ensure_atom_visibility(obj)
+    frame_nodes(tree, [node for node in nodes if node.type not in ('FRAME', 'GROUP_INPUT', 'GROUP_OUTPUT')
+                      and node.parent is None], 'Atoms: selection and representation', (300, 0))
+    for node in nodes:
+        if node.type == 'FRAME' and node.label == 'Modes: displacement and animation':
+            node.location = (300, -1400)
+    inputs.location = (-100, 0)
+    output.location = (1800, 0)
     bpy.context.view_layer.objects.active = obj
     obj.select_set(True)
     return obj
@@ -267,8 +272,8 @@ def field_view(directory, parent=None, index=0):
         socket(tree, name, 'NodeSocketMaterial', default=mat)
         links.new(inputs.outputs[name], style.inputs[name])
     links.new(style.outputs['Geometry'], output.inputs['Geometry'])
-    for number, node in enumerate(nodes):
-        node.location = (number * 240, 0)
+    frame_nodes(tree, [info, style], 'Field: source and isosurface', (300, 0))
+    inputs.location, output.location = (-100, 0), (1200, 0)
     obj.modifiers.new('QC Isosurface', 'NODES').node_group = tree
     tag_view(tree)
     bpy.context.view_layer.objects.active = obj
