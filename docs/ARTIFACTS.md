@@ -18,7 +18,7 @@
 
 | 任务 / 日期 | 提交或标签 | 证据与主要报告 | 工程、候选与阻塞 | 重建入口 |
 | --- | --- | --- | --- | --- |
-| 工作树与 outputs 维护 / 2026-09-30 | 验证 `aaf20f8`；归档 `archive/2026-09-30/chore/output-maintenance` | `outputs/evidence/2026-09-30/output-maintenance/`：`result.json`、`cleanup-safe/{summary,applied}.json`、`before/after.jsonl.gz`、`path-map.jsonl.gz`、`routes.json`、`protection-checks.json` | 安全部分完成；权限、占用和未知归属项保留，任务 02/03 保持 claimed | 本批脚本及命令 JSON；[维护规则](agents/storage-maintenance.md) |
+| 工作树与 outputs 维护 / 2026-09-30 | 验证 `aaf20f8`；已合并 `8188a41`，归档 `archive/2026-09-30/chore/output-maintenance` | `outputs/evidence/2026-09-30/output-maintenance/`：`result.json`、`cleanup-safe/{summary,applied}.json`、`before/after.jsonl.gz`、`path-map.jsonl.gz`、`routes.json`、`protection-checks.json`、`closing.json`、`worktree-preservation.json` | 本轮工作树及已合并分支已正常移除；旧权限/占用及未知对象保留，任务 02/03 保持 claimed | 本批命令 JSON（历史参数）；新批次按开发说明；[维护规则](agents/storage-maintenance.md) |
 | 清理复查补丁 qcf3 / 2026-09-30 | 源码 `a7f9b43`；已合并 `20bfdcd` | `outputs/evidence/2026-09-30/cleanup-followup/qcf3/`：`qualification.json`、`evidence-index.json`、`gui/`；[验证索引](acceptance/cleanup-validation.json) | 最新 ZIP 为 `outputs/candidates/current/qcblender-0.0.1.zip`；独立签署 Not Run | [开发说明](DEVELOPMENT.md)；资格与 GUI 覆盖见验证索引 |
 | 仓库清理 / 2026-09-30 | `47fd82c` | `outputs/evidence/2026-09-30/cleanup-followup/f458/`，按旧相对路径查报告；保全收据 `outputs/evidence/2026-09-30/cleanup-followup/preservation.json` | f458 的 11 个目录、3 个 ZIP 访问拒绝，旧工作树及分支保留；旧 ZIP 不作为可用候选 | 原任务 `.scratch/repository-cleanup/`；原始输入与共用环境 |
 | 输入集中与产物维护 / 2026-09-29 | `archive/2026-09-29/chore/storage-cleanup` | `outputs/evidence/2026-09-30/history/storage-cleanup/`：`applied.json`、`branch-archive.json`、冷重开日志 | 用户保全工程见下表；旧验证不继承为本轮通过 | [历史记录](acceptance/storage-cleanup.md)及当前开发说明 |
@@ -40,7 +40,7 @@
 | `outputs/blender-dev/`、`outputs/blender-runtime.json` | 运行时记录引用的现有配置，保留；其引用解除前不清理 |
 | `outputs/build-python/`、`build-sources/`、`gbasis-build/`、`native-backend-licenses/`、`reference-tools/`、`m0-research/`、`visualization-adoption/`、`repaired-wheels/`、`unrepaired-wheels/` | 构建来源、许可证、参考资料或尚待用途确认的环境；保留原路径，不自动归为重复环境 |
 
-当前可复用的后端是 `wheels/qualified/backend-wheel.json` 与同目录 wheels 的配对，不是根目录旧记录。新工作树先核对锁定摘要，再把这份记录显式复制到该工作树忽略的 `outputs/backend-wheel.json`；打包传入 `--wheels-dir <主检出>/outputs/wheels/qualified`，科学检查传入 `--site <主检出>/outputs/science`。本轮可执行示例为证据中的 `rebuild.py`、`short-rebuild.py`、`after-validation.py` 和 `qualification.py`；它们固定本轮路径。新批次换成未使用的短目录，复用 [开发说明](DEVELOPMENT.md) 的退出码记录流程。
+当前可复用的后端是 `wheels/qualified/backend-wheel.json` 与同目录 wheels 的配对，不是根目录旧记录。新工作树先核对锁定摘要，再把这份记录显式复制到该工作树忽略的 `outputs/backend-wheel.json`；打包传入 `--wheels-dir <主检出>/outputs/wheels/qualified`，科学检查传入 `--site <主检出>/outputs/science`。本轮脚本 `rebuild.py`、`short-rebuild.py`、`after-validation.py` 和 `qualification.py` 保存实际参数；原工作树已移除，复验先创建干净工作树、显式复制并核对必要输入，然后改用新批次和报告位置，不能直接覆盖历史证据。新批次换成未使用的短目录，复用 [开发说明](DEVELOPMENT.md) 的退出码记录流程。
 
 ## 历史任务路由
 
@@ -93,7 +93,7 @@
 | volume-probe | `evidence/2026-09-30/history/volume-probe/` | `result.json` |
 | workflow-migration | `evidence/2026-09-30/history/workflow-migration/` | 批次内原相对层级；完整路径见 routes.json |
 
-根目录零散历史报告、脚本和日志集中在 `outputs/evidence/2026-09-30/history/root/`。全部任务原路径到现位置的 SHA-256 映射见维护批次 `path-map.jsonl.gz`；`routes.json` 按原任务名称定位。原报告中的旧路径是历史信息，不能直接视为仍存在；未迁移且保留的科学原件另列 unknown_inputs。
+根目录零散历史报告、脚本和日志集中在 `outputs/evidence/2026-09-30/history/root/`。全部任务原路径到现位置的 SHA-256 映射见维护批次 `path-map.jsonl.gz`；主检出源码引用同时记录固定 source_commit/source_path，main 后续改动时按该 Git 身份取回并核对摘要。本轮已改动文件的少量字节副本位于 `fixed-source-reference/`，修正收据为 `source-reference-fix.json`；`routes.json` 按原任务名称定位。原报告中的旧路径是历史信息，不能直接视为仍存在；未迁移且保留的科学原件另列 unknown_inputs。
 
 ## 本轮清理结果与后续维护
 
