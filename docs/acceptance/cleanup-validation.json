@@ -85,9 +85,10 @@
     ]
   },
   "candidate": {
-    "path": "dist/qcblender-0.0.1.zip",
+    "path": "outputs/candidates/current/qcblender-0.0.1.zip",
     "sha256": "1e473b32892eab06d399a7940a14abd947c59a29dca8afc18efc3ccd56655a7a",
-    "bytes": 50632953
+    "bytes": 50632953,
+    "path_basis": "repository root"
   },
   "environment": {
     "os": "Windows 11 x64 build 22631",
@@ -593,12 +594,11 @@
     }
   },
   "storage": {
-    "current_batch": "C:/Users/ustcw/.codex/worktrees/b48c/QCBlender/outputs/qcf3",
-    "archive_batch": "D:/workspace/QCBlender/outputs/cleanup-followup-20260930/b48c/outputs/qcf3",
-    "archive_receipt": "D:/workspace/QCBlender/outputs/cleanup-followup-20260930/preservation.json",
-    "availability": "Passed: batch archived and all indexed hashes verified; see task06 preservation receipt. Original paths are historical.",
+    "archive_batch": "D:/workspace/QCBlender/outputs/evidence/2026-09-30/cleanup-followup/qcf3",
+    "archive_receipt": "D:/workspace/QCBlender/outputs/evidence/2026-09-30/cleanup-followup/preservation.json",
+    "availability": "Passed: original reports/screenshots/CSV byte-identical; current locations routed by docs/ARTIFACTS.md. Historical command paths resolve through the maintenance path map.",
     "preserved_manifest_sha256": "07dbeae954f8f78c17b29ea6c24b14555f8ede318e1f9871957de3ffdd9a9f62",
-    "user_project": "D:\\workspace\\QCBlender\\outputs\\cleanup-followup-20260930\\user-session\\未命名.blend",
+    "user_project": "D:/workspace/QCBlender/outputs/projects/cleanup-followup-original/未命名.blend",
     "user_project_sha256": "2126daad3f073126ee373cd598a4752437c1ec0d79c58bb00846496fbaaa6dd4",
     "user_cold_reopen": {
       "status": "Passed",
@@ -615,6 +615,16 @@
       "b48c": "Git registration and files removed; empty root remains process-locked",
       "f458": "Retained: permission-denied evidence unpreserved",
       "receipt_sha256": "0623ce8380067d97fd65e4707060fb239f5d2ccb7197b953a28e03b29262cdce"
+    },
+    "historical_batch": "C:/Users/ustcw/.codex/worktrees/b48c/QCBlender/outputs/qcf3",
+    "active_user_project": "D:/workspace/QCBlender/outputs/projects/user-session-20260930/current.blend",
+    "maintenance": {
+      "status": "Failed",
+      "receipt": "outputs/evidence/2026-09-30/output-maintenance/result.json",
+      "receipt_sha256": "265aad03479eb5b9877c04703056ac7a08cba58d31425e4e1dfa4115fccb51a1",
+      "path_map": "outputs/evidence/2026-09-30/output-maintenance/path-map.jsonl.gz",
+      "route": "docs/ARTIFACTS.md",
+      "scope": "Safe partial cleanup; historical qualification and independent signature unchanged"
     }
   },
   "rebuild": {
@@ -637,7 +647,7 @@
       "candidate_sha256": "48ca845e1d0f7be7bdc1300d962f733c89958fb89add2ff763aee24ebee5c760",
       "technical": "Passed",
       "GUI_import": "Failed",
-      "evidence": "outputs/qcf2/human/evidence/import-diagnostic.json; source unchanged, stale Log digest in FCHK request",
+      "evidence": "outputs/evidence/2026-09-30/cleanup-followup/b48c/outputs/qcf2/human/evidence/import-diagnostic.json; source unchanged, stale Log digest in FCHK request",
       "scope": "Historical; not inherited into qcf3"
     }
   }

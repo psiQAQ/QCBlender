@@ -10,13 +10,13 @@
 
 ## 本批目录与命令记录
 
-先提交待验证的文档、测试及产品源码，记录实际提交。使用新的短批次名称；批次目录存在时停止，不能覆盖旧证据。以下函数保存每条命令、输出摘要与退出码，成功后才继续；命令成功不自动证明未运行的其他范围。
+先提交待验证的文档、测试及产品源码，记录实际提交。使用新的短任务和批次名称（示例 qc/1）；中文移动测试的完整数组路径应短于 260 字符，批次过长时先缩短路径；批次目录存在时停止，不能覆盖旧证据。以下函数保存每条命令、输出摘要与退出码，成功后才继续；命令成功不自动证明未运行的其他范围。
 
 ~~~powershell
 $blender = 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe'
 $blenderPython = 'C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe'
 $repo = (Get-Location).Path
-$batch = "$repo/outputs/runs/cleanup-followup/qcf1"
+$batch = "$repo/outputs/runs/qc/1"
 $qa = "$batch/qa"
 $scienceSite = "$repo/outputs/science"
 $wheels = "$repo/outputs/wheels"

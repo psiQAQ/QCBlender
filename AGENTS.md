@@ -28,4 +28,4 @@
 
 ## 阶段产物维护
 
-阶段结束时按 [存储维护规则](docs/agents/storage-maintenance.md) 核对产物保留、清理授权和 CHANGELOG；具体保护、删除及验证要求以该文件为准。理由：用户工程、必要输入和新候选证据有不同生命周期，集中规则可避免按文件名误删。
+阶段结束时按 [存储维护规则](docs/agents/storage-maintenance.md) 核对产物保留、清理授权和 CHANGELOG；具体保护、删除及验证要求以该文件为准；[ARTIFACTS](docs/ARTIFACTS.md) 是现存产物与重建方法的唯一查找入口。理由：用户工程、必要输入和新候选证据有不同生命周期，集中规则可避免按文件名误删。

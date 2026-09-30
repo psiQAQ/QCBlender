@@ -2,6 +2,12 @@
 
 本页记录历史变化；当前安装、操作和验证分别见 [用户指南](USER_GUIDE.md)、[开发说明](DEVELOPMENT.md) 与 [VALIDATION](VALIDATION.md)。
 
+## 2026-09-30 工作树与 outputs 维护
+
+开发统一使用主检出 .worktrees 独立分支、ff-only 本地合并、带注释 archive 标签与保全后的正常工作树/分支清理。新增唯一[产物路由](ARTIFACTS.md)，根规则、开发说明与存储维护引用；原始报告不改字节，旧路径通过摘要映射定位。产品、科学契约、依赖版本和锁文件未改。
+
+迁移 11,063 项必要证据与来源，保留最新待验收候选和用户工程，清理结束任务的独立环境与旧候选。清单删除 67,453 个文件 / 3,279,888,606 字节，同口径净减少约 2.97 GB；详情及保留/跳过对象见产物路由和 outputs/evidence/2026-09-30/output-maintenance/result.json。168 项访问拒绝、两份活跃日志、f458 拒绝及 b48c 占用继续保留，任务 02/03 未 resolved。8 项边界测试、69 项清理后科学回归、重建、安装/生命周期、双冷重开和工程数组/VDB Passed；默认旧后端 wheel 不可读，显式核对的 qualified wheel 配对 Passed。首次过长路径失败日志与短路径通过分别保存。独立签署 Not Run，未 push。
+
 ## 2026-09-30 清理复查补丁：技术检查
 
 本地 main 已 fast-forward 合并至 20bfdcd；b48c Git 登记及全部文件已移除，空根目录仍因进程占用保留；f458 因权限拒绝保留。任务 06 保持 claimed，清理总体 Failed，保全与保护对象核对 Passed；收据为 outputs/cleanup-followup-20260930/preservation.json。保全的用户工程已使用主检出归档中的插件环境重新打开为可见 Blender，不再依赖旧工作树内容。未 push。
