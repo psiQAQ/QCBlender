@@ -151,7 +151,9 @@
       "profile-created.png": "80d16271da0933607ad2f11e5a9a18b6ae870f6b55491514010a88d6b20c43fc",
       "save-dialog.png": "b27ee936c1629b1fd1465acd9876296bc2a62bd42c47c1674bdec548eef96e43",
       "saved.png": "3ccc76ad574c44793935af59e3875bf5f3ca8c6de7337630cfbbf6d1b3ab5481",
-      "vibration-playing.png": "c22b621f23363f6bc4cf2806f727af87a30a5e1193e871d86c07d84c1bd52eaf"
+      "vibration-playing.png": "c22b621f23363f6bc4cf2806f727af87a30a5e1193e871d86c07d84c1bd52eaf",
+      "user-saved.png": "8ca132c964701de24a54251ceec0910e427292f2f26389978b9eb51e92f28133",
+      "user-cold-reopen.png": "b17c2bdda2e4143d2ba619d03d8b0d815717ff6969e72686879fd88092a3d149"
     },
     "csv": {
       "path": "gui/profile-cold.csv",
@@ -594,7 +596,18 @@
     "current_batch": "C:/Users/ustcw/.codex/worktrees/b48c/QCBlender/outputs/qcf3",
     "archive_batch": "D:/workspace/QCBlender/outputs/cleanup-followup-20260930/b48c/outputs/qcf3",
     "archive_receipt": "D:/workspace/QCBlender/outputs/cleanup-followup-20260930/preservation.json",
-    "availability": "Current batch present; archive requires task06 receipt check"
+    "availability": "Passed: batch archived and all indexed hashes verified; see task06 preservation receipt. Original paths are historical.",
+    "preserved_manifest_sha256": "07dbeae954f8f78c17b29ea6c24b14555f8ede318e1f9871957de3ffdd9a9f62",
+    "user_project": "D:\\workspace\\QCBlender\\outputs\\cleanup-followup-20260930\\user-session\\未命名.blend",
+    "user_project_sha256": "2126daad3f073126ee373cd598a4752437c1ec0d79c58bb00846496fbaaa6dd4",
+    "user_cold_reopen": {
+      "status": "Passed",
+      "path": "gui/user-cold-reopen.json",
+      "sha256": "b68088e3b8ec114329116a40753053ecd5688df130fe2cd788fe003363ce400f",
+      "original_pid": 24852,
+      "new_pid": 47480,
+      "original_exited": true
+    }
   },
   "rebuild": {
     "instructions": "docs/DEVELOPMENT.md: first preparation or verified incremental preparation, new batch, fixed source commit, input preflight, science/units/helpers, packaging/installation/cold opens/recovery/legend, evidence-index then qualification",
@@ -609,7 +622,7 @@
       "source_manifest_sha256": "52da8fd814067a78e75f1f85872eab271190975e585aa73b2b3f85fd2b590834",
       "matched_files": 69,
       "status": "Passed",
-      "candidate_sha256": "See prior repository-cleanup validation"
+      "candidate_sha256": "2cd8bd76b22c3ac0d5cecfa519463a3bd01b0df797508f9f9eb730354b1d42fb"
     },
     "qcf2": {
       "commit": "87b5316e95552929bda8f0f7e74129ea84ab49bd",

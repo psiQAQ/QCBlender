@@ -19,7 +19,7 @@ Branch: chore/cleanup-followup
 | 01 | [用户指南](issues/01-user-guide.md) | 无 | ready-for-agent |
 | 02 | [节点回归断言](issues/02-node-assertions.md) | 无 | ready-for-agent |
 | 03 | [首次构建与开发说明](issues/03-first-build.md) | 01、02 | ready-for-agent |
-| 04 | [按指南点击界面](issues/04-guide-walkthrough.md) | 03 | ready-for-human |
+| 04 | [按指南点击界面](issues/04-guide-walkthrough.md) | 03 | ready-for-agent |
 | 05 | [可复核验证索引](issues/05-validation-index.md) | 03、04 | ready-for-agent |
 | 06 | [合并与工作树清理](issues/06-merge-cleanup.md) | 05 | ready-for-agent |
 
@@ -35,6 +35,8 @@ Branch: chore/cleanup-followup
 - f458 已发现 11 个目录访问拒绝。保全未完成时保留受影响工作树并记录阻塞，不修改 ACL、取得所有权或强制删除。
 
 ## Comments
+
+- 2026-09-30：追加授权修复与新候选 qcf3 资格、MCP + Computer Use 可见界面检查及受跟踪验证索引完成，01—05 resolved。b48c 完整保全通过；用户未保存工程独立保存并冷重开通过；f458 的权限拒绝对象仍无法保全，06 保持 claimed，旧工作树保留。
 
 - 2026-09-30：当前工作树及 main 的 HEAD 均为基线，受跟踪工作区干净。已创建本地分支；尚未运行本轮测试、合并或清理。
 
