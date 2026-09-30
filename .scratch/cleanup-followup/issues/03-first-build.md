@@ -1,7 +1,7 @@
 # 修订并复验首次构建
 
 Triage: ready-for-agent
-Status: resolved
+Status: claimed
 Type: task
 Blocked by: 01, 02
 
@@ -14,6 +14,8 @@ Blocked by: 01, 02
 - 先提交被验证文档与测试，再记录准确提交、环境及本轮结果；锁文件无改动。
 
 ## Comments
+
+- 2026-09-30：追加授权的导入状态修复需要新候选和固定提交身份；领取同范围增量复验，旧批 qcf2 结果保留，不继承到新批 qcf3。
 
 - 2026-09-30：01、02 已 resolved，领取任务。首次/增量路径分开，九个 PowerShell 示例通过语法检查；首次脚本由正文代码块直接提取，不添加构建框架。候选和资格使用本次提交身份。
 

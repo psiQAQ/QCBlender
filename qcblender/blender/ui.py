@@ -156,6 +156,8 @@ class QCBLENDER_OT_import(AsyncOperation, bpy.types.Operator, ImportHelper):
 
     def invoke(self, context, event):
         self._preview_gui = True
+        self.source_sha256 = ''
+        self.job_number = 1
         return ImportHelper.invoke(self, context, event)
 
     def begin(self, context):

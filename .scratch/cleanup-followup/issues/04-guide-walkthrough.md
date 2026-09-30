@@ -1,6 +1,6 @@
 # 仅依据指南点击界面
 
-Triage: ready-for-human
+Triage: ready-for-agent
 Status: claimed
 Type: task
 Blocked by: 03
@@ -17,6 +17,8 @@ Blocked by: 03
 逐项记录活动对象、实际路径、预期/实际结果和截图路径；检查者自行反馈。未执行保持 Not Run。本任务是操作指南检查，不改变独立科研验收签署。
 
 ## Comments
+
+- 2026-09-30：用户追加授权修复导入参数复用缺陷，并由 Agent 通过 MCP + Computer Use 在独立可见 Blender 窗口完成剩余实际点击、保存和重开检查及截图。已发现并连接本地 Computer Use 组件；保留用户原有未保存窗口。新候选复验及实际点击尚未完成，状态保持 claimed；旧候选失败与用户已完成的两项仍单独保存。
 
 - 当前宿主没有桌面点击工具；Blender 脚本和截图工具不作为实际点击证据。
 

@@ -7,10 +7,12 @@ from pathlib import Path
 import shutil
 import sys
 import time
+from types import SimpleNamespace
 from unittest.mock import patch
 
 import bpy
 import numpy as np
+from bpy_extras.io_utils import ImportHelper
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -86,6 +88,20 @@ else:
         from_source.append(views.atom_view(job.directory / 'dataset'))
     assert browser.source_group(from_source[0])[0] != browser.source_group(from_source[1])[0]
     report['selected_jobs'] = 'Passed'
+    ui = importlib.import_module(MODULE + '.blender.ui')
+    fchk = ROOT / 'tests/data/chemtools/ch4_uhf_ccpvdz.fchk'
+    state = SimpleNamespace(filepath=str(fchk), job_number=2,
+                            source_sha256=preview['source']['sha256'])
+    with patch.object(ImportHelper, 'invoke', return_value={'RUNNING_MODAL'}) as picker:
+        assert ui.QCBLENDER_OT_import.invoke(state, bpy.context, None) == {'RUNNING_MODAL'}
+        picker.assert_called_once_with(state, bpy.context, None)
+    assert state.job_number == 1 and state.source_sha256 == ''
+    job = ui.QCBLENDER_OT_import.begin(state, bpy.context)
+    assert finish(job)['status'] == 'succeeded'
+    data = storage.load_dataset(job.directory / 'dataset')
+    assert data.metadata['source']['sha256'] == hashlib.sha256(fchk.read_bytes()).hexdigest()
+    assert data.arrays['atomic_numbers'].tolist() == [6, 1, 1, 1, 1]
+    report['new_dialog_resets_previous_preview'] = 'Passed'
     spectrum = from_source[1].qc_settings.spectrum
     assert spectrum and browser.source_group(spectrum)[0] == browser.source_group(from_source[1])[0]
     assert any(title == 'Spectrum' for title, _ in browser.source_details(spectrum))
