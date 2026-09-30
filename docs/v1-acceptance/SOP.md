@@ -1,6 +1,6 @@
 # QCBlender 0.0.1 跟随教程与独立人工验收 SOP
 
-适用 **Windows x64、Blender 5.1.1**。取得 QCBlender 扩展 ZIP 和本教程指定样本后，即可在 Blender 中完成导入、调整、渲染和保存；安装包包含必要运行库。公开安装包是否可取得见 [README](../../README.md)，来源、许可及获取说明见 [SOURCES](SOURCES.md)。当前步骤草稿的具体输入与参数尚待样本清单冻结；标有“待样本定稿”的案例不可据此宣布通过。
+适用 **Windows x64、Blender 5.1.1**。取得 QCBlender 扩展 ZIP 和本教程指定样本后，即可在 Blender 中完成导入、调整、渲染和保存；安装包包含必要运行库。公开安装包是否可取得见 [README](../../README.md)，来源、许可及获取说明见 [SOURCES](SOURCES.md)。本教程绑定 [冻结样本清单](tutorial-samples.json)；P01/P03/P04/P05 在样本包中，C02/C06 所用 P02 需原站单独获取，其再分发许可未确认。安装包和样本包目前为本地交付，尚无已发布远程下载地址。
 
 本教程保留 **C01–C13** 科学案例和 **N01–N18** 节点/交互检查编号。按钮位置与当前插件界面一致；对话框及部分控件仍使用英文。操作结果只记 **Passed / Failed / Not Run**。用户实际点击、Agent Computer Use 点击、MCP 数据核对、独立科研签署分别记录；Agent 不填写使用者签名。
 
@@ -9,7 +9,7 @@
 ### 0.1 取得材料并建立本次目录
 
 1. 取得实际扩展安装 ZIP，核对提供者记录的版本、文件大小和 SHA-256；源码仓库 ZIP 不能直接安装为扩展。使用公开包时记录下载地址；维护者提供候选时记录候选身份。
-2. 按 [SOURCES](SOURCES.md) 取得所需 P01–P05 样本。新计算数据使用 CC BY 4.0；第三方材料保留原许可。公开包只收录允许分发的文件。受限或许可未知的材料按原站获取步骤取得并核对摘要，不能因其可下载便视为可再分发。取得不了必要文件时，在相应案例记录阻塞和 Not Run，其他案例可以继续。
+2. 向提供者取得 **qcblender-public-tutorial-samples-v1.zip**，SHA-256 为 `a4ccfc3ef91921817d17284196ba23ccfb7cce7b1643cdfa41af8e8a6103f85b`。核对后解压到本次 `inputs/`，保留包内 P01/P03/P04/P05 目录、LICENSE、NOTICE 和 `tutorial-samples.json`，署名 **QCBlender contributors**。按 [SOURCES 的公开教程获取说明](SOURCES.md#公开教程样本与独立获取2026-09-30) 单独取得 P02。新计算数据使用 CC BY 4.0；第三方材料保留原许可。公开包只收录允许分发的文件。受限或许可未知的材料按原站获取步骤取得并核对摘要，不能因其可下载便视为可再分发。取得不了必要文件时，在相应案例记录阻塞和 Not Run，其他案例可以继续。
 3. 在自己的工作目录新建一个独立批次目录，例如 `QCBlender-tutorial/2026-09-30-run01/`，下面建立 `inputs/`、`cases/C01/` 至 `cases/C13/` 和 `moved/`。输入保持样本包的相对目录结构，尤其 IRC 的 CSV 与逐步 FCHK/Mayer 文本不能分离。不要覆盖上一批工程或用户已有文件。
 4. Windows PowerShell 中逐一核对安装 ZIP 和本次所用文件：
 
@@ -29,6 +29,25 @@
 | 扩展版本、源码身份或提供者资格报告 | 待填写 |
 | 样本清单版本/摘要、所用文件 SHA-256 | 待填写 |
 | 科学运行库检查结果及截图 | Not Run；[用户截图待引用] |
+
+### 0.1.1 单独取得 P02（C02/C06 前置条件）
+
+在 **本批 inputs/ 目录**打开 PowerShell。P02 使用 Gaussian 16 A.03 / NBO 3.1 的真实水优化/频率日志；下载定位与本地读取说明不授予再分发权限。先自行确认原站使用条件；不具备使用权或下载失败时，C02/C06 保持 Not Run 并记录原因，不需要安装计算软件补造结果。
+
+```powershell
+New-Item -ItemType Directory -Force P02 | Out-Null
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/cclib/cclib-data/a16cc80ea29e8baec60abd0df346ce6862f52531/Gaussian/Gaussian16/water_neutral_nbo_opt_freq.out' -OutFile P02/water_neutral_nbo_opt_freq.out
+Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.out -Algorithm SHA256
+```
+
+SHA 必须为 `9493d24655fb261a2c945d292ad517567f3024996594a25f678199df74017519`，字节数 **92,872**。核对成功后创建另一扩展名入口的逐字节副本：
+
+```powershell
+Copy-Item -LiteralPath P02/water_neutral_nbo_opt_freq.out -Destination P02/water_neutral_nbo_opt_freq.log
+Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
+```
+
+两者摘要相同。该原站本轮取得与摘要核对 Passed，仅证明提供者检查时可取得；每位使用者仍需核对实际下载。不把 P02 文件放进公开附件或归档分发。
 
 ### 0.2 安装与编辑器定位
 
@@ -63,17 +82,31 @@
 
 ## 1. C01–C13 输入与物理量教程
 
-下列样本组由最终清单提供具体路径、许可、SHA-256、计算条件和展示参数。**待样本定稿**字段是教程实施前置条件，不能用历史 S01–S35 的数值代填。
+以下输入均相对本批 `inputs/`。清单的 `archive_path` 是样本包路径；`path` 是开发仓库路径，用户无需将文件放到 `tests/data/`。外部原件为 `P02/water_neutral_nbo_opt_freq.out/.log`。
 
-| 案例 | 能力组 | 本例输入与参数 |
+所有待生成的 MO/密度/ESP 使用 **Grid spacing = 0.7 Å、Grid margin = 3 Å**，Memory budget 使用对话框默认 **512 MiB**，并记录实际网格；0.7 Å 是本批显示测试建议，不证明定量收敛。MO、等值、色域、振幅和其他展示值来自清单 `cases.gui/grid_defaults`，其状态是 **proposed；视觉 Not Run**，按以下值起步后记录实际轮廓和必要调整，不能将建议值称成图验收通过。外部 Cube 的真实网格不重采样为 0.7 Å。
+
+| 案例 | 文件/源身份 | 本例展示设置 |
 | --- | --- | --- |
-| C01/C05 | P01 开壳层 O2；C05 标注另用 P02/P04 | 待样本定稿：FCHK、别名、源 MO/自旋、网格、阈值、氢与标注编号 |
-| C02/C06 | P02 水多 Job Log/NBO/FCHK | 待样本定稿：获取路径、job/block、模式、频率/能量、振动展示参数 |
-| C03/C04/C07/C08/C09 | P03 水二聚体场与外部分析 | 待样本定稿：FCHK/Cube/PDB/text、单位、网格、片段、IRI指数、阈值/颜色、剖面端点 |
-| C10/C11 | P04 H2O2 IRC/Mayer | 待样本定稿：steps/Mayer CSV、步序、原子对、能量/键级 |
-| C12/C13 | P05 CO–BH3 ETS-NOCV | 待样本定稿：参考构型、真实表与pair Cube、pair/spin、能量/密度单位、阈值 |
+| C01 | P01/o2-uhf.fchk、o2-uhf.fch；UHF/STO-3G O2 | Alpha MO9、Beta HOMO7；MO阈值0.045 bohr^-3/2；自旋±0.002 electron/bohr^3 |
+| C02 | P02/water_neutral_nbo_opt_freq.out/.log；Job2频率、Job1优化 | 模式3；Amplitude 0.35 Å；Cycles per second 1 |
+| C03 | P03/igmh/sl2r.cub、P03/color.cube | sign_lambda2_rho，electron/bohr^3，倍率1；正负阈值0.02 |
+| C04 | P03/water-dimer.fchk | 密度等值0.004 electron/bohr^3；ESP色域−0.05/0/+0.05 hartree/e；Mulliken；偶极1.5 Å/D |
+| C05 | P03/water-dimer.fchk/.fch | 保留氢源编号2；氧编号1、4；距离1,4；角2,1,3 |
+| C06 | P02同C02 | Job2/block1；NBO1、E(2)记录1 |
+| C07 | P03参考FCHK；igmh/dg_inter.cub、sl2r.cub；iri/func2.cub、func1.cub | 片段1–3/4–6；IGMH0.005 electron/bohr^4；IRI1，a=1.1；颜色−0.04/0/+0.04 electron/bohr^3 |
+| C08 | P03参考/ESP场；esp/surfanalysis.pdb、esp/stdout.log | rho=0.001 electron/bohr^3；极值/分布中心kcal/mol；面积angstrom^2 |
+| C09 | P03参考；aim/CPs.pdb、paths.pdb、CPprop.txt | 坐标Å；选源点1 |
+| C10 | P04/steps.csv、step-001/002/003.fchk | 三步连续跨TS，按CSV顺序1→2→3 |
+| C11 | P04/mayer-pyscf.csv、step-001/002/003-mayer-pyscf.txt | Mayer原子对1,2，无量纲 |
+| C12 | P05/complex.fchk、nocv/ets-nocv.txt | kcal/mol，pair1，Spin Total |
+| C13 | C12表与P05/nocv/nocv-pair1.cub | pair1/Total；electron/bohr^3；两符号阈值0.003 |
+
+数值核对按源打印精度：坐标容差 **3e-6 Å**，FCHK 标量能量 **6e-7 Eh**，Log打印能量 **1e-9 Eh**，Cube公式核对 **3e-6**（原字段单位）。保存或改显示时数组应保留，不能用这些数值容差代替数组 SHA 一致性检查。
 
 ### C01 FCHK、开壳层轨道与密度
+
+**真实输入预期：** O2 2原子，源顺序 O1/O2，坐标 (0,0,−0.6)/(0,0,+0.6) Å；中性三重态16电子，Alpha9/Beta7，源能量 **−147.633453 Eh**，每通道10个MO。选 Alpha/Source number/9 与 Beta/HOMO（应解析为7）；预览占据/轨道能量以源记录为准，不另填未知值。两FCHK入口 SHA 同为 `ef562c4b210e7c380219282d7684370cca1f0e8349dffa1d4388af5831472e36`。
 
 1. 按 0.3 导入 P01 FCHK，再逐字节别名 `.fch`；选择各自原子对象，核对原子身份/顺序、坐标、方法、基组、电荷、多重度、电子数和电子总能量，两入口记录一致。
 2. 保持 FCHK 原子视图活动，点击 **工作流 → 生成量子化学场**；Quantity 选 **Molecular orbital**，分别选 **Alpha/Beta**，按清单选 **Orbital → Source number** 并填 **Orbital number (1-based)**，或按已核对身份选 HOMO/LUMO。记录预览 Source MO、occupation、Energy；输入清单网格 **Grid spacing (angstrom)**、**Grid margin (angstrom)** 与 **Memory budget (MiB)**，确认等待生成。
@@ -86,16 +119,20 @@
 
 ### C02 Log/Out 能量、振动与优化
 
+**真实输入预期：** Job2 是中性单重态水，3原子 O/H/H，RHF/STO-3G，10电子；目标电子能量 **−74.9659011806 Eh**（与Job1最终优化步一致）。模式1/2/3频率 **2169.7613/4141.3837/4392.5759 cm^-1**，IR **7.2483/44.2724/29.9428 km/mol**；先选模式3。Job1有4优化步，能量依次 **−74.9643287914、−74.9649723283、−74.9659003010、−74.9659011806 Eh**。两扩展名都要完成导入。导入回归的下一文件固定 **P03/water-dimer.fchk**，预期6原子及其SHA；无P02 FCHK。
+
 1. 按 0.3 导入 P02 Log/Out，选清单含频率的计算段。选择导入的**原子对象**，展开 **对象属性 → 科学记录与振动模式**，选择能量记录，核对 Hartree 值、方法、kind/role 和原文位置。参考 SCF、目标方法、ZPE/热校正分别记录，不能把最后一条 SCF 当成唯一目标值。
 2. 同一面板模式列表选清单指定模式，核对源编号、频率、IR 强度与 IR 棒图高亮。在同级 **高级参数** 勾选 **Animate**，填写指定 **Amplitude (angstrom)** 和 **Cycles per second**，到 Timeline 点击播放，观察实际帧推进，再暂停；改变 Phase 和模式重复。在 **几何表示 → Show Displacement Vectors** 开位移箭头。平衡源坐标不变；播放速度不是物理振动频率。
 3. 再点 **导入 Gaussian / Cube** 打开新的文件对话框，选同一 Log 的优化计算段。选其原子对象，点 **创建视图与检查工具 → 创建优化轨迹视图**；必须选中新轨迹对象，再展开 **对象属性 → Optimization Trajectory**，逐次点击 **Previous、Next、Choose Step**。核对步号、构型、能量、终止状态、收敛值/阈值及原文行范围。缺失/歧义能量按界面状态记录；优化步不是物理时间。
 4. 在 Display Layers 复制优化轨迹，分别切到不同步，核对互不影响；原视图仍保留其已核实性质，轨迹不借用最终电荷、偶极或模式。C05 的标注也在 P02/P04 可操作的步序上核对随步更新。
-5. **导入状态回归：** 本工程再次导入 Log，明确选 **Job 2** 并完成；随后点击 **导入 Gaussian / Cube** 打开**新文件对话框**导入 P02/P01 FCHK。核对新的计算段参数从 1 开始，导入成功、来源 SHA 为该 FCHK，未继承 Log 的摘要/job；不得以脚本执行 Operator 代替此项真实点击。
+5. **导入状态回归：** 本工程再次导入 Log，明确选 **Job 2** 并完成；随后点击 **导入 Gaussian / Cube** 打开**新文件对话框**导入 **P03/water-dimer.fchk**。核对新的计算段参数从 1 开始，导入成功、来源 SHA 为该 FCHK，未继承 Log 的摘要/job；不得以脚本执行 Operator 代替此项真实点击。
 6. 对应 N12/N15/N16，按 0.4 保存。证据：`C02.png`、`C02-energy.png`、`C02-vibration.png`、`C02-ir.png`、`C02-optimization.png`、`C02-reimport.png` 及工程。
 
 **截图槽：** Job预览 [用户截图待引用]；能量/模式 [用户截图待引用]；播放/IR [用户截图待引用]；优化两步 [用户截图待引用]；Log→Job2→FCHK [用户截图待引用]。
 
 ### C03 Cube/cub 物理量、网格与双符号
+
+**真实输入预期：** `P03/igmh/sl2r.cub` 与 `P03/color.cube` 字节一致，SHA为 `18a33c308c868c9f7747128f1a23c04fc69df37fd5b9681aa5dd35ef20997958`；6原子，**91×38×156**，origin **(−1.2877770840,−0.5291772105,−0.5291772105) Å**，三轴步长 **0.02874808114 Å**。值域 **−194.599..+0.295371 electron/bohr^3**，量 `sign_lambda2_rho`，倍率 **1**。声明时选 **Other externally computed scalar field**，Physical quantity填 `sign_lambda2_rho`，Unit填 `electron/bohr^3`，该场数值不做额外倍率换算。
 
 1. 分别导入 P03 Cube 和逐字节 `.cub` 别名，选各自场对象核对原子、网格和数值数组；普通 Cube 初始物理量可能为 **unknown_scalar / unknown**。
 2. 选待声明场，点 **对象属性主面板 → 声明 Cube 物理量与单位**，只选择样本中数值实际已有的物理量/单位；声明不会换算数值。不匹配提供的选项时保留 unknown 并记录原始定义，不能冒选密度。
@@ -107,27 +144,31 @@
 
 ### C04 ESP、电荷、偶极、切片、探针与剖面
 
+**真实输入预期：** 水二聚体6原子 **[O,H,H,O,H,H]**，中性单重态20电子，RHF/6-31G(d)，能量 **−152.013820 Eh**。源SHA为 `02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a`。Mulliken原子1/2/4为 **−0.928340742/+0.461442520/−0.920221916 e**；偶极源向量为约 **(0,0,1.67243888) e·bohr**，界面以Debye展示，核对保留的单位换算记录。切片中心 **(0,0,1.45) Å**；游标剖面起点 **(0,−2,1.45)**、终点 **(0,+2,1.45) Å**，Geometry、101点、距离0..4 Å。源关联使用逐字节别名 **P03/water-dimer.fch**，不能用P02单水Log与水二聚体关联。
+
 1. 导入 P03 FCHK，选原子对象分别 **生成量子化学场 → Electron density / Electrostatic potential**，使用同一指定网格；核对密度单位 electron/bohr^3、ESP hartree/e。ESP 核附近无效点不算物理零。
 2. 选**密度表面**，打开 **对象属性 → 颜色映射 → 选择／替换着色场**，选择 ESP；核对候选源 SHA、job、量名/单位再确认。密度决定几何，ESP 决定颜色。隐藏独立 ESP 表面的显示和渲染，不删除其内部体场。
-3. 填指定 **Color Minimum/Center/Maximum**，须严格递增；在 **图例排版** 开 **显示图例**（Show Legend），改 长宽/字号/小数/方向/旋转/位置。点击 **零中心对称** 输入正数 R，再 **读取有效范围** 对照一次读取结果；记录并恢复成图色域。材质属性改色带/Reverse，范围外用端点颜色，无效采样为洋红。
+3. 填 **Color Minimum=−0.05、Color Center=0、Color Maximum=+0.05**，须严格递增；在 **图例排版** 开 **显示图例**（Show Legend），改 长宽/字号/小数/方向/旋转/位置。点击 **零中心对称** 输入 **R=0.05**，再 **读取有效范围** 对照一次读取结果；记录并恢复成图色域。材质属性改色带/Reverse，范围外用端点颜色，无效采样为洋红。
 4. 旧多选映射作为独立复核：选 ESP 表面，Shift 选待着色密度表面使其活动，F3 搜索 **Map Selected Field to Active Surface**。与单对象对话框映射核对来源；再用 **选择／替换着色场** 替换一次，范围和图例位置保留。
 5. 重新选原始原子对象，在 **科学记录与振动模式 → 设置原子电荷着色** 选真实存在的布居方法，核对指定原子电荷 e；已绑定网格着色的原子层需换独立层。点 **创建视图与检查工具 → 创建偶极矢量**，核对源三分量/Debye，改变 **Angstrom per Debye** 只改显示长度。
-6. 选 ESP 场，点 **创建切片**；选新切片，在 **空间观察** 改 Center/Rotation/Width/Height 和 **显示采样数/轴**（Resolution）。点 **按源网格或三个原子定平面**，选 **Grid ij / Grid jk / Grid ki / Three source atoms**，按清单填构型关联与三个非共线源编号；使用 3D Viewport 工具栏 **QC Slice Gizmo** 平移/旋转，核对平面记录。在对象属性 **切片等值线 → 开启等值线**，选正确几何/色场并填 **阈值列表（空白：自动 9 条）** 后点 **更新等值线**，等待异步曲线/标签更新，变更后无效单元不连线。
-7. 选 ESP 场，在 **3D Viewport → N → View → 3D Cursor** 输入清单坐标，点击 **创建视图与检查工具 → 读取游标处场值**。分别测试有效域、无效域和域外，后两者不能记 0。点 **点击探针 · 几何场** 后在表面点击，退出探针；绑定色场的密度表面再用 **点击探针 · 绑定色场**，记录采样位置/单位和实际结果。
-8. 选指定场或切片，输入游标起点，点击 **记录剖面起点**；保持**同一个活动视图**，输入终点，点 **创建线剖面**，选 Geometry 或已绑定的 Color，填 Samples。选新剖面，改 **剖面坐标轴与排版 → 应用排版**，点 **导出剖面 CSV** 保存 `C04-profile.csv`；核对距离 Å、字段单位、端点、valid 列及无效值空白。剖面是采样快照，移动排版不改 CSV。
-9. 源关联复核：导入清单配套 Log/FCHK，选两个原子对象，最后选参考对象，点 **对象属性主面板 → 关联选中数据源**。检查原子顺序和构型，按实际需要开启刚体配准；线性/单中心几何不自动唯一配准。两个理论层次/能量各自保留。
+6. 选 ESP 场，点 **创建切片**；选新切片，在 **空间观察** 改 Center/Rotation/Width/Height，在 **几何表示** 改 **显示采样数/轴**（Resolution）。点 **按源网格或三个原子定平面**，选 **Grid ij / Grid jk / Grid ki / Three source atoms**，Associated atom view选水二聚体原子对象，First/Second/Third source atom分别填 **2/1/4**（三点非共线）；使用 3D Viewport 工具栏 **QC Slice Gizmo** 平移/旋转，核对平面记录。在对象属性 **切片等值线 → 开启等值线**，本例ESP切片选 **几何场**；先留 **阈值列表（空白：自动 9 条）** 为空，再填 **−0.02,0,0.02**（hartree/e）并点 **更新等值线**，等待异步曲线/标签更新，变更后无效单元不连线。
+7. 选 ESP 场，在 **3D Viewport → N → View → 3D Cursor** 输入清单坐标，点击 **创建视图与检查工具 → 读取游标处场值**。分别在 **(0,0,1.45)**、核邻近 **(0,0,0)** 和域外 **(20,20,20) Å** 读取。核附近是否无效由实际网格掩码决定，0.7 Å 网格未必命中核的排除区；若核邻近仍有效，如实记录值，并将“无效域读数”保留 Not Run，另由同批数据核对验证真实无效格点，不能凭坐标宣称无效。无效/域外不能记物理0。点 **点击探针 · 几何场** 后在表面点击，退出探针；绑定色场的密度表面再用 **点击探针 · 绑定色场**，记录采样位置/单位和实际结果。
+8. 选指定场或切片，输入游标起点，点击 **记录剖面起点**；保持**同一个活动视图**，输入终点，点 **创建线剖面**，先选 **Geometry**、填 **Samples=101**；绑定色场视图再明确选 Color复核。选新剖面，改 **剖面坐标轴与排版 → 应用排版**，点 **导出剖面 CSV** 保存 `C04-profile.csv`；核对距离 Å、字段单位、端点、valid 列及无效值空白。剖面是采样快照，移动排版不改 CSV。
+9. 源关联复核：导入 **P03/water-dimer.fch** 别名，选两个同构型原子对象，最后选参考对象，点 **对象属性主面板 → 关联选中数据源**。检查原子顺序和构型，按实际需要开启刚体配准；线性/单中心几何不自动唯一配准。两个理论层次/能量各自保留。
 10. 对应 N06–N11/N17，按 0.4 保存；冷重开与移动后再次导出 CSV，核对保存数组/摘要。证据：`C04.png`、`C04-esp.png`、`C04-charge.png`、`C04-dipole.png`、`C04-slice.png`、`C04-profile.png`、CSV 和工程。
 
 **截图槽：** 映射/图例 [用户截图待引用]；电荷/偶极 [用户截图待引用]；切片/等值线 [用户截图待引用]；探针三类结果 [用户截图待引用]；剖面/CSV [用户截图待引用]；来源关联 [用户截图待引用]。
 
 ### C05 氢显隐、局部选择、标注与显示层
 
-P01 O2 不含氢。本例氢显隐及三/四原子标注使用清单指定的 P02 水、P04 H2O2；不能向 O2 填造氢编号。
+**真实输入预期：** 同C04水二聚体，氢源编号 **2/3/5/6**，保留 **2**；氧集合 **1,4**。编号标注 **1**；距离 **1,4 = 2.9 Å**；角 **2,1,3 = 112.7698904°**；二面角 **2,1,4,5 = 0.000°**（项目B→C约定）。这些标注预期由已核对FCHK源坐标经项目measure实算，显示可取三位小数。优化/IRC随步更新另用C02/C10，不影响本例静态样本可运行。
 
-1. 导入本例含氢 FCHK/Log，选原子对象，在 **对象属性 → 局部选择与标注** 依次点击 **隐藏氢 → 保留指定氢 → 显示全部氢**，按清单填一个真实氢的源编号，核对只保留指定氢及全恢复。每步记录前后；撤销/重做核对状态。
-2. 点 **设置局部选择**，在 **Source atom numbers (1-based)** 填清单编号/区间，按 **Replace、Union、Intersect、Difference、Invert** 分别操作；再勾 **Include distance neighborhood**，填 **Radius (Å)** 与是否包含种子。局部集合和元素、连续编号、氢筛选共同作用。点 **清除局部限制** 恢复其他筛选控制的范围。
+本例静态氢、局部选择和全部标注统一使用 **P03水二聚体**；P01 O2不含氢。随步更新另在C02/P02和C10/P04复做。
+
+1. 导入 **P03/water-dimer.fchk**，选原子对象，在 **对象属性 → 局部选择与标注** 依次点击 **隐藏氢 → 保留指定氢 → 显示全部氢**，按清单填一个真实氢的源编号，核对只保留指定氢及全恢复。每步记录前后；撤销/重做核对状态。
+2. 点 **设置局部选择**，在 **Source atom numbers (1-based)** 先填 **1,4**、Mode=**Replace**；再填 **2**、Mode=**Union**（得1,2,4），填 **1,2**、Mode=**Intersect**（得1,2），填 **2**、Mode=**Difference**（得1），最后Mode=**Invert**（得2–6）。再次点 **设置局部选择**，选 **Replace**、编号 **1**，勾 **Include distance neighborhood**，以源 **1** 为种子、填 **Radius (Å)=1.0** 并勾 Include seed atoms，预期包括1/2/3。局部集合和元素、连续编号、氢筛选共同作用。点 **清除局部限制** 恢复其他筛选控制的范围。
 3. 保持原子对象，点击 **创建视图与检查工具 → 创建局部显示层**，输入对应编号/半径，新副本独立调整样式/材质。优化/IRC 上局部集合固定源编号，换步不会自动换集合，必要时点 **按当前步重新计算**；IRC 仅在原层选择，不创建局部副本。
-4. 选择 P02/P04 原子对象，分别点 **创建编号标注／创建距离标注／创建角度标注／创建二面角标注**，按测量顺序填实际源编号；不足四原子的水不执行二面角，使用 P04。核对距离 Å、角度度数、带符号二面角范围 (-180°,180°]；退化构型显示 undefined 与原因。
+4. 选择 **P03水二聚体原子对象**，分别点 **创建编号标注／创建距离标注／创建角度标注／创建二面角标注**，按测量顺序填实际源编号；编号填 **1**，距离填 **1,4**，角度填 **2,1,3**，二面角填 **2,1,4,5**。核对距离 Å、角度度数、带符号二面角范围 (-180°,180°]；退化构型显示 undefined 与原因。
 5. 在 **局部选择与标注 → Source Atom Annotations** 用设置图标调整文字大小/颜色/偏移/小数和引线；原子源构型或当前优化/IRC 步决定值，对象缩放与振动位移不改变测量。切步核对文字、锚点、步号同步；相机建好后点 **Face All to Camera**。
 6. 在 **N 侧栏 → Display Layers** 选择层，用复制图标建立副本，改副本参数/材质确认原层不变；排序、视口/渲染显隐和删除只在副本测试。点击 **创建视图与检查工具 → 创建当前版本视图**，保留原层并核对新层。多选同类层，最后选参数源，在 **3D Viewport → 对象右键菜单 → QCBlender → 复制显示参数到选中视图** 选类别；数值复制需同量/单位/电荷方法，不兼容时取消数值类别。目标位置、选择、裁剪和图例布局保留。
 7. 对应 N01–N03/N15/N16，按 0.4 保存 `C05.png/.blend/.qcdata/`，加 `C05-selection.png`、`C05-annotations.png` 与显示层前后截图。
@@ -135,6 +176,8 @@ P01 O2 不含氢。本例氢显隐及三/四原子标注使用清单指定的 P0
 **截图槽：** 三步氢显隐 [用户截图待引用]；集合/邻域 [用户截图待引用]；四类标注/换步 [用户截图待引用]；复制/排序/参数复制前后 [用户截图待引用]。
 
 ### C06 NBO 与 E(2)
+
+**真实输入预期：** P02 **Job2/block1**，7条NBO、2条E(2)。NBO1为 O1–H2 的 BD，occupancy **1.99933**、energy **−0.77653 Eh**、原文行 **1444**；E(2)记录1 donor **1**→acceptor **7**、**0.59 kcal/mol**、原文行 **1434**。源SHA同0.1.1，不能把NBO编号当MO编号。
 
 1. 确认已合法取得 P02 的真实 Log/Out 并核对 SHA；公开包不含许可未知原件。按 0.3 选清单指定 job 导入，选其原子对象，点 **N 侧栏 → 导入外部结果 → NBO 记录**。
 2. 对话框 **Gaussian Log / Out** 选同文件，**Gaussian job (1-based)** 与 **NBO block within job (1-based)** 按清单填，确认等待。NBO 几何关联要同段同构型，不能借优化多构型段作最终关联。
@@ -147,18 +190,22 @@ P01 O2 不含氢。本例氢显隐及三/四原子标注使用清单指定的 P0
 
 ### C07 IGMH、IRI 成对场与散点
 
+**真实输入预期：** P03参考与成对场6原子、片段 **1–3 / 4–6**，各Cube同为 **91×38×156**；Multiwfn **2026.9.20**。IGMH Geometry=`igmh/dg_inter.cub`，electron/bohr^4；Color=`igmh/sl2r.cub`，electron/bohr^3。IRI Geometry=`iri/func2.cub`，`a.u. (electron^-0.1 bohr^-0.7)`；Color=`iri/func1.cub`，electron/bohr^3；**a=1.1**。IGMH几何值域1.01735e-10..0.0185476，IRI几何0.0593502..11.432；颜色−194.599..+0.295371，原值不除100。色域截断只是显示。
+
 1. 导入 P03 参考 FCHK，选择同构型原子对象，点 **导入外部结果 → IGMH / IRI 成对场**。
 2. **Analysis** 选 IGMH，分别在 **Geometry Cube** 与 **sign(lambda2)rho Cube** 填清单文件，填 **Geometry value unit、Color value unit、Color minimum/maximum**，确认。再次以 IRI 输入其成对文件和 **IRI density exponent a**；片段、方法/版本、a、网格与单位按真实生成记录核对，不能用另一类几何场替代。
 3. 选几何场改等值与色域：位置由几何场、颜色由第二场决定；查看来源核对两输入 SHA 与完全相同网格。
 4. 选散点对象，打开 **对象属性 → External Result Browser**，核对横/纵轴量名/单位，改上下界并点 **更新散点**，交换轴重复。核对匹配总数/显示数；最多显示 50,000 点是显示抽样，不是删除科学数组。
-5. 错误输入检查只用清单专供的真实不匹配场组合，观察拒绝与错误；没有该输入时这一子项 Not Run，不修改原 Cube。
+5. 错误输入检查只用包内真实不匹配场组合：Geometry保留 **P03/igmh/dg_inter.cub**，Color误选 **P05/nocv/nocv-pair1.cub**，观察拒绝与错误；记录网格/构型不匹配的实际错误，再恢复正确配对；不修改原Cube。
 6. 对应 N06/N07/N14/N16，按 0.4 保存 `C07-igmh.png`、`C07-iri.png`、`C07-scatter.png`、总览与工程。
 
 **截图槽：** 成对场对话框 [用户截图待引用]；IGMH/IRI [用户截图待引用]；散点轴/筛选 [用户截图待引用]；错误拒绝 [用户截图待引用]。
 
 ### C08 ESP 极值与面积分布
 
-1. 打开 C04 工程另存为 C08，选**实际 ESP 场对象**，点 **导入外部结果 → ESP 表面分析**。密度表面即使按 ESP 着色，也不能替代这个活动参考对象。
+**真实输入预期：** P03 **rho=0.001 electron/bohr^3** 表面；4最大值/3最小值，PDB B-factor是ESP，**kcal/mol**，坐标Å。例如最大值源1：**36.69 kcal/mol** @ **(−1.740,−0.051,1.026) Å**；最小值源1：**−25.50** @ **(−0.036,−1.400,1.768) Å**。面积各bin见原stdout，合计 **73.1833 Å²**。C04初始0.004密度表面若作为视觉参照，先改成0.001并单独记录；分析导入活动对象仍是ESP场。
+
+1. 打开C04工程另存为C08。先选**密度表面对象**，在 **对象属性 → 几何表示 → 正值阈值**（Isovalue）从 **0.004** 改为 **0.001 electron/bohr^3**，记录新旧画面；也可创建独立密度等值面层并设0.001。然后重新选**实际ESP场对象**，点 **导入外部结果 → ESP 表面分析**。密度表面即使按 ESP 着色，也不能替代这个活动参考对象。
 2. 填 **Extrema PDB、Area distribution text、Surface definition、Extrema value unit、Distribution center unit、Area unit**，均用清单所记真实表面定义/单位；PDB REMARK/table 声明与用户指定须一致。
 3. 选择生成的 maximum/minimum 层，在 **External Analysis Records** 逐项读极值/坐标；在 **External Result Browser** 按源编号/数值筛选并 **应用筛选**，显示标签和点，核对选择突出位置。值源于 PDB B-factor 时记录该约定。
 4. 选择面积层，按中心或完整区间筛选，核对原始总面积、所选小计、各 bin 百分比和原表，筛选不重新归一化。
@@ -167,6 +214,8 @@ P01 O2 不含氢。本例氢显隐及三/四原子标注使用清单指定的 P0
 **截图槽：** 表面定义/单位 [用户截图待引用]；极值/筛选 [用户截图待引用]；面积/小计 [用户截图待引用]。
 
 ### C09 AIM 临界点、路径与属性
+
+**真实输入预期：** 11临界点属性记录、10路径；源点1类型 **C/(3,−3)**，坐标 **(−0.724,0,3.384) Å**（PDB打印精度），对应源核6(H)，Density of all electrons **0.4316646446**，源属性单位约定按CPprop原文。本样本实际点类型以原文件为准，空类型保持不存在；不要为了C/N/O/F齐全制造记录。
 
 1. 导入 P03 同构型参考 FCHK，选原子对象，点 **导入外部结果 → AIM 拓扑**，分别填 **CPs PDB、Paths PDB、CP properties text (optional)**。有真实属性才填第三项。
 2. 选生成 C/N/O/F 点层和路径层，在 **External Analysis Records** 查类型、坐标、路径组、属性值/单位和原子关联；本样本没有的类型不凭空构造。
@@ -177,25 +226,31 @@ P01 O2 不含氢。本例氢显隐及三/四原子标注使用清单指定的 P0
 
 ### C10 真实 IRC 步序与能量
 
+**真实输入预期：** H2O2四原子 **[O,O,H,H]**，RHF/STO-3G，中性单重态18电子；原生geomeTRIC **1.1.1** 双向IRC，61接受帧，截取0-based **29/30(TS)/31**。CSV中的1/2/3依次对应它们，FCHK打印能量 **−148.764884 / −148.764883 / −148.764884 Eh**；TS唯一虚频 **−48.1434547807 cm^-1**、最大梯度 **1.893862e-8 Eh/bohr**。三点邻近TS，构型变化小，核对坐标/游标而非要求肉眼发生大反应；不能把该短段称为完整61步路径。
+
 1. 按清单保持 P04 CSV 和逐步 FCHK 相对目录。CSV 是 UTF-8，首行为 `step,fchk`，步号从 1 连续，文件顺序与记录的反应方向一致；输入来自真实 IRC 计算。
 2. 在 **N 侧栏 → 工作流 → 导入 IRC 路径** 在 **CSV manifest: step,fchk** 指定 steps CSV，等待建立根原子视图与曲线；选**IRC 根原子对象**，打开 **对象属性 → IRC Path**。
 3. 点击 **Previous/Next** 遍历每步，核对步号、原子身份/坐标、hartree 能量及曲线游标。确认端点和当前清单；能量须对应该步 FCHK。
 4. 在 C05 同入口添加当前步距离/角度/二面角标注，换步核对文字和锚点同步；局部集合保持固定编号，需要时重新计算。
-5. 仅用清单提供的错误步序/原子不匹配输入复核拒绝；无错误输入时该子项 Not Run。
+5. 在 **inputs/P04/** 复制steps.csv为 **checks-duplicate.csv**，用文本编辑器把第二行数据的step也改为1，保留FCHK相对路径，保存UTF-8；用该副本导入应拒绝重复编号，记录副本摘要和错误。再用完整原CSV导入；原件不改。
 6. 对应 N15/N16/N18，按 0.4 保存 `C10-curve.png`、`C10-steps.png`、总览与工程。
 
 **截图槽：** CSV输入 [用户截图待引用]；两步构型/游标 [用户截图待引用]；端点/错误拒绝 [用户截图待引用]。
 
 ### C11 IRC 逐步 Mayer 键级
 
+**真实输入预期：** 同C10三步、每步六对Mayer；原子对 **1,2** 值 **0.987331413844 / 0.987349305673 / 0.987331413844**，无量纲。可换对1,3：**0.950875651565 / 0.950844120525 / 0.950875651565**，复核独立曲线。结果来自同构型PySCF AO密度/重叠矩阵，文本采用兼容输入语法，其producer不是Multiwfn。
+
 1. 打开 C10 工程另存 C11，选 **IRC 根原子对象**，在 **对象属性 → IRC Path → Import Mayer Results** 在 **CSV manifest: step,mayer_output** 指定清单的 Mayer CSV。
 2. 选择新 Mayer 记录对象，在 **IRC Path** 填 **Atom A (1-based)、Atom B (1-based)**，点击实际按钮 **Plot Pair**；核对原子对、每步值/无量纲单位和源文本。
 3. 切 IRC 步观察构型、键级曲线游标及显示值同步，再换原子对点 Plot Pair。距离推断显示键不是 Mayer 值。
-4. 清单有缺步/原子对冲突输入时复核拒绝，否则该子项 Not Run。按 0.4 保存 `C11-curve.png`、`C11-records.png`、总览与工程。
+4. 在 **inputs/P04/** 复制Mayer CSV为 **checks-missing-mayer.csv**，用文本编辑器删除step3的数据行并保存UTF-8，相对文本路径保留；用该副本导入应拒绝缺步。记录新副本摘要/错误，恢复完整原CSV。按 0.4 保存 `C11-curve.png`、`C11-records.png`、总览与工程。
 
 **截图槽：** Mayer CSV [用户截图待引用]；原子对/数值 [用户截图待引用]；切步曲线 [用户截图待引用]。
 
 ### C12 ETS-NOCV 真实结果表
+
+**真实输入预期：** CO–BH3共6原子 **[C,O,B,H,H,H]**，22电子，中性单重态，RB3LYP/6-31G(d)，源能量 **−139.947332 Eh**。pair1 **Total** 对轨道 **1/48**，特征值 **±0.54550**，pair能量 **−57.02 kcal/mol**，原表行7。此能量为真实整体KS矩阵重构的 **Multiwfn近似**，不是F_TS过渡态方法；详情见清单/NOTICE。
 
 1. 导入 P05 参考构型，选原子对象，点 **导入外部结果 → ETS-NOCV 表**。填 **ETS-NOCV output text**，**Pair energy unit** 选文件实际 kcal/mol 或 hartree。
 2. 选新表对象，在 **External Analysis Records** 查 pair、spin、特征值、成对轨道编号、能量、原文行号和源 SHA，与同次真实输出核对。
@@ -205,6 +260,8 @@ P01 O2 不含氢。本例氢显隐及三/四原子标注使用清单指定的 P0
 **截图槽：** 文件/单位 [用户截图待引用]；表记录/来源 [用户截图待引用]；筛选 [用户截图待引用]。
 
 ### C13 NOCV pair Cube 与两符号密度
+
+**真实输入预期：** `P05/nocv/nocv-pair1.cub`，pair1/Total，与C12表和构型一致；网格 **47×50×57**，值域 **−0.243093..+0.0494892 electron/bohr^3**，SHA为 `d6d3ec263d5173261791f997eabd78b8112f6685abc3bd851c70deec86a82e33`。正/负阈值从 **0.003** 开始；用不存在pair **999** 或错误Spin **Alpha**观察关联拒绝。
 
 1. 打开 C12 工程另存 C13，选 **ETS-NOCV 表对象**，点 **导入外部结果 → NOCV pair Cube**，在 **Pair number、Spin、Signed pair Cube、Deformation density unit** 填清单 pair 编号、自旋、Cube 路径与数值已有单位，确认等待。
 2. 选新 pair 场核对表行/pair/spin、参考构型、Cube SHA 和密度单位；不能用 canonical MO Cube 冒充 NOCV 密度。
@@ -216,6 +273,8 @@ P01 O2 不含氢。本例氢显隐及三/四原子标注使用清单指定的 P0
 ## 2. N01–N18 节点与交互检查
 
 以上教程先通过对象/材质属性操作。需查看实际节点时，选指定视图，将一个编辑器切为 **Geometry Node Editor**，取消其图钉固定，选择该视图的 Geometry Nodes 修改器/节点组。修改器输入与对象属性共享参数；内部绑定 Dataset 的节点不作为独立通用资产。**Asset Browser → QCBlender Nodes** 按目录查找九个公共资产，添加到独立测试副本，核对已有输入/输出并接入真实视图。操作前保存，新增节点或改接线仅在副本进行；记录实际节点名、接线、原值→新值和可见变化，不以节点名称存在计 Passed。
+
+新建视图的外层节点按可见Frame查找：原子 **Atoms: selection and representation**；振动 **Modes: displacement and animation**；等值面 **Field: source and isosurface**；映射 **Scalar: sampling and colors**；电荷 **Charge: attributes and colors**；图例 **Legend: range and labels**；切片 **Slice: plane placement**。Frame用于阅读，不增加物理量或公共节点；实际节点和接线仍以所选视图为准。
 
 | 检查 | 活动对象、入口和操作 | 预期/需记录 |
 | --- | --- | --- |
