@@ -1,7 +1,7 @@
 # 仅依据指南点击界面
 
 Triage: ready-for-human
-Status: pending
+Status: claimed
 Type: task
 Blocked by: 03
 
@@ -22,6 +22,10 @@ Blocked by: 03
 
 - 2026-09-30：03 已 resolved，可以由检查者领取并复做。仅依据指南查找入口；活动对象、路径、按钮文字、预期和实际结果由检查者填写。候选已完成技术资格，尚未收到人工反馈。
 
+- 2026-09-30：用户已实际执行前两项并开始第三项，领取状态更新为 claimed。能量及三个振动模式的播放 Passed；Log 后导入 FCHK 被来源摘要保护检查拒绝，第三项 Failed，保存/重开 Not Run。保留现有 Blender 会话（现场 PID 24852），未覆盖安装或操作工程。
+- 文件及失败任务输入副本的 SHA-256 均为 3f93c52df5ef5adda00eff89bc5c9bb0bc10182722193d87e72f3b710d7c2c40，匹配清单；失败请求却带有先前水 Log 的摘要 9493d24655fb261a2c945d292ad517567f3024996594a25f678199df74017519 和 job_index=1。已确认新文件对话框沿用先前的 source_sha256/job_number。实际安装 ui.py 与同批 ZIP 及仓库一致。
+- 两行产品修复草案保存在 outputs/cleanup-followup/import-preview-state.patch，尚未应用。独立后台 Blender 使用模型化的操作参数及隔离的文件对话框边界，执行真实已安装 worker：旧状态复现 Failed、内存草案下 FCHK 导入 succeeded、显式摘要对应的源文件变化仍被拒绝。该复现不作为实际点击证据。报告为 outputs/qcf2/human/evidence/import-state-probe.json；产品冻结边界是否允许本次最小缺陷修复，等待用户决定。
+
 ## 本次材料
 
 - 同批候选：outputs/qcf2/dist/qcblender-0.0.1.zip；SHA-256：48ca845e1d0f7be7bdc1300d962f733c89958fb89add2ff763aee24ebee5c760。
@@ -30,11 +34,13 @@ Blocked by: 03
 
 ## 操作记录
 
-检查者、检查日期和截图由实际操作者填写。截图只需要记录本地路径，受限原件不进入 Git。
+实际操作者：用户；检查日期：2026-09-30。以下依据用户反馈及其截图记录，未反馈的路径或动作不推定为完成。受限原件和截图不进入 Git。
 
 | 操作 | 活动对象与选择顺序 | 实际编辑器/面板/按钮 | 预期与实际结果 | 截图路径 | 状态 |
 | --- | --- | --- | --- | --- | --- |
-| 能量记录 | 待填写 | 待填写 | 待填写 | 待填写 | Not Run |
-| 模式选择与播放 | 待填写 | 待填写 | 待填写 | 待填写 | Not Run |
-| 线剖面 | 待填写 | 待填写 | 待填写 | 待填写 | Not Run |
+| 能量记录 | water_neutral_nbo_opt_freq.out / Job 2 原子对象 | Properties → Object → QCBlender · 对象与量子化学 → 科学记录与振动模式；截图已核对 | 预期显示计算段能量；实际选中 RHF / electronic_total / target，-74.9659011806 Eh，用户报告约 -74.9659 Eh | outputs/qcf2/human/evidence/energy-modes.png | Passed |
+| 模式选择与播放 | 同一 Job 2 原子对象 | 科学记录与振动模式列表已见；播放由用户报告，高级参数控件未另截图 | 列表频率 2169.7613、4141.3837、4392.5759 cm⁻¹；用户确认三个模式均能随帧播放 | 同上 | Passed |
+| 线剖面 | 甲烷原子/场视图尚未创建 | 工作流导入 FCHK；失败请求的文件路径正确 | 预期导入并生成剖面；实际 Source changed after preview，曲线与采样检查尚未运行 | 错误由用户文字及原始 worker 报告核对 | Failed |
 | 保存与新进程重开 | 待填写 | 待填写 | 待填写 | 待填写 | Not Run |
+
+原始截图位置：C:/Users/ustcw/Pictures/Screenshots/屏幕截图 2026-09-30 155143.png；保留副本字节一致，SHA-256 为 2fbbb5a1bbceef170074b728c575cc4cc1de9f2e6b72f6615a867baef04b5940。失败请求、result.json、worker.log 和诊断摘要保留在 outputs/qcf2/human/evidence/。本记录属于操作指南检查；独立科研验收签署仍 Not Run。
