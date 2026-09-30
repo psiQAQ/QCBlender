@@ -8,14 +8,14 @@
 
 | 案例 | 场景与成片 | 物理量与参数 |
 | --- | --- | --- |
-| DVB 自由基阳离子，20 原子，+1 / 双重态 | [场景](../outputs/complex-examples/orbitals/orbitals.blend)、[轨道与自旋](../outputs/complex-examples/orbitals/orbitals-spin.png)、[线框](../outputs/complex-examples/orbitals/orbital-wire.png)、[点](../outputs/complex-examples/orbitals/orbital-points.png)、[体积雾](../outputs/complex-examples/orbitals/spin-fog.png) | UB3LYP；Alpha SOMO 35，等值 ±0.045 bohr^-3/2；自旋密度 α−β，等值 ±0.002 electron/bohr³；另存 Beta HOMO 34、总/Alpha/Beta 密度视图 |
-| 中性 DVB，20 原子，单重态 | [场景](../outputs/complex-examples/vibration/vibration.blend)、[振动与 IR](../outputs/complex-examples/vibration/vibration-ir.png)、[两秒动画](../outputs/complex-examples/vibration/vibration-ir.mp4) | B3LYP；54 个模式；默认最强 IR 模式 45，3396.4292 cm⁻¹；显示振幅 0.35 Å，播放 1 Hz，非物理时间 |
-| 色氨酸，27 原子，中性单重态 | [场景](../outputs/complex-examples/polar/polar.blend)、[ESP / 电荷 / 偶极](../outputs/complex-examples/polar/density-esp-charges.png)、[ESP 切片](../outputs/complex-examples/polar/esp-slice.png) | RHF；密度等值 0.004 electron/bohr³；ESP 色域 ±0.05 hartree/e；Mulliken 电荷色域 ±0.6 e；偶极显示缩放 1.5 Å/D |
-| 水二聚体，6 原子，中性单重态 | [场景](../outputs/complex-examples/interaction/interaction.blend)、[氢键区域](../outputs/complex-examples/interaction/hydrogen-bond-rdg.png) | PBE；外部 RDG=0.5，以 sign(λ₂)ρ 着色，−0.035 / 0 / +0.02 electron/bohr³ 对应蓝 / 绿 / 红 |
+| DVB 自由基阳离子，20 原子，+1 / 双重态 | 场景（`outputs/complex-examples/orbitals/orbitals.blend`）、轨道与自旋（`outputs/complex-examples/orbitals/orbitals-spin.png`）、线框（`outputs/complex-examples/orbitals/orbital-wire.png`）、点（`outputs/complex-examples/orbitals/orbital-points.png`）、体积雾（`outputs/complex-examples/orbitals/spin-fog.png`） | UB3LYP；Alpha SOMO 35，等值 ±0.045 bohr^-3/2；自旋密度 α−β，等值 ±0.002 electron/bohr³；另存 Beta HOMO 34、总/Alpha/Beta 密度视图 |
+| 中性 DVB，20 原子，单重态 | 场景（`outputs/complex-examples/vibration/vibration.blend`）、振动与 IR（`outputs/complex-examples/vibration/vibration-ir.png`）、两秒动画（`outputs/complex-examples/vibration/vibration-ir.mp4`） | B3LYP；54 个模式；默认最强 IR 模式 45，3396.4292 cm⁻¹；显示振幅 0.35 Å，播放 1 Hz，非物理时间 |
+| 色氨酸，27 原子，中性单重态 | 场景（`outputs/complex-examples/polar/polar.blend`）、ESP / 电荷 / 偶极（`outputs/complex-examples/polar/density-esp-charges.png`）、ESP 切片（`outputs/complex-examples/polar/esp-slice.png`） | RHF；密度等值 0.004 electron/bohr³；ESP 色域 ±0.05 hartree/e；Mulliken 电荷色域 ±0.6 e；偶极显示缩放 1.5 Å/D |
+| 水二聚体，6 原子，中性单重态 | 场景（`outputs/complex-examples/interaction/interaction.blend`）、氢键区域（`outputs/complex-examples/interaction/hydrogen-bond-rdg.png`） | PBE；外部 RDG=0.5，以 sign(λ₂)ρ 着色，−0.035 / 0 / +0.02 electron/bohr³ 对应蓝 / 绿 / 红 |
 
 中性 DVB 与阳离子属于不同计算，分开保存。色氨酸 FCHK 与 Log 原子顺序一致，最大坐标差约 4.99e-7 Å；偶极以 e·bohr 与 Debye 换算后核对。
 
-## 操作与能力覆盖
+## 操作与历史能力覆盖
 
 1. 在轨道场景的 QCBlender 显示层选择左侧轨道，调整 `Isovalue`、`Link Thresholds`、正负相位、材质及透明度。切换 solid / wire / points。正负表示轨道相位；其他已生成物理量默认隐藏，可分别启用。
 2. 复制显示层，改变阈值或材质，再排序或删除复制层。复制层的外层节点图独立；进入 Geometry Nodes 可查看公共等值面、样式、采样和颜色映射节点的连接。
@@ -24,7 +24,7 @@
 5. 振动场景中选择分子，切换模式并播放时间轴，IR 选中峰随之变化。图注描述默认模式，手动换模式后应同步修改图注再出图；展示振幅及播放速度不是实际振动振幅和频率。
 6. 相互作用场景分别绑定 RDG 几何来源与带符号密度颜色来源。RDG 等值、颜色范围和颜色中心独立可调；中心明确为零。
 
-| 能力 | 本案例证据 |
+| 能力 | 历史案例证据 |
 | --- | --- |
 | Log/FCHK/Cube 导入、状态与单位 | 四例真实导入；来源清单、`source-inspection.json` |
 | MO / 总 / Alpha / Beta / 自旋密度 | 轨道案例；总密度=Alpha+Beta、自旋=Alpha−Beta、69电子占据断言 |
@@ -52,13 +52,10 @@
 
 ## 复建
 
-在仓库根目录 PowerShell 执行。首次下载需要网络，其余步骤使用隔离配置和离线模式；本地安装包须已存在。准备脚本仅在隔离配置缺少插件时通过原生扩展流程安装。
+在仓库根目录 PowerShell 执行。先按 [DEVELOPMENT](DEVELOPMENT.md) 从当前源码构建并安装新候选，沿用该隔离配置及 `$blender` / `$blenderPython`。已有输入先运行 `tools/local_inputs.py`；仅缺输入且下载已获授权时运行 `tools/fetch_complex_examples.py`。以下脚本固定写入 `outputs/complex-examples/`，先确认该目录没有需保护的旧工程。本轮未重跑完整四例流程（Not Run），下表数值为历史样本依据。
 
 ```powershell
-$blender = 'C:\Program Files\Blender Foundation\Blender 5.1\blender.exe'
-$blenderPython = 'C:\Program Files\Blender Foundation\Blender 5.1\5.1\python\bin\python.exe'
-$env:BLENDER_USER_RESOURCES = "$PWD/outputs/blender-m8"
-& $blenderPython tools/fetch_complex_examples.py
+& $blenderPython -I tools/local_inputs.py
 if ($LASTEXITCODE -ne 0) { throw 'Source verification failed' }
 & $blender --background --factory-startup --offline-mode --python-exit-code 1 --python tools/prepare_complex_examples.py
 if ($LASTEXITCODE -ne 0) { throw 'Preparation failed' }

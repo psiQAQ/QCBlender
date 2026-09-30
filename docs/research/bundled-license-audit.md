@@ -8,7 +8,7 @@
 - 内含 11 个 wheel。10 个原样上游 wheel 由 `dependencies.lock.json` 描述；第 11 个为本地构建的 `qc_gbasis-0.1.0+qcblender.071969c.pure1-py3-none-any.whl`。
 - 对所有 wheel 读取 `METADATA`、`RECORD`、全部以 LICENSE/LICENCE/COPYING/NOTICE/AUTHORS 命名的文件，核对每个 RECORD 数据文件的哈希和大小，并检查声明的 `License-File` 是否实际存在。
 - 以已下载固定源码核对 GBasis 和 IOData 的 Python 文件、原始许可文件。未运行依赖安装、联网联系上游、修改锁文件或产品代码。
-- 可重跑脚本：[`outputs/audit-bundled-licenses.py`](../../outputs/audit-bundled-licenses.py)。完整文件名、wheel 哈希、原始许可文本、元数据及对比字段：[`outputs/bundled-license-audit.json`](../../outputs/bundled-license-audit.json)。这些 outputs 制品为本地审计证据。
+- 可重跑脚本：`outputs/audit-bundled-licenses.py`（`outputs/audit-bundled-licenses.py`）。完整文件名、wheel 哈希、原始许可文本、元数据及对比字段：`outputs/bundled-license-audit.json`（`outputs/bundled-license-audit.json`）。这些 outputs 制品为本地审计证据。
 
 复核命令，工作目录为仓库根目录：
 

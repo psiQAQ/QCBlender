@@ -70,7 +70,7 @@ Computer Use 实际确认了 Color 选择、101 点创建、来源详情、撤�
 
 ## 最终候选技术 SOP 矩阵
 
-各例证据位于 `04-profile/final-sop/cases/CNN/`：`CNN.png`、`CNN.blend`、`CNN.qcdata/`、源值/节点报告、`saved-final.json`、`candidate-run.json` 和两次重开报告。移动副本在 `04-profile/final-sop/moved/CNN/`。C06、C08、C09、C11、C12 的固定 PNG 包含实际可读面板；另存纯渲染图。具体节点前后值和逐项证据映射见[本地完整矩阵](../../outputs/source-adoption/04-profile/final-sop/final-sop-summary.md)。
+各例证据位于 `04-profile/final-sop/cases/CNN/`：`CNN.png`、`CNN.blend`、`CNN.qcdata/`、源值/节点报告、`saved-final.json`、`candidate-run.json` 和两次重开报告。移动副本在 `04-profile/final-sop/moved/CNN/`。C06、C08、C09、C11、C12 的固定 PNG 包含实际可读面板；另存纯渲染图。具体节点前后值和逐项证据映射见本地完整矩阵（`outputs/source-adoption/04-profile/final-sop/final-sop-summary.md`）。
 
 | 案例 | 导入 | 源数值/单位 | 节点前后 | PNG | 保存重开 | 移动冷重开 | 关键实测 |
 | --- | --- | --- | --- | --- | --- | --- | --- |

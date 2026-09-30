@@ -2,16 +2,16 @@
 
 > 产物保留政策（2026-09-29）：历史候选 ZIP、生成工程、截图和渲染按用户批准的清理清单删除；本文既有候选摘要及技术结果属于历史记录，不代表二进制仍可取得。后续执行先核对 [集中输入](SOURCES.md)，按 [开发说明](../DEVELOPMENT.md) 从当前源码构建独立候选，记录新 SHA-256 并重新执行安装资格检查。不能把新包称为已删除候选的逐字节复现。新证据使用独立输出目录，阶段结束按 [维护规则](../agents/storage-maintenance.md) 处理。独立人工验收状态不因本次清理改变。
 
-适用 **Windows x64 + Blender 5.1.1**。候选 ZIP：`outputs/dist/qcblender-0.0.1.zip`，50,440,466 字节，SHA-256 `03311fdeb0c83a38a546ebddedee1fe05e8dcb7260b53c889dd9fee3fa7ee231`。这是当前技术候选的固定快照；ZIP 摘要变化时停止并重建本清单。全部案例当前状态为 **Not Run**，只有实际操作和复核的使用者填写结果、日期和签名。Agent 已有的技术报告不构成人工签署。
+适用 **Windows x64 + Blender 5.1.1**。执行者先记录本批实际 ZIP 路径、字节数、SHA-256、源码身份和安装资格报告；当前开发验证状态见 [VALIDATION](../VALIDATION.md)。ZIP 摘要改变后重新核对验收范围，不沿用旧包签署。全部人工案例当前为 **Not Run**，只有实际操作和复核的使用者填写结果、日期和签名。Agent 技术报告不构成人工签署。
 
 [样本清单](SOURCES.md)列出 S01–S35 的 URL、版本、许可、摘要和已知计算条件。先在仓库根目录 PowerShell 检查 ZIP 和本次所用的每个样本：`Get-FileHash <路径> -Algorithm SHA256`。摘要不符则停在该例。`outputs/v1-acceptance/` 是本地忽略目录；每例在 `outputs/v1-acceptance/cases/CNN/` 留存同名 `CNN.png`、`CNN.blend`、`CNN.qcdata/`。记录型案例的 `CNN.png` 须拍到可读的 QCBlender 面板和关联分子，不假造三维数值场。可另加 PNG，但不能替代这些固定文件。
 
 ## 0. 安装与通用操作
 
-1. 在 Blender 5.1.1 的 **Preferences → Get Extensions → Install from Disk** 选择上述 ZIP，启用 QCBlender；转到 **Preferences → Add-ons（插件）**，展开 **QCBlender**，点击其偏好设置中的 **Check Scientific Runtime**。检查完成后返回 3D Viewport，按 `N` 打开 **QCBlender** 页。记录操作系统、Blender 精确版本、ZIP 摘要及检查结果。
-2. 每例开始前打开新场景。进入 **QCBlender → Import** 选择案例文件。`.log/.out` 还要选择从 1 开始的 **Gaussian Log job number**。等待完成，选择新原子或场视图。原子编号从 1 开始，坐标是 Å，1 Blender 单位 = 1 Å。
+1. 在 Blender 5.1.1 的 **Preferences → Get Extensions → Install from Disk** 选择本批 ZIP，启用 QCBlender；转到 **Preferences → Add-ons（插件）**，展开 **QCBlender**，点击其偏好设置中的 **Check Scientific Runtime**。检查完成后返回 3D Viewport，按 `N` 打开 **QCBlender** 页。记录操作系统、Blender 精确版本、ZIP 摘要及检查结果。
+2. 每例开始前打开新场景。进入 **QCBlender → 工作流 → 导入 Gaussian / Cube** 选择案例文件。`.log/.out` 在预览对话框选择计算段并确认。等待完成，选择新原子或场视图。原子编号从 1 开始，坐标是 Å，1 Blender 单位 = 1 Å。
 3. 在 QCBlender 面板和源文件核对原子数、顺序、元素、坐标、计算方法/基组、源摘要、量名、单位及具体数值。FCHK/Log 的源总能量用 Hartree；电荷用 `e`；偶极用 Debye；频率用 `cm^-1`，IR 强度用 `km/mol`。数值按源文件输出精度比较，不凭颜色或轮廓判断数值正确。
-4. 选中视图，在 **Geometry Nodes 修改器** 或侧栏编辑下面指定节点输入；截图或记下修改前后数值与视觉变化。用 Blender 原生相机/灯光和 **Render → Render Image**，`Image → Save As` 保存指定 PNG。图注或旁注写源文件 SHA、量名/单位、阈值、网格、颜色范围和色彩管理。
+4. 选中视图，在 **Geometry Nodes 修改器** 或对象/材质属性编辑下面指定节点输入；截图或记下修改前后数值与视觉变化。用 Blender 原生相机/灯光和 **Render → Render Image**，`Image → Save As` 保存指定 PNG。图注或旁注写源文件 SHA、量名/单位、阈值、网格、颜色范围和色彩管理。
 5. 点击 **Save Portable QC Project** 指定 `CNN.blend`。检查同名 `CNN.qcdata/`。关闭 Blender，重新启动后打开该 `.blend`，确认视图、数值、图例/参数和 PNG 对应；再将 `.blend` 与 `.qcdata/` 一起复制到另一目录，用新 Blender 进程冷重开并再次渲染。原始外部结果文件需另存，`.qcdata` 只保存其来源摘要和导入记录。
 6. 每例依次记 **导入、源数值、节点变化、渲染、保存重开、移动冷重开** 六栏的 `Passed / Failed / Not Run`、实测值/截图路径、缺陷编号、本人签名和日期。任一栏失败则全例 `Failed`；修复后须用新的候选 ZIP 重做受影响例。未找到真实样本的例子保留步骤，状态 `Not Run`，不得签署。
 
@@ -23,7 +23,7 @@
 
 | 例 / 输入 / 状态 | 点击步骤和须核对的物理量、单位 | 节点参数、预期变化与固定证据路径 |
 | --- | --- | --- |
-| **C01 FCHK + `.fch` 别名**；S01、S05 和 `tests/data/local/aliases/water_dimer.fch`；A | 分别 **Import** S01、S05 和别名；S05/别名均应为 6 原子且身份、坐标、源能量一致；S01 应为 20 原子、+1/双重态、69 电子，UB3LYP/STO-3G，总能量约 `-382.0813927197 Eh`。在 S01 原子视图分别 **Generate Field** Alpha MO 35、Beta HOMO 34、总/Alpha/Beta/自旋密度；核对 MO 的源编号、占据、能量和 `bohr^-3/2`，密度为 `electron/bohr^3`，同网格上总=Alpha+Beta、自旋=Alpha−Beta。 | MO35 用 `Isovalue=0.045`、正负相均开；自旋密度从 `±0.002 electron/bohr^3` 开始。正负相显隐、独立阈值、透明度和三种表面样式都应改变显示而不改源数组。分别保存 `C01-mo.png`、`C01-total.png`、`C01-alpha.png`、`C01-beta.png`、`C01-spin.png`；总览 `C01.png`，工程 `C01.blend` + `C01.qcdata/`。 |
+| **C01 FCHK + `.fch` 别名**；S01、S05 和 `tests/data/local/aliases/water_dimer.fch`；A | 分别 **Import** S01、S05 和别名；S05/别名均应为 6 原子且身份、坐标、源能量一致；S01 应为 20 原子、+1/双重态、69 电子，UB3LYP/STO-3G，总能量约 `-382.0813927197 Eh`。在 S01 原子视图分别 **生成量子化学场** Alpha MO 35、Beta HOMO 34、总/Alpha/Beta/自旋密度；核对 MO 的源编号、占据、能量和 `bohr^-3/2`，密度为 `electron/bohr^3`，同网格上总=Alpha+Beta、自旋=Alpha−Beta。 | MO35 用 `Isovalue=0.045`、正负相均开；自旋密度从 `±0.002 electron/bohr^3` 开始。正负相显隐、独立阈值、透明度和三种表面样式都应改变显示而不改源数组。分别保存 `C01-mo.png`、`C01-total.png`、`C01-alpha.png`、`C01-beta.png`、`C01-spin.png`；总览 `C01.png`，工程 `C01.blend` + `C01.qcdata/`。 |
 | **C02 `.log` 与 `.out`**；S04、S02；A | **Import** S04（`.log`）与 S02（`.out`）；S04 与 S03 同为 27 原子、原子顺序一致，最大坐标差约 `4.99e-7 Å`；查能量记录方法、来源行及 `Eh`。S02 是中性 DVB、B3LYP/STO-3G、54 个振动模式；选模式 45，核对 `3396.4292 cm^-1`、IR 强度源值 `km/mol` 及 IR 棒图高亮。 | 开 **Animate**、`Amplitude=0.35 Å`、`Cycles per second=1`，切模式、调 Phase，振动方向/IR 高亮应变化；播放速度不是物理频率。保存 `C02-vibration.png`、`C02-ir.png`、总览 `C02.png/.blend/.qcdata/`。 |
 | **C03 `.cube` + `.cub` 别名**；S05–S07 与 `tests/data/local/aliases/water_dimer_density.cub`；A | 分别 **Import** S06 `.cube` 和别名 `.cub`，核对 6 原子、同一网格及原值，初始应为 `unknown_scalar/unknown`；S06 是 NCIPLOT 的 **100×sign(λ₂)ρ**，不得点选普通电子密度并误称未缩放。再导入 S07，核对 RDG 过滤哨兵和原始量定义。`Identify Cube` 仅在填入实际物理量和**数值已有的单位/倍率**时使用；标注不执行数值换算。 | 调正负等值与颜色映射，显示 S06 双符号区域；S07 可作表面几何场但不能宣称 IGMH/IRI。`.cube` 和 `.cub` 值、网格、场形应一致。保存 `C03.png/.blend/.qcdata/`，并记录源值、倍率和标注文本。 |
 | **C04 ESP / 电荷 / 偶极**；S03 + S04；A | **Import** S03；在原子对象 **Generate Field → Electrostatic potential** 和 **Electron density**。核对 27 原子、RHF/STO-3G、总能量约 `-673.5905711573 Eh`；ESP 是 `hartree/e`，密度 `electron/bohr^3`；**Charge** 只选源中确有的方法，核对至少两原子电荷和 `e`；**Dipole** 核对三分量及 Debye，检查 S04 对应偶极（换算后）。核附近无效 ESP 不当零值。 | 密度表面 `Isovalue=0.004 electron/bohr^3`；选 ESP 表面再 Shift 选密度为活动对象，点 **Map Colors**，色域 `-0.05/0/+0.05 hartree/e`，开图例；偶极显示比例可用 `1.5 Å/D`。另 **Slice** ESP，保存 `C04-esp.png`、`C04-charge.png`、`C04-dipole.png`、`C04-slice.png` 与总览 `C04.png/.blend/.qcdata/`。 |

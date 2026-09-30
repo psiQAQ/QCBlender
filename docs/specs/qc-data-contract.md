@@ -1,36 +1,29 @@
 # 插件内通用量子化学数据契约
 
-状态：设计草案。适用架构为单个 QCBlender 扩展；数据层由插件提供。`cbq_core` 是源码和设计参考，不要求用户安装该包或 ChemBlender。本文的名称均为拟实现的 QCBlender 类型与字段。
+数据层由 `qcblender/data.py` 的 `Dataset(metadata, arrays)` 实现。metadata 为字典，arrays 将名称映射到 NumPy 数组；下表描述实际字段，不要求建立同名实体类。科学读取与求值不导入 `bpy`，Blender 层负责对象生命周期。
 
-## 1. 数据概念与最小接口
+## 1. 数据与接口
 
-数据层接受 Gaussian 文件，输出与文件后缀、Blender 对象名称解耦的计算数据。ORCA 输入仅在后续需求明确后评估。数据解析和科学运算不导入 `bpy`；Blender 映射层负责对象与属性生命周期。
-
-| 类型 | 必需信息 | 数组/关系与约束 |
+| 内容 | metadata / arrays | 约束 |
 | --- | --- | --- |
-| `SourceFile` | 内容哈希、格式、生成程序及版本（可未知）、原始文件名、解析器版本 | 文件路径仅作定位；哈希用于身份；保留原始文本/字段位置 |
-| `Calculation` | 方法、基组、电荷、多重度、溶剂/色散等已知条件、任务类型与状态 | 一个源文件可有多个计算段；Link1、restart、composite 子任务保留层级 |
-| `Geometry` | 元素、稳定 `atom_id`、坐标、坐标系与来源 | `atomic_number[N]`、`positions[N,3]`；坐标统一为 Å，原始单位另存 |
-| `Step` | 所属计算、源步编号、结构引用、收敛状态 | `EnergyRecord`、原子性质和场按实际步引用；未输出步骤不合成 |
-| `AtomicProperty` | 方法明确的量名、单位、结构/步引用、有效性 | `values[N]` 或 `[N,3]`；Mulliken、Hirshfeld、CM5、ESP 拟合电荷各有身份 |
-| `OrbitalSet` | 轨道类型、自旋、源编号、占据、能量单位及可用项 | `energy[nMO]`、`occupancy[nMO]` 可缺；系数 `[nAO,nMO]` 仅在实际取得时保存 |
-| `BasisSet` | 壳层中心、角动量、球谐/笛卡尔约定、指数、收缩、归一化 | 与 `OrbitalSet` 独立；完整读取并不自动声明该组合可求值 |
-| `DensityMatrix` | 矩阵、自旋、理论层次、几何、基组与来源 | `[nAO,nAO]`；SCF、相关态、spin-summed 等身份明确 |
-| `ScalarField` | 物理量、单位、网格、来源/派生关系、可选轨道或态引用 | 一个 scalar dataset 为 `[nx,ny,nz]`，不混入 dataset/component 轴；非完整定义域另带同形 `valid_mask` |
-| `VectorField` | 三分量、共同单位、坐标基与网格 | `[nx,ny,nz,3]`；只有模的数据仍是 `ScalarField` |
-| `NormalModes` | 平衡结构、源编号、频率、位移、归一化、可用 IR/Raman 数据 | `displacements[M,N,3]`，频率单位 cm⁻¹；位移和播放参数分开 |
-| `EnergyRecord` | 能量种类、方法角色、态/步、单位、来源、计算有效性 | 详细选择契约见 [能量研究与设计](../research/gaussian-energy-semantics.md) |
-| `ViewBinding` | 所显示数据的 ID、统一显示变换、节点/材质版本、科学参数 | 数据身份独立于 Blender 名称；复制视图可共享同一数据 |
+| 来源 | `source`、`selected_job`（适用时） | 文件名、SHA-256、格式/解析器和计算段，路径不作身份 |
+| 结构 | `coordinate_unit`、`atomic_numbers[N]`、`positions[N,3]` | Å；原子顺序固定，缺失信息不补零 |
+| 键 | `bonds` 元数据与 `[K,2]` 数组 | 距离/元素半径推断，用于显示，不是键级 |
+| 轨道与基组 | `orbitals`、`basis`；`mo_coeffs[nAO,nMO]`、`mo_occs[nMO]`、可用 `mo_energies[nMO]` 及壳层数组 | 保留受限/非受限身份、通道数量、AO 约定、源编号从 1 开始 |
+| 密度矩阵 | `density_matrices` 中的 `kind`、`array` 引用 | `[nAO,nAO]`，求值还须核对方法和密度层次 |
+| 标量场 | `fields` 中的量名、单位、网格参数与数组引用 | 每场 `[nx,ny,nz]`，可选同形有效掩码；多 Cube 数据集分别保存 |
+| 电荷与偶极 | `charges`、`dipole` 中的量名/单位/数组引用 | 电荷 `[N]`，偶极 `[3]`，保持布居方法和原点 |
+| 振动 | `modes` 及 `mode_*` 数组 | 频率 `[M]`、位移 `[M,N,3]`；原始记录与归一化显示位移分开 |
+| 优化轨迹 | `optimization`、`optimization_positions[S,N,3]` | 每步保留构型、明确关联的能量、收敛表和原文位置；`positions` 仍为最终构型 |
+| 能量 | `energies` 及日志计算记录 | 方法、目标/参考/校正、状态与源位置；见第 4 节 |
 
-当前 Gaussian 优化轨迹采用可选 `metadata.optimization` 与 float64 `optimization_positions[S,N,3]`：每步保留源步号、坐标原文位置、明确关联的目标方法能量、打印收敛表和计算状态。原 `positions` 保持最终构型；独立轨迹视图只包含结构和轨迹数组，不继承其他步的原子性质或场。旧 schema 0.1 工程无需迁移，无轨迹记录时不合成步骤。
+实际入口为 `readers.read_source(path, job_index=0)`、`association.compare_sources(reference, moving, allow_rigid=False, tolerance_angstrom=1e-3)`、`evaluate.evaluate_field(data, grid, quantity, spin='alpha', orbital=1, memory_mb=512, ...)`。Blender 使用 `views.atom_view(directory)`、`views.field_view(directory, parent=None, index=0)` 接入落盘 Dataset。
 
-数量、单位、数组形状、身份和来源在导入时校验。非法 shape、非有限数、无法识别的布局直接返回精确诊断；文件缺字段表现为缺失能力，不使用零数组冒充。
-
-接口控制在四个动作：`read_source(path)` 返回数据与诊断；`associate_sources(ids, mapping)` 显式建立兼容关系；`evaluate_field(request)` 从波函数求值并返回与 Cube 导入相同的 `ScalarField`；`build_view(data_id, recipe)` 创建显示。这些是首版设计接口，尚未实现。
+非法 shape、非有限数据和身份不匹配返回具体诊断；缺字段表现为缺失能力。独立优化视图仅携带该步结构与轨迹记录，不继承最终构型的电荷/偶极/场。旧工程没有逐步数组时不合成步骤。
 
 ## 2. 通用场与单位
 
-`grid.origin[3]`、`grid.steps[3,3]`、`grid.shape[3]` 和 `grid.coordinate_unit` 是每个场的组成部分。约定步向量为矩阵行：
+每个 `metadata['fields'][i]` 平铺保存 `origin[3]`、`steps[3,3]`、`shape[3]` 和 `coordinate_unit`；没有额外的 `grid` 子对象。求值请求通过独立 `grid` 参数传入同一组网格参数。约定步向量为矩阵行：
 
 \[
 \mathbf r(i,j,k)=\mathbf o+[i,j,k]A.
@@ -40,22 +33,21 @@
 
 科学工作坐标使用 Å，长度换算常量集中定义并标明来源/版本；轨道求值时转换为 Bohr。场值单位不会因位置由 Bohr 转 Å 就自动变化。典型量纲：
 
-| 场 | 建议内部标识 | 源原子单位示例 | 语义限制 |
+| 场 | 内部标识 | 源原子单位示例 | 语义限制 |
 | --- | --- | --- | --- |
 | 实值轨道振幅 | `orbital_amplitude` | `bohr^-3/2` | 正负是波函数相位，不是电荷；不能平方后保留同标签 |
 | 电子密度 | `electron_number_density` | `electron/bohr^3` | 区分总/Alpha/Beta，保留密度理论层次 |
 | 自旋密度 | `spin_density` | `electron/bohr^3` | 保存具体约定，例如 alpha-minus-beta |
 | 静电势 | `electrostatic_potential` | `hartree/e` | 与静电势能区分，场符号约定必须保留 |
-| 密度差 | `difference_density` | `electron/bohr^3` | 保存相减对象、顺序、几何/网格对齐与方法 |
 | 未知标量 | `unknown_scalar` | 未知 | 可绘制一般标量面，定量积分/比较先补全含义 |
 
 源数据保留 float64；显示体网格采用 float32 时保留转化记录。网格体元由行列式计算，先换成与场值分母一致的长度单位。等值面不能代替电子密度积分。
 
-Cube 的原子行中核电荷信息不直接映射为“原子部分电荷”。文件名不确定 HOMO/LUMO、场类型或电荷方法。负原子数的轨道数据、多值标量和多分量向量布局分别识别，完整保留数据集编号；支持之外的组合布局须明确拒绝。
+Cube 的原子行中核电荷信息不直接映射为“原子部分电荷”。文件名不确定 HOMO/LUMO、场类型或电荷方法。负原子数轨道数据与多标量数据分别保留数据集编号；这些数组不自动解释成矢量场。
 
 ### 波函数求值契约
 
-首版对已完成的非周期实值 HF/DFT 结果求值，不执行新的 SCF。请求必须指定 `geometry_id`、基组/系数或密度矩阵 ID、`quantity_kind`、自旋通道、轨道源编号（适用时）、网格原点/步向量/尺寸与单位、内存预算。结果记录后端版本、输入摘要和全部科学参数；轨道数组下标与 Gaussian 源编号分开。
+求值限于支持的非周期实值全电子 HF/DFT 结果，不执行新的 SCF。输入 Dataset 提供构型、基组、系数和可用密度矩阵；请求指定物理量、自旋、轨道源编号、网格和内存预算。结果记录后端、输入摘要及科学参数；Gaussian 源编号与数组下标分开。
 
 原子轨道基函数（AO）记为 χ，分子轨道（MO）记为 ψ。对实值基组，采用：
 
@@ -67,7 +59,7 @@ P_\sigma=C_\sigma\operatorname{diag}(n_\sigma)C_\sigma^T,\quad
 
 其中 σ 为 Alpha/Beta，n 为该通道实际占据。总密度为 ρα+ρβ，自旋密度约定为 ρα−ρβ。受限闭壳层可共用空间轨道，但总占据 2 不能再对每个通道乘 2；受限开壳层按已验证电子数/占据拆分，缺证据时报通道信息不足。优先使用具有正确方法/态身份的密度矩阵，不能把 post-SCF 请求悄悄替换成 SCF 密度。
 
-所有系数与密度矩阵必须跟随同一 AO 排序、归一化和坐标变换。先验收 SP、纯球谐/笛卡尔 d/f/g、收缩基组和 `nMO != nAO`；超出后端支持的角动量、复数、周期、未知占据/基组约定返回具体原因。HOMO/LUMO 由通道和占据决定，不由文件名或电子总数的一条通用公式决定；分数占据和简并情况展示实际占据及可选集合。
+所有系数与密度矩阵必须跟随同一 AO 排序、归一化和坐标变换。覆盖及独立参考以 [VALIDATION](../VALIDATION.md) 为准；超出后端支持的角动量、复数、周期、未知占据/基组约定返回具体原因。HOMO/LUMO 由通道和占据决定，不由文件名或电子总数的一条通用公式决定；分数占据和简并情况展示实际占据及可选集合。
 
 全电子体系的静电势在原子单位下定义为：
 
@@ -78,7 +70,7 @@ P_\sigma=C_\sigma\operatorname{diag}(n_\sigma)C_\sigma^T,\quad
 
 这里 P 为总电子密度矩阵，零势参考在无穷远；Φ 的单位为 Hartree/e。采用成熟后端的库仑积分，不用有限显示网格上的点电荷求和代替连续密度积分。该计算路线与本次只读核对的 [PySCF cubegen 源码](https://github.com/pyscf/pyscf/blob/c63a953ba603a5ad8c1d65d88da72aaf05ede4d8/pyscf/tools/cubegen.py) 一致；它是独立实现参考，不是本项目已选择或安装的依赖。
 
-核奇点和数值不可靠近核区域用记录了半径/原因的有效域掩码表示。数组存有限占位值，但无效项不得参与定量采样/图例/积分；插值要求所有邻点有效。ECP 体系仅在有效核电荷、价电子密度与独立参考约定均明确时开放对应 ESP，标签说明价电子模型；首版不宣称重建全电子近核密度或完整 ECP 算符势。溶剂反应场等额外势需要另有来源，默认分子 ESP 不包含它们。
+核奇点和数值不可靠近核区域用记录了半径/原因的有效域掩码表示。数组存有限占位值，但无效项不得参与定量采样/图例/积分；插值要求所有邻点有效。ECP、幽灵中心、复轨道和超出支持范围的基组组合明确拒绝；不声称重建全电子近核密度。溶剂反应场等额外势需要另有来源，默认分子 ESP 不包含它们。
 
 网格范围与实际步长由用户控制，预览预设只是初值；扩展到包围盒外一定距离不能证明弥散尾部收敛。开始前预估输出、AO 块、积分中间量及显示副本内存，超过预算时报告并允许调整。MO/密度按点分块，ESP 块大小还考虑 AO 对积分开销；取消在块间响应，工作进程退出后不发布未完成数组。
 
@@ -86,15 +78,7 @@ P_\sigma=C_\sigma\operatorname{diag}(n_\sigma)C_\sigma^T,\quad
 
 ## 3. 多文件关联与坐标变换
 
-同一计算常有 `.log`、`.fchk` 和多份 `.cube`；自动建议关联，经过校验才绑定：
-
-1. 识别计算段、结构帧、原子数/元素及其顺序。
-2. 判断是否为同一构型；同一分子在不同优化步骤也不能直接共享场。
-3. 已知映射下比较坐标；允许刚体配准时保存置换与旋转/平移。
-4. 坐标变换统一作用于结构、场、偶极/位移等向量；不能仅把分子移到原点。
-5. 检查轨道通道/编号、计算方法、源程序与字段；未知项留空并展示关联依据。
-
-相同元素的置换、简并/对称构型、不同电荷/自旋、频率与单点来自不同几何时，都可能需要人工确认。用户明确建立的关联记录为 `user_confirmed`，不能升级成独立数值验证。
+用户显式选择参考和移动 Dataset 后，`compare_sources` 核对原子顺序、已知电荷/多重度与构型；默认坐标容差 1e-3 Å。可选择刚体旋转/平移，不自动搜索原子置换。单中心和线性结构不能唯一确定方向，拒绝自动刚体配准。记录保留变换、坐标误差与各来源摘要，不能据几何相同推断方法相同。
 
 View 的布局变换与科学配准分开：移动对比图中的整个对象只改变展示位置。默认 **1 Å = 1 Blender unit**；所有相关 View 使用同一显示变换。相互关联的体对象存在额外缩放时，采样坐标先转换到被采样网格的局部空间。
 
@@ -102,7 +86,7 @@ View 的布局变换与科学配准分开：移动对比图中的整个对象只
 
 电子总能量、MO 能量、激发能、热校正和 Gibbs 自由能是不同量。对 HF/常规 DFT 可识别目标 SCF 能量；MP2/双杂化/CCSD(T) 必须保留参考 SCF 与目标结果；CASSCF/TD 绑定电子态；组合方法识别专属摘要。
 
-`EnergyRecord` 的权威字段表见 [能量设计第 4 节](../research/gaussian-energy-semantics.md#4-插件内部的数据契约)：`kind`、`value_hartree`、`method_ref`、`role`、计算/job/evaluation/几何/态引用、源位置及各项有效性。热力学上下文增加温度、压力、校正方案及对应电子能量；派生量保存已知操作与输入 ID。
+能量语义及完整概念字段表见 [能量设计第 4 节](../research/gaussian-energy-semantics.md#4-插件内部的数据契约)：`kind`、`value_hartree`、`method_ref`、`role`、计算/job/evaluation/几何/态引用、源位置及各项有效性。热力学上下文增加温度、压力、校正方案及对应电子能量；派生量保存已知操作与输入 ID。
 
 规则以方法/任务/态/步骤匹配唯一目标，不按数值大小选择，也不统一取最后一条。规则不覆盖、多个候选或正文/archive 不一致时，列候选和来源，等待用户指定；保留“未识别目标方法能量”。未收敛结果即使能解析也不作为已完成目标数据。
 
@@ -110,11 +94,11 @@ View 的布局变换与科学配准分开：移动对比图中的整个对象只
 
 ## 5. 原子属性、振动和光谱
 
-原子 `atom_id` 在同一结构序列内稳定，显示标签编号与底层数组索引单独记录。推断键包含推断方法、半径表与阈值；片段选择是显示集合，不能据此声称已分解电子密度。
+原子数组索引在同一结构序列内稳定，显示标签编号与底层数组索引单独记录。推断键包含推断方法、半径表与阈值；片段选择是显示集合，不能据此声称已分解电子密度。
 
 振动位移保存源约定和一次性的规范化结果。节点使用规范化位移做 `R=R0+A*d*sin(phase)`；`A` 与播放速度是展示参数，原始频率保持不变。虚频保留符号；静态电子场保持在对应平衡构型，不随振动原子扭曲成“时变轨道”。
 
-IR 原始频率/强度列表与模式选择同步；Raman 活性不是 Raman 强度。展宽曲线、频率缩放、温度因子若启用，属于派生谱，参数须记录；不得把未经说明的曲线标为实验光谱。
+IR 原始频率/强度列表与模式选择同步，显示棒状谱。Raman 活性不是 Raman 强度，当前未提供模拟 Raman 光谱或温度展宽处理。
 
 分子偶极保存物理矢量、单位和源坐标原点。带净电荷体系的偶极依赖原点；改变显示箭头锚点只改变绘图位置。物理方向箭头作为默认，化学示意方向若提供，应有独立标签。
 
@@ -122,7 +106,7 @@ IR 原始频率/强度列表与模式选择同步；Raman 活性不是 Raman 强
 
 采用插件内的版本化 JSON manifest + NumPy 数组，借鉴 CBQ 的可校验数组与来源记录。名称为 `qcblender.project`，初始 schema `0.1`；它是本项目内部工程契约，不宣称是行业统一交换标准，也不直接宣称兼容 `.cbq`。
 
-初始存储建议：`<name>.blend` 配套 `<name>.qcdata/manifest.json`、`arrays/<hash>.npy`、`cache/<key>.vdb`。这影响的是工程文件组织，安装仍然只有一个扩展。VDB 可从科学网格重建；Blender 节点树和材质仍保存在 `.blend`。
+工程保存为 `<name>.blend` 和 `<name>.qcdata/`。目录根 `manifest.json` 为 `qcblender.scene` schema 0.1，索引 `datasets/<manifest摘要>/manifest.json`；每个 Dataset 内为 `qcblender.project` schema 0.1，包含 `arrays/<hash>.npy` 及字段记录引用的 VDB。这影响的是工程文件组织，安装仍然只有一个扩展。VDB 可从科学网格重建；Blender 节点树和材质仍保存在 `.blend`。
 
 - `.npy` 用 `allow_pickle=False`，限制 dtype、维度、元素数与内存预算，检查有限值及内容摘要。
 - manifest 路径为相对路径，拒绝 `..`、绝对路径和逃逸根目录的链接。
@@ -131,15 +115,13 @@ IR 原始频率/强度列表与模式选择同步；Raman 活性不是 Raman 强
 - `.blend` 保存项目 ID、schema、相对位置和内容摘要。缺失时明确显示并支持重定位，不创建空数据替代。
 - 项目“打包”将配套目录和 `.blend` 一起归档，不默认把大型数组编码进 Blender 自定义属性。
 
-该存储方案尚待实际冷重开和移动目录测试；首版采用配套目录加打包操作，全数据内嵌单个 `.blend` 暂不作为发布要求。
+配套保存、原地/中文移动目录冷重开和缓存恢复的当前证据见 [VALIDATION](../VALIDATION.md)。
 
 ## 7. 缓存与状态
 
-科学转换键由输入哈希、解析器版本、数据集编号、单位/坐标转换与派生参数组成。显示缓存再加入精度、显示变换和 VDB 版本；等值/颜色只改变节点输入。只有源数据/科学参数改变才使对应科学缓存失效。
+`worker.py` 的求值缓存身份包括输入 Dataset manifest 摘要、网格、科学参数、后端及求值器源码摘要、NumPy 和 Blender 版本；内存预算不改变场的科学身份。缓存命中后仍校验 Dataset 与 VDB；损坏缓存按实际错误记录后重算。等值、颜色和视图布局不使科学场失效。
 
-数据能力使用 `available / missing / unsupported / ambiguous / invalid`；计算状态单列 `converged / unconverged / failed / incomplete / unknown`。任务状态使用 `queued / running / cancelling / succeeded / failed / cancelled`。不存在 `succeeded` 就代表科学正确或人工验收通过的推导关系。
-
-后台任务先产生不含 `bpy` 对象的结果，主线程校验并接入。任务代号和输入版本防止旧任务覆盖用户新选择；取消检查以 chunk 为边界，并保留实际错误类型和文件/字段位置。
+计算状态、能力诊断和 worker 执行状态各自保留。worker 最终状态为 `succeeded / failed / cancelled`，执行成功不等于科学正确或独立人工验收通过。后台结果不包含 `bpy` 对象，由主线程校验并接入；取消及过期操作不得覆盖新的选择。
 
 ## 8. 数据契约的最小证据
 

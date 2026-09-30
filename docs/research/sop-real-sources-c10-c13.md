@@ -100,7 +100,7 @@ P=C\operatorname{diag}(n_i)C^T,\quad n_i\in\{0,2\}.
 
 运行目录为 `outputs/v1-acceptance/sources/c10-c13/multiwfn-cobh3-20260927/`。本次从用户提供的 Windows 包 `examples/ETS-NOCV/COBH3/` 复制三个 FCH；其摘要与上述官方 ZIP 输入逐项一致。2026-09-27 09:57:05（Asia/Shanghai）实际运行 `submodules/Multiwfn/Multiwfn_2026.9.20_bin_Win64/Multiwfn.exe COBH3.fch`，耗时 0.80 秒，退出码 0，stderr 为空，stdout 明确显示版本和 **4 线程**。没有运行量子化学单点，也没有安装依赖。
 
-运行前依据用户提供的[本地手册](../../submodules/Multiwfn/Multiwfn_manual_2026.9.1.pdf)第 3.26.2–3.26.3、4.23.1 节，以及同版本源码 [`ETS_NOCV.f90`](../../submodules/Multiwfn/Multiwfn_2026.9.20_src_Win64/ETS_NOCV.f90)、[`sub.f90`](../../submodules/Multiwfn/Multiwfn_2026.9.20_src_Win64/sub.f90) 的 `MOene2Fmat` 和 [`grid.f90`](../../submodules/Multiwfn/Multiwfn_2026.9.20_src_Win64/grid.f90) 核对菜单、公式和参数；原始网络说明为[作者 ETS-NOCV 教程 /609](http://sobereva.com/609)。本地手册 PDF SHA-256 为 `418871dc13a9c0860f4f5417935ca2848cb2251f42bce9b26e90a15717c6c9fb`。现有 Xpdf `pdftotext` 导出的文字及摘录保存在工作目录，部分 PDF 字体映射不能完整还原公式，因此公式以匹配的 Fortran 源码核对。
+运行前依据用户提供的本地手册（本地原件：`submodules/Multiwfn/Multiwfn_manual_2026.9.1.pdf`）第 3.26.2–3.26.3、4.23.1 节，以及同版本源码 ETS_NOCV.f90（本地原件：`submodules/Multiwfn/Multiwfn_2026.9.20_src_Win64/ETS_NOCV.f90`）、sub.f90（本地原件：`submodules/Multiwfn/Multiwfn_2026.9.20_src_Win64/sub.f90`） 的 `MOene2Fmat` 和 grid.f90（本地原件：`submodules/Multiwfn/Multiwfn_2026.9.20_src_Win64/grid.f90`） 核对菜单、公式和参数；原始网络说明为[作者 ETS-NOCV 教程 /609](http://sobereva.com/609)。本地手册 PDF SHA-256 为 `418871dc13a9c0860f4f5417935ca2848cb2251f42bce9b26e90a15717c6c9fb`。现有 Xpdf `pdftotext` 导出的文字及摘录保存在工作目录，部分 PDF 字体映射不能完整还原公式，因此公式以匹配的 Fortran 源码核对。
 
 `stdin.txt` 是实际交互输入；初始整体 FCH 作为命令行参数传入：
 

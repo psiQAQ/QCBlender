@@ -43,7 +43,7 @@
 
 ## 最终 SOP
 
-最终 ZIP 使用上列 C 候选。35 个固定样本摘要一致；所有工程及移动副本由各自的新 Blender 进程重开、重新渲染，核对关联目录、节点输入和科学数组摘要。记录型案例保留 Computer Use 原生面板实拍；重复操作、源值与节点检查通过 MCP 执行。完整证据矩阵见 [技术汇总](../outputs/molecularnodes-parameters/03-legend/final-sop/final-sop-summary.md)。
+最终 ZIP 使用上列 C 候选。35 个固定样本摘要一致；所有工程及移动副本由各自的新 Blender 进程重开、重新渲染，核对关联目录、节点输入和科学数组摘要。记录型案例保留 Computer Use 原生面板实拍；重复操作、源值与节点检查通过 MCP 执行。完整证据矩阵见 技术汇总（`outputs/molecularnodes-parameters/03-legend/final-sop/final-sop-summary.md`）。
 
 | 案例 | 导入 | 源数值与单位 | 节点前后 | PNG | 保存重开 | 移动冷重开 |
 | --- | --- | --- | --- | --- | --- | --- |

@@ -1,6 +1,6 @@
-# 外部分析结果导入（开发候选）
+# 外部分析结果导入
 
-本页描述本轮加入的导入入口。运行时只读取已有结果文件；不会启动 Multiwfn、VMD 或 Tachyon。每个文件的角色由对话框或显式 CSV 步序给出，来源文件名和 SHA-256、用户指定单位及关联信息写入 `.qcdata`。界面不根据文件名推断物理量，也不隐式换算数值。科学样本验收状态见 [验证记录](VALIDATION.md)。
+本页描述已有外部分析结果的导入入口。运行时只读取已有结果文件；不会启动 Multiwfn、VMD 或 Tachyon。每个文件的角色由对话框或显式 CSV 步序给出，来源文件名和 SHA-256、用户指定单位及关联信息写入 `.qcdata`。界面不根据文件名推断物理量，也不隐式换算数值。科学样本验收状态见 [验证记录](VALIDATION.md)。
 
 ## 在侧栏操作
 
@@ -40,4 +40,4 @@ step,mayer_output
 
 ## 验证边界
 
-当前真实 Gaussian NBO 样本通过了解析、构型关联和 Blender 保存重开。IGMH/IRI、ESP、AIM、IRC/Mayer、ETS-NOCV 和 NOCV 场的接口检查使用了已有数值 Cube 或构造格式样本，**还没有对应分析的真实结果验收**。这些入口在真实样本核对前保持开发候选状态；独立用户验收与发布仍沿用 M5 流程。
+真实样本的历史技术验收覆盖 NBO、IGMH/IRI、ESP、AIM、IRC/Mayer、ETS-NOCV 和 NOCV 场，来源与范围见 [SOP 来源清单](v1-acceptance/SOURCES.md) 和 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md)。当前候选实际复验与未执行项目以 [VALIDATION](VALIDATION.md) 为准；独立用户验收尚未签署。

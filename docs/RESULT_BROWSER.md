@@ -2,17 +2,15 @@
 
 > 产物状态更新（2026-09-29）：本页是历史技术验收记录。候选 ZIP、生成工程及图像已纳入用户批准的清理范围；日志、摘要和历史 Passed 保留，二进制可用性以 [清理记录](acceptance/storage-cleanup.md) 为准。本文中“可重开”“保留候选”等描述只代表验收当时状态。当前可用的用户工程单独保存，后续演示从集中输入重建。
 
-2026-09-27，Windows x64 / Blender 5.1.1，开发分支 `feat/result-browser`，工作目录 `D:\workspace\QCBlender`。Gaussian 计算段选择、按来源分组及只读详情已通过本轮 Agent 技术验证；独立人工验收和发布批准为 **Not Run**。
+2026-09-27，Windows x64 / Blender 5.1.1，开发分支 `feat/result-browser`。Gaussian 计算段选择、按来源分组及只读详情已通过本轮 Agent 技术验证；独立人工验收和发布批准为 **Not Run**。
 
 ## 候选与操作
 
-安装独立候选 `outputs/result-browser/dist/qcblender-0.0.1.zip`，SHA-256：
+当时验证的独立候选 `outputs/result-browser/dist/qcblender-0.0.1.zip`，SHA-256：
 
 `239cd7c447a2d4caec07646d4d3fdad832f1b5f1b6d5fc9b3c0a33e0bc8539c7`
 
-GUI 导入 Log/Out 后等待预览，选择计算段并确认；每段保留状态、route、原文行区间和能量摘要。失败、未完成或缺少显式几何会如实显示，实际导入继续完整校验。预览不创建 Dataset 或对象，确认时重新核对源摘要。显式脚本段号导入以及 FCHK/Cube 导入保持兼容。
-
-**Display Layers → Refresh Sources / Source Details** 提供来源分组和只读记录。**Source record** 选择几何、计算段、量/单位、着色或外部关联记录；计算段编号从 1 开始。分组身份使用完整源摘要与计算段，组内上下排序保持可见顺序；IR 谱图和偶极通过父原子对象关联。着色源沿实际节点采样连接查找。旧工程不迁移格式，缺失信息显示“未记录”，损坏关联明确显示错误。操作细节见[使用指南](USER_GUIDE.md)。
+计算段选择和来源浏览的现行操作见 [用户指南](USER_GUIDE.md)。下表保存此历史批次的具体边界与结果。
 
 固定 SOP 候选 `outputs/dist/qcblender-0.0.1.zip` 保持不变，SHA-256 为 `03311fdeb0c83a38a546ebddedee1fe05e8dcb7260b53c889dd9fee3fa7ee231`；旧人工验收证据未覆盖。
 
@@ -43,19 +41,7 @@ Computer Use 完成真实导入确认、计算段下拉选择/取消、来源详
 
 可重开的工程包括 `GUI-result-browser.blend` 与配套 `.qcdata/`、`gui-moved/`、`verification-final-role/moved/sources.blend` 和 `offline-final-role/moved 中文 path/mo8.blend`。GUI 的复制对象可独立编辑；完整科学数组保存在配套目录。
 
-## 复现命令
-
-在仓库根目录使用 PowerShell，复用已有科学依赖与 wheels，不安装依赖。为重跑选择新的输出目录，保留现有证据。
-
-```powershell
-$blender = 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe'
-python tools/build_extension.py --blender $blender --output-dir outputs/result-browser/dist
-$env:BLENDER_USER_RESOURCES = 'D:/workspace/QCBlender/outputs/result-browser/recheck-profile'
-& $blender --background --offline-mode --python-exit-code 1 --python tools/verify_result_browser.py -- --output-dir outputs/result-browser/recheck
-& $blender --background outputs/result-browser/recheck/moved/sources.blend --offline-mode --python-exit-code 1 --python tools/verify_result_browser.py -- --output-dir outputs/result-browser/recheck --reopen
-```
-
-安装回归使用 `tools/verify_extension.py -- --candidate <新ZIP> --output-dir <新目录>`；冷重开该目录下的 `moved 中文 path/mo8.blend` 时传相同 `--output-dir` 和 `--reopen`。科学回归为 Blender 自带 Python 执行 `tools/run_science_tests.py`。
+当前操作见 [用户指南](USER_GUIDE.md)，新候选构建和复验流程见 [DEVELOPMENT](DEVELOPMENT.md)。本页只保留对应历史批次的结果与范围。
 
 ## 评审与修复记录
 

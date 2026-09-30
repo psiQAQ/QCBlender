@@ -1,123 +1,110 @@
 # Windows 构建与验收
 
-目标为 Windows x64、Blender 5.1.1、宿主 CPython 3.13.9 / NumPy 2.3.4 / OpenVDB 13。以下命令在仓库根目录的 PowerShell 执行。构建者需要 Blender 和已有 uv；验收机器只需要 Blender 与扩展 ZIP。
+以下步骤在仓库根目录 PowerShell 执行，目标 Windows x64、Blender 5.1.1 / CPython 3.13.9。每条命令成功后再继续；当前实际结果见 [VALIDATION](VALIDATION.md)。最终用户只安装合格扩展 ZIP，以下环境是开发验证所需。
 
-## 构建
+## 输入与已有环境
 
-设置本机路径。当前验证使用 uv 0.11.19；构建工具版本固定在 `tools/build-requirements.txt`。全部下载和中间文件进入忽略的 `outputs/`，不向 Blender Python 安装构建工具。
+按本机安装设置路径。使用独立、路径较短的新验收目录，避免覆盖已有工程；原生 ZIP 解压仍可能受 Windows 路径长度限制。
 
 ```powershell
 $blender = 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe'
 $blenderPython = 'C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe'
-$uv = 'C:/Users/ustcw/.local/bin/uv.exe'
-& $blenderPython -I tools/prepare_build.py --uv $uv
-& $blenderPython -I tools/fetch_dependencies.py
-& $blenderPython -I tools/build_science_backend.py
-& $blenderPython -I tools/build_extension.py --blender $blender
-```
-
-每条命令成功后再执行下一条。依赖下载严格遵循 `dependencies.lock.json` 的 URL/SHA-256；源码固定在 `science-sources.lock.json`。GBasis 只打包未修改的 Python 数值实现，使用 setuptools 生成标准 wheel，排除可选原生积分接口；`outputs/backend-wheel.json` 保存产物摘要。ZIP 时间戳可能产生不同哈希，需重新验收，不能声称逐字节可重现。
-
-产物为 `outputs/dist/qcblender-0.0.1.zip`。ZIP 含所需 wheels 与许可文本，运行时不调用 pip/uv、不下载包；NumPy/OpenVDB 使用宿主版本。`THIRD_PARTY.md` 记录源码许可事实和发行材料要求。
-
-独立候选使用 `build_extension.py --output-dir <批次目录/dist>`。已有锁定 wheel 存放在其他本地目录时可指定 `--wheels-dir <目录>`；仍逐个核对锁文件摘要，不下载或更新依赖。
-
-## 科学验收
-
-将随包 wheels 安装到仓库专用测试目录，保留宿主 NumPy。这里是开发验证命令，不是最终用户安装步骤。
-
-```powershell
-$env:UV_CACHE_DIR = "$PWD/outputs/uv-cache"
-$env:TEMP = "$PWD/outputs/process-temp"
+$batch = "$PWD/outputs/qc01"
+$qa = "$batch/qa"
+$scienceSite = "$PWD/outputs/science"
+$wheels = "$PWD/outputs/wheels"
+$env:BLENDER_USER_RESOURCES = "$batch/profile"
+$env:TEMP = "$batch/process-temp"
 $env:TMP = $env:TEMP
-$locked = Get-Content dependencies.lock.json -Raw | ConvertFrom-Json
-$backend = Get-Content outputs/backend-wheel.json -Raw | ConvertFrom-Json
-$scienceWheels = @($locked.packages.filename) + @($backend.filename)
-$scienceWheels = $scienceWheels | ForEach-Object { Join-Path "$PWD/outputs/wheels" $_ }
-& $uv pip install --python $blenderPython --target outputs/science --no-deps $scienceWheels
-& $blenderPython -I tools/fetch_log_examples.py
-& $blenderPython -I tools/run_science_tests.py
-& $blenderPython -I tools/qualify_scientific_fields.py
+New-Item -ItemType Directory -Force $env:TEMP
 ```
 
-来源、版本、SHA-256 和许可证随 `tests/data/` 样本保存。许可边界不清晰的公开 Log 只下载到 `tests/data/local/log-examples`，不作为扩展内容分发：
+`qc01` 是本批示例名称；下一批换用另一个未使用的短目录名，安装工程和报告随 `$batch` 一起隔离。
 
-```powershell
-& $blenderPython -I tools/fetch_log_examples.py
-```
-
-快速回归输出 `outputs/science-reference.json`；网格积分与带电远场检查输出 `outputs/scientific-convergence.json`。独立 Cubegen/Fortran 参考、代数不变量、网格收敛是不同证据，不能互相替代。
-
-## Blender 原生验收
-
-使用隔离配置、关闭自动脚本和网络。测试自己创建的场景及进程，不写入日常 Blender 配置。
-
-```powershell
-$env:BLENDER_USER_RESOURCES = "$PWD/outputs/blender-acceptance"
-& $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_extension.py --python tools/verify_node_assets.py
-& $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_storage_paths.py
-& $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/verify_extension.py -- --reopen
-& $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/verify_project_recovery.py
-& $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_visual_features.py
-& $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_animation.py
-& $blender --background --offline-mode --disable-autoexec 'outputs/animation-acceptance-v2/water-mode.blend' --python-exit-code 1 --python tools/verify_saved_views.py
-& $blender --background --offline-mode --disable-autoexec 'outputs/visual-acceptance-v2/density-esp.blend' --python-exit-code 1 --python tools/verify_saved_views.py
-& $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/verify_failed_save.py
-& $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/probe_scalar_views.py
-& $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/benchmark_fields.py
-```
-
-`verify_extension.py` 安装当前 ZIP，验证运行库来源、后台计算/取消、重复场缓存、双相和阈值，生成渲染并保存可迁移工程；带 `--reopen` 在新目录冷启动并核对数组身份及网格数量。`verify_storage_paths.py` 必须在 Blender 宿主中运行，验证超过 260 字符的数组路径；独立 Python 的 Windows 长路径行为不能代替这项检查。`verify_project_recovery.py` 验证缺失缓存恢复、重定位、电荷/偶极及振动/IR。报告位于 `outputs/acceptance/`。
-
-在限制文件系统的 Agent 沙箱内，Blender 原生安装器可能无法将扩展暂存目录重命名；该测试需要宿主批准相应的本地安装操作。这不属于最终用户的插件依赖。
-
-当前技术状态以 `.scratch/qcblender-v1/issues/` 和实际报告为准。独立用户验收不得由 Agent 代签。
-
-`verify_node_assets.py` 在原生安装测试创建场之后执行，检查公共等值面节点的参数/源对象隔离、已有分支连接保留及无对象/材质绑定的 `.blend` 资产导出和重新加载；报告为 `outputs/node-assets/report.json`。
-
-体积雾检查复用原生安装测试生成的轨道工程：
-
-```powershell
-& $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/verify_fog.py
-& $blender --background --offline-mode --disable-autoexec 'outputs/fog-acceptance/fog.blend' --python-exit-code 1 --python tools/verify_fog.py -- --reopen-fog
-```
-
-`outputs/fog-acceptance/report.json` 记录正负颜色、零不透明度、连续透明度、缓存不变和保存后渲染一致性。
-
-显示层检查分为数据/节点操作、冷重开和实际 GUI 撤销：
-
-```powershell
-& $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/verify_layers.py
-& $blender --background --offline-mode --disable-autoexec 'outputs/layer-acceptance/layers.blend' --python-exit-code 1 --python tools/verify_layers.py -- --reopen-layers
-& $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_layers.py -- --vibration-layers
-& $blender --offline-mode --disable-autoexec 'outputs/layer-acceptance/layers.blend' --python-exit-code 1 --python tools/verify_layers_gui.py
-```
-
-最后一条需 GUI，脚本自动检查撤销/重做、截取显示层面板并退出本次 Blender；继续使用上述隔离配置。`outputs/layer-acceptance/report.json` 汇总结果。振动复制检查重新导入真实 Gaussian 样本，不依赖其他会话生成的旧缓存权限。
-
-完成相应检查后运行 `& $blenderPython -I tools/qualify_package.py`，核对最终 ZIP 与当前源码、随包 wheel 哈希，并汇总已有报告。它不代替上述 Blender 验收命令。
-
-独立候选使用 `--candidate <ZIP> --installed-dir <安装目录> --evidence-index <批次索引.json> --output <报告.json>`。索引记录 `candidate_sha256`，并在 `checks` 中为每份报告记录相对 `path`、报告 `sha256` 和同一 `candidate_sha256`；报告必须位于该批次目录且状态为 `Passed`。科学回归可用 `run_science_tests.py --output <批次目录/science.json>` 单独保存。每批重新运行对应检查，资格工具核对文件与摘要，不替代验收范围判断。
-
-可组合节点的快速真实 Blender 检查：`& $blender --background --factory-startup --offline-mode --python-exit-code 1 --python tools/verify_composable.py`。它覆盖样式切换、分支保留、修改器重排、独立阈值、裁剪、斜轴和无效域采样、游标变换与保留旧图的新建操作，输出 `outputs/composable/report.json`。体积裁剪与曲线需同时运行 `verify_fog.py` 的真实渲染检查。
-
-随后在已安装扩展的隔离配置运行 `& $blender --background --offline-mode --disable-autoexec 'outputs/acceptance/moved 中文 path/mo8.blend' --python-exit-code 1 --python tools/verify_composable_render.py`，将实体、线框与表面点的实际渲染证据追加至同一报告，再执行包资格汇总。
-
-## 开发问题记录
-
-实际故障、处理和复验状态见 [开发问题与复验记录](DEVELOPMENT_PITFALLS.md)。新增记录须区分已复现故障、静态发现和待验证推断。
-
-## 输入与阶段产物维护
-
-必要输入统一从 [SOURCES.md](v1-acceptance/SOURCES.md) 和 `tests/data/local-inputs.json` 定位。已有测试环境可直接复用，不必重复安装依赖：
+必要输入由 [SOURCES](v1-acceptance/SOURCES.md) 和 `tests/data/local-inputs.json` 固定来源及 SHA-256。已有集中输入可以用 `QCBLENDER_REFERENCE_ROOT` 指向包含相同清单的仓库；部分日志单测仍直接使用当前仓库 `tests/data/local/log-examples/`，需按清单复制相同字节。校验后才运行：
 
 ```powershell
 & $blenderPython -I tools/local_inputs.py
-& $blenderPython -I tools/run_science_tests.py --output outputs/current-check/science.json
 ```
 
-`verify_results_blender.py --case C07 --check prepare --out <本批目录>`、`verify_multiwfn_interaction.py --mode prepare --out <本批目录>` 和 `verify_multiwfn_charts.py --mode prepare --out <本批目录>` 默认从集中输入重建；`--fixture` 仍可显式读取工程。`verify_multiwfn_foundation.py` 默认重建 core/nbo/analysis 场景，`--fixture-blend` 保持兼容。`verify_result_browser.py --use-installed` 可复用隔离安装，省略此项仍执行安装检查。原地和移动冷重开必须使用同次新生成的 `.blend + .qcdata`。
+缺少输入时按来源清单取得原件，保留许可证；不使用历史生成工程代替原始输入。复用已有锁定 wheels、`outputs/backend-wheel.json` 和 science 测试目录，不必重复安装环境。
 
-本文件其余按步骤生成再重开的命令需要先运行对应生成步骤；历史输出不再作为可取得的固定依赖。需要候选时用 `build_extension.py --output-dir <本批目录/dist>` 重建并记录新摘要，再运行 `qualify_package.py --candidate <新ZIP>` 和实际安装检查；已有锁定 wheels、构建解释器及环境保留。
+## 构建新候选
 
-阶段结束后按 [存储维护规则](agents/storage-maintenance.md) 留存用户工程、必要输入和日志。自动清理只覆盖用户已批准类别，清单之外的内容继续保留。
+```powershell
+& $blenderPython -I tools/build_extension.py --blender $blender --wheels-dir $wheels --output-dir "$batch/dist"
+if ($LASTEXITCODE -ne 0) { throw 'Build failed' }
+$candidate = "$batch/dist/qcblender-0.0.1.zip"
+Get-FileHash -Algorithm SHA256 $candidate
+```
+
+`dependencies.lock.json` 固定 wheel URL/SHA-256，`science-sources.lock.json` 固定科学源码。构建核对锁定输入并生成节点资产；ZIP 含科学 wheels 与许可文本，NumPy/OpenVDB 来自 Blender。ZIP 时间戳可能不同，不能宣称逐字节复现；每个新包记录摘要并重新验收。
+
+仅在首次建立开发环境、且依赖下载/安装已获授权时，按顺序运行下列命令；已有环境跳过。工具版本由 `tools/build-requirements.txt` 固定，不向 Blender Python 安装构建工具。
+
+```powershell
+$uv = (Get-Command uv).Source
+$env:UV_CACHE_DIR = "$PWD/outputs/uv-cache"
+& $blenderPython -I tools/prepare_build.py --uv $uv
+& $blenderPython -I tools/fetch_dependencies.py
+& $blenderPython -I tools/build_science_backend.py
+```
+
+科学测试环境使用随包 wheels 和宿主 NumPy；依赖安装也是首次环境准备步骤：
+
+```powershell
+$locked = Get-Content dependencies.lock.json -Raw | ConvertFrom-Json
+$backend = Get-Content outputs/backend-wheel.json -Raw | ConvertFrom-Json
+$scienceWheels = @($locked.packages.filename) + @($backend.filename)
+$scienceWheels = $scienceWheels | ForEach-Object { Join-Path $wheels $_ }
+& $uv pip install --python $blenderPython --target $scienceSite --no-deps $scienceWheels
+```
+
+## 数值与非科学单测
+
+```powershell
+& $blenderPython -I tools/run_science_tests.py --site $scienceSite --output "$batch/science.json"
+foreach ($test in @('test_copy_display.py', 'test_legend_layout.py', 'test_local_inputs.py', 'test_storage_cleanup.py')) {
+    & $blenderPython -B -m unittest discover -s tests -p $test
+    if ($LASTEXITCODE -ne 0) { throw "Unit tests failed: $test" }
+}
+```
+
+科学报告记录 tests/failures/errors/skipped 和参考误差；只看退出码不能代替确认真实样本及测试数量。完整网格收敛专项另由 `tools/qualify_scientific_fields.py` 执行；没有运行时记 Not Run。
+
+## 安装、显示与同批工程冷重开
+
+继续使用上述隔离配置。以下命令均在新进程运行，安装测试生成本批 `mo8.blend`、同名 `.qcdata/`、渲染、归档和中文移动副本。
+
+```powershell
+& $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_extension.py --python tools/verify_node_assets.py -- --candidate $candidate --output-dir $qa
+& $blender --background --offline-mode --disable-autoexec "$qa/mo8.blend" --python-exit-code 1 --python tools/verify_extension.py -- --reopen --output-dir $qa
+& $blender --background --offline-mode --disable-autoexec "$qa/moved 中文 path/mo8.blend" --python-exit-code 1 --python tools/verify_extension.py -- --reopen --output-dir $qa
+& $blender --background --offline-mode --disable-autoexec "$qa/moved 中文 path/mo8.blend" --python-exit-code 1 --python tools/verify_project_recovery.py
+& $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_node_helpers.py
+```
+
+`verify_extension.py` 核对运行库来源、实际求值、取消、缓存和注册/注销。`verify_node_assets.py` 在安装测试创建场后执行，检查公共等值面、分支保留和资产导出重载，输出 `outputs/node-assets/report.json`。恢复检查固定写入 `outputs/acceptance/recovery.json`，运行前须确认该目录可写，并把本次报告副本与日志纳入批次。冷重开日志应分别保存，脚本复用报告字段时不能仅保留最后一次 stdout。
+
+图例专项在已安装扩展的同一隔离配置下从集中输入创建真实密度/ESP 场。`--out` 必须传绝对路径，并让隔离配置位于其父目录内；否则 Blender 渲染路径可能落在仓库之外。
+
+```powershell
+$legend = "$batch/legend"
+& $blender --background --factory-startup --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_mn_legend.py -- --check legend --out $legend
+```
+
+随后分别打开 `$legend/evidence.blend` 与 `$legend/moved 中文 path/evidence.blend`，执行同一脚本 `--check reopen --out $legend`。只重开本次生成工程，记录两份日志并检查渲染。
+
+更广行为按改动范围选择专项工具与 [SOP](v1-acceptance/SOP.md)。`verify_results_blender.py --case C07 --check prepare --out <本批目录>`、`verify_multiwfn_interaction.py --mode prepare`、`verify_multiwfn_charts.py --mode prepare` 可从集中输入复建；具体必需参数见各工具。GUI、完整 SOP、性能与其他平台未运行时明确 Not Run。已有工具不代表每项命令对当前候选均已复验；已知问题见 [开发问题记录](DEVELOPMENT_PITFALLS.md) 和对应本地任务。
+
+## 汇总资格与保留证据
+
+保存源码提交/工作区摘要、构建命令、ZIP 摘要和实际安装目录。批次索引 JSON 使用 `candidate_sha256` 和 `checks`；每个检查包含批次内报告相对 `path`、报告 `sha256` 与相同 `candidate_sha256`，报告状态须为 Passed。
+
+```powershell
+& $blenderPython -I tools/qualify_package.py --candidate $candidate --installed-dir '<本批实际安装目录>' --evidence-index "$batch/evidence-index.json" --output "$batch/qualification.json"
+```
+
+将占位安装目录替换为本批实际路径，并先生成索引。资格工具只校验源码、ZIP、wheel、安装副本和报告身份，不执行 Blender 验收或判断覆盖是否充分。修改产品源码后必须重建并复验。
+
+文件系统受限时，原生安装器重命名或新数据读取可能需要宿主权限；保留真实错误，不能吞错或修改科学行为规避。技术检查与独立人工签署分别维护。阶段结束按 [存储维护规则](agents/storage-maintenance.md) 保留工程、必要输入和日志；本页命令不提供额外删除授权。

@@ -1,6 +1,6 @@
 # 几何节点接口与科学显示契约
 
-状态：首版配方契约；实现进展与具体边界见 [验收记录](../VALIDATION.md)。数据约定见 [通用 QC 数据契约](qc-data-contract.md)。节点操作已导入数据，文件读取、波函数求值和缓存构建由独立的插件操作执行。
+当前节点与科学显示契约；实现和验证边界见 [验收记录](../VALIDATION.md)。数据约定见 [通用 QC 数据契约](qc-data-contract.md)。节点操作已导入数据，文件读取、波函数求值和缓存构建由独立的插件操作执行。
 
 ## 1. 分组方式
 
@@ -12,20 +12,19 @@
 
 - 侧栏选择计算、构型、轨道和模式，定位已导入的 data ID。
 - 选择未缓存的场时，显示缺失原因和明确的“导入/生成场”操作，不在节点求值中读取源文件。
-- 节点控制阈值、选择、尺度、材质和已载入数据之间的组合；侧栏快捷控件绑定同一个 socket，避免状态重复。
+- 节点控制阈值、选择、尺度、材质和已载入数据之间的组合；对象属性快捷控件绑定同一个 socket，避免状态重复。
 - 物理量、轨道编号、自旋、单位和关联几何由数据引用决定，不因改 Blender 对象名而改变。
 
-Display Layers 面板管理当前场景的原子、表面、切片、体积雾、偶极和 IR 对象。可新增表面/雾/切片、重命名、复制、删除、排序，并分别控制视口和渲染可见性。选中层后，主面板直接编辑该层的节点或材质输入。复制创建独立网格、外层节点组和材质；通用样式资产与只读科学场继续共享。振动层另复制 IR 对象，模式高亮互不影响。删除显示层保留其子层的世界变换和科学数据文件。排序只控制面板组织，不改变三维深度遮挡。
+Display Layers 面板管理当前场景的原子、表面、切片、体积雾、偶极和 IR 对象。可新增表面/雾/切片、重命名、复制、删除、排序，并分别控制视口和渲染可见性。选中层后，对象/材质属性编辑该层的节点或材质输入。复制创建独立网格、外层节点组和材质；通用样式资产与只读科学场继续共享。振动层另复制 IR 对象，模式高亮互不影响。删除显示层保留其子层的世界变换和科学数据文件。排序只控制面板组织，不改变三维深度遮挡。
 
 ## 2. 原子和向量属性
 
-原子载体为点/边几何。下列属性中除 `qc_fragment_id` 尚未交付外，均由当前视图写入；节点组合必须保留稳定原子身份。
+原子载体为点/边几何。下列属性按视图类型与可用数据写入；节点组合必须保留稳定原子身份。
 
 | 属性 | 域/类型 | 含义 |
 | --- | --- | --- |
-| `qc_atom_id` | POINT / INT | 稳定原子编号，索引变化时仍可映射 |
+| `qc_atom_id` | POINT / INT | 源原子零起始索引；界面源编号从 1 开始 |
 | `qc_atomic_number` | POINT / INT | 元素编号；幽灵/虚拟中心需显式分类 |
-| `qc_fragment_id` | POINT / INT | 用户确认的片段标签 |
 | `qc_charge` + `qc_charge_valid` | POINT / FLOAT + BOOLEAN | 当前选定布居方法的电荷与有效标志；方法记录在数据绑定中 |
 | `qc_mode_displacement` | POINT / VECTOR | 当前模式位移，经导入层统一约定 |
 | `qc_equilibrium_position` | POINT / VECTOR | 模式对应的平衡构型 |
@@ -36,26 +35,25 @@ Display Layers 面板管理当前场景的原子、表面、切片、体积雾�
 
 ## 3. 节点清单与 socket 契约
 
-下表是配方职责与目标 socket 契约，不是已发布的独立公共节点名称清单。当前原子选择、样式和振动组合到每个原子视图的节点组；场提面/映射、切片、偶极及 IR 使用各自的可编辑节点组。实际 socket 以修改器和侧栏为准，片段选择等未交付能力不计入已支持范围。最后一列描述可观察行为。
+九个公共资产由 `qcblender/asset_catalog.py` 固定身份，工厂位于 `blender/assets.py`。此表列主要输入；全部 socket 标识、默认值和连接以对应工厂为准，不通过改名升级已保存工程。
 
-| 节点组 | 主要输入 | 输出 | 约束/行为 |
-| --- | --- | --- | --- |
-| `QC Atoms` | 数据 Object、构型引用 | Geometry | 取得带属性原子点与键，不生成球；配置在数据绑定中 |
-| `QC Select Atoms` | Geometry、元素/编号/片段/属性范围 | Boolean Selection | 组合使用原生 Boolean Math；无效属性不选中 |
-| `QC Style Atoms and Bonds` | Geometry、Selection、原子/键半径、质量、Material | Geometry | 原子和键风格共享选择；键连接两端随原子位置更新 |
-| `QC Scalar Field` | Volume Object、Grid Name | 实际体/网格接口 | 选择一个有明确身份的已加载 dataset，不解释所有网格为 density |
-| `QC Orbital` | 已缓存的轨道场 Object、通道/编号绑定 | 同 Scalar Field | 作为轨道工作流入口；HOMO/LUMO 解析由元数据选择器完成 |
-| `QC Isosurface` | Grid、正阈值、双相开关、各相可见/Material、Adaptivity | Geometry | 默认 ±同一绝对值；分别开关相位；默认 Adaptivity=0 |
-| `QC Sample Scalar` | Grid、Position、Interpolation、采样域信息 | Value、Valid | 明确坐标变换；默认三线性；范围外不给物理零值解释 |
-| `QC Color Map` | Value、Valid、Min/Max、Center、Color Ramp | Color | 数值不改写；固定图例范围；越界/缺失有专用显示 |
-| `QC Slice` | Grid、中心/法向、平面大小、采样数 | Geometry + sampled attrs | 平面采样；样本分辨率独立于源网格；等高线是可组合样式 |
-| `QC Vector Glyphs` | Points、Vectors、Selection、比例、归一化、长度上限、Material | Geometry | 同一资产服务偶极/位移；归一化仅影响显示，原向量保留 |
-| `QC Animate Normal Mode` | Atoms、Displacement、Amplitude、Phase、Playback Rate | Geometry | 更新原子位置后生成样式，原始频率标签不随播放速度变化 |
-| `QC Animate Frames` | 已载入帧、步号、插值设置 | Geometry | 已列入后续轨迹阶段；插值是显示中间构型，不能伪造已计算性质 |
+| 稳定资产 ID | 工厂 | 主要职责 |
+| --- | --- | --- |
+| `qc.sample.v1` | `sample_group` | Volume/坐标变换、标量与有效域采样 |
+| `qc.atom_selection.v1` | `selection_group` | 元素和源编号范围的 Boolean Selection |
+| `qc.atom_style.v1` | `atom_style_group` | 原子/键几何、选择、半径、材质和显示样式 |
+| `qc.surface_style.v1` | `surface_style_group` | 实体、线框、表面顶点球及材质 |
+| `qc.isosurface.v3` | `isosurface_group` | 正负等值、相位显隐/材质、法线；输出 Geometry 与独立 Positive/Negative |
+| `qc.volume_fog.v1` | `fog_group` | 体积几何与 Material |
+| `qc.color_scalar.v2` | `color_group` | Value/Valid、Minimum/Center/Maximum、颜色映射 |
+| `qc.slice.v1` | `slice_group` | 平面尺寸/分辨率及空间变换 |
+| `qc.clip.v1` | `clip_group` | 局部平面/包围盒裁剪 |
 
-质量输入控制球体细分或曲线截面，不改变科学场值。`QC Orbital` 的语义输入通过已存在的数据对象/属性实现；资产构建时要按锁定 Blender 版本确认真实 socket 类型，不能把概念列名直接当 Python API。
+库内资产不绑定具体对象/材质，工程内外层节点负责 Dataset 绑定。模式、偶极和 IR 由对应视图组合原生节点，不是额外公共资产。质量参数控制显示几何，不改变科学数组。
 
 ## 4. 四种主要配方
+
+以下流程图使用职责名称描述组合关系，不是 Python API 或额外资产名称。
 
 体积雾配方使用 `QC Style Volume Fog v1`，输入为 Volume 和 Material，输出仍是体积几何，可与表面分支组合。材质通过 `qc_value` 和 `qc_valid` 采样：有符号量的不透明度为 `scale * abs(value)`，电子数密度为 `scale * max(value, 0)`，仅在有效域显示。scale 是光学显示参数，不代表电子数密度转换，也不把轨道振幅改写为概率密度。默认颜色仅区分正负，原始场和单位不变；侧栏与材质节点共用不透明度和颜色参数。
 
@@ -115,7 +113,7 @@ IR 棒状谱/模式表选择是 UI 行为，切换后只更新当前位移属性
 
 等值面默认关闭几何平滑、重网格、删除小连通分量和自适应简化；可开启法线平滑。形状处理若启用，保留原始分支并标记为展示处理。裁切 ROI 仅表示看见哪些空间区域，不改变场定义。
 
-节点组保留稳定 socket 标识和资产版本；升级创建新版本，不覆盖用户已改的树。用户可拆开配方继续组合，侧栏失去可靠绑定时提示恢复/重绑，不自动重建并抹掉改动。删除视图只有在无人引用时才清理对应派生缓存，科学数据管理有独立操作。
+节点组保留稳定 socket 标识和资产版本；升级创建新版本，不覆盖用户已改的树。用户可拆开配方继续组合，侧栏失去可靠绑定时提示恢复/重绑，不自动重建并抹掉改动。删除显示层不删除科学数据文件；缓存清理遵循工程保存及存储维护规则。
 
 发布图注应能取得：物理量/方法/构型、自旋和轨道、阈值与单位、色标范围、插值、几何处理、振动模式/显示振幅。相机、灯光与材质作为展示参数保存。
 
@@ -133,8 +131,10 @@ IR 棒状谱/模式表选择是 UI 行为，切换后只更新当前位移属性
 
 数据身份、单位和缺失区域必须保持明确。外部 Cube 的 Other scalar 允许用户声明名称及单位，未知单位保持 unknown；该操作不转换数组数值。
 
-## 7. 实验依据
+## 7. 实验依据（历史专项）
 
 [probe_volume_nodes.py](../../tools/probe_volume_nodes.py) 已在 Blender 5.1.1 实际通过：有符号非对称场、斜轴/平移变换、正负面、阈值变更和第二个斜轴标量场的三线性采样。第二场采用解析线性函数，在所有提取表面顶点比较，最大绝对误差约 `1.79e-6`，检查阈值为 `1e-5`。
 
 该实验包含 `Get Named Grid → Grid to Mesh → Sample Grid → Store Named Attribute`，只证明数值和几何路径；尚未验证完整资产库、科学输入、材质/色标渲染、范围外处理、GUI、动画和冷重开。其数据不是实际 Gaussian ESP。
+
+当前候选的节点行为、资产导出重载、渲染及冷重开范围见 [VALIDATION](../VALIDATION.md)。上述合成场误差是专项实验结论，不代替完整产品验收。

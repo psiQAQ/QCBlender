@@ -1,20 +1,25 @@
-# 0.0.1 候选的支持范围与验证
+# 0.0.1 支持范围与验证状态
 
-状态同步：2026-09-28。平台：Windows 11 x64，Blender 5.1.1，CPython 3.13.9，NumPy 2.3.4，OpenVDB 13。当前是本地开发验收候选，尚未对外发布；独立用户验收未签署。
+更新：2026-09-30。清单声明 Windows x64，Blender 最低 5.1.1、最高边界 5.2.0；实际验证环境为 Windows x64、Blender 5.1.1、CPython 3.13.9、NumPy 2.3.4、OpenVDB 13。独立人工验收尚未签署，当前仅为本地开发候选。
 
-独立人工复做使用 [v1 验收 SOP](v1-acceptance/SOP.md)；真实输入、许可与缺样本状态见 [样本清单](v1-acceptance/SOURCES.md)。该清单的所有人工结果初始为 `Not Run`。
+## 当前候选与证据
 
-固定 SOP 候选的 C01–C13 六栏、N01–N18 及真实样本技术复跑 **Passed**，见 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md)。结果浏览独立候选的技术验证 **Passed**，见 [结果浏览技术记录](RESULT_BROWSER.md)，科学回归为 21/21。[优化轨迹独立候选](OPTIMIZATION_TRAJECTORY.md)的技术验证 **Passed**，科学回归为 25/25，已检查 GUI/MCP、渲染和移动冷重开。下表早期专项证据保留其原测试范围，不代表对后续候选重新执行了全部检查。
+本次候选基于 `1b87751616ecb03d89f6a8c0e96cac99544b420a` 加本次仓库清理变更；提交见 Git 清理记录。精确源码由 `outputs/repository-cleanup/final/source-hashes.json` 固定，SHA-256 为 `52da8fd814067a78e75f1f85872eab271190975e585aa73b2b3f85fd2b590834`。本地 ZIP 为 `outputs/repository-cleanup/final/dist/qcblender-0.0.1.zip`，SHA-256 为 `2cd8bd76b22c3ac0d5cecfa519463a3bd01b0df797508f9f9eb730354b1d42fb`；该路径是本地证据，不是公开下载。
 
-[源码借鉴最终候选](acceptance/source-adoption.md)的 AIM/NOCV 关联校验、正交自动取景和场值线剖面技术验收 **Passed**；45/45 科学回归、干净配置安装、GUI/MCP、C01–C13 六栏与 N01–N18 全部通过，证据绑定该独立 ZIP。
+| 检查 | 状态 | 本次范围与证据 |
+| --- | --- | --- |
+| 科学回归 | Passed | 69/69，无失败、错误或跳过；`outputs/repository-cleanup/final/science.json`，数值指标与清理前一致 |
+| 非科学单测 | Passed | 11/11，显示复制、布局、输入与清理边界；同批单测日志 |
+| 节点行为 | Passed | 九个公共资产加选择/图例共十组的输入标识、默认值、操作和连线与基线一致；`tools/verify_node_helpers.py` 实际 Blender 检查 |
+| 新 ZIP 离线安装与生命周期 | Passed | 新配置安装、科学运行库、worker 取消/缓存、注册/注销；`outputs/rc03/extension.json` 与 `outputs/rc03h/extension.json` |
+| MO 成图及工程保存 | Passed | 实际求值、阈值/双相、渲染，原地及中文移动路径冷重开；同批 `outputs/rc03/` 工程与报告 |
+| 数据恢复与节点资产 | Passed | 缺 VDB 恢复、来源重定位、电荷/偶极/振动；公共资产导出重载和已有分支保留 |
+| 图例与双场 | Passed | 真实密度/ESP、横竖/旋转布局、替换及独立复制、旧图升级、signed MO/电荷；`outputs/rc03hl/checks.json`，原地/中文移动冷重开与渲染 |
+| 来源与包一致性 | Passed | 源码、ZIP、两份安装副本、wheel 摘要；`outputs/repository-cleanup/final/qualification.json`、`qualification-host.json` |
+| 全量历史 SOP、GUI 人工操作和外部视觉对照 | Not Run | 本次未重跑 C01–C13 全流程、N01–N18 或 Computer Use；专项自动化不替代这些验收 |
+| 独立人工签署、其他平台、公开发布 | Not Run | 不能由本次清理或技术通过推导完成 |
 
-[VMD 参数交互候选](acceptance/vmd-parameters.md)已实现分组面板、显式着色场、一次性色标范围与显示参数复制。最终候选的 48 项科学回归、7 项复制策略、安装、MCP、Computer Use 及 GUI 工程原地/移动冷重开均 **Passed**；四包首批技术验收完成。真实多计算段 Log 已覆盖原子视图；字段候选的分段身份采用明确标注的合成 Dataset，真实多段字段链路仍 **Not Run**。
-
-[MolecularNodes 参数交互候选](MOLECULARNODES_PARAMETERS.md)的固定局部选择、真实步结构标注和图例排版技术验收 **Passed**；58 项科学回归、2 项布局数学测试、安装、GUI/MCP、原地/移动冷重开及最终候选 C01–C13 六栏、N01–N18 均通过。科学数组、来源身份和工程格式保持原约定。
-
-[Multiwfn 参数与原生界面候选](MULTIWFN_PARAMETERS.md)完成 N 侧栏/对象/材质的职责拆分、九个资产分类、探针和切片 Gizmo、等值线/剖面排版及外部结果浏览。最终 `04-results-r2` 的 69 项科学回归、安装、GUI/MCP、C01–C13 六栏、N01–N18 及 26 次 SOP 原地/移动冷重开全部 **Passed**；源码、安装副本和 ZIP 摘要一致。
-
-当前顺序：按后续需求评估统一出图、显示几何性能、动画控制 → 独立人工验收及外部视觉对照 → 发布机制。人工验收及外部视觉对照保持 **Not Run**。ORCA、`.mwfn`、周期体系和新分析类型仅按后续需求立项。
+本次范围和处置见 [清理任务](../.scratch/repository-cleanup/spec.md)。历史 20/21/25/45/48/58/69 项测试属于各自候选，仍可从 [CHANGELOG](CHANGELOG.md) 与对应任务追溯，不作为本 ZIP 的未执行检查。Blender 图例重开仍有 VFont 转节点诊断；实际报告和画面通过不等于无日志警告。
 
 ## 输入和科学边界
 
@@ -27,66 +32,22 @@
 | 基组 | SP、球谐/笛卡尔 d/f 和实际 nMO<nAO 回归；g 的 Python 基组不变量另行检查。h 及以上、ECP、幽灵中心、广义/复轨道显式拒绝 |
 | 理论层次 | 已确认 SCF 轨道和密度一致才求值。方法白名单见 `evaluate.prepare`；白名单是入口边界，不代表每个泛函/版本组合都有独立参考 |
 | 能量 | HF/DFT、MP2、CCSD(T)、DSDPBEP86、明确标记选态的 TD，保留参考/目标/校正/热力学和源位置；多步或冲突不自动取最后值 |
-| 后续范围 | B2PLYP 目标规则仍为候选；CASSCF、复合方法等不宣称完整解析。相关方法密度、WFN/WFX、ORCA、`.mwfn`、周期体系及新分析类型仅按后续需求立项；外部 IRC FCHK 路径已通过 C10 真实结果技术验收 |
+| 未支持及受限范围 | B2PLYP 目标规则仍为候选；CASSCF、复合方法等不宣称完整解析。相关方法密度、WFN/WFX、ORCA、`.mwfn`、周期体系及新分析类型不属于当前支持范围；外部 IRC FCHK 路径已通过 C10 真实结果技术验收 |
 
 GBasis 来源固定在 `science-sources.lock.json`，当前 wheel 为 `0.1.0+qcblender.071969c.pure1`，只打包 Python 数值路径。SciPy 等随包 wheels 固定 SHA-256，NumPy/OpenVDB 使用 Blender 自带版本；运行时不调用外部 Python/pip。
 
-## 技术验收
+## 外部结果与轨迹
 
-| 项目 | 状态 | 证据 |
-| --- | --- | --- |
-| 复杂案例集 | Passed | DVB阳离子/振动、色氨酸、水二聚体，4组可迁移工程、8张代表图、48帧MP4；[操作及复建](COMPLEX_EXAMPLES.md)，独立人工验收仍未完成 |
-| 解析/归一化/科学回归 | Passed | 20 项测试，`outputs/science-reference.json`；含路径逃逸/损坏摘要拒绝、并发不可变数据复制 |
-| MO 独立参考 | Passed | CH4 UHF/cc-pVDZ，27 点 Fortran 参考，Alpha/Beta MO 8/9 最大绝对误差约 4.85e-9 |
-| 密度/ESP 独立参考 | Passed | 同一 CH4 的 Gaussian Cubegen 18 点：密度最大误差 8.44e-7 electron/bohr^3，ESP 4.61e-6 hartree/e；只证明对应样本 |
-| AO/电子数 | Passed | 开闭壳层、纯/笛卡尔、矩形 MO 的 CᵀSC 与 Tr(PS)；CH4 电子数 9.9999999974 |
-| 网格与远场 | Passed | `outputs/scientific-convergence.json`：LiH+ 密度/自旋步长与范围分开变化，半宽 8 bohr、步长 0.1 bohr 得 2.99994998 个电子；200 bohr 的 rΦ=0.99993221，趋向 +1 |
-| 全新配置离线安装 | Passed | `outputs/acceptance/extension.json`；后台库来源、GUI 不导入求值依赖、取消、注册/注销、缓存复用 |
-| 双相面与显示阈值 | Passed | 阈值改变表面网格，正/负面独立，VDB 哈希不变；`outputs/acceptance/mo8.png` 已作视觉检查 |
-| 公共等值面资产 | Passed | `outputs/node-assets/report.json`：无对象/材质绑定的共享资产，独立阈值与源平移、保留原分支、资产库导出和重载 |
-| 可组合节点与常用样式 | Passed | `outputs/composable/report.json`：三种原子/表面样式、修改器重排、保留分支/旧图、映射后独立相位透明度、平面/盒裁剪、斜轴与无效域游标采样；真实 Gaussian 三种表面渲染已检查 |
-| 体积雾 | Passed | `outputs/fog-acceptance/report.json`：真实 Cycles 渲染的正负颜色、零/连续不透明度、缓存摘要不变及冷重开渲染一致；图片已检查 |
-| 显示层管理 | Passed | `outputs/layer-acceptance/report.json`：增删、复制、排序/可见性、独立材质及模式/IR，保存重开和 GUI 撤销/重做；面板截图已检查 |
-| 双场与切片 | Passed | `outputs/scalar-probe/result.json`：斜轴线性场采样最大误差约 1.08e-6，对象变换后约 2.27e-6；域外 289 个切片点全为无效 |
-| 原子、图例和关联 | Passed | `outputs/visual-acceptance-v2/result.json`：元素/编号选择、真实密度/ESP、与范围联动的图例、刚体配准、平衡距离、Cube 显式单位及外部场声明；渲染已检查 |
-| 电荷/偶极/振动/IR | Passed | `outputs/acceptance/recovery.json`、`outputs/vibration-probe.json`：Mulliken、偶极方向/比例/零向量、3 个水分子模式、真实位移方程、位移箭头、IR 高亮 |
-| 动画导出 | Passed | `outputs/animation-acceptance-v2/result.json`；原生 Blender 渲染 4 张 PNG，图注保留频率及非物理播放速度，源科学数组完全不变；已检查代表帧 |
-| 保存、中文路径、迁移恢复 | Passed | 配套 `.blend + .qcdata`、ZIP、移动后冷启动、缺 VDB 重建、按 manifest 摘要重定位；数组和表面保持一致 |
-| 保存失败的回滚 | Passed | `outputs/acceptance/failed-save.json`：真实 Blender 保存失败后，先前场景索引与内存中的对象/体文件引用保留 |
-| Windows 长路径数组 | Passed | `outputs/acceptance/storage-paths.json`：Blender 宿主内超过 260 字符的数组路径可读取、复制复用和归档；深层隔离配置中的实际重复场缓存命中 |
-| 模式和色标的冷重开 | Passed | `outputs/acceptance/*-cold-view.json`：模式选择、IR 引用、能量记录、时间驱动位移及扩展开关；双场绑定/色标/文字图例保持，冷启动渲染已检查 |
-| 交互界面 | Passed（局部） | `outputs/acceptance/interactive.json`：开发实例实际异步 Log/FCHK 导入、模式/能量接入、HOMO 生成（Alpha MO 5，占据 1，-0.543101269 Eh）；不是独立用户复做证据 |
-| 人工使用与外部视觉对照 | Not Run | 用户独立复做及 VMD/VESTA 同输入同阈值的视觉比较尚未执行 |
-| 对外发布 | Not Run | 其他平台、任意第三方扩展组合、所有科学方法不在本轮验收范围；许可材料尚待发布复核 |
+源码提供 IGMH/IRI 配对 Cube、ESP 极值/面积、NBO/E(2)、AIM、IRC FCHK/Mayer、ETS-NOCV 表与 NOCV pair Cube 的读取和显示；运行时不执行这些外部分析算法。输入角色、单位及关联限制见 [外部分析导入](EXTERNAL_ANALYSIS_IMPORT.md)。
 
-复现命令见 [DEVELOPMENT.md](DEVELOPMENT.md)。`tools/qualify_package.py` 核对 ZIP 中 Python 与工作区源码一致、wheel 摘要、排除原生 GBasis，并汇总报告及精确 ZIP 摘要到 `outputs/qualification.json`。它核对证据，不自动运行 Blender 检查；修改代码后必须重建并执行相关检查。
+真实结果的历史技术证据见 [SOP Agent 复跑](v1-acceptance/AGENT-REPLAY.md)、[来源清单](v1-acceptance/SOURCES.md) 和 [源码借鉴验收](acceptance/source-adoption.md)。本次科学回归覆盖相应解析/身份检查，未重跑每项外部结果的全部渲染及 GUI 工作流。Gaussian 优化日志仅支持已识别任务类型；扫描、重启、QST2/QST3 和复合路径不纳入逐步浏览。外部 IRC 使用显式有序 FCHK 清单，不代表任意 IRC 日志均可解析。
 
-## 外部分析导入的本轮检查
+## 科学依据与复现
 
-| 功能片 | 当前状态 | 已有证据与缺口 |
-| --- | --- | --- |
-| 显示快捷控制 | Passed（技术） | Blender 5.1.1 实际节点显隐、无氢、非法编号、独立复制、源 manifest 不变、保存重开及 GUI 撤销/重做；`tools/verify_atom_visibility.py`、`tools/verify_visibility_gui.py` |
-| IGMH / IRI | Passed | C07 真实配对 Cube、字段角色、源值、节点、渲染与冷重开；见 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md) |
-| ESP 极值/面积 | Passed | C08 同构型真实 ESP 表面、极值及面积分布，单位与面积对照、渲染和冷重开；见 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md) |
-| NBO / E(2) | Passed（所测样本） | 真实 Gaussian 16 水分子 Log 的三个 NBO 块、7 条轨道与 2 条 E(2)、多构型拒绝、单构型关联、离线 worker、冷重开及 GUI 导入撤销/重做；仍需独立用户复做 |
-| AIM | Passed | C09 真实 CP、路径和属性关联，数值、显示及冷重开；见 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md) |
-| IRC FCHK 路径 | Passed | C10 同一真实 IRC 的逐步 FCHK、构型/能量、错误步序拒绝和冷重开；见 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md) |
-| IRC Mayer 键级 | Passed | C11 真实逐步 Mayer 输出、原子对关联、缺步拒绝和冷重开；见 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md) |
-| ETS-NOCV 表 | Passed | C12 真实同次分析的 pair 表和参考构型，数值、单位、错误身份拒绝及冷重开；限已测样本；见 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md) |
-| NOCV 场 | Passed | C13 对应真实 pair Cube、带符号形变密度、错误 pair/自旋拒绝及冷重开；见 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md) |
+现有独立参考测试保留 CH4 UHF/cc-pVDZ 的 27 点 MO 与 18 点 Gaussian Cubegen 密度/ESP 对照；最大绝对误差约为 4.85e-9、8.44e-7 electron/bohr³、4.61e-6 hartree/e。AO 重叠与电子数测试覆盖开闭壳层、球谐/笛卡尔及矩形 MO；这些结果只证明所测样本。
 
-## 性能观测
+网格收敛与远场专项历史证据：LiH+ 半宽 8 bohr、步长 0.1 bohr 得 2.99994998 个电子，200 bohr 的 rΦ=0.99993221；原报告 `outputs/scientific-convergence.json`。本次未单独重跑该完整实验。历史性能表保存在 Git 中的本文件基线版本；本次未执行性能基准，不作速度承诺。
 
-当前候选在 Intel64 Family 6 Model 183 Stepping 1 上测 CH4、34 AO、Alpha MO 8；完整工作进程包含启动、场数组、VDB 和结果落盘。内存为 Windows 峰值工作集，不等同于用户设定的数组预算。
+当前构建、输入校验、安装和同批工程冷重开步骤见 [DEVELOPMENT](DEVELOPMENT.md)。`qualify_package.py` 只核对报告及文件身份，不代替实际运行。四组真实案例的计算参数与复建入口见 [复杂案例](COMPLEX_EXAMPLES.md)。
 
-| 网格 | 首次任务 | 重复缓存 | 首次峰值工作集 |
-| --- | --- | --- | --- |
-| 64³ | 2.51 s | 1.61 s | 251 MiB |
-| 128³ | 6.56 s | 1.71 s | 315 MiB |
-| 256³ | 76.65 s | 3.22 s | 827 MiB |
-
-证据：`outputs/field-performance.json`。测量期间同机还运行了渲染验收，属于有竞争负载的观测，不是隔离硬件基准或性能承诺。ESP 计算复杂度高于单个 MO，不能用此表推算 ESP 耗时。
-
-## 独立复做入口
-
-安装 ZIP 后按 [用户指南](USER_GUIDE.md) 导入自己的 FCHK，选择一个 MO，生成密度/ESP 并设置明确色标；用频率 Log 选择模式并导出动画；保存配套工程，移动目录并重开。记录 Blender 版本、输入方法/基组、源文件摘要、预期与实际结果。用户验收签署目前为空，不由 Agent 的测试结果填写。
+独立复做使用 [SOP](v1-acceptance/SOP.md)，记录 Blender 版本、输入方法/基组、源摘要和预期/实际结果。人工签署由使用者完成，不能用 Agent 测试结果填写。

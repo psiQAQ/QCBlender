@@ -1,6 +1,6 @@
 # QCBlender 可视化借鉴与近期落地路线
 
-核查日期：2026-09-27。研究输入为 [Multiwfn 调研](../GPT-Web-Chat/multiwfn.md)与[可视化软件调研](../GPT-Web-Chat/visualization-sw.md)，原文仅保存在本地忽略目录，不纳入提交历史。
+核查日期：2026-09-27。研究输入为 Multiwfn 调研（本地原件：`docs/GPT-Web-Chat/multiwfn.md`）与可视化软件调研（本地原件：`docs/GPT-Web-Chat/visualization-sw.md`），原文仅保存在本地忽略目录，不纳入提交历史。
 
 **近期顺序：文档状态同步（完成）→ Gaussian 优化轨迹及四项源码借鉴（技术 Passed）→ 独立人工验收及外部视觉对照（Not Run）。** 现有 IOData/cclib、GBasis、OpenVDB 和 Geometry Nodes 已承担核心功能；新参考项目的价值需要落实到具体缺口。VTK 保留为固定版本的源码参考，未引入 VTK 产品代码或运行依赖。
 
@@ -56,16 +56,16 @@ IGMH/IRI 当前要求两场同网格，这是该导入器的合同；一般表�
 
 ### VTK：固定源码用于算法审查和后续对照
 
-参考子模块为 [`submodules/VTK`](../../submodules/VTK)，来源采用[官方仓库入口](https://vtk.org/download/)，固定 `v9.7.0` / `23f0a095621e91bbdbeace8451e22b950c8e5f46`。本地为 depth 1、`blob:none` 部分克隆和指定文件的 sparse checkout；检出了许可、模块声明及下列源码，未初始化嵌套子模块、编译 VTK 或安装 wheel。Git 记录固定 gitlink，`.gitmodules` 保存官方 URL 和 `shallow = true`；局部检出范围属于本地读取配置。
+参考子模块为 submodules/VTK（本地原件：`submodules/VTK`），来源采用[官方仓库入口](https://vtk.org/download/)，固定 `v9.7.0` / `23f0a095621e91bbdbeace8451e22b950c8e5f46`。本地为 depth 1、`blob:none` 部分克隆和指定文件的 sparse checkout；检出了许可、模块声明及下列源码，未初始化嵌套子模块、编译 VTK 或安装 wheel。Git 记录固定 gitlink，`.gitmodules` 保存官方 URL 和 `shallow = true`；局部检出范围属于本地读取配置。
 
 | 固定版本源码 | 核查结果 | 对 QCBlender 的取舍 |
 | --- | --- | --- |
-| [vtkGaussianCubeReader.cxx](../../submodules/VTK/IO/Chemistry/vtkGaussianCubeReader.cxx#L119) | 原子行读取四项；轨道编号被跳过；grid 分配一个 float32 标量；origin 为零、spacing 为一，另持有 Transform。读值循环没有按多轨道数量拆出多个数组。 | 不能直接替换当前 float64、多轨道源编号、完整步向量和显式单位合同。这是源码观察，未运行该 reader 验证全部变体。 |
-| [vtkProbeFilter.h](../../submodules/VTK/Filters/Core/vtkProbeFilter.h#L80) | Input 提供几何，Source 提供插值数据，并输出有效点掩码。 | 线剖面复用 QC 三线性采样，保存源坐标距离、字段来源和有效掩码；曲线在无效区断开，CSV 留空。未引入 VTK 运行依赖，见[源码借鉴验收](../acceptance/source-adoption.md)。 |
-| [vtkFlyingEdges3D.h](../../submodules/VTK/Filters/Core/vtkFlyingEdges3D.h#L18) | 四遍处理、预分配和并行能力明确；文档同时提示可能产生零面积三角形。 | 作为性能对照候选。先测原生等值面瓶颈、内存及输出质量，再决定是否值得增加编译/打包成本。 |
-| [vtkImageData.h](../../submodules/VTK/Common/DataModel/vtkImageData.h#L304)、[VTK XML writer](../../submodules/VTK/IO/XML/vtkXMLImageDataWriter.h#L4) | 数据模型有方向矩阵和索引到物理空间变换，writer 提供 VTI 文件输出。 | 后续有场交换需求时审查坐标、数组顺序、点/单元属性、有效域和科学元数据；不能只导出数值数组就声称完整互操作。 |
+| vtkGaussianCubeReader.cxx（本地原件：`submodules/VTK/IO/Chemistry/vtkGaussianCubeReader.cxx#L119`） | 原子行读取四项；轨道编号被跳过；grid 分配一个 float32 标量；origin 为零、spacing 为一，另持有 Transform。读值循环没有按多轨道数量拆出多个数组。 | 不能直接替换当前 float64、多轨道源编号、完整步向量和显式单位合同。这是源码观察，未运行该 reader 验证全部变体。 |
+| vtkProbeFilter.h（本地原件：`submodules/VTK/Filters/Core/vtkProbeFilter.h#L80`） | Input 提供几何，Source 提供插值数据，并输出有效点掩码。 | 线剖面复用 QC 三线性采样，保存源坐标距离、字段来源和有效掩码；曲线在无效区断开，CSV 留空。未引入 VTK 运行依赖，见[源码借鉴验收](../acceptance/source-adoption.md)。 |
+| vtkFlyingEdges3D.h（本地原件：`submodules/VTK/Filters/Core/vtkFlyingEdges3D.h#L18`） | 四遍处理、预分配和并行能力明确；文档同时提示可能产生零面积三角形。 | 作为性能对照候选。先测原生等值面瓶颈、内存及输出质量，再决定是否值得增加编译/打包成本。 |
+| vtkImageData.h（本地原件：`submodules/VTK/Common/DataModel/vtkImageData.h#L304`）、VTK XML writer（本地原件：`submodules/VTK/IO/XML/vtkXMLImageDataWriter.h#L4`） | 数据模型有方向矩阵和索引到物理空间变换，writer 提供 VTI 文件输出。 | 后续有场交换需求时审查坐标、数组顺序、点/单元属性、有效域和科学元数据；不能只导出数值数组就声称完整互操作。 |
 
-所查 reader/filter 文件头为 BSD-3-Clause；[项目许可](../../submodules/VTK/Copyright.txt)与模块材料都需保留。尤其 [FiltersCore 模块声明](../../submodules/VTK/Filters/Core/vtk.module)另列 `LicenseRef-BSD-3-Clause-Sandia-USGov` 和[对应附加声明](../../submodules/VTK/Filters/Core/LICENSE)，完整模块不能仅凭单文件头概括。[IOChemistry](../../submodules/VTK/IO/Chemistry/vtk.module)还依赖多个 Common/IO/Rendering 等模块，“选一个 reader”并不等于只增加一个无依赖源文件。本轮仅登记参考源码，未改变现有发行材料和包内容。
+所查 reader/filter 文件头为 BSD-3-Clause；项目许可（本地原件：`submodules/VTK/Copyright.txt`）与模块材料都需保留。尤其 FiltersCore 模块声明（本地原件：`submodules/VTK/Filters/Core/vtk.module`）另列 `LicenseRef-BSD-3-Clause-Sandia-USGov` 和对应附加声明（本地原件：`submodules/VTK/Filters/Core/LICENSE`），完整模块不能仅凭单文件头概括。IOChemistry（本地原件：`submodules/VTK/IO/Chemistry/vtk.module`）还依赖多个 Common/IO/Rendering 等模块，“选一个 reader”并不等于只增加一个无依赖源文件。本轮仅登记参考源码，未改变现有发行材料和包内容。
 
 ### VESTA：保留结构与场共同变换的验收思路
 
@@ -99,21 +99,4 @@ ORCA、`.mwfn`、周期体系及新的分析类型按后续实际需求另行立
 | VTK/VMD/Multiwfn 构建、运行与性能比较 | Not Run | 本轮只获取参考源码、阅读资料并执行现有 Cube 测试。 |
 | C01–C13 科学与 GUI 完整复跑、独立人工复做 | Not Run（本轮） | 研究阶段未执行；后续主分支技术复跑已 Passed，独立人工仍 Not Run，见第 1 节。 |
 
-复跑本轮 Cube 检查使用已有 Blender Python 和已有科学库目录；在研究工作树根目录运行以下 PowerShell 命令，不执行安装或环境同步：
-
-```powershell
-$researchPython = 'C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe'
-$cubeCheck = @'
-import sys
-import unittest
-from pathlib import Path
-
-sys.path[:0] = [str(Path.cwd()), 'D:/workspace/QCBlender/outputs/science']
-suite = unittest.defaultTestLoader.discover('tests', pattern='test_science_cube.py')
-result = unittest.TextTestRunner(verbosity=2).run(suite)
-raise SystemExit(not result.wasSuccessful())
-'@
-$cubeCheck | & $researchPython -I -
-```
-
-上述科学库路径属于本机已准备的开发环境；其他机器须使用其已按[开发文档](../DEVELOPMENT.md)准备好的目录。本轮结果保存在忽略的 `outputs/visualization-adoption/cube-check.json`。文档与 Git 范围检查覆盖链接、行号、编码、空白、两次提交的文件清单及主工作区原件。
+重跑 Cube 科学检查使用 [DEVELOPMENT](../DEVELOPMENT.md) 中已有环境与当前测试入口。本研究当时的检查保存于忽略的 `outputs/visualization-adoption/cube-check.json`；它不构成当前候选复验结果。
