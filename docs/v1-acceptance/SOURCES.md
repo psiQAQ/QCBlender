@@ -4,10 +4,10 @@
 
 | ID | 本地路径（相对仓库根） | 固定公开来源、版本和许可 | SHA-256 | 计算条件 / 用途 |
 | --- | --- | --- | --- | --- |
-| S01 | `tests/data/local/complex-examples/dvb_un_sp.fchk` | [cclib f90be37](https://github.com/cclib/cclib/blob/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data/FChk/basicGaussian16/dvb_un_sp.fchk)，BSD-3-Clause | `32ed4471dc01913f1a6d5e7b5238745ea4489d98fd19a989fe56c254b7c05972` | Gaussian 16；UB3LYP/STO-3G；DVB 自由基阳离子，20 原子，+1、双重态；MO 和自旋密度 |
-| S02 | `tests/data/local/complex-examples/dvb_ir.out` | [cclib f90be37](https://github.com/cclib/cclib/blob/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data/Gaussian/basicGaussian16/dvb_ir.out)，BSD-3-Clause | `bc1a21de15ada135d5188b11d44226389022d92488ddfa8163ba7d4d713e5061` | Gaussian 16；B3LYP/STO-3G；中性 DVB，20 原子；54 个振动模式及 IR |
-| S03 | `tests/data/local/complex-examples/Trp_polar.fchk` | [cclib f90be37](https://github.com/cclib/cclib/blob/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data/FChk/basicGaussian16/Trp_polar.fchk)，BSD-3-Clause | `04a1cd071eb66ec4aeeffd0f6a198e2294ad9ef483d3ce3beaf94a839a81e88d` | Gaussian 16；RHF/STO-3G；色氨酸，27 原子；密度、ESP、电荷和偶极 |
-| S04 | `tests/data/local/complex-examples/Trp_polar.log` | [cclib f90be37](https://github.com/cclib/cclib/blob/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data/Gaussian/basicGaussian16/Trp_polar.log)，BSD-3-Clause | `42bf0641a49d6944847b0368ca35d3ff5367e31abd22f3821bb1d009ae3ca82b` | 同 S03；核对 Log 计算段、能量、原子顺序及偶极 |
+| S01 | `tests/data/local/complex-examples/dvb_un_sp.fchk` | [cclib f90be37](https://github.com/cclib/cclib/blob/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data/FChk/basicGaussian16/dvb_un_sp.fchk)，程序仓库 BSD-3-Clause；数据文件许可未单列确认 | `32ed4471dc01913f1a6d5e7b5238745ea4489d98fd19a989fe56c254b7c05972` | Gaussian 16；UB3LYP/STO-3G；DVB 自由基阳离子，20 原子，+1、双重态；MO 和自旋密度 |
+| S02 | `tests/data/local/complex-examples/dvb_ir.out` | [cclib f90be37](https://github.com/cclib/cclib/blob/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data/Gaussian/basicGaussian16/dvb_ir.out)，程序仓库 BSD-3-Clause；数据文件许可未单列确认 | `bc1a21de15ada135d5188b11d44226389022d92488ddfa8163ba7d4d713e5061` | Gaussian 16；B3LYP/STO-3G；中性 DVB，20 原子；54 个振动模式及 IR |
+| S03 | `tests/data/local/complex-examples/Trp_polar.fchk` | [cclib f90be37](https://github.com/cclib/cclib/blob/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data/FChk/basicGaussian16/Trp_polar.fchk)，程序仓库 BSD-3-Clause；数据文件许可未单列确认 | `04a1cd071eb66ec4aeeffd0f6a198e2294ad9ef483d3ce3beaf94a839a81e88d` | Gaussian 16；RHF/STO-3G；色氨酸，27 原子；密度、ESP、电荷和偶极 |
+| S04 | `tests/data/local/complex-examples/Trp_polar.log` | [cclib f90be37](https://github.com/cclib/cclib/blob/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data/Gaussian/basicGaussian16/Trp_polar.log)，程序仓库 BSD-3-Clause；数据文件许可未单列确认 | `42bf0641a49d6944847b0368ca35d3ff5367e31abd22f3821bb1d009ae3ca82b` | 同 S03；核对 Log 计算段、能量、原子顺序及偶极 |
 | S05 | `tests/data/local/complex-examples/chemtools-h2o_dimer_pbe_sto3g.fchk` | [ChemTools 47c9fe2](https://github.com/theochem/chemtools/blob/47c9fe255848b8dbc6f589beb738421f76401885/chemtools/data/h2o_dimer_pbe_sto3g.fchk)，仓库 GPL-3.0-or-later | `d3801a7a8b13c1a5b106440e5eefab2e6e76b0f1e47181a33270406154efe03e` | Gaussian 格式；PBE/STO-3G；水二聚体，6 原子；Cube 对照构型 |
 | S06 | `tests/data/local/complex-examples/chemtools-h2o_dimer_pbe_sto3g-dens.cube` | [ChemTools 47c9fe2](https://github.com/theochem/chemtools/blob/47c9fe255848b8dbc6f589beb738421f76401885/chemtools/data/h2o_dimer_pbe_sto3g-dens.cube)，仓库 GPL-3.0-or-later | `c033795323068422872bb65d221f72e30e83e3d3d4b18dc41fd20ee2d6a6aefc` | 与 S05 同构型；NCIPLOT 输出，数值为 **100 × sign(λ₂)ρ**，不能直接标成普通电子密度 |
 | S07 | `tests/data/local/complex-examples/chemtools-h2o_dimer_pbe_sto3g-grad.cube` | [ChemTools 47c9fe2](https://github.com/theochem/chemtools/blob/47c9fe255848b8dbc6f589beb738421f76401885/chemtools/data/h2o_dimer_pbe_sto3g-grad.cube)，仓库 GPL-3.0-or-later | `33ff13185dc4d97e70788c344049b55422a403100c88836c238f802df26a577d` | 同构型的 NCIPLOT RDG 场，部分点为过滤哨兵；不能当作 IGMH/IRI |
@@ -153,3 +153,34 @@ S08 的许可未核清前，验收可在本地使用；不得把该数据文件�
 迁移逐文件映射和摘要核对在 `outputs/storage-cleanup/input-migration.json`。S01–S35 原始字节不变。生成日志中列出的冗余波函数、加和核对 Cube、轨道 Cube 等辅助原件仍作为参考资料保留在原目录；集中索引覆盖当前 SOP/回归读取和来源追溯所需输入。日志中的历史摘要不代表这些计算在本次重新执行。
 
 输入索引可用 Blender Python 执行 `tools/local_inputs.py` 完整核对；受影响场景由 `tools/prepare_sop_fixture.py` 通过已安装扩展重新读取/求值。重建密度与 ESP 使用 0.7 Å 的显示测试网格，原始波函数及外部分析条件不变，该网格不替代科学收敛检查。验证报告与科学量的源数组分别记录。
+
+## 公开教程样本与独立获取（2026-09-30）
+
+当前教程固定使用 [机器清单](tutorial-samples.json) 的 P01–P05，而非把 S01–S35 原件整体装入附件。逐文件 `archive_path` 是公开包解压根相对路径，`path` 是仓库规范路径，SHA-256/字节数、真实 producer、方法/基组/电荷/自旋、原子顺序、单位及实测期待值均在清单内。C01–C13 与 N01–N18 的映射、Job/block/pair 号及 Log Job 2 → 新 FCHK 的检查身份也由清单固定。显示阈值、色域、切片/剖线和网格默认值属于建议设置，GUI、渲染及人工签署保持 Not Run，由教程/综合验证分别更新。
+
+| 能力组 | 真实来源与计算条件 | 教程入口及分发状态 |
+| --- | --- | --- |
+| P01 | 自定义 O₂ 构型，PySCF 2.13.1 UHF/STO-3G，中性三重态，16 电子；完整 Alpha/Beta MO，自旋与电子密度。FCHK 能量 `-147.633453 Eh` | 包内 `P01/o2-uhf.fchk` 与逐字节 `.fch`；CC BY 4.0，署名 QCBlender contributors；C01 |
+| P02 | 原 S08 Gaussian 16 A.03/NBO 3.1 真实水多计算段，RHF/STO-3G；job 1 优化 4 步，job 2 有 3 模式、7 NBO/2 E(2) | **包外单独取得**：下述固定原站与 SHA 实际下载核验 Passed。数据许可未确认，不把 cclib 程序许可当作数据许可；C02/C06 |
+| P03 | 自定义水二聚体，PySCF RHF/6-31G(d)，中性单重态，20 电子，源原子 `[8,1,1,8,1,1]`；Multiwfn 2026.9.20 真实 IGMH/IRI、ESP 表面极值/面积、AIM CP/路径/属性。片段 `1–3`、`4–6`；IRI a=1.1；双场同为 `91×38×156` | 包内 `P03/water-dimer.fchk/.fch`、`igmh/`、`iri/`、`esp/`、`aim/`；CC BY 4.0；C03–C05/C07–C09。独立 Cube 初始 unknown；按 manifest 识别量名与已有单位，倍率 1 |
+| P04 | 自定义 H₂O₂ 初始构型；PySCF RHF/STO-3G + geomeTRIC 1.1.1 原生 TS/双向 IRC，18 电子。TS 唯一虚频 `-48.1434547807 cm^-1`，最大梯度 `1.893862e-8 Eh/Bohr`；61 个接受帧，选 0-based 帧 29/30(TS)/31 三个连续点。每点重新真实 SCF，完整 FCHK 与同一 AO 密度/重叠矩阵 Mayer | 包内 `P04/steps.csv`、`mayer-pyscf.csv`、3 份 FCHK/3 份 Mayer；CC BY 4.0；C10/C11。三步 FCHK 能量 `-148.764884/-148.764883/-148.764884 Eh`。这是当前原生 IRC，不使用旧 S15 构型，也不是三点扫描；Mayer 文本明确 producer 为 PySCF，语法兼容 Multiwfn |
+| P05 | 自定义 CO/BH₃ 及整体几何，PySCF RB3LYP/6-31G(d)，整体 22 电子；同几何片段真实 SCF，Multiwfn 真实 ETS-NOCV。pair 1/Total 为轨道 1/48、特征值 ±0.54550、pair 能量 `-57.02 kcal/mol`；场 `47×50×57` | 包内 `P05/complex.fchk`、`co.fchk`、`bh3.fchk`、`nocv/ets-nocv.txt`、`nocv-pair1.cub`；CC BY 4.0；C12/C13。能量是整体 KS 轨道重构矩阵的 Multiwfn 近似，不是 F_TS 过渡态方法 |
+
+P01/P03/P05 是自行定义的示意构型，未声称优化结构；本次场网格用于导入/显示检查，不声称科学网格收敛。Multiwfn 引用保存在样本 `NOTICE.md`。ETS-NOCV 逐体素公式、真实空间密度、构型/电子数/自旋与源值互校均 Passed，视觉表现另验。
+
+公开 ZIP 当前本地交付位置为 `outputs/runs/public-tutorial/samples/qcblender-public-tutorial-samples-v1.zip`，仅 27 份许可合格数据加清单/LICENSE/NOTICE；没有原站未知许可文件或程序二进制。尚未发布远程下载地址。小文件 Git 跟踪于 `tests/data/tutorial/`，较大 Cube 只保留主检出 `tests/data/local/public-tutorial/` 并进入集中索引；工作树读取大文件时显式 `--reference-root D:/workspace/QCBlender`。不要复制整套历史样本到工作树。
+
+P02 的独立获取适用 PowerShell，在公开样本解压根新建 `P02/` 后执行。该原站定位和本地读取说明**不授予再分发权限**；许可不明日志不得加入公开包，且未承诺下载者在其环境下拥有额外使用权。cclib 官方 [安装说明](https://cclib.readthedocs.io/en/stable/how_to_install.html)说明测试日志数据存在非自由许可问题，不能由代码仓库许可证替代逐文件许可核查。
+
+```powershell
+New-Item -ItemType Directory -Force P02 | Out-Null
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/cclib/cclib-data/a16cc80ea29e8baec60abd0df346ce6862f52531/Gaussian/Gaussian16/water_neutral_nbo_opt_freq.out' -OutFile P02/water_neutral_nbo_opt_freq.out
+Get-FileHash P02/water_neutral_nbo_opt_freq.out -Algorithm SHA256
+Copy-Item P02/water_neutral_nbo_opt_freq.out P02/water_neutral_nbo_opt_freq.log
+```
+
+摘要须为 `9493d24655fb261a2c945d292ad517567f3024996594a25f678199df74017519`，字节数 92,872；不符则停止该例。job 2/block 1 的 NBO 与 E(2) 原文、频率和 IR 强度见清单。公共包的 C02/C06 不会自动可运行：须先取得并核对该外部日志；其分发许可仍是剩余限制。
+
+生成与验证脚本为 `tools/generate_tutorial_samples.py`、`tools/generate_tutorial_irc.py`、`tools/finalize_tutorial_samples.py`、`tools/verify_tutorial_samples.py`。根目录通过 `Path(__file__).resolve().parents[1]` 固定，外部工具/科学依赖取显式 reference-root；不依赖搬移旧生成脚本的 parents 层级。每次生成选新的不存在任务输出目录，保留真实输入/SCF CHK/Molden/FCHK、Multiwfn stdin/settings/stdout、TS Hessian/虚频/梯度和两方向 IRC 接受轨迹，避免覆盖原输入。
+
+完整本次证据为 `outputs/evidence/2026-09-30/public-tutorial/samples/`，科学/包验收 `final-validation.json`；GUI、独立冷重开、移动重开、科研签署为 Not Run。

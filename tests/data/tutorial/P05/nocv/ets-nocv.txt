@@ -1,0 +1,19 @@
+        --------------- Pair and NOCV orbital information --------------
+ There are totally   24 NOCV pairs and    48 NOCV orbitals
+ NOCV orbitals with absolute eigenvalues smaller than 1.0E-03 are not shown
+ Note: All energies are given in kcal/mol
+ 
+  Pair  Energy | Orbital  Eigenvalue    Energy  | Orbital  Eigenvalue    Energy
+     1  -57.02       1      0.54550    -120.33       48     -0.54550     -15.81
+     2  -11.91       2      0.33615    -136.54       47     -0.33615    -101.11
+     3  -11.91       3      0.33615    -136.54       46     -0.33615    -101.11
+     4   -4.04       4      0.11111     -44.10       45     -0.11112      -7.75
+     5   -0.52       5      0.02962    -112.50       44     -0.02962     -94.92
+     6   -0.17       6      0.02357      -4.74       43     -0.02357       2.57
+     7   -0.17       7      0.02357      -4.73       42     -0.02357       2.57
+     8   -0.08       8      0.00686   -1288.80       41     -0.00686   -1276.76
+     9   -0.02       9      0.00351   -1395.01       40     -0.00351   -1387.90
+    10   -0.01      10      0.00190   -2993.34       39     -0.00190   -2986.05
+    11   -0.01      11      0.00147   -4577.65       38     -0.00147   -4569.74
+ Sum of NOCV eigenvalues:  -0.00000
+ Sum of pair energies:     -85.88 kcal/mol

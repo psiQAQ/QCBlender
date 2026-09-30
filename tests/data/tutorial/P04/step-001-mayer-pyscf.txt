@@ -1,0 +1,9 @@
+Producer: PySCF 2.13.1; actual converged RHF/STO-3G AO matrices
+Mayer unit: dimensionless; Multiwfn-compatible syntax
+Bond orders with absolute value
+# 1: 1(O) 2(O) 0.987331413844
+# 2: 1(O) 3(H) 0.950875651565
+# 3: 1(O) 4(H) 0.007468878918
+# 4: 2(O) 3(H) 0.007468878918
+# 5: 2(O) 4(H) 0.950875651565
+# 6: 3(H) 4(H) 0.004188599991

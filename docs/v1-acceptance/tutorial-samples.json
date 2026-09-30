@@ -1,0 +1,5582 @@
+{
+  "schema": 1,
+  "date": "2026-09-30",
+  "attribution": "QCBlender contributors",
+  "groups": {
+    "P01": {
+      "local_parse_status": "Passed",
+      "public_material_status": "included"
+    },
+    "P02": {
+      "local_parse_status": "Passed",
+      "public_material_status": "external; permission unverified"
+    },
+    "P03": {
+      "local_parse_status": "Passed",
+      "public_material_status": "included"
+    },
+    "P04": {
+      "local_parse_status": "Passed",
+      "public_material_status": "included"
+    },
+    "P05": {
+      "local_parse_status": "Passed",
+      "public_material_status": "included"
+    }
+  },
+  "files": {
+    "P01-o2-uhf": {
+      "id": "P01-o2-uhf",
+      "path": "tests/data/tutorial/P01/o2-uhf.fchk",
+      "archive_path": "P01/o2-uhf.fchk",
+      "local_key": null,
+      "bytes": 8880,
+      "sha256": "ef562c4b210e7c380219282d7684370cca1f0e8349dffa1d4388af5831472e36",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "reference wavefunction",
+      "producer": "PySCF 2.13.1; IOData 1.0.1 FCHK writer",
+      "calculation_group": "P01",
+      "quantity": null,
+      "unit": null,
+      "expected": {
+        "producer": "PySCF",
+        "version": "2.13.1",
+        "method": "UHF",
+        "basis": "sto-3g",
+        "charge": 0,
+        "spin": 2,
+        "multiplicity": 3,
+        "coordinates_angstrom": [
+          [
+            0.0,
+            0.0,
+            -0.5999999970658874
+          ],
+          [
+            0.0,
+            0.0,
+            0.5999999970658874
+          ]
+        ],
+        "atomic_numbers": [
+          8,
+          8
+        ],
+        "electron_count": 16,
+        "energy_hartree": -147.633453,
+        "full_precision_energy_hartree": -147.63345273344976,
+        "orbitals": {
+          "kind": "unrestricted",
+          "norba": 10,
+          "norbb": 10,
+          "energy_unit": "hartree",
+          "source_number_base": 1
+        },
+        "mulliken_charges": [
+          -1.42108547e-14,
+          1.42108547e-14
+        ],
+        "dipole_e_bohr": [
+          2.92291417e-16,
+          -1.14933284e-15,
+          3.24185123e-14
+        ],
+        "fchk_sha256": "ef562c4b210e7c380219282d7684370cca1f0e8349dffa1d4388af5831472e36",
+        "density_max_abs_error": 6.053579637566031e-09,
+        "scf_converged": true
+      },
+      "calculation": {
+        "method": "UHF",
+        "basis": "sto-3g",
+        "charge": 0,
+        "spin": 2,
+        "multiplicity": 3,
+        "electron_count": 16,
+        "reference_file_id": "P01-o2-uhf"
+      }
+    },
+    "P03-water-dimer": {
+      "id": "P03-water-dimer",
+      "path": "tests/data/tutorial/P03/water-dimer.fchk",
+      "archive_path": "P03/water-dimer.fchk",
+      "local_key": null,
+      "bytes": 38191,
+      "sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "reference wavefunction",
+      "producer": "PySCF 2.13.1; IOData 1.0.1 FCHK writer",
+      "calculation_group": "P03",
+      "quantity": null,
+      "unit": null,
+      "expected": {
+        "producer": "PySCF",
+        "version": "2.13.1",
+        "method": "RHF",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "coordinates_angstrom": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.7586000004690396,
+            0.0,
+            0.5042999998437369
+          ],
+          [
+            -0.7586000004690396,
+            0.0,
+            0.5042999998437369
+          ],
+          [
+            0.0,
+            0.0,
+            2.8999999972839614
+          ],
+          [
+            0.7586000004690396,
+            0.0,
+            3.4042999997735843
+          ],
+          [
+            -0.7586000004690396,
+            0.0,
+            3.4042999997735843
+          ]
+        ],
+        "atomic_numbers": [
+          8,
+          1,
+          1,
+          8,
+          1,
+          1
+        ],
+        "electron_count": 20,
+        "energy_hartree": -152.01382,
+        "full_precision_energy_hartree": -152.0138199127934,
+        "orbitals": {
+          "kind": "restricted",
+          "norba": 36,
+          "norbb": 36,
+          "energy_unit": "hartree",
+          "source_number_base": 1
+        },
+        "mulliken_charges": [
+          -0.928340742,
+          0.46144252,
+          0.46144252,
+          -0.920221916,
+          0.462838809,
+          0.462838809
+        ],
+        "dipole_e_bohr": [
+          8.01013986e-15,
+          1.4954879e-16,
+          1.67243888
+        ],
+        "fchk_sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+        "density_max_abs_error": 3.675255655366527e-10,
+        "scf_converged": true
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 20,
+        "reference_file_id": "P03-water-dimer"
+      }
+    },
+    "P05-complex": {
+      "id": "P05-complex",
+      "path": "tests/data/tutorial/P05/complex.fchk",
+      "archive_path": "P05/complex.fchk",
+      "local_key": null,
+      "bytes": 63671,
+      "sha256": "57f2f6c70b5ff468c2718e27e90827ab5beed175b80952942b8b441f4cf85479",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "reference wavefunction",
+      "producer": "PySCF 2.13.1; IOData 1.0.1 FCHK writer",
+      "calculation_group": "P05",
+      "quantity": null,
+      "unit": null,
+      "expected": {
+        "producer": "PySCF",
+        "version": "2.13.1",
+        "method": "RB3LYP",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "coordinates_angstrom": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -1.1299999987957017
+          ],
+          [
+            0.0,
+            0.0,
+            1.6999999978604148
+          ],
+          [
+            1.190000000089822,
+            0.0,
+            1.6999999978604148
+          ],
+          [
+            -0.594999997399025,
+            1.0305699981072478,
+            1.6999999978604148
+          ],
+          [
+            -0.594999997399025,
+            -1.0305699981072478,
+            1.6999999978604148
+          ]
+        ],
+        "atomic_numbers": [
+          6,
+          8,
+          5,
+          1,
+          1,
+          1
+        ],
+        "electron_count": 22,
+        "energy_hartree": -139.947332,
+        "full_precision_energy_hartree": -139.9473318244951,
+        "orbitals": {
+          "kind": "restricted",
+          "norba": 48,
+          "norbb": 48,
+          "energy_unit": "hartree",
+          "source_number_base": 1
+        },
+        "mulliken_charges": [
+          0.333754952,
+          -0.173697853,
+          -0.107447781,
+          -0.0175392906,
+          -0.0175350135,
+          -0.0175350135
+        ],
+        "dipole_e_bohr": [
+          1.37907721e-05,
+          -2.36598935e-14,
+          -0.545388912
+        ],
+        "fchk_sha256": "57f2f6c70b5ff468c2718e27e90827ab5beed175b80952942b8b441f4cf85479",
+        "density_max_abs_error": 1.2307261876287612e-09,
+        "scf_converged": true
+      },
+      "calculation": {
+        "method": "RB3LYP",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 22,
+        "reference_file_id": "P05-complex"
+      }
+    },
+    "P05-co": {
+      "id": "P05-co",
+      "path": "tests/data/tutorial/P05/co.fchk",
+      "archive_path": "P05/co.fchk",
+      "local_key": null,
+      "bytes": 23980,
+      "sha256": "eeebe9fc4dd4f19d5ef3216573ce39dc70ff0f5b20b7ff92c4abda78ec80eb63",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "reference wavefunction",
+      "producer": "PySCF 2.13.1; IOData 1.0.1 FCHK writer",
+      "calculation_group": "P05",
+      "quantity": null,
+      "unit": null,
+      "expected": {
+        "producer": "PySCF",
+        "version": "2.13.1",
+        "method": "RB3LYP",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "coordinates_angstrom": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -1.1299999987957017
+          ]
+        ],
+        "atomic_numbers": [
+          6,
+          8
+        ],
+        "electron_count": 14,
+        "energy_hartree": -113.306775,
+        "full_precision_energy_hartree": -113.3067745049608,
+        "orbitals": {
+          "kind": "restricted",
+          "norba": 28,
+          "norbb": 28,
+          "energy_unit": "hartree",
+          "source_number_base": 1
+        },
+        "mulliken_charges": [
+          0.150906562,
+          -0.150906562
+        ],
+        "dipole_e_bohr": [
+          -1.48398347e-15,
+          1.06942758e-16,
+          -0.0353752225
+        ],
+        "fchk_sha256": "eeebe9fc4dd4f19d5ef3216573ce39dc70ff0f5b20b7ff92c4abda78ec80eb63",
+        "density_max_abs_error": 2.0395951594309736e-10,
+        "scf_converged": true
+      },
+      "calculation": {
+        "method": "RB3LYP",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 22,
+        "reference_file_id": "P05-complex"
+      }
+    },
+    "P05-bh3": {
+      "id": "P05-bh3",
+      "path": "tests/data/tutorial/P05/bh3.fchk",
+      "archive_path": "P05/bh3.fchk",
+      "local_key": null,
+      "bytes": 14542,
+      "sha256": "d96b81b4623de934074a49f479690a8631145afafca76d4d5f5717b5863d19d3",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "reference wavefunction",
+      "producer": "PySCF 2.13.1; IOData 1.0.1 FCHK writer",
+      "calculation_group": "P05",
+      "quantity": null,
+      "unit": null,
+      "expected": {
+        "producer": "PySCF",
+        "version": "2.13.1",
+        "method": "RB3LYP",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "coordinates_angstrom": [
+          [
+            0.0,
+            0.0,
+            1.6999999978604148
+          ],
+          [
+            1.190000000089822,
+            0.0,
+            1.6999999978604148
+          ],
+          [
+            -0.594999997399025,
+            1.0305699981072478,
+            1.6999999978604148
+          ],
+          [
+            -0.594999997399025,
+            -1.0305699981072478,
+            1.6999999978604148
+          ]
+        ],
+        "atomic_numbers": [
+          5,
+          1,
+          1,
+          1
+        ],
+        "electron_count": 8,
+        "energy_hartree": -26.6123869,
+        "full_precision_energy_hartree": -26.61238694602176,
+        "orbitals": {
+          "kind": "restricted",
+          "norba": 20,
+          "norbb": 20,
+          "energy_unit": "hartree",
+          "source_number_base": 1
+        },
+        "mulliken_charges": [
+          -0.00301444242,
+          0.00100490789,
+          0.00100476727,
+          0.00100476727
+        ],
+        "dipole_e_bohr": [
+          6.03087425e-07,
+          -5.46849892e-15,
+          -1.0658141e-14
+        ],
+        "fchk_sha256": "d96b81b4623de934074a49f479690a8631145afafca76d4d5f5717b5863d19d3",
+        "density_max_abs_error": 1.3849038430803484e-10,
+        "scf_converged": true
+      },
+      "calculation": {
+        "method": "RB3LYP",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 22,
+        "reference_file_id": "P05-complex"
+      }
+    },
+    "P01-fch": {
+      "id": "P01-fch",
+      "path": "tests/data/tutorial/P01/o2-uhf.fch",
+      "archive_path": "P01/o2-uhf.fch",
+      "local_key": null,
+      "bytes": 8880,
+      "sha256": "ef562c4b210e7c380219282d7684370cca1f0e8349dffa1d4388af5831472e36",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "byte-identical alias",
+      "producer": "PySCF 2.13.1; IOData 1.0.1 FCHK writer",
+      "calculation_group": "P01",
+      "quantity": null,
+      "unit": null,
+      "expected": {
+        "same_as": "P01-o2-uhf"
+      },
+      "calculation": {
+        "method": "UHF",
+        "basis": "sto-3g",
+        "charge": 0,
+        "spin": 2,
+        "multiplicity": 3,
+        "electron_count": 16,
+        "reference_file_id": "P01-o2-uhf"
+      }
+    },
+    "P03-fch": {
+      "id": "P03-fch",
+      "path": "tests/data/tutorial/P03/water-dimer.fch",
+      "archive_path": "P03/water-dimer.fch",
+      "local_key": null,
+      "bytes": 38191,
+      "sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "byte-identical alias",
+      "producer": "PySCF 2.13.1; IOData 1.0.1 FCHK writer",
+      "calculation_group": "P03",
+      "quantity": null,
+      "unit": null,
+      "expected": {
+        "same_as": "P03-water-dimer"
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 20,
+        "reference_file_id": "P03-water-dimer"
+      }
+    },
+    "P03-igmh-dg_inter.cub": {
+      "id": "P03-igmh-dg_inter.cub",
+      "path": "tests/data/local/public-tutorial/P03/igmh/dg_inter.cub",
+      "archive_path": "P03/igmh/dg_inter.cub",
+      "local_key": "public-tutorial/P03/igmh/dg_inter.cub",
+      "bytes": 7732649,
+      "sha256": "daf5a7e79c7dcc67b244f3dc1d2d314795c9f318c931e4f25d36e72ea168a28e",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "geometry",
+      "producer": "Multiwfn 2026.9.20",
+      "calculation_group": "P03",
+      "quantity": "delta_g_inter",
+      "unit": "electron/bohr^4",
+      "expected": {
+        "shape": [
+          91,
+          38,
+          156
+        ],
+        "origin": [
+          -1.2877770840105092,
+          -0.529177210544,
+          -0.529177210544
+        ],
+        "steps": [
+          [
+            0.028748081140013346,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.028748081140013346,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.028748081140013346
+          ]
+        ],
+        "minimum": 1.01735e-10,
+        "maximum": 0.0185476
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 20,
+        "reference_file_id": "P03-water-dimer"
+      }
+    },
+    "P03-igmh-sl2r.cub": {
+      "id": "P03-igmh-sl2r.cub",
+      "path": "tests/data/local/public-tutorial/P03/igmh/sl2r.cub",
+      "archive_path": "P03/igmh/sl2r.cub",
+      "local_key": "public-tutorial/P03/igmh/sl2r.cub",
+      "bytes": 7732649,
+      "sha256": "18a33c308c868c9f7747128f1a23c04fc69df37fd5b9681aa5dd35ef20997958",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "color",
+      "producer": "Multiwfn 2026.9.20",
+      "calculation_group": "P03",
+      "quantity": "sign_lambda2_rho",
+      "unit": "electron/bohr^3",
+      "expected": {
+        "shape": [
+          91,
+          38,
+          156
+        ],
+        "origin": [
+          -1.2877770840105092,
+          -0.529177210544,
+          -0.529177210544
+        ],
+        "steps": [
+          [
+            0.028748081140013346,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.028748081140013346,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.028748081140013346
+          ]
+        ],
+        "minimum": -194.599,
+        "maximum": 0.295371
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 20,
+        "reference_file_id": "P03-water-dimer"
+      }
+    },
+    "P03-iri-func2.cub": {
+      "id": "P03-iri-func2.cub",
+      "path": "tests/data/local/public-tutorial/P03/iri/func2.cub",
+      "archive_path": "P03/iri/func2.cub",
+      "local_key": "public-tutorial/P03/iri/func2.cub",
+      "bytes": 7732649,
+      "sha256": "f56bd9fddaaea4452a73c2d303262d90a34267370ea6ea68019d1f1d16a9bf61",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "geometry",
+      "producer": "Multiwfn 2026.9.20",
+      "calculation_group": "P03",
+      "quantity": "iri_function",
+      "unit": "a.u. (electron^-0.1 bohr^-0.7)",
+      "expected": {
+        "shape": [
+          91,
+          38,
+          156
+        ],
+        "origin": [
+          -1.2877770840105092,
+          -0.529177210544,
+          -0.529177210544
+        ],
+        "steps": [
+          [
+            0.028748081140013346,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.028748081140013346,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.028748081140013346
+          ]
+        ],
+        "minimum": 0.0593502,
+        "maximum": 11.432
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 20,
+        "reference_file_id": "P03-water-dimer"
+      }
+    },
+    "P03-iri-func1.cub": {
+      "id": "P03-iri-func1.cub",
+      "path": "tests/data/local/public-tutorial/P03/iri/func1.cub",
+      "archive_path": "P03/iri/func1.cub",
+      "local_key": "public-tutorial/P03/iri/func1.cub",
+      "bytes": 7732649,
+      "sha256": "98efc19dd7ab101047c8f6176e24bc9651dbd47efae8a605cd2dd43d1754f5f4",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "color",
+      "producer": "Multiwfn 2026.9.20",
+      "calculation_group": "P03",
+      "quantity": "sign_lambda2_rho",
+      "unit": "electron/bohr^3",
+      "expected": {
+        "shape": [
+          91,
+          38,
+          156
+        ],
+        "origin": [
+          -1.2877770840105092,
+          -0.529177210544,
+          -0.529177210544
+        ],
+        "steps": [
+          [
+            0.028748081140013346,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.028748081140013346,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.028748081140013346
+          ]
+        ],
+        "minimum": -194.599,
+        "maximum": 0.295371
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 20,
+        "reference_file_id": "P03-water-dimer"
+      }
+    },
+    "P03-cube": {
+      "id": "P03-cube",
+      "path": "tests/data/local/public-tutorial/P03/color.cube",
+      "archive_path": "P03/color.cube",
+      "local_key": "public-tutorial/P03/color.cube",
+      "bytes": 7732649,
+      "sha256": "18a33c308c868c9f7747128f1a23c04fc69df37fd5b9681aa5dd35ef20997958",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "byte-identical alias",
+      "producer": "Multiwfn 2026.9.20",
+      "calculation_group": "P03",
+      "quantity": "sign_lambda2_rho",
+      "unit": "electron/bohr^3",
+      "expected": {
+        "same_as": "P03-igmh-sl2r.cub"
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 20,
+        "reference_file_id": "P03-water-dimer"
+      }
+    },
+    "P03-esp-surfanalysis.pdb": {
+      "id": "P03-esp-surfanalysis.pdb",
+      "path": "tests/data/tutorial/P03/esp/surfanalysis.pdb",
+      "archive_path": "P03/esp/surfanalysis.pdb",
+      "local_key": null,
+      "bytes": 682,
+      "sha256": "88aa4bc279308860e33f7462cd69a279b3eeb976ff2a46aa7797424c84a8673f",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "external esp records",
+      "producer": "Multiwfn 2026.9.20",
+      "calculation_group": "P03",
+      "quantity": null,
+      "unit": "kcal/mol; coordinates angstrom",
+      "expected": {
+        "extrema": [
+          {
+            "serial": 1,
+            "kind": "maximum",
+            "position_angstrom": [
+              -1.74,
+              -0.051,
+              1.026
+            ],
+            "value": 36.69,
+            "source_line": 3
+          },
+          {
+            "serial": 2,
+            "kind": "maximum",
+            "position_angstrom": [
+              -1.682,
+              -0.042,
+              4.031
+            ],
+            "value": 57.8,
+            "source_line": 4
+          },
+          {
+            "serial": 3,
+            "kind": "maximum",
+            "position_angstrom": [
+              1.634,
+              0.03,
+              4.098
+            ],
+            "value": 57.87,
+            "source_line": 5
+          },
+          {
+            "serial": 4,
+            "kind": "maximum",
+            "position_angstrom": [
+              1.739,
+              -0.05,
+              1.028
+            ],
+            "value": 36.66,
+            "source_line": 6
+          },
+          {
+            "serial": 1,
+            "kind": "minimum",
+            "position_angstrom": [
+              -0.036,
+              -1.4,
+              1.768
+            ],
+            "value": -25.5,
+            "source_line": 7
+          },
+          {
+            "serial": 2,
+            "kind": "minimum",
+            "position_angstrom": [
+              -0.005,
+              -0.058,
+              -1.769
+            ],
+            "value": -50.68,
+            "source_line": 8
+          },
+          {
+            "serial": 3,
+            "kind": "minimum",
+            "position_angstrom": [
+              -0.012,
+              1.404,
+              1.773
+            ],
+            "value": -25.52,
+            "source_line": 9
+          }
+        ],
+        "area_sum_angstrom2": 73.1833
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 20,
+        "reference_file_id": "P03-water-dimer"
+      }
+    },
+    "P03-esp-stdout.log": {
+      "id": "P03-esp-stdout.log",
+      "path": "tests/data/tutorial/P03/esp/stdout.log",
+      "archive_path": "P03/esp/stdout.log",
+      "local_key": null,
+      "bytes": 36760,
+      "sha256": "f06e5c30e3a9fcf8e9f61b63ba1dd828aa3c512b0a5747d3e73877f0b921b7c0",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "external esp records",
+      "producer": "Multiwfn 2026.9.20",
+      "calculation_group": "P03",
+      "quantity": null,
+      "unit": "center kcal/mol; area angstrom^2; percentage %",
+      "expected": {
+        "area_bins": [
+          {
+            "begin": -100.0,
+            "end": -95.0,
+            "center": -97.5,
+            "area": 0.0,
+            "percentage": 0.0,
+            "source_line": 451
+          },
+          {
+            "begin": -95.0,
+            "end": -90.0,
+            "center": -92.5,
+            "area": 0.0,
+            "percentage": 0.0,
+            "source_line": 452
+          },
+          {
+            "begin": -90.0,
+            "end": -85.0,
+            "center": -87.5,
+            "area": 0.0,
+            "percentage": 0.0,
+            "source_line": 453
+          },
+          {
+            "begin": -85.0,
+            "end": -80.0,
+            "center": -82.5,
+            "area": 0.0,
+            "percentage": 0.0,
+            "source_line": 454
+          },
+          {
+            "begin": -80.0,
+            "end": -75.0,
+            "center": -77.5,
+            "area": 0.0,
+            "percentage": 0.0,
+            "source_line": 455
+          },
+          {
+            "begin": -75.0,
+            "end": -70.0,
+            "center": -72.5,
+            "area": 0.0,
+            "percentage": 0.0,
+            "source_line": 456
+          },
+          {
+            "begin": -70.0,
+            "end": -65.0,
+            "center": -67.5,
+            "area": 0.0,
+            "percentage": 0.0,
+            "source_line": 457
+          },
+          {
+            "begin": -65.0,
+            "end": -60.0,
+            "center": -62.5,
+            "area": 0.0,
+            "percentage": 0.0,
+            "source_line": 458
+          },
+          {
+            "begin": -60.0,
+            "end": -55.0,
+            "center": -57.5,
+            "area": 0.0,
+            "percentage": 0.0,
+            "source_line": 459
+          },
+          {
+            "begin": -55.0,
+            "end": -50.0,
+            "center": -52.5,
+            "area": 0.6315,
+            "percentage": 0.8628,
+            "source_line": 460
+          },
+          {
+            "begin": -50.0,
+            "end": -45.0,
+            "center": -47.5,
+            "area": 4.0402,
+            "percentage": 5.5207,
+            "source_line": 461
+          },
+          {
+            "begin": -45.0,
+            "end": -40.0,
+            "center": -42.5,
+            "area": 3.3216,
+            "percentage": 4.5387,
+            "source_line": 462
+          },
+          {
+            "begin": -40.0,
+            "end": -35.0,
+            "center": -37.5,
+            "area": 3.0137,
+            "percentage": 4.118,
+            "source_line": 463
+          },
+          {
+            "begin": -35.0,
+            "end": -30.0,
+            "center": -32.5,
+            "area": 2.6382,
+            "percentage": 3.6049,
+            "source_line": 464
+          },
+          {
+            "begin": -30.0,
+            "end": -25.0,
+            "center": -27.5,
+            "area": 2.7604,
+            "percentage": 3.7719,
+            "source_line": 465
+          },
+          {
+            "begin": -25.0,
+            "end": -20.0,
+            "center": -22.5,
+            "area": 5.0954,
+            "percentage": 6.9626,
+            "source_line": 466
+          },
+          {
+            "begin": -20.0,
+            "end": -15.0,
+            "center": -17.5,
+            "area": 4.4424,
+            "percentage": 6.0703,
+            "source_line": 467
+          },
+          {
+            "begin": -15.0,
+            "end": -10.0,
+            "center": -12.5,
+            "area": 3.9076,
+            "percentage": 5.3395,
+            "source_line": 468
+          },
+          {
+            "begin": -10.0,
+            "end": -5.0,
+            "center": -7.5,
+            "area": 3.582,
+            "percentage": 4.8945,
+            "source_line": 469
+          },
+          {
+            "begin": -5.0,
+            "end": 0.0,
+            "center": -2.5,
+            "area": 3.4323,
+            "percentage": 4.69,
+            "source_line": 470
+          },
+          {
+            "begin": 0.0,
+            "end": 5.0,
+            "center": 2.5,
+            "area": 3.5123,
+            "percentage": 4.7993,
+            "source_line": 471
+          },
+          {
+            "begin": 5.0,
+            "end": 10.0,
+            "center": 7.5,
+            "area": 3.5163,
+            "percentage": 4.8048,
+            "source_line": 472
+          },
+          {
+            "begin": 10.0,
+            "end": 15.0,
+            "center": 12.5,
+            "area": 3.9238,
+            "percentage": 5.3616,
+            "source_line": 473
+          },
+          {
+            "begin": 15.0,
+            "end": 20.0,
+            "center": 17.5,
+            "area": 3.526,
+            "percentage": 4.8181,
+            "source_line": 474
+          },
+          {
+            "begin": 20.0,
+            "end": 25.0,
+            "center": 22.5,
+            "area": 3.3569,
+            "percentage": 4.587,
+            "source_line": 475
+          },
+          {
+            "begin": 25.0,
+            "end": 30.0,
+            "center": 27.5,
+            "area": 3.5086,
+            "percentage": 4.7943,
+            "source_line": 476
+          },
+          {
+            "begin": 30.0,
+            "end": 35.0,
+            "center": 32.5,
+            "area": 3.7206,
+            "percentage": 5.084,
+            "source_line": 477
+          },
+          {
+            "begin": 35.0,
+            "end": 40.0,
+            "center": 37.5,
+            "area": 3.2343,
+            "percentage": 4.4195,
+            "source_line": 478
+          },
+          {
+            "begin": 40.0,
+            "end": 45.0,
+            "center": 42.5,
+            "area": 2.2969,
+            "percentage": 3.1385,
+            "source_line": 479
+          },
+          {
+            "begin": 45.0,
+            "end": 50.0,
+            "center": 47.5,
+            "area": 2.2618,
+            "percentage": 3.0907,
+            "source_line": 480
+          },
+          {
+            "begin": 50.0,
+            "end": 55.0,
+            "center": 52.5,
+            "area": 2.2286,
+            "percentage": 3.0452,
+            "source_line": 481
+          },
+          {
+            "begin": 55.0,
+            "end": 60.0,
+            "center": 57.5,
+            "area": 1.2319,
+            "percentage": 1.6833,
+            "source_line": 482
+          },
+          {
+            "begin": 60.0,
+            "end": 65.0,
+            "center": 62.5,
+            "area": 0.0,
+            "percentage": 0.0,
+            "source_line": 483
+          },
+          {
+            "begin": 65.0,
+            "end": 70.0,
+            "center": 67.5,
+            "area": 0.0,
+            "percentage": 0.0,
+            "source_line": 484
+          },
+          {
+            "begin": 70.0,
+            "end": 75.0,
+            "center": 72.5,
+            "area": 0.0,
+            "percentage": 0.0,
+            "source_line": 485
+          },
+          {
+            "begin": 75.0,
+            "end": 80.0,
+            "center": 77.5,
+            "area": 0.0,
+            "percentage": 0.0,
+            "source_line": 486
+          },
+          {
+            "begin": 80.0,
+            "end": 85.0,
+            "center": 82.5,
+            "area": 0.0,
+            "percentage": 0.0,
+            "source_line": 487
+          },
+          {
+            "begin": 85.0,
+            "end": 90.0,
+            "center": 87.5,
+            "area": 0.0,
+            "percentage": 0.0,
+            "source_line": 488
+          },
+          {
+            "begin": 90.0,
+            "end": 95.0,
+            "center": 92.5,
+            "area": 0.0,
+            "percentage": 0.0,
+            "source_line": 489
+          },
+          {
+            "begin": 95.0,
+            "end": 100.0,
+            "center": 97.5,
+            "area": 0.0,
+            "percentage": 0.0,
+            "source_line": 490
+          }
+        ],
+        "area_sum_angstrom2": 73.1833
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 20,
+        "reference_file_id": "P03-water-dimer"
+      }
+    },
+    "P03-aim-CPs.pdb": {
+      "id": "P03-aim-CPs.pdb",
+      "path": "tests/data/tutorial/P03/aim/CPs.pdb",
+      "archive_path": "P03/aim/CPs.pdb",
+      "local_key": null,
+      "bytes": 926,
+      "sha256": "9d275abfd9128da4128da1d1752999741a62490ff0072fb0b4a11a56d25be1a1",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "external aim records",
+      "producer": "Multiwfn 2026.9.20",
+      "calculation_group": "P03",
+      "quantity": null,
+      "unit": null,
+      "expected": {
+        "count": 11,
+        "records": [
+          {
+            "serial": 1,
+            "type": "C",
+            "position_angstrom": [
+              -0.724,
+              0.0,
+              3.384
+            ],
+            "source_line": 2
+          },
+          {
+            "serial": 2,
+            "type": "C",
+            "position_angstrom": [
+              0.724,
+              -0.0,
+              3.384
+            ],
+            "source_line": 3
+          },
+          {
+            "serial": 3,
+            "type": "C",
+            "position_angstrom": [
+              0.0,
+              -0.0,
+              2.9
+            ],
+            "source_line": 4
+          },
+          {
+            "serial": 4,
+            "type": "C",
+            "position_angstrom": [
+              -0.724,
+              -0.0,
+              0.484
+            ],
+            "source_line": 5
+          },
+          {
+            "serial": 5,
+            "type": "C",
+            "position_angstrom": [
+              0.724,
+              0.0,
+              0.484
+            ],
+            "source_line": 6
+          },
+          {
+            "serial": 6,
+            "type": "C",
+            "position_angstrom": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "source_line": 7
+          },
+          {
+            "serial": 7,
+            "type": "N",
+            "position_angstrom": [
+              -0.611,
+              0.0,
+              3.314
+            ],
+            "source_line": 8
+          },
+          {
+            "serial": 8,
+            "type": "N",
+            "position_angstrom": [
+              0.611,
+              -0.0,
+              3.314
+            ],
+            "source_line": 9
+          },
+          {
+            "serial": 9,
+            "type": "N",
+            "position_angstrom": [
+              -0.0,
+              -0.0,
+              1.451
+            ],
+            "source_line": 10
+          },
+          {
+            "serial": 10,
+            "type": "N",
+            "position_angstrom": [
+              -0.611,
+              -0.0,
+              0.414
+            ],
+            "source_line": 11
+          },
+          {
+            "serial": 11,
+            "type": "N",
+            "position_angstrom": [
+              0.611,
+              0.0,
+              0.414
+            ],
+            "source_line": 12
+          }
+        ]
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 20,
+        "reference_file_id": "P03-water-dimer"
+      }
+    },
+    "P03-aim-paths.pdb": {
+      "id": "P03-aim-paths.pdb",
+      "path": "tests/data/tutorial/P03/aim/paths.pdb",
+      "archive_path": "P03/aim/paths.pdb",
+      "local_key": null,
+      "bytes": 32690,
+      "sha256": "9bf08cc0b4707f9dcc56957e8d125dbbd678a9d44a7e714fb739f65f22f32b7f",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "external aim records",
+      "producer": "Multiwfn 2026.9.20",
+      "calculation_group": "P03",
+      "quantity": null,
+      "unit": null,
+      "expected": {
+        "count": 10,
+        "records": [
+          {
+            "residue": 1,
+            "points_angstrom": [
+              [
+                -0.611,
+                0.0,
+                3.314
+              ],
+              [
+                -0.624,
+                0.0,
+                3.322
+              ],
+              [
+                -0.638,
+                0.0,
+                3.331
+              ],
+              [
+                -0.651,
+                0.0,
+                3.339
+              ],
+              [
+                -0.665,
+                0.0,
+                3.347
+              ],
+              [
+                -0.678,
+                0.0,
+                3.356
+              ],
+              [
+                -0.692,
+                0.0,
+                3.364
+              ],
+              [
+                -0.705,
+                0.0,
+                3.372
+              ],
+              [
+                -0.724,
+                0.0,
+                3.384
+              ]
+            ]
+          },
+          {
+            "residue": 2,
+            "points_angstrom": [
+              [
+                -0.611,
+                0.0,
+                3.314
+              ],
+              [
+                -0.598,
+                0.0,
+                3.305
+              ],
+              [
+                -0.584,
+                0.0,
+                3.297
+              ],
+              [
+                -0.571,
+                0.0,
+                3.288
+              ],
+              [
+                -0.557,
+                0.0,
+                3.28
+              ],
+              [
+                -0.544,
+                0.0,
+                3.271
+              ],
+              [
+                -0.531,
+                0.0,
+                3.263
+              ],
+              [
+                -0.517,
+                0.0,
+                3.254
+              ],
+              [
+                -0.504,
+                0.0,
+                3.245
+              ],
+              [
+                -0.491,
+                0.0,
+                3.237
+              ],
+              [
+                -0.477,
+                0.0,
+                3.228
+              ],
+              [
+                -0.464,
+                0.0,
+                3.219
+              ],
+              [
+                -0.451,
+                0.0,
+                3.211
+              ],
+              [
+                -0.438,
+                0.0,
+                3.202
+              ],
+              [
+                -0.424,
+                0.0,
+                3.193
+              ],
+              [
+                -0.411,
+                0.0,
+                3.184
+              ],
+              [
+                -0.398,
+                0.0,
+                3.176
+              ],
+              [
+                -0.385,
+                0.0,
+                3.167
+              ],
+              [
+                -0.371,
+                0.0,
+                3.158
+              ],
+              [
+                -0.358,
+                0.0,
+                3.149
+              ],
+              [
+                -0.345,
+                0.0,
+                3.14
+              ],
+              [
+                -0.332,
+                0.0,
+                3.132
+              ],
+              [
+                -0.319,
+                0.0,
+                3.123
+              ],
+              [
+                -0.305,
+                0.0,
+                3.114
+              ],
+              [
+                -0.292,
+                0.0,
+                3.105
+              ],
+              [
+                -0.279,
+                0.0,
+                3.097
+              ],
+              [
+                -0.265,
+                0.0,
+                3.088
+              ],
+              [
+                -0.252,
+                0.0,
+                3.08
+              ],
+              [
+                -0.239,
+                0.0,
+                3.071
+              ],
+              [
+                -0.225,
+                0.0,
+                3.062
+              ],
+              [
+                -0.212,
+                0.0,
+                3.054
+              ],
+              [
+                -0.199,
+                0.0,
+                3.045
+              ],
+              [
+                -0.186,
+                0.0,
+                3.036
+              ],
+              [
+                -0.173,
+                0.0,
+                3.027
+              ],
+              [
+                -0.16,
+                0.0,
+                3.018
+              ],
+              [
+                -0.147,
+                0.0,
+                3.008
+              ],
+              [
+                -0.134,
+                0.0,
+                2.999
+              ],
+              [
+                -0.121,
+                0.0,
+                2.99
+              ],
+              [
+                -0.108,
+                0.0,
+                2.98
+              ],
+              [
+                -0.095,
+                0.0,
+                2.971
+              ],
+              [
+                -0.083,
+                0.0,
+                2.962
+              ],
+              [
+                -0.07,
+                0.0,
+                2.952
+              ],
+              [
+                -0.057,
+                0.0,
+                2.943
+              ],
+              [
+                -0.044,
+                0.0,
+                2.933
+              ],
+              [
+                -0.032,
+                0.0,
+                2.924
+              ],
+              [
+                -0.019,
+                0.0,
+                2.914
+              ],
+              [
+                0.0,
+                -0.0,
+                2.9
+              ]
+            ]
+          },
+          {
+            "residue": 3,
+            "points_angstrom": [
+              [
+                0.611,
+                -0.0,
+                3.314
+              ],
+              [
+                0.624,
+                -0.0,
+                3.322
+              ],
+              [
+                0.638,
+                -0.0,
+                3.331
+              ],
+              [
+                0.651,
+                -0.0,
+                3.339
+              ],
+              [
+                0.665,
+                -0.0,
+                3.347
+              ],
+              [
+                0.678,
+                -0.0,
+                3.356
+              ],
+              [
+                0.692,
+                -0.0,
+                3.364
+              ],
+              [
+                0.705,
+                -0.0,
+                3.372
+              ],
+              [
+                0.724,
+                -0.0,
+                3.384
+              ]
+            ]
+          },
+          {
+            "residue": 4,
+            "points_angstrom": [
+              [
+                0.611,
+                -0.0,
+                3.314
+              ],
+              [
+                0.598,
+                -0.0,
+                3.305
+              ],
+              [
+                0.584,
+                -0.0,
+                3.297
+              ],
+              [
+                0.571,
+                -0.0,
+                3.288
+              ],
+              [
+                0.557,
+                -0.0,
+                3.28
+              ],
+              [
+                0.544,
+                -0.0,
+                3.271
+              ],
+              [
+                0.531,
+                -0.0,
+                3.263
+              ],
+              [
+                0.517,
+                -0.0,
+                3.254
+              ],
+              [
+                0.504,
+                -0.0,
+                3.245
+              ],
+              [
+                0.491,
+                -0.0,
+                3.237
+              ],
+              [
+                0.477,
+                -0.0,
+                3.228
+              ],
+              [
+                0.464,
+                -0.0,
+                3.219
+              ],
+              [
+                0.451,
+                -0.0,
+                3.211
+              ],
+              [
+                0.438,
+                -0.0,
+                3.202
+              ],
+              [
+                0.424,
+                -0.0,
+                3.193
+              ],
+              [
+                0.411,
+                -0.0,
+                3.184
+              ],
+              [
+                0.398,
+                -0.0,
+                3.176
+              ],
+              [
+                0.385,
+                -0.0,
+                3.167
+              ],
+              [
+                0.371,
+                -0.0,
+                3.158
+              ],
+              [
+                0.358,
+                -0.0,
+                3.149
+              ],
+              [
+                0.345,
+                -0.0,
+                3.14
+              ],
+              [
+                0.332,
+                -0.0,
+                3.132
+              ],
+              [
+                0.319,
+                -0.0,
+                3.123
+              ],
+              [
+                0.305,
+                -0.0,
+                3.114
+              ],
+              [
+                0.292,
+                -0.0,
+                3.105
+              ],
+              [
+                0.279,
+                -0.0,
+                3.097
+              ],
+              [
+                0.265,
+                -0.0,
+                3.088
+              ],
+              [
+                0.252,
+                -0.0,
+                3.08
+              ],
+              [
+                0.239,
+                -0.0,
+                3.071
+              ],
+              [
+                0.225,
+                -0.0,
+                3.062
+              ],
+              [
+                0.212,
+                -0.0,
+                3.054
+              ],
+              [
+                0.199,
+                -0.0,
+                3.045
+              ],
+              [
+                0.186,
+                -0.0,
+                3.036
+              ],
+              [
+                0.173,
+                -0.0,
+                3.027
+              ],
+              [
+                0.16,
+                -0.0,
+                3.018
+              ],
+              [
+                0.147,
+                -0.0,
+                3.008
+              ],
+              [
+                0.134,
+                -0.0,
+                2.999
+              ],
+              [
+                0.121,
+                -0.0,
+                2.99
+              ],
+              [
+                0.108,
+                -0.0,
+                2.98
+              ],
+              [
+                0.095,
+                -0.0,
+                2.971
+              ],
+              [
+                0.083,
+                -0.0,
+                2.962
+              ],
+              [
+                0.07,
+                -0.0,
+                2.952
+              ],
+              [
+                0.057,
+                -0.0,
+                2.943
+              ],
+              [
+                0.044,
+                -0.0,
+                2.933
+              ],
+              [
+                0.032,
+                -0.0,
+                2.924
+              ],
+              [
+                0.019,
+                -0.0,
+                2.914
+              ],
+              [
+                0.0,
+                -0.0,
+                2.9
+              ]
+            ]
+          },
+          {
+            "residue": 5,
+            "points_angstrom": [
+              [
+                -0.0,
+                -0.0,
+                1.451
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.467
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.483
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.499
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.515
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.531
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.547
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.563
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.578
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.594
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.61
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.626
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.642
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.658
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.674
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.69
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.705
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.721
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.737
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.753
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.769
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.785
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.801
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.817
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.832
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.848
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.864
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.88
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.896
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.912
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.928
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.944
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.959
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.975
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.991
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.007
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.023
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.039
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.055
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.071
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.086
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.102
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.118
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.134
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.15
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.166
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.182
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.198
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.213
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.229
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.245
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.261
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.277
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.293
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.309
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.325
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.34
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.356
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.372
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.388
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.404
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.42
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.436
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.452
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.467
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.483
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.499
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.515
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.531
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.547
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.563
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.579
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.594
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.61
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.626
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.642
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.658
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.674
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.69
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.706
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.721
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.737
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.753
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.769
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.785
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.801
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.817
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.833
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.848
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.864
+              ],
+              [
+                -0.0,
+                -0.0,
+                2.88
+              ],
+              [
+                0.0,
+                -0.0,
+                2.9
+              ]
+            ]
+          },
+          {
+            "residue": 6,
+            "points_angstrom": [
+              [
+                -0.0,
+                -0.0,
+                1.451
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.436
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.42
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.404
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.388
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.372
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.356
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.34
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.324
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.309
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.293
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.277
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.261
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.245
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.229
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.213
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.197
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.182
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.166
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.15
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.134
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.118
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.102
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.086
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.07
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.055
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.039
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.023
+              ],
+              [
+                -0.0,
+                -0.0,
+                1.007
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.991
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.975
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.959
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.943
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.928
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.912
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.896
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.88
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.864
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.848
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.832
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.816
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.801
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.785
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.769
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.753
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.737
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.721
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.705
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.689
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.674
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.658
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.642
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.626
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.61
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.594
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.578
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.562
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.547
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.531
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.515
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.499
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.483
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.467
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.451
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.435
+              ],
+              [
+                -0.0,
+                -0.0,
+                0.42
+              ],
+              [
+                -0.0,
+                0.0,
+                0.404
+              ],
+              [
+                -0.0,
+                0.0,
+                0.388
+              ],
+              [
+                -0.0,
+                0.0,
+                0.372
+              ],
+              [
+                -0.0,
+                0.0,
+                0.356
+              ],
+              [
+                -0.0,
+                0.0,
+                0.34
+              ],
+              [
+                -0.0,
+                0.0,
+                0.324
+              ],
+              [
+                -0.0,
+                0.0,
+                0.308
+              ],
+              [
+                -0.0,
+                0.0,
+                0.293
+              ],
+              [
+                -0.0,
+                0.0,
+                0.277
+              ],
+              [
+                -0.0,
+                0.0,
+                0.261
+              ],
+              [
+                -0.0,
+                0.0,
+                0.245
+              ],
+              [
+                -0.0,
+                0.0,
+                0.229
+              ],
+              [
+                -0.0,
+                0.0,
+                0.213
+              ],
+              [
+                -0.0,
+                0.0,
+                0.197
+              ],
+              [
+                -0.0,
+                0.0,
+                0.181
+              ],
+              [
+                -0.0,
+                0.0,
+                0.166
+              ],
+              [
+                -0.0,
+                0.0,
+                0.15
+              ],
+              [
+                -0.0,
+                0.0,
+                0.134
+              ],
+              [
+                -0.0,
+                0.0,
+                0.118
+              ],
+              [
+                -0.0,
+                0.0,
+                0.102
+              ],
+              [
+                -0.0,
+                0.0,
+                0.086
+              ],
+              [
+                -0.0,
+                0.0,
+                0.07
+              ],
+              [
+                -0.0,
+                0.0,
+                0.054
+              ],
+              [
+                -0.0,
+                0.0,
+                0.039
+              ],
+              [
+                -0.0,
+                0.0,
+                0.023
+              ],
+              [
+                0.0,
+                -0.0,
+                0.0
+              ]
+            ]
+          },
+          {
+            "residue": 7,
+            "points_angstrom": [
+              [
+                -0.611,
+                -0.0,
+                0.414
+              ],
+              [
+                -0.624,
+                -0.0,
+                0.422
+              ],
+              [
+                -0.638,
+                -0.0,
+                0.43
+              ],
+              [
+                -0.651,
+                -0.0,
+                0.439
+              ],
+              [
+                -0.665,
+                -0.0,
+                0.447
+              ],
+              [
+                -0.678,
+                -0.0,
+                0.455
+              ],
+              [
+                -0.692,
+                -0.0,
+                0.464
+              ],
+              [
+                -0.705,
+                -0.0,
+                0.472
+              ],
+              [
+                -0.724,
+                -0.0,
+                0.484
+              ]
+            ]
+          },
+          {
+            "residue": 8,
+            "points_angstrom": [
+              [
+                -0.611,
+                -0.0,
+                0.414
+              ],
+              [
+                -0.597,
+                -0.0,
+                0.405
+              ],
+              [
+                -0.584,
+                -0.0,
+                0.397
+              ],
+              [
+                -0.57,
+                -0.0,
+                0.388
+              ],
+              [
+                -0.557,
+                -0.0,
+                0.38
+              ],
+              [
+                -0.544,
+                -0.0,
+                0.371
+              ],
+              [
+                -0.53,
+                -0.0,
+                0.363
+              ],
+              [
+                -0.517,
+                -0.0,
+                0.354
+              ],
+              [
+                -0.504,
+                -0.0,
+                0.345
+              ],
+              [
+                -0.49,
+                -0.0,
+                0.337
+              ],
+              [
+                -0.477,
+                -0.0,
+                0.328
+              ],
+              [
+                -0.464,
+                -0.0,
+                0.319
+              ],
+              [
+                -0.45,
+                -0.0,
+                0.311
+              ],
+              [
+                -0.437,
+                -0.0,
+                0.302
+              ],
+              [
+                -0.424,
+                -0.0,
+                0.293
+              ],
+              [
+                -0.411,
+                -0.0,
+                0.285
+              ],
+              [
+                -0.397,
+                -0.0,
+                0.276
+              ],
+              [
+                -0.384,
+                -0.0,
+                0.267
+              ],
+              [
+                -0.371,
+                -0.0,
+                0.258
+              ],
+              [
+                -0.358,
+                -0.0,
+                0.25
+              ],
+              [
+                -0.344,
+                -0.0,
+                0.241
+              ],
+              [
+                -0.331,
+                -0.0,
+                0.232
+              ],
+              [
+                -0.318,
+                -0.0,
+                0.224
+              ],
+              [
+                -0.304,
+                -0.0,
+                0.215
+              ],
+              [
+                -0.291,
+                -0.0,
+                0.206
+              ],
+              [
+                -0.278,
+                -0.0,
+                0.198
+              ],
+              [
+                -0.264,
+                -0.0,
+                0.189
+              ],
+              [
+                -0.251,
+                -0.0,
+                0.181
+              ],
+              [
+                -0.237,
+                -0.0,
+                0.172
+              ],
+              [
+                -0.224,
+                -0.0,
+                0.164
+              ],
+              [
+                -0.211,
+                -0.0,
+                0.155
+              ],
+              [
+                -0.198,
+                -0.0,
+                0.146
+              ],
+              [
+                -0.184,
+                -0.0,
+                0.137
+              ],
+              [
+                -0.171,
+                -0.0,
+                0.128
+              ],
+              [
+                -0.158,
+                -0.0,
+                0.119
+              ],
+              [
+                -0.146,
+                -0.0,
+                0.11
+              ],
+              [
+                -0.133,
+                -0.0,
+                0.1
+              ],
+              [
+                -0.12,
+                -0.0,
+                0.091
+              ],
+              [
+                -0.107,
+                -0.0,
+                0.081
+              ],
+              [
+                -0.095,
+                -0.0,
+                0.072
+              ],
+              [
+                -0.082,
+                -0.0,
+                0.062
+              ],
+              [
+                -0.069,
+                -0.0,
+                0.053
+              ],
+              [
+                -0.057,
+                -0.0,
+                0.043
+              ],
+              [
+                -0.044,
+                -0.0,
+                0.034
+              ],
+              [
+                -0.031,
+                -0.0,
+                0.024
+              ],
+              [
+                -0.019,
+                -0.0,
+                0.014
+              ],
+              [
+                0.0,
+                -0.0,
+                0.0
+              ]
+            ]
+          },
+          {
+            "residue": 9,
+            "points_angstrom": [
+              [
+                0.611,
+                0.0,
+                0.414
+              ],
+              [
+                0.624,
+                0.0,
+                0.422
+              ],
+              [
+                0.638,
+                0.0,
+                0.43
+              ],
+              [
+                0.651,
+                0.0,
+                0.439
+              ],
+              [
+                0.665,
+                0.0,
+                0.447
+              ],
+              [
+                0.678,
+                0.0,
+                0.455
+              ],
+              [
+                0.692,
+                0.0,
+                0.464
+              ],
+              [
+                0.705,
+                0.0,
+                0.472
+              ],
+              [
+                0.724,
+                0.0,
+                0.484
+              ]
+            ]
+          },
+          {
+            "residue": 10,
+            "points_angstrom": [
+              [
+                0.611,
+                0.0,
+                0.414
+              ],
+              [
+                0.597,
+                0.0,
+                0.405
+              ],
+              [
+                0.584,
+                0.0,
+                0.397
+              ],
+              [
+                0.57,
+                0.0,
+                0.388
+              ],
+              [
+                0.557,
+                0.0,
+                0.38
+              ],
+              [
+                0.544,
+                0.0,
+                0.371
+              ],
+              [
+                0.53,
+                0.0,
+                0.363
+              ],
+              [
+                0.517,
+                0.0,
+                0.354
+              ],
+              [
+                0.504,
+                0.0,
+                0.345
+              ],
+              [
+                0.49,
+                0.0,
+                0.337
+              ],
+              [
+                0.477,
+                0.0,
+                0.328
+              ],
+              [
+                0.464,
+                0.0,
+                0.319
+              ],
+              [
+                0.45,
+                0.0,
+                0.311
+              ],
+              [
+                0.437,
+                0.0,
+                0.302
+              ],
+              [
+                0.424,
+                0.0,
+                0.293
+              ],
+              [
+                0.411,
+                0.0,
+                0.285
+              ],
+              [
+                0.397,
+                0.0,
+                0.276
+              ],
+              [
+                0.384,
+                0.0,
+                0.267
+              ],
+              [
+                0.371,
+                0.0,
+                0.258
+              ],
+              [
+                0.358,
+                0.0,
+                0.25
+              ],
+              [
+                0.344,
+                0.0,
+                0.241
+              ],
+              [
+                0.331,
+                0.0,
+                0.232
+              ],
+              [
+                0.318,
+                0.0,
+                0.224
+              ],
+              [
+                0.304,
+                0.0,
+                0.215
+              ],
+              [
+                0.291,
+                0.0,
+                0.206
+              ],
+              [
+                0.278,
+                0.0,
+                0.198
+              ],
+              [
+                0.264,
+                0.0,
+                0.189
+              ],
+              [
+                0.251,
+                0.0,
+                0.181
+              ],
+              [
+                0.237,
+                0.0,
+                0.172
+              ],
+              [
+                0.224,
+                0.0,
+                0.164
+              ],
+              [
+                0.211,
+                0.0,
+                0.155
+              ],
+              [
+                0.198,
+                0.0,
+                0.146
+              ],
+              [
+                0.184,
+                0.0,
+                0.137
+              ],
+              [
+                0.171,
+                0.0,
+                0.128
+              ],
+              [
+                0.158,
+                0.0,
+                0.119
+              ],
+              [
+                0.146,
+                0.0,
+                0.11
+              ],
+              [
+                0.133,
+                0.0,
+                0.1
+              ],
+              [
+                0.12,
+                0.0,
+                0.091
+              ],
+              [
+                0.107,
+                0.0,
+                0.081
+              ],
+              [
+                0.095,
+                0.0,
+                0.072
+              ],
+              [
+                0.082,
+                0.0,
+                0.062
+              ],
+              [
+                0.069,
+                0.0,
+                0.053
+              ],
+              [
+                0.057,
+                0.0,
+                0.043
+              ],
+              [
+                0.044,
+                0.0,
+                0.034
+              ],
+              [
+                0.031,
+                0.0,
+                0.024
+              ],
+              [
+                0.019,
+                0.0,
+                0.014
+              ],
+              [
+                0.0,
+                -0.0,
+                0.0
+              ]
+            ]
+          }
+        ]
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 20,
+        "reference_file_id": "P03-water-dimer"
+      }
+    },
+    "P03-aim-CPprop.txt": {
+      "id": "P03-aim-CPprop.txt",
+      "path": "tests/data/tutorial/P03/aim/CPprop.txt",
+      "archive_path": "P03/aim/CPprop.txt",
+      "local_key": null,
+      "bytes": 37709,
+      "sha256": "e8381272fb737a522ce07dbbc3dbbc58dbdd1a1207555d10e7abbe474522699d",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "external aim records",
+      "producer": "Multiwfn 2026.9.20",
+      "calculation_group": "P03",
+      "quantity": null,
+      "unit": null,
+      "expected": {
+        "count": 11,
+        "records": {
+          "1": {
+            "CP_type": "(3,-3)",
+            "Corresponding nucleus": "6(H )",
+            "Position (Bohr)": "-1.368845295629    0.000000000000    6.394551163008",
+            "Position (Angstrom)": "-0.724361735699    0.000000000000    3.383850749417",
+            "Density of all electrons": 0.4316646446,
+            "Density of Alpha electrons": 0.2158323223,
+            "Density of Beta electrons": 0.2158323223,
+            "Spin density of electrons": 0.0,
+            "Lagrangian kinetic energy G(r)": 0.02870892979,
+            "G(r) in X,Y,Z": "0.4288496898E-02  0.1399358733E-01  0.1042684557E-01",
+            "Hamiltonian kinetic energy K(r)": 3.988478741,
+            "Potential energy density V(r)": -4.017187671,
+            "Energy density E(r) or H(r)": -3.988478741,
+            "Laplacian of electron density": -15.83907924,
+            "Electron localization function (ELF)": 0.9983569017,
+            "Localized orbital locator (LOL)": 0.9610261921,
+            "Local information entropy": 0.08278979425,
+            "Interaction region indicator (IRI)": 4.707588378e-14,
+            "Reduced density gradient (RDG)": 100.0,
+            "Reduced density gradient with promolecular approximation": 100.0,
+            "Sign(lambda2)*rho": -0.4316646446,
+            "Sign(lambda2)*rho with promolecular approximation": -0.2912525333,
+            "Corr. hole for alpha, ref.": "0.00000   0.00000   0.00000 : -0.2214567559E-06",
+            "Source function, ref.": "0.00000   0.00000   0.00000 :  0.1927439679E+00",
+            "Wavefunction value for orbital       1": 0.0005092845386,
+            "Average local ionization energy (ALIE)": 0.8963053853,
+            "van der Waals potential (probe atom": "C ):  0.7915010324E+22 kcal/mol",
+            "Delta-g (under promolecular approximation)": 0.3254528088,
+            "Delta-g (under Hirshfeld partition)": 0.5954685263,
+            "User-defined real space function": 1.0,
+            "ESP from nuclear charges": 20.05632412,
+            "ESP from electrons": -7.74679801,
+            "Total ESP": "0.1230952611E+02 a.u. ( 0.3349592E+03 eV, 0.7724351E+04 kcal/mol)",
+            "Note": "The following information is for electron density",
+            "Components of gradient in x/y/z are": "",
+            "Norm of gradient is": 1.868355906e-14,
+            "Components of Laplacian in x/y/z are": "",
+            "Total": -15.83907924,
+            "Hessian matrix": "",
+            "Eigenvalues of Hessian": "-0.5900117924E+01 -0.5878399254E+01 -0.4060562066E+01",
+            "Eigenvectors (columns) of Hessian": "",
+            "Determinant of Hessian": -140.8334844,
+            "Ellipticity of electron density": 0.003695,
+            "eta index": -1.45303,
+            "Stiffness": -1.447681,
+            "Stress tensor": "",
+            "Eigenvalues of stress tensor": "-0.1497586988E+01 -0.1494361043E+01 -0.1025239639E+01",
+            "Eigenvectors (columns) of stress tensor": "",
+            "Stress tensor stiffness": 1.460719,
+            "Stress tensor polarizability": 0.684594
+          },
+          "2": {
+            "CP_type": "(3,-3)",
+            "Corresponding nucleus": "5(H )",
+            "Position (Bohr)": "1.368845295629   -0.000000000000    6.394551163008",
+            "Position (Angstrom)": "0.724361735699   -0.000000000000    3.383850749417",
+            "Density of all electrons": 0.4316646446,
+            "Density of Alpha electrons": 0.2158323223,
+            "Density of Beta electrons": 0.2158323223,
+            "Spin density of electrons": 0.0,
+            "Lagrangian kinetic energy G(r)": 0.02870892979,
+            "G(r) in X,Y,Z": "0.4288496898E-02  0.1399358733E-01  0.1042684557E-01",
+            "Hamiltonian kinetic energy K(r)": 3.988478741,
+            "Potential energy density V(r)": -4.017187671,
+            "Energy density E(r) or H(r)": -3.988478741,
+            "Laplacian of electron density": -15.83907924,
+            "Electron localization function (ELF)": 0.9983569017,
+            "Localized orbital locator (LOL)": 0.9610261921,
+            "Local information entropy": 0.08278979425,
+            "Interaction region indicator (IRI)": 4.741328815e-14,
+            "Reduced density gradient (RDG)": 100.0,
+            "Reduced density gradient with promolecular approximation": 100.0,
+            "Sign(lambda2)*rho": -0.4316646446,
+            "Sign(lambda2)*rho with promolecular approximation": -0.2912525333,
+            "Corr. hole for alpha, ref.": "0.00000   0.00000   0.00000 : -0.2214567559E-06",
+            "Source function, ref.": "0.00000   0.00000   0.00000 :  0.1927439679E+00",
+            "Wavefunction value for orbital       1": 0.0005092845386,
+            "Average local ionization energy (ALIE)": 0.8963053853,
+            "van der Waals potential (probe atom": "C ):  0.7915010324E+22 kcal/mol",
+            "Delta-g (under promolecular approximation)": 0.3254528088,
+            "Delta-g (under Hirshfeld partition)": 0.5954685263,
+            "User-defined real space function": 1.0,
+            "ESP from nuclear charges": 20.05632412,
+            "ESP from electrons": -7.74679801,
+            "Total ESP": "0.1230952611E+02 a.u. ( 0.3349592E+03 eV, 0.7724351E+04 kcal/mol)",
+            "Note": "The following information is for electron density",
+            "Components of gradient in x/y/z are": "",
+            "Norm of gradient is": 1.88174687e-14,
+            "Components of Laplacian in x/y/z are": "",
+            "Total": -15.83907924,
+            "Hessian matrix": "",
+            "Eigenvalues of Hessian": "-0.5900117924E+01 -0.5878399254E+01 -0.4060562066E+01",
+            "Eigenvectors (columns) of Hessian": "",
+            "Determinant of Hessian": -140.8334844,
+            "Ellipticity of electron density": 0.003695,
+            "eta index": -1.45303,
+            "Stiffness": -1.447681,
+            "Stress tensor": "",
+            "Eigenvalues of stress tensor": "-0.1497586988E+01 -0.1494361043E+01 -0.1025239639E+01",
+            "Eigenvectors (columns) of stress tensor": "",
+            "Stress tensor stiffness": 1.460719,
+            "Stress tensor polarizability": 0.684594
+          },
+          "3": {
+            "CP_type": "(3,-3)",
+            "Corresponding nucleus": "4(O )",
+            "Position (Bohr)": "0.000000000000   -0.000000000000    5.480214616688",
+            "Position (Angstrom)": "0.000000000000   -0.000000000000    2.900004686009",
+            "Density of all electrons": 290.9433105,
+            "Density of Alpha electrons": 145.4716553,
+            "Density of Beta electrons": 145.4716553,
+            "Spin density of electrons": 0.0,
+            "Lagrangian kinetic energy G(r)": 46.74714127,
+            "G(r) in X,Y,Z": "0.1240987455E+02  0.1879014971E+02  0.1554711701E+02",
+            "Hamiltonian kinetic energy K(r)": 481325.171,
+            "Potential energy density V(r)": -481371.9182,
+            "Energy density E(r) or H(r)": -481325.171,
+            "Laplacian of electron density": -1925113.696,
+            "Electron localization function (ELF)": 0.9999983757,
+            "Localized orbital locator (LOL)": 0.9987271242,
+            "Local information entropy": -38.94852519,
+            "Interaction region indicator (IRI)": 4.525078726e-13,
+            "Reduced density gradient (RDG)": 100.0,
+            "Reduced density gradient with promolecular approximation": 100.0,
+            "Sign(lambda2)*rho": -290.9433105,
+            "Sign(lambda2)*rho with promolecular approximation": -292.3624007,
+            "Corr. hole for alpha, ref.": "0.00000   0.00000   0.00000 : -0.1102268898E-04",
+            "Source function, ref.": "0.00000   0.00000   0.00000 :  0.2795432133E+05",
+            "Wavefunction value for orbital       1": 11.7897714,
+            "Average local ionization energy (ALIE)": 19.70616593,
+            "van der Waals potential (probe atom": "C ):  0.4236919375E+70 kcal/mol",
+            "Delta-g (under promolecular approximation)": 0.06347735032,
+            "Delta-g (under Hirshfeld partition)": 0.0958226602,
+            "User-defined real space function": 1.0,
+            "ESP from nuclear charges": 903275.2873,
+            "ESP from electrons": -25.36683021,
+            "Total ESP": "0.9032499205E+06 a.u. ( 0.2457868E+08 eV, 0.5667984E+09 kcal/mol)",
+            "Note": "The following information is for electron density",
+            "Components of gradient in x/y/z are": "",
+            "Norm of gradient is": 2.321749459e-10,
+            "Components of Laplacian in x/y/z are": "",
+            "Total": -1925113.696,
+            "Hessian matrix": "",
+            "Eigenvalues of Hessian": "-0.6417180060E+06 -0.6417042645E+06 -0.6416914252E+06",
+            "Eigenvectors (columns) of Hessian": "",
+            "Determinant of Hessian": -2.642441532e+17,
+            "Ellipticity of electron density": 2.1e-05,
+            "eta index": -1.000041,
+            "Stiffness": -1.00002,
+            "Stress tensor": "",
+            "Eigenvalues of stress tensor": "-0.1604604366E+06 -0.1604571604E+06 -0.1604543212E+06",
+            "Eigenvectors (columns) of stress tensor": "",
+            "Stress tensor stiffness": 1.000038,
+            "Stress tensor polarizability": 0.999962
+          },
+          "4": {
+            "CP_type": "(3,-3)",
+            "Corresponding nucleus": "3(H )",
+            "Position (Bohr)": "-1.368979213819   -0.000000000000    0.914440540011",
+            "Position (Angstrom)": "-0.724432602153   -0.000000000000    0.483901094499",
+            "Density of all electrons": 0.4329223719,
+            "Density of Alpha electrons": 0.216461186,
+            "Density of Beta electrons": 0.216461186,
+            "Spin density of electrons": 0.0,
+            "Lagrangian kinetic energy G(r)": 0.02862794005,
+            "G(r) in X,Y,Z": "0.4246655940E-02  0.1400457916E-01  0.1037670495E-01",
+            "Hamiltonian kinetic energy K(r)": 4.009794609,
+            "Potential energy density V(r)": -4.038422549,
+            "Energy density E(r) or H(r)": -4.009794609,
+            "Laplacian of electron density": -15.92466668,
+            "Electron localization function (ELF)": 0.9983818841,
+            "Localized orbital locator (LOL)": 0.9613126097,
+            "Local information entropy": 0.08296803831,
+            "Interaction region indicator (IRI)": 4.080588178e-14,
+            "Reduced density gradient (RDG)": 100.0,
+            "Reduced density gradient with promolecular approximation": 100.0,
+            "Sign(lambda2)*rho": -0.4329223719,
+            "Sign(lambda2)*rho with promolecular approximation": -0.291326681,
+            "Corr. hole for alpha, ref.": "0.00000   0.00000   0.00000 : -0.1259501085E-02",
+            "Source function, ref.": "0.00000   0.00000   0.00000 :  0.7697529402E+00",
+            "Wavefunction value for orbital       1": -5.49846183e-05,
+            "Average local ionization energy (ALIE)": 0.843089666,
+            "van der Waals potential (probe atom": "C ):  0.8124339304E+22 kcal/mol",
+            "Delta-g (under promolecular approximation)": 0.325344459,
+            "Delta-g (under Hirshfeld partition)": 0.5966564232,
+            "User-defined real space function": 1.0,
+            "ESP from nuclear charges": 20.53533368,
+            "ESP from electrons": -8.250344409,
+            "Total ESP": "0.1228498927E+02 a.u. ( 0.3342916E+03 eV, 0.7708954E+04 kcal/mol)",
+            "Note": "The following information is for electron density",
+            "Components of gradient in x/y/z are": "",
+            "Norm of gradient is": 1.624702314e-14,
+            "Components of Laplacian in x/y/z are": "",
+            "Total": -15.92466668,
+            "Hessian matrix": "",
+            "Eigenvalues of Hessian": "-0.5929829430E+01 -0.5907604982E+01 -0.4087232265E+01",
+            "Eigenvectors (columns) of Hessian": "",
+            "Determinant of Hessian": -143.1802009,
+            "Ellipticity of electron density": 0.003762,
+            "eta index": -1.450818,
+            "Stiffness": -1.44538,
+            "Stress tensor": "",
+            "Eigenvalues of stress tensor": "-0.1504910404E+01 -0.1501801767E+01 -0.1031710379E+01",
+            "Eigenvectors (columns) of stress tensor": "",
+            "Stress tensor stiffness": 1.458656,
+            "Stress tensor polarizability": 0.685563
+          },
+          "5": {
+            "CP_type": "(3,-3)",
+            "Corresponding nucleus": "2(H )",
+            "Position (Bohr)": "1.368979213819    0.000000000000    0.914440540011",
+            "Position (Angstrom)": "0.724432602153    0.000000000000    0.483901094499",
+            "Density of all electrons": 0.4329223719,
+            "Density of Alpha electrons": 0.216461186,
+            "Density of Beta electrons": 0.216461186,
+            "Spin density of electrons": 0.0,
+            "Lagrangian kinetic energy G(r)": 0.02862794005,
+            "G(r) in X,Y,Z": "0.4246655940E-02  0.1400457916E-01  0.1037670495E-01",
+            "Hamiltonian kinetic energy K(r)": 4.009794609,
+            "Potential energy density V(r)": -4.038422549,
+            "Energy density E(r) or H(r)": -4.009794609,
+            "Laplacian of electron density": -15.92466668,
+            "Electron localization function (ELF)": 0.9983818841,
+            "Localized orbital locator (LOL)": 0.9613126097,
+            "Local information entropy": 0.08296803831,
+            "Interaction region indicator (IRI)": 4.254413961e-14,
+            "Reduced density gradient (RDG)": 100.0,
+            "Reduced density gradient with promolecular approximation": 100.0,
+            "Sign(lambda2)*rho": -0.4329223719,
+            "Sign(lambda2)*rho with promolecular approximation": -0.291326681,
+            "Corr. hole for alpha, ref.": "0.00000   0.00000   0.00000 : -0.1259501085E-02",
+            "Source function, ref.": "0.00000   0.00000   0.00000 :  0.7697529402E+00",
+            "Wavefunction value for orbital       1": -5.49846183e-05,
+            "Average local ionization energy (ALIE)": 0.843089666,
+            "van der Waals potential (probe atom": "C ):  0.8124339304E+22 kcal/mol",
+            "Delta-g (under promolecular approximation)": 0.325344459,
+            "Delta-g (under Hirshfeld partition)": 0.5966564232,
+            "User-defined real space function": 1.0,
+            "ESP from nuclear charges": 20.53533368,
+            "ESP from electrons": -8.250344409,
+            "Total ESP": "0.1228498927E+02 a.u. ( 0.3342916E+03 eV, 0.7708954E+04 kcal/mol)",
+            "Note": "The following information is for electron density",
+            "Components of gradient in x/y/z are": "",
+            "Norm of gradient is": 1.693911737e-14,
+            "Components of Laplacian in x/y/z are": "",
+            "Total": -15.92466668,
+            "Hessian matrix": "",
+            "Eigenvalues of Hessian": "-0.5929829430E+01 -0.5907604982E+01 -0.4087232265E+01",
+            "Eigenvectors (columns) of Hessian": "",
+            "Determinant of Hessian": -143.1802009,
+            "Ellipticity of electron density": 0.003762,
+            "eta index": -1.450818,
+            "Stiffness": -1.44538,
+            "Stress tensor": "",
+            "Eigenvalues of stress tensor": "-0.1504910404E+01 -0.1501801767E+01 -0.1031710379E+01",
+            "Eigenvectors (columns) of stress tensor": "",
+            "Stress tensor stiffness": 1.458656,
+            "Stress tensor polarizability": 0.685563
+          },
+          "6": {
+            "CP_type": "(3,-3)",
+            "Corresponding nucleus": "1(O )",
+            "Position (Bohr)": "0.000000000000   -0.000000000000    0.000008645147",
+            "Position (Angstrom)": "0.000000000000   -0.000000000000    0.000004574815",
+            "Density of all electrons": 290.9189345,
+            "Density of Alpha electrons": 145.4594672,
+            "Density of Beta electrons": 145.4594672,
+            "Spin density of electrons": 0.0,
+            "Lagrangian kinetic energy G(r)": 46.73892909,
+            "G(r) in X,Y,Z": "0.1234005169E+02  0.1865953431E+02  0.1573934309E+02",
+            "Hamiltonian kinetic energy K(r)": 481287.1253,
+            "Potential energy density V(r)": -481333.8642,
+            "Energy density E(r) or H(r)": -481287.1253,
+            "Laplacian of electron density": -1924961.546,
+            "Electron localization function (ELF)": 0.9999983758,
+            "Localized orbital locator (LOL)": 0.99872717,
+            "Local information entropy": -38.94404323,
+            "Interaction region indicator (IRI)": 1.68793836e-17,
+            "Reduced density gradient (RDG)": 100.0,
+            "Reduced density gradient with promolecular approximation": 100.0,
+            "Sign(lambda2)*rho": -290.9189345,
+            "Sign(lambda2)*rho with promolecular approximation": -292.3632466,
+            "Corr. hole for alpha, ref.": "0.00000   0.00000   0.00000 : -0.1454594672E+03",
+            "Source function, ref.": "0.00000   0.00000   0.00000 :  0.1771902450E+11",
+            "Wavefunction value for orbital       1": -0.0001364144099,
+            "Average local ionization energy (ALIE)": 19.65440113,
+            "van der Waals potential (probe atom": "C ):  0.5662880953E+70 kcal/mol",
+            "Delta-g (under promolecular approximation)": 0.06349633216,
+            "Delta-g (under Hirshfeld partition)": 0.09582914442,
+            "User-defined real space function": 1.0,
+            "ESP from nuclear charges": 925377.5824,
+            "ESP from electrons": -25.30185143,
+            "Total ESP": "0.9253522805E+06 a.u. ( 0.2518012E+08 eV, 0.5806678E+09 kcal/mol)",
+            "Note": "The following information is for electron density",
+            "Components of gradient in x/y/z are": "",
+            "Norm of gradient is": 8.659758287e-15,
+            "Components of Laplacian in x/y/z are": "",
+            "Total": -1924961.546,
+            "Hessian matrix": "",
+            "Eigenvalues of Hessian": "-0.6416675590E+06 -0.6416527591E+06 -0.6416412275E+06",
+            "Eigenvectors (columns) of Hessian": "",
+            "Determinant of Hessian": -2.641815051e+17,
+            "Ellipticity of electron density": 2.3e-05,
+            "eta index": -1.000041,
+            "Stiffness": -1.000018,
+            "Stress tensor": "",
+            "Eigenvalues of stress tensor": "-0.1604476260E+06 -0.1604446685E+06 -0.1604415698E+06",
+            "Eigenvectors (columns) of stress tensor": "",
+            "Stress tensor stiffness": 1.000038,
+            "Stress tensor polarizability": 0.999962
+          },
+          "7": {
+            "CP_type": "(3,-1)",
+            "Connected atoms": "6(H )   --     4(O )",
+            "Position (Bohr)": "-1.154632182111    0.000000000000    6.261950986711",
+            "Position (Angstrom)": "-0.611005037748    0.000000000000    3.313681757959",
+            "Density of all electrons": 0.39859328,
+            "Density of Alpha electrons": 0.19929664,
+            "Density of Beta electrons": 0.19929664,
+            "Spin density of electrons": 0.0,
+            "Lagrangian kinetic energy G(r)": 0.07577783937,
+            "G(r) in X,Y,Z": "0.1335248669E-01  0.3598201060E-01  0.2644334208E-01",
+            "Hamiltonian kinetic energy K(r)": 0.6975083067,
+            "Potential energy density V(r)": -0.773286146,
+            "Energy density E(r) or H(r)": -0.6975083067,
+            "Laplacian of electron density": -2.486921869,
+            "Electron localization function (ELF)": 0.98527063,
+            "Localized orbital locator (LOL)": 0.8910652331,
+            "Local information entropy": 0.07803551623,
+            "Interaction region indicator (IRI)": 7.500847391e-16,
+            "Reduced density gradient (RDG)": 100.0,
+            "Reduced density gradient with promolecular approximation": 100.0,
+            "Sign(lambda2)*rho": -0.39859328,
+            "Sign(lambda2)*rho with promolecular approximation": -0.2398596777,
+            "Corr. hole for alpha, ref.": "0.00000   0.00000   0.00000 : -0.1847197281E-06",
+            "Source function, ref.": "0.00000   0.00000   0.00000 :  0.3108010832E-01",
+            "Wavefunction value for orbital       1": 0.001691659339,
+            "Average local ionization energy (ALIE)": 0.9291952526,
+            "van der Waals potential (probe atom": "C ):  0.1758592789E+15 kcal/mol",
+            "Delta-g (under promolecular approximation)": 0.61350955,
+            "Delta-g (under Hirshfeld partition)": 0.9517115267,
+            "User-defined real space function": 1.0,
+            "ESP from nuclear charges": 10.79204222,
+            "ESP from electrons": -8.525074066,
+            "Total ESP": "0.2266968151E+01 a.u. ( 0.6168734E+02 eV, 0.1422545E+04 kcal/mol)",
+            "Note": "The following information is for electron density",
+            "Components of gradient in x/y/z are": "",
+            "Norm of gradient is": 2.727051247e-16,
+            "Components of Laplacian in x/y/z are": "",
+            "Total": -2.486921869,
+            "Hessian matrix": "",
+            "Eigenvalues of Hessian": "-0.2186522455E+01 -0.2139798795E+01  0.1839399380E+01",
+            "Eigenvectors (columns) of Hessian": "",
+            "Determinant of Hessian": 8.606031199,
+            "Ellipticity of electron density": 0.021836,
+            "eta index": 1.188715,
+            "Stiffness": 1.163314,
+            "Stress tensor": "",
+            "Eigenvalues of stress tensor": "-0.6069137199E+00 -0.5977378449E+00  0.4313654188E+00",
+            "Eigenvectors (columns) of stress tensor": "",
+            "Stress tensor stiffness": 1.40696,
+            "Stress tensor polarizability": 0.710752
+          },
+          "8": {
+            "CP_type": "(3,-1)",
+            "Connected atoms": "5(H )   --     4(O )",
+            "Position (Bohr)": "1.154632182111   -0.000000000000    6.261950986711",
+            "Position (Angstrom)": "0.611005037748   -0.000000000000    3.313681757959",
+            "Density of all electrons": 0.39859328,
+            "Density of Alpha electrons": 0.19929664,
+            "Density of Beta electrons": 0.19929664,
+            "Spin density of electrons": 0.0,
+            "Lagrangian kinetic energy G(r)": 0.07577783937,
+            "G(r) in X,Y,Z": "0.1335248669E-01  0.3598201060E-01  0.2644334208E-01",
+            "Hamiltonian kinetic energy K(r)": 0.6975083067,
+            "Potential energy density V(r)": -0.773286146,
+            "Energy density E(r) or H(r)": -0.6975083067,
+            "Laplacian of electron density": -2.486921869,
+            "Electron localization function (ELF)": 0.98527063,
+            "Localized orbital locator (LOL)": 0.8910652331,
+            "Local information entropy": 0.07803551623,
+            "Interaction region indicator (IRI)": 3.633802195e-16,
+            "Reduced density gradient (RDG)": 100.0,
+            "Reduced density gradient with promolecular approximation": 100.0,
+            "Sign(lambda2)*rho": -0.39859328,
+            "Sign(lambda2)*rho with promolecular approximation": -0.2398596777,
+            "Corr. hole for alpha, ref.": "0.00000   0.00000   0.00000 : -0.1847197281E-06",
+            "Source function, ref.": "0.00000   0.00000   0.00000 :  0.3108010832E-01",
+            "Wavefunction value for orbital       1": 0.001691659339,
+            "Average local ionization energy (ALIE)": 0.9291952526,
+            "van der Waals potential (probe atom": "C ):  0.1758592789E+15 kcal/mol",
+            "Delta-g (under promolecular approximation)": 0.61350955,
+            "Delta-g (under Hirshfeld partition)": 0.9517115267,
+            "User-defined real space function": 1.0,
+            "ESP from nuclear charges": 10.79204222,
+            "ESP from electrons": -8.525074066,
+            "Total ESP": "0.2266968151E+01 a.u. ( 0.6168734E+02 eV, 0.1422545E+04 kcal/mol)",
+            "Note": "The following information is for electron density",
+            "Components of gradient in x/y/z are": "",
+            "Norm of gradient is": 1.321126039e-16,
+            "Components of Laplacian in x/y/z are": "",
+            "Total": -2.486921869,
+            "Hessian matrix": "",
+            "Eigenvalues of Hessian": "-0.2186522455E+01 -0.2139798795E+01  0.1839399380E+01",
+            "Eigenvectors (columns) of Hessian": "",
+            "Determinant of Hessian": 8.606031199,
+            "Ellipticity of electron density": 0.021836,
+            "eta index": 1.188715,
+            "Stiffness": 1.163314,
+            "Stress tensor": "",
+            "Eigenvalues of stress tensor": "-0.6069137199E+00 -0.5977378449E+00  0.4313654188E+00",
+            "Eigenvectors (columns) of stress tensor": "",
+            "Stress tensor stiffness": 1.40696,
+            "Stress tensor polarizability": 0.710752
+          },
+          "9": {
+            "CP_type": "(3,-1)",
+            "Connected atoms": "4(O )   --     1(O )",
+            "Position (Bohr)": "-0.000000000000   -0.000000000000    2.742827905596",
+            "Position (Angstrom)": "-0.000000000000   -0.000000000000    1.451442021070",
+            "Density of all electrons": 0.01088848625,
+            "Density of Alpha electrons": 0.005444243125,
+            "Density of Beta electrons": 0.005444243125,
+            "Spin density of electrons": 0.0,
+            "Lagrangian kinetic energy G(r)": 0.01060266025,
+            "G(r) in X,Y,Z": "0.1067281923E-02  0.7360607435E-03  0.8799317579E-02",
+            "Hamiltonian kinetic energy K(r)": -0.00110858271,
+            "Potential energy density V(r)": -0.009494077536,
+            "Energy density E(r) or H(r)": 0.00110858271,
+            "Laplacian of electron density": 0.04684497182,
+            "Electron localization function (ELF)": 0.02051376372,
+            "Localized orbital locator (LOL)": 0.1265267953,
+            "Local information entropy": 0.004091774246,
+            "Interaction region indicator (IRI)": 3.589041597e-15,
+            "Reduced density gradient (RDG)": 1.665389202e-15,
+            "Reduced density gradient with promolecular approximation": 0.5129326516,
+            "Sign(lambda2)*rho": -0.01088848625,
+            "Sign(lambda2)*rho with promolecular approximation": 0.01351218611,
+            "Corr. hole for alpha, ref.": "0.00000   0.00000   0.00000 : -0.4196076767E-05",
+            "Source function, ref.": "0.00000   0.00000   0.00000 : -0.1359109846E-02",
+            "Wavefunction value for orbital       1": -5.368282847e-05,
+            "Average local ionization energy (ALIE)": 0.6908373098,
+            "van der Waals potential (probe atom": "C ):  0.3597784042E+05 kcal/mol",
+            "Delta-g (under promolecular approximation)": 0.02377655139,
+            "Delta-g (under Hirshfeld partition)": 0.02188703392,
+            "User-defined real space function": 1.0,
+            "ESP from nuclear charges": 7.216537047,
+            "ESP from electrons": -7.239216296,
+            "Total ESP": "-0.2267924901E-01 a.u. (-0.6171337E+00 eV,-0.1423146E+02 kcal/mol)",
+            "Note": "The following information is for electron density",
+            "Components of gradient in x/y/z are": "",
+            "Norm of gradient is": 2.486810827e-17,
+            "Components of Laplacian in x/y/z are": "",
+            "Total": 0.04684497182,
+            "Hessian matrix": "",
+            "Eigenvalues of Hessian": "-0.9821158074E-02 -0.4517075842E-02  0.6118320574E-01",
+            "Eigenvectors (columns) of Hessian": "",
+            "Determinant of Hessian": 2.714265409e-06,
+            "Ellipticity of electron density": 1.174229,
+            "eta index": 0.16052,
+            "Stiffness": 0.073829,
+            "Stress tensor": "",
+            "Eigenvalues of stress tensor": "-0.3927411005E-02 -0.3263832806E-02 -0.2302833724E-02",
+            "Eigenvectors (columns) of stress tensor": "",
+            "Stress tensor stiffness": 1.705469,
+            "Stress tensor polarizability": 0.586349
+          },
+          "10": {
+            "CP_type": "(3,-1)",
+            "Connected atoms": "3(H )   --     1(O )",
+            "Position (Bohr)": "-1.154043775814   -0.000000000000    0.781607822246",
+            "Position (Angstrom)": "-0.610693666545   -0.000000000000    0.413609047396",
+            "Density of all electrons": 0.399480049,
+            "Density of Alpha electrons": 0.1997400245,
+            "Density of Beta electrons": 0.1997400245,
+            "Spin density of electrons": 0.0,
+            "Lagrangian kinetic energy G(r)": 0.07573188157,
+            "G(r) in X,Y,Z": "0.1329904491E-01  0.3602386385E-01  0.2640897281E-01",
+            "Hamiltonian kinetic energy K(r)": 0.6982886876,
+            "Potential energy density V(r)": -0.7740205692,
+            "Energy density E(r) or H(r)": -0.6982886876,
+            "Laplacian of electron density": -2.490227224,
+            "Electron localization function (ELF)": 0.985395216,
+            "Localized orbital locator (LOL)": 0.8914829358,
+            "Local information entropy": 0.07816473775,
+            "Interaction region indicator (IRI)": 5.258360704e-16,
+            "Reduced density gradient (RDG)": 100.0,
+            "Reduced density gradient with promolecular approximation": 100.0,
+            "Sign(lambda2)*rho": -0.399480049,
+            "Sign(lambda2)*rho with promolecular approximation": -0.2398349781,
+            "Corr. hole for alpha, ref.": "0.00000   0.00000   0.00000 : -0.1417221725E-02",
+            "Source function, ref.": "0.00000   0.00000   0.00000 :  0.1421749658E+00",
+            "Wavefunction value for orbital       1": -3.12793074e-05,
+            "Average local ionization energy (ALIE)": 0.8755799175,
+            "van der Waals potential (probe atom": "C ):  0.1722039307E+15 kcal/mol",
+            "Delta-g (under promolecular approximation)": 0.6142750718,
+            "Delta-g (under Hirshfeld partition)": 0.954284213,
+            "User-defined real space function": 1.0,
+            "ESP from nuclear charges": 11.16641321,
+            "ESP from electrons": -8.958468297,
+            "Total ESP": "0.2207944916E+01 a.u. ( 0.6008124E+02 eV, 0.1385508E+04 kcal/mol)",
+            "Note": "The following information is for electron density",
+            "Components of gradient in x/y/z are": "",
+            "Norm of gradient is": 1.916438901e-16,
+            "Components of Laplacian in x/y/z are": "",
+            "Total": -2.490227224,
+            "Hessian matrix": "",
+            "Eigenvalues of Hessian": "-0.2190799612E+01 -0.2143490949E+01  0.1844063337E+01",
+            "Eigenvectors (columns) of Hessian": "",
+            "Determinant of Hessian": 8.65964608,
+            "Ellipticity of electron density": 0.022071,
+            "eta index": 1.188028,
+            "Stiffness": 1.162374,
+            "Stress tensor": "",
+            "Eigenvalues of stress tensor": "-0.6079204650E+00 -0.5989972283E+00  0.4328971242E+00",
+            "Eigenvectors (columns) of stress tensor": "",
+            "Stress tensor stiffness": 1.404307,
+            "Stress tensor polarizability": 0.712095
+          },
+          "11": {
+            "CP_type": "(3,-1)",
+            "Connected atoms": "2(H )   --     1(O )",
+            "Position (Bohr)": "1.154043775814    0.000000000000    0.781607822246",
+            "Position (Angstrom)": "0.610693666545    0.000000000000    0.413609047396",
+            "Density of all electrons": 0.399480049,
+            "Density of Alpha electrons": 0.1997400245,
+            "Density of Beta electrons": 0.1997400245,
+            "Spin density of electrons": 0.0,
+            "Lagrangian kinetic energy G(r)": 0.07573188157,
+            "G(r) in X,Y,Z": "0.1329904491E-01  0.3602386385E-01  0.2640897281E-01",
+            "Hamiltonian kinetic energy K(r)": 0.6982886876,
+            "Potential energy density V(r)": -0.7740205692,
+            "Energy density E(r) or H(r)": -0.6982886876,
+            "Laplacian of electron density": -2.490227224,
+            "Electron localization function (ELF)": 0.985395216,
+            "Localized orbital locator (LOL)": 0.8914829358,
+            "Local information entropy": 0.07816473775,
+            "Interaction region indicator (IRI)": 4.644508511e-16,
+            "Reduced density gradient (RDG)": 100.0,
+            "Reduced density gradient with promolecular approximation": 100.0,
+            "Sign(lambda2)*rho": -0.399480049,
+            "Sign(lambda2)*rho with promolecular approximation": -0.2398349781,
+            "Corr. hole for alpha, ref.": "0.00000   0.00000   0.00000 : -0.1417221725E-02",
+            "Source function, ref.": "0.00000   0.00000   0.00000 :  0.1421749658E+00",
+            "Wavefunction value for orbital       1": -3.12793074e-05,
+            "Average local ionization energy (ALIE)": 0.8755799175,
+            "van der Waals potential (probe atom": "C ):  0.1722039307E+15 kcal/mol",
+            "Delta-g (under promolecular approximation)": 0.6142750718,
+            "Delta-g (under Hirshfeld partition)": 0.954284213,
+            "User-defined real space function": 1.0,
+            "ESP from nuclear charges": 11.16641321,
+            "ESP from electrons": -8.958468297,
+            "Total ESP": "0.2207944916E+01 a.u. ( 0.6008124E+02 eV, 0.1385508E+04 kcal/mol)",
+            "Note": "The following information is for electron density",
+            "Components of gradient in x/y/z are": "",
+            "Norm of gradient is": 1.692717044e-16,
+            "Components of Laplacian in x/y/z are": "",
+            "Total": -2.490227224,
+            "Hessian matrix": "",
+            "Eigenvalues of Hessian": "-0.2190799612E+01 -0.2143490949E+01  0.1844063337E+01",
+            "Eigenvectors (columns) of Hessian": "",
+            "Determinant of Hessian": 8.65964608,
+            "Ellipticity of electron density": 0.022071,
+            "eta index": 1.188028,
+            "Stiffness": 1.162374,
+            "Stress tensor": "",
+            "Eigenvalues of stress tensor": "-0.6079204650E+00 -0.5989972283E+00  0.4328971242E+00",
+            "Eigenvectors (columns) of stress tensor": "",
+            "Stress tensor stiffness": 1.404307,
+            "Stress tensor polarizability": 0.712095
+          }
+        }
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 20,
+        "reference_file_id": "P03-water-dimer"
+      }
+    },
+    "P04-steps.csv": {
+      "id": "P04-steps.csv",
+      "path": "tests/data/tutorial/P04/steps.csv",
+      "archive_path": "P04/steps.csv",
+      "local_key": null,
+      "bytes": 62,
+      "sha256": "e364c78eb296bb63048f6ce6b64226b4ada40bce553e7bc2e05c70d8b198f1ba",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "genuine bidirectional IRC/Mayer",
+      "producer": "PySCF 2.13.1 / geomeTRIC 1.1.1",
+      "calculation_group": "P04",
+      "quantity": null,
+      "unit": null,
+      "expected": {
+        "energies_hartree": [
+          -148.764884,
+          -148.764883,
+          -148.764884
+        ],
+        "steps": 3,
+        "irc_report": {
+          "producer": {
+            "pyscf": "2.13.1",
+            "geometric": "1.1.1"
+          },
+          "method": "RHF",
+          "basis": "STO-3G",
+          "charge": 0,
+          "spin": 0,
+          "initial_coordinates_angstrom": [
+            [
+              0.0,
+              0.0,
+              -0.725
+            ],
+            [
+              0.0,
+              0.0,
+              0.725
+            ],
+            [
+              0.92,
+              0.0,
+              -0.9499999999999998
+            ],
+            [
+              -0.92,
+              0.0,
+              0.9499999999999998
+            ]
+          ],
+          "ts_coordinates_angstrom": [
+            [
+              -0.04235708310520252,
+              -1.9879855533039647e-08,
+              -0.6996870117107244
+            ],
+            [
+              0.04236550392391795,
+              2.0039782723038818e-08,
+              0.6996786793599447
+            ],
+            [
+              0.9300373572432253,
+              -3.9068967520091435e-08,
+              -0.9292507565961797
+            ],
+            [
+              -0.9300289364242943,
+              3.895120246690724e-08,
+              0.929242424245451
+            ]
+          ],
+          "ts_energy_hartree": -148.76488299940874,
+          "ts_frequencies_cm_minus1": [
+            -48.143454780658004,
+            1485.706723195188,
+            1493.5725608415648,
+            1885.3383276123332,
+            4168.334550824391,
+            4188.239072552654
+          ],
+          "imaginary_mode_count": 1,
+          "ts_gradient_max": 1.8938620449659993e-08,
+          "irc_direction": "both",
+          "license": "CC-BY-4.0",
+          "selected_steps": [
+            {
+              "step": 1,
+              "accepted_frame_zero_based": 29,
+              "energy_hartree": -148.764884,
+              "full_precision_energy_hartree": -148.76488444227655,
+              "fchk_sha256": "c801d883cea1804103adc3ca5cf217922c531d65f4a0002cb604492e8980cb2d",
+              "mayer": [
+                [
+                  1,
+                  2,
+                  0.9873314138440641
+                ],
+                [
+                  1,
+                  3,
+                  0.9508756515647273
+                ],
+                [
+                  1,
+                  4,
+                  0.007468878918280131
+                ],
+                [
+                  2,
+                  3,
+                  0.007468878918280879
+                ],
+                [
+                  2,
+                  4,
+                  0.9508756515647279
+                ],
+                [
+                  3,
+                  4,
+                  0.004188599990841678
+                ]
+              ]
+            },
+            {
+              "step": 2,
+              "accepted_frame_zero_based": 30,
+              "energy_hartree": -148.764883,
+              "full_precision_energy_hartree": -148.76488299940874,
+              "fchk_sha256": "9c8cdd3b495694dce0ca59da58d823df2fc892ce70831477f6d0fca24a492219",
+              "mayer": [
+                [
+                  1,
+                  2,
+                  0.9873493056726962
+                ],
+                [
+                  1,
+                  3,
+                  0.9508441205245314
+                ],
+                [
+                  1,
+                  4,
+                  0.007387489502207964
+                ],
+                [
+                  2,
+                  3,
+                  0.0073874895022037765
+                ],
+                [
+                  2,
+                  4,
+                  0.9508441205245016
+                ],
+                [
+                  3,
+                  4,
+                  0.0042714864956772325
+                ]
+              ]
+            },
+            {
+              "step": 3,
+              "accepted_frame_zero_based": 31,
+              "energy_hartree": -148.764884,
+              "full_precision_energy_hartree": -148.76488444227653,
+              "fchk_sha256": "d09831388dcae43afdddb490a2aa6a091622849c05491f68617750f457d37d20",
+              "mayer": [
+                [
+                  1,
+                  2,
+                  0.987331413843611
+                ],
+                [
+                  1,
+                  3,
+                  0.9508756515646171
+                ],
+                [
+                  1,
+                  4,
+                  0.0074688789191152995
+                ],
+                [
+                  2,
+                  3,
+                  0.007468878919113674
+                ],
+                [
+                  2,
+                  4,
+                  0.9508756515646125
+                ],
+                [
+                  3,
+                  4,
+                  0.004188599990328323
+                ]
+              ]
+            }
+          ],
+          "accepted_frame_count": 61,
+          "ts_accepted_frame_zero_based": 30,
+          "irc_status": "converged both directions",
+          "parse_status": "Passed"
+        }
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "STO-3G",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 18,
+        "producer": "PySCF 2.13.1 / geomeTRIC 1.1.1"
+      }
+    },
+    "P04-mayer-pyscf.csv": {
+      "id": "P04-mayer-pyscf.csv",
+      "path": "tests/data/tutorial/P04/mayer-pyscf.csv",
+      "archive_path": "P04/mayer-pyscf.csv",
+      "local_key": null,
+      "bytes": 103,
+      "sha256": "3627fbb0c0e271882dd9852c94efd3f6691f724bb9636465edcfe52d362d65fc",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "genuine bidirectional IRC/Mayer",
+      "producer": "PySCF 2.13.1 / geomeTRIC 1.1.1",
+      "calculation_group": "P04",
+      "quantity": null,
+      "unit": "dimensionless",
+      "expected": {
+        "pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "orders": [
+          [
+            0.987331413844,
+            0.950875651565,
+            0.007468878918,
+            0.007468878918,
+            0.950875651565,
+            0.004188599991
+          ],
+          [
+            0.987349305673,
+            0.950844120525,
+            0.007387489502,
+            0.007387489502,
+            0.950844120525,
+            0.004271486496
+          ],
+          [
+            0.987331413844,
+            0.950875651565,
+            0.007468878919,
+            0.007468878919,
+            0.950875651565,
+            0.00418859999
+          ]
+        ],
+        "unit": "dimensionless"
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "STO-3G",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 18,
+        "producer": "PySCF 2.13.1 / geomeTRIC 1.1.1"
+      }
+    },
+    "P04-step-001.fchk": {
+      "id": "P04-step-001.fchk",
+      "path": "tests/data/tutorial/P04/step-001.fchk",
+      "archive_path": "P04/step-001.fchk",
+      "local_key": null,
+      "bytes": 7557,
+      "sha256": "c801d883cea1804103adc3ca5cf217922c531d65f4a0002cb604492e8980cb2d",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "genuine bidirectional IRC/Mayer",
+      "producer": "PySCF 2.13.1 / geomeTRIC 1.1.1",
+      "calculation_group": "P04",
+      "quantity": null,
+      "unit": null,
+      "expected": {
+        "atomic_numbers": [
+          8,
+          8,
+          1,
+          1
+        ],
+        "positions_angstrom": [
+          [
+            -0.041656396670805965,
+            -0.03536337185786525,
+            -0.6997289775865264
+          ],
+          [
+            0.04166481656815609,
+            -0.035363331904985855,
+            0.6997206483372325
+          ],
+          [
+            0.9284245298546596,
+            0.03536331296044172,
+            -0.928168344583491
+          ],
+          [
+            -0.9284161053534677,
+            0.03536339085532711,
+            0.9281600100424249
+          ]
+        ],
+        "energy_hartree": -148.764884
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "STO-3G",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 18,
+        "producer": "PySCF 2.13.1 / geomeTRIC 1.1.1"
+      }
+    },
+    "P04-step-001-mayer-pyscf.txt": {
+      "id": "P04-step-001-mayer-pyscf.txt",
+      "path": "tests/data/tutorial/P04/step-001-mayer-pyscf.txt",
+      "archive_path": "P04/step-001-mayer-pyscf.txt",
+      "local_key": null,
+      "bytes": 339,
+      "sha256": "c3f338abb2e16455520ad6307ac9d0bac3dd91dbd4e042212cc26c9bd1e69732",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "genuine bidirectional IRC/Mayer",
+      "producer": "PySCF 2.13.1 / geomeTRIC 1.1.1",
+      "calculation_group": "P04",
+      "quantity": null,
+      "unit": null,
+      "expected": {},
+      "calculation": {
+        "method": "RHF",
+        "basis": "STO-3G",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 18,
+        "producer": "PySCF 2.13.1 / geomeTRIC 1.1.1"
+      }
+    },
+    "P04-step-002.fchk": {
+      "id": "P04-step-002.fchk",
+      "path": "tests/data/tutorial/P04/step-002.fchk",
+      "archive_path": "P04/step-002.fchk",
+      "local_key": null,
+      "bytes": 7557,
+      "sha256": "9c8cdd3b495694dce0ca59da58d823df2fc892ce70831477f6d0fca24a492219",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "genuine bidirectional IRC/Mayer",
+      "producer": "PySCF 2.13.1 / geomeTRIC 1.1.1",
+      "calculation_group": "P04",
+      "quantity": null,
+      "unit": null,
+      "expected": {
+        "atomic_numbers": [
+          8,
+          8,
+          1,
+          1
+        ],
+        "positions_angstrom": [
+          [
+            -0.04235708307284422,
+            -1.987985427356751e-08,
+            -0.6996870138337302
+          ],
+          [
+            0.0423655038697956,
+            2.0039782210138117e-08,
+            0.6996786792926641
+          ],
+          [
+            0.9300373561569556,
+            -3.906896824243983e-08,
+            -0.9292507554005703
+          ],
+          [
+            -0.9300289369475359,
+            3.895119985423326e-08,
+            0.9292424261512764
+          ]
+        ],
+        "energy_hartree": -148.764883
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "STO-3G",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 18,
+        "producer": "PySCF 2.13.1 / geomeTRIC 1.1.1"
+      }
+    },
+    "P04-step-002-mayer-pyscf.txt": {
+      "id": "P04-step-002-mayer-pyscf.txt",
+      "path": "tests/data/tutorial/P04/step-002-mayer-pyscf.txt",
+      "archive_path": "P04/step-002-mayer-pyscf.txt",
+      "local_key": null,
+      "bytes": 339,
+      "sha256": "96967cb1f1aeecfac0684edbb8f7b7d6b99ce92edd95afd54c42ca2793636c34",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "genuine bidirectional IRC/Mayer",
+      "producer": "PySCF 2.13.1 / geomeTRIC 1.1.1",
+      "calculation_group": "P04",
+      "quantity": null,
+      "unit": null,
+      "expected": {},
+      "calculation": {
+        "method": "RHF",
+        "basis": "STO-3G",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 18,
+        "producer": "PySCF 2.13.1 / geomeTRIC 1.1.1"
+      }
+    },
+    "P04-step-003.fchk": {
+      "id": "P04-step-003.fchk",
+      "path": "tests/data/tutorial/P04/step-003.fchk",
+      "archive_path": "P04/step-003.fchk",
+      "local_key": null,
+      "bytes": 7557,
+      "sha256": "d09831388dcae43afdddb490a2aa6a091622849c05491f68617750f457d37d20",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "genuine bidirectional IRC/Mayer",
+      "producer": "PySCF 2.13.1 / geomeTRIC 1.1.1",
+      "calculation_group": "P04",
+      "quantity": null,
+      "unit": null,
+      "expected": {
+        "atomic_numbers": [
+          8,
+          8,
+          1,
+          1
+        ],
+        "positions_angstrom": [
+          [
+            -0.04165639577120471,
+            0.035363332063739025,
+            -0.6997289775865264
+          ],
+          [
+            0.041664817467757354,
+            0.03536337201661842,
+            0.6997206483372325
+          ],
+          [
+            0.9284245245628875,
+            -0.035363390961162554,
+            -0.928168344583491
+          ],
+          [
+            -0.9284161053534677,
+            -0.035363313066277165,
+            0.9281600100424249
+          ]
+        ],
+        "energy_hartree": -148.764884
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "STO-3G",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 18,
+        "producer": "PySCF 2.13.1 / geomeTRIC 1.1.1"
+      }
+    },
+    "P04-step-003-mayer-pyscf.txt": {
+      "id": "P04-step-003-mayer-pyscf.txt",
+      "path": "tests/data/tutorial/P04/step-003-mayer-pyscf.txt",
+      "archive_path": "P04/step-003-mayer-pyscf.txt",
+      "local_key": null,
+      "bytes": 339,
+      "sha256": "5dc0029ac64223d9adf14562092afc17439d18d65542eab0719ecedca06e1014",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "genuine bidirectional IRC/Mayer",
+      "producer": "PySCF 2.13.1 / geomeTRIC 1.1.1",
+      "calculation_group": "P04",
+      "quantity": null,
+      "unit": null,
+      "expected": {},
+      "calculation": {
+        "method": "RHF",
+        "basis": "STO-3G",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 18,
+        "producer": "PySCF 2.13.1 / geomeTRIC 1.1.1"
+      }
+    },
+    "P05-ets-nocv.txt": {
+      "id": "P05-ets-nocv.txt",
+      "path": "tests/data/tutorial/P05/nocv/ets-nocv.txt",
+      "archive_path": "P05/nocv/ets-nocv.txt",
+      "local_key": null,
+      "bytes": 1310,
+      "sha256": "47e71830f05a745817d4a4c6f857b7bafaa4f5cf51fcede9f208dd13962c29be",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "external ETS-NOCV",
+      "producer": "Multiwfn 2026.9.20",
+      "calculation_group": "P05",
+      "quantity": null,
+      "unit": "kcal/mol",
+      "expected": {
+        "pairs": [
+          {
+            "pair": 1,
+            "pair_energy": -57.02,
+            "positive_orbital": 1,
+            "positive_eigenvalue": 0.5455,
+            "positive_energy": -120.33,
+            "negative_orbital": 48,
+            "negative_eigenvalue": -0.5455,
+            "negative_energy": -15.81,
+            "spin": "Total",
+            "energy_unit": "kcal/mol",
+            "source_line": 7
+          },
+          {
+            "pair": 2,
+            "pair_energy": -11.91,
+            "positive_orbital": 2,
+            "positive_eigenvalue": 0.33615,
+            "positive_energy": -136.54,
+            "negative_orbital": 47,
+            "negative_eigenvalue": -0.33615,
+            "negative_energy": -101.11,
+            "spin": "Total",
+            "energy_unit": "kcal/mol",
+            "source_line": 8
+          },
+          {
+            "pair": 3,
+            "pair_energy": -11.91,
+            "positive_orbital": 3,
+            "positive_eigenvalue": 0.33615,
+            "positive_energy": -136.54,
+            "negative_orbital": 46,
+            "negative_eigenvalue": -0.33615,
+            "negative_energy": -101.11,
+            "spin": "Total",
+            "energy_unit": "kcal/mol",
+            "source_line": 9
+          },
+          {
+            "pair": 4,
+            "pair_energy": -4.04,
+            "positive_orbital": 4,
+            "positive_eigenvalue": 0.11111,
+            "positive_energy": -44.1,
+            "negative_orbital": 45,
+            "negative_eigenvalue": -0.11112,
+            "negative_energy": -7.75,
+            "spin": "Total",
+            "energy_unit": "kcal/mol",
+            "source_line": 10
+          },
+          {
+            "pair": 5,
+            "pair_energy": -0.52,
+            "positive_orbital": 5,
+            "positive_eigenvalue": 0.02962,
+            "positive_energy": -112.5,
+            "negative_orbital": 44,
+            "negative_eigenvalue": -0.02962,
+            "negative_energy": -94.92,
+            "spin": "Total",
+            "energy_unit": "kcal/mol",
+            "source_line": 11
+          },
+          {
+            "pair": 6,
+            "pair_energy": -0.17,
+            "positive_orbital": 6,
+            "positive_eigenvalue": 0.02357,
+            "positive_energy": -4.74,
+            "negative_orbital": 43,
+            "negative_eigenvalue": -0.02357,
+            "negative_energy": 2.57,
+            "spin": "Total",
+            "energy_unit": "kcal/mol",
+            "source_line": 12
+          },
+          {
+            "pair": 7,
+            "pair_energy": -0.17,
+            "positive_orbital": 7,
+            "positive_eigenvalue": 0.02357,
+            "positive_energy": -4.73,
+            "negative_orbital": 42,
+            "negative_eigenvalue": -0.02357,
+            "negative_energy": 2.57,
+            "spin": "Total",
+            "energy_unit": "kcal/mol",
+            "source_line": 13
+          },
+          {
+            "pair": 8,
+            "pair_energy": -0.08,
+            "positive_orbital": 8,
+            "positive_eigenvalue": 0.00686,
+            "positive_energy": -1288.8,
+            "negative_orbital": 41,
+            "negative_eigenvalue": -0.00686,
+            "negative_energy": -1276.76,
+            "spin": "Total",
+            "energy_unit": "kcal/mol",
+            "source_line": 14
+          },
+          {
+            "pair": 9,
+            "pair_energy": -0.02,
+            "positive_orbital": 9,
+            "positive_eigenvalue": 0.00351,
+            "positive_energy": -1395.01,
+            "negative_orbital": 40,
+            "negative_eigenvalue": -0.00351,
+            "negative_energy": -1387.9,
+            "spin": "Total",
+            "energy_unit": "kcal/mol",
+            "source_line": 15
+          },
+          {
+            "pair": 10,
+            "pair_energy": -0.01,
+            "positive_orbital": 10,
+            "positive_eigenvalue": 0.0019,
+            "positive_energy": -2993.34,
+            "negative_orbital": 39,
+            "negative_eigenvalue": -0.0019,
+            "negative_energy": -2986.05,
+            "spin": "Total",
+            "energy_unit": "kcal/mol",
+            "source_line": 16
+          },
+          {
+            "pair": 11,
+            "pair_energy": -0.01,
+            "positive_orbital": 11,
+            "positive_eigenvalue": 0.00147,
+            "positive_energy": -4577.65,
+            "negative_orbital": 38,
+            "negative_eigenvalue": -0.00147,
+            "negative_energy": -4569.74,
+            "spin": "Total",
+            "energy_unit": "kcal/mol",
+            "source_line": 17
+          }
+        ],
+        "energy_unit": "kcal/mol",
+        "energy_method": "Actual complex KS reconstruction; Multiwfn approximation, not F_TS",
+        "pair_density_formula_max_abs_error": 9.49715097509074e-07
+      },
+      "calculation": {
+        "method": "RB3LYP",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 22,
+        "reference_file_id": "P05-complex"
+      }
+    },
+    "P05-nocv-pair1.cub": {
+      "id": "P05-nocv-pair1.cub",
+      "path": "tests/data/local/public-tutorial/P05/nocv/nocv-pair1.cub",
+      "archive_path": "P05/nocv/nocv-pair1.cub",
+      "local_key": "public-tutorial/P05/nocv/nocv-pair1.cub",
+      "bytes": 1922861,
+      "sha256": "d6d3ec263d5173261791f997eabd78b8112f6685abc3bd851c70deec86a82e33",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "https://creativecommons.org/licenses/by/4.0/",
+      "source_url": null,
+      "acquire": "Extract public tutorial ZIP retaining archive_path layout.",
+      "role": "external ETS-NOCV",
+      "producer": "Multiwfn 2026.9.20",
+      "calculation_group": "P05",
+      "quantity": "nocv_deformation_density",
+      "unit": "electron/bohr^3",
+      "expected": {
+        "shape": [
+          47,
+          50,
+          57
+        ],
+        "minimum": -0.243093,
+        "maximum": 0.0494892,
+        "net_integral_electron": -0.005832491212467502
+      },
+      "calculation": {
+        "method": "RB3LYP",
+        "basis": "6-31g(d)",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 22,
+        "reference_file_id": "P05-complex"
+      }
+    },
+    "P02-water_neutral_nbo_opt_freq.out": {
+      "id": "P02-water_neutral_nbo_opt_freq.out",
+      "path": "tests/data/local/log-examples/water_neutral_nbo_opt_freq.out",
+      "archive_path": null,
+      "local_key": "log-examples/water_neutral_nbo_opt_freq.out",
+      "bytes": 92872,
+      "sha256": "9493d24655fb261a2c945d292ad517567f3024996594a25f678199df74017519",
+      "distribution": "external-acquisition",
+      "license": "unverified data permission",
+      "license_evidence": "https://cclib.readthedocs.io/en/stable/how_to_install.html",
+      "source_url": "https://raw.githubusercontent.com/cclib/cclib-data/a16cc80ea29e8baec60abd0df346ce6862f52531/Gaussian/Gaussian16/water_neutral_nbo_opt_freq.out",
+      "acquire": "Obtain fixed original URL separately and verify SHA; this grants no redistribution permission. Copy identical .log alias to test the other extension.",
+      "role": "Gaussian multijob opt/freq/NBO",
+      "producer": "Gaussian 16 A.03 / NBO 3.1",
+      "calculation_group": "P02",
+      "expected": {
+        "job_number": 2,
+        "job_index": 1,
+        "block_number": 1,
+        "block_index": 0,
+        "atomic_numbers": [
+          8,
+          1,
+          1
+        ],
+        "positions_angstrom": [
+          [
+            -0.0,
+            0.0,
+            0.127131
+          ],
+          [
+            0.0,
+            0.758039,
+            -0.508525
+          ],
+          [
+            -0.0,
+            -0.758039,
+            -0.508525
+          ]
+        ],
+        "frequencies_cm_minus1": [
+          2169.7613,
+          4141.3837,
+          4392.5759
+        ],
+        "ir_intensities_km_mol": [
+          7.2483,
+          44.2724,
+          29.9428
+        ],
+        "nbo_count": 7,
+        "e2_count": 2,
+        "nbo": {
+          "job_number": 2,
+          "block_number": 1,
+          "summary_line": 1438,
+          "orbitals": [
+            {
+              "number": 1,
+              "type": "BD",
+              "subindex": 1,
+              "atoms": [
+                {
+                  "symbol": "O",
+                  "number": 1
+                },
+                {
+                  "symbol": "H",
+                  "number": 2
+                }
+              ],
+              "occupancy": 1.99933,
+              "energy_hartree": -0.77653,
+              "source_line": 1444,
+              "raw_line": "     1. BD (   1) O   1 - H   2          1.99933    -0.77653  7(g)"
+            },
+            {
+              "number": 2,
+              "type": "BD",
+              "subindex": 1,
+              "atoms": [
+                {
+                  "symbol": "O",
+                  "number": 1
+                },
+                {
+                  "symbol": "H",
+                  "number": 3
+                }
+              ],
+              "occupancy": 1.99933,
+              "energy_hartree": -0.77653,
+              "source_line": 1445,
+              "raw_line": "     2. BD (   1) O   1 - H   3          1.99933    -0.77653  6(g)"
+            },
+            {
+              "number": 3,
+              "type": "CR",
+              "subindex": 1,
+              "atoms": [
+                {
+                  "symbol": "O",
+                  "number": 1
+                }
+              ],
+              "occupancy": 2.0,
+              "energy_hartree": -20.1456,
+              "source_line": 1446,
+              "raw_line": "     3. CR (   1) O   1                  2.00000   -20.14560"
+            },
+            {
+              "number": 4,
+              "type": "LP",
+              "subindex": 1,
+              "atoms": [
+                {
+                  "symbol": "O",
+                  "number": 1
+                }
+              ],
+              "occupancy": 2.0,
+              "energy_hartree": -0.86319,
+              "source_line": 1447,
+              "raw_line": "     4. LP (   1) O   1                  2.00000    -0.86319"
+            },
+            {
+              "number": 5,
+              "type": "LP",
+              "subindex": 2,
+              "atoms": [
+                {
+                  "symbol": "O",
+                  "number": 1
+                }
+              ],
+              "occupancy": 2.0,
+              "energy_hartree": -0.39262,
+              "source_line": 1448,
+              "raw_line": "     5. LP (   2) O   1                  2.00000    -0.39262"
+            },
+            {
+              "number": 6,
+              "type": "BD*",
+              "subindex": 1,
+              "atoms": [
+                {
+                  "symbol": "O",
+                  "number": 1
+                },
+                {
+                  "symbol": "H",
+                  "number": 2
+                }
+              ],
+              "occupancy": 0.00067,
+              "energy_hartree": 0.6369,
+              "source_line": 1449,
+              "raw_line": "     6. BD*(   1) O   1 - H   2          0.00067     0.63690"
+            },
+            {
+              "number": 7,
+              "type": "BD*",
+              "subindex": 1,
+              "atoms": [
+                {
+                  "symbol": "O",
+                  "number": 1
+                },
+                {
+                  "symbol": "H",
+                  "number": 3
+                }
+              ],
+              "occupancy": 0.00067,
+              "energy_hartree": 0.6369,
+              "source_line": 1450,
+              "raw_line": "     7. BD*(   1) O   1 - H   3          0.00067     0.63690"
+            }
+          ],
+          "interactions": [
+            {
+              "donor": 1,
+              "acceptor": 7,
+              "e2_kcal_mol": 0.59,
+              "delta_e_hartree": 1.41,
+              "fij_hartree": 0.026,
+              "source_line": 1434,
+              "raw_line": "   1. BD (   1) O   1 - H   2        /  7. BD*(   1) O   1 - H   3            0.59    1.41    0.026"
+            },
+            {
+              "donor": 2,
+              "acceptor": 6,
+              "e2_kcal_mol": 0.59,
+              "delta_e_hartree": 1.41,
+              "fij_hartree": 0.026,
+              "source_line": 1435,
+              "raw_line": "   2. BD (   1) O   1 - H   3        /  6. BD*(   1) O   1 - H   2            0.59    1.41    0.026"
+            }
+          ],
+          "orbital_energy_unit": "hartree",
+          "interaction_energy_unit": "kcal/mol",
+          "canonical_mo_mapping": "none"
+        },
+        "optimization_job_number": 1,
+        "optimization_step_count": 4,
+        "optimization_energies_hartree": [
+          -74.9643287914,
+          -74.9649723283,
+          -74.965900301,
+          -74.9659011806
+        ]
+      },
+      "calculation": {
+        "method": "RHF",
+        "basis": "STO-3G",
+        "charge": 0,
+        "spin": 0,
+        "multiplicity": 1,
+        "electron_count": 10
+      }
+    }
+  },
+  "cases": {
+    "C01": {
+      "group": "P01",
+      "files": [
+        "P01-o2-uhf",
+        "P01-fch"
+      ],
+      "gui": {
+        "alpha_mo": 9,
+        "beta_homo": 7,
+        "isovalue": 0.045,
+        "spin_isovalue": 0.002
+      },
+      "local_parse_status": "Passed",
+      "gui_status": "Not Run",
+      "display_defaults_status": "proposed; root visual check required",
+      "public_material_status": "included",
+      "grid_defaults": {
+        "spacing_angstrom": 0.7,
+        "margin_angstrom": 3
+      }
+    },
+    "C02": {
+      "group": "P02",
+      "files": [
+        "P02-water_neutral_nbo_opt_freq.out"
+      ],
+      "gui": {
+        "job_number": 2,
+        "mode_number": 3,
+        "amplitude_angstrom": 0.35,
+        "cycles_per_second": 1
+      },
+      "local_parse_status": "Passed",
+      "gui_status": "Not Run",
+      "display_defaults_status": "proposed; root visual check required",
+      "public_material_status": "external; permission unverified",
+      "grid_defaults": {
+        "spacing_angstrom": 0.7,
+        "margin_angstrom": 3
+      }
+    },
+    "C03": {
+      "group": "P03",
+      "files": [
+        "P03-igmh-sl2r.cub",
+        "P03-cube"
+      ],
+      "gui": {
+        "quantity": "sign_lambda2_rho",
+        "unit": "electron/bohr^3",
+        "scale_factor": 1,
+        "isovalue": 0.02
+      },
+      "local_parse_status": "Passed",
+      "gui_status": "Not Run",
+      "display_defaults_status": "proposed; root visual check required",
+      "public_material_status": "included",
+      "grid_defaults": {
+        "spacing_angstrom": 0.7,
+        "margin_angstrom": 3
+      }
+    },
+    "C04": {
+      "group": "P03",
+      "files": [
+        "P03-water-dimer"
+      ],
+      "gui": {
+        "density_isovalue": 0.004,
+        "color_minimum": -0.05,
+        "color_center": 0,
+        "color_maximum": 0.05,
+        "color_unit": "hartree/e",
+        "charge_method": "mulliken",
+        "dipole_scale_angstrom_per_debye": 1.5
+      },
+      "local_parse_status": "Passed",
+      "gui_status": "Not Run",
+      "display_defaults_status": "proposed; root visual check required",
+      "public_material_status": "included",
+      "grid_defaults": {
+        "spacing_angstrom": 0.7,
+        "margin_angstrom": 3
+      }
+    },
+    "C05": {
+      "group": "P03",
+      "files": [
+        "P03-water-dimer",
+        "P03-fch"
+      ],
+      "gui": {
+        "keep_h_atom_number": 2,
+        "oxygen_atom_numbers": [
+          1,
+          4
+        ]
+      },
+      "local_parse_status": "Passed",
+      "gui_status": "Not Run",
+      "display_defaults_status": "proposed; root visual check required",
+      "public_material_status": "included",
+      "grid_defaults": {
+        "spacing_angstrom": 0.7,
+        "margin_angstrom": 3
+      }
+    },
+    "C06": {
+      "group": "P02",
+      "files": [
+        "P02-water_neutral_nbo_opt_freq.out"
+      ],
+      "gui": {
+        "job_number": 2,
+        "block_number": 1,
+        "nbo_number": 1,
+        "e2_record_number": 1
+      },
+      "local_parse_status": "Passed",
+      "gui_status": "Not Run",
+      "display_defaults_status": "proposed; root visual check required",
+      "public_material_status": "external; permission unverified",
+      "grid_defaults": {
+        "spacing_angstrom": 0.7,
+        "margin_angstrom": 3
+      }
+    },
+    "C07": {
+      "group": "P03",
+      "files": [
+        "P03-water-dimer",
+        "P03-igmh-dg_inter.cub",
+        "P03-igmh-sl2r.cub",
+        "P03-iri-func2.cub",
+        "P03-iri-func1.cub"
+      ],
+      "gui": {
+        "fragments_1based": [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            4,
+            5,
+            6
+          ]
+        ],
+        "igmh_isovalue": 0.005,
+        "iri_isovalue": 1,
+        "iri_exponent": 1.1,
+        "color_minimum": -0.04,
+        "color_center": 0,
+        "color_maximum": 0.04,
+        "color_unit": "electron/bohr^3"
+      },
+      "local_parse_status": "Passed",
+      "gui_status": "Not Run",
+      "display_defaults_status": "proposed; root visual check required",
+      "public_material_status": "included",
+      "grid_defaults": {
+        "spacing_angstrom": 0.7,
+        "margin_angstrom": 3
+      }
+    },
+    "C08": {
+      "group": "P03",
+      "files": [
+        "P03-water-dimer",
+        "P03-esp-surfanalysis.pdb",
+        "P03-esp-stdout.log"
+      ],
+      "gui": {
+        "surface_definition": "rho=0.001 electron/bohr^3",
+        "extrema_unit": "kcal/mol",
+        "center_unit": "kcal/mol",
+        "area_unit": "angstrom^2"
+      },
+      "local_parse_status": "Passed",
+      "gui_status": "Not Run",
+      "display_defaults_status": "proposed; root visual check required",
+      "public_material_status": "included",
+      "grid_defaults": {
+        "spacing_angstrom": 0.7,
+        "margin_angstrom": 3
+      }
+    },
+    "C09": {
+      "group": "P03",
+      "files": [
+        "P03-water-dimer",
+        "P03-aim-CPs.pdb",
+        "P03-aim-paths.pdb",
+        "P03-aim-CPprop.txt"
+      ],
+      "gui": {
+        "coordinate_unit": "angstrom",
+        "point_number": 1
+      },
+      "local_parse_status": "Passed",
+      "gui_status": "Not Run",
+      "display_defaults_status": "proposed; root visual check required",
+      "public_material_status": "included",
+      "grid_defaults": {
+        "spacing_angstrom": 0.7,
+        "margin_angstrom": 3
+      }
+    },
+    "C10": {
+      "group": "P04",
+      "files": [
+        "P04-steps.csv",
+        "P04-step-001.fchk",
+        "P04-step-002.fchk",
+        "P04-step-003.fchk"
+      ],
+      "gui": {
+        "step_numbers": [
+          1,
+          2,
+          3
+        ]
+      },
+      "local_parse_status": "Passed",
+      "gui_status": "Not Run",
+      "display_defaults_status": "proposed; root visual check required",
+      "public_material_status": "included",
+      "grid_defaults": {
+        "spacing_angstrom": 0.7,
+        "margin_angstrom": 3
+      }
+    },
+    "C11": {
+      "group": "P04",
+      "files": [
+        "P04-mayer-pyscf.csv",
+        "P04-step-001-mayer-pyscf.txt",
+        "P04-step-002-mayer-pyscf.txt",
+        "P04-step-003-mayer-pyscf.txt"
+      ],
+      "gui": {
+        "atom_pair_1based": [
+          1,
+          2
+        ],
+        "unit": "dimensionless"
+      },
+      "local_parse_status": "Passed",
+      "gui_status": "Not Run",
+      "display_defaults_status": "proposed; root visual check required",
+      "public_material_status": "included",
+      "grid_defaults": {
+        "spacing_angstrom": 0.7,
+        "margin_angstrom": 3
+      }
+    },
+    "C12": {
+      "group": "P05",
+      "files": [
+        "P05-complex",
+        "P05-ets-nocv.txt"
+      ],
+      "gui": {
+        "energy_unit": "kcal/mol",
+        "pair_number": 1,
+        "spin": "Total"
+      },
+      "local_parse_status": "Passed",
+      "gui_status": "Not Run",
+      "display_defaults_status": "proposed; root visual check required",
+      "public_material_status": "included",
+      "grid_defaults": {
+        "spacing_angstrom": 0.7,
+        "margin_angstrom": 3
+      }
+    },
+    "C13": {
+      "group": "P05",
+      "files": [
+        "P05-complex",
+        "P05-ets-nocv.txt",
+        "P05-nocv-pair1.cub"
+      ],
+      "gui": {
+        "pair_number": 1,
+        "spin": "Total",
+        "unit": "electron/bohr^3",
+        "isovalue": 0.003
+      },
+      "local_parse_status": "Passed",
+      "gui_status": "Not Run",
+      "display_defaults_status": "proposed; root visual check required",
+      "public_material_status": "included",
+      "grid_defaults": {
+        "spacing_angstrom": 0.7,
+        "margin_angstrom": 3
+      }
+    }
+  },
+  "checks": {
+    "P01": "Passed",
+    "P03": "Passed",
+    "P02_local": "Passed",
+    "P04": "Passed",
+    "P05": "Passed"
+  },
+  "source_availability": {
+    "status": "Passed",
+    "url": "https://raw.githubusercontent.com/cclib/cclib-data/a16cc80ea29e8baec60abd0df346ce6862f52531/Gaussian/Gaussian16/water_neutral_nbo_opt_freq.out",
+    "sha256": "9493d24655fb261a2c945d292ad517567f3024996594a25f678199df74017519",
+    "bytes": 92872,
+    "permission": "unverified"
+  },
+  "nodes": {
+    "N01": {
+      "case": "C05",
+      "status": "Not Run"
+    },
+    "N02": {
+      "case": "C05",
+      "status": "Not Run"
+    },
+    "N03": {
+      "case": "C05",
+      "status": "Not Run"
+    },
+    "N04": {
+      "case": "C01",
+      "status": "Not Run"
+    },
+    "N05": {
+      "case": "C01",
+      "status": "Not Run"
+    },
+    "N06": {
+      "case": "C04",
+      "status": "Not Run"
+    },
+    "N07": {
+      "case": "C04",
+      "status": "Not Run"
+    },
+    "N08": {
+      "case": "C04",
+      "status": "Not Run"
+    },
+    "N09": {
+      "case": "C01",
+      "status": "Not Run"
+    },
+    "N10": {
+      "case": "C01",
+      "status": "Not Run"
+    },
+    "N11": {
+      "case": "C04",
+      "status": "Not Run"
+    },
+    "N12": {
+      "case": "C02",
+      "status": "Not Run"
+    },
+    "N13": {
+      "case": "C09",
+      "status": "Not Run"
+    },
+    "N14": {
+      "case": "C07",
+      "status": "Not Run"
+    },
+    "N15": {
+      "case": "C01",
+      "status": "Not Run"
+    },
+    "N16": {
+      "case": "all",
+      "status": "Not Run"
+    },
+    "N17": {
+      "case": "C04",
+      "status": "Not Run"
+    },
+    "N18": {
+      "case": "all",
+      "status": "Not Run"
+    }
+  },
+  "interaction_examples": {
+    "atom_number_base": 1,
+    "measurement_distance_atoms": [
+      1,
+      4
+    ],
+    "expected_distance_angstrom": 2.9,
+    "measurement_angle_atoms": [
+      2,
+      1,
+      3
+    ],
+    "label_atom_number": 1,
+    "profile_start_angstrom": [
+      0,
+      -2,
+      1.45
+    ],
+    "profile_end_angstrom": [
+      0,
+      2,
+      1.45
+    ],
+    "profile_case": "C04",
+    "slice_center_angstrom": [
+      0,
+      0,
+      1.45
+    ],
+    "read_cursor_inside_angstrom": [
+      0,
+      0,
+      1.45
+    ],
+    "read_cursor_invalid_angstrom": [
+      0,
+      0,
+      0
+    ],
+    "read_cursor_outside_angstrom": [
+      20,
+      20,
+      20
+    ]
+  },
+  "blockers": [
+    {
+      "group": "P02",
+      "reason": "Original Gaussian/NBO log excluded: data redistribution permission unverified. Separate acquisition grants no redistribution right."
+    }
+  ],
+  "regression": {
+    "log_job_number": 2,
+    "next_fchk": "P03-water-dimer",
+    "expected_fchk_job_number": 1,
+    "expected_fchk_atomic_numbers": [
+      8,
+      1,
+      1,
+      8,
+      1,
+      1
+    ],
+    "gui_status": "Not Run"
+  },
+  "tolerances": {
+    "coordinates_angstrom": 3e-06,
+    "scalar_energy_hartree": 6e-07,
+    "printed_log_energy_hartree": 1e-09,
+    "cube_formula_abs": 3e-06
+  }
+}

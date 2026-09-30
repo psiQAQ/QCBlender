@@ -14,7 +14,8 @@
         "tools/prepare_sop_fixture.py"
       ],
       "source_url": "https://raw.githubusercontent.com/cclib/cclib/f90be37ffa1ab4cfec97495bdd01d670ca329f17/LICENSE",
-      "license": "BSD-3-Clause"
+      "license": "BSD-3-Clause",
+      "data_license_status": "unverified; code license does not establish data permission"
     },
     "complex-examples/Trp_polar.fchk": {
       "id": "S03",
@@ -31,7 +32,8 @@
         "SOP C09"
       ],
       "source_url": "https://raw.githubusercontent.com/cclib/cclib/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data/FChk/basicGaussian16/Trp_polar.fchk",
-      "license": "BSD-3-Clause"
+      "license": "BSD-3-Clause",
+      "data_license_status": "unverified; code license does not establish data permission"
     },
     "complex-examples/Trp_polar.log": {
       "id": "S04",
@@ -46,7 +48,8 @@
         "SOP C03"
       ],
       "source_url": "https://raw.githubusercontent.com/cclib/cclib/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data/Gaussian/basicGaussian16/Trp_polar.log",
-      "license": "BSD-3-Clause"
+      "license": "BSD-3-Clause",
+      "data_license_status": "unverified; code license does not establish data permission"
     },
     "complex-examples/chemtools-LICENSE": {
       "id": "R004",
@@ -137,7 +140,8 @@
         "SOP C05"
       ],
       "source_url": "https://raw.githubusercontent.com/cclib/cclib/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data/Gaussian/basicGaussian16/dvb_ir.out",
-      "license": "BSD-3-Clause"
+      "license": "BSD-3-Clause",
+      "data_license_status": "unverified; code license does not establish data permission"
     },
     "complex-examples/dvb_un_sp.fchk": {
       "id": "S01",
@@ -153,7 +157,8 @@
         "SOP C04"
       ],
       "source_url": "https://raw.githubusercontent.com/cclib/cclib/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data/FChk/basicGaussian16/dvb_un_sp.fchk",
-      "license": "BSD-3-Clause"
+      "license": "BSD-3-Clause",
+      "data_license_status": "unverified; code license does not establish data permission"
     },
     "log-examples/README.md": {
       "id": "R011",
@@ -1280,6 +1285,85 @@
       "role": "generation log, command or provenance",
       "used_by": [
         "source provenance for SOP C07-C09"
+      ]
+    },
+    "public-tutorial/P03/igmh/dg_inter.cub": {
+      "id": "P03-igmh-dg_inter.cub",
+      "path": "tests/data/local/public-tutorial/P03/igmh/dg_inter.cub",
+      "bytes": 7732649,
+      "sha256": "daf5a7e79c7dcc67b244f3dc1d2d314795c9f318c931e4f25d36e72ea168a28e",
+      "role": "geometry",
+      "license": "CC-BY-4.0",
+      "source_url": null,
+      "provenance": "Owned tutorial calculation; tutorial-samples.json",
+      "used_by": [
+        "C07"
+      ]
+    },
+    "public-tutorial/P03/igmh/sl2r.cub": {
+      "id": "P03-igmh-sl2r.cub",
+      "path": "tests/data/local/public-tutorial/P03/igmh/sl2r.cub",
+      "bytes": 7732649,
+      "sha256": "18a33c308c868c9f7747128f1a23c04fc69df37fd5b9681aa5dd35ef20997958",
+      "role": "color",
+      "license": "CC-BY-4.0",
+      "source_url": null,
+      "provenance": "Owned tutorial calculation; tutorial-samples.json",
+      "used_by": [
+        "C03",
+        "C07"
+      ]
+    },
+    "public-tutorial/P03/iri/func2.cub": {
+      "id": "P03-iri-func2.cub",
+      "path": "tests/data/local/public-tutorial/P03/iri/func2.cub",
+      "bytes": 7732649,
+      "sha256": "f56bd9fddaaea4452a73c2d303262d90a34267370ea6ea68019d1f1d16a9bf61",
+      "role": "geometry",
+      "license": "CC-BY-4.0",
+      "source_url": null,
+      "provenance": "Owned tutorial calculation; tutorial-samples.json",
+      "used_by": [
+        "C07"
+      ]
+    },
+    "public-tutorial/P03/iri/func1.cub": {
+      "id": "P03-iri-func1.cub",
+      "path": "tests/data/local/public-tutorial/P03/iri/func1.cub",
+      "bytes": 7732649,
+      "sha256": "98efc19dd7ab101047c8f6176e24bc9651dbd47efae8a605cd2dd43d1754f5f4",
+      "role": "color",
+      "license": "CC-BY-4.0",
+      "source_url": null,
+      "provenance": "Owned tutorial calculation; tutorial-samples.json",
+      "used_by": [
+        "C07"
+      ]
+    },
+    "public-tutorial/P03/color.cube": {
+      "id": "P03-cube",
+      "path": "tests/data/local/public-tutorial/P03/color.cube",
+      "bytes": 7732649,
+      "sha256": "18a33c308c868c9f7747128f1a23c04fc69df37fd5b9681aa5dd35ef20997958",
+      "role": "byte-identical alias",
+      "license": "CC-BY-4.0",
+      "source_url": null,
+      "provenance": "Owned tutorial calculation; tutorial-samples.json",
+      "used_by": [
+        "C03"
+      ]
+    },
+    "public-tutorial/P05/nocv/nocv-pair1.cub": {
+      "id": "P05-nocv-pair1.cub",
+      "path": "tests/data/local/public-tutorial/P05/nocv/nocv-pair1.cub",
+      "bytes": 1922861,
+      "sha256": "d6d3ec263d5173261791f997eabd78b8112f6685abc3bd851c70deec86a82e33",
+      "role": "external ETS-NOCV",
+      "license": "CC-BY-4.0",
+      "source_url": null,
+      "provenance": "Owned tutorial calculation; tutorial-samples.json",
+      "used_by": [
+        "C13"
       ]
     }
   },
