@@ -16,3 +16,5 @@ Blocked by: 05
 ## Comments
 
 - f458 的受限目录尚未完成保全，清理尚未执行。
+
+- 2026-09-30：未领取，仅完成只读盘点。主检出仍在 47fd82c，Git 工作区无用户修改；两棵工作树仍登记。宿主及 Windows 扩展路径检查：f458 可读取 14,490 个文件，但 11 个目录和 3 个 portable.zip 仍访问拒绝，清单不完整，必须保留该工作树；b48c 可读取 24,294 个文件，无权限错误或链接。证据为 outputs/cleanup-followup/inventory/*-summary.json 与逐文件 JSONL 清单，记录大小和 SHA-256。清单中的单个 untracked 文件是 .git 指针，不是用户未跟踪内容。未迁移、合并或删除任何对象，清理状态 Not Run。
