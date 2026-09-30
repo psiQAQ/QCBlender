@@ -1,11 +1,13 @@
 # Triage 标签
 
-| 角色 | 本仓库标签 | 含义 |
+| 标签 / 技能角色 | 用途 | 理由 |
 | --- | --- | --- |
-| needs-triage | needs-triage | 待维护者评估 |
-| needs-info | needs-info | 等待补充信息 |
-| ready-for-agent | ready-for-agent | 规格与边界明确，可交给 Agent 实施 |
-| ready-for-human | ready-for-human | 需要人工操作或实施 |
-| wontfix | wontfix | 已决定不处理 |
+| needs-triage | 待维护者评估 | 需求还没有可执行的范围与优先级 |
+| needs-info | 等待补充信息 | 缺失输入会影响任务结果或边界 |
+| ready-for-agent | 规格与边界明确，可交给 Agent 实施 | 执行者已有判断完成所需的信息 |
+| ready-for-human | 需要人工操作或实施 | 用户签署或人工决定不能由 Agent 代办 |
+| wontfix | 已决定不处理 | 保留不实施的明确结论，避免重复领取 |
 
-技能提到 canonical role 时，使用同名标签；本配置不创建远端标签。
+技能提到 canonical role 时使用同名标签；执行进度仍按 [任务规则](issue-tracker.md) 写入 `Status`。理由：分派结论不等于任务执行完成。
+
+本配置不创建远端标签。理由：本地分类规则不提供外部写入授权。
