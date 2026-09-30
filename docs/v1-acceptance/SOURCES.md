@@ -184,3 +184,5 @@ Copy-Item P02/water_neutral_nbo_opt_freq.out P02/water_neutral_nbo_opt_freq.log
 生成与验证脚本为 `tools/generate_tutorial_samples.py`、`tools/generate_tutorial_irc.py`、`tools/finalize_tutorial_samples.py`、`tools/verify_tutorial_samples.py`。根目录通过 `Path(__file__).resolve().parents[1]` 固定，外部工具/科学依赖取显式 reference-root；不依赖搬移旧生成脚本的 parents 层级。每次生成选新的不存在任务输出目录，保留真实输入/SCF CHK/Molden/FCHK、Multiwfn stdin/settings/stdout、TS Hessian/虚频/梯度和两方向 IRC 接受轨迹，避免覆盖原输入。
 
 完整本次证据为 `outputs/evidence/2026-09-30/public-tutorial/samples/`，科学/包验收 `final-validation.json`；GUI、独立冷重开、移动重开、科研签署为 Not Run。
+
+维护者核查：`tools/verify_tutorial_samples.py` 的常规模式使用插件科学环境，不要求 PySCF。原始 PySCF CHK 与 FCHK 密度互校须在既有计算环境中显式加 `--checkpoints`；报告单列 `original_checkpoint_density`，未运行时为 Not Run。该环境仅用于材料生成和来源互校，用户安装与教程不需要它。
