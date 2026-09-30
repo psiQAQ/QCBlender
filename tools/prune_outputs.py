@@ -176,11 +176,12 @@ def classify(path, migrated):
 def plan():
     REPORTS.mkdir(exist_ok=True)
     index = json.loads((ROOT / 'tests/data/local-inputs.json').read_text(encoding='utf-8'))['files']
-    migrated = {record['original_path']: record for record in index.values()}
-    for old, record in migrated.items():
+    migrated = {record['original_path']: record for record in index.values() if record.get('original_path')}
+    for record in index.values():
         target = ROOT / record['path']
         assert digest(target) == record['sha256'], target
-        if (ROOT / old).is_file():
+        old = record.get('original_path')
+        if old and (ROOT / old).is_file():
             assert digest(ROOT / old) == record['sha256'], old
     tracked = set(subprocess.check_output(['git', 'ls-files'], cwd=ROOT, text=True).splitlines())
     summary = defaultdict(lambda: {'files': 0, 'bytes': 0})

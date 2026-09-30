@@ -174,7 +174,7 @@ else:
     rejected('no-adjacent', 'no adjacent valid', samples=2)
     rejected('missing-color', 'no color field', field_role='COLOR')
     analytic['qc_dataset_sha256'] = 'f' * 64
-    rejected('changed-binding', 'binding changed')
+    rejected('changed-binding', '显示层与体场来源摘要不同')
     analytic['qc_dataset_sha256'] = digest(directory / 'manifest.json')
     layers.activate(bpy.context, curve)
     assert bpy.ops.qcblender.layer_action(target=curve.name, action='DUPLICATE') == {'FINISHED'}

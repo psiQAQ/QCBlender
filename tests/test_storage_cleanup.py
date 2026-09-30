@@ -79,6 +79,24 @@ class PolicySafety(unittest.TestCase):
         with patch.object(Path, 'is_file', return_value=True), patch.object(cleanup, 'digest', side_effect=PermissionError('denied')):
             self.assertEqual(cleanup.classify(self.root / 'old/library.whl', {})[0], 'keep')
 
+    def test_generated_canonical_input_is_verified_without_a_migration_origin(self):
+        input_file = self.root / 'tests/data/local/generated.cub'
+        input_file.parent.mkdir(parents=True)
+        input_file.write_bytes(b'owned generated field')
+        index = self.root / 'tests/data/local-inputs.json'
+        index.write_text(json.dumps({'files': {'generated.cub': {
+            'path': 'tests/data/local/generated.cub', 'sha256': cleanup.digest(input_file)}}}), encoding='utf-8')
+        output = self.root / 'outputs'
+        output.mkdir()
+        with patch.object(cleanup, 'ROOT', self.root), patch.object(cleanup, 'OUTPUTS', output), \
+             patch.object(cleanup, 'REPORTS', output / 'receipts'), \
+             patch.object(cleanup.subprocess, 'check_output', return_value=''):
+            cleanup.plan()
+            self.assertTrue((output / 'receipts/summary.json').is_file())
+            input_file.write_bytes(b'changed scientific input')
+            with self.assertRaises(AssertionError):
+                cleanup.plan()
+
     def test_invalid_policy_cannot_retire_shared_roots(self):
         path = self.root / 'policy.json'
         for data in ({'retired_profiles': ['../outside']}, {'retired_profiles': ['science']}, {'retired_task_roots': ['.']}, {'other': []}):
