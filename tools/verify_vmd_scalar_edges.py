@@ -4,7 +4,6 @@ import hashlib
 import json
 import math
 from pathlib import Path
-import shutil
 import sys
 
 import bpy

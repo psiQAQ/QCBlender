@@ -9,7 +9,7 @@ import numpy as np
 from qcblender.data import BOHR_ANGSTROM, load_dataset, save_dataset, orbital_selection
 from qcblender.evaluate import Grid, evaluate_field, evaluate_points
 from qcblender.evaluate import prepare
-from qcblender.readers import read_source, wavefunction
+from qcblender.readers import read_source
 from qcblender.association import compare_sources
 
 ROOT = Path(__file__).resolve().parents[1]

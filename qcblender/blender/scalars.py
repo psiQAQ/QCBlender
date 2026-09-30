@@ -83,6 +83,8 @@ def color_fraction(tree, inputs, value, minimum, center, maximum):
 def add_legend(obj, color_material, minimum, center, maximum, title, *, tree=None, text_material=None,
                destination=None):
     """Legend geometry reads the same range sockets and material as the colored view."""
+    from .assets import math
+
     modifier = view_modifier(obj)
     tree = modifier.node_group if tree is None else tree
     nodes, links = tree.nodes, tree.links
@@ -111,25 +113,15 @@ def add_legend(obj, color_material, minimum, center, maximum, title, *, tree=Non
     destination = output.inputs['Geometry'] if destination is None else destination
     original = destination.links[0].from_socket
 
-    def math_node(operation, *args):
-        node = nodes.new('ShaderNodeMath')
-        node.operation = operation
-        for index, arg in enumerate(args):
-            if isinstance(arg, (int, float)):
-                node.inputs[index].default_value = arg
-            else:
-                links.new(arg, node.inputs[index])
-        return node.outputs[0]
-
     def component(coefficients):
-        parts = [math_node('MULTIPLY', inputs.outputs[name], factor)
+        parts = [math(tree, 'MULTIPLY', inputs.outputs[name], factor)
                  for name, factor in zip(('Legend Length', 'Legend Width', 'Legend Text Size'), coefficients[:3])
                  if factor]
         if coefficients[3]:
             parts.append(coefficients[3])
         result = parts[0]
         for part in parts[1:]:
-            result = math_node('ADD', result, part)
+            result = math(tree, 'ADD', result, part)
         return result
 
     def offset(label):
@@ -154,8 +146,8 @@ def add_legend(obj, color_material, minimum, center, maximum, title, *, tree=Non
     xyz = nodes.new('ShaderNodeSeparateXYZ')
     links.new(position.outputs['Position'], xyz.inputs['Vector'])
     fraction = nodes.new('ShaderNodeMapRange')
-    links.new(math_node('MULTIPLY', inputs.outputs['Legend Length'], -.5), fraction.inputs['From Min'])
-    links.new(math_node('MULTIPLY', inputs.outputs['Legend Length'], .5), fraction.inputs['From Max'])
+    links.new(math(tree, 'MULTIPLY', inputs.outputs['Legend Length'], -.5), fraction.inputs['From Min'])
+    links.new(math(tree, 'MULTIPLY', inputs.outputs['Legend Length'], .5), fraction.inputs['From Max'])
     links.new(xyz.outputs['X'], fraction.inputs['Value'])
     geometry = grid.outputs['Mesh']
     for name, kind, value in [('qc_color_fraction', 'FLOAT', fraction.outputs['Result']),

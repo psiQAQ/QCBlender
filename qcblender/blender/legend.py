@@ -3,7 +3,7 @@ import math
 
 import bpy
 
-from .graph import tag_view, view_modifier
+from .graph import tag_view
 
 
 def _link(input_socket):

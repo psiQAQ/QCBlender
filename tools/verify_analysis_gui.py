@@ -1,5 +1,4 @@
 """Foreground panel and IRC undo/redo smoke check for saved analysis projects."""
-import importlib
 import json
 from pathlib import Path
 import sys

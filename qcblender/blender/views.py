@@ -184,17 +184,8 @@ def ensure_atom_visibility(obj):
 
 
 def atom_selection(tree, inputs):
-    nodes, links = tree.nodes, tree.links
-
-    def math_node(operation, first, second):
-        node = nodes.new('ShaderNodeMath')
-        node.operation = operation
-        for index, value in enumerate((first, second)):
-            if isinstance(value, (int, float)):
-                node.inputs[index].default_value = value
-            else:
-                links.new(value, node.inputs[index])
-        return node.outputs[0]
+    from .assets import math
+    nodes = tree.nodes
 
     atomic_number = nodes.new('GeometryNodeInputNamedAttribute')
     atomic_number.data_type = 'INT'
@@ -202,16 +193,16 @@ def atom_selection(tree, inputs):
     atom_id = nodes.new('GeometryNodeInputNamedAttribute')
     atom_id.data_type = 'INT'
     atom_id.inputs['Name'].default_value = 'qc_atom_id'
-    source_number = math_node('ADD', atom_id.outputs['Attribute'], 1)
+    source_number = math(tree, 'ADD', atom_id.outputs['Attribute'], 1)
     element = inputs.outputs['Element (0 = all)']
     last = inputs.outputs['Last Atom (0 = all)']
-    matches_element = math_node('MAXIMUM', math_node('COMPARE', element, 0),
-                                math_node('COMPARE', atomic_number.outputs['Attribute'], element))
-    after_first = math_node('SUBTRACT', 1, math_node('LESS_THAN', source_number, inputs.outputs['First Atom (1-based)']))
-    before_last = math_node('MAXIMUM', math_node('COMPARE', last, 0),
-                            math_node('SUBTRACT', 1, math_node('GREATER_THAN', source_number, last)))
-    return math_node('MULTIPLY', inputs.outputs['Selection'],
-                     math_node('MULTIPLY', matches_element, math_node('MULTIPLY', after_first, before_last)))
+    matches_element = math(tree, 'MAXIMUM', math(tree, 'COMPARE', element, 0),
+                           math(tree, 'COMPARE', atomic_number.outputs['Attribute'], element))
+    after_first = math(tree, 'SUBTRACT', 1, math(tree, 'LESS_THAN', source_number, inputs.outputs['First Atom (1-based)']))
+    before_last = math(tree, 'MAXIMUM', math(tree, 'COMPARE', last, 0),
+                       math(tree, 'SUBTRACT', 1, math(tree, 'GREATER_THAN', source_number, last)))
+    return math(tree, 'MULTIPLY', inputs.outputs['Selection'],
+                math(tree, 'MULTIPLY', matches_element, math(tree, 'MULTIPLY', after_first, before_last)))
 
 
 def field_view(directory, parent=None, index=0):

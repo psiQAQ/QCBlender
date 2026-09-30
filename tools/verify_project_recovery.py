@@ -1,5 +1,4 @@
 """Run against the relocated acceptance .blend in an isolated Blender process."""
-import hashlib
 import importlib
 import json
 from pathlib import Path
