@@ -675,8 +675,15 @@
   "blockers": [
     {
       "status": "Not Run",
-      "step": "Task 06 archive tags, normal worktree/branch removal and closing receipt",
-      "reason": "MCP technical acceptance and approved outputs cleanup passed; local repository closing steps in progress"
+      "step": "Legacy f458 cleanup",
+      "reason": "14 inaccessible objects, incomplete preservation; worktree and branch kept",
+      "receipt": "outputs/evidence/2026-10-01/public-tutorial-mcp/legacy-worktrees.json"
+    },
+    {
+      "status": "Failed",
+      "step": "Legacy b48c empty directory removal",
+      "reason": "Directory in use; no force or process termination",
+      "receipt": "outputs/evidence/2026-10-01/public-tutorial-mcp/legacy-worktrees.json"
     }
   ],
   "preferences": {
@@ -690,7 +697,7 @@
     "03": "resolved",
     "04": "resolved",
     "05": "resolved",
-    "06": "claimed",
+    "06": "resolved",
     "07": "resolved"
   },
   "updated": "2026-10-01",
@@ -1147,7 +1154,8 @@
       "status": "Passed",
       "path": "outputs/evidence/2026-10-01/public-tutorial-mcp/final-visible.json",
       "sha256": "cf9530fec7f3807fafc6f6b538e7fb81620e99865e872a35b56602c31407e69e",
-      "pid": 21116
+      "pid": 21116,
+      "scope": "Final independent visible candidate remains connected to MCP; original user session is retained separately."
     },
     "current_visible_screenshot": {
       "status": "Passed",
@@ -1155,5 +1163,37 @@
       "sha256": "786ecd5be7e919415254fc55ab5659787db8c8a4bb1cb11c9ca5267e7b978e30",
       "pid": 21116
     }
+  },
+  "cleanup": {
+    "status": "Passed",
+    "scope": "Current public-tutorial task06 local archive and safe cleanup; legacy blocked tasks remain unresolved",
+    "receipt": "outputs/evidence/2026-10-01/public-tutorial-mcp/closing.json",
+    "receipt_sha256": "063336b04a350241a5ac8309d52386e045afe19e1372ca01d63307ded66e0328",
+    "archive_tags": [
+      {
+        "tag": "archive/2026-10-01/chore/tutorial-samples",
+        "commit": "efe92ca78578e7fd6735022793aa777d074a2fc9"
+      },
+      {
+        "tag": "archive/2026-10-01/chore/node-layout",
+        "commit": "94bf280153c344b2c90a533307bd313400d7a0bb"
+      },
+      {
+        "tag": "archive/2026-10-01/docs/public-tutorial",
+        "commit": "59bdde88047b66b7289cba166b26b02fa00deaa0"
+      },
+      {
+        "tag": "archive/2026-10-01/chore/tutorial-validation",
+        "commit": "0a90411865496223b97e96dba195d8e30b0e5c8f"
+      }
+    ],
+    "storage_report": "outputs/evidence/2026-10-01/public-tutorial-mcp/cleanup-prep/storage-result.json",
+    "storage_report_sha256": "37a1cf01d08d1d10585370d5a4dd6ba100ea59298f15271a09f2379d1c0b6465",
+    "preservation_map": "outputs/evidence/2026-10-01/public-tutorial-mcp/cleanup-prep/preservation-mapping-final.json",
+    "preservation_map_sha256": "c544d10c5ce1d90bc243ac37413468682ae5c49c83e250af2da52f7d94b6d20c",
+    "deleted_files": 24750,
+    "deleted_bytes": 1845200762,
+    "net_bytes_reduced": 1573886482,
+    "old_blocked_tasks_resolved": false
   }
 }
