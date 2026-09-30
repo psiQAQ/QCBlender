@@ -15,6 +15,7 @@ Date: 2026-09-30
 04 教程定稿：依赖 01、03，同教程 Agent；具体参数来自已核验 manifest。
 05 综合验证：依赖 02、04，主 Agent。
 06 证据与归档：依赖 05，主 Agent。
+07 验证配置隔离：本轮安装检查发现隔离遗漏后补充，主 Agent；05 验收前须完成。
 
 共享的 AGENTS、spec、CHANGELOG、ARTIFACTS、验证索引由主 Agent 维护。每个 Agent 只领取并更新所属任务文件。三个子分支按样本、节点、教程顺序合入 main；未合入分支 rebase 到当前 main 并复验。协调分支在三个子分支合入后 fast-forward 到 main。
 

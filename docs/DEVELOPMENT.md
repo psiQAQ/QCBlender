@@ -26,11 +26,14 @@ $sourceCommit = git rev-parse HEAD
 if ($LASTEXITCODE -ne 0) { throw 'Cannot identify source commit' }
 $utf8 = [System.Text.UTF8Encoding]::new($false)
 $env:BLENDER_USER_RESOURCES = "$batch/profile"
+$env:BLENDER_USER_CONFIG = "$env:BLENDER_USER_RESOURCES/config"
+$env:BLENDER_USER_EXTENSIONS = "$env:BLENDER_USER_RESOURCES/extensions"
+$env:BLENDER_USER_DATAFILES = "$env:BLENDER_USER_RESOURCES/datafiles"
 $env:BLENDER_USER_CACHE = "$batch/cache"
 $env:TEMP = "$batch/process-temp"
 $env:TMP = $env:TEMP
 $env:UV_CACHE_DIR = "$repo/outputs/uv-cache"
-New-Item -ItemType Directory -Force -Path $env:TEMP,"$batch/logs" | Out-Null
+New-Item -ItemType Directory -Force -Path $env:BLENDER_USER_CONFIG,$env:BLENDER_USER_EXTENSIONS,$env:BLENDER_USER_DATAFILES,$env:TEMP,"$batch/logs" | Out-Null
 
 function Invoke-QCCheck([string]$name, [string]$executable, [string[]]$arguments) {
     Write-Output ("Running: " + $name)
@@ -52,7 +55,7 @@ function Invoke-QCCheck([string]$name, [string]$executable, [string[]]$arguments
 }
 ~~~
 
-Blender 路径按本机安装修改。构建工具写入仓库的 outputs/build-site；科学测试依赖写入 outputs/science，不向 Blender Python 的安装目录写入包。部分旧工具固定写入 outputs/node-assets、outputs/acceptance 或 outputs/recovery，须在新工作树执行，或先确保没有上一批同名产物。
+Blender 路径按本机安装修改。 CONFIG、EXTENSIONS 和 DATAFILES 必须显式指定并在 Blender 启动前创建；仅设置资源根目录时，缺少子目录可能回退到用户默认配置。安装脚本先核对本批实际目录，校验通过后才安装。构建工具写入仓库的 outputs/build-site；科学测试依赖写入 outputs/science，不向 Blender Python 的安装目录写入包。部分旧工具固定写入 outputs/node-assets、outputs/acceptance 或 outputs/recovery，须在新工作树执行，或先确保没有上一批同名产物。
 
 ## 必要输入与前置检查
 

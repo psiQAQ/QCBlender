@@ -1,8 +1,8 @@
 # 05 综合验证
 
 Triage: ready-for-agent
-Status: pending
-Blocked by: 02, 04
+Status: claimed
+Blocked by: 02, 04, 07
 
 ## 验收
 
@@ -11,3 +11,4 @@ Blocked by: 02, 04
 ## Comments
 
 - 2026-09-30：按用户已批准实施计划建立任务；尚未领取或运行验收。
+- 2026-09-30：主 Agent 领取；02/04/07 已 resolved。新候选绑定本次固定 main 提交，脚本核对与 Computer Use 实际点击分别记录。

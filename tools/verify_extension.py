@@ -3,6 +3,7 @@ import hashlib
 import argparse
 import importlib
 import json
+import os
 from pathlib import Path
 import sys
 import time
@@ -66,7 +67,13 @@ if '--reopen' in sys.argv:
     REPORT.write_text(json.dumps(report, indent=2), encoding='utf-8')
     print(json.dumps(report))
 else:
-    assert Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to(ROOT / 'outputs')
+    # Precreated explicit paths prevent Blender falling back to the user profile.
+    profile = Path(os.environ['BLENDER_USER_RESOURCES']).resolve(strict=True)
+    assert profile.is_relative_to(OUT.parent), profile
+    for kind in ('CONFIG', 'EXTENSIONS', 'DATAFILES'):
+        requested = Path(os.environ['BLENDER_USER_' + kind]).resolve(strict=True)
+        actual = Path(bpy.utils.user_resource(kind)).resolve(strict=True)
+        assert actual == requested and actual.is_relative_to(profile), (kind, actual, requested)
     assert bpy.ops.extensions.package_install_files(
         filepath=str(args.candidate.resolve()), repo='user_default',
         enable_on_install=True, overwrite=True) == {'FINISHED'}
