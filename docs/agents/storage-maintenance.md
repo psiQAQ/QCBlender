@@ -37,7 +37,7 @@
 
 ## 任务策略与路由
 
-`tools/prune_outputs.py --policy <JSON> --plan/--apply --report-dir <新目录>` 使用同一策略和清单；策略路径相对 outputs，字段为 `protected_paths`、`retired_task_roots`、`retired_profiles`。保护优先；未列入已审查任务范围的内容保留，独立测试环境只有明确列入 retired_profiles 才允许移除。共用 build-site/science/wheels、evidence/projects/candidates 自动保护。策略不得越界或通过链接引用外部目录。
+`tools/prune_outputs.py --policy <JSON> --plan/--apply --report-dir <新目录>` 使用同一策略和清单；策略路径相对 outputs，字段为 `protected_paths`、`retired_task_roots`、`retired_profiles`、`migrated_files`（已逐文件核对副本的旧文件）。保护优先；未列入已审查任务范围的内容保留，独立测试环境只有明确列入 retired_profiles 才允许移除。共用 build-site/science/wheels、evidence/projects/candidates 自动保护。策略不得越界或通过链接引用外部目录。
 
 先迁移必要日志、报告、生成脚本、源记录和必要截图并核对摘要，再审查删除清单。待删除文件必须有 SHA-256；执行时再次核对内容、大小、修改时间、策略和路径，任何变更、权限拒绝或链接都拒绝该项。缺摘要不删除，失败项原位保留，收据不覆盖。
 

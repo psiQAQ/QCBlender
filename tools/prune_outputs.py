@@ -71,7 +71,7 @@ def safe_output_path(path):
 
 def load_policy(path):
     data = json.loads(Path(path).read_text(encoding='utf-8'))
-    groups = {'protected_paths', 'retired_task_roots', 'retired_profiles'}
+    groups = {'protected_paths', 'retired_task_roots', 'retired_profiles', 'migrated_files'}
     if not isinstance(data, dict) or set(data) - groups:
         raise ValueError('Unknown cleanup policy fields')
     result = {}
@@ -91,11 +91,16 @@ def load_policy(path):
             if target == OUTPUTS:
                 raise ValueError('Policy cannot retire all outputs')
             result[group].append(target)
-    shared = [OUTPUTS / name for name in ('build-site', 'science', 'wheels', 'evidence', 'projects', 'candidates')]
+    shared = [OUTPUTS / name for name in ('build-site', 'science', 'wheels', 'backend-wheel.json', 'blender-runtime.json', 'evidence', 'projects', 'candidates')]
     for target in result['retired_profiles'] + result['retired_task_roots']:
         if any(target == protected or protected.is_relative_to(target) for protected in shared):
             raise ValueError('Cannot retire shared environments or canonical retained roots')
+    result = {group: set(paths) for group, paths in result.items()}
     return result
+
+
+def covered(path, roots):
+    return any(parent in roots for parent in (path, *path.parents))
 
 
 def verify_entry(row):
@@ -114,12 +119,13 @@ def classify(path, migrated):
     rel = path.relative_to(OUTPUTS)
     parts = rel.parts
     if POLICY is not None:
-        protected = POLICY['protected_paths'] + [REPORTS] + [OUTPUTS / name for name in ('build-site', 'science', 'wheels', 'evidence', 'projects', 'candidates')]
-        if any(path.is_relative_to(root) for root in protected):
+        if parts[0] in ('build-site', 'science', 'wheels', 'backend-wheel.json', 'blender-runtime.json', 'evidence', 'projects', 'candidates') or path.is_relative_to(REPORTS) or covered(path, POLICY['protected_paths']):
             return 'keep', 'explicit protected path or shared retained root'
-        if any(path.is_relative_to(root) for root in POLICY['retired_profiles']):
+        if path in POLICY.get('migrated_files', []):
+            return 'delete', 'hash-verified migrated evidence or input'
+        if covered(path, POLICY['retired_profiles']):
             return 'delete', 'verified ended-session isolated environment'
-        if not any(path.is_relative_to(root) for root in POLICY['retired_task_roots']):
+        if not covered(path, POLICY['retired_task_roots']):
             return 'keep', 'outside reviewed retired tasks'
     if parts[0] in ('recovery', 'branch-archive'):
         return 'keep', 'preserved project or cleanup evidence'
@@ -157,8 +163,11 @@ def classify(path, migrated):
         return 'delete', 'generated scientific dataset or display cache'
     if path.suffix == '.whl':
         canonical = OUTPUTS / 'wheels' / path.name
-        if canonical.is_file() and digest(canonical) == digest(path):
-            return 'delete', 'duplicate of retained shared wheel'
+        try:
+            if canonical.is_file() and digest(canonical) == digest(path):
+                return 'delete', 'duplicate of retained shared wheel'
+        except OSError:
+            return 'keep', 'wheel identity inaccessible; retained for review'
     if path.suffix in TEXT or path.name.lower().startswith(('license', 'copying')):
         return 'keep', 'log, report, generation script or provenance'
     return 'keep', 'unclassified; retained for review'
@@ -201,7 +210,7 @@ def plan():
                 summary[key]['bytes'] += row['bytes']
                 stream.write(json.dumps(row, ensure_ascii=False) + '\n')
     result = {'categories': dict(summary), 'skipped': skipped, 'status': 'Planned',
-              'policy': {key: [str(path) for path in paths] for key, paths in POLICY.items()} if POLICY is not None else None}
+              'policy': {key: sorted(str(path) for path in paths) for key, paths in POLICY.items()} if POLICY is not None else None}
     (REPORTS / 'summary.json').write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
     print(json.dumps(result['categories'], ensure_ascii=False, indent=2))
 
@@ -210,7 +219,7 @@ def apply():
     # Every target is a manifest file, under this repository, with unchanged stat data.
     failures, removed, protected = [], {'files': 0, 'bytes': 0}, 0
     saved = json.loads((REPORTS / 'summary.json').read_text(encoding='utf-8'))
-    active = {key: [str(path) for path in paths] for key, paths in POLICY.items()} if POLICY is not None else None
+    active = {key: sorted(str(path) for path in paths) for key, paths in POLICY.items()} if POLICY is not None else None
     assert saved.get('policy') == active, 'policy changed after inventory'
     def verify(row):
         try:

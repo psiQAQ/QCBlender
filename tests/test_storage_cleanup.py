@@ -40,8 +40,13 @@ class PolicySafety(unittest.TestCase):
         patch.object(cleanup, 'POLICY', {'protected_paths': [self.root / 'old/profile/project'], 'retired_task_roots': [self.root / 'old'], 'retired_profiles': [self.root / 'old/profile']}).start()
 
     def test_explicit_protection_and_retirement(self):
-        for path, expected in [('old/profile/project/a.npy', 'keep'), ('old/profile/extensions/a.dll', 'delete'), ('old/scene.blend', 'delete'), ('unknown/scene.blend', 'keep'), ('science/a.npy', 'keep'), ('evidence/a.png', 'keep')]:
+        for path, expected in [('old/profile/project/a.npy', 'keep'), ('old/profile/extensions/a.dll', 'delete'), ('old/scene.blend', 'delete'), ('unknown/scene.blend', 'keep'), ('science/a.npy', 'keep'), ('backend-wheel.json', 'keep'), ('evidence/a.png', 'keep')]:
             self.assertEqual(cleanup.classify(self.root / path, {})[0], expected, path)
+
+    def test_verified_migration_can_retire_a_report_without_retiring_other_logs(self):
+        cleanup.POLICY['migrated_files'] = [self.root / 'old/report.json']
+        self.assertEqual(cleanup.classify(self.root / 'old/report.json', {})[0], 'delete')
+        self.assertEqual(cleanup.classify(self.root / 'old/other.log', {})[0], 'keep')
 
     def test_content_change_with_preserved_size_and_time_is_rejected(self):
         import os
@@ -69,6 +74,10 @@ class PolicySafety(unittest.TestCase):
         with patch.object(Path, 'is_junction', return_value=True):
             with self.assertRaisesRegex(AssertionError, 'link or junction'):
                 cleanup.safe_output_path(self.root / 'old/a.dll')
+
+    def test_inaccessible_canonical_wheel_is_kept(self):
+        with patch.object(Path, 'is_file', return_value=True), patch.object(cleanup, 'digest', side_effect=PermissionError('denied')):
+            self.assertEqual(cleanup.classify(self.root / 'old/library.whl', {})[0], 'keep')
 
     def test_invalid_policy_cannot_retire_shared_roots(self):
         path = self.root / 'policy.json'

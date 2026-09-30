@@ -16,7 +16,7 @@
 $blender = 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe'
 $blenderPython = 'C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe'
 $repo = (Get-Location).Path
-$batch = "$repo/outputs/runs/<任务名>/<新批次>"
+$batch = "$repo/outputs/runs/cleanup-followup/qcf1"
 $qa = "$batch/qa"
 $scienceSite = "$repo/outputs/science"
 $wheels = "$repo/outputs/wheels"
