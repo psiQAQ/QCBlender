@@ -147,7 +147,18 @@ else:
     analytic = views.field_view(directory)
     gap, data = create(analytic, coordinates[0, 1, 1], coordinates[4, 1, 1], 'Gap profile', count=5)
     np.testing.assert_array_equal(data.arrays['profile_valid'], [True, True, False, True, True])
-    assert len(gap.data.splines) == 2 and [len(s.points) for s in gap.data.splines] == [2, 2]
+    # Sample paths precede the two axes and their ticks in the saved chart.
+    splines = list(gap.data.splines)
+    assert len(splines) == 4 + gap['qc_profile_x_ticks'] + gap['qc_profile_y_ticks']
+    assert [len(s.points) for s in splines[:2]] == [2, 2]
+    chart = json.loads(gap['qc_chart'])
+    expected = np.zeros((5, 3))
+    expected[:, 0] = ((data.arrays['profile_distance'] - chart['x_min'])
+                      * gap['qc_profile_width'] / (chart['x_max'] - chart['x_min']))
+    expected[:, 2] = ((data.arrays['profile_values'] - chart['y_min'])
+                      * gap['qc_profile_height'] / (chart['y_max'] - chart['y_min']))
+    for spline, indices in zip(splines[:2], ([0, 1], [3, 4]), strict=True):
+        np.testing.assert_allclose([point.co[:3] for point in spline.points], expected[indices], atol=1e-6)
     valid = data.arrays['profile_valid']
     np.testing.assert_allclose(data.arrays['profile_values'][valid], data.arrays['profile_positions'][valid] @ [2, -3, .5] + 1)
     _, outside = create(analytic, coordinates[0, 1, 1] - 2 * grid_steps[0], coordinates[4, 1, 1], 'Outside profile', count=13)

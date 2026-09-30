@@ -196,7 +196,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 2. **Analysis** 选 IGMH，分别在 **Geometry Cube** 与 **sign(lambda2)rho Cube** 填清单文件，填 **Geometry value unit、Color value unit、Color minimum/maximum**，确认。再次以 IRI 输入其成对文件和 **IRI density exponent a**；片段、方法/版本、a、网格与单位按真实生成记录核对，不能用另一类几何场替代。
 3. 选几何场改等值与色域：位置由几何场、颜色由第二场决定；查看来源核对两输入 SHA 与完全相同网格。
 4. 选散点对象，打开 **对象属性 → External Result Browser**，核对横/纵轴量名/单位，改上下界并点 **更新散点**，交换轴重复。核对匹配总数/显示数；最多显示 50,000 点是显示抽样，不是删除科学数组。
-5. 错误输入检查只用包内真实不匹配场组合：Geometry保留 **P03/igmh/dg_inter.cub**，Color误选 **P05/nocv/nocv-pair1.cub**，观察拒绝与错误；记录网格/构型不匹配的实际错误，再恢复正确配对；不修改原Cube。
+5. 错误输入检查前重新选择 **P03参考原子对象**，重新打开配对导入，选 **IGMH** 并重填对应单位。Geometry使用 **P03/igmh/dg_inter.cub**，Color误选 **P05/nocv/nocv-pair1.cub**，应先因原子身份/构型不匹配拒绝；记录实际错误，这个组合不单独证明网格检查通过。然后恢复正确配对；不修改原Cube。
 6. 对应 N06/N07/N14/N16，按 0.4 保存 `C07-igmh.png`、`C07-iri.png`、`C07-scatter.png`、总览与工程。
 
 **截图槽：** 成对场对话框 [用户截图待引用]；IGMH/IRI [用户截图待引用]；散点轴/筛选 [用户截图待引用]；错误拒绝 [用户截图待引用]。
@@ -244,7 +244,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 1. 打开 C10 工程另存 C11，选 **IRC 根原子对象**，在 **对象属性 → IRC Path → Import Mayer Results** 在 **CSV manifest: step,mayer_output** 指定清单的 Mayer CSV。
 2. 选择新 Mayer 记录对象，在 **IRC Path** 填 **Atom A (1-based)、Atom B (1-based)**，点击实际按钮 **Plot Pair**；核对原子对、每步值/无量纲单位和源文本。
 3. 切 IRC 步观察构型、键级曲线游标及显示值同步，再换原子对点 Plot Pair。距离推断显示键不是 Mayer 值。
-4. 在 **inputs/P04/** 复制Mayer CSV为 **checks-missing-mayer.csv**，用文本编辑器删除step3的数据行并保存UTF-8，相对文本路径保留；用该副本导入应拒绝缺步。记录新副本摘要/错误，恢复完整原CSV。按 0.4 保存 `C11-curve.png`、`C11-records.png`、总览与工程。
+4. 缺步检查在**尚无Mayer表的IRC根**上执行：重新打开C10工程的独立副本，或从完整steps.csv新建IRC路径，再选根对象。在 **inputs/P04/** 复制Mayer CSV为 **checks-missing-mayer.csv**，删除step3的数据行并保存UTF-8，相对文本路径保留；用副本导入应报 **Mayer step count differs from the IRC path**，且不产生新表。记录副本摘要/实际错误，再导入完整原CSV；已有Mayer表的拒绝不计为缺步检查通过。按 0.4 保存 `C11-curve.png`、`C11-records.png`、总览与工程。
 
 **截图槽：** Mayer CSV [用户截图待引用]；原子对/数值 [用户截图待引用]；切步曲线 [用户截图待引用]。
 
@@ -266,7 +266,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 1. 打开 C12 工程另存 C13，选 **ETS-NOCV 表对象**，点 **导入外部结果 → NOCV pair Cube**，在 **Pair number、Spin、Signed pair Cube、Deformation density unit** 填清单 pair 编号、自旋、Cube 路径与数值已有单位，确认等待。
 2. 选新 pair 场核对表行/pair/spin、参考构型、Cube SHA 和密度单位；不能用 canonical MO Cube 冒充 NOCV 密度。
 3. 在 **几何表示** 分别显示正/负值，关 Link Thresholds 后各自改阈值，在材质属性改透明度。正负值为形变密度的符号，不能套用 MO 相位解释。
-4. 用表中确实不存在的 pair 或错误自旋复核拒绝，记录错误，随后恢复合法输入。对应 N04/N05/N16，按 0.4 保存 `C13-positive.png`、`C13-negative.png`、总览与工程。
+4. 先重新选择 **C12的ETS-NOCV表对象**，再打开pair Cube导入，用表中不存在的pair **999** 或错误Spin **Alpha**复核关联拒绝；活动pair场不能作为导入参考。记录错误，随后恢复合法输入。对应 N04/N05/N16，按 0.4 保存 `C13-positive.png`、`C13-negative.png`、总览与工程。
 
 **截图槽：** pair/spin关联 [用户截图待引用]；两符号前后 [用户截图待引用]；错误拒绝 [用户截图待引用]。
 
