@@ -86,7 +86,11 @@ Invoke-QCCheck 'inputs' $blenderPython @('-I', 'tools/local_inputs.py')
 ~~~powershell
 Invoke-QCCheck 'prepare' $blenderPython @('-I', 'tools/prepare_build.py', '--uv', $uv)
 Invoke-QCCheck 'dependencies' $blenderPython @('-I', 'tools/fetch_dependencies.py')
+$sourceLockBytes = [System.IO.File]::ReadAllBytes("$repo/science-sources.lock.json")
 Invoke-QCCheck 'backend' $blenderPython @('-I', 'tools/build_science_backend.py')
+$sourceLockText = [System.IO.File]::ReadAllText("$repo/science-sources.lock.json").Replace("`r`n", "`n")
+if ($sourceLockText -ne $utf8.GetString($sourceLockBytes).Replace("`r`n", "`n")) { throw 'Science source lock changed' }
+[System.IO.File]::WriteAllBytes("$repo/science-sources.lock.json", $sourceLockBytes)
 $locked = Get-Content dependencies.lock.json -Raw | ConvertFrom-Json
 $backend = Get-Content outputs/backend-wheel.json -Raw | ConvertFrom-Json
 $scienceWheels = @($locked.packages.filename) + @($backend.filename)
@@ -94,7 +98,7 @@ $scienceWheels = @($scienceWheels | ForEach-Object { Join-Path $wheels $_ })
 Invoke-QCCheck 'science-install' $uv (@('pip', 'install', '--python', $blenderPython, '--target', $scienceSite, '--no-deps') + $scienceWheels)
 ~~~
 
-prepare_build 固定工具版本，fetch_dependencies 核对每个 wheel，build_science_backend 从固定 GBasis 源码生成纯 Python wheel 和 outputs/backend-wheel.json。完成后检查依赖锁及科学源码锁没有改动。首次路径接着执行下方共同流程，不提前调用 build_extension。
+prepare_build 固定工具版本，fetch_dependencies 核对每个 wheel，build_science_backend 从固定 GBasis 源码生成纯 Python wheel 和 outputs/backend-wheel.json。科学源码锁由工具重写时，仅在文本完全一致后恢复其原字节，保留原有换行；内容变化直接失败。完成后检查两个锁文件没有改动。首次路径接着执行下方共同流程，不提前调用 build_extension。
 
 ## 增量构建准备
 
@@ -166,11 +170,11 @@ Copy-Item -LiteralPath 'outputs/acceptance/recovery.json' -Destination "$batch/r
 
 ## 图例专项
 
-out 必须为绝对路径；继续使用本批已安装扩展配置，配置位于图例目录的父目录内。
+out 必须为绝对路径；继续使用本批已安装扩展配置，配置位于图例目录的父目录内。先打开安装检查生成的 mo8.blend：图例专项从该工程取得 MO 视图，再创建密度/ESP 场；空场景不满足前置条件。
 
 ~~~powershell
 $legend = "$batch/legend"
-Invoke-QCCheck 'legend' $blender @('--background', '--factory-startup', '--offline-mode', '--disable-autoexec', '--python-exit-code', '1', '--python', 'tools/verify_mn_legend.py', '--', '--check', 'legend', '--out', $legend)
+Invoke-QCCheck 'legend' $blender @('--background', '--offline-mode', '--disable-autoexec', "$qa/mo8.blend", '--python-exit-code', '1', '--python', 'tools/verify_mn_legend.py', '--', '--check', 'legend', '--out', $legend)
 Copy-Item -LiteralPath "$legend/checks.json" -Destination "$batch/legend.json"
 Invoke-QCCheck 'legend-cold-original' $blender @('--background', '--offline-mode', '--disable-autoexec', "$legend/evidence.blend", '--python-exit-code', '1', '--python', 'tools/verify_mn_legend.py', '--', '--check', 'reopen', '--out', $legend)
 Copy-Item -LiteralPath "$legend/checks.json" -Destination "$batch/legend-cold-original.json"
@@ -178,7 +182,7 @@ Invoke-QCCheck 'legend-cold-moved' $blender @('--background', '--offline-mode', 
 Copy-Item -LiteralPath "$legend/checks.json" -Destination "$batch/legend-cold-moved.json"
 ~~~
 
-检查实际渲染。更广范围按改动选择 [SOP](v1-acceptance/SOP.md) 和专项工具；已有工具不等于每项命令对当前候选均通过。GUI 实际点击、完整 SOP、性能、独立人工签署及其他平台分别记录，不由包资格推导。
+检查实际渲染。图例初建和第一次重开的报告 status 为 Not Run，表示完整双冷重开链尚未完成；保留这些阶段快照，用第二次重开后的完整 Passed 报告参加资格汇总。更广范围按改动选择 [SOP](v1-acceptance/SOP.md) 和专项工具；已有工具不等于每项命令对当前候选均通过。GUI 实际点击、完整 SOP、性能、独立人工签署及其他平台分别记录，不由包资格推导。
 
 ## 生成索引与汇总资格
 
@@ -192,7 +196,7 @@ batch, candidate = map(lambda value: Path(value).resolve(), sys.argv[1:])
 digest = hashlib.sha256(candidate.read_bytes()).hexdigest()
 reports = ['science.json', 'node-assets.json', 'extension-install.json',
            'extension-cold-original.json', 'extension-cold-moved.json', 'recovery.json',
-           'legend.json', 'legend-cold-original.json', 'legend-cold-moved.json']
+           'legend-cold-moved.json']
 reports += [f'{name}-command.json' for name in
             ['test_copy_display', 'test_legend_layout', 'test_local_inputs', 'test_storage_cleanup',
              'helpers', 'install', 'cold-original', 'cold-moved', 'recovery',
