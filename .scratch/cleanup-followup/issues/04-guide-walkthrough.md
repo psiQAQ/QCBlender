@@ -1,7 +1,7 @@
 # 仅依据指南点击界面
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Type: task
 Blocked by: 03
 
@@ -17,6 +17,8 @@ Blocked by: 03
 逐项记录活动对象、实际路径、预期/实际结果和截图路径；检查者自行反馈。未执行保持 Not Run。本任务是操作指南检查，不改变独立科研验收签署。
 
 ## Comments
+
+- 2026-09-30：新候选 qcf3 的 MCP + Computer Use 实际检查 Passed。通过 N 侧栏按钮导入 Log、选择 Job 2，再打开新文件对话框导入 FCHK 成功；生成 Electron density（0.20 Å、margin 3 Å），点击记录剖面起点与创建线剖面（Geometry，101 点），点击保存自包含工程，关闭自建进程并由新可见进程重开，点击导出剖面 CSV。MCP 用于核对进程/数据、输入文件及保存路径、设置游标端点、准备活动对象与显示；核心入口及确认均由 Computer Use 实际点击，不用 Operator 调用代替。独立科研人工签署仍 Not Run。
 
 - 2026-09-30：用户追加授权修复导入参数复用缺陷，并由 Agent 通过 MCP + Computer Use 在独立可见 Blender 窗口完成剩余实际点击、保存和重开检查及截图。已发现并连接本地 Computer Use 组件；保留用户原有未保存窗口。新候选复验及实际点击尚未完成，状态保持 claimed；旧候选失败与用户已完成的两项仍单独保存。
 
@@ -35,6 +37,18 @@ Blocked by: 03
 - 在独立进程/配置安装或启用上述 ZIP；新工程和截图保存到 outputs/qcf2/human，不覆盖技术检查工程或已打开的用户工程。
 
 ## 操作记录
+
+本轮追加操作者：Agent，经用户授权使用 MCP + Computer Use；新候选、新进程检查与下面的旧候选用户反馈分别保留。自建可见进程 43840，冷重开进程 45216；未操作用户原有未保存窗口。
+
+| 操作 | 活动对象、实际路径及文字 | 预期与实际结果 | 证据（outputs/qcf3/gui/） | 状态 |
+| --- | --- | --- | --- | --- |
+| Log 后再次导入 FCHK | 水 Job 2 → N → QCBlender → 工作流 → 导入 Gaussian / Cube → 文件确认 | 新对话框计算段为 1；甲烷导入成功，5 原子、来源摘要匹配 | result-browser/checks.json 位于批次根的专项目录；start2.log | Passed |
+| 能量 | 水 Job 2 → 对象属性 → QCBlender · 对象与量子化学 → 科学记录与振动模式 | RHF / electronic_total / target，-74.9659011806 Hartree | energy-modes.png、energy-animation.json | Passed |
+| 模式与播放 | 同一对象；科学记录列表、高级参数 → Animate、时间轴播放/暂停 | 2169.7613、4141.3837、4392.5759 cm⁻¹ 列表可见；模式 1 实际播放，帧由 1 前进到 161，随后实际切换模式 2，频率和视图同步 | vibration-playing.png、energy-modes.png、energy-animation.json | Passed |
+| 剖面 | QC electron_number_density；N → 创建视图与检查工具 → 记录剖面起点、创建线剖面 | MCP 设置起点 (-1,0,0)、终点 (1,0,0)，实际点击 Geometry/101 点确认；101/101 有效，0–2 Å，electron/bohr³ | profile-created.png、profile-check.json | Passed |
+| 保存、重开、CSV | QC line profile；N → 工程与诊断 → 保存自包含工程；新可见进程重开；创建视图与检查工具 → 导出剖面 CSV | guide-check.blend/.qcdata 生成；5 个科学对象可读且路径位于配套目录；剖面数组摘要一致；CSV 101/101 valid，单位保留 | save-dialog.png、saved.png、cold-reopen.png、cold-reopen.json、profile-cold.csv | Passed |
+
+点击检查发现当前侧栏没有剖面有效点数摘要；指南改为曲线坐标轴显示单位、CSV 的 valid 列核对有效点数。该 CSV 导出路径已在上述重开检查中实际执行。
 
 实际操作者：用户；检查日期：2026-09-30。以下依据用户反馈及其截图记录，未反馈的路径或动作不推定为完成。受限原件和截图不进入 Git。
 

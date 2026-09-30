@@ -1,0 +1,623 @@
+{
+  "schema": 1,
+  "date": "2026-09-30",
+  "status": "Passed",
+  "scope": "Local technical qualification and authorized Agent GUI walkthrough; independent scientific signature Not Run",
+  "source": {
+    "commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+    "repository_tree": "d55923fd940ede6ba6a3ebb2630ecf7812c69faa",
+    "product_tree": "c0a54011974d7553a653b50ab12424769cde7ffe",
+    "product_files": {
+      "qcblender/__init__.py": "e9d96a34bad6549b06c83e11d6922fbd80f342fca7e86445c03511ab8b34e93f",
+      "qcblender/analysis_data.py": "de5ccf196fb485465e76ba0cc122da3192f421104b5c52122f9061364e1650d8",
+      "qcblender/asset_catalog.py": "6ea330239015f93758c75b207870de1ff57facf1c8d5bd418fcdeb35c5ac9b85",
+      "qcblender/association.py": "e9b8f0d9e462f3ecf0e5b6c428f3cce2a5378404871c50bd23a58cf825fee000",
+      "qcblender/atom_selection.py": "d0ec3197dbe4b3d21bdf2158e2cc9cabff85867aee37460d989b0c583676e979",
+      "qcblender/auto_load.py": "8d95bd858ee742fc4c62266a24bbf8c3c3e9dff8be6afd3e1666934f012488ff",
+      "qcblender/blender/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530",
+      "qcblender/blender/asset_library.py": "3d22ca8e6c41f0fc6c0c141986cc6e964e59858507c01a7daa8da96dc493f6a4",
+      "qcblender/blender/assets.py": "7b9738469040f90dc915d45c2322d29029f44c5453db2e0531eb12980ca46536",
+      "qcblender/blender/association.py": "f7a3e17c966e95b5def5fe5f410463435d8a42867769dbb6d476b2d8ee618f19",
+      "qcblender/blender/atom_selection.py": "4e0464b519f6f9b4d0936245a48be4bae9e44939845ce7fe4e7032d263c32b3f",
+      "qcblender/blender/atomic_properties.py": "c23386b65af69a91d62fb91232b1acb12e07646d0b9dd729c171762c152513f0",
+      "qcblender/blender/camera.py": "772edbed6be940510b575126bb4993abe63b43283c8e6146566edb3668ee1410",
+      "qcblender/blender/capabilities.py": "e99bbdbf87fb0a2e08160c65e6d2b405a917d4ca5bc738b2baae46c89f099386",
+      "qcblender/blender/charts.py": "fff768253e3a791469dfa718c163762b86389224803af26e81ee4d0fcfb9e6e4",
+      "qcblender/blender/color_ranges.py": "b98e223cb8e543d2ad23867a3ce25afa9797371a16dc550cea0924ae73c781ef",
+      "qcblender/blender/copy_display.py": "e6c7d9a51c98b0c67c921a89af3178317f40612427d683c9b0bd64a628c66e1b",
+      "qcblender/blender/editor_ui.py": "269798fc1a5580e591902594f80d5194fa99e368f20d426f99279d75098c0d40",
+      "qcblender/blender/external_fields.py": "1c83fd33cb8a561caa312450e74a52bd8bfc09dc6d654eb03c2468cb7869c8cb",
+      "qcblender/blender/external_results.py": "afb27eb59f1e6920887d9b26f6f926bcdaf2ac0b96ff18e7b7d591581a02ca1f",
+      "qcblender/blender/fog.py": "b538f461b7ab6ce9a3bf5b91d543abb91e12f803a128d56147941ddb15482d62",
+      "qcblender/blender/geometry.py": "b3f453dc1943e7488b1bee33c761b874178c9ad9c8a25e855732cb50ddbd82ca",
+      "qcblender/blender/graph.py": "8863c2f776bc55e91728ffff9bcb7d52185d678386a234cafa780c7e6e829220",
+      "qcblender/blender/inspection.py": "d4f143a48a2327bd2ee3038927ffeed4e1fdd26868f79b7f0e66ffdd4a2db93c",
+      "qcblender/blender/interaction.py": "0130d6c98d3a56a1e021138ab98aa353cb7aa0c03f97bc02c945143f876ed265",
+      "qcblender/blender/irc.py": "a7da528854039e0e3bb9c030e87d081602448f6adc9ef7777b670106dbd6a23f",
+      "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+      "qcblender/blender/layers.py": "e01afa1d2b39c9edeaa069f5c77ea7a5e6ac4bf8f2f0580730012de5985e3843",
+      "qcblender/blender/legend.py": "e8f0fdacb9cf34c9a397d636ff7b581792673a3fe17a4e92f621fbcf5b53c2f8",
+      "qcblender/blender/legend_layout.py": "6b63cb9819e7e9c0df1e8d75337182b6b46c8042b4e64970bde58669dd62ef34",
+      "qcblender/blender/nbo.py": "67b548afac2b59fd18955a2c2f24407e465cdfe1afe1943db43a69e9fd1dfeef",
+      "qcblender/blender/nocv.py": "944a5cc1effe9b05111a8bfe8417f0f720ca740dc42f3586d497a9d727ef267e",
+      "qcblender/blender/optimization.py": "7fabbdce3791ecea4d26680589bd816a727d20b494801242278d7e705471823b",
+      "qcblender/blender/parameters.py": "8920b314c0d2ac09246435d45da7de144565ffdc4d1f1621c44be6faa78d160e",
+      "qcblender/blender/profile.py": "4eb27fa9f96261ccf01cf25e8803525692bf2ea8cd175530bc7e9dfc5a214cc1",
+      "qcblender/blender/project.py": "30181040074a4ec38ce7f06e1d55e2dabc16e80a47ec4a1c95b5e1f75d543df4",
+      "qcblender/blender/properties.py": "aefa94f242a139524ddf6abf12f7f7d13b8a29cf00dc2668b1e18e3f23ed39dc",
+      "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+      "qcblender/blender/scalars.py": "4c4ad29287bce22733c67833d6c140fddb3feede88b33818bf2cf7b898b4fffc",
+      "qcblender/blender/source_browser.py": "8be0aa54c40d92cd6e3625b70aab3fc765e7548ab0ef071f1918e6e4e2c4e8a4",
+      "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+      "qcblender/blender/views.py": "e7ffeee0d5056bdc75aeb36d934ed5956a2563e4fa0491369cb13d3a4d4f34cd",
+      "qcblender/blender_manifest.toml": "f12911e546e85b61259288636865990f15571ed03ef3e57adbefe24cea0827bb",
+      "qcblender/contours.py": "8749f4ad3730eddf4dff40b718c436287a0fd53db9e06be28af1c179dda225cb",
+      "qcblender/cube.py": "9af0ad7091af18b5d526e368ff1ccacc129f2544df3e19573a76e926a57cfe14",
+      "qcblender/data.py": "58a45c8c03b99508db1dbd74d36b38bff518d64361b561249a0320293a7c1a70",
+      "qcblender/diagnostics.py": "d13054a55303d14d0816fe0a7900079d0590d5c46336221b7394207c95c92635",
+      "qcblender/evaluate.py": "172e7f0c7ff6406bb998c8f94d32858218b11ea9d0db5ef5a00917c682afe397",
+      "qcblender/external_fields.py": "87458b8656ca5fa157b6872ffe725de36e080662b5b623102600cd0f25dec508",
+      "qcblender/external_results.py": "34dae8703d9d6e2234c64132c78f33252e7e74d7b1a1410e58804920e5ebd7fb",
+      "qcblender/field_ranges.py": "9aebc0879acf99009d133617629afe096d466bb5c9399274bae3ce071b4f9e90",
+      "qcblender/framing.py": "3392a4ae99dd70609e5315bf2343bcbf7cad31369c2f7e3fb40812667a8c214a",
+      "qcblender/gaussian_log.py": "c479741fb9078d9c12e14474d29b91efc8705bea33848ffdf3bd6339112b41ff",
+      "qcblender/geometry.py": "ebfcc7b3fbdd170a192420d21932d555c550deefd0fcc65a1244b15aa1e34cd4",
+      "qcblender/irc.py": "80941cc9fb90277031b7512ee48f131b76f50fa7e6055d2949ed63b84b5117a1",
+      "qcblender/measurements.py": "15d52ae7c9ca8b98cd53ed9d0030f4b848d1387f845c57f7c5892f7717a53fdc",
+      "qcblender/nbo.py": "6e68c96174803940f8012a54ba4b977c2df5792de45057345e3ec6597b89fd4f",
+      "qcblender/nocv.py": "537f220e48bd8dd7f02675b46099bb59df167a3b6ffc8a44ced107c4d33899ba",
+      "qcblender/optimization.py": "87abc7fc714f0e73a53abab53244dd6f76334d13630566a668ce46f3b137c13a",
+      "qcblender/planes.py": "551ef7107fbcce12992b73521238df3aaeceac01c5593a91a7b4a2da20bc3875",
+      "qcblender/plot_layout.py": "ce99efcf7646e286d7763099be92733461b14e3ec5a4b919fcbaaa4ffb0471c0",
+      "qcblender/profile.py": "ef86e07aefa6d076641492e255765281d25fb47d2a1166eeb95830f886061a78",
+      "qcblender/project.py": "7c14461d7adf243bbd1c4005c542cc9fad87549f88a56ff183889644d0102ea3",
+      "qcblender/radii.py": "d38eb202fc0a1ba3da9ed20e7fa1d022e8b4c6ed8f937d54b9dcc44c921866cd",
+      "qcblender/readers.py": "69fd2c68c535aa987e0e6da93fcf22c37faae14d736ea61d3d0827491228ef3b",
+      "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+      "qcblender/sampling.py": "6bcb428a41af4d634a029a24945e797ff19fe925f0a0a604b51a44bccc630966",
+      "qcblender/worker.py": "f96a838a18427611c085f531339cf8ed5c3be11f15fa815732a708f8092f0a37"
+    },
+    "manifest_sha256": "dade220055c9b3a0a1eab6f4199472831f2a814ab3cc81fe4eec99e79ce79ccf",
+    "manifest_encoding": "UTF-8 json.dumps(product_files,sort_keys=True,separators=(comma,colon))",
+    "changes_from_baseline": [
+      "qcblender/blender/ui.py: reset source_sha256 and job_number in new GUI invoke"
+    ]
+  },
+  "candidate": {
+    "path": "dist/qcblender-0.0.1.zip",
+    "sha256": "1e473b32892eab06d399a7940a14abd947c59a29dca8afc18efc3ccd56655a7a",
+    "bytes": 50632953
+  },
+  "environment": {
+    "os": "Windows 11 x64 build 22631",
+    "blender": "5.1.1 b70da489d7f4",
+    "python": "3.13.9",
+    "numpy": "2.3.4",
+    "openvdb": "13.0.0",
+    "uv": "0.11.19",
+    "backend": {
+      "name": "qc-gbasis",
+      "version": "0.1.0+qcblender.071969c.pure1",
+      "filename": "qc_gbasis-0.1.0+qcblender.071969c.pure1-py3-none-any.whl",
+      "sha256": "b53fa8f7227172a3b022d8a7cf2b03c5df34e800c920a6e88cfad88b07a0b3d0",
+      "source_lock": "science-sources.lock.json",
+      "backend": "Python/NumPy Gaussian basis and Coulomb integrals"
+    }
+  },
+  "coverage": {
+    "science": {
+      "status": "Passed",
+      "tests": 69,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "non_science_units": {
+      "status": "Passed",
+      "tests": 11
+    },
+    "node_helpers": "Passed",
+    "installation_lifecycle_assets": "Passed",
+    "original_and_chinese_moved_cold_reopen": "Passed",
+    "recovery": "Passed",
+    "legend_and_both_cold_reopens": "Passed",
+    "result_browser_and_stale_preview_regression": "Passed",
+    "full_historical_SOP": "Not Run",
+    "performance_and_full_grid_convergence": "Not Run",
+    "independent_scientific_signature": "Not Run",
+    "other_platforms_and_public_release": "Not Run"
+  },
+  "gui": {
+    "status": "Passed",
+    "actor": "Agent using MCP and Computer Use, authorized 2026-09-30",
+    "processes": [
+      43840,
+      45216
+    ],
+    "preparation": "MCP set file/save paths, cursor endpoints and active objects/display; all workflow buttons and confirmations clicked through Computer Use",
+    "energy_hartree": -74.9659011806,
+    "mode_frequencies_cm-1": [
+      2169.7613,
+      4141.3837,
+      4392.5759
+    ],
+    "animation": "Mode 1 played through timeline, frames advanced 1 to161; mode2 selected by click; previous user separately reported all3 play in qcf2",
+    "profile": "101/101 valid, endpoints (-1,0,0)/(1,0,0), distance 0-2 angstrom, electron/bohr^3",
+    "save": "Button-created .blend/.qcdata, new visible process, 5 scientific objects readable, arrays exact; CSV re-exported by click",
+    "screenshots": {
+      "cold-reopen.png": "f0c7cfb419919561c6b3aeb954e43cc96b1a6379ca1f93101aed7ca22bcfedc6",
+      "energy-modes.png": "7844f40aed450814ee26b6b00245598b3e4e12a7951621dae303fe203b821481",
+      "profile-created.png": "80d16271da0933607ad2f11e5a9a18b6ae870f6b55491514010a88d6b20c43fc",
+      "save-dialog.png": "b27ee936c1629b1fd1465acd9876296bc2a62bd42c47c1674bdec548eef96e43",
+      "saved.png": "3ccc76ad574c44793935af59e3875bf5f3ca8c6de7337630cfbbf6d1b3ab5481",
+      "vibration-playing.png": "c22b621f23363f6bc4cf2806f727af87a30a5e1193e871d86c07d84c1bd52eaf"
+    },
+    "csv": {
+      "path": "gui/profile-cold.csv",
+      "sha256": "b1faceca209799cd0102ee3cb259713e23151ccb614d8d1975ab7cbd9c6b8cbd"
+    }
+  },
+  "reports": {
+    "build-command.json": {
+      "status": "Passed",
+      "sha256": "999f9373de1c39df48dc2599551f94187aec41556b4d0adbb08ac8183bad64da",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe",
+        "-I",
+        "tools/build_extension.py",
+        "--blender",
+        "C:/Program Files/Blender Foundation/Blender 5.1/blender.exe",
+        "--wheels-dir",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/wheels",
+        "--output-dir",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/dist"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/build.log",
+      "log_sha256": "107d4251198f1bd4f9c4894e67e9f1dafc1a204ead0e071eb004964d821fdf92"
+    },
+    "cold-moved-command.json": {
+      "status": "Passed",
+      "sha256": "70099f66111ba815e06712354cb290d7f2a2d8342370f0a60d0e302e6a056ec2",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/blender.exe",
+        "--background",
+        "--offline-mode",
+        "--disable-autoexec",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/qa/moved 中文 path/mo8.blend",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "tools/verify_extension.py",
+        "--",
+        "--reopen",
+        "--output-dir",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/qa"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/cold-moved.log",
+      "log_sha256": "30212a468c539347867c28bcdd79b6c301450815ae9ff62ec9ca4f7c239660a0"
+    },
+    "cold-original-command.json": {
+      "status": "Passed",
+      "sha256": "8667de46ca6d55aeb1ac921ecd3f24422a0d7c7e4402734e41276ccab7f6571c",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/blender.exe",
+        "--background",
+        "--offline-mode",
+        "--disable-autoexec",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/qa/mo8.blend",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "tools/verify_extension.py",
+        "--",
+        "--reopen",
+        "--output-dir",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/qa"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/cold-original.log",
+      "log_sha256": "f53a7e61f66355402725ff23eca81070527d15a28ace431249da775b811ac21a"
+    },
+    "copy-inputs-command.json": {
+      "status": "Passed",
+      "sha256": "173bec3b2776589c0523b244bd4e00f768c0908551b1663e98cb9122d97c7875",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe",
+        "-I",
+        "-c",
+        "import hashlib, json, shutil, sys\r\nfrom pathlib import Path\r\nsource_root, root = map(lambda value: Path(value).resolve(), sys.argv[1:])\r\ncatalog = json.loads((root / 'tests/data/local-inputs.json').read_text(encoding='utf-8'))\r\nfor entry in catalog['files'].values():\r\n    relative = Path(entry['path'])\r\n    source, target = source_root / relative, root / relative\r\n    assert source.resolve().is_relative_to(source_root / 'tests/data/local'), source\r\n    assert target.resolve().is_relative_to(root / 'tests/data/local'), target\r\n    assert hashlib.sha256(source.read_bytes()).hexdigest() == entry['sha256'], source\r\n    target.parent.mkdir(parents=True, exist_ok=True)\r\n    if not target.exists():\r\n        shutil.copyfile(source, target)\r\n    assert hashlib.sha256(target.read_bytes()).hexdigest() == entry['sha256'], target\r\nprint('INPUT_COPY_PASSED:', len(catalog['files']))",
+        "D:/workspace/QCBlender",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/copy-inputs.log",
+      "log_sha256": "4264b7de7b56703aab318d5256a37ce2f07f0a0cb6f7b939e86d8d36ae8003c6"
+    },
+    "environment-command.json": {
+      "status": "Passed",
+      "sha256": "8995d734cc75a4c140a4249aba7376ccb8ef9dbd4e52fda26961e7b3a9c4caee",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe",
+        "-I",
+        "-c",
+        "from importlib.metadata import distributions\r\nimport hashlib, json\r\nfrom pathlib import Path\r\nroot = Path.cwd()\r\nexpected = dict(line.split('==') for line in (root / 'tools/build-requirements.txt').read_text().splitlines() if line)\r\nactual = {d.metadata['Name'].lower().replace('_', '-'): d.version for d in distributions(path=[str(root / 'outputs/build-site')])}\r\nassert all(actual.get(name.lower().replace('_', '-')) == version for name, version in expected.items())\r\nbackend = json.loads((root / 'outputs/backend-wheel.json').read_text())\r\npackages = json.loads((root / 'dependencies.lock.json').read_text())['packages'] + [backend]\r\nscience = {d.metadata['Name'].lower().replace('_', '-'): d.version for d in distributions(path=[str(root / 'outputs/science')])}\r\nfor package in packages:\r\n    wheel = root / 'outputs/wheels' / package['filename']\r\n    assert hashlib.sha256(wheel.read_bytes()).hexdigest() == package['sha256'], wheel\r\n    assert science.get(package['name'].lower().replace('_', '-')) == package['version'], package['name']\r\nprint('BUILD_ENVIRONMENT_PASSED')"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/environment.log",
+      "log_sha256": "f5c621c9cdd7d488494597380fe73f33152d8eaf9b3611ced37cbc35890f283c"
+    },
+    "helpers-command.json": {
+      "status": "Passed",
+      "sha256": "7f3ee35b1e51abf67365f6daa4756ef828fb89908493ed5729327eb7f3798fc9",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/blender.exe",
+        "--background",
+        "--factory-startup",
+        "--offline-mode",
+        "--disable-autoexec",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "tools/verify_node_helpers.py"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/helpers.log",
+      "log_sha256": "585049469c887c979daae1911ec7fee20fc7a87a6932475ab07f64de94d006d7"
+    },
+    "index-command.json": {
+      "status": "Passed",
+      "sha256": "0160ff00d4e3c4c095ce4fcacf32f097141f01fe5c1855592064cf3c7b53a505",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe",
+        "-I",
+        "-c",
+        "import hashlib, json, sys\r\nfrom pathlib import Path\r\nbatch, candidate = map(lambda value: Path(value).resolve(), sys.argv[1:])\r\ndigest = hashlib.sha256(candidate.read_bytes()).hexdigest()\r\nreports = ['result-browser/checks.json', 'result-browser-command.json', 'science.json', 'node-assets.json', 'extension-install.json',\r\n           'extension-cold-original.json', 'extension-cold-moved.json', 'recovery.json',\r\n           'legend-cold-moved.json']\r\nreports += [f'{name}-command.json' for name in\r\n            ['test_copy_display', 'test_legend_layout', 'test_local_inputs', 'test_storage_cleanup',\r\n             'helpers', 'install', 'cold-original', 'cold-moved', 'recovery',\r\n             'legend', 'legend-cold-original', 'legend-cold-moved']]\r\nchecks = {}\r\nfor name in reports:\r\n    path = batch / name\r\n    raw = path.read_bytes()\r\n    report = json.loads(raw)\r\n    assert report['status'] == 'Passed', (name, report)\r\n    if 'log' in report:\r\n        assert hashlib.sha256((batch / report['log']).read_bytes()).hexdigest() == report['log_sha256'], name\r\n    checks[name] = {'path': name, 'sha256': hashlib.sha256(raw).hexdigest(),\r\n                    'candidate_sha256': digest}\r\n(batch / 'evidence-index.json').write_text(\r\n    json.dumps({'candidate_sha256': digest, 'checks': checks}, indent=2) + '\\n', encoding='utf-8')\r\nprint('EVIDENCE_INDEX_PASSED:', len(checks), digest)",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/dist/qcblender-0.0.1.zip"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/index.log",
+      "log_sha256": "5b88adfc87d7b4f7939d8d362de0dc1212b5cac69d508ebb600243a49c9966f6"
+    },
+    "inputs-command.json": {
+      "status": "Passed",
+      "sha256": "a0f97f34bf9a424a4aabec9ccf3e26fa0c3a21440789d2bb9c23df95a43ab6cd",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe",
+        "-I",
+        "tools/local_inputs.py"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/inputs.log",
+      "log_sha256": "5393806f956c59d5047ab605bc58ae49842d51c3917fa356811a6f2b78c45e07"
+    },
+    "install-command.json": {
+      "status": "Passed",
+      "sha256": "b042df67f54054ca799588c53621de149a1acb730c872e6c215bae61373070d2",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/blender.exe",
+        "--background",
+        "--factory-startup",
+        "--offline-mode",
+        "--disable-autoexec",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "tools/verify_extension.py",
+        "--python",
+        "tools/verify_node_assets.py",
+        "--",
+        "--candidate",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/dist/qcblender-0.0.1.zip",
+        "--output-dir",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/qa"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/install.log",
+      "log_sha256": "23315f06f3ca1bb58ed176e2808a78b6d53f7d3aab46d34def7828073c54128b"
+    },
+    "legend-cold-moved-command.json": {
+      "status": "Passed",
+      "sha256": "c692b7623054873d0a9cafeadd84338420f748123100c4e09e23f28c7f1bdc02",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/blender.exe",
+        "--background",
+        "--offline-mode",
+        "--disable-autoexec",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/legend/moved 中文 path/evidence.blend",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "tools/verify_mn_legend.py",
+        "--",
+        "--check",
+        "reopen",
+        "--out",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/legend"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/legend-cold-moved.log",
+      "log_sha256": "9ac7ce8831a7e22b7e5f7e8ba3a6075db68dbfa105a000dc4916be881d97aadf"
+    },
+    "legend-cold-original-command.json": {
+      "status": "Passed",
+      "sha256": "894220e7b81114eb482cc5861d06a4997147c1683a23f641d6bbba21f4600ff5",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/blender.exe",
+        "--background",
+        "--offline-mode",
+        "--disable-autoexec",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/legend/evidence.blend",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "tools/verify_mn_legend.py",
+        "--",
+        "--check",
+        "reopen",
+        "--out",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/legend"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/legend-cold-original.log",
+      "log_sha256": "6ed72ec922c2b8b370dba136af6a67bb6cdd0139193b537109d57c66d0b9238e"
+    },
+    "legend-command.json": {
+      "status": "Passed",
+      "sha256": "afcca1b196de8e5f17937ce679795e689b41335732f4337ce864d99691f9c7a2",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/blender.exe",
+        "--background",
+        "--offline-mode",
+        "--disable-autoexec",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/qa/mo8.blend",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "tools/verify_mn_legend.py",
+        "--",
+        "--check",
+        "legend",
+        "--out",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/legend"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/legend.log",
+      "log_sha256": "dae5d4270495269d95c4ce1697a76557527c28f1069c40b60b1a7e6dbeab0bfc"
+    },
+    "qualification-command.json": {
+      "status": "Passed",
+      "sha256": "5d8f9da2570a7d885658199130062a4c74a172c57c1615850f6a4545088746af",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe",
+        "-I",
+        "tools/qualify_package.py",
+        "--candidate",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/dist/qcblender-0.0.1.zip",
+        "--installed-dir",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/profile/extensions/user_default/qcblender",
+        "--evidence-index",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/evidence-index.json",
+        "--output",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/qualification.json"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/qualification.log",
+      "log_sha256": "738eedc7a42a029f3225cadd19f75fc7d675c4e867261424fd5679401bea6697"
+    },
+    "recovery-command.json": {
+      "status": "Passed",
+      "sha256": "ea18df0b4a2aa208aa0f1f382b4a4dfed317c447283241f043571031a2979a8f",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/blender.exe",
+        "--background",
+        "--offline-mode",
+        "--disable-autoexec",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/qa/moved 中文 path/mo8.blend",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "tools/verify_project_recovery.py"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/recovery.log",
+      "log_sha256": "c321acd55dccdc5ba33bfdf7eced95a74d16fc5d5e30306722c455454de2050e"
+    },
+    "result-browser-command.json": {
+      "status": "Passed",
+      "sha256": "adab5340dc69a06750083c360f98e5587af832069fd09824617c719e63cbc3fe",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/blender.exe",
+        "--background",
+        "--offline-mode",
+        "--disable-autoexec",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "tools/verify_result_browser.py",
+        "--",
+        "--candidate",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/dist/qcblender-0.0.1.zip",
+        "--use-installed",
+        "--output-dir",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/result-browser"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/result-browser.log",
+      "log_sha256": "80d61aecf66b9b7af90ec92788e53d3de84e307e96bb7f9bcc1da512da3150ed"
+    },
+    "science-command.json": {
+      "status": "Passed",
+      "sha256": "5e9590160f846d20a62a2ac1f5d5ad42254d9d9523f7d8184e0b2432618b8143",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe",
+        "-I",
+        "tools/run_science_tests.py",
+        "--site",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/science",
+        "--output",
+        "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender/outputs/qcf3/science.json"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/science.log",
+      "log_sha256": "dff6d7205e3e050b2418239215f779ded2a18c7016272f539cb0c81f49058859"
+    },
+    "test_copy_display-command.json": {
+      "status": "Passed",
+      "sha256": "01189f351b93f0216478238de3c350bde120e5871c79e43f6af94eb532d75c04",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_copy_display.py"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/test_copy_display.log",
+      "log_sha256": "0d6653413f55f7cf64dbfab59b6b29c640ade8e63585414ab2a44a0892a5ed0a"
+    },
+    "test_legend_layout-command.json": {
+      "status": "Passed",
+      "sha256": "a6209f66cbfe26a4cc86c206b1414d128d5e75193e6c7053848fc48aaf557d66",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_legend_layout.py"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/test_legend_layout.log",
+      "log_sha256": "a6707d4eff38012da33ddc34bc6dc076a3b17151cfc9aef223c8790cbe64c3da"
+    },
+    "test_local_inputs-command.json": {
+      "status": "Passed",
+      "sha256": "0ed6ef74696a12273937998a2a4efd72c8572e7c9aca5bb5da0c8647fe61b0f1",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_local_inputs.py"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/test_local_inputs.log",
+      "log_sha256": "8fc491c33af10c373d8f98a2362fd7e66cdc6c96497aa5aa59d429264ca5ac92"
+    },
+    "test_storage_cleanup-command.json": {
+      "status": "Passed",
+      "sha256": "6d14544ec35e2267fc2a59ef0a7f96cc33ebd41dd7dc375e22816d06c61bd2bb",
+      "command": [
+        "C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_storage_cleanup.py"
+      ],
+      "source_commit": "a7f9b431f5cf15980fd373f4f6482ef0d4e128bd",
+      "log": "logs/test_storage_cleanup.log",
+      "log_sha256": "d10ffbd9f0faa72cd6837063279524e199b59fbc3d035051302a1e8dbc4b36ad"
+    },
+    "result-browser/checks.json": {
+      "status": "Passed",
+      "sha256": "32db595bbf04a1728c938f4613fa3f42a129c5208b8b781713e2051688927e00"
+    },
+    "science.json": {
+      "status": "Passed",
+      "sha256": "fe05b6e626b883c0c8694029f79bb0b3bfe218829849cc14cd0596761fd54226"
+    },
+    "node-assets.json": {
+      "status": "Passed",
+      "sha256": "5375e977fcdeac64aee1097e42db10571d3d02e45acd39e65ad36a7e182f4783"
+    },
+    "extension-install.json": {
+      "status": "Passed",
+      "sha256": "58c6b1190ef6919b9778e05c2d1f86d4ebc4a7fa6fdbf56811b60b28ecbb4ddf"
+    },
+    "extension-cold-original.json": {
+      "status": "Passed",
+      "sha256": "a2620575aec5d3380ee8c4918c419e693ad84341d75771844d0b9efdbec048a3"
+    },
+    "extension-cold-moved.json": {
+      "status": "Passed",
+      "sha256": "a2620575aec5d3380ee8c4918c419e693ad84341d75771844d0b9efdbec048a3"
+    },
+    "recovery.json": {
+      "status": "Passed",
+      "sha256": "cf0f05ee51ad21e86ee59210f1d4ed694589e429e487d686c8d4f2fbdbbd73e1"
+    },
+    "legend-cold-moved.json": {
+      "status": "Passed",
+      "sha256": "1008cec30c7d9c59e5ef3b4833c1f41f5df639802cc9085cb4d234e235dc7b1c"
+    },
+    "qualification.json": {
+      "status": "Passed",
+      "sha256": "37b4c68884af5ea990c387e668bd92a0be9813cc65b5f088806e9438f37c44ef"
+    },
+    "evidence-index.json": {
+      "status": "Passed",
+      "sha256": "8a59cb342246e0e7d7835a455233420e100d9a9825c6b2d8f6fdce268733f48e"
+    },
+    "gui/profile-check.json": {
+      "status": "Passed",
+      "sha256": "db61dbcc6431e170edbefe5745a9523db631e7c1149a380f252fbf3bf25ca466"
+    },
+    "gui/cold-reopen.json": {
+      "status": "Passed",
+      "sha256": "c98e909199a04dd3b936c7e6a70e1e5afd1049bab7c55f81215bac44b87d13dd"
+    },
+    "gui/energy-animation.json": {
+      "status": "Passed",
+      "sha256": "bd2ec9f82137df881518543773dcbda396413fa8a1624fbf4fa86157a99392d0"
+    }
+  },
+  "storage": {
+    "current_batch": "C:/Users/ustcw/.codex/worktrees/b48c/QCBlender/outputs/qcf3",
+    "archive_batch": "D:/workspace/QCBlender/outputs/cleanup-followup-20260930/b48c/outputs/qcf3",
+    "archive_receipt": "D:/workspace/QCBlender/outputs/cleanup-followup-20260930/preservation.json",
+    "availability": "Current batch present; archive requires task06 receipt check"
+  },
+  "rebuild": {
+    "instructions": "docs/DEVELOPMENT.md: first preparation or verified incremental preparation, new batch, fixed source commit, input preflight, science/units/helpers, packaging/installation/cold opens/recovery/legend, evidence-index then qualification",
+    "additional_command": "Blender --background --offline-mode --disable-autoexec --python-exit-code 1 --python tools/verify_result_browser.py -- --candidate <same-batch ZIP> --use-installed --output-dir <batch>/result-browser",
+    "gui": "docs/USER_GUIDE.md and .scratch/cleanup-followup/issues/04-guide-walkthrough.md; visible independent window and screenshots",
+    "restricted_inputs": "tests/data/local-inputs.json + docs/v1-acceptance/SOURCES.md; explicit SHA-256 check required; missing samples stop preflight",
+    "zip_reproducibility": "Rebuild and requalify; ZIP timestamps can change bytes"
+  },
+  "history": {
+    "baseline": {
+      "commit": "47fd82cef8d340fe80d45756df8333518114490a",
+      "source_manifest_sha256": "52da8fd814067a78e75f1f85872eab271190975e585aa73b2b3f85fd2b590834",
+      "matched_files": 69,
+      "status": "Passed",
+      "candidate_sha256": "See prior repository-cleanup validation"
+    },
+    "qcf2": {
+      "commit": "87b5316e95552929bda8f0f7e74129ea84ab49bd",
+      "candidate_sha256": "48ca845e1d0f7be7bdc1300d962f733c89958fb89add2ff763aee24ebee5c760",
+      "technical": "Passed",
+      "GUI_import": "Failed",
+      "evidence": "outputs/qcf2/human/evidence/import-diagnostic.json; source unchanged, stale Log digest in FCHK request",
+      "scope": "Historical; not inherited into qcf3"
+    }
+  }
+}

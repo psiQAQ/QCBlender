@@ -4,22 +4,23 @@
 
 ## 当前候选与证据
 
-本次候选基于 `1b87751616ecb03d89f6a8c0e96cac99544b420a` 加本次仓库清理变更；提交见 Git 清理记录。精确源码由 `outputs/repository-cleanup/final/source-hashes.json` 固定，SHA-256 为 `52da8fd814067a78e75f1f85872eab271190975e585aa73b2b3f85fd2b590834`。本地 ZIP 为 `outputs/repository-cleanup/final/dist/qcblender-0.0.1.zip`，SHA-256 为 `2cd8bd76b22c3ac0d5cecfa519463a3bd01b0df797508f9f9eb730354b1d42fb`；该路径是本地证据，不是公开下载。
+当前本地候选的验证身份、产品源码树及 69 个文件摘要、ZIP 摘要、命令、报告摘要、截图和重建方法统一保存于受版本控制的[验证索引](acceptance/cleanup-validation.json)。资格绑定固定提交 `a7f9b43`；索引与任务收尾随后提交，不引用自身提交。大文件及受限样本仍在忽略目录，实际归档可用性以任务 06 的保全收据为准。
 
 | 检查 | 状态 | 本次范围与证据 |
 | --- | --- | --- |
-| 科学回归 | Passed | 69/69，无失败、错误或跳过；`outputs/repository-cleanup/final/science.json`，数值指标与清理前一致 |
+| 科学回归 | Passed | 同批 qcf3：69/69，无失败、错误或跳过 |
 | 非科学单测 | Passed | 11/11，显示复制、布局、输入与清理边界；同批单测日志 |
-| 节点行为 | Passed | 九个公共资产加选择/图例共十组的输入标识、默认值、操作和连线与基线一致；`tools/verify_node_helpers.py` 实际 Blender 检查 |
-| 新 ZIP 离线安装与生命周期 | Passed | 新配置安装、科学运行库、worker 取消/缓存、注册/注销；`outputs/rc03/extension.json` 与 `outputs/rc03h/extension.json` |
-| MO 成图及工程保存 | Passed | 实际求值、阈值/双相、渲染，原地及中文移动路径冷重开；同批 `outputs/rc03/` 工程与报告 |
+| 节点行为 | Passed | 七种选择实际原子编号、固定公共接口/标识、helper；资产和图例复用已有专项。上轮十组节点图对照另记历史 |
+| 新 ZIP 离线安装与生命周期 | Passed | 新配置安装、科学运行库、worker 取消/缓存、注册/注销 |
+| MO 成图及工程保存 | Passed | 实际求值、阈值/双相、渲染，原地及中文移动路径冷重开 |
 | 数据恢复与节点资产 | Passed | 缺 VDB 恢复、来源重定位、电荷/偶极/振动；公共资产导出重载和已有分支保留 |
-| 图例与双场 | Passed | 真实密度/ESP、横竖/旋转布局、替换及独立复制、旧图升级、signed MO/电荷；`outputs/rc03hl/checks.json`，原地/中文移动冷重开与渲染 |
-| 来源与包一致性 | Passed | 源码、ZIP、两份安装副本、wheel 摘要；`outputs/repository-cleanup/final/qualification.json`、`qualification-host.json` |
-| 全量历史 SOP、GUI 人工操作和外部视觉对照 | Not Run | 本次未重跑 C01–C13 全流程、N01–N18 或 Computer Use；专项自动化不替代这些验收 |
+| 图例与双场 | Passed | 真实密度/ESP、横竖/旋转布局、替换及独立复制、旧图升级、signed MO/电荷；原地/中文移动冷重开与渲染 |
+| 来源与包一致性 | Passed | 同批源码、ZIP、安装副本、wheel 摘要；Log 后新对话框导入 FCHK 回归，真正的源文件变化仍被拒绝 |
+| 授权的指南界面操作 | Passed | Agent 使用 MCP + Computer Use 在可见新窗口实际点击：Log/FCHK 导入、能量、模式与播放、密度/剖面、保存、新进程重开及 CSV；具体准备与按钮范围见任务 04 |
+| 全量历史 SOP、性能、完整网格收敛和外部视觉对照 | Not Run | 本批未重跑 C01–C13/N01–N18 全流程；专项不替代完整范围 |
 | 独立人工签署、其他平台、公开发布 | Not Run | 不能由本次清理或技术通过推导完成 |
 
-本次范围和处置见 [清理任务](../.scratch/repository-cleanup/spec.md)。历史 20/21/25/45/48/58/69 项测试属于各自候选，仍可从 [CHANGELOG](CHANGELOG.md) 与对应任务追溯，不作为本 ZIP 的未执行检查。Blender 图例重开仍有 VFont 转节点诊断；实际报告和画面通过不等于无日志警告。
+本次范围和处置见 [清理复查任务](../.scratch/cleanup-followup/spec.md)。基线清单已逐文件匹配 `47fd82c`；旧候选通过和导入失败分别保留于索引历史项，不继承为本批结果。Blender 图例重开仍有 VFont 转节点诊断；实际报告和画面通过不等于无日志警告。
 
 ## 输入和科学边界
 

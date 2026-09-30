@@ -1,7 +1,7 @@
 # 修订并复验首次构建
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Type: task
 Blocked by: 01, 02
 
@@ -26,6 +26,8 @@ Blocked by: 01, 02
 - 资格续跑脚本遗漏 candidate 变量，索引生成 Failed；修正任务脚本后 Passed，失败收据位于 outputs/qcf2/failures/index-resume。增量环境在沙箱读取宿主生成的后端 wheel 时访问拒绝，qci1 为 Failed；按既有授权在宿主核对，qci2 为 Passed。均保留真实错误，不修改权限或依赖。
 
 ## Answer
+
+追加复验 Passed：新批 outputs/qcf3 使用增量环境核对路径，显式检查 104 项输入、工具版本、锁定 wheels 和后端记录后，重新运行 69 项科学测试、11 项单测、节点辅助、打包、安装/生命周期、资产、原地及中文移动路径冷重开、恢复、图例双冷重开及来源浏览专项。来源专项包含新对话框重置旧 Log 摘要/计算段后真实导入 FCHK，以及显式预览对应的源文件变化仍被拒绝。21 项报告/收据索引及 qualification.json Passed，执行和资格提交均为 a7f9b431f5cf15980fd373f4f6482ef0d4e128bd；候选 SHA-256：1e473b32892eab06d399a7940a14abd947c59a29dca8afc18efc3ccd56655a7a，50,632,953 字节。旧批结果如下，独立保存。
 
 Passed：首次路径在新工作树的新 outputs/qcf2 目录完成输入检查、工具/依赖/后端准备、科学测试、打包、离线安装、工程及专项检查、索引和 qualification.json。显式复制并逐项核对 104 项本地输入及锁定依赖缓存；科学后端重新构建，没有复用旧候选、工程或中间报告。必要输入缺失的前置失败检查 Passed，证据 outputs/cleanup-followup/missing-input-preflight.json。
 
