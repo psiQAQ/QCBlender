@@ -2504,7 +2504,7 @@
         "independent_scientific_signature": "Not Run",
         "new_annotation_copy_removal_and_manual_render_restore": "Passed"
       },
-      "remaining": "C05 layer copying/order/removal/display parameter transfer, remaining public nodes, render and moved/unpacked cold chain; C06-C13; unified final qualification",
+      "remaining": "C05 public asset insertion/wiring, remaining first-use annotation/degenerate and step-update checks, complete PNG exports and original/moved/unpacked cold chain; C06-C13; unified qualification, main merge and archive.",
       "rebuild": [
         "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/build.json",
         "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/scripts/build-install-atom-layer.py"
@@ -2514,6 +2514,209 @@
         "sha256": "a229eb9088bbc8b1d2c9f901106cccfa93d7bdf9e4f269805984b9f9a1c62e76",
         "status": "Failed"
       }
+    },
+    "C05_display_controls": {
+      "status": "Not Run",
+      "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+      "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+      "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+      "scope": "Passed only for scoped GUI controls, layer copy/order, compatible atom transfer and native original-path checkpoint cold reopen.",
+      "checks": {
+        "GUI_property_selection_and_geometry": "Passed",
+        "GUI_copy_and_order": "Passed",
+        "GUI_atom_parameter_transfer": "Passed",
+        "portable_save": "Passed",
+        "native_original_path_cold_reopen": "Passed",
+        "public_asset_N01_N02_N09_insertion": "Not Run",
+        "complete_C05_renders_and_moved_unpacked_chain": "Not Run",
+        "full_C_N": "Not Run",
+        "independent_scientific_signature": "Not Run"
+      },
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N01-element8-GUI-MCP.json",
+          "sha256": "65fb52ffcb7894414077a382732a71da4882b04a373a6d05c4adaac93f65ca3a",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N01-selection-off-GUI-MCP.json",
+          "sha256": "23e2afcd425ce4cde6e40a3c064b55a3756aaefca4849162c5246a3a5b7f5c02",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N01-element8-last3-GUI-MCP.json",
+          "sha256": "061fc491df0831b4238f0d9802c9264726f6dff9ebfea86ed79dfedc4cf793f7",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N01-element8-first2-last3-GUI-MCP.json",
+          "sha256": "23e2afcd425ce4cde6e40a3c064b55a3756aaefca4849162c5246a3a5b7f5c02",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N01-first2-last3-GUI-MCP.json",
+          "sha256": "df650ac749f56cc3180ee2e8801d286f892aa00630931b396a382b9241a952b1",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N02-space-fill-GUI-MCP.json",
+          "sha256": "c437971f9a15c2acf1a9f9356923f3216d07c12ea5593d484ac6376a6e667abd",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N02-bonds-empty-GUI-MCP.json",
+          "sha256": "fd1925f1172f010bddbe59306dfb845b1c42966cf651ede716a34a0c9dfb9329",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N02-bonds-cleared-GUI-MCP.json",
+          "sha256": "ac092eeab33ff6f5c3360f9a20c1fc9c74330474166594d96cc0ddd93bbf51d6",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N02-bond-radius012-GUI-MCP.json",
+          "sha256": "490c9ada489986d7923e527f85564df76e5b7121a79b6a240955d4a5c0cbb00e",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N02-ball-stick-GUI-MCP.json",
+          "sha256": "8ccbe843e627db7181f5e08864cb6ea66145a374becc40b68b98cd981b74dc56",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N02-atom-radius035-GUI-MCP.json",
+          "sha256": "c39986aaeaf6ee199f82ed5d707719bb71c9de63b714c5032991ebf3e515f7dd",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/display-layer-copy-GUI-MCP.json",
+          "sha256": "0ef3fa897799b9af6e48ed240bcc27bd0231af3ab81f48d57b3d36a5adb10e70",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/layer-order-up-GUI-MCP.json",
+          "sha256": "66ae1fe36f849e067f3355919252384b9e53d34159b0ac75c6502ff54b9db49f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/layer-order-down-GUI-MCP.json",
+          "sha256": "f4e71c2c61ba9255475fcd56544cb2ac620fa9b141e19e7140309220d3f25f1f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/copy-parameters-GUI-MCP.json",
+          "sha256": "b78768c1ca3b747424d8b0b74dbd9551b677b8e522f8c77823e6679c2f50e39c",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/preservation-controls.json",
+          "sha256": "f15c8e5ac5b9f1f9a0fa22e49b1f939d6d7013c30ead00ec90abdd13e1c9c633",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/cold-controls-native.json",
+          "sha256": "2834c4154344f67e7358da19be24ec69207b38c7e1c32b8b388a5fab3b57cf02",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/cold-controls-exit.json",
+          "sha256": "07fa1f5fb1555c4c39912079e3967792a4f31a50f6820825b80916cbb06f9e4f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/geometry-before-cold.json",
+          "sha256": "9d0bd6e21a02b44087637b02a8eab13fb8d8cca61c073c051a36668cc4490087",
+          "status": "Passed"
+        }
+      ],
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-display-layer-copy-GUI.jpg",
+          "sha256": "5ce25f824cbf38fa3ce23073f78a6205f33b7e9d634d912cfc128ff02fdfe85b"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-layer-order-up-GUI.jpg",
+          "sha256": "5916a9c91037d7d914c0126e865bc266bbd2796c4413cbefe236c90745f8ea11"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N02-space-fill-GUI.jpg",
+          "sha256": "6817297c6dfa6ba48b661d27158a63f38b2c1676138a636c79c896fbd9955b11"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N02-bonds-empty-selection-GUI.jpg",
+          "sha256": "f31e7c2fb759377c17512690cc575bf41b98073fe8f915d9c29d8cf23ea6beb2"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N02-bonds-all-atoms-cleared-GUI.jpg",
+          "sha256": "caef1c3ffb0f6206a4b33204628a92b9194beb5075d0a586bbd7e24e3d087cfb"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N02-bond-radius012-GUI.jpg",
+          "sha256": "a936b3c2e1377ccbd30a12a7ef69d8da3663c2618d472a0dee74f02ff4893b1c"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N02-atom-radius035-GUI.jpg",
+          "sha256": "5199358efa780b225f683f593206ca8586ee5525ef1d7015fac7d40fbd9abc32"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N01-element8-GUI.jpg",
+          "sha256": "06577039fbcd2ac236210da339053c0aeb22bf4b0858a8b6918ff7a9d6114f4f"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N01-selection-off-GUI.jpg",
+          "sha256": "f25433d321bae44f457ba0088bd9503dcdf84d034897e982acf19da951522989"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N01-first2-last3-GUI.jpg",
+          "sha256": "bbee125667fc07a7a2a74a472e3e422cf66faee6cfa0c5d37235ef2eedafafb1"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-copy-parameters-menu-GUI.jpg",
+          "sha256": "d101223fba20833e7f535aa8e5e2e76a2605d34c560d662edafece9ee44f0024"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-copy-parameters-dialog-GUI.jpg",
+          "sha256": "628b68cd31c25c85f995d7a4205e454ae6f99583ae554b70118fcf2efdf7462f"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-copy-parameters-result-MCP.jpg",
+          "sha256": "114ed5a0a653d369877703cb22b0cf811acd178b9bbe17cfd7af7d8898d39565"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-controls-portable-saved-MCP.jpg",
+          "sha256": "78577c34cf1e08efc73fee0133530420f47652d17156b6a22bfc6f1976289fb3"
+        }
+      ],
+      "project": {
+        "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/C05-display-controls.blend",
+        "sha256": "373cc90a849ba00c3c0c4f44a7398ed05ffe278217a9977a83baeb7803ea9072",
+        "retained_files": 3,
+        "datasets": 1,
+        "arrays": 50,
+        "atom_views": 5,
+        "annotation_objects": 40
+      },
+      "diagnostics": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N02-bonds-all-GUI-MCP.json",
+          "sha256": "5a019012234dfd108bd05e7f09218eae112b76dce7b48b7d3701c059a7072b87",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/preservation-dirty-diagnostic.json",
+          "sha256": "a09715e68de859dd489505e9dd60b67ea6612601f94d98bec94019eae629fd2b",
+          "status": "Failed"
+        }
+      ],
+      "remaining": "C05 public asset insertion/wiring, remaining first-use annotation/degenerate and step-update checks, complete PNG exports and original/moved/unpacked cold chain; C06-C13; unified qualification, main merge and archive.",
+      "rebuild": [
+        "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/scripts/C05-copy-preparation.py",
+        "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/scripts/run-C05-cold-controls.py"
+      ],
+      "processes_exited": [
+        41240,
+        51472
+      ]
     }
   },
   "historical_partial_supplement": {

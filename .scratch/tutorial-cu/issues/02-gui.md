@@ -46,3 +46,5 @@ Blocked by: 01
 2026-10-01 C04关联工程三路径冷重开：PID52464/50260/34032分别在新可见进程完成原路径、中文移动与ZIP解包MCP读取和原生渲染；7 Dataset/222数组/15引用/4体积/117文件、源关联/探针/切片、三份CSV及精确像素一致Passed。两个Computer Use观察截图紧接C04-10，原路径空白截图仅留诊断；长路径验证脚本失败及修正记录独立保留，插件Dataset读取Passed。全部进程正常退出且工程摘要未改写。完整C04/C-N与统一资格仍Not Run，02保持claimed，03 pending；证据completion/preservation-cold-chain.json。
 
 2026-10-01 C04公共资产：N06原生Volume/Position连线和Y/Z输入、N07最大值、N08分辨率101→51Passed；部分其他连线由MCP完成。162表面点/68正值变化/2601切片点与21点CPU参考核对，恢复后原层未变。两节点库原生打包后另存117文件工程，7 Dataset/222数组/17引用/4体积、原路径PID19364、移动3720、解包50676冷重开Passed；后两处原库路径不存在。原PID22680及三冷重开进程均正常退出；16截图紧接N06/07/08/15/18，26登记项，脚本失败诊断独立保留。完整C04/C-N/统一资格Not Run，02保持claimed、03 pending；证据public-nodes/preservation.json。
+
+2026-10-02 C05控件阶段：同候选2eddb6a的Selection/Element/First/Last、三样式、.07→.12键半径与.25→.35原子半径GUI及编号/求值核对Passed；复制Mesh/树/8标注独立，排序恢复、原生菜单与三类别显示参数传递Passed。MCP准备目标的非默认选择/裁剪/位置，复制后保留；材质独立、50数组不变。14张图紧接步骤，31登记项。另存3文件、1Dataset/50数组、5视图/40标注，PID51472原生冷重开全状态与几何一致Passed，PID41240和51472均退出。边界点击与同事件周期dirty断言Failed作为脚本诊断保留。公共资产N01/N02/N09添加、C05完整成图和移动/解包、C06-C13及统一资格仍Not Run；02保持claimed，03pending。证据full/C05-completion/preservation-controls.json及cold-controls-native.json。

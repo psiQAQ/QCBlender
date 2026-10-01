@@ -2080,6 +2080,290 @@
           }
         ]
       }
+    },
+    {
+      "id": "atom-property-selection-controls",
+      "title": "原子对象属性中的选择、元素与编号范围",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions with MCP assertions; fixture preparation and observation separately identified",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "P03 water-dimer原子副本；源、目标及选择顺序见本批报告",
+        "visible_entry": "Properties → Object → QCBlender → 几何表示 → 选中项／Element／First Atom／Last Atom",
+        "validated_scope": "P03水二聚体副本；清除局部集合后，8/1/0→氧1、4；选中项关闭→零顶点；0/2/3→氢2、3；8/2/3→空交集。仅对象属性输入，公共资产新增接线未覆盖。",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N01-element8-GUI-MCP.json",
+            "sha256": "65fb52ffcb7894414077a382732a71da4882b04a373a6d05c4adaac93f65ca3a",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N01-selection-off-GUI-MCP.json",
+            "sha256": "23e2afcd425ce4cde6e40a3c064b55a3756aaefca4849162c5246a3a5b7f5c02",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N01-element8-last3-GUI-MCP.json",
+            "sha256": "061fc491df0831b4238f0d9802c9264726f6dff9ebfea86ed79dfedc4cf793f7",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N01-element8-first2-last3-GUI-MCP.json",
+            "sha256": "23e2afcd425ce4cde6e40a3c064b55a3756aaefca4849162c5246a3a5b7f5c02",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N01-first2-last3-GUI-MCP.json",
+            "sha256": "df650ac749f56cc3180ee2e8801d286f892aa00630931b396a382b9241a952b1",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/N01-element8-GUI.jpg",
+            "sha256": "06577039fbcd2ac236210da339053c0aeb22bf4b0858a8b6918ff7a9d6114f4f"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N01-selection-off-GUI.jpg",
+            "sha256": "f25433d321bae44f457ba0088bd9503dcdf84d034897e982acf19da951522989"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N01-first2-last3-GUI.jpg",
+            "sha256": "bbee125667fc07a7a2a74a472e3e422cf66faee6cfa0c5d37235ef2eedafafb1"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/blender/graph.py": "887b365c7fd1c849fcf55bbdb4a5e37f01f146b674994198703d76dc951dc325",
+        "qcblender/blender/atom_selection.py": "4e0464b519f6f9b4d0936245a48be4bae9e44939845ce7fe4e7032d263c32b3f"
+      },
+      "fingerprint_review": "Review transitive helpers, immutable asset signatures, callbacks, interfaces, Blender and dependency changes; these file hashes are an initial set.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "P03水二聚体副本；清除局部集合后，8/1/0→氧1、4；选中项关闭→零顶点；0/2/3→氢2、3；8/2/3→空交集。仅对象属性输入，公共资产新增接线未覆盖。 MCP可更新对应原生socket或执行已登记Operator，并逐项核对当前结果；相关变更后重新GUI确认。",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true
+      }
+    },
+    {
+      "id": "atom-property-geometry-controls",
+      "title": "原子对象属性中的样式和半径",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions with MCP assertions; fixture preparation and observation separately identified",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "P03 water-dimer原子副本；源、目标及选择顺序见本批报告",
+        "visible_entry": "Properties → Object → QCBlender → 几何表示 → 样式／Atom Radius／Bond Radius；局部选择与标注 → 清除局部限制",
+        "validated_scope": "P03副本球棍/空间填充/键线；氧1、4键线无键，清除局部限制后六原子48顶点32面；键半径.07→.12，球棍原子半径.25→.35；50数组和原层控件不变。公共资产独立添加未覆盖。",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N02-space-fill-GUI-MCP.json",
+            "sha256": "c437971f9a15c2acf1a9f9356923f3216d07c12ea5593d484ac6376a6e667abd",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N02-bonds-empty-GUI-MCP.json",
+            "sha256": "fd1925f1172f010bddbe59306dfb845b1c42966cf651ede716a34a0c9dfb9329",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N02-bonds-cleared-GUI-MCP.json",
+            "sha256": "ac092eeab33ff6f5c3360f9a20c1fc9c74330474166594d96cc0ddd93bbf51d6",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N02-bond-radius012-GUI-MCP.json",
+            "sha256": "490c9ada489986d7923e527f85564df76e5b7121a79b6a240955d4a5c0cbb00e",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N02-ball-stick-GUI-MCP.json",
+            "sha256": "8ccbe843e627db7181f5e08864cb6ea66145a374becc40b68b98cd981b74dc56",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/N02-atom-radius035-GUI-MCP.json",
+            "sha256": "c39986aaeaf6ee199f82ed5d707719bb71c9de63b714c5032991ebf3e515f7dd",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/N02-space-fill-GUI.jpg",
+            "sha256": "6817297c6dfa6ba48b661d27158a63f38b2c1676138a636c79c896fbd9955b11"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N02-bonds-empty-selection-GUI.jpg",
+            "sha256": "f31e7c2fb759377c17512690cc575bf41b98073fe8f915d9c29d8cf23ea6beb2"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N02-bonds-all-atoms-cleared-GUI.jpg",
+            "sha256": "caef1c3ffb0f6206a4b33204628a92b9194beb5075d0a586bbd7e24e3d087cfb"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N02-bond-radius012-GUI.jpg",
+            "sha256": "a936b3c2e1377ccbd30a12a7ef69d8da3663c2618d472a0dee74f02ff4893b1c"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N02-atom-radius035-GUI.jpg",
+            "sha256": "5199358efa780b225f683f593206ca8586ee5525ef1d7015fac7d40fbd9abc32"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/blender/graph.py": "887b365c7fd1c849fcf55bbdb4a5e37f01f146b674994198703d76dc951dc325",
+        "qcblender/blender/parameters.py": "8920b314c0d2ac09246435d45da7de144565ffdc4d1f1621c44be6faa78d160e",
+        "qcblender/blender/atom_selection.py": "4e0464b519f6f9b4d0936245a48be4bae9e44939845ce7fe4e7032d263c32b3f"
+      },
+      "fingerprint_review": "Review transitive helpers, immutable asset signatures, callbacks, interfaces, Blender and dependency changes; these file hashes are an initial set.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "P03副本球棍/空间填充/键线；氧1、4键线无键，清除局部限制后六原子48顶点32面；键半径.07→.12，球棍原子半径.25→.35；50数组和原层控件不变。公共资产独立添加未覆盖。 MCP可更新对应原生socket或执行已登记Operator，并逐项核对当前结果；相关变更后重新GUI确认。",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true
+      }
+    },
+    {
+      "id": "atom-display-layer-copy-and-order",
+      "title": "原子显示层复制及排序",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions with MCP assertions; fixture preparation and observation separately identified",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "P03 water-dimer原子副本；源、目标及选择顺序见本批报告",
+        "visible_entry": "3D视图 → N侧栏 → QCBlender → Display Layers → 复制／上移／下移",
+        "validated_scope": "带8个标注对象的P03原子层复制后Mesh、外层树、8个曲线/文字数据独立；上移和下移恢复精确顺序。GUI删除未覆盖。",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/display-layer-copy-GUI-MCP.json",
+            "sha256": "0ef3fa897799b9af6e48ed240bcc27bd0231af3ab81f48d57b3d36a5adb10e70",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/layer-order-up-GUI-MCP.json",
+            "sha256": "66ae1fe36f849e067f3355919252384b9e53d34159b0ac75c6502ff54b9db49f",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/layer-order-down-GUI-MCP.json",
+            "sha256": "f4e71c2c61ba9255475fcd56544cb2ac620fa9b141e19e7140309220d3f25f1f",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C05-display-layer-copy-GUI.jpg",
+            "sha256": "5ce25f824cbf38fa3ce23073f78a6205f33b7e9d634d912cfc128ff02fdfe85b"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C05-layer-order-up-GUI.jpg",
+            "sha256": "5916a9c91037d7d914c0126e865bc266bbd2796c4413cbefe236c90745f8ea11"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+        "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530",
+        "qcblender/blender/atom_selection.py": "4e0464b519f6f9b4d0936245a48be4bae9e44939845ce7fe4e7032d263c32b3f",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432"
+      },
+      "fingerprint_review": "Review transitive helpers, immutable asset signatures, callbacks, interfaces, Blender and dependency changes; these file hashes are an initial set.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "带8个标注对象的P03原子层复制后Mesh、外层树、8个曲线/文字数据独立；上移和下移恢复精确顺序。GUI删除未覆盖。 MCP可更新对应原生socket或执行已登记Operator，并逐项核对当前结果；相关变更后重新GUI确认。",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true
+      }
+    },
+    {
+      "id": "atom-copy-display-parameters",
+      "title": "相容原子视图的显示参数复制",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions with MCP assertions; fixture preparation and observation separately identified",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "P03 water-dimer原子副本；源、目标及选择顺序见本批报告",
+        "visible_entry": "3D视图 → 对象顶部菜单 → QCBlender → 复制显示参数到选中视图 → 确定",
+        "validated_scope": "MCP准备选中的目标及最后活动参数源，Agent点击原生菜单和三类别对话框；目标样式/半径复制，源不变；目标局部集合、元素/编号、非默认裁剪参数、平移和8标注保留，材质独立且shader默认值一致。本图无标量数值范围，不据此声明场/雾或不相容复制通过。",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/copy-parameters-GUI-MCP.json",
+            "sha256": "b78768c1ca3b747424d8b0b74dbd9551b677b8e522f8c77823e6679c2f50e39c",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C05-copy-parameters-menu-GUI.jpg",
+            "sha256": "d101223fba20833e7f535aa8e5e2e76a2605d34c560d662edafece9ee44f0024"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C05-copy-parameters-dialog-GUI.jpg",
+            "sha256": "628b68cd31c25c85f995d7a4205e454ae6f99583ae554b70118fcf2efdf7462f"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C05-copy-parameters-result-MCP.jpg",
+            "sha256": "114ed5a0a653d369877703cb22b0cf811acd178b9bbe17cfd7af7d8898d39565"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/copy_display.py": "5248dce188947476bbcb44230fe305dafb31772e59e2c78d4f2235a4d26ca614",
+        "qcblender/blender/graph.py": "887b365c7fd1c849fcf55bbdb4a5e37f01f146b674994198703d76dc951dc325",
+        "qcblender/blender/parameters.py": "8920b314c0d2ac09246435d45da7de144565ffdc4d1f1621c44be6faa78d160e",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+        "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530"
+      },
+      "fingerprint_review": "Review transitive helpers, immutable asset signatures, callbacks, interfaces, Blender and dependency changes; these file hashes are an initial set.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP准备选中的目标及最后活动参数源，Agent点击原生菜单和三类别对话框；目标样式/半径复制，源不变；目标局部集合、元素/编号、非默认裁剪参数、平移和8标注保留，材质独立且shader默认值一致。本图无标量数值范围，不据此声明场/雾或不相容复制通过。 MCP可更新对应原生socket或执行已登记Operator，并逐项核对当前结果；相关变更后重新GUI确认。",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true
+      }
     }
   ]
 }

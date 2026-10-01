@@ -16,6 +16,8 @@
 
 ## 当前任务与候选
 
+C05对象属性选择/样式/半径、显示层复制与排序、相容原子显示参数传递补验Passed，使用同一2eddb6a候选。原生操作与MCP准备/数据核对分列，14张截图紧接SOP步骤；操作登记31项。报告和重建脚本位于 `outputs/evidence/2026-10-02/tutorial-cu/full/C05-completion/`，新工程 `C05-display-controls.blend + .qcdata` 共3文件、1 Dataset/50数组、5原子视图/40标注；原路径新原生进程读回控件、数组、标注和求值几何一致Passed，工程摘要未变。首个边界点击和保存后同一事件周期的dirty断言失败仅作为检查脚本诊断保留。PID41240与51472正常退出；完整C05成图/移动解包、公有节点添加、后续案例、统一资格和main合并归档仍Not Run。
+
 C05原子层标注显隐修复候选为 `outputs/candidates/current/tutorial-atom-layer-2eddb6a/qcblender-0.0.1.zip`，固定源码 `2eddb6a`；构建安装、GUI视口/渲染切换、三个真实视图专项断言及新工程冷重开Passed。证据与重建脚本在 `outputs/evidence/2026-10-02/tutorial-cu/atom-layer/`，工程 `C05-layer-fixed.blend + .qcdata` 保全24文件、50科学数组及24标注。旧候选失败及旧工程/ZIP摘要保存在 `outputs/evidence/2026-10-01/tutorial-cu/full/C05/`，不覆盖历史结论。10张截图按C05对应步骤引用，操作登记27项；全部Blender进程已退出。完整C05/C-N、统一资格、main合并及归档仍Not Run，配置保留待继续验证。
 
 C04公共节点N06/N07/N08新增资产、接线/参数调整及恢复Passed，同候选e26d22a；GUI操作与MCP接线/独立参考分列。工程 `outputs/projects/tutorial-cu-full/cases/C04/C04-public-nodes-packed.blend + .qcdata` 和同名ZIP保全117文件、7 Dataset/222数组、17引用及4体积；两份关联节点库已原生打包。原路径、中文移动和解包冷重开Passed，后两者外部节点库不存在仍能求值一致。证据/重建脚本和截图摘要见 `outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/preservation.json`；移动映射在cold-moved/unpacked的process.json；16张图紧接SOP对应步骤，登记26项。四进程均正常退出。完整C04/C-N、统一资格和main合并/归档仍Not Run，未清理活跃候选配置。

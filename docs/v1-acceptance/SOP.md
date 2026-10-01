@@ -723,9 +723,19 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    ![Agent Computer Use观察：MCP调整颜色、偏移和小数后，科学距离仍为2.900 Å](screenshot/C05-05-edited-result-MCP.jpg)
 
-6. 在 **N 侧栏 → Display Layers** 选择层，用复制图标建立副本，改副本参数/材质确认原层不变；排序、视口/渲染显隐和删除只在副本测试。点击 **创建视图与检查工具 → 创建当前版本视图**，保留原层并核对新层。多选同类层，最后选参数源，在 **3D Viewport → 对象右键菜单 → QCBlender → 复制显示参数到选中视图** 选类别；数值复制需同量/单位/电荷方法，不兼容时取消数值类别。目标位置、选择、裁剪和图例布局保留。
+6. 在 **N 侧栏 → Display Layers** 选择层，用复制图标建立副本，改副本参数/材质确认原层不变；排序、视口/渲染显隐和删除只在副本测试。点击 **创建视图与检查工具 → 创建当前版本视图**，保留原层并核对新层。多选同类层，最后选参数源，在 **3D Viewport → 对象顶部菜单或对象右键菜单 → QCBlender → 复制显示参数到选中视图** 选类别；数值复制需同量/单位/电荷方法，不兼容时取消数值类别。目标位置、选择、裁剪和图例布局保留。
 
    [用户截图待引用：C05-06，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Agent Computer Use：复制原子显示层；MCP核对Mesh、外层树和8个标注数据独立](screenshot/C05-display-layer-copy-GUI.jpg)
+
+   ![Agent Computer Use：上移副本；随后下移恢复原顺序，MCP核对次序](screenshot/C05-layer-order-up-GUI.jpg)
+
+   ![Agent Computer Use：对象顶部菜单 → QCBlender → 复制显示参数到选中视图；源最后选中并保持活动](screenshot/C05-copy-parameters-menu-GUI.jpg)
+
+   ![Agent Computer Use：确认几何表示、外观、数值设置三类别](screenshot/C05-copy-parameters-dialog-GUI.jpg)
+
+   ![Computer Use观察MCP选中的目标：球棍/0.35/0.12已复制，氧集合1、4和编号控件保留](screenshot/C05-copy-parameters-result-MCP.jpg)
 
    ![Agent Computer Use：修复候选隐藏原子层，所属标注与引线同步隐藏](screenshot/C05-06-atom-layer-hidden-GUI.jpg)
 
@@ -736,6 +746,8 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 7. 对应 N01–N03/N15/N16，按 0.4 保存 `C05.png/.blend/.qcdata/`，加 `C05-selection.png`、`C05-annotations.png` 与显示层前后截图。
 
    [用户截图待引用：C05-07，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Computer Use观察：MCP另存自包含参数工程；原生新进程冷重开核对另记](screenshot/C05-controls-portable-saved-MCP.jpg)
 
 
 
@@ -955,11 +967,31 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    [用户截图待引用：N01，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
 
+   对象属性控件示例：选 C05 水二聚体原子副本，在 **局部选择与标注 → 清除局部限制** 恢复完整源编号，再展开 **几何表示**。勾选 **选中项**；**Element (0 = all)=8、First Atom (1-based)=1、Last Atom (0 = all)=0** 时只保留氧编号1、4。取消选中项时输出为空。恢复勾选并设 **Element=0、First=2、Last=3**，只保留氢编号2、3；元素与编号范围共同筛选。标注引用源构型，筛选不会删除源数组或标注。此处展示对象属性控件，公共资产的独立添加与接线按本节开头另行执行。
+
+   ![Agent Computer Use（候选2eddb6a）：Element=8；MCP核对源编号1、4](screenshot/N01-element8-GUI.jpg)
+
+   ![Agent Computer Use：取消选中项，MCP核对零顶点；源标注仍可见](screenshot/N01-selection-off-GUI.jpg)
+
+   ![Agent Computer Use：Element=0、First=2、Last=3；MCP核对氢编号2、3](screenshot/N01-first2-last3-GUI.jpg)
+
 2. **N02 QC Style Atoms and Bonds**：原子；对象属性→几何表示；球棍/空间填充/键，改原子与键半径。
 
    预期/需记录：轮廓不同；半径Å，键是距离推断。
 
    [用户截图待引用：N02，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
+
+   在 C05 副本 **几何表示 → 样式** 依次选 **球棍／空间填充／键线**。局部集合仅含氧1、4时，空间填充有两个球，键线为空：两氧相距2.900 Å，没有推断的键。点 **清除局部限制**，并恢复 **Element=0、First=1、Last=0、选中项勾选**，键线显示两个水分子的O–H键。将 **Bond Radius [Å] 0.07→0.12**，键应变粗；回到球棍，将 **Atom Radius [Å] 0.25→0.35**，球应变大。原层保持自己的参数。
+
+   ![Agent Computer Use：局部氧1、4的空间填充](screenshot/N02-space-fill-GUI.jpg)
+
+   ![Agent Computer Use：相同局部氧集合的键线为空](screenshot/N02-bonds-empty-selection-GUI.jpg)
+
+   ![Agent Computer Use：清除局部限制后，六原子的O–H键线](screenshot/N02-bonds-all-atoms-cleared-GUI.jpg)
+
+   ![Agent Computer Use：键半径0.12 Å；源数组不变](screenshot/N02-bond-radius012-GUI.jpg)
+
+   ![Agent Computer Use：球棍原子半径0.35 Å；原层参数不变](screenshot/N02-atom-radius035-GUI.jpg)
 
 3. **N03 氢显隐**：C05含氢原子；局部选择与标注的三个氢按钮、撤销重做。
 
