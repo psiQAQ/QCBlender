@@ -558,7 +558,7 @@
     "docs/acceptance/tutorial-validation.json",
     "docs/acceptance/cleanup-validation.json"
   ],
-  "remaining_click_steps": "Remaining three public assets (qc.isosurface.v3/qc.surface_style.v1/qc.volume_fog.v1) independent Add/connect, C08-C12 native Undo/Redo, same-final-source unified qualification, main merge and preservation-first archive/cleanup. Real internal mask propagation, paired-grid mismatch and N18 recovery now Passed at deb9416/c736bb9; user/scientific signatures remain Not Run.",
+  "remaining_click_steps": "Remaining three public assets (qc.isosurface.v3/qc.surface_style.v1/qc.volume_fog.v1) independent Add/connect, same-final-source unified qualification, main merge and preservation-first archive/cleanup. C08-C12 native Undo/Redo and real internal field/recovery boundaries Passed at deb9416/c736bb9; user/scientific signatures remain Not Run.",
   "cleanup": {
     "status": "Passed",
     "scope": "This screenshot supplement only; full GUI task remains claimed",
@@ -5918,6 +5918,334 @@
           "sha256": "34c5bea4e2a72148f9e4b52cba5790077a297fe6d1e3311e5ad77b03be8aed89"
         }
       }
+    },
+    "C08_C12_native_undo_redo": {
+      "status": "Passed",
+      "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+      "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+      "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+      "scope": "Five separate visible installed-candidate projects: native filtering/IRC step/Mayer pair plot, full-scene native undo/redo/restore via MCP, portable save and serial fresh background cold snapshots; no repeated current CU clicks claimed",
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/completion.json",
+          "sha256": "00a752032cbdc611b0d4571a4063b573353d001ef3f3f5e889b7f55d62aa1027",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/reuse-review.json",
+          "sha256": "98735ba37706c7f527e8e72a76e34e9828d88556fd4cbce8b1846104d15de1b9",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C08/prepare.json",
+          "sha256": "3d89e23149f31f7ee4c75b8b91ac7906f1cc5dacc065f051101c00623eaf7b60",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C08/undo.json",
+          "sha256": "e46be002caf0e80b6a56a4fdb0cf53ba286e85f6dfa8edf1f154559de3e9ab90",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C08/redo.json",
+          "sha256": "7a4904d9bfa0d056bccd62d738ac000c177613672f94bbf9d61131ce8607a9e8",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C08/restore.json",
+          "sha256": "e46be002caf0e80b6a56a4fdb0cf53ba286e85f6dfa8edf1f154559de3e9ab90",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C08/preservation.json",
+          "sha256": "2e4a26d2b5d8c7bf09f14434d59d95ef6b05e920e0ba9dcc8dc5f714c69ae701",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C08/project-path-map.json",
+          "sha256": "21869bac1d74c35ba6c17eba3fa8a73db0d12657bdcb6ea3ca683609416584a2",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C08/cold-readback.json",
+          "sha256": "5ea678f30389a3876c627b339284262c5c6f860a9fe3ee0324d170c8d0b9b802",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C08/cold-exit.json",
+          "sha256": "f38c31de3d6e12976cc96be35beb9c8b72c7e3f097c5b53e820771f97cd1af93",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C08/close-confirmed.json",
+          "sha256": "f6582cc92b083a05e48f37469dd56aa3edc24ca6e1ff359ac62d398cb446dd83",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C09/prepare.json",
+          "sha256": "2c39538d246c450a6c819faa2afab0e1a6f51d390ca463b87422e5b73054ed37",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C09/undo.json",
+          "sha256": "012d4d7004f68742024f67371a5cb4040788eb3f62ab8432b1d2686534f9df41",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C09/redo.json",
+          "sha256": "6f1b6c5ef30f97743d35a780624e489227cdcc10af79e09c494f7b43372b88a0",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C09/restore.json",
+          "sha256": "012d4d7004f68742024f67371a5cb4040788eb3f62ab8432b1d2686534f9df41",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C09/preservation.json",
+          "sha256": "257684cc73a30e618c592859856f35286bca2bf4843848ea57be46b27109c2a4",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C09/project-path-map.json",
+          "sha256": "d21be2236641208ebbde6728e88aade52fb9b6bbf1f46f24defc61b563eee6fa",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C09/cold-readback.json",
+          "sha256": "11b0aa7801ca421cd91e21015f7fac63d14b09c3cd93329df8abc1ceb85cd85f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C09/cold-exit.json",
+          "sha256": "015be509441a17ad58dc5104104394bcf5ed1bca4c4b2a2e71c6d0a280ea4c0b",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C09/close-confirmed.json",
+          "sha256": "0f4eb9332c9ecb826f452f9e029ce51219ee9f7a90614968798e48ba922eb42b",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C10/prepare.json",
+          "sha256": "e43258d088b11f7d003507d15238a082d0e1ce516286f53459f86399ac5a99ea",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C10/undo.json",
+          "sha256": "b842b5c5c0c417a5497e52d09862548b75f311dec204bccf0b00a902837b5205",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C10/redo.json",
+          "sha256": "dd81a34155b0f7d6fa98677541a04b6d98b88903ea71dfff589485bf5627e7b7",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C10/restore.json",
+          "sha256": "b842b5c5c0c417a5497e52d09862548b75f311dec204bccf0b00a902837b5205",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C10/preservation.json",
+          "sha256": "d74f107b0f9b797e7471c47f1e9be72539fb6ad42b6e2047997781262aca7d2f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C10/project-path-map.json",
+          "sha256": "80a2e903dc9a0fc7134a5ce830f350a7ebcac311617e193d4d3154262c4b11bf",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C10/cold-readback.json",
+          "sha256": "c652057acd72141cf6b70b8d71ad6ca7c35eb8bc8f08999e140315cf0d0d3b5d",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C10/cold-exit.json",
+          "sha256": "1704e00e63b6f50a1da874c4f879a923121fd6ec2f3defc3d92c0982f9425791",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C10/close-confirmed.json",
+          "sha256": "59b04dfa6b90a6040f81d768353f3b405e73e952eeeba9c3a63e7a8b556d1d25",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C11/prepare.json",
+          "sha256": "4321bd06c618739e83725cc678a64901b16e30fd29412d0e55a2143dd68e2d35",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C11/undo.json",
+          "sha256": "b608023b5e4ef87c123cc063c8e4c44fb8a1a316ad6bceb3dc347475e180a5f1",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C11/redo.json",
+          "sha256": "8a9f9fb76842793ba4aef13d0d22d39daa4b7c69acbf14a95d3ccd3327ad5b6d",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C11/restore.json",
+          "sha256": "b608023b5e4ef87c123cc063c8e4c44fb8a1a316ad6bceb3dc347475e180a5f1",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C11/preservation.json",
+          "sha256": "3a2ae849aee1bf98848c884d2952aa465573e0d7e4c7d48e2b12d217682c7020",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C11/project-path-map.json",
+          "sha256": "e8bdf67879bcd01003db6ff6fedf4210874bd789e3641fa1b62d56463158b3a5",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C11/cold-readback.json",
+          "sha256": "457e307db70f80f7cfc338ffbe7eb63454abd42962dd4e5c9389e5d1ae6c6f29",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C11/cold-exit.json",
+          "sha256": "ff5637aea7cdee3b55dbc32a12365a5714ed2c2e639d35fbe8c9e8d7c132546a",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C11/close-confirmed.json",
+          "sha256": "4de824006c0549844408956a30b0de5fb9d311cf2aff801e3ea0d7c9e97e7c0f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C12/prepare.json",
+          "sha256": "87dd35b20c7691965a74b4411f84159ac3f21b86f8bdf30ad18d99282a5bd5e4",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C12/undo.json",
+          "sha256": "d9815974817e3c151f4ed80b44c8c1576992c6af02aac38066f8190669ea727f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C12/redo.json",
+          "sha256": "a4b17206ea591efdbc3199741f23cc54aa859b22856904f86920cd0603d952ce",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C12/restore.json",
+          "sha256": "d9815974817e3c151f4ed80b44c8c1576992c6af02aac38066f8190669ea727f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C12/preservation.json",
+          "sha256": "ae066b116077ab5b398c672f89dc06d471810410696d7fab3575e97b0ecb147a",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C12/project-path-map.json",
+          "sha256": "6428265859414a75853ad27000ccfa908ebffb2a6624057e84966ffd67a34c84",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C12/cold-readback.json",
+          "sha256": "f04dcdff34fde4a25fadf5455b036d811b2b987677af565dbc4c818a3d588541",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C12/cold-exit.json",
+          "sha256": "ce7ff04b20a4f62215c47f97576047712323ea8ebc735aad595d214711d9eba2",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/undo/C12/close-confirmed.json",
+          "sha256": "7421fcb9bb8905296370e5bb4f0fa3e2e5e31995568c362e3c155c63238ec86e",
+          "status": "Passed"
+        }
+      ],
+      "cases": [
+        {
+          "case": "C08",
+          "status": "Passed",
+          "gui_pid": 53472,
+          "cold_pid": 18928,
+          "project": "D:\\workspace\\QCBlender\\outputs\\projects\\tutorial-cu-full\\cases\\undo\\C08\\C08-undo-restored.blend",
+          "files": 120,
+          "datasets": 8,
+          "arrays": 224,
+          "objects": 88,
+          "node_trees": 15,
+          "cold_report_sha256": "5ea678f30389a3876c627b339284262c5c6f860a9fe3ee0324d170c8d0b9b802",
+          "original_unchanged": true
+        },
+        {
+          "case": "C09",
+          "status": "Passed",
+          "gui_pid": 53272,
+          "cold_pid": 48536,
+          "project": "D:\\workspace\\QCBlender\\outputs\\projects\\tutorial-cu-full\\cases\\undo\\C09\\C09-undo-restored.blend",
+          "files": 120,
+          "datasets": 8,
+          "arrays": 224,
+          "objects": 88,
+          "node_trees": 15,
+          "cold_report_sha256": "11b0aa7801ca421cd91e21015f7fac63d14b09c3cd93329df8abc1ceb85cd85f",
+          "original_unchanged": true
+        },
+        {
+          "case": "C10",
+          "status": "Passed",
+          "gui_pid": 51464,
+          "cold_pid": 51452,
+          "project": "D:\\workspace\\QCBlender\\outputs\\projects\\tutorial-cu-full\\cases\\undo\\C10\\C10-undo-restored.blend",
+          "files": 8,
+          "datasets": 1,
+          "arrays": 5,
+          "objects": 17,
+          "node_trees": 2,
+          "cold_report_sha256": "c652057acd72141cf6b70b8d71ad6ca7c35eb8bc8f08999e140315cf0d0d3b5d",
+          "original_unchanged": true
+        },
+        {
+          "case": "C11",
+          "status": "Passed",
+          "gui_pid": 41448,
+          "cold_pid": 30108,
+          "project": "D:\\workspace\\QCBlender\\outputs\\projects\\tutorial-cu-full\\cases\\undo\\C11\\C11-undo-restored.blend",
+          "files": 13,
+          "datasets": 2,
+          "arrays": 9,
+          "objects": 23,
+          "node_trees": 3,
+          "cold_report_sha256": "457e307db70f80f7cfc338ffbe7eb63454abd42962dd4e5c9389e5d1ae6c6f29",
+          "original_unchanged": true
+        },
+        {
+          "case": "C12",
+          "status": "Passed",
+          "gui_pid": 48460,
+          "cold_pid": 50340,
+          "project": "D:\\workspace\\QCBlender\\outputs\\projects\\tutorial-cu-full\\cases\\undo\\C12\\C12-undo-restored.blend",
+          "files": 40,
+          "datasets": 2,
+          "arrays": 60,
+          "objects": 15,
+          "node_trees": 1,
+          "cold_report_sha256": "f04dcdff34fde4a25fadf5455b036d811b2b987677af565dbc4c818a3d588541",
+          "original_unchanged": true
+        }
+      ],
+      "single_process_serial": true,
+      "explicit_native_checkpoints": true,
+      "full_scene_snapshot_scope": "Object identity/type/parent, transforms, hide state, QC properties, mesh coordinates/edges/faces/QC attributes, curve points, font bodies, volume paths, modifier controls, display graph nodes/socket defaults/frames/links and all loaded scientific array hashes",
+      "cold_path_normalization": "Only portable Dataset-directory and VDB-path relocation components normalized; raw files, arrays, geometry, annotations, graph and other properties strict",
+      "unchanged_original_projects_and_inputs": true,
+      "all_processes_exited": true,
+      "remaining": {
+        "unified_final_source_qualification": "Not Run",
+        "user_walkthrough": "Not Run",
+        "independent_signature": "Not Run"
+      },
+      "rebuild": "Run retained launch-undo-case.py for one case at a time using recorded locked installation; apply undo-case-MCP.py phases prepare/undo/redo/restore in separate MCP calls, then saved exact-PID close script; run run-undo-cold.py with new paths and preservation manifests. Evidence scripts do not replace native undo with an emulation."
     }
   },
   "historical_partial_supplement": {
