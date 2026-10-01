@@ -3191,6 +3191,149 @@
         48444
       ],
       "remaining": "C05 degenerate and optimization/IRC annotation updates, removal/current-version boundaries; C01 density checkpoint, invalid-mask fixture, other public assets, C06-C13, unified fixed-candidate qualification and main merge/archive."
+    },
+    "C05_optimization_annotations_and_current_view": {
+      "status": "Passed",
+      "scope": "P02 Job1第4步独立优化原子层，两个源标注；实际GUI点击创建当前版本视图，原层保持、新层Mesh/树/标注/材质独立且保留步4；MCP四步值、文字、锚点与独立NumPy参考一致。仅记录全三原子条件，IRC与其他局部限制另验收。",
+      "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+      "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+      "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/annotation-steps-current-GUI-MCP.json",
+          "sha256": "ae9d792470184a4d61e02f0c0112ca071691af25254264774df4bc84d7b9d68f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/preservation-optimization-annotations.json",
+          "sha256": "cd998e8e00129f7b403ab349147b751420a316da5a85b16c7cd2b90d0213279c",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/cold-original/readback.json",
+          "sha256": "d3f16e01d919b43a6c2c875e607eb0847ff51f1cc5c262771eba9f3f958ff180",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/cold-moved/readback.json",
+          "sha256": "9bd3a730c2ec519296e5cd368348b079aed894677b13005cbca92afcc8bd4fe2",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/cold-unpacked/readback.json",
+          "sha256": "8c33726e1b580a49dc80fc90024f24f10b0f57cf46682807cfc6a7389efd44c7",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/cold-chain.json",
+          "sha256": "069df7a12570d60219cf2e5c1136959e38b4c697e6f051519f5fcee25ee0937b",
+          "status": "Passed"
+        }
+      ],
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-followup-current-view-after-GUI.jpg",
+          "sha256": "1ba7ea583a3bd777fe9150e10c11f7e00cd257ee3ca99cd1133927309ee752f7"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-followup-optimization-step1-framed-MCP.jpg",
+          "sha256": "1c60b027120c247ba8f23d0fbfa11445df55f72dce88d5a47e6c3a82e5ec3709"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-followup-optimization-step4-framed-MCP.jpg",
+          "sha256": "31cf9e34a2bb04601a83b7543a389480b36693e201b5a1ab186f13b71057b517"
+        }
+      ],
+      "raw_capture_records": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/screenshots/C05-followup-current-view-after-GUI.jpg",
+          "sha256": "1ba7ea583a3bd777fe9150e10c11f7e00cd257ee3ca99cd1133927309ee752f7"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/screenshots/C05-followup-current-view-before-GUI.jpg",
+          "sha256": "ede91dda1565ff1222d6611c9b02a3453d80f4c3511009c344034173d875d089"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/screenshots/C05-followup-optimization-step1-framed-MCP.jpg",
+          "sha256": "1c60b027120c247ba8f23d0fbfa11445df55f72dce88d5a47e6c3a82e5ec3709"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/screenshots/C05-followup-optimization-step1-MCP.jpg",
+          "sha256": "ceebb803e7ca3654d2a208013b60e16ff52807642d965bf260275251d6959037"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/screenshots/C05-followup-optimization-step1-readable-MCP.jpg",
+          "sha256": "5757f9762f8b5b1521c2cc55149573713206b65a010ce84a56f510bb5f6619c6"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/screenshots/C05-followup-optimization-step4-framed-MCP.jpg",
+          "sha256": "31cf9e34a2bb04601a83b7543a389480b36693e201b5a1ab186f13b71057b517"
+        }
+      ],
+      "diagnostics": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/preservation-script-diagnostic.json",
+          "sha256": "30176b7f66c2f51cb5626e2e4e45f7fa841c00a53e60c89c4235d6344a325101",
+          "status": "Failed"
+        }
+      ],
+      "checks": {
+        "native_current_version_view": "Passed",
+        "four_real_optimization_steps_independent": "Passed",
+        "synthetic_undefined": "Passed",
+        "temporary_copy_removal_MCP": "Passed",
+        "three_paths_cold_four_step_replay": "Passed",
+        "removal_GUI_click": "Not Run",
+        "IRC_step_updates": "Not Run",
+        "full_C05_C_N_unified_qualification": "Not Run",
+        "independent_signature": "Not Run"
+      },
+      "project": {
+        "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/C05-optimization-annotations.blend",
+        "sha256": "0ce425ec247d40beb456431b555502dfc2d46964cba28b49c14a50abb2ba946b",
+        "files": 12,
+        "datasets": 2,
+        "arrays": 8,
+        "atom_views": 5,
+        "annotation_objects": 8
+      },
+      "scripts": {
+        "C05-followup-check.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/scripts/C05-followup-check.py",
+          "sha256": "29e1a635e0312e3b8bc375ecc846a50964ad0431cea5d944c7c4b528c31eb674"
+        },
+        "C05-followup-cold.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/scripts/C05-followup-cold.py",
+          "sha256": "9564b5b28442054380c257e42d1de704398edd251771af209a02e48110059ea1"
+        },
+        "C05-followup-prepare.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/scripts/C05-followup-prepare.py",
+          "sha256": "50c86afacc14487492dd57aa235cf6a16261f5fdd58cf43447368398c7cc4fa3"
+        },
+        "C05-followup-preserve-resume.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/scripts/C05-followup-preserve-resume.py",
+          "sha256": "b9570fc199e5f5356db2b7321359cff510112667a0f84783de624a0847a6e72e"
+        },
+        "C05-followup-preserve-v1.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/scripts/C05-followup-preserve-v1.py",
+          "sha256": "9bad90e5f15f96281c769403c5497ba755ffde0e0e9feece4aabd5b9ec3baf40"
+        },
+        "launch-C05-followup.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/scripts/launch-C05-followup.py",
+          "sha256": "84b874c937623ad83deb01fa721c4423909b0829388e62e38c282ae783b6090e"
+        },
+        "run-C05-followup-cold.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/scripts/run-C05-followup-cold.py",
+          "sha256": "796fe65137e19b8d967ae9db2624a902a9794705aab6c065170325c94f1dfaf0"
+        }
+      },
+      "processes_exited": [
+        44884,
+        20136,
+        51556,
+        7836
+      ],
+      "remaining": "IRC annotation updates and current-version refusal; removal GUI click not claimed; remaining C01/C04 boundaries and public assets, C06-C13, same-final-source qualification and merge/archive."
     }
   },
   "historical_partial_supplement": {

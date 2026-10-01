@@ -742,6 +742,16 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
    | 角度 | 2,1,3 | 1.2 / −0.5 / −0.35 |
    | 二面角 | 2,1,4,5 | 0.8207 / −0.5 / −0.25215 |
 
+   随优化步更新练习另用 **C02/P02 Job 1** 的四步优化轨迹，保持该轨迹副本为活动对象；添加距离 **1,2** 和角度 **2,1,3**，小数3。在 **对象属性 → Optimization Trajectory → Choose Step** 依次选1、2、3、4；距离/角度由各步源坐标决定，文字中的 **Optimization Step**、锚点和引线同步变化。第1步为 **0.990 Å、106.000°**，第4步为 **0.989 Å、100.037°**。原层保留原步号；不要把P03静态水二聚体的预期数值代入P02优化。
+
+   图中排版使用Size=0.14，距离Offset=(0.3,−0.6,0.95)、角度Offset=(0.3,−0.6,−0.65)，从 **+X** 观察水的 **YZ** 源平面；文字朝向同方向相机。你可用右视图和视图缩放复现画幅。以下为MCP切步、调整排版后由Computer Use观察截图；本批逐步坐标与距离/角度经独立NumPy计算核对。
+
+   ![MCP优化第1步；Computer Use观察：0.990 Å、106.000°及未完成收敛状态](screenshot/C05-followup-optimization-step1-framed-MCP.jpg)
+
+   ![MCP优化第4步；Computer Use观察：0.989 Å、100.037°及收敛状态](screenshot/C05-followup-optimization-step4-framed-MCP.jpg)
+
+   退化角的 **undefined** 与原因另用明确的合成重合原子测试核对，测试后恢复真实源坐标；该测试不代表真实优化步退化，也不要求用户修改输入原件。IRC随步练习仍在C10单独执行。
+
 6. 在 **N 侧栏 → Display Layers** 选择层，用复制图标建立副本，改副本参数/材质确认原层不变；排序、视口/渲染显隐和删除只在副本测试。点击 **创建视图与检查工具 → 创建当前版本视图**，保留原层并核对新层。多选同类层，最后选参数源，在 **3D Viewport → 对象顶部菜单或对象右键菜单 → QCBlender → 复制显示参数到选中视图** 选类别；数值复制需同量/单位/电荷方法，不兼容时取消数值类别。目标位置、选择、裁剪和图例布局保留。
 
    [用户截图待引用：C05-06，活动对象、参数与结果同屏；参数变化保留前后画面]
@@ -761,6 +771,10 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
    ![Agent Computer Use：恢复原子层及所属标注](screenshot/C05-06-atom-layer-restored-GUI.jpg)
 
    ![Agent操作示例：关闭IR谱显示层，谱线与所属文字同步隐藏；视口与渲染开关独立](screenshot/C05-06-ir-layer-hidden.jpg)
+
+   当前版本视图示例：仅选上述 **P02第4步优化标注层**，点击 **创建当前版本视图**。新层应保留第4步和两项标注，Mesh、外层节点树、文字、曲线和材质独立；原层仍保留。本批真实点击后MCP核对通过，并在新层遍历四步，不改变原层；临时副本的单项标注和显示层移除另由MCP执行与核对，不记录为GUI删除点击。
+
+   ![Agent Computer Use：创建当前版本优化视图；MCP核对第4步、独立图及标注](screenshot/C05-followup-current-view-after-GUI.jpg)
 
 7. 对应 N01–N03/N15/N16，按 0.4 保存 `C05.png/.blend/.qcdata/`，加 `C05-selection.png`、`C05-annotations.png` 与显示层前后截图。
 

@@ -52,3 +52,5 @@ Blocked by: 01
 2026-10-02 公共N01/N02/N09：同候选2eddb6a原生添加三资产和五条接线、选择/Style0/1/2/两裁剪Enabled操作Passed；辅助输入输出、材质、向量MCP准备分列。固定Socket_0–4、氧1/4与同数量氢2/3、空输出、三样式及Plane/Box/交集150/100/50逐顶点CPU参考Passed；原五层与50数组不变。17图紧接步骤、34登记项。24文件工程/ZIP、6视图48标注和两个内嵌库保全，原路径53228、移动10068、解包20956新原生进程全状态一致Passed；18312长路径检查脚本失败保留并修正，产品未改。原51408及全部冷进程退出。完整C05成图、后续案例和统一资格仍Not Run；02claimed、03pending。证据full/C05-public-atoms/cold-chain.json。
 
 2026-10-02 C05成图：PID20556原生角度2/1/3、二面角2/1/4/5、Face All to Camera点击及独立NumPy参考Passed；50数组与原五层不变，MCP非均匀缩放/排版/三图导出Passed。24文件工程、1Dataset/50数组、6视图/52标注及ZIP保全；27252/16908/48444原路径/中文移动/解包新原生进程与9次实渲染像素一致Passed。隐藏文字缓存世界矩阵未求值诊断Failed保留，完整保存变换链严格核对Passed。4截图、3效果图紧接步骤，36登记项；全部进程退出。退化/随步/删除/当前版本、后续案例及统一资格仍Not Run，02claimed、03pending。证据full/C05-final/cold-chain-v2.json。
+
+2026-10-02 C05/P02优化标注：PID44884实际点击创建当前版本视图，独立Mesh/树/标注数据/材质与步4保持Passed；MCP逐步独立NumPy距离/角度、文字步号、锚点与引线Passed（第1步0.990Å/106.000°，第4步0.989Å/100.037°）。合成退化与临时标注/层移除MCP单列Passed，GUI移除Not Run。12文件、2Dataset/8数组、5视图/8标注保全；20136/51556/7836原路径/中文移动/解包新进程冷读并重放四步Passed。3图紧接步骤、37登记项，原C02工程不变、全部进程退出。IRC及完整C/N/统一资格仍Not Run，02claimed、03pending。证据full/C05-followup/cold-chain.json。

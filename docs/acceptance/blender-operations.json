@@ -2796,6 +2796,67 @@
         ],
         "requires_current_result_assertions": true
       }
+    },
+    {
+      "id": "current-version-optimization-view",
+      "title": "保留原层并创建当前版本优化视图",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use actual current-version button; MCP preparation and independent checks separately scoped",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "仅选C05 optimization annotations；P02 Job1水优化第4步，两标注随源编号1,2及2,1,3",
+        "visible_entry": "3D View → N → QCBlender → 创建视图与检查工具 → 创建当前版本视图",
+        "validated_scope": "P02 Job1第4步独立优化原子层，两个源标注；实际GUI点击创建当前版本视图，原层保持、新层Mesh/树/标注/材质独立且保留步4；MCP四步值、文字、锚点与独立NumPy参考一致。仅记录全三原子条件，IRC与其他局部限制另验收。",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/annotation-steps-current-GUI-MCP.json",
+            "sha256": "ae9d792470184a4d61e02f0c0112ca071691af25254264774df4bc84d7b9d68f",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C05-followup-current-view-after-GUI.jpg",
+            "sha256": "1ba7ea583a3bd777fe9150e10c11f7e00cd257ee3ca99cd1133927309ee752f7"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+        "qcblender/blender/optimization.py": "7fabbdce3791ecea4d26680589bd816a727d20b494801242278d7e705471823b",
+        "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/geometry.py": "b3f453dc1943e7488b1bee33c761b874178c9ad9c8a25e855732cb50ddbd82ca",
+        "qcblender/geometry.py": "ebfcc7b3fbdd170a192420d21932d555c550deefd0fcc65a1244b15aa1e34cd4"
+      },
+      "fingerprint_review": "Review transitive callbacks, public interfaces, Blender and dependency changes; initial file list is not exhaustive.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "P02 Job1第4步独立优化原子层，两个源标注；实际GUI点击创建当前版本视图，原层保持、新层Mesh/树/标注/材质独立且保留步4；MCP四步值、文字、锚点与独立NumPy参考一致。仅记录全三原子条件，IRC与其他局部限制另验收。 后续同条件可调用registered operator，实际结果独立核对。",
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/preservation-optimization-annotations.json",
+            "sha256": "cd998e8e00129f7b403ab349147b751420a316da5a85b16c7cd2b90d0213279c",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/cold-chain.json",
+            "sha256": "069df7a12570d60219cf2e5c1136959e38b4c697e6f051519f5fcee25ee0937b",
+            "status": "Passed"
+          }
+        ],
+        "requires_current_result_assertions": true
+      }
     }
   ]
 }
