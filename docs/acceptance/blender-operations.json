@@ -1057,6 +1057,77 @@
         "current_batch_replay_status": "Not Run",
         "requires_current_result_assertions": true
       }
+    },
+    {
+      "id": "legacy-map-selected-field",
+      "title": "新未映射视图的旧多选字段映射入口",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use new-view button, F3 search and dialog confirmation; MCP selection setup and numerical readback",
+        "source_commit": "b7090967e6618c15449efec278bcd47a0f018d54",
+        "product_tree": "9905f2c69eb28a7e33460b5fc6f02c7ad43bd896",
+        "candidate_sha256": "9795a9ea2c262f9c50f877a7373cf820a3a91794474817f515cdac4430dfe1d1",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "先选ESP表面，再选新建未着色密度表面使其活动；恰好两个对象。此批选择由MCP设置，不宣称Outliner Shift点击已验收。",
+        "visible_entry": "3D Viewport → Object → QCBlender → Map Selected Field to Active Surface；或F3完整名称搜索",
+        "validated_scope": "P03水二聚体新视图无qc_color_source/映射子组；新视图162顶点，21个float64 CPU参考取样，最大误差1.53e-8 hartree/e；色域±0.05，Developer Extras关闭。",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-top-menu/GUI/F3-entry-and-sampling.json",
+            "sha256": "8d57136fbab99cc617c41fd93735257891551e16cd9263f2a34187aa8b9e7501",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-top-menu/GUI/fresh-unmapped-view.json",
+            "sha256": "f18afc0de99d99dd1c888ea7432e6d8dcf885067c7935f34ca09fecbd5046d99",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-04-top-object-menu-entry.jpg",
+            "sha256": "ed1da1f3ce28fe18ba04a7bc0b371eaf167b0107bf92a9b7b1f85275daf73170"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-04-new-view-before-F3.jpg",
+            "sha256": "6690f3d6a22b1062a55ec53d5e021d9bab30188adde7b22364aa29d68179701d"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-04-F3-fresh-map-entry.jpg",
+            "sha256": "3dc6f6063b39e64324972a3996bd6f8f5b6b1ec22a058d56e4e947ff08126de6"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-04-F3-fresh-map-dialog.jpg",
+            "sha256": "8d8f96442338f430af1828529da6e00dfd7338e884e34a6a9935bb98e2c83ee6"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/__init__.py": "3c81acbf5f7e5307891d5e961426263172e75da32c8afb2f1d2cb4f648ae6ad4",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/blender/scalars.py": "1e17b26bf258a6a10963410d597a248b31cb60998b9a030d3fa03b6e7df7ac89",
+        "qcblender/blender/source_browser.py": "8be0aa54c40d92cd6e3625b70aab3fc765e7548ab0ef071f1918e6e4e2c4e8a4",
+        "qcblender/blender/assets.py": "7b9738469040f90dc915d45c2322d29029f44c5453db2e0531eb12980ca46536",
+        "qcblender/blender/graph.py": "887b365c7fd1c849fcf55bbdb4a5e37f01f146b674994198703d76dc951dc325",
+        "qcblender/blender/legend_layout.py": "6b63cb9819e7e9c0df1e8d75337182b6b46c8042b4e64970bde58669dd62ef34",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/association.py": "f7a3e17c966e95b5def5fe5f410463435d8a42867769dbb6d476b2d8ee618f19",
+        "qcblender/sampling.py": "6bcb428a41af4d634a029a24945e797ff19fe925f0a0a604b51a44bccc630966",
+        "qcblender/association.py": "e9b8f0d9e462f3ecf0e5b6c428f3cce2a5378404871c50bd23a58cf825fee000"
+      },
+      "fingerprint_review": "Include registration, menu hooks, transitive helpers and locked dependencies; different product tree requires reviewed scope, not implicit reuse.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP可设置明确选择与活动对象并调用qcblender.map_scalar；仅未映射接收者。已映射视图使用select_color_field替换。首次或菜单修改后必须GUI复验。",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true
+      }
     }
   ]
 }

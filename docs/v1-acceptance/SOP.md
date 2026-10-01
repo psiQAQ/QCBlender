@@ -549,9 +549,17 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    ![Agent点击：恢复中点0.5与Reverse=0](screenshot/C04-03-material-restored.jpg)
 
-4. 旧多选映射使用新的未映射层独立复核：先选步骤2的密度表面，点 **N 侧栏 → 创建视图与检查工具 → 创建当前版本视图**，保留原层，新标准密度层尚未绑定色场。临时开启 ESP 表面的视口可见性，取消其他选择，在 Outliner 先选 ESP 表面，再 Shift 选新密度表面使其活动，确认恰好选中两个对象；F3 搜索 **Map Selected Field to Active Surface**，确认后核对与步骤2相同的来源。再用 **选择／替换着色场** 替换一次，范围和图例位置保留；恢复独立 ESP 表面隐藏。
+4. 旧多选映射使用新的未映射层独立复核：先选步骤2的密度表面，点 **N 侧栏 → 创建视图与检查工具 → 创建当前版本视图**，保留原层，新标准密度层尚未绑定色场。临时开启 ESP 表面的视口可见性，取消其他选择，在 Outliner 先选 ESP 表面，再 Shift 选新密度表面使其活动，确认恰好选中两个对象；在 **3D Viewport → Object（物体）→ QCBlender → Map Selected Field to Active Surface** 打开映射；也可将鼠标放在3D视口后 F3 搜索同名操作。填 **Color minimum=−0.05、Color maximum=+0.05**，确认后核对与步骤2相同的来源。已有着色的视图会拒绝重复添加，应使用选择／替换着色场。再用 **选择／替换着色场** 替换一次，范围和图例位置保留；恢复独立 ESP 表面隐藏。
 
    [用户截图待引用：C04-04，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Agent观察：Object顶部QCBlender菜单中的旧映射入口](screenshot/C04-04-top-object-menu-entry.jpg)
+
+   ![Agent点击新建视图，MCP核对无着色绑定并设置两对象选择](screenshot/C04-04-new-view-before-F3.jpg)
+
+   ![Agent点击：默认配置F3检索旧映射操作](screenshot/C04-04-F3-fresh-map-entry.jpg)
+
+   ![Agent点击：新未映射视图映射参数−0.05至+0.05](screenshot/C04-04-F3-fresh-map-dialog.jpg)
 
 5. 重新选原始原子对象，在 **科学记录与振动模式 → 设置原子电荷着色** 选真实存在的布居方法，核对指定原子电荷 e；已绑定网格着色的原子层需换独立层。点 **创建视图与检查工具 → 创建偶极矢量**，核对源三分量/Debye，改变 **Angstrom per Debye** 只改显示长度。
 
@@ -592,6 +600,8 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
    ![MCP保存阶段工程；完整C04渲染与冷重开待补验](screenshot/C04-10-mapping-checkpoint-saved-MCP.jpg)
 
    ![MCP保存图例阶段工程；154数组保持原摘要，完整C04及本工程冷重开待补验](screenshot/C04-10-legend-checkpoint-saved.jpg)
+
+   ![MCP保存F3映射阶段工程；3 Dataset和154数组核对，完整C04与冷重开待补验](screenshot/C04-10-F3-checkpoint-saved-MCP.jpg)
 
 
 

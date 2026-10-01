@@ -40,6 +40,13 @@
       "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
       "sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
       "scope": "Fog repair; partial GUI evidence in full_batch_progress"
+    },
+    "b709096": {
+      "source_commit": "b7090967e6618c15449efec278bcd47a0f018d54",
+      "product_tree": "9905f2c69eb28a7e33460b5fc6f02c7ad43bd896",
+      "path": "D:\\workspace\\QCBlender\\outputs\\candidates\\current\\tutorial-mapping-b709096\\qcblender-0.0.1.zip",
+      "sha256": "9795a9ea2c262f9c50f877a7373cf820a3a91794474817f515cdac4430dfe1d1",
+      "scope": "Minimal menu entry repair; installation, lifecycle and actual F3 execution Passed; full qualification Not Run"
     }
   },
   "environment": {
@@ -1178,6 +1185,246 @@
           "sha256": "47f11564eacdb37bdde5fba5957d3cdf869c27aa28c675363ce37aa94613077c",
           "scope": "C04 layout/material evidence and two preserved checkpoints only"
         }
+      }
+    },
+    "C04_mapping_entry_followup": {
+      "status": "Not Run",
+      "scope": "New view, legacy mapping, source replacement and preservation individual checks Passed; complete C04/whole C-N and new checkpoints cold reopen Not Run",
+      "source_commit": "b7090967e6618c15449efec278bcd47a0f018d54",
+      "candidate_sha256": "9795a9ea2c262f9c50f877a7373cf820a3a91794474817f515cdac4430dfe1d1",
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legacy/baseline-attempt-diagnostic.json",
+          "sha256": "62812415f4dbef1c35be847ff0f06ab0baf672ed2a403199b71ca1bd5cc9cbe1",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legacy/before-new-view.json",
+          "sha256": "0e663cefbd8e457bf1114bf4d6a67bc5757807bba30bff220aab3f3496db59c7",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legacy/exit-verified.json",
+          "sha256": "fb8c8b762724b7f48a5ab8095811581905d53f328fdb73c570948315b1fec2b3",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legacy/F3-entry-failure.json",
+          "sha256": "0b6979e329479cc893a9aa965adf6f716c423a31dcf27c2fd16f06646050dfdd",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legacy/identity.json",
+          "sha256": "ca884741493d48c84ac19525a3470ce31bbe3a52cc14a61640e920c57e288504",
+          "status": "Not Run"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legacy/legacy-mapping-dialog-result.json",
+          "sha256": "30c76face6e7182f5fc8df840ee0ae3dc96ae50fc6938b579bd2bd282761a8c5",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legacy/mapping-readback-attempt-diagnostic.json",
+          "sha256": "ecaf39c679aea67407a1ca4656a9498cf0d646cdc1c98f8248c08c5542e924d5",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legacy/mcp-ready-46892.json",
+          "sha256": "77068a79eb2437859b45b25af5da45cc7e7a1cc62ddeee5edc6c984596d5c0e6",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legacy/new-current-view-GUI.json",
+          "sha256": "44263ca3e8a1fb408d2f544c3652fdf1bc61959d67a1f6919b1ce77569f95594",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legacy/portable-legacy-checkpoint.json",
+          "sha256": "16d88e428bdaaf81971071947fae79c96ee4ec74508f6e8165dd30f8d881a699",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legacy/process.json",
+          "sha256": "3e6660748e173fa47b217cdffb9462a3a27a03ea5b106ff4b3eb19e4f0ff8025",
+          "status": "Not Run"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legacy/replacement-preservation-MCP.json",
+          "sha256": "c835c2ef7dd99224353168ab3c812d1b5278725a1147f4c64e64d008f4ae0d91",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legacy/report-write-attempt-diagnostic.json",
+          "sha256": "22dd3f90b9c2528707fc882a03e9c6d5044c77383112a9ce614f5fedbd08c119",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legacy/two-object-selection-MCP.json",
+          "sha256": "72df672aeefb29603c1c5502fc785e5091780d985e99debed03cd656fed58fac",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legacy/vertex-count-attempt-diagnostic.json",
+          "sha256": "8609f5e9a521064df539dbd34aa0ef82e0794b057a1203812384f1dd45a4eff2",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-entry/build.json",
+          "sha256": "b1c154a19cd37efd6c339d0b3efdbb851f781441022778a48ca48efd8ac65dab",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-entry/extension-installation.json",
+          "sha256": "3e8b9700abb20afa21912aef78b551482df54a695b760b8a73d45c035dcbfca7",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-entry/GUI/context-menu-result.json",
+          "sha256": "7fe4ff6a48b4ab00be4cb527f1d2d679bb65fa39b77e22e4c92da345c5adcb51",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-entry/GUI/exit-verified.json",
+          "sha256": "cc738944bca6fe74855f037ae61c16e78d70618651fe89eb14e05c67333affc3",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-entry/GUI/F3-entry-failure.json",
+          "sha256": "b0a5a34f9aa6fe1f960cd1b9007f8f73db52cfc54793e54ae54ab88902034378",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-entry/GUI/mcp-ready-32028.json",
+          "sha256": "f20274da83d709451bc3a1e7318d39890602ba92cca86ab87eefddae7cdc0e46",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-entry/GUI/new-unmapped-GUI.json",
+          "sha256": "f7ebaff50647c72b093d871064603015a2878c2e6d14455b0dd045d3123ba749",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-entry/GUI/portable-context-menu-checkpoint.json",
+          "sha256": "dcc71e073e6e37c4b7fc6f9e7ec072170fd80f140a0285d605b302a504788018",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-entry/GUI/process.json",
+          "sha256": "f6b2180f0fa88d9121fda24c1ac8f044d7eac021db583b0adec4c46cda584b86",
+          "status": "Not Run"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-entry/GUI/selection-MCP.json",
+          "sha256": "80b6f3ce59ab70788671a36d57c094c222125869a09ff19da16ea3e02e2a9bf8",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-entry/input-provenance.json",
+          "sha256": "64a91c4d8ac246da35941eb4057dd43cc41549ba9f8202efca2b62b678fbb5d5",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-entry/installation-command.json",
+          "sha256": "1ba3dfee8eb9ac7f105a678153880ac7b9711cabf9873a02bb3b62d144643e86",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-top-menu/build.json",
+          "sha256": "480b29f473ae7ee363d10d065e6293e7111c9f20fbe15540681bf7f52dbdf847",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-top-menu/extension-installation.json",
+          "sha256": "e37497f064bb9191a075ee3203803c6b86716add1efdc5e0f1c1861a33c0aea2",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-top-menu/GUI/already-mapped-rejection-diagnostic.json",
+          "sha256": "ac3e35bdde6ff189a4c032332e1baabe00ee670971fbcd9d7a16be1c5f10a448",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-top-menu/GUI/exit-verified.json",
+          "sha256": "632255f4cb22711548b1c3682b89774e2dd03098c7b818c5e42608db63890652",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-top-menu/GUI/F3-entry-and-sampling.json",
+          "sha256": "8d57136fbab99cc617c41fd93735257891551e16cd9263f2a34187aa8b9e7501",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-top-menu/GUI/fresh-unmapped-view.json",
+          "sha256": "f18afc0de99d99dd1c888ea7432e6d8dcf885067c7935f34ca09fecbd5046d99",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-top-menu/GUI/mcp-ready-10796.json",
+          "sha256": "6d13aa000728545ac75b3c82eefc071f3032ea1c7e1469e171913cc7f92ca8f6",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-top-menu/GUI/portable-F3-checkpoint.json",
+          "sha256": "787f94ac8bd5eb082704d453f2da8d1a2a859b20afd25f05f20b9113d91f0488",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-top-menu/GUI/process.json",
+          "sha256": "e2bca2a2c2b3a2614e2851120d12ba08339f0e8e870f962d360803ad12e788e3",
+          "status": "Not Run"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-top-menu/GUI/selection-MCP.json",
+          "sha256": "51c2093fffbc95b86cc343aab6ad7f7ed77fa6d8ddbbd1d7ac4703d175cc1ba8",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-top-menu/input-provenance.json",
+          "sha256": "64a91c4d8ac246da35941eb4057dd43cc41549ba9f8202efca2b62b678fbb5d5",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-top-menu/installation-command.json",
+          "sha256": "6f13a33df37587d9229eda4475d4f769093c70fef7141416c245b4f875432360",
+          "status": "Passed"
+        }
+      ],
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-04-top-object-menu-entry.jpg",
+          "sha256": "ed1da1f3ce28fe18ba04a7bc0b371eaf167b0107bf92a9b7b1f85275daf73170"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-04-new-view-before-F3.jpg",
+          "sha256": "6690f3d6a22b1062a55ec53d5e021d9bab30188adde7b22364aa29d68179701d"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-04-F3-fresh-map-entry.jpg",
+          "sha256": "3dc6f6063b39e64324972a3996bd6f8f5b6b1ec22a058d56e4e947ff08126de6"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-04-F3-fresh-map-dialog.jpg",
+          "sha256": "8d8f96442338f430af1828529da6e00dfd7338e884e34a6a9935bb98e2c83ee6"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-10-F3-checkpoint-saved-MCP.jpg",
+          "sha256": "1db5cdfe219f4119d6ef4b21d0ec56041fb9f41809e90797e86a74e42907af8c"
+        }
+      ],
+      "preservation": "outputs/evidence/2026-10-01/tutorial-cu/mapping-top-menu/preservation.json",
+      "projects": [
+        "outputs/projects/tutorial-cu-full/cases/C04/C04-legacy-checkpoint.blend",
+        "outputs/projects/tutorial-cu-full/cases/C04/C04-context-menu-checkpoint.blend",
+        "outputs/projects/tutorial-cu-full/cases/C04/C04-F3-checkpoint.blend"
+      ],
+      "agent_selection_clicks": "Not Run",
+      "user_walkthrough": "Not Run",
+      "independent_scientific_signature": "Not Run",
+      "verification": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/mapping-top-menu/verification.json",
+        "sha256": "3b4303770c92a8a36bd4606a59392f754dfca831a7ec941a03642384eff48bb9",
+        "status": "Passed",
+        "scope": "Preservation copies, report and screenshot SHA-256, stable historical records, product identity and task/GUI state consistency"
       }
     }
   },
