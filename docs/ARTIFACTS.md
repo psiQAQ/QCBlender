@@ -16,6 +16,8 @@
 
 ## 当前任务与候选
 
+C04切片绑定路径修复候选为 `outputs/candidates/current/tutorial-slice-e26d22a/qcblender-0.0.1.zip`，源码 `e26d22a`；原生四平面及身份拒绝守卫、GUI定平面/Gizmo/等值线/探针和ESP剖面补验Passed，证据与重建脚本见 `outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/preservation.json`，原生报告见 `outputs/evidence/2026-10-01/tutorial-cu/slice-plane/`。保全工程 `outputs/projects/tutorial-cu-full/cases/C04/C04-slice-fixed-checkpoint.blend + .qcdata` 共95文件、6 Dataset/172数组；原路径新进程冷读和三份CSV复导出Passed。完整C04成图、最终移动/解包链条、完整C-N及统一资格仍Not Run；两进程均退出，隔离配置保留待后续验证。
+
 C04旧多选映射补验候选为 `outputs/candidates/current/tutorial-mapping-b709096/qcblender-0.0.1.zip`，源码 `b709096`，菜单修复分支任务记录提交 `6310d6e`；安装及默认F3执行Passed，完整资格Not Run。历史失败、原始动作/截图与摘要映射见 `outputs/evidence/2026-10-01/tutorial-cu/mapping-top-menu/preservation.json` 及 [补验索引](acceptance/tutorial-cu-validation.json)。保全工程 `outputs/projects/tutorial-cu-full/cases/C04/C04-F3-checkpoint.blend` 与 `.qcdata`；三份新阶段工程冷重开、剩余C04/完整C-N仍Not Run。按该批scripts与build.json重建；main未合并，分支/工作树和本批隔离配置保留。
 
 | 任务 / 日期 | 提交或标签 | 证据与主要报告 | 工程、候选与阻塞 | 重建入口 |

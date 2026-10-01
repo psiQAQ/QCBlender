@@ -4,7 +4,7 @@
 
 本教程保留 **C01–C13** 科学案例和 **N01–N18** 节点/交互检查编号。按钮位置与当前插件界面一致；对话框及部分控件仍使用英文。操作结果只记 **Passed / Failed / Not Run**。用户实际点击、Agent Computer Use 点击、MCP操作与数据核对、独立科研签署分别记录；Agent 不填写使用者签名。维护者按 [交互规则](../agents/blender-interaction.md) 和 [操作登记表](../acceptance/blender-operations.json) 复用已确认且功能未变的操作，MCP/命令行复验单独记录，完整案例结果仍逐项验收。
 
-本文的 Agent 示例截图紧接相应操作展示，原始 JPEG 保存在同级 `screenshot/` 目录。截图记录本批可见 Blender 状态；图注区分 Computer Use 实际点击与 MCP 执行后观察截图，保留你的逐步骤截图占位；各图的候选身份、输入、参数和检查范围见 [点击补验索引](../acceptance/tutorial-cu-validation.json)。C02、密度生成/取样/CSV、氢显隐与首次保存使用90ff9bf候选；IR层显隐复验、最终剖面、相机、渲染及冷重开使用1554ee2候选。候选92d498c的C01雾修复与三路径冷重开、C02能量/振动/优化/连续导入/渲染/三路径冷重开，以及C03双符号/独立着色/保存和MCP三路径冷重开截图同样逐步骤展示，具体范围见索引 full_batch_progress；完整C/N点击覆盖及独立科研签署仍为Not Run。你复现时，将自己的截图保存到 `screenshot/`，在对应占位下一行填写 `![用户复做：C02-01](screenshot/C02-01-user.png)`；使用独立文件名，保留 Agent 示例便于对照。
+本文的 Agent 示例截图紧接相应操作展示，原始 JPEG 保存在同级 `screenshot/` 目录。截图记录本批可见 Blender 状态；图注区分 Computer Use 实际点击与 MCP 执行后观察截图，保留你的逐步骤截图占位；各图的候选身份、输入、参数和检查范围见 [点击补验索引](../acceptance/tutorial-cu-validation.json)。C02、密度生成/取样/CSV、氢显隐与首次保存使用90ff9bf候选；IR层显隐复验、最终剖面、相机、渲染及冷重开使用1554ee2候选。候选92d498c的C01雾修复与三路径冷重开、C02能量/振动/优化/连续导入/渲染/三路径冷重开，以及C03双符号/独立着色/保存和MCP三路径冷重开截图同样逐步骤展示，候选e26d22a的C04切片/Gizmo/等值线、ESP几何及绑定色场探针、ESP剖面排版截图亦按步骤展示；其中MCP设置坐标、重放和冷重开单独标明。具体范围见索引 full_batch_progress；完整C/N点击覆盖及独立科研签署仍为Not Run。你复现时，将自己的截图保存到 `screenshot/`，在对应占位下一行填写 `![用户复做：C02-01](screenshot/C02-01-user.png)`；使用独立文件名，保留 Agent 示例便于对照。
 
 ## 0. 准备、安装与通用操作
 
@@ -569,15 +569,51 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    [用户截图待引用：C04-06，活动对象、参数与结果同屏；参数变化保留前后画面]
 
+   ![Agent点击：创建新的ESP切片；候选e26d22a](screenshot/C04-06-fixed-new-slice-dialog.jpg)
+
+   ![Agent点击：Grid ij，101×101采样](screenshot/C04-06-fixed-grid-ij.jpg)
+
+   ![Agent点击：Grid jk；混合绝对与相对绑定路径已通过复验](screenshot/C04-06-fixed-grid-jk.jpg)
+
+   ![Agent点击：Grid ki](screenshot/C04-06-fixed-grid-ki.jpg)
+
+   ![Agent点击：首次三原子平面1/2/3；教程2/1/4另经MCP复验](screenshot/C04-06-fixed-three-atoms-dialog.jpg)
+
+   ![Agent点击：三原子平面；5072个域外采样点以洋红显示](screenshot/C04-06-fixed-three-atoms.jpg)
+
+   ![Agent点击：自由平面Center/Rotation/Width/Height；6×6 Å](screenshot/C04-06-fixed-free-parameters.jpg)
+
+   ![Agent拖动：QC Slice Gizmo平移](screenshot/C04-06-fixed-gizmo-move.jpg)
+
+   ![Agent拖动：QC Slice Gizmo旋转](screenshot/C04-06-fixed-gizmo-rotation.jpg)
+
+   ![Agent拖动：QC Slice Gizmo改变宽度](screenshot/C04-06-fixed-gizmo-width.jpg)
+
+   ![Agent点击显式阈值与标签；MCP取景后观察，−0.02/0/0.02 hartree/e](screenshot/C04-06-fixed-explicit-contours-framed.jpg)
+
 7. 选 ESP 场，在 **3D Viewport → N → View → 3D Cursor** 输入清单坐标，点击 **创建视图与检查工具 → 读取游标处场值**。分别在 **(0,0,1.45)**、核邻近 **(0,0,0)** 和域外 **(20,20,20) Å** 读取。核附近是否无效由实际网格掩码决定，0.7 Å 网格未必命中核的排除区；若核邻近仍有效，如实记录值，并将“无效域读数”保留 Not Run，另由同批数据核对验证真实无效格点，不能凭坐标宣称无效。无效/域外不能记物理0。点 **点击探针 · 几何场** 后在表面点击预览，按 **Enter** 保存取点结果；按 **Escape** 恢复进入探针前的状态。绑定色场的密度表面再用 **点击探针 · 绑定色场**，同样点击后按 Enter 保存，记录采样位置/单位和实际结果。
 
    [用户截图待引用：C04-07，活动对象、参数与结果同屏；参数变化保留前后画面]
 
+   ![Agent点击：读取游标ESP，0.0085721002 hartree/e](screenshot/C04-07-esp-cursor-valid.jpg)
+
+   ![Agent点击：ESP切片几何场取点预览，Enter保存](screenshot/C04-07-esp-geometry-probe-preview.jpg)
+
+   ![Agent点击：第二取点预览后Escape恢复原记录](screenshot/C04-07-esp-geometry-probe-Escape-preview.jpg)
+
+   ![Agent点击：密度表面绑定色场取点，实际采样ESP](screenshot/C04-07-bound-color-probe-preview.jpg)
+
+   ![Agent点击Enter：保存0.072094069 hartree/e绑定色场读数](screenshot/C04-07-bound-color-probe-saved.jpg)
+
    ![Agent操作示例：独立密度几何场取点预览，单位 electron/bohr^3；该示例不是 ESP 取点](screenshot/C04-07-click-probe-preview.jpg)
 
-8. 选指定场或切片，输入游标起点，点击 **记录剖面起点**；保持**同一个活动视图**，输入终点，点 **创建线剖面**，先选 **Geometry**、填 **Samples=101**；绑定色场视图再明确选 Color复核。选新剖面，改 **剖面坐标轴与排版 → 应用排版**，点 **导出剖面 CSV** 保存 `C04-profile.csv`；核对距离 Å、字段单位、端点、valid 列及无效值空白。剖面是采样快照，移动排版不改 CSV。
+8. 选指定场或切片，输入游标起点，点击 **记录剖面起点**；保持**同一个活动视图**，输入终点，点 **创建线剖面**，先选 **几何数据（Geometry）**、填 **采样（Samples）=101**；绑定色场视图再明确选 **颜色（Color）** 复核。选新剖面，改 **剖面坐标轴与排版 → 应用排版**，点 **导出剖面 CSV** 保存 `C04-profile.csv`；核对距离 Å、字段单位、端点、valid 列及无效值空白。本例图幅宽度从 **4→6** 后点击 **应用排版**；图幅单位与距离单位分别记录，CSV距离仍为 **0–4 Å**。剖面是采样快照，移动排版不改 CSV。
 
    [用户截图待引用：C04-08，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Agent点击：Sample field选颜色，采样101点；游标坐标由MCP设置](screenshot/C04-08-color-profile-dialog.jpg)
+
+   ![Agent点击图幅宽度6与应用排版；MCP正面取景，CSV仍覆盖0–4 Å](screenshot/C04-08-color-profile-layout.jpg)
 
    ![Agent操作示例：独立密度剖面示例的游标起点，场单位 electron/bohr^3](screenshot/C04-08-cursor-start.jpg)
 
@@ -596,6 +632,10 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 10. 对应 N06–N11/N17，按 0.4 保存；冷重开与移动后再次导出 CSV，核对保存数组/摘要。证据：`C04.png`、`C04-esp.png`、`C04-charge.png`、`C04-dipole.png`、`C04-slice.png`、`C04-profile.png`、CSV 和工程。
 
    [用户截图待引用：C04-10，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![MCP另存检查点：6 Dataset、172数组；此图尚非最终C04成图](screenshot/C04-10-slice-fixed-checkpoint-saved-MCP.jpg)
+
+   ![新进程MCP冷重开与CSV复导出；单独显示ESP剖面，完整C04成图待验收](screenshot/C04-10-slice-fixed-cold-MCP.jpg)
 
    ![MCP保存阶段工程；完整C04渲染与冷重开待补验](screenshot/C04-10-mapping-checkpoint-saved-MCP.jpg)
 

@@ -47,6 +47,13 @@
       "path": "D:\\workspace\\QCBlender\\outputs\\candidates\\current\\tutorial-mapping-b709096\\qcblender-0.0.1.zip",
       "sha256": "9795a9ea2c262f9c50f877a7373cf820a3a91794474817f515cdac4430dfe1d1",
       "scope": "Minimal menu entry repair; installation, lifecycle and actual F3 execution Passed; full qualification Not Run"
+    },
+    "e26d22a": {
+      "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
+      "product_tree": "4086224b13cdd50fa4495c1e00004e0d8dd15d49",
+      "path": "D:\\workspace\\QCBlender\\outputs\\candidates\\current\\tutorial-slice-e26d22a\\qcblender-0.0.1.zip",
+      "sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+      "scope": "Mixed Dataset path identity repair; native guards, actual slice/probe/profile GUI and original checkpoint cold readback Passed; complete final qualification Not Run"
     }
   },
   "environment": {
@@ -1425,6 +1432,253 @@
         "sha256": "3b4303770c92a8a36bd4606a59392f754dfca831a7ec941a03642384eff48bb9",
         "status": "Passed",
         "scope": "Preservation copies, report and screenshot SHA-256, stable historical records, product identity and task/GUI state consistency"
+      }
+    },
+    "C04_slice_supplement": {
+      "status": "Passed",
+      "scope": "Only individually cited slice/probe/profile checks; full C04 remains Not Run",
+      "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
+      "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-grid-ij-created-GUI.json",
+          "sha256": "a396af32d12e239f13ade50446c9a447a601c2092b84fca671f4656d0a0da2f9",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-grid-jk-GUI.json",
+          "sha256": "608ebcf8b3c177fab1a800b2cbd0a5547f2c1d568a0877adcdd5566d94d491a6",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-grid-ki-GUI.json",
+          "sha256": "4b2ffe144dcab6392e651c1d90a3170e1d2901b87eb0de667ebcee7e3fdd85df",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-atoms-123-GUI.json",
+          "sha256": "9e10a8236a3572765ed69db2b6af665bf24db43ba8815ddab3711ef31afe8278",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-atoms-214-MCP.json",
+          "sha256": "e10213e331bb19bddc8c1d89be88d17081de327237476cf39de041468b9770ab",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/atoms-invalid-mask-MCP.json",
+          "sha256": "68c524b98a656272d62e0cf7c429fc98e5a210d39e1227e1c50da328c79b6115",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-free-center-rotation-dimensions-GUI.json",
+          "sha256": "54bfab2125c0772d0e6088c1e681e8ff9c12fe16a5863c976c0a04f42a9f7072",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-free-gizmo-move-GUI.json",
+          "sha256": "d0b21d33897a22eb37b33ed7abea95a4db81a748acad0f5e18bcd0ce59861da7",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-free-gizmo-rotation-GUI.json",
+          "sha256": "9fe8fb854e0e7ab8b51d3c931cc7075580481fce9382de52a15f039042528ecd",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-free-gizmo-width-GUI.json",
+          "sha256": "0e8544fb934c52fd70951aa6ea01d25efecf587b0f5dc072ad310df729910b9b",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/contours-auto-nine-GUI.json",
+          "sha256": "81e3eaa2d2574876de6d1ad3e536825e5c58daa8acfc269eaa3afaaaa0ccdb63",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/contours-explicit-three-labels-GUI.json",
+          "sha256": "b5e2047baa76dcef286336c1d062ed5674d9b211221c04e91e731ee198eccfc9",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/source-preservation-MCP.json",
+          "sha256": "f06d5d88477c58106a339a14d1ef76df45477d2a6231c3cb1feae31fff6c6322",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/geometry-click-probe-Enter-GUI.json",
+          "sha256": "bb328b0b6c13418f6898a704110735a1a140fa95c4dabb0efd9d34accd28ad42",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/geometry-click-probe-Escape-GUI.json",
+          "sha256": "b816b04a962132bb61999a3d63c24ec6152bffffa333d9f1d248ca09f0257d84",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/bound-color-click-probe-Enter-GUI.json",
+          "sha256": "0f54f76d5a60d85e5a232b7365cb181941fdd235b886ea8d2557f988951ad056",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/cursor-field-samples-GUI-MCP.json",
+          "sha256": "ebddb35c72ea222f62bc2700ce87269c242aaded19fe49dd2731435b807a4e73",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/profile-layout-GUI.json",
+          "sha256": "14422a128e2767bb1b913b683cb5123bdb4ef60de38417a3a60a8e7d0c06956f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/ESP-profiles-GUI-MCP.json",
+          "sha256": "7be5e704e5839083cbd3dd1c38e8dc68c7cb1994ddb32dbcfc9d525d0fca6396",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/portable-slice-fixed-MCP.json",
+          "sha256": "6fe2c7919f148d9977189d90070c2a537ddf78908291288aedad25d1a506d9d2",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/exit-verified.json",
+          "sha256": "7c631a5cf8c8dbab1a135fd25cbb1c4c5a4087ae40fdf07708c9cfe612e41f2d",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/cold-original/readback-MCP.json",
+          "sha256": "a10ec6d04f2e0e0ce86253cb00724a7e55385b150d627512eb17497b1d828bda",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/cold-original/exit-verified.json",
+          "sha256": "b8a2b45969bc86e5372b9f34ce43c68e2881a565f9f1309a90f43fd24644a652",
+          "status": "Passed"
+        }
+      ],
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-06-fixed-explicit-contours-framed.jpg",
+          "sha256": "6a6a5059b6baee0bd8254a3a24199d2d394db6472ca4ca5aab47355bfd908b4c",
+          "caption": "Agent点击显式阈值与标签；MCP取景后观察，−0.02/0/0.02 hartree/e"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-06-fixed-free-parameters.jpg",
+          "sha256": "b006c75c00ac6e5c604bdd6e63ce6d0edc83416125a45c88d2f1b99455b7eaa0",
+          "caption": "Agent点击：自由平面Center/Rotation/Width/Height；6×6 Å"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-06-fixed-gizmo-move.jpg",
+          "sha256": "daa6d8a65d17dea62f1660a82321e557606a7c439b98b704bbf8dbba20686f92",
+          "caption": "Agent拖动：QC Slice Gizmo平移"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-06-fixed-gizmo-rotation.jpg",
+          "sha256": "c5eca7a4c9e7de810149216c54e46aa9dd132db92bbe4e3a7d2fdba79b0e5e05",
+          "caption": "Agent拖动：QC Slice Gizmo旋转"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-06-fixed-gizmo-width.jpg",
+          "sha256": "2ddb9c0567e166349a339a4774410b3e06d294931904b1f48830bb169a7c8a54",
+          "caption": "Agent拖动：QC Slice Gizmo改变宽度"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-06-fixed-grid-ij.jpg",
+          "sha256": "652d83126d5cb6076ee03dbf54242a145b546d5e0152abf71514ab644db1a575",
+          "caption": "Agent点击：Grid ij，101×101采样"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-06-fixed-grid-jk.jpg",
+          "sha256": "6683460f610336bab3a530bca4fd3ff028cb759e9470f1a9f3ccdf7ba7946271",
+          "caption": "Agent点击：Grid jk；混合绝对与相对绑定路径已通过复验"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-06-fixed-grid-ki.jpg",
+          "sha256": "e4f6a33de2268d492bc71e26b0677072c71fa777412c76fd9584a453e9d6ec3f",
+          "caption": "Agent点击：Grid ki"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-06-fixed-new-slice-dialog.jpg",
+          "sha256": "0c84fdfd62ae7d397ba4eec88efe07ac420a3fb9cef1c9174e74f508fd3a4f9c",
+          "caption": "Agent点击：创建新的ESP切片；候选e26d22a"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-06-fixed-three-atoms-dialog.jpg",
+          "sha256": "e4479abb3b97451d2f490ad0a991d16e2297dd08058f0e6a755b393c364b68d8",
+          "caption": "Agent点击：首次三原子平面1/2/3；教程2/1/4另经MCP复验"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-06-fixed-three-atoms.jpg",
+          "sha256": "31b4033312f7cca61a607c151faabf74cd52dea6d22412ba65b157fba98c4058",
+          "caption": "Agent点击：三原子平面；5072个域外采样点以洋红显示"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-07-bound-color-probe-preview.jpg",
+          "sha256": "edd917dbc007eda7def9e89c7675ad0ce264dfb9eb0831c477417de2b3dfe510",
+          "caption": "Agent点击：密度表面绑定色场取点，实际采样ESP"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-07-bound-color-probe-saved.jpg",
+          "sha256": "f8abd57592a09654e40ff97a07b17201535a67ac84f29816501e3ced41488e60",
+          "caption": "Agent点击Enter：保存0.072094069 hartree/e绑定色场读数"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-07-esp-cursor-valid.jpg",
+          "sha256": "d3d944c3fe4c0fb2331e1ca9a0617e8770e40afd00bf79a4a0055f64d8f21eee",
+          "caption": "Agent点击：读取游标ESP，0.0085721002 hartree/e"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-07-esp-geometry-probe-Escape-preview.jpg",
+          "sha256": "2d6832074fc9105de169aafca2695fa26e18e8152e45c8c23067353b2823c4ec",
+          "caption": "Agent点击：第二取点预览后Escape恢复原记录"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-07-esp-geometry-probe-preview.jpg",
+          "sha256": "12a23aae0070310a586d393319ca243ee5724ff73f779d10a04d03716dc24165",
+          "caption": "Agent点击：ESP切片几何场取点预览，Enter保存"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-08-color-profile-dialog.jpg",
+          "sha256": "6103f5aba5e1abd8e2dc2c39089f276bf586c0f5cc92c0d3361aed064e8ba52f",
+          "caption": "Agent点击：Sample field选颜色，采样101点；游标坐标由MCP设置"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-08-color-profile-layout.jpg",
+          "sha256": "92366ab946a5ef65d97924e463477d779c3db5e27df4c7c2b7144a5a4a65711f",
+          "caption": "Agent点击图幅宽度6与应用排版；MCP正面取景，CSV仍覆盖0–4 Å"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-10-slice-fixed-checkpoint-saved-MCP.jpg",
+          "sha256": "5012a2004ad2918089215f2e7d9e2cba2d6f1c4f10a2176401b4ad9247f2c8a2",
+          "caption": "MCP另存检查点：6 Dataset、172数组；此图尚非最终C04成图"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-10-slice-fixed-cold-MCP.jpg",
+          "sha256": "59a916f19d49ccf0f7f83c394660bdc476a75f201ae27127cf9bdac0d3642099",
+          "caption": "新进程MCP冷重开与CSV复导出；单独显示ESP剖面，完整C04成图待验收"
+        }
+      ],
+      "preservation": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/preservation.json",
+        "sha256": "a3bf50460f0b41f775b35818ed881da9684eeb79642718e2d0eafb268dd88da0",
+        "status": "Passed"
+      },
+      "project": "D:\\workspace\\QCBlender\\outputs\\projects\\tutorial-cu-full\\cases\\C04\\C04-slice-fixed-checkpoint.blend",
+      "project_sha256": "87b9c9eeb2ecea198889aa622a66878b35187136f5ccc48ab7315ebc9370e410",
+      "datasets": 6,
+      "arrays": 172,
+      "refs": 14,
+      "volumes": 4,
+      "files": 95,
+      "original_cold_readback": "Passed",
+      "checkpoint_render": "Not Run",
+      "moved_unpacked_cold": "Not Run",
+      "user_walkthrough": "Not Run",
+      "independent_scientific_signature": "Not Run",
+      "verification": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/verification.json",
+        "sha256": "003da3c6e87cae59885b858dabe17abb8361a6c4f0daff1c4ed3223053099176",
+        "status": "Passed"
       }
     }
   },

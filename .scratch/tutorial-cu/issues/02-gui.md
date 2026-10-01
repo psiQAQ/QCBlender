@@ -6,6 +6,8 @@ Blocked by: 01
 
 ## Comments
 
+- 2026-10-01 C04切片/探针/剖面补验：候选e26d22a，原失败的混合Dataset路径场景GUI ij/jk/ki/atoms及FREE/Gizmo Passed；三原子2/1/4另MCP重放。自动/显式等值线与标签不跨无效单元；ESP Geometry Enter/Escape与Color点击、游标有效/域外拒绝Passed。101点Geometry/Color剖面同值，域外46个CSV值空白；GUI图幅4→6不改数组。新工程6 Dataset/172数组/14引用/4体积/95文件保全，新PID52600冷读/CSV复导出Passed；20张示例截图紧接步骤，4操作登记。完整C04/全C-N仍Not Run，02保持claimed；证据full/C04/slice-retest/preservation.json。
+
 - 2026-10-01 C04旧入口补验：原候选默认F3无入口，796abe2右键菜单执行Passed但F3仍Failed；b709096补入顶部Object菜单后默认F3实际执行Passed。新未映射视图162顶点/21点CPU参考误差1.53e-8 hartree/e；选择由MCP设置，Outliner选择点击Not Run。三份阶段工程各74文件、3 Dataset/154数组保全，PID10796正常退出，5张截图紧接步骤。旧诊断保留，不继承旧候选Passed；完整C04、新阶段冷重开及全C/N仍Not Run，02保持claimed。证据mapping-top-menu/preservation.json。
 
 - 2026-10-01 C04图例补验：PID40888唯一可见进程从阶段工程冷读3 Dataset/154数组/2 VDB Passed；长度2.6、宽度.25、字号.2、小数3、竖排、Z旋转.3 rad与X位置3.5实际GUI Passed。色带中点.5→.4与Reverse0→1、材质撤销/菜单重做Passed，恢复原色带与方向；全部科学数组摘要不变。11截图逐步骤保全，新增图例工程74文件核对后正常退出；该新工程冷重开、无效域及C04后续/全C/N仍Not Run，02保持claimed。快捷键与即时保存综合断言诊断单列，证据full/C04/legend/preservation.json。

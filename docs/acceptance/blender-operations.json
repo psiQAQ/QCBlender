@@ -1128,6 +1128,415 @@
         "current_batch_replay_status": "Not Run",
         "requires_current_result_assertions": true
       }
+    },
+    {
+      "id": "slice-plane-and-gizmo",
+      "title": "切片定平面与Gizmo",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Computer Use actual named interaction; MCP parameter setup/replay and independent assertions explicitly separated",
+        "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
+        "product_tree": "4086224b13cdd50fa4495c1e00004e0d8dd15d49",
+        "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "按报告的活动对象；ESP场/切片或绑定ESP的密度表面，原子平面关联P03水二聚体；选择与游标设置由MCP完成",
+        "input_sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+        "visible_entry": "N侧栏 → 创建视图与检查工具 → 创建切片；对象属性 → 按源网格或三个原子定平面；3D工具栏 → QC Slice Gizmo",
+        "validated_scope": "新ESP切片；ij/jk/ki、原子1/2/3实际GUI，2/1/4 MCP重放；Center/Rotation/Width/Height及Gizmo平移/旋转/宽度；Resolution101。限定P03字段与对象条件",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-grid-ij-created-GUI.json",
+            "sha256": "a396af32d12e239f13ade50446c9a447a601c2092b84fca671f4656d0a0da2f9",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-grid-jk-GUI.json",
+            "sha256": "608ebcf8b3c177fab1a800b2cbd0a5547f2c1d568a0877adcdd5566d94d491a6",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-grid-ki-GUI.json",
+            "sha256": "4b2ffe144dcab6392e651c1d90a3170e1d2901b87eb0de667ebcee7e3fdd85df",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-atoms-123-GUI.json",
+            "sha256": "9e10a8236a3572765ed69db2b6af665bf24db43ba8815ddab3711ef31afe8278",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-free-center-rotation-dimensions-GUI.json",
+            "sha256": "54bfab2125c0772d0e6088c1e681e8ff9c12fe16a5863c976c0a04f42a9f7072",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-free-gizmo-move-GUI.json",
+            "sha256": "d0b21d33897a22eb37b33ed7abea95a4db81a748acad0f5e18bcd0ce59861da7",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-free-gizmo-rotation-GUI.json",
+            "sha256": "9fe8fb854e0e7ab8b51d3c931cc7075580481fce9382de52a15f039042528ecd",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-free-gizmo-width-GUI.json",
+            "sha256": "0e8544fb934c52fd70951aa6ea01d25efecf587b0f5dc072ad310df729910b9b",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-explicit-contours-framed.jpg",
+            "sha256": "6a6a5059b6baee0bd8254a3a24199d2d394db6472ca4ca5aab47355bfd908b4c",
+            "caption": "Agent点击显式阈值与标签；MCP取景后观察，−0.02/0/0.02 hartree/e"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-free-parameters.jpg",
+            "sha256": "b006c75c00ac6e5c604bdd6e63ce6d0edc83416125a45c88d2f1b99455b7eaa0",
+            "caption": "Agent点击：自由平面Center/Rotation/Width/Height；6×6 Å"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-gizmo-move.jpg",
+            "sha256": "daa6d8a65d17dea62f1660a82321e557606a7c439b98b704bbf8dbba20686f92",
+            "caption": "Agent拖动：QC Slice Gizmo平移"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-gizmo-rotation.jpg",
+            "sha256": "c5eca7a4c9e7de810149216c54e46aa9dd132db92bbe4e3a7d2fdba79b0e5e05",
+            "caption": "Agent拖动：QC Slice Gizmo旋转"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-gizmo-width.jpg",
+            "sha256": "2ddb9c0567e166349a339a4774410b3e06d294931904b1f48830bb169a7c8a54",
+            "caption": "Agent拖动：QC Slice Gizmo改变宽度"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-grid-ij.jpg",
+            "sha256": "652d83126d5cb6076ee03dbf54242a145b546d5e0152abf71514ab644db1a575",
+            "caption": "Agent点击：Grid ij，101×101采样"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-grid-jk.jpg",
+            "sha256": "6683460f610336bab3a530bca4fd3ff028cb759e9470f1a9f3ccdf7ba7946271",
+            "caption": "Agent点击：Grid jk；混合绝对与相对绑定路径已通过复验"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-grid-ki.jpg",
+            "sha256": "e4f6a33de2268d492bc71e26b0677072c71fa777412c76fd9584a453e9d6ec3f",
+            "caption": "Agent点击：Grid ki"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-new-slice-dialog.jpg",
+            "sha256": "0c84fdfd62ae7d397ba4eec88efe07ac420a3fb9cef1c9174e74f508fd3a4f9c",
+            "caption": "Agent点击：创建新的ESP切片；候选e26d22a"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-three-atoms-dialog.jpg",
+            "sha256": "e4479abb3b97451d2f490ad0a991d16e2297dd08058f0e6a755b393c364b68d8",
+            "caption": "Agent点击：首次三原子平面1/2/3；教程2/1/4另经MCP复验"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-three-atoms.jpg",
+            "sha256": "31b4033312f7cca61a607c151faabf74cd52dea6d22412ba65b157fba98c4058",
+            "caption": "Agent点击：三原子平面；5072个域外采样点以洋红显示"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/blender/interaction.py": "0130d6c98d3a56a1e021138ab98aa353cb7aa0c03f97bc02c945143f876ed265",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/graph.py": "887b365c7fd1c849fcf55bbdb4a5e37f01f146b674994198703d76dc951dc325",
+        "qcblender/blender/profile.py": "4eb27fa9f96261ccf01cf25e8803525692bf2ea8cd175530bc7e9dfc5a214cc1",
+        "qcblender/blender/charts.py": "fff768253e3a791469dfa718c163762b86389224803af26e81ee4d0fcfb9e6e4",
+        "qcblender/blender/layers.py": "4ff0f8284523a6dc8276635b69fd6bb5e952906b3546cc0b5be9437d0f46c211",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/sampling.py": "6bcb428a41af4d634a029a24945e797ff19fe925f0a0a604b51a44bccc630966",
+        "qcblender/profile.py": "ef86e07aefa6d076641492e255765281d25fb47d2a1166eeb95830f886061a78",
+        "qcblender/planes.py": "551ef7107fbcce12992b73521238df3aaeceac01c5593a91a7b4a2da20bc3875"
+      },
+      "fingerprint_review": "Review transitive helpers, callbacks, interfaces, Blender and dependency changes before reuse; this set is not exhaustive proof.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP调用原生define_slice_plane和节点公共参数；Gizmo语义可设置相同参数，但新交互行为变更仍须GUI确认",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true
+      }
+    },
+    {
+      "id": "slice-contours",
+      "title": "切片等值线与标签",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Computer Use actual named interaction; MCP parameter setup/replay and independent assertions explicitly separated",
+        "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
+        "product_tree": "4086224b13cdd50fa4495c1e00004e0d8dd15d49",
+        "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "按报告的活动对象；ESP场/切片或绑定ESP的密度表面，原子平面关联P03水二聚体；选择与游标设置由MCP完成",
+        "input_sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+        "visible_entry": "对象属性 → 切片等值线 → 开启等值线 / 几何场 / 阈值列表 / 数值标签 / 更新等值线",
+        "validated_scope": "自动9阈值、显式−.02/0/.02 hartree/e；源字段和无效单元守卫、746段避开无效单元、三个数值标签；等待真实异步作业",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/contours-auto-nine-GUI.json",
+            "sha256": "81e3eaa2d2574876de6d1ad3e536825e5c58daa8acfc269eaa3afaaaa0ccdb63",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/contours-explicit-three-labels-GUI.json",
+            "sha256": "b5e2047baa76dcef286336c1d062ed5674d9b211221c04e91e731ee198eccfc9",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-explicit-contours-framed.jpg",
+            "sha256": "6a6a5059b6baee0bd8254a3a24199d2d394db6472ca4ca5aab47355bfd908b4c",
+            "caption": "Agent点击显式阈值与标签；MCP取景后观察，−0.02/0/0.02 hartree/e"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-free-parameters.jpg",
+            "sha256": "b006c75c00ac6e5c604bdd6e63ce6d0edc83416125a45c88d2f1b99455b7eaa0",
+            "caption": "Agent点击：自由平面Center/Rotation/Width/Height；6×6 Å"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-gizmo-move.jpg",
+            "sha256": "daa6d8a65d17dea62f1660a82321e557606a7c439b98b704bbf8dbba20686f92",
+            "caption": "Agent拖动：QC Slice Gizmo平移"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-gizmo-rotation.jpg",
+            "sha256": "c5eca7a4c9e7de810149216c54e46aa9dd132db92bbe4e3a7d2fdba79b0e5e05",
+            "caption": "Agent拖动：QC Slice Gizmo旋转"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-gizmo-width.jpg",
+            "sha256": "2ddb9c0567e166349a339a4774410b3e06d294931904b1f48830bb169a7c8a54",
+            "caption": "Agent拖动：QC Slice Gizmo改变宽度"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-grid-ij.jpg",
+            "sha256": "652d83126d5cb6076ee03dbf54242a145b546d5e0152abf71514ab644db1a575",
+            "caption": "Agent点击：Grid ij，101×101采样"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-grid-jk.jpg",
+            "sha256": "6683460f610336bab3a530bca4fd3ff028cb759e9470f1a9f3ccdf7ba7946271",
+            "caption": "Agent点击：Grid jk；混合绝对与相对绑定路径已通过复验"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-grid-ki.jpg",
+            "sha256": "e4f6a33de2268d492bc71e26b0677072c71fa777412c76fd9584a453e9d6ec3f",
+            "caption": "Agent点击：Grid ki"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-new-slice-dialog.jpg",
+            "sha256": "0c84fdfd62ae7d397ba4eec88efe07ac420a3fb9cef1c9174e74f508fd3a4f9c",
+            "caption": "Agent点击：创建新的ESP切片；候选e26d22a"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-three-atoms-dialog.jpg",
+            "sha256": "e4479abb3b97451d2f490ad0a991d16e2297dd08058f0e6a755b393c364b68d8",
+            "caption": "Agent点击：首次三原子平面1/2/3；教程2/1/4另经MCP复验"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-three-atoms.jpg",
+            "sha256": "31b4033312f7cca61a607c151faabf74cd52dea6d22412ba65b157fba98c4058",
+            "caption": "Agent点击：三原子平面；5072个域外采样点以洋红显示"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/blender/interaction.py": "0130d6c98d3a56a1e021138ab98aa353cb7aa0c03f97bc02c945143f876ed265",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/graph.py": "887b365c7fd1c849fcf55bbdb4a5e37f01f146b674994198703d76dc951dc325",
+        "qcblender/blender/profile.py": "4eb27fa9f96261ccf01cf25e8803525692bf2ea8cd175530bc7e9dfc5a214cc1",
+        "qcblender/blender/charts.py": "fff768253e3a791469dfa718c163762b86389224803af26e81ee4d0fcfb9e6e4",
+        "qcblender/blender/layers.py": "4ff0f8284523a6dc8276635b69fd6bb5e952906b3546cc0b5be9437d0f46c211",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/sampling.py": "6bcb428a41af4d634a029a24945e797ff19fe925f0a0a604b51a44bccc630966",
+        "qcblender/profile.py": "ef86e07aefa6d076641492e255765281d25fb47d2a1166eeb95830f886061a78",
+        "qcblender/planes.py": "551ef7107fbcce12992b73521238df3aaeceac01c5593a91a7b4a2da20bc3875"
+      },
+      "fingerprint_review": "Review transitive helpers, callbacks, interfaces, Blender and dependency changes before reuse; this set is not exhaustive proof.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP设置本批登记属性并调用update_contours；等实际异步作业结束，再核对曲线数值与有效单元",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true
+      }
+    },
+    {
+      "id": "cursor-and-click-probes",
+      "title": "游标与点击探针",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Computer Use actual named interaction; MCP parameter setup/replay and independent assertions explicitly separated",
+        "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
+        "product_tree": "4086224b13cdd50fa4495c1e00004e0d8dd15d49",
+        "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "按报告的活动对象；ESP场/切片或绑定ESP的密度表面，原子平面关联P03水二聚体；选择与游标设置由MCP完成",
+        "input_sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+        "visible_entry": "N侧栏 → 创建视图与检查工具 → 读取游标处场值 / 点击探针·几何场 / 点击探针·绑定色场",
+        "validated_scope": "ESP游标有效与域外拒绝；切片GEOMETRY点击Enter保存、Escape恢复；密度表面COLOR实际ESP点击Enter保存。0.7Å网格没有内部无效点，内部无效格点案例Not Run",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/geometry-click-probe-Enter-GUI.json",
+            "sha256": "bb328b0b6c13418f6898a704110735a1a140fa95c4dabb0efd9d34accd28ad42",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/geometry-click-probe-Escape-GUI.json",
+            "sha256": "b816b04a962132bb61999a3d63c24ec6152bffffa333d9f1d248ca09f0257d84",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/bound-color-click-probe-Enter-GUI.json",
+            "sha256": "0f54f76d5a60d85e5a232b7365cb181941fdd235b886ea8d2557f988951ad056",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/cursor-field-samples-GUI-MCP.json",
+            "sha256": "ebddb35c72ea222f62bc2700ce87269c242aaded19fe49dd2731435b807a4e73",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-07-bound-color-probe-preview.jpg",
+            "sha256": "edd917dbc007eda7def9e89c7675ad0ce264dfb9eb0831c477417de2b3dfe510",
+            "caption": "Agent点击：密度表面绑定色场取点，实际采样ESP"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-07-bound-color-probe-saved.jpg",
+            "sha256": "f8abd57592a09654e40ff97a07b17201535a67ac84f29816501e3ced41488e60",
+            "caption": "Agent点击Enter：保存0.072094069 hartree/e绑定色场读数"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-07-esp-cursor-valid.jpg",
+            "sha256": "d3d944c3fe4c0fb2331e1ca9a0617e8770e40afd00bf79a4a0055f64d8f21eee",
+            "caption": "Agent点击：读取游标ESP，0.0085721002 hartree/e"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-07-esp-geometry-probe-Escape-preview.jpg",
+            "sha256": "2d6832074fc9105de169aafca2695fa26e18e8152e45c8c23067353b2823c4ec",
+            "caption": "Agent点击：第二取点预览后Escape恢复原记录"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-07-esp-geometry-probe-preview.jpg",
+            "sha256": "12a23aae0070310a586d393319ca243ee5724ff73f779d10a04d03716dc24165",
+            "caption": "Agent点击：ESP切片几何场取点预览，Enter保存"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/blender/interaction.py": "0130d6c98d3a56a1e021138ab98aa353cb7aa0c03f97bc02c945143f876ed265",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/graph.py": "887b365c7fd1c849fcf55bbdb4a5e37f01f146b674994198703d76dc951dc325",
+        "qcblender/blender/profile.py": "4eb27fa9f96261ccf01cf25e8803525692bf2ea8cd175530bc7e9dfc5a214cc1",
+        "qcblender/blender/charts.py": "fff768253e3a791469dfa718c163762b86389224803af26e81ee4d0fcfb9e6e4",
+        "qcblender/blender/layers.py": "4ff0f8284523a6dc8276635b69fd6bb5e952906b3546cc0b5be9437d0f46c211",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/sampling.py": "6bcb428a41af4d634a029a24945e797ff19fe925f0a0a604b51a44bccc630966",
+        "qcblender/profile.py": "ef86e07aefa6d076641492e255765281d25fb47d2a1166eeb95830f886061a78",
+        "qcblender/planes.py": "551ef7107fbcce12992b73521238df3aaeceac01c5593a91a7b4a2da20bc3875"
+      },
+      "fingerprint_review": "Review transitive helpers, callbacks, interfaces, Blender and dependency changes before reuse; this set is not exhaustive proof.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP读取游标和数据核对；点击射线/模态Enter-Escape若MCP/CLI无法覆盖则Computer Use兜底，不直接写qc_probe冒充取点",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true
+      }
+    },
+    {
+      "id": "line-profile-and-layout",
+      "title": "线剖面、排版与CSV",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Computer Use actual named interaction; MCP parameter setup/replay and independent assertions explicitly separated",
+        "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
+        "product_tree": "4086224b13cdd50fa4495c1e00004e0d8dd15d49",
+        "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "按报告的活动对象；ESP场/切片或绑定ESP的密度表面，原子平面关联P03水二聚体；选择与游标设置由MCP完成",
+        "input_sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+        "visible_entry": "N侧栏 → 创建视图与检查工具 → 记录剖面起点 / 创建线剖面 / 导出剖面CSV；对象属性 → 剖面坐标轴与排版 → 应用排版",
+        "validated_scope": "本批GUI：COLOR采样101、宽度4→6和应用排版；游标坐标由MCP设置。Geometry同ESP和域外14Å剖面MCP重放；CSV复用历史90ff9bf GUI且实现未变，原路径冷重开复导出相同",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/profile-layout-GUI.json",
+            "sha256": "14422a128e2767bb1b913b683cb5123bdb4ef60de38417a3a60a8e7d0c06956f",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/ESP-profiles-GUI-MCP.json",
+            "sha256": "7be5e704e5839083cbd3dd1c38e8dc68c7cb1994ddb32dbcfc9d525d0fca6396",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-08-color-profile-dialog.jpg",
+            "sha256": "6103f5aba5e1abd8e2dc2c39089f276bf586c0f5cc92c0d3361aed064e8ba52f",
+            "caption": "Agent点击：Sample field选颜色，采样101点；游标坐标由MCP设置"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-08-color-profile-layout.jpg",
+            "sha256": "92366ab946a5ef65d97924e463477d779c3db5e27df4c7c2b7144a5a4a65711f",
+            "caption": "Agent点击图幅宽度6与应用排版；MCP正面取景，CSV仍覆盖0–4 Å"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/blender/interaction.py": "0130d6c98d3a56a1e021138ab98aa353cb7aa0c03f97bc02c945143f876ed265",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/graph.py": "887b365c7fd1c849fcf55bbdb4a5e37f01f146b674994198703d76dc951dc325",
+        "qcblender/blender/profile.py": "4eb27fa9f96261ccf01cf25e8803525692bf2ea8cd175530bc7e9dfc5a214cc1",
+        "qcblender/blender/charts.py": "fff768253e3a791469dfa718c163762b86389224803af26e81ee4d0fcfb9e6e4",
+        "qcblender/blender/layers.py": "4ff0f8284523a6dc8276635b69fd6bb5e952906b3546cc0b5be9437d0f46c211",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/sampling.py": "6bcb428a41af4d634a029a24945e797ff19fe925f0a0a604b51a44bccc630966",
+        "qcblender/profile.py": "ef86e07aefa6d076641492e255765281d25fb47d2a1166eeb95830f886061a78",
+        "qcblender/planes.py": "551ef7107fbcce12992b73521238df3aaeceac01c5593a91a7b4a2da20bc3875"
+      },
+      "fingerprint_review": "Review transitive helpers, callbacks, interfaces, Blender and dependency changes before reuse; this set is not exhaustive proof.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP可调用mark_profile_start/create_line_profile/apply_profile_axes/export_line_profile；必须保持同一活动视图、区分GEOMETRY/COLOR、核对CSV无效值空白",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true
+      }
     }
   ]
 }
