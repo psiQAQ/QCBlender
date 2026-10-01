@@ -558,7 +558,7 @@
     "docs/acceptance/tutorial-validation.json",
     "docs/acceptance/cleanup-validation.json"
   ],
-  "remaining_click_steps": "C04 internal invalid-mask boundary, density checkpoint relocation, remaining three public assets and per-case Undo/Redo/N18 scope, same-final-source unified qualification before main merge/archive. C13 scoped import/control/guards/copy/undo/render/cold checks Passed; user and scientific signatures remain Not Run.",
+  "remaining_click_steps": "C04 internal invalid-mask boundary, paired-field grid mismatch refusal, remaining three public assets and C08-C12 Undo/Redo/N18 scope, same-final-source unified qualification before main merge/archive. C01 density checkpoint relocation and C13 scoped checks Passed; user and scientific signatures remain Not Run.",
   "cleanup": {
     "status": "Passed",
     "scope": "This screenshot supplement only; full GUI task remains claimed",
@@ -5499,6 +5499,101 @@
       "independent_signature": "Not Run",
       "rebuild": "Retained scripts, independent raw Cube oracle, central SHA-bound P05 inputs, candidate deb9416 and locked environment; use new batch paths.",
       "scientific_contract": "Signed deformation density, explicit electron/bohr^3; coordinates converted by repository BOHR_ANGSTROM .529177210544; not MO phase or native ETS-NOCV computation"
+    },
+    "C01_density_checkpoint_current_three_paths": {
+      "status": "Passed",
+      "scope": "Serial native background Blender original, Chinese moved and archive-unpacked density checkpoint on installed deb9416; no current Computer Use click claim",
+      "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+      "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+      "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+      "historical_project_source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+      "project_sha256": "f8dfd95726e6234724f7a736f10481925bf24cb7ecfda66c46a9f647a692c8bf",
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/C01-density/cold-chain.json",
+          "sha256": "8c1d18601e8fc49e037c184791b3812683797d946eeb095b4eb7b6a7daab2295",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/C01-density/preserved-path-mapping.json",
+          "sha256": "f9a59d2312cd3aa319f84e8bcc23dc80f32095ca0a6146ff7a9fb2b88d534e4a",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/C01-density/render-prune.json",
+          "sha256": "3f5bd315c64eaf31fd128e86d42e2af9f9ff1914ed912228d7d5faeed742e92a",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/C01-density/cold-original/readback-render.json",
+          "sha256": "c31ffe70785967cf5352764f615ff597faec865be003a69b0d0c26f55a056120",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/C01-density/cold-moved/readback-render.json",
+          "sha256": "87ea7575334efcbcd57089d6e6b946d75a6ab90226f56855e577af5579b717e1",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/C01-density/cold-unpacked/readback-render.json",
+          "sha256": "69df2a50b087efcf067b45f1dc17b53505773d84ddb66c8c859b6f03aa1cd84b",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/C01-density/cold-original-exit.json",
+          "sha256": "3641db1e0dca6e3889f58ae5883f832ffe788e9d2142c7325a6568e8208ddb76",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/C01-density/cold-moved-exit.json",
+          "sha256": "5e17bd6a70803c4fc022729d4333fb86487bbeef557ca7b6833ab862767ce1d4",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/C01-density/cold-unpacked-exit.json",
+          "sha256": "911425f50c9dbf26843e1b835b5c5dc6eeab087520987475248aed128ec82eb0",
+          "status": "Passed"
+        }
+      ],
+      "project": "outputs/projects/tutorial-cu-full/unpacked/C01/C01-density.blend",
+      "moved_project": "outputs/projects/tutorial-cu-full/中文移动/C01-density-checkpoint/C01-density.blend",
+      "unpacked_project": "outputs/projects/tutorial-cu-full/unpacked/C01-density-checkpoint/C01-density.blend",
+      "archive": {
+        "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/C01-density/C01-density-checkpoint.zip",
+        "sha256": "30fcff7c4293a40e54f836c9ba822add9ca023e56ed1aab5c00220ec3d4356f9"
+      },
+      "files": 176,
+      "datasets": 9,
+      "arrays": 221,
+      "references": 17,
+      "volumes": 7,
+      "checks": {
+        "original_moved_unpacked": "Passed",
+        "density_relations_and_units": "Passed",
+        "twelve_actual_renders": "Passed",
+        "all_render_pixels_equal_retained_visual_examples": "Passed",
+        "scientific_files_unchanged": "Passed",
+        "processes_exited": "Passed",
+        "same_final_source_qualification": "Not Run",
+        "independent_signature": "Not Run"
+      },
+      "retained_render_report": "outputs/evidence/2026-10-02/tutorial-cu/full/C01-density-cold/readback-render.json",
+      "duplicate_render_availability": "Deleted after pixel equality and SHA checks; retained original PNGs and per-file prune receipt locate the images",
+      "rebuild": "Run scripts/run-density-boundary.py in a new evidence batch after adjusting fresh destination paths; source checkpoint and locked installed candidate required",
+      "scripts": {
+        "C01-density-boundary.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/C01-density/scripts/C01-density-boundary.py",
+          "sha256": "eff898c991b8a1e2fa1bac126b43c5af3a914e3824375ce8c8b888bbdbe1e5ba"
+        },
+        "prepare-density-boundary.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/C01-density/scripts/prepare-density-boundary.py",
+          "sha256": "82763895e9c3d61ab1559cc46cee51e3ecbdcd56acc78b811acea14b8b14b9a5"
+        },
+        "run-density-boundary.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/C01-density/scripts/run-density-boundary.py",
+          "sha256": "8cd0fba5272e87061b8a1c734a3ae5d1aeb6e00591458ab65f516a3bf799c065"
+        }
+      }
     }
   },
   "historical_partial_supplement": {

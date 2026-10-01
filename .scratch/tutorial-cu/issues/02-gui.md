@@ -72,3 +72,5 @@ Blocked by: 01
 2026-10-02 C12真实ETS-NOCV首次导入、记录1/2、Pair/Total/负本征值范围与正本征值排序GUI Passed；11打印行与全部字段、25筛选排序和3错误边界MCP Passed。40文件/2Dataset/60数组/2引用保全，三处串行后台冷读和3次像素一致渲染Passed，全部进程退出。表无渲染网格，效果图手动排版源说明明确标注；8图紧接步骤，登记61项。原测试断言和后台启动缓存时序Failed保留；完整教程、统一资格和合并归档仍待完成。证据full/C12/cold-chain-v2.json。
 
 2026-10-02 C13真实Pair1/Total导入GUI Passed；独立133950个Cube值/六原子/表绑定、10显示组合、两个真实异步错误拒绝及独立复制/原生撤销重做MCP Passed。48文件/3Dataset/66数组/1VDB/4引用保全，三处串行冷读和12次像素一致渲染Passed，全进程退出。11图紧接步骤，登记62项；BOHR常数/接口缩写/空材质测试诊断保留。C12可见启动自动缓存Passed另列；完整教程剩余边界、统一资格和合并归档待完成。证据full/C13/cold-chain.json。
+
+2026-10-02 C01密度检查点：安装候选deb9416/c736bb9在原位置、中文移动和新归档解包副本串行冷读Passed；176文件/9Dataset/221数组/17引用/7体积源与源摘要一致，四密度关系与12次重渲染像素一致Passed。三个进程已退出，12份重复PNG核对后清理，四张已检查原图保留。证据full/remaining-boundaries/C01-density/cold-chain.json；原2eddb6a报告保持原身份。02仍claimed、03pending，内部无效mask/网格不匹配/其余资产与撤销恢复/统一资格和合并归档待完成。

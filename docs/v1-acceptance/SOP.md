@@ -293,7 +293,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
 
 
-   密度检查点复核：保存于步骤6的 `C01-density.blend + .qcdata` 已在2eddb6a候选的新原生后台进程冷重开，175配套文件、9 Dataset/221数组、17对象引用及7体积源一致；四密度重新渲染并检查，总密度=Alpha+Beta、自旋密度=Alpha−Beta关系通过。详见[点击补验索引](../acceptance/tutorial-cu-validation.json)的 `C01_density_checkpoint_cold`，原候选/保存身份与本批冷读身份分别记录。此检查点的中文移动/解包及最终统一候选资格另行维护；已有雾工程三路径证据保持原批次。
+   密度检查点复核：保存于步骤6的 `C01-density.blend + .qcdata` 已在2eddb6a候选的新原生后台进程冷重开，175配套文件、9 Dataset/221数组、17对象引用及7体积源一致；四密度重新渲染并检查，总密度=Alpha+Beta、自旋密度=Alpha−Beta关系通过。详见[点击补验索引](../acceptance/tutorial-cu-validation.json)的 `C01_density_checkpoint_cold`，原候选/保存身份与本批冷读身份分别记录。安装候选deb9416的后续原位置、中文移动及归档解包冷重开均通过；175配套文件、全部引用及四密度关系一致，12次重渲染像素与上述四张原图一致。此补验通过串行原生命令行执行，索引 `C01_density_checkpoint_current_three_paths` 记录报告、摘要、保留工程和重复图清理收据。最终统一候选资格另行维护，原 GUI 与雾工程证据保持原批次。
 
 ### C02 Log/Out 能量、振动与优化
 
