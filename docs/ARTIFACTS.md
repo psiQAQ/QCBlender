@@ -1,6 +1,6 @@
 # 产物查找入口
 
-更新：2026-10-01。任务状态见 `.scratch/`，原始报告负责验证结论；本页路由现存文件、候选、工程、重建方法和阻塞，不改变历史 Passed 或独立人工签署。
+更新：2026-10-02。任务状态见 `.scratch/`，原始报告负责验证结论；本页路由现存文件、候选、工程、重建方法和阻塞，不改变历史 Passed 或独立人工签署。
 
 ## 目录与生命周期
 
@@ -15,6 +15,8 @@
 真实输入的唯一清单为 `tests/data/local-inputs.json`，来源见 [SOURCES](v1-acceptance/SOURCES.md)。没有确认用途的原件保留原位，具体路径见本批 `routes.json` 的 `unknown_inputs`；不把它们称为已迁移或已删除。
 
 ## 当前任务与候选
+
+C05原子层标注显隐修复候选为 `outputs/candidates/current/tutorial-atom-layer-2eddb6a/qcblender-0.0.1.zip`，固定源码 `2eddb6a`；构建安装、GUI视口/渲染切换、三个真实视图专项断言及新工程冷重开Passed。证据与重建脚本在 `outputs/evidence/2026-10-02/tutorial-cu/atom-layer/`，工程 `C05-layer-fixed.blend + .qcdata` 保全24文件、50科学数组及24标注。旧候选失败及旧工程/ZIP摘要保存在 `outputs/evidence/2026-10-01/tutorial-cu/full/C05/`，不覆盖历史结论。10张截图按C05对应步骤引用，操作登记27项；全部Blender进程已退出。完整C05/C-N、统一资格、main合并及归档仍Not Run，配置保留待继续验证。
 
 C04公共节点N06/N07/N08新增资产、接线/参数调整及恢复Passed，同候选e26d22a；GUI操作与MCP接线/独立参考分列。工程 `outputs/projects/tutorial-cu-full/cases/C04/C04-public-nodes-packed.blend + .qcdata` 和同名ZIP保全117文件、7 Dataset/222数组、17引用及4体积；两份关联节点库已原生打包。原路径、中文移动和解包冷重开Passed，后两者外部节点库不存在仍能求值一致。证据/重建脚本和截图摘要见 `outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/preservation.json`；移动映射在cold-moved/unpacked的process.json；16张图紧接SOP对应步骤，登记26项。四进程均正常退出。完整C04/C-N、统一资格和main合并/归档仍Not Run，未清理活跃候选配置。
 

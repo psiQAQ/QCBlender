@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-10-01",
+  "updated": "2026-10-02",
   "rules": "docs/agents/blender-interaction.md",
   "operation_ids_are_stable": true,
   "history_is_not_current_batch_pass": true,
@@ -2005,6 +2005,77 @@
           {
             "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-unpacked/readback-MCP.json",
             "sha256": "591ac6083c5d8da9c8984635b1b3ca8b83eadf16ff50e22c2a4c72d8d1075b5e",
+            "status": "Passed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "atom-layer-owned-annotations",
+      "title": "原子层与所属标注的视口/渲染显隐",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native clicks with MCP read-only assertions",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "P03水二聚体当前版本原子视图，活动对象所属4个LABEL与4个LEADER；其他视图由MCP隔离",
+        "visible_entry": "3D视图 → N侧栏 → QCBlender → Display Layers → 对应层的眼睛与相机按钮",
+        "validated_scope": "隐藏/恢复视口及渲染，8个所属对象同步；三个真实视图独立重复切换及手动隐藏恢复由MCP专项确认",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/gui-hidden.json",
+            "sha256": "9bd10b19e9c589c309f372752fb02941dd7101a9450ae772eb0a099fda1b8398",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/gui-restored.json",
+            "sha256": "67917d146744fbb48efcc930b834914ae10bbddf4adb622ad76d758f8bde51d5",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/gui-render-hidden.json",
+            "sha256": "5f34fdb6b4e053440c07595af76525ac80daa8879c5ee1d269a50ca36e0e8e63",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/gui-render-restored.json",
+            "sha256": "b9ad6c3070dc1678edaab891213fd4fc9c37ddd7666c6cb8010334aec2b7e3a8",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C05-06-atom-layer-hidden-GUI.jpg",
+            "sha256": "24553f64084ba96b0bcad33abfcab2bef4701903bb6499c500e69f835227ae39"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C05-06-atom-layer-restored-GUI.jpg",
+            "sha256": "55f55ffadd9a5f0cd66f2593675a8651b836a37e390291a662cb591ffbe5a970"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+        "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530"
+      },
+      "fingerprint_review": "Review registration, public helper and annotation callbacks as well as listed files before replay.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "layer_action target/action可通过MCP复用；既有verify_mn_annotations的check_layer_visibility断言用于手动隐藏恢复、SELECT和无关子对象边界。首次或相关功能变更后实际点击。",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/layer-visibility-regression.json",
+            "sha256": "bc1a49db9b68fb0f548275a85159b8073107f081bfd69ed5f41db83f38d93c5a",
             "status": "Passed"
           }
         ]

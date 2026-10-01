@@ -6,6 +6,8 @@ Blocked by: 01
 
 ## Comments
 
+- 2026-10-02：C05局部替换/并集/1Å邻域、编号/距离及样式原生点击Passed；14选择组合及独立测量MCP Passed。原子层所属8标注隐藏遗漏保留Failed，修复2eddb6a候选构建安装/GUI显隐/三个真实视图专项/工程冷重开Passed；24文件与50数组不变，27个操作登记，10截图逐步骤引用。旧e26工程冷重开Passed；全部进程退出。完整C05/C-N与统一资格Not Run，02保持claimed。证据outputs/evidence/2026-10-02/tutorial-cu/atom-layer/。
+
 - 2026-10-01 C04关联/导出：同候选e26d22a的FCH真实异步导入MCP Passed；MCP设置选择顺序，GUI关联按钮与对话框确认Passed，6原子映射/0偏差/源数组不变。六类PNG、三CSV、7 Dataset/222数组/15引用/4体积/117文件工程与同条目ZIP保全；原87b9c检查点不变。PID44636正常退出，8张GUI/MCP示例截图紧接步骤；历史b709096电荷/偶极另登记，操作共22项。完整C04/新工程冷重开/全C-N仍Not Run，02保持claimed；证据full/C04/completion/preservation.json。
 
 - 2026-10-01 C04切片/探针/剖面补验：候选e26d22a，原失败的混合Dataset路径场景GUI ij/jk/ki/atoms及FREE/Gizmo Passed；三原子2/1/4另MCP重放。自动/显式等值线与标签不跨无效单元；ESP Geometry Enter/Escape与Color点击、游标有效/域外拒绝Passed。101点Geometry/Color剖面同值，域外46个CSV值空白；GUI图幅4→6不改数组。新工程6 Dataset/172数组/14引用/4体积/95文件保全，新PID52600冷读/CSV复导出Passed；20张示例截图紧接步骤，4操作登记。完整C04/全C-N仍Not Run，02保持claimed；证据full/C04/slice-retest/preservation.json。

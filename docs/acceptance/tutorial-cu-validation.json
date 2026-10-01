@@ -2150,6 +2150,370 @@
         "sha256": "4afd0ba8aef68812e44ccfd0a8b5edc025b78d8a9a683d2881fe2bf108a66085",
         "status": "Passed"
       }
+    },
+    "C05_atom_layer_followup": {
+      "status": "Not Run",
+      "scope": "Partial C05 selection/annotations and repaired atom-layer visibility; full C05 and unified qualification remain Not Run",
+      "fixed_source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+      "fixed_product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+      "fixed_candidate": "D:\\workspace\\QCBlender\\outputs\\candidates\\current\\tutorial-atom-layer-2eddb6a\\qcblender-0.0.1.zip",
+      "fixed_candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+      "fixed_reports": {
+        "build-command.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/build-command.json",
+          "sha256": "fb4815cf6fdfd220169959bca90c04c9369d2b33bb0ef12cb816310af5ecd021",
+          "status": "Passed"
+        },
+        "build.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/build.json",
+          "sha256": "24bd321392fd3e46cca8403b8078cd76bc8e108e90b98a407bf3fd17dbb8e557",
+          "status": "Passed"
+        },
+        "cold-fixed-command.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/cold-fixed-command.json",
+          "sha256": "3a6e3098d67430a2e9e49f4a8d9b505e8f8d2d6cc412254490f27a10f978c71c",
+          "status": "Passed"
+        },
+        "cold-fixed.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/cold-fixed.json",
+          "sha256": "096b4ac7b1a4146bcb547e6669c85435d189813ef77a7a40558cdd14114a6130",
+          "status": "Passed"
+        },
+        "extension-installation.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/extension-installation.json",
+          "sha256": "8c6698e42ea65c5bee4d20f5846cd3c22c9892cea79c4b5624ce3fe97ed086a5",
+          "status": "Passed"
+        },
+        "gui-baseline.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/gui-baseline.json",
+          "sha256": "f28fdac650c1f25250719003a7d1a376da900fc1bcc24cbbdcc34a1174d72e03",
+          "status": "Passed"
+        },
+        "gui-hidden.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/gui-hidden.json",
+          "sha256": "9bd10b19e9c589c309f372752fb02941dd7101a9450ae772eb0a099fda1b8398",
+          "status": "Passed"
+        },
+        "gui-render-hidden.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/gui-render-hidden.json",
+          "sha256": "5f34fdb6b4e053440c07595af76525ac80daa8879c5ee1d269a50ca36e0e8e63",
+          "status": "Passed"
+        },
+        "gui-render-restored.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/gui-render-restored.json",
+          "sha256": "b9ad6c3070dc1678edaab891213fd4fc9c37ddd7666c6cb8010334aec2b7e3a8",
+          "status": "Passed"
+        },
+        "gui-restored.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/gui-restored.json",
+          "sha256": "67917d146744fbb48efcc930b834914ae10bbddf4adb622ad76d758f8bde51d5",
+          "status": "Passed"
+        },
+        "input-provenance.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/input-provenance.json",
+          "sha256": "49f33efdfdff048805b916873ae81801b24a5aff7d9117a0e5cebc394b3b6b16",
+          "status": "Passed"
+        },
+        "installation-command.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/installation-command.json",
+          "sha256": "12501ee23fbfbf18a7a045cbf65f9767c6b408549899ec9521ff3a565b225fc5",
+          "status": "Passed"
+        },
+        "layer-visibility-regression.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/layer-visibility-regression.json",
+          "sha256": "bc1a49db9b68fb0f548275a85159b8073107f081bfd69ed5f41db83f38d93c5a",
+          "status": "Passed"
+        },
+        "mcp-ready-53872.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/mcp-ready-53872.json",
+          "sha256": "24f61e8243b6659422bb5820e29c8cff02aaad6c8b6bfa9628afa76e374b166d",
+          "status": "Passed"
+        },
+        "preservation-fixed.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/preservation-fixed.json",
+          "sha256": "a2ad42ca2362a4bfd30a22936c50d3e41668b4bda035f95564975e5585daa063",
+          "status": "Passed"
+        },
+        "save-fixed.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/save-fixed.json",
+          "sha256": "a9c8d817deee5405953ad164d63dbad7cd09fad02658af9607f0ad1bc2ce1174",
+          "status": "Passed"
+        },
+        "visible-process.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/visible-process.json",
+          "sha256": "a2582e1f6e48a9eb99be246b3d4f3e35ae19b7cd727314f5904ba5ed7eb78517",
+          "status": "Not Run"
+        },
+        "new-copy-remove.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/new-copy-remove.json",
+          "sha256": "c0bb644f8f4dc609b5c8f017fad7b0a75c94a8b90eb52b9375cdc578c7748a2b",
+          "status": "Passed"
+        },
+        "new-copy-remove-command.json": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/new-copy-remove-command.json",
+          "sha256": "665cea51526d5f625fbb8184d5cfb966070773179cb8dc1e5cc80ceaaee7b05d",
+          "status": "Passed"
+        }
+      },
+      "preceding_C05_reports_original_candidate": {
+        "annotation-atom1-GUI-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/annotation-atom1-GUI-MCP.json",
+          "sha256": "d939ec6dfb546a67fe140ff06277439a01630e632f1d643fe5c6a848891bca71",
+          "status": "Passed"
+        },
+        "annotation-distance14-GUI-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/annotation-distance14-GUI-MCP.json",
+          "sha256": "86aec9e1fa4b4eebc99cbdb7d09daa32c8bbd2d604ccecd262e700e37627e9b1",
+          "status": "Passed"
+        },
+        "annotation-edit-size-GUI-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/annotation-edit-size-GUI-MCP.json",
+          "sha256": "d2d317cb2afbb61770ebaeb196842503063d3b5a6bf467f7cf4b5587be0b04ad",
+          "status": "Passed"
+        },
+        "annotation-face-camera-GUI-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/annotation-face-camera-GUI-MCP.json",
+          "sha256": "8b8f8e490074b2ce26375ebb4c44a4e28c5f2c5eeeaa5fa4d38ba9171b7b9afb",
+          "status": "Passed"
+        },
+        "annotation-scientific-invariance-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/annotation-scientific-invariance-MCP.json",
+          "sha256": "9d69e7e8ae42059cd411310d6b6b66b4f88bcb926314ffa5b071f4291cf292c2",
+          "status": "Passed"
+        },
+        "annotations-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/annotations-MCP.json",
+          "sha256": "89978c64e743548e00c4334f3c0b69d2473664907e1e690457d29417a2a669c9",
+          "status": "Passed"
+        },
+        "atom-layer-child-visibility-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/atom-layer-child-visibility-MCP.json",
+          "sha256": "a229eb9088bbc8b1d2c9f901106cccfa93d7bdf9e4f269805984b9f9a1c62e76",
+          "status": "Failed"
+        },
+        "cold-before-fix-command.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/cold-before-fix-command.json",
+          "sha256": "aa8f2a16934b12518da9f74182fc2d05384e4e4d4e512619e50900734db41011",
+          "status": "Passed"
+        },
+        "cold-before-fix.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/cold-before-fix.json",
+          "sha256": "2e5718a3fa8a4a6b4b45717c12e3524c280ff447cc687646cb25c24601fa3d51",
+          "status": "Passed"
+        },
+        "current-version-view-GUI-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/current-version-view-GUI-MCP.json",
+          "sha256": "3466e3bff7dbeb000935b1e0eac76981d523643630a58272c07e4b0ab45007ff",
+          "status": "Passed"
+        },
+        "hydrogen-hide-GUI-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/hydrogen-hide-GUI-MCP.json",
+          "sha256": "be4fc54a26702db6ee1c20cab92ba749741fa42ee883f47b3f40a5af3b871fb9",
+          "status": "Passed"
+        },
+        "hydrogen-keep2-GUI-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/hydrogen-keep2-GUI-MCP.json",
+          "sha256": "5e6b63f59c241427ecf0a65f7d06ada74b813f2f02f94fe21ddf1e4250d125ae",
+          "status": "Passed"
+        },
+        "hydrogen-restore-GUI-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/hydrogen-restore-GUI-MCP.json",
+          "sha256": "ec3f9f2089cac8db3eba5793bf422851e8425307f439bde7e75da134da756d67",
+          "status": "Passed"
+        },
+        "import-readback-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/import-readback-MCP.json",
+          "sha256": "018f7bb47aece8fa5e5d8de265a73bc953e14f14ed0d360c408d4389369bb6ed",
+          "status": "Passed"
+        },
+        "import-request-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/import-request-MCP.json",
+          "sha256": "a57ce8c7f5100516743f9efc725580d868fbdf5ebdaaa9bc9a8569806d444caa",
+          "status": "Not Run"
+        },
+        "local-clear-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-clear-MCP.json",
+          "sha256": "e73c10c15d0bdb74996b61c0b165459c268b2b81719a49b73ad27979aa3d90fa",
+          "status": "Passed"
+        },
+        "local-difference2-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-difference2-MCP.json",
+          "sha256": "a7bb15319128a7de8f358fcf460c1250bde48e531a8b586988aab3c5caf7bc1e",
+          "status": "Passed"
+        },
+        "local-final-clear-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-final-clear-MCP.json",
+          "sha256": "e73c10c15d0bdb74996b61c0b165459c268b2b81719a49b73ad27979aa3d90fa",
+          "status": "Passed"
+        },
+        "local-intersect12-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-intersect12-MCP.json",
+          "sha256": "a63617f4dae2f57480026b6dd084513496c3c827b9e860808d2bceae7ba9c5af",
+          "status": "Passed"
+        },
+        "local-invert-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-invert-MCP.json",
+          "sha256": "4072218d82064799082b8bdbf56229118a4b57f41ced3c33521e29323f44c626",
+          "status": "Passed"
+        },
+        "local-layer14-GUI-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-layer14-GUI-MCP.json",
+          "sha256": "ecfac11b6e86d35c23966b14900b2b6a41af9d923ffdb73f05e40279e74c65e6",
+          "status": "Passed"
+        },
+        "local-radius-recompute-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-radius-recompute-MCP.json",
+          "sha256": "c43f5d887a8fc259d023506a2013c22aa0621014d5c0ddb4b208dc35148babf6",
+          "status": "Passed"
+        },
+        "local-radius1-element8-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-radius1-element8-MCP.json",
+          "sha256": "f599e34c59d049bd977817cc53a018817d69c3bbc22cdba63bf33df1ff0fef71",
+          "status": "Passed"
+        },
+        "local-radius1-GUI-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-radius1-GUI-MCP.json",
+          "sha256": "e8d8735c9f5ad8920017527ea431ad2e0ba758a1649d641c006b0e155220a7a3",
+          "status": "Passed"
+        },
+        "local-radius1-hydrogen-hide-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-radius1-hydrogen-hide-MCP.json",
+          "sha256": "999e655315ff3042e8efaf6ad613fd253454843216ee9b8ca5d7885e6e60e7a1",
+          "status": "Passed"
+        },
+        "local-radius1-hydrogen-keep2-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-radius1-hydrogen-keep2-MCP.json",
+          "sha256": "0d68cc5da4a4bc251a4796a3b868673a35a5902158b653cc4ceca043ddc5a82b",
+          "status": "Passed"
+        },
+        "local-radius1-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-radius1-MCP.json",
+          "sha256": "c43f5d887a8fc259d023506a2013c22aa0621014d5c0ddb4b208dc35148babf6",
+          "status": "Passed"
+        },
+        "local-radius1-range23-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-radius1-range23-MCP.json",
+          "sha256": "6f03252d4cc999911e9556cdc8878e0a429c4945acd09c647c2c90d49f8ecf0e",
+          "status": "Passed"
+        },
+        "local-recomputed-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-recomputed-MCP.json",
+          "sha256": "c43f5d887a8fc259d023506a2013c22aa0621014d5c0ddb4b208dc35148babf6",
+          "status": "Passed"
+        },
+        "local-replace14-GUI-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-replace14-GUI-MCP.json",
+          "sha256": "872bde2b5ac65dd728f07beaa6feb7e6a4f204f580481f104f88236b3443ff8b",
+          "status": "Passed"
+        },
+        "local-replace14-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-replace14-MCP.json",
+          "sha256": "944f4750044cb4f2f1d0dba438b4324ac5737d8f22fb937386b0269320cab83d",
+          "status": "Passed"
+        },
+        "local-union2-GUI-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-union2-GUI-MCP.json",
+          "sha256": "d0ce7e5b6cb728388b52c443b516b0afb19ca2887c256f65ff48c7f6117606b3",
+          "status": "Passed"
+        },
+        "local-union2-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/local-union2-MCP.json",
+          "sha256": "936a7ad5ebdba1d1cb5f0aeeb8bfb048e52551c7870050f68ebc1ac4d440cf20",
+          "status": "Passed"
+        },
+        "mcp-ready-5632.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/mcp-ready-5632.json",
+          "sha256": "899057588fbf2be79d315f792e2966d9865362a9335c7f2e612c9ec85586eecd",
+          "status": "Passed"
+        },
+        "preservation-before-fix.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/preservation-before-fix.json",
+          "sha256": "c3b777b2f0850d818e85822457a6c95bbbbb266596ec6d01b861e6cd941c6c2d",
+          "status": "Passed"
+        },
+        "process.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/process.json",
+          "sha256": "caa1278a624924376839ae16a0fc522ac05b6b7d56d9a1f8e0b12a46da487510",
+          "status": "Not Run"
+        },
+        "save-before-fix-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/save-before-fix-MCP.json",
+          "sha256": "728260b381586c06b074a0dc6364cc25fe0105afe4585a56f5ebe90195f5facc",
+          "status": "Passed"
+        },
+        "selection-replay-harness-v1-failure.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/selection-replay-harness-v1-failure.json",
+          "sha256": "b65e748afe1754beaed1c67fecbb99586d2e5db0f27ce59db55710bcf74353c6",
+          "status": "Failed"
+        },
+        "selection-replay-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/selection-replay-MCP.json",
+          "sha256": "b9e1c8ba060611c702fab2ff208972861418250567090cc7d30e29e51a6e1f61",
+          "status": "Passed"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-02-union-result-GUI.jpg",
+          "sha256": "cea601f050ff51102a01d973aa7e2eea887148b27b6a3ac02224f08e8aa26055"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-02-radius-dialog-GUI.jpg",
+          "sha256": "3fc09f0e56288e877594ac2b79a94a17e4da5d4b6a23290f7d248b5504debf4b"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-02-radius-result-GUI.jpg",
+          "sha256": "cb74f6dde5fbd2e1b90ad64cee784118daed15015fc62ce5ace3ad29532ebdcb"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-03-local-layer-result-GUI.jpg",
+          "sha256": "684d420fa2abeadeadc734061d661a2b8c4f00a142d5ec2b6697e7513a71567f"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-04-distance-dialog-GUI.jpg",
+          "sha256": "ffdd1b1371b436c3fd55737c1a6c895da77199fd46364fe635326c09d8c85150"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-04-two-entry-paths-GUI.jpg",
+          "sha256": "b76fe79588b29e1f1240c08712e5b735ae7f2449b6fd6776770a9234ab58ad76"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-05-edit-size-dialog-GUI.jpg",
+          "sha256": "380e9fa53fa66c3b1e9ae7d22d011014749dfa071c636a5e393f46c6b6229eae"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-05-edited-result-MCP.jpg",
+          "sha256": "78c97ad34261675d9394263ce93e7fb39f3112e0676d3f8833b1d4e99f77b03b"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-06-atom-layer-hidden-GUI.jpg",
+          "sha256": "24553f64084ba96b0bcad33abfcab2bef4701903bb6499c500e69f835227ae39"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-06-atom-layer-restored-GUI.jpg",
+          "sha256": "55f55ffadd9a5f0cd66f2593675a8651b836a37e390291a662cb591ffbe5a970"
+        }
+      ],
+      "checks": {
+        "build_installation": "Passed",
+        "GUI_viewport_and_render_toggles": "Passed",
+        "focused_existing_verifier_on_three_real_views": "Passed",
+        "fixed_project_cold_reopen": "Passed",
+        "full_annotation_suite": "Not Run",
+        "full_C05": "Not Run",
+        "independent_scientific_signature": "Not Run",
+        "new_annotation_copy_removal_and_manual_render_restore": "Passed"
+      },
+      "remaining": "C05 layer copying/order/removal/display parameter transfer, remaining public nodes, render and moved/unpacked cold chain; C06-C13; unified final qualification",
+      "rebuild": [
+        "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/build.json",
+        "outputs/evidence/2026-10-02/tutorial-cu/atom-layer/scripts/build-install-atom-layer.py"
+      ],
+      "old_failure": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C05/atom-layer-child-visibility-MCP.json",
+        "sha256": "a229eb9088bbc8b1d2c9f901106cccfa93d7bdf9e4f269805984b9f9a1c62e76",
+        "status": "Failed"
+      }
     }
   },
   "historical_partial_supplement": {

@@ -691,25 +691,45 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    ![Agent操作示例：撤销恢复6个原子，再用Edit菜单的Redo重做隐藏氢；返回氧1与4](screenshot/C05-01-redo-menu.jpg)
 
-2. 点 **设置局部选择**，在 **Source atom numbers (1-based)** 先填 **1,4**、Mode=**Replace**；再填 **2**、Mode=**Union**（得1,2,4），填 **1,2**、Mode=**Intersect**（得1,2），填 **2**、Mode=**Difference**（得1），最后Mode=**Invert**（得2–6）。再次点 **设置局部选择**，选 **Replace**、编号 **1**，勾 **Include distance neighborhood**，以源 **1** 为种子、填 **Radius (Å)=1.0** 并勾 Include seed atoms，预期包括1/2/3。局部集合和元素、连续编号、氢筛选共同作用。点 **清除局部限制** 恢复其他筛选控制的范围。
+2. 点 **设置局部选择**，在 **Source atom numbers (1-based)** 先填 **1,4**、**Mode=替换（Replace）**；再填 **2**、**并集（Union）**（得1,2,4），填 **1,2**、**交集（Intersect）**（得1,2），填 **2**、**差值（Difference）**（得1），最后选 **反转（Invert）**（得2–6）。再次点 **设置局部选择**，选 **Replace**、编号 **1**，勾 **Include distance neighborhood**，以源 **1** 为种子、填 **Radius (Å)=1.0** 并勾 Include seed atoms，预期包括1/2/3。局部集合和元素、连续编号、氢筛选共同作用。点 **清除局部限制** 恢复其他筛选控制的范围。
 
    [用户截图待引用：C05-02，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Agent Computer Use：并集后源编号1、2、4](screenshot/C05-02-union-result-GUI.jpg)
+
+   ![Agent Computer Use：源编号1及1.0 Å邻域参数](screenshot/C05-02-radius-dialog-GUI.jpg)
+
+   ![Agent Computer Use：邻域返回源编号1、2、3](screenshot/C05-02-radius-result-GUI.jpg)
 
 3. 保持原子对象，点击 **创建视图与检查工具 → 创建局部显示层**，输入对应编号/半径，新副本独立调整样式/材质。优化/IRC 上局部集合固定源编号，换步不会自动换集合，必要时点 **按当前步重新计算**；IRC 仅在原层选择，不创建局部副本。
 
    [用户截图待引用：C05-03，活动对象、参数与结果同屏；参数变化保留前后画面]
 
-4. 选择 **P03水二聚体原子对象**，分别点 **创建编号标注／创建距离标注／创建角度标注／创建二面角标注**，按测量顺序填实际源编号；编号填 **1**，距离填 **1,4**，角度填 **2,1,3**，二面角填 **2,1,4,5**。核对距离 Å、角度度数、带符号二面角范围 (-180°,180°]；退化构型显示 undefined 与原因。
+   ![Agent Computer Use：编号1、4的独立局部显示层](screenshot/C05-03-local-layer-result-GUI.jpg)
+
+4. 选择 **P03水二聚体原子对象**，在 **3D视图 → N侧栏 → QCBlender → 创建视图与检查工具** 分别点 **创建编号标注／创建距离标注／创建角度标注／创建二面角标注**；也可在 **Properties → Object → QCBlender → 局部选择与标注 → Source Atom Annotations** 点对应 **Atoms／Distance／Angle／Dihedral**，按测量顺序填实际源编号；编号填 **1**，距离填 **1,4**，角度填 **2,1,3**，二面角填 **2,1,4,5**。核对距离 Å、角度度数、带符号二面角范围 (-180°,180°]；退化构型显示 undefined 与原因。
 
    [用户截图待引用：C05-04，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Agent Computer Use：按测量顺序输入距离编号1、4](screenshot/C05-04-distance-dialog-GUI.jpg)
+
+   ![Agent Computer Use观察：N侧栏中文按钮与对象属性英文按钮入口](screenshot/C05-04-two-entry-paths-GUI.jpg)
 
 5. 在 **局部选择与标注 → Source Atom Annotations** 用设置图标调整文字大小/颜色/偏移/小数和引线；原子源构型或当前优化/IRC 步决定值，对象缩放与振动位移不改变测量。切步核对文字、锚点、步号同步；相机建好后点 **Face All to Camera**。
 
    [用户截图待引用：C05-05，活动对象、参数与结果同屏；参数变化保留前后画面]
 
+   ![Agent Computer Use：距离文字大小调整为0.22](screenshot/C05-05-edit-size-dialog-GUI.jpg)
+
+   ![Agent Computer Use观察：MCP调整颜色、偏移和小数后，科学距离仍为2.900 Å](screenshot/C05-05-edited-result-MCP.jpg)
+
 6. 在 **N 侧栏 → Display Layers** 选择层，用复制图标建立副本，改副本参数/材质确认原层不变；排序、视口/渲染显隐和删除只在副本测试。点击 **创建视图与检查工具 → 创建当前版本视图**，保留原层并核对新层。多选同类层，最后选参数源，在 **3D Viewport → 对象右键菜单 → QCBlender → 复制显示参数到选中视图** 选类别；数值复制需同量/单位/电荷方法，不兼容时取消数值类别。目标位置、选择、裁剪和图例布局保留。
 
    [用户截图待引用：C05-06，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Agent Computer Use：修复候选隐藏原子层，所属标注与引线同步隐藏](screenshot/C05-06-atom-layer-hidden-GUI.jpg)
+
+   ![Agent Computer Use：恢复原子层及所属标注](screenshot/C05-06-atom-layer-restored-GUI.jpg)
 
    ![Agent操作示例：关闭IR谱显示层，谱线与所属文字同步隐藏；视口与渲染开关独立](screenshot/C05-06-ir-layer-hidden.jpg)
 
