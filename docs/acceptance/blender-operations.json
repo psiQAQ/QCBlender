@@ -4392,6 +4392,83 @@
           }
         ]
       }
+    },
+    {
+      "id": "nocv-pair-cube-import",
+      "title": "真实NOCV pair Cube导入",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native dialog; independent MCP Cube/table/arrays oracle",
+        "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+        "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+        "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID24044，从已保存C12继续；唯一活动ETS-NOCV表，Pair1/Total/Cube明确单位",
+        "visible_entry": "3D视图 → N侧栏 → QCBlender → 导入外部结果 → NOCV pair Cube；Signed pair Cube、Pair number、Spin、Deformation density unit、确定",
+        "validated_scope": "真实P05 pair1，47×50×57，133950值精确核对；六原子关联、表源及manifest摘要、1VDB、66数组不变。错误pair999/Alpha由MCP另验，不称为GUI错误输入。",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/native-import-gui.json",
+            "sha256": "bf5f0f25a5b34a302efa4abee54f601b14d5b652407600393774c5db442c241a",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/native-import-oracle.json",
+            "sha256": "0a1b5dcaa692eab4b71292906cad8e64a4c1fa5b58328a7af7369d0f3309c5a7",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C13-entry-GUI.jpg",
+            "sha256": "d4ba34db89b71ad0c415324477ec0fc74f0071d5c605d219c1d879986f037121"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C13-dialog-GUI.jpg",
+            "sha256": "ed8095130aa82d619b7e753223c8007ed36adcd75a06532a5a33c3de9ac4157b"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/nocv.py": "944a5cc1effe9b05111a8bfe8417f0f720ca740dc42f3586d497a9d727ef267e",
+        "qcblender/nocv.py": "537f220e48bd8dd7f02675b46099bb59df167a3b6ffc8a44ced107c4d33899ba",
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/blender/capabilities.py": "e99bbdbf87fb0a2e08160c65e6d2b405a917d4ca5bc738b2baae46c89f099386",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/assets.py": "7b9738469040f90dc915d45c2322d29029f44c5453db2e0531eb12980ca46536",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/blender/parameters.py": "8920b314c0d2ac09246435d45da7de144565ffdc4d1f1621c44be6faa78d160e",
+        "qcblender/cube.py": "9af0ad7091af18b5d526e368ff1ccacc129f2544df3e19573a76e926a57cfe14",
+        "qcblender/association.py": "e9b8f0d9e462f3ecf0e5b6c428f3cce2a5378404871c50bd23a58cf825fee000",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
+      },
+      "fingerprint_review": "Review transitive helpers, callbacks, interfaces and dependencies, not only operator names.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP native async import with table identity/worker checks; registered valid dialog scope is P05 Pair1 Total.",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/guard-pair.json",
+            "sha256": "b3312a9e684241447880ee0720b921057c236588ba149646ce52e95313fed512",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/guard-spin.json",
+            "sha256": "4f7b2fd9e288bf8fb297a516fe7adf111ff6ce6c0592ad1193a2e12098f48c6d",
+            "status": "Passed"
+          }
+        ]
+      }
     }
   ]
 }

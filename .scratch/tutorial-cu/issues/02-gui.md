@@ -70,3 +70,5 @@ Blocked by: 01
 2026-10-02 C11原生Mayer导入自动曲线与1,3 Plot Pair通过；6对×3步18源值、两对8次步进/标注同步与非法/重复/缺步输入MCP Passed。deb9416以两行对象上下文override修复Properties嵌套poll缺陷，新候选c736bb9；13文件/2Dataset/9数组/6引用保全，三处串行冷读和9次像素一致渲染Passed，全进程退出。原导入Failed及临时渲染开关断言诊断保留；7图紧接步骤，登记57项。完整教程、统一资格与合并归档仍待完成。证据full/C11/fixed/cold-chain-v2.json。
 
 2026-10-02 C12真实ETS-NOCV首次导入、记录1/2、Pair/Total/负本征值范围与正本征值排序GUI Passed；11打印行与全部字段、25筛选排序和3错误边界MCP Passed。40文件/2Dataset/60数组/2引用保全，三处串行后台冷读和3次像素一致渲染Passed，全部进程退出。表无渲染网格，效果图手动排版源说明明确标注；8图紧接步骤，登记61项。原测试断言和后台启动缓存时序Failed保留；完整教程、统一资格和合并归档仍待完成。证据full/C12/cold-chain-v2.json。
+
+2026-10-02 C13真实Pair1/Total导入GUI Passed；独立133950个Cube值/六原子/表绑定、10显示组合、两个真实异步错误拒绝及独立复制/原生撤销重做MCP Passed。48文件/3Dataset/66数组/1VDB/4引用保全，三处串行冷读和12次像素一致渲染Passed，全进程退出。11图紧接步骤，登记62项；BOHR常数/接口缩写/空材质测试诊断保留。C12可见启动自动缓存Passed另列；完整教程剩余边界、统一资格和合并归档待完成。证据full/C13/cold-chain.json。

@@ -882,7 +882,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
 3. 只选择 **QC delta_g**，在 **Properties → 对象属性 → QCBlender · 对象与量子化学 → 几何表示** 把 **Isovalue** 设为 **0.005**；**QC iri_function** 设为 **1.0**。在各对象的 **颜色映射** 设置 **Color Minimum=-0.04、Color Center=0、Color Maximum=0.04**。位置取自几何场、颜色取自第二场；按N14查看来源，核对两输入摘要与网格，原值不除100。
 
-   本例该阈值下IGMH为4,992顶点/4,906面、IRI为3,150顶点/3,140面（不含图例文字）。成图先只显示参考原子与当前几何场，按N17创建取景相机，**Margin=0.05、Eevee、1920×1080**。本示例视角绕X轴0.9 rad；在 **图例排版** 启用 **Show Legend**，把 **Legend Rotation** 的X角也设为 **0.9 rad（约51.566°）**，使量名、单位和−0.04/0/+0.04可读。初次构图前确认角度字段所用单位。
+   本例该阈值下IGMH为4,992顶点/4,906面、IRI为3,150顶点/3,140面（不含图例文字）。成图先只显示参考原子与当前几何场，按0.4步骤1创建取景相机，**Margin=0.05、Eevee、1920×1080**。本示例视角绕X轴0.9 rad；在 **图例排版** 启用 **Show Legend**，把 **Legend Rotation** 的X角也设为 **0.9 rad（约51.566°）**，使量名、单位和−0.04/0/+0.04可读。初次构图前确认角度字段所用单位。
 
    [用户截图待引用：C07-03，分别保留两几何场参数、颜色源和可读图例]
 
@@ -965,11 +965,11 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    ![Agent Computer Use切换并应用完整源区间：6bin、21.2676 Å²、29.0608%](screenshot/C08-area-source-interval-GUI.jpg)
 
-5. 对应N13/N16，按0.4导出 **C08-extrema.png、C08-area.png**。极值图先取消数值范围、**Source number=0、Match (1-based)=2**并应用两极值层，显示参考原子、两层及其标签；面积图仅显示恢复全部40bin的面积层。按N17创建相机，**Margin=0.05、Eevee、1920×1080**。本示例沿Y方向取景，标签绕X轴 **90°**面向相机；部分minimum在此投影重叠，可旋转视角并逐条突出核对。源记录和坐标不随观察方向改变。
+5. 对应N13/N16，按0.4导出 **C08-extrema.png、C08-area.png**。极值图先取消数值范围、**Source number=0、Match (1-based)=2**并应用两极值层，显示参考原子、两层及其标签；面积图仅显示恢复全部40bin的面积层。按0.4步骤1创建取景相机，**Margin=0.05、Eevee、1920×1080**。本示例沿Y方向取景，标签绕X轴 **90°**面向相机；部分minimum在此投影重叠，可旋转视角并逐条突出核对。源记录和坐标不随观察方向改变。
 
    为取得下图照明，添加Sun灯，**Energy=2、Angle=0.35 rad（约20.054°）**，灯旋转约 **X=40.107°、Y=−17.189°、Z=−22.918°**；两个原生标签的材质设白色 **Base Color、Emission Color**，**Emission Strength=1**。这些是工程显示设置。恢复极值层后再次点 **应用筛选**，确认标签可见，避免把面积图中临时隐藏的标签状态带入保存工程。
 
-   点击 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程**，保存 `.blend + .qcdata`；按N16导出配套ZIP。完成后正常关闭，原路径、中文移动和ZIP解包路径分别在一个新Blender进程打开核对，每次关闭后再开下一处。本批文件名为 **C08-final.blend**，效果图带 `-v2` 后缀。
+   点击 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程**，保存 `.blend + .qcdata`；按0.4的归档工程步骤（N18）打包配套ZIP。完成后正常关闭，原路径、中文移动和ZIP解包路径分别在一个新Blender进程打开核对，每次关闭后再开下一处。本批文件名为 **C08-final.blend**，效果图带 `-v2` 后缀。
 
    [用户截图待引用：C08-05，分别保留极值图、面积图、保存路径和三个冷重开结果]
 
@@ -1020,7 +1020,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    下图使用 **EEVEE、1920×1080、正交相机Scale=9、位置(X,Y,Z)=(1,−12,1.65)、绕X轴90°**。源标签字号 **0.11**、绕X轴90°、局部Y偏移 **−0.6**；C标签局部Z偏移 **−1.05**，N标签 **0.15**。灯光和白色标签发光材质沿用C08显示参数，第二Sun能量0.35。这些参数只影响排版与照明，不改变科学坐标/属性。
 
-   点击 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程**，保存 **C09-final.blend + C09-final.qcdata**，按N16导出配套ZIP。完成后正常关闭并确认退出；原路径、中文移动路径和解包路径依次在一个新Blender进程打开，每次读取科学数据、标签、筛选和路径后关闭，再开下一处。示例效果图带 `-v3` 后缀。
+   点击 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程**，保存 **C09-final.blend + C09-final.qcdata**，按0.4的归档工程步骤（N18）打包配套ZIP。完成后正常关闭并确认退出；原路径、中文移动路径和解包路径依次在一个新Blender进程打开，每次读取科学数据、标签、筛选和路径后关闭，再开下一处。示例效果图带 `-v3` 后缀。
 
    [用户截图待引用：C09-04，三张效果图、保存路径和三处冷重开]
 
@@ -1079,7 +1079,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    标签使用上面的黄色发光材质，Strength **1**；世界Background灰色 **(0.12,0.12,0.12)**、Strength **0.8**、Standard视图变换；两Sun能量 **2/0.35**、角宽 **0.35 rad**，Euler XYZ旋转 **(0.7,−0.3,−0.4)/(−0.4,0.4,2.5) rad**。相机/照明与排版通过MCP复用，只影响显示。
 
-   点击 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程**，保存 **C10-final.blend + C10-final.qcdata**，按N16归档ZIP。完成后关闭并确认进程退出；原路径、中文移动路径和解包路径依次在新进程打开，核对三步数据、标注与渲染，每次关闭后再打开下一处。C11从这份尚未导入Mayer的工程继续并另存。
+   点击 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程**，保存 **C10-final.blend + C10-final.qcdata**，按0.4的归档工程步骤（N18）打包ZIP。完成后关闭并确认进程退出；原路径、中文移动路径和解包路径依次在新进程打开，核对三步数据、标注与渲染，每次关闭后再打开下一处。C11从这份尚未导入Mayer的工程继续并另存。
 
    [用户截图待引用：C10-06，三张效果图、保存位置与三处冷重开]
 
@@ -1138,7 +1138,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    ![原生EEVEE：左能量曲线、中央真实构型、右Mayer曲线；单位分别来自源记录](screenshot/C11-overview.png)
 
-7. 在 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程** 另存 **C11-final.blend + C11-final.qcdata**，按N16导出配套ZIP。及时关闭并确认进程退出，再在新Blender依次打开原路径、中文移动副本和ZIP解包副本，每次完成后关闭再开下一处。检查两份Dataset/九数组、六对象引用、1,3逐步值和源构型，并重出三图。本批13文件全部摘要一致，三处冷读和九次像素一致渲染Passed；九份重复冷渲染已清理，三张原图与报告仍可取。
+7. 在 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程** 另存 **C11-final.blend + C11-final.qcdata**，按0.4的归档工程步骤（N18）打包配套ZIP。及时关闭并确认进程退出，再在新Blender依次打开原路径、中文移动副本和ZIP解包副本，每次完成后关闭再开下一处。检查两份Dataset/九数组、六对象引用、1,3逐步值和源构型，并重出三图。本批13文件全部摘要一致，三处冷读和九次像素一致渲染Passed；九份重复冷渲染已清理，三张原图与报告仍可取。
 
    [用户截图待引用：C11-07，独立保存位置、两份数据和三个新进程冷重开结果]
 
@@ -1186,7 +1186,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    ![原生EEVEE：六原子参考构型与手动排版的pair1/2源记录说明](screenshot/C12-overview.png)
 
-6. 在 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程** 保存 **C12-final.blend + C12-final.qcdata**，按N16打包ZIP；一个工程完成后及时关闭。确认退出后在新Blender依次打开原路径、中文移动副本、ZIP解包副本，每处核对11条源记录、2份Dataset、60数组、来源关联、筛选参数与渲染，关闭后再开下一处。本批40文件摘要和三处冷读/实际像素一致重渲染Passed；后台CLI在启用插件后显式执行已有 **刷新来源**，避免定时器尚未运行就调用依赖缓存的筛选按钮。首次后台时序Failed保留，不改写为通过。
+6. 在 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程** 保存 **C12-final.blend + C12-final.qcdata**，按0.4的归档工程步骤（N18）打包ZIP；一个工程完成后及时关闭。确认退出后在新Blender依次打开原路径、中文移动副本、ZIP解包副本，每处核对11条源记录、2份Dataset、60数组、来源关联、筛选参数与渲染，关闭后再开下一处。本批40文件摘要和三处冷读/实际像素一致重渲染Passed；后台CLI在启用插件后显式执行已有 **刷新来源**，避免定时器尚未运行就调用依赖缓存的筛选按钮。首次后台时序Failed保留，不改写为通过。
 
    [用户截图待引用：C12-06，保存位置与三个串行新进程冷重开结果]
 
@@ -1194,25 +1194,61 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
 ### C13 NOCV pair Cube 与两符号密度
 
-**真实输入预期：** `P05/nocv/nocv-pair1.cub`，pair1/Total，与C12表和构型一致；网格 **47×50×57**，值域 **−0.243093..+0.0494892 electron/bohr^3**，SHA为 `d6d3ec263d5173261791f997eabd78b8112f6685abc3bd851c70deec86a82e33`。正/负阈值从 **0.003** 开始；用不存在pair **999** 或错误Spin **Alpha**观察关联拒绝。
+**真实输入预期：** `P05/nocv/nocv-pair1.cub`，Pair **1 / Total**，承接C12的CO–BH3构型与ETS-NOCV表；网格 **47×50×57**，133,950个值，值域 **−0.243093..+0.0494892 electron/bohr^3**，SHA-256 `d6d3ec263d5173261791f997eabd78b8112f6685abc3bd851c70deec86a82e33`。正负是**形变密度的符号**；本例参考/单位由用户明确指定，不推断未知字段，也不套用MO相位解释。
 
-1. 打开 C12 工程另存 C13，选 **ETS-NOCV 表对象**，点 **导入外部结果 → NOCV pair Cube**，在 **Pair number、Spin、Signed pair Cube、Deformation density unit** 填清单 pair 编号、自旋、Cube 路径与数值已有单位，确认等待。
+1. 确认上一工程已保存且进程退出，在一个Blender进程打开 **C12-final.blend**，最后另存C13。只选择 **QC ETS-NOCV pairs** 表对象为活动对象，在 **3D视图 → N侧栏 → QCBlender → 导入外部结果 → NOCV pair Cube** 打开对话框。**Signed pair Cube** 指定 `inputs/P05/nocv/nocv-pair1.cub`，**Pair number=1**，**Spin=总数**（英文Total），**Deformation density unit=electron/bohr^3**，点 **确定**并等待作业完成。预期新增并选中 **QC nocv_deformation_density** 场及配套体积源；表与六原子根保留。
 
-   [用户截图待引用：C13-01，活动对象、参数与结果同屏；参数变化保留前后画面]
+   [用户截图待引用：C13-01，活动ETS表、实际入口、路径与Pair/Spin/单位对话框]
 
-2. 选新 pair 场核对表行/pair/spin、参考构型、Cube SHA 和密度单位；不能用 canonical MO Cube 冒充 NOCV 密度。
+   ![Agent Computer Use：ETS表活动时打开NOCV pair Cube入口](screenshot/C13-entry-GUI.jpg)
 
-   [用户截图待引用：C13-02，活动对象、参数与结果同屏；参数变化保留前后画面]
+   ![Agent Computer Use：真实pair Cube、Pair1、Total和明确密度单位](screenshot/C13-dialog-GUI.jpg)
 
-3. 在 **几何表示** 分别显示正/负值，关 Link Thresholds 后各自改阈值，在材质属性改透明度。正负值为形变密度的符号，不能套用 MO 相位解释。
+2. 保持新场唯一活动，打开 **Properties → 对象属性 → QCBlender · 对象与量子化学** 核对网格和单位；点 **来源详情**，查看 **Geometry / data source** 的Cube摘要及 **Geometry field** 的量名、单位和Spin。Pair和表关联另选 **QC ETS-NOCV pairs**，在C12的 **External Analysis Records → Record (1-based)=1** 核对Pair1/Total与原文行7，再到 **External Result Browser** 设Pair1、Spin总数并点 **应用筛选**；预期定位已存在的唯一pair场。保存证据时分别记录Cube、ETS表及构型摘要，完整表manifest绑定由维护者报告核对。六原子编号对应 **[C,O,B,H,H,H]**；Cube采用bohr坐标，界面几何坐标采用Å。不要把普通MO Cube当成pair形变密度。本批全部Cube数值、表行、构型、科学数组及VDB由MCP独立核对，登记报告见当前验证索引。
 
-   [用户截图待引用：C13-03，活动对象、参数与结果同屏；参数变化保留前后画面]
+   [用户截图待引用：C13-02，活动pair场、来源详情、Pair/Spin/单位与表关联]
 
-4. 先重新选择 **C12的ETS-NOCV表对象**，再打开pair Cube导入，用表中不存在的pair **999** 或错误Spin **Alpha**复核关联拒绝；活动pair场不能作为导入参考。记录错误，随后恢复合法输入。对应 N04/N05/N16，按 0.4 保存 `C13-positive.png`、`C13-negative.png`、总览与工程。
+3. 在同一对象属性的 **几何表示** 将 **正值阈值 [electron/bohr^3]=0.003**，勾选 **Link Thresholds**，分别勾选 **显示正值 / 显示负值**。实体模式下，默认蓝色表示正值、红色表示负值；两者都勾选时显示完整两符号密度，均关闭时只剩根分子。正值/负值单独显示分别导出 `C13-positive.png`、`C13-negative.png`；本批求值顶点分别2,052/2,718，合计4,770，数量仅适用于本批网格和显示参数。
 
-   [用户截图待引用：C13-04，活动对象、参数与结果同屏；参数变化保留前后画面]
+   [用户截图待引用：C13-03，阈值、两个显隐开关及正/负结果]
 
+   ![MCP设置阈值与两个显隐开关，Computer Use观察：两符号密度及实际控件](screenshot/C13-both-MCP.jpg)
 
+   ![原生EEVEE：仅显示正值，阈值0.003 electron/bohr³](screenshot/C13-positive.png)
+
+   ![原生EEVEE：仅显示负值，阈值0.003 electron/bohr³](screenshot/C13-negative.png)
+
+4. 两符号均显示，取消 **Link Thresholds**，将正值阈值设 **0.004**、负值阈值设 **0.006**，分别调整其中一个并观察独立变化。**样式**可选 **实面、线框、点**，线框/点半径只影响展示。透明度入口是 **Properties → 材质属性 → QCBlender · 节点材质 → Positive Opacity / Negative Opacity**：可分别设 **0.35 / 0.65**。这些控件通过 `qc_opacity` 属性控制已链接的Alpha；无需在原生Principled节点上寻找可直接修改的Alpha。完成后恢复实面、Link Thresholds、两阈值0.003、两Opacity1。
+
+   [用户截图待引用：C13-04，独立阈值前后与材质属性两透明度；改变参数不改变源数组]
+
+   ![MCP设置独立正负阈值0.004与0.006，Computer Use观察实际界面](screenshot/C13-unlinked-MCP.jpg)
+
+   ![MCP设置Positive Opacity0.35及Negative Opacity0.65，Computer Use展开实际材质面板](screenshot/C13-opacity-MCP.jpg)
+
+   ![原生EEVEE：不同透明度下可见内部核构型，源密度数组不变](screenshot/C13-opacity.png)
+
+5. 错误输入检查必须重新选择 **QC ETS-NOCV pairs 表对象**，在步骤1的对话框使用同一Cube但 **Pair number=999、Spin=总数**，确认；预期拒绝 **Selected pair and spin do not identify one ETS-NOCV table row**，不新增场、不改变现有科学数据。随后用 **Pair number=1、Spin=Alpha** 再次确认，预期同样拒绝。已有pair场不是导入参考对象。记录真实错误后取消对话框，恢复选择合法Pair1/Total场。本批两次错误导入由MCP调用真实异步Operator，Computer Use仅观察错误提示，不称为本批错误参数点击。
+
+   [用户截图待引用：C13-05，活动参考表、非法参数、真实错误及现有对象不变]
+
+   ![MCP执行错误导入后的真实界面提示，Computer Use观察截图](screenshot/C13-guard-MCP.jpg)
+
+6. 按 **N16** 检查撤销/重做：活动pair场，在 **N侧栏 → Display Layers → 复制** 创建副本，只把副本正值阈值改成0.009，原场应保持0.003。3D视口撤销/重做，核对副本存在状态、阈值、独立Mesh/节点树/材质和源绑定；移除本次临时副本时仅移除显示层。记录操作及科学数组保持不变。本批使用MCP的原生复制/撤销/重做和独立断言，未重复点击已登记操作。
+
+   [用户截图待引用：C13-06，副本阈值、原层不变及撤销/重做结果]
+
+   按0.4创建相机并F12渲染总览。本批保留C12显示变换：根X=−3、Z旋转45°；正交相机 **(−3,−20,0.65)**、X旋转90°、Scale **11**，1920×1080、Standard、EEVEE、C12两Sun与灰世界背景，隐藏C12手动说明文字。相机范围完整包围两符号密度；这些是展示参数，科学构型不变。
+
+   ![原生EEVEE：Pair1/Total两符号形变密度总览](screenshot/C13-overview.png)
+
+7. 在 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程** 保存 **C13-final.blend + C13-final.qcdata**，按0.4的归档工程步骤（N18）打包ZIP，正常关闭并确认退出。依次在新进程打开原路径、中文移动副本、ZIP解包副本，每次核对Pair/Spin/表关联、相对VDB、控件和渲染后关闭再继续。本批48文件、3份Dataset、66数组、1VDB、4个科学引用及三处各四张像素一致重渲染Passed；重复冷渲染图核对后清理，四张原图和日志保留。
+
+   [用户截图待引用：C13-07，保存位置、三个串行新进程冷重开及数组/单位/关联核对]
+
+   ![MCP保存自包含工程后由Computer Use观察：C13标题无未保存标记，透明度已恢复](screenshot/C13-saved-MCP.jpg)
+
+   首次合法导入由Agent Computer Use确认；参数/错误输入/复制/撤销重做/保存由MCP复用与核对，冷读及重渲染由串行原生CLI执行。证据见[当前验证索引](../acceptance/tutorial-cu-validation.json)的 `C13_pair_density_controls_and_cold_chain`。C12可见启动缓存恢复另有只读报告；不把后台定时器诊断改写为通过。本项不代表统一资格完成，用户复做和独立科研签署仍Not Run。历史[cleanup-validation.json](../acceptance/cleanup-validation.json)保持原身份。
 
 ## 2. N01–N18 节点与交互检查
 
@@ -1296,7 +1332,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    [用户截图待引用：N04，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
 
-5. **N05 独立等值与透明度**：C01/C13场；关Link Thresholds、改两阈值；材质改两透明度。
+5. **N05 独立等值与透明度**：C01/C13场；关Link Thresholds、改两阈值；材质属性 → QCBlender · 节点材质 → Positive Opacity / Negative Opacity分别调两透明度。
 
    预期/需记录：分别响应，字段单位正确，源数值不变。
 

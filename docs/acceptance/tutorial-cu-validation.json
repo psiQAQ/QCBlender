@@ -558,7 +558,7 @@
     "docs/acceptance/tutorial-validation.json",
     "docs/acceptance/cleanup-validation.json"
   ],
-  "remaining_click_steps": "C13, C04 invalid-mask boundaries, density checkpoint relocation, remaining N scope and same-final-source unified qualification before main merge/archive. C12 scoped records/render/CLI cold checks Passed; historical GUI/MCP signatures remain distinct.",
+  "remaining_click_steps": "C04 internal invalid-mask boundary, density checkpoint relocation, remaining three public assets and per-case Undo/Redo/N18 scope, same-final-source unified qualification before main merge/archive. C13 scoped import/control/guards/copy/undo/render/cold checks Passed; user and scientific signatures remain Not Run.",
   "cleanup": {
     "status": "Passed",
     "scope": "This screenshot supplement only; full GUI task remains claimed",
@@ -5273,6 +5273,232 @@
       "rebuild": "Retained scripts, independent source oracle, central SHA-bound P05 inputs, candidate deb9416 and locked environment; use new batch paths.",
       "cache_scope": "Background scripts explicitly refresh source cache after enabling plugin; GUI startup timer recovery checked separately when opening C13.",
       "render_scope": "Native molecule plus manually arranged source Font captions; table itself has no render geometry"
+    },
+    "C13_pair_density_controls_and_cold_chain": {
+      "status": "Passed",
+      "scope": "Scoped true P05 signed density, native import, independent raw oracle, parameter/guards/copy/undo, four renders and three CLI cold paths",
+      "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+      "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+      "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+      "inputs": [
+        {
+          "id": "P05-complex",
+          "path": "tests/data/tutorial/P05/complex.fchk",
+          "sha256": "57f2f6c70b5ff468c2718e27e90827ab5beed175b80952942b8b441f4cf85479",
+          "bytes": 63671
+        },
+        {
+          "id": "P05-co",
+          "path": "tests/data/tutorial/P05/co.fchk",
+          "sha256": "eeebe9fc4dd4f19d5ef3216573ce39dc70ff0f5b20b7ff92c4abda78ec80eb63",
+          "bytes": 23980
+        },
+        {
+          "id": "P05-bh3",
+          "path": "tests/data/tutorial/P05/bh3.fchk",
+          "sha256": "d96b81b4623de934074a49f479690a8631145afafca76d4d5f5717b5863d19d3",
+          "bytes": 14542
+        },
+        {
+          "id": "P05-ets-nocv.txt",
+          "path": "tests/data/tutorial/P05/nocv/ets-nocv.txt",
+          "sha256": "47e71830f05a745817d4a4c6f857b7bafaa4f5cf51fcede9f208dd13962c29be",
+          "bytes": 1310
+        },
+        {
+          "id": "P05-nocv-pair1.cub",
+          "path": "tests/data/local/public-tutorial/P05/nocv/nocv-pair1.cub",
+          "sha256": "d6d3ec263d5173261791f997eabd78b8112f6685abc3bd851c70deec86a82e33",
+          "bytes": 1922861
+        }
+      ],
+      "input_manifest_sha256": "59c192d18a9cd2c9cf904eb7a844e757a2884ccd095ccc55d73aae4b0d7b71dd",
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/C12-visible-cold-auto-cache.json",
+          "sha256": "342bc194f526911259cad4aff5b4d3136db772727c2a5cc4b9743136a43e1c80",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/native-import-gui.json",
+          "sha256": "bf5f0f25a5b34a302efa4abee54f601b14d5b652407600393774c5db442c241a",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/native-import-oracle.json",
+          "sha256": "0a1b5dcaa692eab4b71292906cad8e64a4c1fa5b58328a7af7369d0f3309c5a7",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/controls.json",
+          "sha256": "bd5e471a8224bc5a2d7ea3cc4c84e9acea3203e4a06292de08ce768a5efcc50a",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/guard-pair.json",
+          "sha256": "b3312a9e684241447880ee0720b921057c236588ba149646ce52e95313fed512",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/guard-spin.json",
+          "sha256": "4f7b2fd9e288bf8fb297a516fe7adf111ff6ce6c0592ad1193a2e12098f48c6d",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/copy-undo.json",
+          "sha256": "1798e845aeba1f98faa12cc48ff4e0579bfc9d9ea4fbcb1e5c9934e4c078624d",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/copy-redo.json",
+          "sha256": "ac7674fe2c245cce4a9aed26b9fea3c0b6d8e788c515d66bc16911d6b622522c",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/reuse-review.json",
+          "sha256": "c4da3f5746cc100f893f37e08e49c84028a7ec1711c4e9fa125edff69e8b7df8",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/renders.json",
+          "sha256": "15bf65e37481f7802d2e3a2da76539ee673be93e961676e87fc2fd5f7ff931e4",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/render-visual-review.json",
+          "sha256": "a055a2d534ef37a49d0ee3a1b0402d7337eb621796c07167478112701469707e",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/preservation-final.json",
+          "sha256": "5ff32650536ede4da227b17ae3e0843756080c5cea7fa3d2e505eb9786742ad1",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/close-request.json",
+          "sha256": "9abe624e455e8c5f024c2f12a4fa22f09eb311c83d2d562abd66639485d0e2ad",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/close-confirmed.json",
+          "sha256": "b40d61180be71ada60d06db306afcc698c6c972d98d884ce9156e433bd2ddb22",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/preserved-path-mapping.json",
+          "sha256": "974bbb3efde17f3558f5093b8b5d519bbe9c2c7b84c4de9ce286e617d99af984",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/cold-chain.json",
+          "sha256": "3aa82e8e6fb82059e659d80c3ca63ad9d32ece3b3603a98f188444f6a40e7256",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/cold-render-prune.json",
+          "sha256": "01a52e1783e6a896696ace6b8b5848f4c2ad174d8ddb3763474dd67b8ee2bc4b",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/cold-original/readback-render.json",
+          "sha256": "c0b6f106287fad3d71165f010f322443f745c6d7792eae3b545a9bd44dc6975a",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/cold-moved/readback-render.json",
+          "sha256": "75a6401296a311a367b027906fb2ba152ca6a5b32ba27d2327aa8018ea871fce",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/cold-unpacked/readback-render.json",
+          "sha256": "c432798140c9d3223adfd2144272b010a7655379dcf1cde8a61577b477cec602",
+          "status": "Passed"
+        }
+      ],
+      "diagnostics": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/oracle-constant-diagnostic.json",
+          "sha256": "28c600796717831662780c25fc171a6fb10b31a293d8a8a6796d07dfc70d6abc",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/controls-interface-diagnostic.json",
+          "sha256": "1131ffbaabe7af8115bab0076a9242815a322bbdb81ae5c61fedaa44e08e72f1",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/controls-null-material-diagnostic.json",
+          "sha256": "fec8d22e9ee82e9aa99c77c35933fed539a15ba516023f47055419ffde5619bf",
+          "status": "Failed"
+        }
+      ],
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/C13-entry-GUI.jpg",
+          "sha256": "d4ba34db89b71ad0c415324477ec0fc74f0071d5c605d219c1d879986f037121"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C13-dialog-GUI.jpg",
+          "sha256": "ed8095130aa82d619b7e753223c8007ed36adcd75a06532a5a33c3de9ac4157b"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C13-both-MCP.jpg",
+          "sha256": "388b8dab06cbb3cb825938166ed616243179a2f7e0600582c40ac069632f8e9c"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C13-unlinked-MCP.jpg",
+          "sha256": "ad61cdb5eeb5cdfbe121f6f1ce279fe9b7aa855b1df7ca35fde6890e74957b8f"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C13-opacity-MCP.jpg",
+          "sha256": "dc5bb3f9a7082710d230ffe6405922f40ed56df96f04abd584529578a6ae24df"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C13-guard-MCP.jpg",
+          "sha256": "5d279dd337c43354bc0b3cba88ea643ce2d2118fbe5ff2177a25fd5aa893c5de"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C13-saved-MCP.jpg",
+          "sha256": "9b57069251a85bffc0e450c72fa6a5e54b8eb851f3695066b36abe9ab5fdb589"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C13-positive.png",
+          "sha256": "0bc9928b705dc2bd4f27b27d565d24df347d45f08aa8feebca10b725e6c67d89"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C13-negative.png",
+          "sha256": "d3d88e00eef85bce5d15518f96069632da2a0e2078c66d03ae4b8801a7ea37bd"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C13-overview.png",
+          "sha256": "32f3406c750d93a01f569632e4284e6c70c39c754bcc9daeeed2b0348e16ce58"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C13-opacity.png",
+          "sha256": "09dad9f61550c53b1d775e8b36facb8ae58a46f51ee6a87414185438835894c3"
+        }
+      ],
+      "project": {
+        "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C13/C13-final.blend",
+        "sha256": "363b48eab8ea1dfffedcbad31781f863a3ef7c7b318e8b27b6351dbd09e2c055",
+        "files": 48,
+        "datasets": 3,
+        "arrays": 66,
+        "references": 4,
+        "volumes": 1
+      },
+      "moved_project": "outputs/projects/tutorial-cu-full/中文移动/C13/C13-final.blend",
+      "unpacked_project": "outputs/projects/tutorial-cu-full/unpacked/C13/C13-final.blend",
+      "processes_exited": [
+        24044,
+        6780,
+        36636,
+        28140
+      ],
+      "user_walkthrough": "Not Run",
+      "independent_signature": "Not Run",
+      "rebuild": "Retained scripts, independent raw Cube oracle, central SHA-bound P05 inputs, candidate deb9416 and locked environment; use new batch paths.",
+      "scientific_contract": "Signed deformation density, explicit electron/bohr^3; coordinates converted by repository BOHR_ANGSTROM .529177210544; not MO phase or native ETS-NOCV computation"
     }
   },
   "historical_partial_supplement": {
