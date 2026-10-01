@@ -55,8 +55,16 @@
           "Computer Use"
         ],
         "coverage": "MCP 可执行 import_calculation 并等待真实异步作业，CLI 可执行已有导入验证；首次/变更后的文件对话框重置检查仍需 GUI",
-        "current_batch_replay_status": "Not Run",
-        "requires_current_result_assertions": true
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": [
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/geometry-import-declaration-MCP.json",
+            "sha256": "1407e4c2e5f5eb6c8bc7fc92dc8396281a8d72cbc4237d1be3271ceb983f6303",
+            "scope": "MCP reuse of cube-cub-import, cube-quantity-declaration and field-geometry-controls"
+          }
+        ]
       }
     },
     {
@@ -270,8 +278,22 @@
           "Computer Use"
         ],
         "coverage": "MCP 可调用 save_project(filepath=...)、archive_project(filepath=...)；保存后核对引用、数组和完整ZIP条目",
-        "current_batch_replay_status": "Not Run",
-        "requires_current_result_assertions": true
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": [
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/phase-checkpoint-preservation.json",
+            "sha256": "2f5bf22c8d655f01b3bc89d1b98ac70bd32d2e8d34b12dba1f3e55027baae21d",
+            "scope": "C03 phase checkpoint Dataset/arrays/portable archive; main mapping and cold chain Not Run"
+          },
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/portable-archive-MCP.json",
+            "sha256": "6d7f014a4115e8aae3a2b8ec87b49af01db4c6a531cb08b1834c834f38c5a912",
+            "scope": "C03 complete phases/mapping portable save and archive; new-process cold chain Not Run"
+          }
+        ]
       }
     },
     {
@@ -330,6 +352,395 @@
           "Computer Use"
         ],
         "coverage": "MCP 或 CLI 打开、渲染和读取当前工程；仍需真实新进程、记录PID、文件摘要与冷重开结果，保存历史渲染不能冒充本次渲染",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": [
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/phase-cold-original/readback.json",
+            "sha256": "1116b6e3b30cb129b14b5732b85d3536824d2723252bfb2fd6d9daa80edb9d64",
+            "scope": "C03 phase checkpoint original-path cold reopen; mapping and full C03 chain Not Run"
+          },
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/phase-cold-original/render-MCP.json",
+            "sha256": "475a2fb08d1459c4ad537012358b10832480540a41d74a65c4e61f1ad16af490",
+            "scope": "C03 phase checkpoint original-path cold render only; full mapping/chain Not Run"
+          },
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cold-original/readback.json",
+            "sha256": "9507f7dcc27f2e66a697758de0058fbdc2f3086b04d222633df60a218a832a9f",
+            "scope": "MCP native open in a new visible process; real Dataset/array/VDB/parameter/mapped evaluation assertions"
+          },
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cold-original/render-MCP.json",
+            "sha256": "72be7a73ae62726f5d8540ce9b09007c172b9e211bc23f9f5d46e45aa7f1014d",
+            "scope": "MCP native visible render after cold reopen; exact pixel comparison with saved render"
+          },
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cold-moved/readback.json",
+            "sha256": "7a71194162de72e3f0789bad685db25ed1708384642905774019ec65a5437b66",
+            "scope": "MCP native open in a new visible process; real Dataset/array/VDB/parameter/mapped evaluation assertions"
+          },
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cold-moved/render-MCP.json",
+            "sha256": "10caf6fc26a1b66df010278d1793217834c76d8aa66a98041c02931605ed2583",
+            "scope": "MCP native visible render after cold reopen; exact pixel comparison with saved render"
+          },
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cold-unpacked/readback.json",
+            "sha256": "a09969a4356424c3a401be403072fbfbe2226ffa5d2c0b1c56fb2eb02f99bcc8",
+            "scope": "MCP native open in a new visible process; real Dataset/array/VDB/parameter/mapped evaluation assertions"
+          },
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cold-unpacked/render-MCP.json",
+            "sha256": "a10bbc6d168f7d4d8eea15397c9b3645ddbfe7b4c83f0d6a71c5277348be68a5",
+            "scope": "MCP native visible render after cold reopen; exact pixel comparison with saved render"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cube-quantity-declaration",
+      "title": "声明 Cube 物理量与单位",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use native dialog and MCP read-only all-array assertions",
+        "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+        "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
+        "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "活动 sl2r.cub 场；单独 Dataset，初始 unknown_scalar/unknown",
+        "visible_entry": "对象属性 → QCBlender · 对象与量子化学 → 声明 Cube 物理量与单位",
+        "validated_scope": "custom/sign_lambda2_rho/electron/bohr^3；六个科学数组逐项摘要不变，color.cube 独立 Dataset 保持 unknown",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cub-declaration-GUI.json",
+            "sha256": "9d303d55fa6a1ea540593cc6ae5bdfd944c74e0f6ad57650d65e6b41c30dcb01",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-02-cub-declaration-parameters.jpg",
+            "sha256": "809614d8c041edfb5b2b158088c31883d54baef70673c95ee17313a2a54965df"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-02-cub-declared.jpg",
+            "sha256": "a04f19082ace957ac4d25365cdf4d6586b676fad915684fa00137ed89caedd4c"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/blender/project.py": "30181040074a4ec38ce7f06e1d55e2dabc16e80a47ec4a1c95b5e1f75d543df4",
+        "qcblender/data.py": "58a45c8c03b99508db1dbd74d36b38bff518d64361b561249a0320293a7c1a70",
+        "qcblender/worker.py": "f96a838a18427611c085f531339cf8ed5c3be11f15fa815732a708f8092f0a37"
+      },
+      "fingerprint_review": "Review transitive callback, registration, interface and dependency changes as well as listed files",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP select exact field then bpy.ops.qcblender.declare_field EXEC_DEFAULT with quantity=custom, custom_quantity and custom_unit; wait actual asynchronous job, verify rebinding and every array hash",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true,
+        "replay_report": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cube-declaration-MCP.json",
+          "sha256": "162596a43fbb9911f1e4f9a123d9b4fdd39cc8a5b5dabf55b803876ce22d4590",
+          "method": "MCP; distinct from historical GUI clicks"
+        },
+        "current_batch_replay_reports": [
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cube-declaration-MCP.json",
+            "sha256": "162596a43fbb9911f1e4f9a123d9b4fdd39cc8a5b5dabf55b803876ce22d4590",
+            "scope": "MCP replay of GUI-confirmed unchanged declaration operator; both independent source datasets explicitly declared; read-only all-array comparison"
+          },
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/geometry-import-declaration-MCP.json",
+            "sha256": "1407e4c2e5f5eb6c8bc7fc92dc8396281a8d72cbc4237d1be3271ceb983f6303",
+            "scope": "MCP reuse of cube-cub-import, cube-quantity-declaration and field-geometry-controls"
+          }
+        ]
+      }
+    },
+    {
+      "id": "field-geometry-controls",
+      "title": "场阈值、两符号显隐与几何表示",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use native parameter edits; MCP read-only evaluated geometry and all-array assertions",
+        "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+        "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
+        "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "选已声明的 C03 color.cube 场对象；在该对象属性修改参数",
+        "visible_entry": "对象属性 → QCBlender · 对象与量子化学 → 几何表示 → 正值阈值、Link Thresholds、负值阈值、显示正值/负值、样式",
+        "validated_scope": "C03 sign_lambda2_rho/electron/bohr^3；联动0.03，独立0.03/0.01；正/负单独显示；实面/线框/点，求值几何与材质核对",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/phase-controls-GUI.json",
+            "sha256": "466102bf425300a95324e071492146920605b17ba65ff1fef6521960455aa3c8",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-03-linked-threshold-003.jpg",
+            "sha256": "4aee508f2432f3db874c8f39d0ae5acb1513d1dbdcd712001421bbf5a1a293bc"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-03-unlinked-003-001.jpg",
+            "sha256": "bcdc5fd0dd98a18fa2416b2cfd051c41c57439de76039a165834c501836b9a51"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-03-both-phases.jpg",
+            "sha256": "312240929eb81d76df6f569cd1b7f87a472b0956982d06e353ea9f28185da651"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-03-negative-only.jpg",
+            "sha256": "90d736c765935d886f1a313d597cfb34d73dc321257541f026d4abbac6ab31dd"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-03-positive-only.jpg",
+            "sha256": "fd9357e270d871af7c2317e62ac32f6cf520d0826740f459eb467eee065aef0a"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-03-wire.jpg",
+            "sha256": "9a7d3d1a09c9dd4c86c1351f4aa78b4a8896d55275d1770f637395cd4bbbcb94"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-03-points.jpg",
+            "sha256": "07ba7fb3a65437c3b8e99b8851dfc74e0f08f13e83d975c106a1c703f2052d17"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/assets.py": "7b9738469040f90dc915d45c2322d29029f44c5453db2e0531eb12980ca46536",
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/editor_ui.py": "269798fc1a5580e591902594f80d5194fa99e368f20d426f99279d75098c0d40",
+        "qcblender/blender/parameters.py": "8920b314c0d2ac09246435d45da7de144565ffdc4d1f1621c44be6faa78d160e"
+      },
+      "fingerprint_review": "Include transitive helpers, registration, interfaces and dependency changes when reviewing reuse; listed files are an initial operation-specific set, not exhaustive proof of no impact.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP 通过原生样式 Operator 和修改器公共接口参数重放；核对实际求值几何、相位材质及科学数组。其他场量与样本需要本批断言，不继承 C03 数值。",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": [
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/phase-controls-MCP-alias.json",
+            "sha256": "bb0df98703ffdcce9ae4acd9b8cfa9a8321e6f946a47a9f0a300de50f36773a8",
+            "scope": "Identical cube/cub alias controls and evaluated mesh/opacity; mapping/render/cold reopen Not Run"
+          },
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/geometry-import-declaration-MCP.json",
+            "sha256": "1407e4c2e5f5eb6c8bc7fc92dc8396281a8d72cbc4237d1be3271ceb983f6303",
+            "scope": "MCP reuse of cube-cub-import, cube-quantity-declaration and field-geometry-controls"
+          }
+        ]
+      }
+    },
+    {
+      "id": "field-phase-opacity",
+      "title": "两符号场独立透明度",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use native parameter edits; MCP read-only evaluated geometry and all-array assertions",
+        "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+        "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
+        "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "选已声明的 C03 color.cube 场对象；在该对象属性修改参数",
+        "visible_entry": "材质属性 → QCBlender · 节点材质 → Positive Opacity / Negative Opacity；3D Viewport 材质预览",
+        "validated_scope": "C03 两符号场正0.6/负0.3；公共 qc_opacity 属性材质；科学数组保持原摘要",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/phase-controls-GUI.json",
+            "sha256": "466102bf425300a95324e071492146920605b17ba65ff1fef6521960455aa3c8",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-03-opacity-06-03.jpg",
+            "sha256": "2e519839265937699e6877c83392f64cc1203a79fe6f934aaa8784921b6e9ee0"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/assets.py": "7b9738469040f90dc915d45c2322d29029f44c5453db2e0531eb12980ca46536",
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/editor_ui.py": "269798fc1a5580e591902594f80d5194fa99e368f20d426f99279d75098c0d40",
+        "qcblender/blender/parameters.py": "8920b314c0d2ac09246435d45da7de144565ffdc4d1f1621c44be6faa78d160e"
+      },
+      "fingerprint_review": "Include transitive helpers, registration, interfaces and dependency changes when reviewing reuse; listed files are an initial operation-specific set, not exhaustive proof of no impact.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP 设置公共修改器正负透明度输入并核对求值 qc_opacity 属性及材质；保留相关来源与参数",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": [
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/phase-controls-MCP-alias.json",
+            "sha256": "bb0df98703ffdcce9ae4acd9b8cfa9a8321e6f946a47a9f0a300de50f36773a8",
+            "scope": "Identical cube/cub alias controls and evaluated mesh/opacity; mapping/render/cold reopen Not Run"
+          }
+        ]
+      }
+    },
+    {
+      "id": "select-replace-color-field",
+      "title": "选择与替换独立着色场",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use native clicks with MCP read-only assertions",
+        "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+        "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
+        "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "活动对象 QC unknown_scalar.002，几何 delta_g_inter；着色源 color.cube 或 sl2r.cub",
+        "visible_entry": "对象属性 → QCBlender · 对象与量子化学 → 颜色映射 → 选择／替换着色场",
+        "validated_scope": "真实 P03 delta_g_inter .005 electron/bohr^4 表面，sign_lambda2_rho 色域 −.05/0/.05 electron/bohr^3；4992顶点有效，21点CPU取样误差小于1e-5；替换cub别名保留范围/图例位置/取样属性。其他输入、错误关联和图例控件需另核对。",
+        "reports": [
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/mapping-GUI.json",
+            "sha256": "b72917f98e18518ab528508ab73714bcb788485c4c06bee218353a61b2b766f0",
+            "scope": "Agent Computer Use native Select Color Field; MCP read-only array and native-evaluation assertions"
+          },
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/mapping-replace-GUI.json",
+            "sha256": "0dba7902c38d405d5df84b7926f395d9e709103f21178e1ac4b637e24293eba5",
+            "scope": "Agent native Computer Use replacement; MCP read-only checks"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-03-mapped-result.jpg",
+            "sha256": "4a63fd1cd1f3dc33caea78d5f6d8c2785051aeaec172dc879d9ea248f213b484"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-03-mapping-dialog.jpg",
+            "sha256": "09750c8c0e29c04c9afae94392f07af68abf2751457df9063357c3466a92f8af"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-03-mapping-entry.jpg",
+            "sha256": "2f589b548d7763c3442b7889478e4b991dd7b8bed720dd3a1cd63dfcaf2fa26a"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-03-replace-dialog.jpg",
+            "sha256": "43dc4f9003641010882b3febc8644b32bbffeda776dc418a4f2c8314761d33b9"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-03-replaced-result.jpg",
+            "sha256": "638f1cebf5c6c7c9d49c8adff02cc5e798722dbb6d60a5857253f979a1a46cb2"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/scalars.py": "1e17b26bf258a6a10963410d597a248b31cb60998b9a030d3fa03b6e7df7ac89",
+        "qcblender/blender/source_browser.py": "8be0aa54c40d92cd6e3625b70aab3fc765e7548ab0ef071f1918e6e4e2c4e8a4",
+        "qcblender/blender/assets.py": "7b9738469040f90dc915d45c2322d29029f44c5453db2e0531eb12980ca46536",
+        "qcblender/blender/graph.py": "887b365c7fd1c849fcf55bbdb4a5e37f01f146b674994198703d76dc951dc325",
+        "qcblender/blender/legend_layout.py": "6b63cb9819e7e9c0df1e8d75337182b6b46c8042b4e64970bde58669dd62ef34",
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/association.py": "e9b8f0d9e462f3ecf0e5b6c428f3cce2a5378404871c50bd23a58cf825fee000",
+        "qcblender/sampling.py": "6bcb428a41af4d634a029a24945e797ff19fe925f0a0a604b51a44bccc630966"
+      },
+      "fingerprint_review": "Review transitive helpers, registration, interfaces and dependency changes as well as the listed initial operation-specific files.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "真实 P03 delta_g_inter .005 electron/bohr^4 表面，sign_lambda2_rho 色域 −.05/0/.05 electron/bohr^3；4992顶点有效，21点CPU取样误差小于1e-5；替换cub别名保留范围/图例位置/取样属性。其他输入、错误关联和图例控件需另核对。",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true
+      }
+    },
+    {
+      "id": "display-layer-visibility",
+      "title": "显示层视口与渲染显隐",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use native clicks with MCP read-only assertions",
+        "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+        "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
+        "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "Display Layers 中明确指定独立着色表面及重复原子层，不改变活动几何场",
+        "visible_entry": "N侧栏 → QCBlender → Display Layers → 眼睛／相机图标",
+        "validated_scope": "只复用所记录原子/场层的 VISIBILITY 和 RENDER；删除、排序及所属图表子对象另核对。",
+        "reports": [
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/layer-visibility-GUI.json",
+            "sha256": "fe37e01ac07e524c7c67709c6a11afd95e1da4dbcae9db1b3b8b6eea2c0b4e93",
+            "scope": "Scalar surface and duplicate atom viewport/render switches only; deletion, sorting and chart children not covered"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-03-geometry-unmapped-MCP.jpg",
+            "sha256": "4cc63ae5c69b2d7ef21e8eed3f04154a7c878f515762f78136d32bc342712f37"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-05-portable-mapping-MCP.jpg",
+            "sha256": "cee7786282ed745b15297e131770c7946baba56dbc750243a129ba4315484225"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/layers.py": "4ff0f8284523a6dc8276635b69fd6bb5e952906b3546cc0b5be9437d0f46c211",
+        "qcblender/blender/editor_ui.py": "269798fc1a5580e591902594f80d5194fa99e368f20d426f99279d75098c0d40",
+        "qcblender/blender/charts.py": "fff768253e3a791469dfa718c163762b86389224803af26e81ee4d0fcfb9e6e4",
+        "qcblender/blender/profile.py": "4eb27fa9f96261ccf01cf25e8803525692bf2ea8cd175530bc7e9dfc5a214cc1"
+      },
+      "fingerprint_review": "Review transitive helpers, registration, interfaces and dependency changes as well as the listed initial operation-specific files.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "只复用所记录原子/场层的 VISIBILITY 和 RENDER；删除、排序及所属图表子对象另核对。",
         "current_batch_replay_status": "Not Run",
         "requires_current_result_assertions": true
       }

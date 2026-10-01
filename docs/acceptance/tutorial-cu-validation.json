@@ -537,7 +537,7 @@
     "docs/acceptance/tutorial-validation.json",
     "docs/acceptance/cleanup-validation.json"
   ],
-  "remaining_click_steps": "Complete outstanding C03-C13 and N01-N18 GUI interactions and per-case save/move/cold reopen gates; C01 density-specific cold reopen also pending. Current C02 primary portable project passed all three actual new-process reopens and F12, with 4 Dataset,69 arrays,5 refs. Do not inherit historical MCP/partial candidate passes.",
+  "remaining_click_steps": "Complete C04-C13 and standalone N01-N18 public-asset/editor, error/recovery and per-case save/move/unpack cold gates; C01 density-specific cold reopen remains pending. Selected C03 P03 Cube/cub phases and real geometry/color mapping with three visible cold reopens passed. Keep full walkthrough and independent scientific signature Not Run.",
   "cleanup": {
     "status": "Passed",
     "scope": "This screenshot supplement only; full GUI task remains claimed",
@@ -756,6 +756,126 @@
         "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/cold-unpacked/readback.json",
         "sha256": "84b8117e62300123d76a682fac7d996ac4699cf566e0951d758a11db95323e72",
         "scope": "Native File Open in a new visible process and F12; read-only Dataset/array/reference/optimization-copy/vibration/material checks"
+      },
+      "C03_cube_cub_import": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cube-cub-import.json",
+        "sha256": "5cd911d5cd815fcd4d2d5e4668f55a1ec067b56a4d9338e1d7c8f260055cbe2a",
+        "scope": "Native Cube and cub imports; read-only six atom, grid, initial unknown quantity, value range and all array identity assertions; declaration/render/cold reopen Not Run"
+      },
+      "C03_cub_quantity_GUI": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cub-declaration-GUI.json",
+        "sha256": "9d303d55fa6a1ea540593cc6ae5bdfd944c74e0f6ad57650d65e6b41c30dcb01",
+        "scope": "Native GUI cub custom quantity/unit declaration; every scientific array unchanged; separate cube dataset remains unknown"
+      },
+      "C03_cube_quantity_MCP": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cube-declaration-MCP.json",
+        "sha256": "162596a43fbb9911f1e4f9a123d9b4fdd39cc8a5b5dabf55b803876ce22d4590",
+        "scope": "MCP replay of GUI-confirmed unchanged declaration operator; both independent source datasets explicitly declared; read-only all-array comparison"
+      },
+      "C03_phase_controls_GUI": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/phase-controls-GUI.json",
+        "sha256": "466102bf425300a95324e071492146920605b17ba65ff1fef6521960455aa3c8",
+        "scope": "C03 independent thresholds, phase visibility, solid/wire/point GUI switches and separate opacities; mapping/render/save/cold chain Not Run"
+      },
+      "C03_phase_controls_MCP_alias": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/phase-controls-MCP-alias.json",
+        "sha256": "bb0df98703ffdcce9ae4acd9b8cfa9a8321e6f946a47a9f0a300de50f36773a8",
+        "scope": "Identical cube/cub alias controls and evaluated mesh/opacity; mapping/render/cold reopen Not Run"
+      },
+      "C03_phase_checkpoint_preservation": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/phase-checkpoint-preservation.json",
+        "sha256": "2f5bf22c8d655f01b3bc89d1b98ac70bd32d2e8d34b12dba1f3e55027baae21d",
+        "scope": "C03 phase checkpoint Dataset/arrays/portable archive; main mapping and cold chain Not Run"
+      },
+      "C03_phase_cold_original_readback": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/phase-cold-original/readback.json",
+        "sha256": "1116b6e3b30cb129b14b5732b85d3536824d2723252bfb2fd6d9daa80edb9d64",
+        "scope": "C03 phase checkpoint original-path cold reopen; mapping and full C03 chain Not Run"
+      },
+      "C03_phase_cold_original_render_MCP": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/phase-cold-original/render-MCP.json",
+        "sha256": "475a2fb08d1459c4ad537012358b10832480540a41d74a65c4e61f1ad16af490",
+        "scope": "C03 phase checkpoint original-path cold render only; full mapping/chain Not Run"
+      },
+      "C03_geometry_import_declaration_MCP": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/geometry-import-declaration-MCP.json",
+        "sha256": "1407e4c2e5f5eb6c8bc7fc92dc8396281a8d72cbc4237d1be3271ceb983f6303",
+        "scope": "MCP reuse of cube-cub-import, cube-quantity-declaration and field-geometry-controls"
+      },
+      "C03_mapping_GUI": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/mapping-GUI.json",
+        "sha256": "b72917f98e18518ab528508ab73714bcb788485c4c06bee218353a61b2b766f0",
+        "scope": "Agent Computer Use native Select Color Field; MCP read-only array and native-evaluation assertions"
+      },
+      "C03_mapping_replace_GUI": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/mapping-replace-GUI.json",
+        "sha256": "0dba7902c38d405d5df84b7926f395d9e709103f21178e1ac4b637e24293eba5",
+        "scope": "Agent native Computer Use replacement; MCP read-only checks"
+      },
+      "C03_layer_visibility_GUI": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/layer-visibility-GUI.json",
+        "sha256": "fe37e01ac07e524c7c67709c6a11afd95e1da4dbcae9db1b3b8b6eea2c0b4e93",
+        "scope": "Scalar surface and duplicate atom viewport/render switches only; deletion, sorting and chart children not covered"
+      },
+      "C03_portable_archive_MCP": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/portable-archive-MCP.json",
+        "sha256": "6d7f014a4115e8aae3a2b8ec87b49af01db4c6a531cb08b1834c834f38c5a912",
+        "scope": "C03 complete phases/mapping portable save and archive; new-process cold chain Not Run"
+      },
+      "C03_render_MCP": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/render-MCP.json",
+        "sha256": "1c7b9c3c4fc379e60ea9676157cc34926458a8dc301d56adb8a4de650573bf34",
+        "scope": "C03 mapped geometry render/export"
+      },
+      "C03_cold_original_readback": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cold-original/readback.json",
+        "sha256": "9507f7dcc27f2e66a697758de0058fbdc2f3086b04d222633df60a218a832a9f",
+        "scope": "MCP native open in a new visible process; real Dataset/array/VDB/parameter/mapped evaluation assertions"
+      },
+      "C03_cold_original_render_MCP": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cold-original/render-MCP.json",
+        "sha256": "72be7a73ae62726f5d8540ce9b09007c172b9e211bc23f9f5d46e45aa7f1014d",
+        "scope": "MCP native visible render after cold reopen; exact pixel comparison with saved render"
+      },
+      "C03_cold_moved_readback": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cold-moved/readback.json",
+        "sha256": "7a71194162de72e3f0789bad685db25ed1708384642905774019ec65a5437b66",
+        "scope": "MCP native open in a new visible process; real Dataset/array/VDB/parameter/mapped evaluation assertions"
+      },
+      "C03_cold_moved_render_MCP": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cold-moved/render-MCP.json",
+        "sha256": "10caf6fc26a1b66df010278d1793217834c76d8aa66a98041c02931605ed2583",
+        "scope": "MCP native visible render after cold reopen; exact pixel comparison with saved render"
+      },
+      "C03_cold_unpacked_readback": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cold-unpacked/readback.json",
+        "sha256": "a09969a4356424c3a401be403072fbfbe2226ffa5d2c0b1c56fb2eb02f99bcc8",
+        "scope": "MCP native open in a new visible process; real Dataset/array/VDB/parameter/mapped evaluation assertions"
+      },
+      "C03_cold_unpacked_render_MCP": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cold-unpacked/render-MCP.json",
+        "sha256": "a10bbc6d168f7d4d8eea15397c9b3645ddbfe7b4c83f0d6a71c5277348be68a5",
+        "scope": "MCP native visible render after cold reopen; exact pixel comparison with saved render"
       }
     },
     "agent_full_walkthrough": "Not Run",
@@ -797,6 +917,28 @@
       "preservation": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/preservation-vibrations-render.json",
       "scope": "C02 performed scientific record, vibration, optimization/copy, continuous import and camera/render/save/archive/three-path cold reopen steps; cross-case N15/N16 coverage remains separate.",
       "cold_preservation": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/preservation-cold-chain.json"
+    },
+    "C03_current_candidate": {
+      "status": "Passed",
+      "cube_cub_import": "Passed",
+      "cub_quantity_GUI": "Passed",
+      "cube_quantity_MCP": "Passed",
+      "two_signs_mapping_render_save_cold_chain": "Passed",
+      "independent_thresholds_and_phases_GUI": "Passed",
+      "solid_wire_points_GUI": "Passed",
+      "phase_opacities_GUI": "Passed",
+      "mapping": "Passed",
+      "render_save_cold_chain": "Passed",
+      "scope": "C03 selected P03 Cube/cub phases and real geometry/color mapping, save/archive and all three visible cold reopens; complete N asset-editor coverage and other cases Not Run",
+      "alias_MCP_controls": "Passed",
+      "NCIPLOT_specific": "Not Run; selected P03 samples do not contain NCIPLOT multiplier/sentinel semantics",
+      "preservation": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/preservation-complete.json",
+        "sha256": "d65eacc3878234fa2527078f9a37290f356ff557fcdba21871f6c3072113c41c",
+        "scope": "C03 selected P03 Cube/cub phases and real geometry/color mapping, save/archive and all three visible cold reopens; complete N asset-editor coverage and other cases Not Run"
+      },
+      "N04_N07_complete_public_asset_editor_checks": "Not Run"
     }
   },
   "historical_partial_supplement": {

@@ -4,7 +4,7 @@
 
 本教程保留 **C01–C13** 科学案例和 **N01–N18** 节点/交互检查编号。按钮位置与当前插件界面一致；对话框及部分控件仍使用英文。操作结果只记 **Passed / Failed / Not Run**。用户实际点击、Agent Computer Use 点击、MCP操作与数据核对、独立科研签署分别记录；Agent 不填写使用者签名。维护者按 [交互规则](../agents/blender-interaction.md) 和 [操作登记表](../acceptance/blender-operations.json) 复用已确认且功能未变的操作，MCP/命令行复验单独记录，完整案例结果仍逐项验收。
 
-本文的 Agent 示例截图紧接相应操作展示，原始 JPEG 保存在同级 `screenshot/` 目录。截图是本批实际 Computer Use 操作画面，保留你的逐步骤截图占位；各图的候选身份、输入、参数和检查范围见 [点击补验索引](../acceptance/tutorial-cu-validation.json)。C02、密度生成/取样/CSV、氢显隐与首次保存使用90ff9bf候选；IR层显隐复验、最终剖面、相机、渲染及冷重开使用1554ee2候选。候选92d498c的C01雾修复与三路径冷重开、C02能量/振动/优化/连续导入/渲染/三路径冷重开截图同样逐步骤展示，具体范围见索引 full_batch_progress；完整C/N点击覆盖及独立科研签署仍为Not Run。你复现时，将自己的截图保存到 `screenshot/`，在对应占位下一行填写 `![用户复做：C02-01](screenshot/C02-01-user.png)`；使用独立文件名，保留 Agent 示例便于对照。
+本文的 Agent 示例截图紧接相应操作展示，原始 JPEG 保存在同级 `screenshot/` 目录。截图记录本批可见 Blender 状态；图注区分 Computer Use 实际点击与 MCP 执行后观察截图，保留你的逐步骤截图占位；各图的候选身份、输入、参数和检查范围见 [点击补验索引](../acceptance/tutorial-cu-validation.json)。C02、密度生成/取样/CSV、氢显隐与首次保存使用90ff9bf候选；IR层显隐复验、最终剖面、相机、渲染及冷重开使用1554ee2候选。候选92d498c的C01雾修复与三路径冷重开、C02能量/振动/优化/连续导入/渲染/三路径冷重开，以及C03双符号/独立着色/保存和MCP三路径冷重开截图同样逐步骤展示，具体范围见索引 full_batch_progress；完整C/N点击覆盖及独立科研签署仍为Not Run。你复现时，将自己的截图保存到 `screenshot/`，在对应占位下一行填写 `![用户复做：C02-01](screenshot/C02-01-user.png)`；使用独立文件名，保留 Agent 示例便于对照。
 
 ## 0. 准备、安装与通用操作
 
@@ -415,13 +415,57 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    [用户截图待引用：C03-01，活动对象、参数与结果同屏；参数变化保留前后画面]
 
-2. 选待声明场，点 **对象属性主面板 → 声明 Cube 物理量与单位**，只选择样本中数值实际已有的物理量/单位；声明不会换算数值。不匹配提供的选项时保留 unknown 并记录原始定义，不能冒选密度。
+   ![Agent 实际点击：C03-01-cube-selected](screenshot/C03-01-cube-selected.jpg)
+
+   ![Agent 实际点击：C03-01-cube-imported](screenshot/C03-01-cube-imported.jpg)
+
+   ![Agent 实际点击：C03-01-cub-selected](screenshot/C03-01-cub-selected.jpg)
+
+   ![Agent 实际点击：C03-01-cub-imported](screenshot/C03-01-cub-imported.jpg)
+
+2. 选待声明场，点 **对象属性主面板 → 声明 Cube 物理量与单位**，只选择样本中数值实际已有的物理量/单位；声明不会换算数值。外部标量选择 **Other externally computed scalar field**，填真实量名与单位；来源无法确定时保留 unknown 并记录原始定义。
 
    [用户截图待引用：C03-02，活动对象、参数与结果同屏；参数变化保留前后画面]
 
-3. 在 **几何表示** 改两符号阈值与显隐，核对别名入口一致；按 C04 将一个真实几何场按另一个场着色，来源和网格必须匹配。
+   ![Agent 实际点击：C03-02-cub-declaration-parameters](screenshot/C03-02-cub-declaration-parameters.jpg)
+
+   ![Agent 实际点击：C03-02-cub-declared](screenshot/C03-02-cub-declared.jpg)
+
+   ![Agent MCP声明；Computer Use仅观察结果：C03-02-cube-declared-MCP](screenshot/C03-02-cube-declared-MCP.jpg)
+
+3. 选已声明场，在 **对象属性 → QCBlender · 对象与量子化学 → 几何表示** 将 **正值阈值** 设为 **0.03 electron/bohr^3**；取消 **Link Thresholds** 后，将出现的 **负值阈值** 设为 **0.01**。分别关闭/恢复 **显示正值** 与 **显示负值**，核对蓝色正值与红色负值单独显示；在 **样式** 依次选择 **实面、线框、点**，最后恢复实面。到 **材质属性 → QCBlender · 节点材质** 将 **Positive Opacity / Negative Opacity** 分别设为 **0.6 / 0.3**，通过 3D Viewport **材质预览** 观察，不能用实面着色判断透明度。核对别名入口一致。
+
+   独立几何场着色：随后导入 **P03/igmh/dg_inter.cub**，声明 `delta_g_inter / electron/bohr^4`，正值阈值设 **0.005**，仅显示正值。保持新几何场活动，在 **对象属性 → QCBlender · 对象与量子化学 → 颜色映射 → 选择／替换着色场** 选择原 `color.cube` 场，确认其源 SHA、`sign_lambda2_rho / electron/bohr^3`，Color minimum/maximum 填 **−0.05 / 0.05**。位置由几何场决定，颜色来自第二场；两个输入须同为 **91×38×156**，origin/steps 及原子身份匹配。在 **N 侧栏 → Display Layers** 隐藏独立着色表面的视口和渲染（眼睛/相机），保留内部体场；只显示一份原子。再次 **选择／替换着色场** 选 `sl2r.cub` 别名，范围和图例位置应保留。本例 Geometry SHA 为 `daf5a7e79c7dcc67b244f3dc1d2d314795c9f318c931e4f25d36e72ea168a28e`；几何原值范围 **1.01735e-10..0.0185476**。
 
    [用户截图待引用：C03-03，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Agent 实际点击：C03-03-unlinked-003-001](screenshot/C03-03-unlinked-003-001.jpg)
+
+   ![Agent 实际点击：C03-03-both-phases](screenshot/C03-03-both-phases.jpg)
+
+   ![Agent 实际点击：C03-03-negative-only](screenshot/C03-03-negative-only.jpg)
+
+   ![Agent 实际点击：C03-03-positive-only](screenshot/C03-03-positive-only.jpg)
+
+   ![Agent 实际点击：C03-03-wire](screenshot/C03-03-wire.jpg)
+
+   ![Agent 实际点击：C03-03-points](screenshot/C03-03-points.jpg)
+
+   ![Agent 实际点击：C03-03-opacity-06-03](screenshot/C03-03-opacity-06-03.jpg)
+
+   ![Agent示例：MCP复验别名阈值/透明度；Computer Use观察](screenshot/C03-03-alias-controls-MCP.jpg)
+
+   ![Agent示例：MCP导入及声明真实几何场，GUI隐藏重复层](screenshot/C03-03-geometry-unmapped-MCP.jpg)
+
+   ![Agent示例：GUI活动几何场与颜色映射入口](screenshot/C03-03-mapping-entry.jpg)
+
+   ![Agent示例：GUI独立着色场来源与范围](screenshot/C03-03-mapping-dialog.jpg)
+
+   ![Agent示例：GUI关联着色结果；MCP取样核对](screenshot/C03-03-mapped-result.jpg)
+
+   ![Agent示例：GUI替换为cub别名](screenshot/C03-03-replace-dialog.jpg)
+
+   ![Agent示例：GUI替换结果，范围和取样属性保留](screenshot/C03-03-replaced-result.jpg)
 
 4. NCIPLOT 的倍率、RDG 过滤哨兵若出现在所选样本中按真实记录解释；普通 RDG 不能称 IGMH/IRI。没有该类样本时不套用旧 NCIPLOT 数值。
 
@@ -430,6 +474,26 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 5. 对应 N04–N07，按 0.4 保存 `C03.png/.blend/.qcdata/`。
 
    [用户截图待引用：C03-05，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Agent示例：GUI双符号阶段取景；Computer Use观察截图](screenshot/C03-05-phase-camera.jpg)
+
+   ![Agent示例：MCP双符号阶段渲染；Computer Use观察截图](screenshot/C03-05-phase-render-MCP.jpg)
+
+   ![Agent示例：MCP双符号阶段保存自包含工程；Computer Use观察截图](screenshot/C03-05-phase-portable-MCP.jpg)
+
+   ![Agent示例：MCP阶段工程冷重开数据核对；Computer Use观察截图](screenshot/C03-05-phase-cold-MCP.jpg)
+
+   ![Agent示例：MCP阶段工程冷重开渲染，像素一致；Computer Use观察截图](screenshot/C03-05-phase-cold-render-MCP.jpg)
+
+   ![Agent示例：MCP保存完整C03工程，3 Dataset/18数组/9引用；Computer Use观察截图](screenshot/C03-05-portable-mapping-MCP.jpg)
+
+   ![Agent示例：MCP完整映射工程渲染；Computer Use观察截图](screenshot/C03-05-mapped-render-MCP.jpg)
+
+   ![Agent示例：新可见进程原路径MCP冷重开及渲染；Computer Use观察截图](screenshot/C03-05-original-cold-render-MCP.jpg)
+
+   ![Agent示例：新可见进程中文移动路径MCP冷重开及渲染；Computer Use观察截图](screenshot/C03-05-moved-cold-render-MCP.jpg)
+
+   ![Agent示例：新可见进程归档解包MCP冷重开及渲染；Computer Use观察截图](screenshot/C03-05-unpacked-cold-render-MCP.jpg)
 
 
 

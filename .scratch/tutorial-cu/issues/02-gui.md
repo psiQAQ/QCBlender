@@ -6,6 +6,10 @@ Blocked by: 01
 
 ## Comments
 
+- 2026-10-01 C03：双符号阈值/显隐/实面线框点/透明度GUI及cub别名MCP复验Passed；真实delta_g_inter按sign_lambda2_rho着色和替换GUI Passed，4992有效顶点/21点CPU取样误差7.3e-10。完整工程3 Dataset/18数组/9引用/3 VDB/ZIP26条目；PID47676原路径、41132中文移动、31580解包分别新可见进程MCP冷重开/渲染Passed，像素一致；全部正常退出。截图紧接C03步骤，操作登记11项；NCIPLOT特定语义未选样本、独立公共资产编辑器检查及全C/N仍Not Run，02保持claimed。证据full/C03/preservation-complete.json。
+
+- 2026-10-01 C03初段：实际 Cube/cub 导入 Passed，6原子、91×38×156、全部科学数组一致；cub经GUI声明 sign_lambda2_rho/electron/bohr^3，所有数组保持原摘要。6张截图紧接C03-01/02，声明登记为第7项可复用操作；本批后续重复操作按用户新偏好优先MCP。两符号/映射/保存/冷重开仍Not Run。
+
 - 2026-10-01 C02三路径冷重开：PID45436原路径、PID5636中文移动副本、PID43312归档解包副本分别由新可见进程通过原生File Open与F12，4 Dataset/69数组/5引用/45配套文件及优化副本、模式3、文字材质核对Passed。三个工程摘要一致；9原始截图保全，6张紧接C02-06。完整C/N仍Not Run，02保持claimed。证据：full/C02/preservation-cold-chain.json。
 
 - 2026-10-01 C02当前92d498c补验：能量原文、三模式播放/相位/位移箭头/IR高亮、Log Job2后新FCHK对话框重置与6原子导入Passed；原生取景、F12、PNG另存、保存自包含工程和归档Passed。工程4 Dataset、69数组、5对象引用、45配套文件及ZIP46条目摘要核对Passed；旧优化工程摘要不变。26原始截图保全，21张紧接对应步骤；中文移动与解包副本逐字节核对，实际冷重开Not Run。索引总体改为Not Run，历史局部Passed另列；02保持claimed。证据：full/C02/preservation-vibrations-render.json。
