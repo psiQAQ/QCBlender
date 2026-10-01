@@ -21,3 +21,5 @@ Blocked by: none
 2026-10-01 本批新增N06/07/08公共资产与打包关联库4项成功操作，登记共26项；原报告/截图摘要核对Passed，保存与三个新可见进程冷重开Passed。原节点库路径不存在的移动/解包副本仍求值一致；所有本批进程正常退出。完整教程02继续claimed、03 pending，独立签署Not Run。证据full/C04/public-nodes/preservation.json。
 
 2026-10-02 登记44项：C07新增成对场导入、范围/交换、错误原子拒绝、菜单撤销重做；每项限定实际GUI范围和MCP准备，绑定实现/输入/候选及报告截图摘要。重复操作用MCP，冷读用串行原生后台进程，当前无Blender；完整教程状态不变。证据full/C07/documentation-final.json。
+
+2026-10-02 登记48项：新增ESP导入、源记录、极值筛选与两面积模式，限定实际GUI动作及MCP准备范围。摘要/原始报告/截图核对Passed；仅一GUI与三个后续串行后台进程，当前无Blender。证据full/C08/documentation-final.json。

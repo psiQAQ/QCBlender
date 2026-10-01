@@ -929,26 +929,57 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
 **真实输入预期：** P03 **rho=0.001 electron/bohr^3** 表面；4最大值/3最小值，PDB B-factor是ESP，**kcal/mol**，坐标Å。例如最大值源1：**36.69 kcal/mol** @ **(−1.740,−0.051,1.026) Å**；最小值源1：**−25.50** @ **(−0.036,−1.400,1.768) Å**。面积各bin见原stdout，合计 **73.1833 Å²**。C04初始0.004密度表面若作为视觉参照，先改成0.001并单独记录；分析导入活动对象仍是ESP场。
 
-1. 打开C04工程另存为C08。先选**密度表面对象**，在 **对象属性 → 几何表示 → 正值阈值**（Isovalue）从 **0.004** 改为 **0.001 electron/bohr^3**，记录新旧画面；也可创建独立密度等值面层并设0.001。然后重新选**实际ESP场对象**，点 **导入外部结果 → ESP 表面分析**。密度表面即使按 ESP 着色，也不能替代这个活动参考对象。
+1. 打开C04工程，按0.4另存为C08。先只选 **QC electron_number_density** 密度表面，在 **Properties → 对象属性 → QCBlender · 对象与量子化学 → 几何表示** 把 **Isovalue** 从 **0.004** 改为 **0.001 electron/bohr^3**，记录前后画面。然后只选实际ESP场 **QC electrostatic_potential**；在 **3D视图 → N侧栏 → QCBlender → 导入外部结果** 点击 **ESP 表面分析**。密度着色层不能替代实际ESP场参考。
 
-   [用户截图待引用：C08-01，活动对象、参数与结果同屏；参数变化保留前后画面]
+   [用户截图待引用：C08-01，阈值调整前后、活动ESP对象和导入入口]
 
-2. 填 **Extrema PDB、Area distribution text、Surface definition、Extrema value unit、Distribution center unit、Area unit**，均用清单所记真实表面定义/单位；PDB REMARK/table 声明与用户指定须一致。
+   ![Agent Computer Use：实际ESP场与ESP表面分析入口；密度阈值另由MCP准备](screenshot/C08-entry-GUI.jpg)
 
-   [用户截图待引用：C08-02，活动对象、参数与结果同屏；参数变化保留前后画面]
+2. **Extrema PDB** 填 `P03/esp/surfanalysis.pdb`，**Area distribution text** 填 `P03/esp/stdout.log`，**Surface definition=rho=0.001 electron/bohr^3**；**Extrema value unit=kcal/mol、Distribution center unit=kcal/mol、Area unit=angstrom^2**，确认。极值和面积单位须与PDB REMARK和原表声明一致；中心单位由使用者明确指定。预期生成 **QC ESP maximum、QC ESP minimum、QC ESP area distribution**，均关联到所选ESP场。
 
-3. 选择生成的 maximum/minimum 层，在 **External Analysis Records** 逐项读极值/坐标；在 **External Result Browser** 按源编号/数值筛选并 **应用筛选**，显示标签和点，核对选择突出位置。值源于 PDB B-factor 时记录该约定。
+   该外部分析表来自清单中Multiwfn的源表面。Blender本例0.7Å原生网格只用于显示参照，面积数据直接读取源表；导入不在该显示网格重算面积。原log包含非UTF-8进度/横幅字节；核对完整文件SHA-256，保留原始字节，使用原ASCII科学表行核对。
 
-   [用户截图待引用：C08-03，活动对象、参数与结果同屏；参数变化保留前后画面]
+   [用户截图待引用：C08-02，完整路径、表面定义、三单位和确认后的三对象]
 
-4. 选择面积层，按中心或完整区间筛选，核对原始总面积、所选小计、各 bin 百分比和原表，筛选不重新归一化。
+   ![MCP准备参数、Agent Computer Use确认：ESP极值与面积导入](screenshot/C08-dialog-GUI.jpg)
 
-   [用户截图待引用：C08-04，活动对象、参数与结果同屏；参数变化保留前后画面]
+3. 只选 **QC ESP maximum**，打开 **Properties → 对象属性 → QCBlender · 对象与量子化学 → External Analysis Records**。**Record (1-based)** 从1改为2；最大值1为 **36.69** @ **(−1.740,−0.051,1.026) Å**，最大值2为 **57.80** @ **(−1.682,−0.042,4.031) Å**，单位均为kcal/mol。选择 **QC ESP minimum** 同样逐条查看；最小值2为 **−50.68** @ **(−0.005,−0.058,−1.769) Å**。PDB的B-factor列明确记录ESP，C/O分别编码maximum/minimum。
 
-5. 对应 N13/N16，按 0.4 保存 `C08-extrema.png`、`C08-area.png`、总览与工程；不同单位时仅采用有证据的换算。
+   在 **External Result Browser** 保持 **Source number=0**（全部），启用两个 **ESP value [kcal/mol]** 范围开关，填 **从=40、到=60**，保持 **Show source label、Show matching points**，**Match (1-based)=1**，点击 **应用筛选**。预期2条最大值（源2/3），突出源2并显示 **maximum 2 | 57.8 kcal/mol**。**Source number=2**可只查看该源点。换层查看minimum，不能将maximum层误作minimum。
 
-   [用户截图待引用：C08-05，活动对象、参数与结果同屏；参数变化保留前后画面]
+   [用户截图待引用：C08-03，记录1/2、源坐标、范围开关和筛选突出位置]
 
+   ![Agent Computer Use观察：最大值记录1，36.69 kcal/mol](screenshot/C08-maximum-record1-GUI.jpg)
+
+   ![Agent Computer Use选择：最大值记录2，57.80 kcal/mol及源坐标](screenshot/C08-maximum-record2-GUI.jpg)
+
+   ![Agent Computer Use启用范围并应用：2条最大值；40/60由MCP准备](screenshot/C08-maximum-filter-GUI.jpg)
+
+4. 只选 **QC ESP area distribution**，打开同一 **External Result Browser**。**Area bin selection=Center in range**，启用范围 **从=0、到=20 kcal/mol**，点击 **应用筛选**：预期4个中心2.5/7.5/12.5/17.5区间，**displayed=14.4784 Å²、Source percentages shown=19.7838%**。
+
+   改选 **Recorded interval overlaps range**，保留0..20，再点 **应用筛选**：预期保留6个完整源区间，包括与0、20相接的边界区间，**displayed=21.2676 Å²、Source percentages shown=29.0608%**。该模式保留完整bin，不按交集长度分割面积。两模式总面积均 **73.1833 Å²**，百分比不重新归一化。取消范围开关并应用恢复40个bin；原打印百分比合计100.0002%，属于小数舍入，面板可能显示100%。柱形保持原全表中心及面积缩放；准确bin、单位与小计以属性面板和原表为准。
+
+   [用户截图待引用：C08-04，两模式分别保留范围、总面积、小计及源百分比]
+
+   ![Agent Computer Use应用中心范围：4bin、14.4784 Å²、19.7838%](screenshot/C08-area-center-GUI.jpg)
+
+   ![Agent Computer Use切换并应用完整源区间：6bin、21.2676 Å²、29.0608%](screenshot/C08-area-source-interval-GUI.jpg)
+
+5. 对应N13/N16，按0.4导出 **C08-extrema.png、C08-area.png**。极值图先取消数值范围、**Source number=0、Match (1-based)=2**并应用两极值层，显示参考原子、两层及其标签；面积图仅显示恢复全部40bin的面积层。按N17创建相机，**Margin=0.05、Eevee、1920×1080**。本示例沿Y方向取景，标签绕X轴 **90°**面向相机；部分minimum在此投影重叠，可旋转视角并逐条突出核对。源记录和坐标不随观察方向改变。
+
+   为取得下图照明，添加Sun灯，**Energy=2、Angle=0.35 rad（约20.054°）**，灯旋转约 **X=40.107°、Y=−17.189°、Z=−22.918°**；两个原生标签的材质设白色 **Base Color、Emission Color**，**Emission Strength=1**。这些是工程显示设置。恢复极值层后再次点 **应用筛选**，确认标签可见，避免把面积图中临时隐藏的标签状态带入保存工程。
+
+   点击 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程**，保存 `.blend + .qcdata`；按N16导出配套ZIP。完成后正常关闭，原路径、中文移动和ZIP解包路径分别在一个新Blender进程打开核对，每次关闭后再开下一处。本批文件名为 **C08-final.blend**，效果图带 `-v2` 后缀。
+
+   [用户截图待引用：C08-05，分别保留极值图、面积图、保存路径和三个冷重开结果]
+
+   ![MCP配置灯光、标签和相机，原生EEVEE渲染：ESP源极值；观察方向会产生投影重叠](screenshot/C08-extrema-v2.png)
+
+   ![MCP配置相机，原生EEVEE渲染：40个源面积bin的原缩放柱形](screenshot/C08-area-v2.png)
+
+   ![Computer Use观察与截图：MCP保存的最终工程、源标签和对象属性](screenshot/C08-saved-GUI.jpg)
+
+   本批35组MCP筛选核对、5项错误输入检查及120文件/8Dataset/224数组/4体积/20引用保全Passed；三个串行原生后台进程冷读和6次重渲染像素一致Passed。报告、输入/候选摘要、失败诊断与工具身份见[当前验证索引](../acceptance/tutorial-cu-validation.json)的 `C08_ESP_records_filters_and_cold_chain`。用户复做和独立科研签署仍为Not Run。
 
 
 ### C09 AIM 临界点、路径与属性

@@ -16,6 +16,8 @@
 
 ## 当前任务与候选
 
+C08 ESP：原生入口/确认、记录2、极值范围和两面积模式，以及35组MCP筛选/5错误输入核对Passed。证据、原始诊断、输入/候选摘要与重建脚本：`outputs/evidence/2026-10-02/tutorial-cu/full/C08/`；最终工程`C08-final.blend + .qcdata`及ZIP保留120文件、8Dataset/224数组/4体积/20引用。中文移动和解包工程在`outputs/projects/tutorial-cu-full/`对应C08目录。三个串行新进程和6次重渲染像素一致Passed，全部退出；8界面图和2效果图紧接步骤，登记48项。6份重复冷渲染删除7,746,576字节，原图/日志/摘要收据保留；初始构图和保存设置诊断保留，完整教程/统一资格待完成。
+
 C07成对场：IGMH/IRI导入、散点范围/交换、错误原子配对拒绝和Edit菜单撤销重做GUI及独立MCP核对Passed；参数准备范围单列。证据、原始成功/失败日志与重建脚本：`outputs/evidence/2026-10-02/tutorial-cu/full/C07/`。保留`C07.blend + .qcdata`和ZIP（44文件、3Dataset/66数组、4体积），中文移动与解包副本在`outputs/projects/tutorial-cu-full/`对应C07目录；三个新串行进程与九次真实重渲染像素一致Passed，全部进程退出。11截图、3效果图紧接步骤，44操作登记；9份已核对重复冷渲染删除，原图和摘要收据保留。原失败构图和两项断言诊断原样保留；完整C/N与统一资格待验收。
 
 C06 NBO/E(2)：Job2/block1原生out/log导入、行1/2与BD降序筛选、撤销及Edit菜单重做Passed；27筛选/排序组合由MCP独立核对。证据、成功/失败日志与重建脚本：`outputs/evidence/2026-10-02/tutorial-cu/full/C06/`；保留`C06-final.blend + .qcdata`及ZIP（38文件、3 Dataset/33数组），中文移动和解包副本位于`outputs/projects/tutorial-cu-full/`对应C06-final目录。三个新串行原生进程冷读及真实重渲染像素一致Passed，所有进程退出。9截图和1渲染紧接SOP步骤；快捷键重做失败观察单列、菜单复验Passed，未修改产品。完整C/N与统一资格待验收。

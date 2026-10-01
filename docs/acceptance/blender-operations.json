@@ -3325,6 +3325,255 @@
         "current_batch_replay_status": "Not Run",
         "current_batch_replay_reports": []
       }
+    },
+    {
+      "id": "esp-surface-analysis-import",
+      "title": "ESP表面极值与面积表导入",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP preparation and independent raw-source assertions separately identified",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID44016；仅选择对应ESP场/maximum/area对象，无多选顺序",
+        "visible_entry": "只选实际ESP场；3D视图→N侧栏→QCBlender→导入外部结果→ESP 表面分析",
+        "validated_scope": "Computer Use点击原生入口并确认；MCP准备P03两路径、rho=.001、kcal/mol/angstrom^2；4最大值/3最小值/40bin与独立原文件核对；文本填写不在点击覆盖内",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/native-import-records.json",
+            "sha256": "b183ed14f2e3a5fd341a3802735b3471ecd098a56707fb47414053ea237e05f4",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C08-entry-GUI.jpg",
+            "sha256": "4b7f92d0f6fe178365f63cae901b46da458c19ab3f2fe12568d026083b35f527"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C08-dialog-GUI.jpg",
+            "sha256": "14f02f85947be9b52d37e6497a960fde0d966e5678f277e60ea3f7295a029ccb"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/external_results.py": "afb27eb59f1e6920887d9b26f6f926bcdaf2ac0b96ff18e7b7d591581a02ca1f",
+        "qcblender/analysis_data.py": "de5ccf196fb485465e76ba0cc122da3192f421104b5c52122f9061364e1650d8",
+        "qcblender/external_results.py": "34dae8703d9d6e2234c64132c78f33252e7e74d7b1a1410e58804920e5ebd7fb",
+        "qcblender/readers.py": "69fd2c68c535aa987e0e6da93fcf22c37faae14d736ea61d3d0827491228ef3b",
+        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/blender/capabilities.py": "e99bbdbf87fb0a2e08160c65e6d2b405a917d4ca5bc738b2baae46c89f099386"
+      },
+      "fingerprint_review": "核对传递helper、回调、公共接口、Blender和依赖变化；本文件集合不是功能未变的全部证明。",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Computer Use点击原生入口并确认；MCP准备P03两路径、rho=.001、kcal/mol/angstrom^2；4最大值/3最小值/40bin与独立原文件核对；文本填写不在点击覆盖内",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Not Run",
+        "current_batch_replay_reports": []
+      }
+    },
+    {
+      "id": "esp-source-record-selection",
+      "title": "ESP原始极值记录选择",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP preparation and independent raw-source assertions separately identified",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID44016；仅选择对应ESP场/maximum/area对象，无多选顺序",
+        "visible_entry": "只选QC ESP maximum；对象属性→QCBlender→External Analysis Records→Record (1-based)",
+        "validated_scope": "Computer Use选择记录2，原生界面记录1/2与独立PDB编号、坐标、36.69/57.80 kcal/mol核对；对象选择由MCP完成",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/native-import-records.json",
+            "sha256": "b183ed14f2e3a5fd341a3802735b3471ecd098a56707fb47414053ea237e05f4",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C08-maximum-record1-GUI.jpg",
+            "sha256": "ba51705d8c343b5eaa0f5e5c81d1e0d345d1adb9ad271e9dc016d20d67c27dcd"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C08-maximum-record2-GUI.jpg",
+            "sha256": "f273618bd8d45f6d91e0a9c9324f59ff99f19d235f8804fb0a4c0caff55ef29a"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/external_results.py": "afb27eb59f1e6920887d9b26f6f926bcdaf2ac0b96ff18e7b7d591581a02ca1f",
+        "qcblender/analysis_data.py": "de5ccf196fb485465e76ba0cc122da3192f421104b5c52122f9061364e1650d8",
+        "qcblender/external_results.py": "34dae8703d9d6e2234c64132c78f33252e7e74d7b1a1410e58804920e5ebd7fb",
+        "qcblender/readers.py": "69fd2c68c535aa987e0e6da93fcf22c37faae14d736ea61d3d0827491228ef3b",
+        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/blender/capabilities.py": "e99bbdbf87fb0a2e08160c65e6d2b405a917d4ca5bc738b2baae46c89f099386"
+      },
+      "fingerprint_review": "核对传递helper、回调、公共接口、Blender和依赖变化；本文件集合不是功能未变的全部证明。",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Computer Use选择记录2，原生界面记录1/2与独立PDB编号、坐标、36.69/57.80 kcal/mol核对；对象选择由MCP完成",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Not Run",
+        "current_batch_replay_reports": []
+      }
+    },
+    {
+      "id": "esp-point-range-filter",
+      "title": "ESP极值范围筛选与突出源记录",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP preparation and independent raw-source assertions separately identified",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID44016；仅选择对应ESP场/maximum/area对象，无多选顺序",
+        "visible_entry": "只选QC ESP maximum；对象属性→QCBlender→External Result Browser→范围开关→应用筛选",
+        "validated_scope": "Computer Use启用两界并应用40..60；数值由MCP准备；明确源最大值2/3和坐标、突出最大值2/57.8标签；MCP额外覆盖minimum、同数异点、空结果、点/标签隐藏与恢复",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/maximum-filter-GUI.json",
+            "sha256": "9a5e501c3f14ed2f91235e01dd709a34c095260f29dd904b0590bf23169309cc",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C08-maximum-filter-GUI.jpg",
+            "sha256": "059e4180f1d03b0e2898c02dc1c0416b24770cfcf7163fc32f3a2f079cb7b599"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/external_results.py": "afb27eb59f1e6920887d9b26f6f926bcdaf2ac0b96ff18e7b7d591581a02ca1f",
+        "qcblender/analysis_data.py": "de5ccf196fb485465e76ba0cc122da3192f421104b5c52122f9061364e1650d8",
+        "qcblender/external_results.py": "34dae8703d9d6e2234c64132c78f33252e7e74d7b1a1410e58804920e5ebd7fb",
+        "qcblender/readers.py": "69fd2c68c535aa987e0e6da93fcf22c37faae14d736ea61d3d0827491228ef3b",
+        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/blender/capabilities.py": "e99bbdbf87fb0a2e08160c65e6d2b405a917d4ca5bc738b2baae46c89f099386"
+      },
+      "fingerprint_review": "核对传递helper、回调、公共接口、Blender和依赖变化；本文件集合不是功能未变的全部证明。",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Computer Use启用两界并应用40..60；数值由MCP准备；明确源最大值2/3和坐标、突出最大值2/57.8标签；MCP额外覆盖minimum、同数异点、空结果、点/标签隐藏与恢复",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/filter-batch.json",
+            "sha256": "3197b88dded724251ab87de26f46810a5af6b8ae2cab7b82fc1a79901dc2ce14",
+            "status": "Passed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "esp-area-center-and-source-interval-filter",
+      "title": "ESP面积中心与完整源区间筛选",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP preparation and independent raw-source assertions separately identified",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID44016；仅选择对应ESP场/maximum/area对象，无多选顺序",
+        "visible_entry": "只选QC ESP area distribution；对象属性→QCBlender→External Result Browser→Area bin selection→应用筛选",
+        "validated_scope": "Computer Use开启0..20并应用Center in range，再选Recorded interval overlaps range并应用；4bin/14.4784 Å²/19.7838%与6bin/21.2676 Å²/29.0608%，原总面积73.1833、原百分比和坐标缩放保持；MCP准备数值",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/area-center-GUI.json",
+            "sha256": "b200293ba5cb32b9a179e1915784d978ac1acb1ef310993a2dd1fd35becb4456",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/area-source-interval-GUI.json",
+            "sha256": "3d787de9d24132bbfd6065959885da9c82db0f2d63a8583703bdc5aca2a2a8f6",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C08-area-center-GUI.jpg",
+            "sha256": "781c2bcd0820b41b5a1dbb6e07edcbf355e1825d886acb84c752a9339ff63af9"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C08-area-source-interval-GUI.jpg",
+            "sha256": "c706100657389d013090ef37e639583816abbc56d93de7ec0fa82e1fe4f63bb0"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/external_results.py": "afb27eb59f1e6920887d9b26f6f926bcdaf2ac0b96ff18e7b7d591581a02ca1f",
+        "qcblender/analysis_data.py": "de5ccf196fb485465e76ba0cc122da3192f421104b5c52122f9061364e1650d8",
+        "qcblender/external_results.py": "34dae8703d9d6e2234c64132c78f33252e7e74d7b1a1410e58804920e5ebd7fb",
+        "qcblender/readers.py": "69fd2c68c535aa987e0e6da93fcf22c37faae14d736ea61d3d0827491228ef3b",
+        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/blender/capabilities.py": "e99bbdbf87fb0a2e08160c65e6d2b405a917d4ca5bc738b2baae46c89f099386"
+      },
+      "fingerprint_review": "核对传递helper、回调、公共接口、Blender和依赖变化；本文件集合不是功能未变的全部证明。",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Computer Use开启0..20并应用Center in range，再选Recorded interval overlaps range并应用；4bin/14.4784 Å²/19.7838%与6bin/21.2676 Å²/29.0608%，原总面积73.1833、原百分比和坐标缩放保持；MCP准备数值",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/filter-batch.json",
+            "sha256": "3197b88dded724251ab87de26f46810a5af6b8ae2cab7b82fc1a79901dc2ce14",
+            "status": "Passed"
+          }
+        ]
+      }
     }
   ]
 }

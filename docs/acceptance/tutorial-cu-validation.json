@@ -551,7 +551,7 @@
     "docs/acceptance/tutorial-validation.json",
     "docs/acceptance/cleanup-validation.json"
   ],
-  "remaining_click_steps": "Complete C04 invalid-mask/error boundaries, C05 IRC annotation/current-view/removal checks, C08-C13 and remaining N01-N18 scope. Finish density-checkpoint relocation and same-final-source/candidate unified qualification before main merge/archive. C06 and C07 scoped native actions, independent data/filters and three-path cold chains are separately Passed; historical batch identities retained. Full walkthrough and independent scientific signature remain Not Run.",
+  "remaining_click_steps": "Complete C04 invalid-mask/error boundaries, C05 IRC annotation/current-view/removal checks, C09-C13 and remaining N01-N18 scope. Finish density-checkpoint relocation and same-final-source/candidate unified qualification before main merge/archive. C06-C08 scoped native actions, independent data/filters and three-path cold chains separately Passed; historical identities retained. Full walkthrough and independent scientific signature remain Not Run.",
   "cleanup": {
     "status": "Passed",
     "scope": "This screenshot supplement only; full GUI task remains claimed",
@@ -4045,6 +4045,305 @@
           "status": "Passed"
         },
         "original_three_v2_pngs_retained": true
+      }
+    },
+    "C08_ESP_records_filters_and_cold_chain": {
+      "status": "Passed",
+      "scope": "C08 native ESP import/record2/point range/area modes, raw-source assertions, 35 MCP filters/5 guards, portable three-path readback and six renders",
+      "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+      "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+      "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+      "inputs": [
+        {
+          "id": "P03-water-dimer",
+          "path": "tests/data/tutorial/P03/water-dimer.fchk",
+          "sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+          "size": 38191
+        },
+        {
+          "id": "P03-esp-surfanalysis.pdb",
+          "path": "tests/data/tutorial/P03/esp/surfanalysis.pdb",
+          "sha256": "88aa4bc279308860e33f7462cd69a279b3eeb976ff2a46aa7797424c84a8673f",
+          "size": 682
+        },
+        {
+          "id": "P03-esp-stdout.log",
+          "path": "tests/data/tutorial/P03/esp/stdout.log",
+          "sha256": "f06e5c30e3a9fcf8e9f61b63ba1dd828aa3c512b0a5747d3e73877f0b921b7c0",
+          "size": 36760
+        }
+      ],
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/baseline.json",
+          "sha256": "46082f5e8974590e48e0920d5c77bebb3bd67dbb82249b2f195dabb22b82b7a2",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/reference-setup.json",
+          "sha256": "713b5ceb5e0e0b212a8138aa569f41a242aee3b4effaee8be3e1eece1fca721b",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/native-import-records.json",
+          "sha256": "b183ed14f2e3a5fd341a3802735b3471ecd098a56707fb47414053ea237e05f4",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/maximum-filter-GUI.json",
+          "sha256": "9a5e501c3f14ed2f91235e01dd709a34c095260f29dd904b0590bf23169309cc",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/area-center-GUI.json",
+          "sha256": "b200293ba5cb32b9a179e1915784d978ac1acb1ef310993a2dd1fd35becb4456",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/area-source-interval-GUI.json",
+          "sha256": "3d787de9d24132bbfd6065959885da9c82db0f2d63a8583703bdc5aca2a2a8f6",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/filter-batch.json",
+          "sha256": "3197b88dded724251ab87de26f46810a5af6b8ae2cab7b82fc1a79901dc2ce14",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/renders-v2.json",
+          "sha256": "30c5f7c7b8255d9ca399075c1862b435b7afcb62d0bcb11164cdc8b70f73e6a8",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/render-visual-review.json",
+          "sha256": "4cb7c9863ef1d61e3af155cf92e1ce9769311020cc500cb4277a66718af2deee",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/preservation-final.json",
+          "sha256": "526004ffa13dc2b853873f613242f46507e7996d15e47a2bef22ab789173ad43",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/close-request.json",
+          "sha256": "ecf295c642f1605252eead2d420cf6887071b05ad192c278b8bd87a8fae70d58",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/exit-44016-host.json",
+          "sha256": "3448ded316ce1a2cc40d5dec8fc39f316437edfc059090c41e594847e5d5c3f8",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/path-map.json",
+          "sha256": "f27a357e6933307344d4cc8d7cddd0b65bc48438a913d3e77fc60917fbfdb31b",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/cold-original/readback-render.json",
+          "sha256": "62974b5f621003fbf652b49db16ac59255c32c5e261bb5dc7cb0fced4d4d5879",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/cold-moved/readback-render.json",
+          "sha256": "c514a27ea85c396e23c7b28f5b4ee824ea06e04068673a0cf32021a54a8da9a6",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/cold-unpacked/readback-render.json",
+          "sha256": "49471675066e2528628ae9284a3706a1579475843691e87a78e62cbcac852661",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/cold-chain.json",
+          "sha256": "65306cde40ed8e217561f350a5966595a985afec7b2960d7f41e36e67cc9ebe9",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/cold-render-prune.json",
+          "sha256": "fc38bf43c988fbf9c55cceaaf489f7a71ad3264f2d562d7b12cbf6c806422f3e",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/entry-owned-copy-removal.json",
+          "sha256": "f6b5cba941430c198c89f7aa517d548bfc34ca371c5dd66213fa98d347fee254",
+          "status": "Passed"
+        }
+      ],
+      "diagnostics": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/entry-layout-diagnostic.json",
+          "sha256": "55c58fdc025404fbd4086054b8bbcbd0c6ff7604857209ea7875303ff78a81a8",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/import-check-diagnostic.json",
+          "sha256": "c3c63a3bea27c782a9de239d225270b5dfd526a5ae20a9656bfdc1b6331804e9",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/render-readability-diagnostic.json",
+          "sha256": "bfc935035d36ae3a0196ed401375004adc5163ad217f33b95af9201066d3ef37",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/save-visibility-diagnostic.json",
+          "sha256": "cbd27b2ec3f50f5f8b4b49e633141d65b592ea2e0ceec028c12f91c4266cb160",
+          "status": "Failed"
+        }
+      ],
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/C08-entry-GUI.jpg",
+          "sha256": "4b7f92d0f6fe178365f63cae901b46da458c19ab3f2fe12568d026083b35f527"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C08-dialog-GUI.jpg",
+          "sha256": "14f02f85947be9b52d37e6497a960fde0d966e5678f277e60ea3f7295a029ccb"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C08-maximum-record1-GUI.jpg",
+          "sha256": "ba51705d8c343b5eaa0f5e5c81d1e0d345d1adb9ad271e9dc016d20d67c27dcd"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C08-maximum-record2-GUI.jpg",
+          "sha256": "f273618bd8d45f6d91e0a9c9324f59ff99f19d235f8804fb0a4c0caff55ef29a"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C08-maximum-filter-GUI.jpg",
+          "sha256": "059e4180f1d03b0e2898c02dc1c0416b24770cfcf7163fc32f3a2f079cb7b599"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C08-area-center-GUI.jpg",
+          "sha256": "781c2bcd0820b41b5a1dbb6e07edcbf355e1825d886acb84c752a9339ff63af9"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C08-area-source-interval-GUI.jpg",
+          "sha256": "c706100657389d013090ef37e639583816abbc56d93de7ec0fa82e1fe4f63bb0"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C08-saved-GUI.jpg",
+          "sha256": "9fcc4518278998046502d55abb81a5490faa5989847f14eda7e664756e13ad68"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C08-extrema-v2.png",
+          "sha256": "cad4acabf27ed1cb3ac922bb9049df02bcdf82ffe467e7b596de65d398cdac7b"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C08-area-v2.png",
+          "sha256": "9a96860f60d9360a4c3afdcf96a9b2615f7d225ecad8eef5ed617ef4330e2d0a"
+        }
+      ],
+      "scripts": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/scripts/C08-baseline.py",
+          "sha256": "e2acbe8df78591db071d2cf33df36b0dd68e4547b0dc49911fe1d6e7ffa659d5"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/scripts/C08-check-filter.py",
+          "sha256": "f1157458028210ce1a37a16b42fdd91e3966c02b3aae226deefad56eefc23695"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/scripts/C08-check-import-v1.py",
+          "sha256": "538fab702b2fee31c34c664df658669972ce47edf4f5a70a271bd09b6ae3bd15"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/scripts/C08-check-import.py",
+          "sha256": "95c54b721ee219a8f17ab6c85f34465e8dc5b9c7063b9c642026e5d496b22cb1"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/scripts/C08-cold.py",
+          "sha256": "521d4fe0018305c3e03daa5d086768b51e9e3fffbd31e5afefa942c4833dd90b"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/scripts/C08-filter-batch.py",
+          "sha256": "d14a794239a8eb6db9ef71185ddba57e095f2ee8f72f8bdb1305298f237a812d"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/scripts/C08-preserve-final.py",
+          "sha256": "b3999c427f1b941b3dd1be98a8491102babeebcc799acecbfb1a772c2e84c3f5"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/scripts/C08-preserve.py",
+          "sha256": "f67149b7980cfbc5e1f2ebab51f9b9e27eec1aac64cb6e980d6cf991c6e087da"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/scripts/C08-render-v2.py",
+          "sha256": "cdc04e425d681725a1cdaa3835c758866ddb7fb9822c9f73e9884604c8a51d16"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/scripts/C08-render.py",
+          "sha256": "523272a7d070cb1b38649f017ae3d76087d77daaf7208c4a8c08b77033a8d63b"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/scripts/finalize-C08-docs.py",
+          "sha256": "61a6d58db6242a4663c32df8bf03b4504a7ca2329519be7e8cc1263c545cdc6b"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/scripts/launch-C08.py",
+          "sha256": "3238710e390a3dcd7cf6be904a3cbfdcbde8c05d68a005c19ae37a6a2be26f82"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/scripts/prepare-C08-cold-runner.py",
+          "sha256": "53e74c92fa9515af4434b9c1185f126da40ca3b7b78a7e5103e2b276371a59f5"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/scripts/prepare-C08-final-save.py",
+          "sha256": "fd8c0ca3478cf66bbb7a679347a61f7e41103749064a61641d0d32d29b8ca194"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/scripts/prepare-C08-render-v2.py",
+          "sha256": "bac8c921afa5ef0c824465017e3d371d528dd06b0b9556868220e6ff525f8fc4"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/scripts/run-C08-cold.py",
+          "sha256": "2636283aee613edce94c042cac26670efb943c0ec37b6ca8964cb7b88f6bf4f8"
+        }
+      ],
+      "checks": {
+        "native_ESP_entry_and_confirmation": "Passed",
+        "native_record2_point_and_area_modes": "Passed",
+        "independent_4_max_3_min_40_bins_and_units": "Passed",
+        "MCP_35_filters_and_5_negative_guards": "Passed",
+        "original_7_datasets_222_arrays_117_files_unchanged": "Passed",
+        "three_paths_120_files_224_arrays_4_volumes": "Passed",
+        "six_renders_exact_pixels": "Passed",
+        "two_actual_render_visual_reviews": "Passed",
+        "full_C_N_and_unified_qualification": "Not Run",
+        "independent_signature": "Not Run"
+      },
+      "execution_methods": {
+        "GUI": "Native ESP entry/confirmation, maximum Record2, point/area bounds toggles and apply, source-interval selection",
+        "MCP": "Object/numeric preparation, raw-source/mesh/source-preservation assertions, 35 filter cases/5 guards, camera/light/font/material/save/archive",
+        "CLI": "Three serial fresh background Blender readbacks and six real renders",
+        "user_actions": "Not Run",
+        "independent_scientific_signature": "Not Run"
+      },
+      "diagnostic_resolution": "Panel animation misclick created two owned views; removed only those and checked baseline. Whole-log UTF-8 assumption failed on legacy banner; preserved raw bytes and checked strictly ASCII numeric rows. First render was low contrast; lighting/font v2 inspected. First save setup preserved unwanted individual child hide state; native apply restored labels before final save and cold checks.",
+      "project": {
+        "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/C08-final.blend",
+        "sha256": "0fe3acbc751470d2c1824da48daef173379fc811af925469c81e3d54b84f5474",
+        "files": 120,
+        "datasets": 8,
+        "arrays": 224,
+        "volumes": 4,
+        "references": 20
+      },
+      "moved_project": "outputs/projects/tutorial-cu-full/中文移动/C08/C08-final.blend",
+      "unpacked_project": "outputs/projects/tutorial-cu-full/unpacked/C08/C08-final.blend",
+      "processes_exited": [
+        44016,
+        20920,
+        10488,
+        50344
+      ],
+      "cleanup": {
+        "report": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/cold-render-prune.json",
+          "sha256": "fc38bf43c988fbf9c55cceaaf489f7a71ad3264f2d562d7b12cbf6c806422f3e",
+          "status": "Passed"
+        },
+        "original_two_v2_pngs_retained": true
       }
     }
   },
