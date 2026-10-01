@@ -1,5 +1,6 @@
 """Check ordered FCHK and Mayer overlays in Blender with derived format fixtures."""
 from pathlib import Path
+import json
 import re
 import sys
 
@@ -16,12 +17,36 @@ OUT = ROOT / 'outputs' / 'irc-acceptance'
 OUT.mkdir(parents=True, exist_ok=True)
 qcblender.register()
 
+
+def check_mayer_view(root, expected, step):
+    tables = [child for child in root.children if child.get('qc_analysis_role') == 'irc_mayer']
+    curves = [child for child in root.children if child.get('qc_analysis_role') == 'irc_mayer_curve']
+    cursors = [child for child in root.children if child.get('qc_analysis_role') == 'irc_mayer_cursor']
+    assert len(tables) == len(curves) == len(cursors) == 1
+    table, curve, cursor = tables[0], curves[0], cursors[0]
+    data = load_dataset(bpy.path.abspath(table['qc_dataset']))
+    assert set(data.arrays) == {'atomic_numbers', 'positions', 'mayer_pairs', 'mayer_orders'}
+    for name in data.arrays:
+        assert data.arrays[name].tolist() == expected.arrays[name].tolist(), name
+    assert root['qc_irc_step'] == step
+    assert json.loads(root['qc_irc_record'])['step'] == step
+    assert [int(table['qc_pair_a']), int(table['qc_pair_b'])] == expected.arrays['mayer_pairs'][0].tolist()
+    assert table['qc_mayer_pair_index'] == 0
+    assert list(table['qc_mayer_display_values']) == expected.arrays['mayer_orders'][:, 0].tolist()
+    assert curve.type == 'CURVE' and len(curve.data.splines) == 1
+    assert len(curve.data.splines[0].points) == len(expected.arrays['mayer_orders'])
+    assert cursor.type == 'MESH' and len(cursor.data.vertices) == 1
+    coordinate = curve.data.splines[0].points[step - 1].co[:3]
+    assert all(abs(a - b) < 1e-6 for a, b in zip(cursor.data.vertices[0].co, coordinate))
+    return table
+
+
 if '--reopen' in sys.argv:
     root = next(obj for obj in bpy.data.objects if obj.get('qc_irc'))
     data = load_dataset(bpy.path.abspath(root['qc_dataset']))
     assert root['qc_irc_step'] == 2
     assert len(data.arrays['irc_energies']) == 2
-    assert any(child.get('qc_analysis_role') == 'irc_mayer_curve' for child in root.children)
+    check_mayer_view(root, import_irc_mayer(data, OUT / 'mayer.csv'), 2)
     print('IRC path and Mayer cold reopen Passed; real IRC fixture Not Run')
 else:
     original = (ROOT / 'tests' / 'data' / 'iodata' / 'water_sto3g_hf_g03.fchk').read_text(encoding='ascii')
@@ -52,12 +77,21 @@ else:
             'Total valences and free valences\n', encoding='utf-8')
     mayer_manifest = OUT / 'mayer.csv'
     mayer_manifest.write_text('step,mayer_output\n1,mayer1.txt\n2,mayer2.txt\n', encoding='utf-8')
-    assert import_irc_mayer(data, mayer_manifest).arrays['mayer_orders'].shape == (2, 2)
+    expected_mayer = import_irc_mayer(data, mayer_manifest)
+    assert expected_mayer.arrays['mayer_orders'].shape == (2, 2)
     assert bpy.ops.qcblender.import_irc_path(manifest_path=str(manifest)) == {'FINISHED'}
     root = next(obj for obj in bpy.data.objects if obj.get('qc_irc'))
     bpy.context.view_layer.objects.active = root
     assert bpy.ops.qcblender.irc_step(direction='NEXT') == {'FINISHED'}
     assert root['qc_irc_step'] == 2
-    assert bpy.ops.qcblender.import_irc_mayer(manifest_path=str(mayer_manifest)) == {'FINISHED'}
+    # Keep the invoking object's context fixed while import changes the active object.
+    # This exercises the nested Operator with the same stale object as a GUI event.
+    with bpy.context.temp_override(object=root, active_object=root):
+        assert bpy.context.object == root
+        assert bpy.ops.qcblender.import_irc_mayer(manifest_path=str(mayer_manifest)) == {'FINISHED'}
+        assert bpy.context.object == root
+    table = check_mayer_view(root, expected_mayer, 2)
+    assert bpy.context.view_layer.objects.active == table
+    assert table.select_get() and not root.select_get()
     save_project(OUT / 'irc.blend')
     print('IRC parser, Blender step and Mayer save Passed; real IRC fixture Not Run')

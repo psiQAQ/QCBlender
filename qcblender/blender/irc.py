@@ -171,7 +171,8 @@ class QCBLENDER_OT_import_irc_mayer(bpy.types.Operator):
             context.view_layer.objects.active = obj
             root.select_set(False)
             obj.select_set(True)
-            bpy.ops.qcblender.plot_irc_mayer()
+            with context.temp_override(object=obj, active_object=obj):
+                bpy.ops.qcblender.plot_irc_mayer()
         except (ValueError, OSError, KeyError, TypeError, MemoryError) as error:
             self.report({'ERROR'}, str(error))
             return {'CANCELLED'}
