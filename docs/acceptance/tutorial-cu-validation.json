@@ -2986,6 +2986,211 @@
         20956
       ],
       "remaining": "C05 first-use angle/dihedral and degenerate checks, step-updated annotations, complete three PNG exports and render cold chain; C01 density checkpoint, real invalid-mask fixture, other uncovered public assets, C06-C13 and unified fixed-candidate qualification; main merge/archive."
+    },
+    "C05_native_annotations_and_renders": {
+      "status": "Passed",
+      "scope": "Native angle/dihedral creation and facing; independent values, three actual renders, three serial cold paths and nine exact rerenders. Remaining C05 and full C-N Not Run.",
+      "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+      "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+      "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/annotation-native-GUI-MCP.json",
+          "sha256": "0579d15dc81e783dc5e287a83e03af8f70d27fc5e88324a2b7c3a838a932f13d",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/render-preparation.json",
+          "sha256": "ad936600a01dc6f7d8076995963b1d27896915fcd1f9789005e8b42db36e0b07",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/C05-render.json",
+          "sha256": "93af980af595e627872a792266acfadc7e9971f8e3444e496531ac8a56838e4e",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/C05-selection-render.json",
+          "sha256": "276e775bc5cd2d0a6b69ce7c96fa0b93ce5f90786bf6b027e2cc2d4482a29ffa",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/C05-annotations-final-render.json",
+          "sha256": "453cf1ebbe723c836d7b7c4ddb734068878b4cfa03d014227ccf909cdfff86ba",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/preservation-final.json",
+          "sha256": "b43d57fc88d37b46f71c473daed09cf2b73e57d378efa23c73b45f6b2c8e4448",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/cold-v2-original/readback-render.json",
+          "sha256": "07f7925de8d132a466d865cbd6b23c1a894e7357fc9164a40d316ea7382b0b8c",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/cold-v2-moved/readback-render.json",
+          "sha256": "3c3d902f2c419289159291a5eb24af6d12050fe93bfee0c448d618f1612b6141",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/cold-v2-unpacked/readback-render.json",
+          "sha256": "7add30d14a3407a78a7f693ee23b3dd1c19dd42d0664f611f1634ff9f1138263",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/cold-chain-v2.json",
+          "sha256": "9b2fbf27a02919ffe46232f329b92c086f2f8dfbd7a8f45dc86b19688ff72d6e",
+          "status": "Passed"
+        }
+      ],
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-final-angle-dialog-GUI.jpg",
+          "sha256": "dba398b9be8bcca27f9c394d00259ee7fc22e3139b04a256a61639c842f7b599"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-final-dihedral-dialog-GUI.jpg",
+          "sha256": "5151e113fa78750e95fe7c23d54c2f2c82a6fe05e24fba6e00a416001f495f26"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-final-entrances-GUI.jpg",
+          "sha256": "bfb3d86e68f021472b67abf5b92020272a46e0934c9334ca90d2310c2dbe0535"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-final-face-camera-GUI.jpg",
+          "sha256": "4c74e0521b01f3da26d51b26cda8051a5072acf5eb0d7441ca5b9bb8ba9b3c50"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-final-render.png",
+          "sha256": "b7b90248fe48c3a48c91cd606714a0ad437ca622f613fb0c64accd2c7de36430"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-selection-final-render.png",
+          "sha256": "9041cd8ade693b9128315e34b09e2b6b51c75679a19baba1399791f4f57f8dfc"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C05-annotations-final-render.png",
+          "sha256": "0baf879cd92e3572f65f0e0707457d5208e318eeb56767f1072914c868bb320a"
+        }
+      ],
+      "project": {
+        "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/C05-final.blend",
+        "sha256": "0acff8ae0a4d47c16353cec7325cb1ac1a4642025c3433b3118492f544debfe0",
+        "files": 24,
+        "datasets": 1,
+        "arrays": 50,
+        "atom_views": 6,
+        "annotation_objects": 52
+      },
+      "checks": {
+        "native_angle_dihedral_creation": "Passed",
+        "native_face_all_camera": "Passed",
+        "independent_measurements_and_scale_invariance": "Passed",
+        "three_renders_visual": "Passed",
+        "three_paths_cold_and_nine_pixel_exact_rerenders": "Passed",
+        "remaining_C05_degenerate_step_update_remove_current_version": "Not Run",
+        "full_C_N": "Not Run",
+        "independent_scientific_signature": "Not Run"
+      },
+      "diagnostics": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/render-preparation-diagnostic.json",
+          "sha256": "6dcff8aa074cbf15f285a045ebf49c77030acc316cb34ba6c794af5650e95ae7",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/render-visual-diagnostic.json",
+          "sha256": "3ee8407ea232e6b849f42e47e78dd2d65dbaca6d9b207cf55b84513f863c9717",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/cold-original/readback-render.json",
+          "sha256": "25e2c5c692dbff1c60ce3d55d90bf360a3d0ad0aa549494d568361ad03475bda",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/cold-diagnostic-original/readback-render.json",
+          "sha256": "9161aa40d2ef3d8c3d0c838e20ee7c436f0d8abbd83850ae4b0e3bae67f31c6c",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/cold-hidden-diagnostic-original/readback-render.json",
+          "sha256": "53c735931420d32949fda1eef3057200975a20988875839b026165e997d2b9bf",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/cold-stored-transforms-original/readback-render.json",
+          "sha256": "027d640f7e7e547c932e46d47d1cdbe4f76ebc1214e7d12b44ae8f060db2dc4b",
+          "status": "Passed"
+        }
+      ],
+      "scripts": {
+        "C05-final-annotation-check.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/scripts/C05-final-annotation-check.py",
+          "sha256": "675d97651a93e8a88b033c101addb95dd49fd056bd5cccda5215f5bbc8e7d4d4"
+        },
+        "C05-final-cold-diagnostic.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/scripts/C05-final-cold-diagnostic.py",
+          "sha256": "ecdfe6035f42608e1abcf17f718bf85aa362463daf69c27db144df9a6345ad71"
+        },
+        "C05-final-cold-v2.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/scripts/C05-final-cold-v2.py",
+          "sha256": "60689dae16633cf5062f83996b1c1408225c5dffa9cd5e5467814a053ad7c186"
+        },
+        "C05-final-cold.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/scripts/C05-final-cold.py",
+          "sha256": "cb70ee2c56babfb37ceeae207e92a60865f1ffd9d6eff64a35036c60d2ae08f5"
+        },
+        "C05-final-prepare.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/scripts/C05-final-prepare.py",
+          "sha256": "04516de58e7e188248a85d8bfba14b9b877c41111c9d47ee7d4cc7da8d9f42d7"
+        },
+        "C05-final-preserve.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/scripts/C05-final-preserve.py",
+          "sha256": "82f074d41c20a22be2b19d51913368aeb0f4a9bc27b4af21475280a009d7ee26"
+        },
+        "C05-final-render-v1.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/scripts/C05-final-render-v1.py",
+          "sha256": "218682e20224d0afa241d6a6c27872817dd0ac1496ec01b0f80eec256991e392"
+        },
+        "C05-final-render.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/scripts/C05-final-render.py",
+          "sha256": "7c6c908e6bf870f61a9f4a9c9a99179a7b4a5d566339029d491ebfbdcfb67c77"
+        },
+        "C05-hidden-matrix-diagnostic.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/scripts/C05-hidden-matrix-diagnostic.py",
+          "sha256": "12eca943ee04dafb525153b94ca5f3fb951a7928d2bbd65c05ff96f631b560f8"
+        },
+        "C05-stored-transform-diagnostic.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/scripts/C05-stored-transform-diagnostic.py",
+          "sha256": "edb79ee87e4a4523764240fe4008acaba9b1bf6208950ba401721e0f667bbf32"
+        },
+        "launch-C05-final.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/scripts/launch-C05-final.py",
+          "sha256": "5460d333ced95cf7cfd9b73d28ffd4e9aeb9c0f29ab09eb46e3c978d4bb9e2df"
+        },
+        "run-C05-final-cold-v2.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/scripts/run-C05-final-cold-v2.py",
+          "sha256": "c9c5df4d2bf59eaa766ddfa8027331adf2182e8c475da27fd4fddaa52e43e67c"
+        },
+        "run-C05-final-cold.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/scripts/run-C05-final-cold.py",
+          "sha256": "b1df4d30a3a6dcb8a121eea6a4b0714559c450ac0fac343aa1aa97282a51d7b3"
+        }
+      },
+      "processes_exited": [
+        20556,
+        30832,
+        26476,
+        54192,
+        52976,
+        27252,
+        16908,
+        48444
+      ],
+      "remaining": "C05 degenerate and optimization/IRC annotation updates, removal/current-version boundaries; C01 density checkpoint, invalid-mask fixture, other public assets, C06-C13, unified fixed-candidate qualification and main merge/archive."
     }
   },
   "historical_partial_supplement": {

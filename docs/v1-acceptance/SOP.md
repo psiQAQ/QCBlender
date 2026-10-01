@@ -715,6 +715,14 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    ![Agent Computer Use观察：N侧栏中文按钮与对象属性英文按钮入口](screenshot/C05-04-two-entry-paths-GUI.jpg)
 
+   原生操作示例使用独立显示层 **C05 final annotations**，先恢复全部6个原子，仅选该层。角度输入 **2,1,3**、二面角输入 **2,1,4,5**，**Decimal places=3**；确认后分别为 **112.770°**、**0.000°**。本批 Computer Use 实际创建；独立 NumPy 参考和 MCP 同时核对源编号顺序、单位、锚点、引线及50个科学数组。
+
+   ![Agent Computer Use：当前活动原子层与标注入口](screenshot/C05-final-entrances-GUI.jpg)
+
+   ![Agent Computer Use：角度编号2,1,3及三位小数](screenshot/C05-final-angle-dialog-GUI.jpg)
+
+   ![Agent Computer Use：二面角编号2,1,4,5；B→C约定](screenshot/C05-final-dihedral-dialog-GUI.jpg)
+
 5. 在 **局部选择与标注 → Source Atom Annotations** 用设置图标调整文字大小/颜色/偏移/小数和引线；原子源构型或当前优化/IRC 步决定值，对象缩放与振动位移不改变测量。切步核对文字、锚点、步号同步；相机建好后点 **Face All to Camera**。
 
    [用户截图待引用：C05-05，活动对象、参数与结果同屏；参数变化保留前后画面]
@@ -722,6 +730,17 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
    ![Agent Computer Use：距离文字大小调整为0.22](screenshot/C05-05-edit-size-dialog-GUI.jpg)
 
    ![Agent Computer Use观察：MCP调整颜色、偏移和小数后，科学距离仍为2.900 Å](screenshot/C05-05-edited-result-MCP.jpg)
+
+   ![Agent Computer Use：点击Face All to Camera；MCP核对实际旋转](screenshot/C05-final-face-camera-GUI.jpg)
+
+   可复现排版：保持原子对象位置/旋转为0、缩放为1，球棍 **Atom Radius=0.35 Å、Bond Radius=0.12 Å、Quality=2**。四项文字设 **Size=0.16、Color RGB=(0.03,0.03,0.03)、Decimal places=3、Leader width=0.008、Show leader与可见勾选**；隐藏重复的旧标注及对应引线。分别设置下表 Offset，然后再点 **Face All to Camera**。这些设置只影响显示；本批另用MCP核对父对象缩放(2,0.5,1.5)后科学测量和源数组不变，再恢复缩放。
+
+   | 标注 | 源编号 | Offset X/Y/Z（局部 Å） |
+   | --- | --- | --- |
+   | 编号 | 1 | −1.2 / −0.5 / −0.6 |
+   | 距离 | 1,4 | 1.2 / −0.5 / 0.9 |
+   | 角度 | 2,1,3 | 1.2 / −0.5 / −0.35 |
+   | 二面角 | 2,1,4,5 | 0.8207 / −0.5 / −0.25215 |
 
 6. 在 **N 侧栏 → Display Layers** 选择层，用复制图标建立副本，改副本参数/材质确认原层不变；排序、视口/渲染显隐和删除只在副本测试。点击 **创建视图与检查工具 → 创建当前版本视图**，保留原层并核对新层。多选同类层，最后选参数源，在 **3D Viewport → 对象顶部菜单或对象右键菜单 → QCBlender → 复制显示参数到选中视图** 选类别；数值复制需同量/单位/电荷方法，不兼容时取消数值类别。目标位置、选择、裁剪和图例布局保留。
 
@@ -750,6 +769,16 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
    ![Computer Use观察：MCP另存自包含参数工程；原生新进程冷重开核对另记](screenshot/C05-controls-portable-saved-MCP.jpg)
 
 
+
+   成图示例使用 **Eevee、1920×1080、Standard**，世界背景白色、Strength=0.7。正交相机位于 **(1.4,−12,1.45) Å**，Euler旋转 **(90°,0°,0°)**、Orthographic Scale=8.7。仅显示目标层：完整6原子、氧1/4局部层、完整6原子加四项标注依次导出三图。两盏Area灯为Disk、Size=5，分别位于 **(4,−5,7)** 与 **(−4,−5,5)**，Power=800/600 W，朝向 **(0,0,1.45)**；其他灯关闭渲染。相机和灯属于显示排版，不改变科学单位。
+
+   ![MCP复用渲染操作：水二聚体全部6原子](screenshot/C05-final-render.png)
+
+   ![MCP复用渲染操作：局部层只显示源氧1、4](screenshot/C05-selection-final-render.png)
+
+   ![MCP实际渲染：O1、2.900 Å、112.770°、0.000°；四项标注与引线](screenshot/C05-annotations-final-render.png)
+
+   本批另存 **C05-final.blend + .qcdata** 和同条目ZIP；关闭可见进程后，原路径、中文移动、解包分别在新原生后台进程冷重开，核对24文件、1 Dataset/50数组、6视图、52标注对象，并各重新渲染三图，像素一致。记录见[当前验证索引](../acceptance/tutorial-cu-validation.json)的 `C05_native_annotations_and_renders`；历史失败报告保留，隐藏对象的保存变换通过完整父级链核对。退化、随优化/IRC步更新、移除与当前版本视图另行验收，不能据此将整个C05或全教程写为Passed。
 
 ### C06 NBO 与 E(2)
 

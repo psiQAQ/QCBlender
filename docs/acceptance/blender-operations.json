@@ -2670,6 +2670,132 @@
         ],
         "requires_current_result_assertions": true
       }
+    },
+    {
+      "id": "source-angle-dihedral-annotations",
+      "title": "源编号角度和二面角标注创建",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native clicks; independently scoped MCP readback and NumPy reference",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "仅选P03原子副本C05 final annotations；按源编号顺序填写",
+        "visible_entry": "3D视图 → N侧栏 → QCBlender → 创建视图与检查工具 → 创建角度标注／创建二面角标注",
+        "validated_scope": "P03水二聚体独立层；实际GUI分别输入2,1,3及2,1,4,5，三位小数；独立NumPy参考112.76989039662574°和0°，MCP核对锚点/引线/源身份。辅助复制及后续排版由MCP，不宣称退化/随步/移除已验收。",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/annotation-native-GUI-MCP.json",
+            "sha256": "0579d15dc81e783dc5e287a83e03af8f70d27fc5e88324a2b7c3a838a932f13d",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C05-final-angle-dialog-GUI.jpg",
+            "sha256": "dba398b9be8bcca27f9c394d00259ee7fc22e3139b04a256a61639c842f7b599"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C05-final-dihedral-dialog-GUI.jpg",
+            "sha256": "5151e113fa78750e95fe7c23d54c2f2c82a6fe05e24fba6e00a416001f495f26"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C05-final-entrances-GUI.jpg",
+            "sha256": "bfb3d86e68f021472b67abf5b92020272a46e0934c9334ca90d2310c2dbe0535"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530",
+        "qcblender/blender/geometry.py": "b3f453dc1943e7488b1bee33c761b874178c9ad9c8a25e855732cb50ddbd82ca",
+        "qcblender/measurements.py": "15d52ae7c9ca8b98cd53ed9d0030f4b848d1387f845c57f7c5892f7717a53fdc",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432"
+      },
+      "fingerprint_review": "Review transitive helpers, callbacks, interfaces, Blender and dependency changes; initial file list is not exhaustive.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "P03水二聚体独立层；实际GUI分别输入2,1,3及2,1,4,5，三位小数；独立NumPy参考112.76989039662574°和0°，MCP核对锚点/引线/源身份。辅助复制及后续排版由MCP，不宣称退化/随步/移除已验收。 功能未变可复用registered operators，仍核对本批结果。",
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/preservation-final.json",
+            "sha256": "b43d57fc88d37b46f71c473daed09cf2b73e57d378efa23c73b45f6b2c8e4448",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/cold-chain-v2.json",
+            "sha256": "9b2fbf27a02919ffe46232f329b92c086f2f8dfbd7a8f45dc86b19688ff72d6e",
+            "status": "Passed"
+          }
+        ],
+        "requires_current_result_assertions": true
+      }
+    },
+    {
+      "id": "source-annotations-face-all-camera",
+      "title": "全部源标注朝向场景相机",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native clicks; independently scoped MCP readback and NumPy reference",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "仅选P03原子副本C05 final annotations；按源编号顺序填写",
+        "visible_entry": "Properties → Object → QCBlender → 局部选择与标注 → Source Atom Annotations → Face All to Camera",
+        "validated_scope": "P03独立原子层；实际GUI点击Face All to Camera，MCP独立核对文字旋转等于相机在父对象局部空间的旋转；后续相机排版与重复朝向由MCP。仅已记录相机/对象条件。",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/annotation-native-GUI-MCP.json",
+            "sha256": "0579d15dc81e783dc5e287a83e03af8f70d27fc5e88324a2b7c3a838a932f13d",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C05-final-face-camera-GUI.jpg",
+            "sha256": "4c74e0521b01f3da26d51b26cda8051a5072acf5eb0d7441ca5b9bb8ba9b3c50"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530",
+        "qcblender/blender/geometry.py": "b3f453dc1943e7488b1bee33c761b874178c9ad9c8a25e855732cb50ddbd82ca",
+        "qcblender/measurements.py": "15d52ae7c9ca8b98cd53ed9d0030f4b848d1387f845c57f7c5892f7717a53fdc",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432"
+      },
+      "fingerprint_review": "Review transitive helpers, callbacks, interfaces, Blender and dependency changes; initial file list is not exhaustive.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "P03独立原子层；实际GUI点击Face All to Camera，MCP独立核对文字旋转等于相机在父对象局部空间的旋转；后续相机排版与重复朝向由MCP。仅已记录相机/对象条件。 功能未变可复用registered operators，仍核对本批结果。",
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/preservation-final.json",
+            "sha256": "b43d57fc88d37b46f71c473daed09cf2b73e57d378efa23c73b45f6b2c8e4448",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/cold-chain-v2.json",
+            "sha256": "9b2fbf27a02919ffe46232f329b92c086f2f8dfbd7a8f45dc86b19688ff72d6e",
+            "status": "Passed"
+          }
+        ],
+        "requires_current_result_assertions": true
+      }
     }
   ]
 }
