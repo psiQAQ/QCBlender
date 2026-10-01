@@ -800,29 +800,61 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
 **真实输入预期：** P02 **Job2/block1**，7条NBO、2条E(2)。NBO1为 O1–H2 的 BD，occupancy **1.99933**、energy **−0.77653 Eh**、原文行 **1444**；E(2)记录1 donor **1**→acceptor **7**、**0.59 kcal/mol**、原文行 **1434**。源SHA同0.1.1，不能把NBO编号当MO编号。
 
-1. 确认已合法取得 P02 的真实 Log/Out 并核对 SHA；公开包不含许可未知原件。按 0.3 选清单指定 job 导入，选其原子对象，点 **N 侧栏 → 导入外部结果 → NBO 记录**。
+1. 确认已合法取得 P02 的真实 Log/Out 并核对 SHA；公开包不含许可未知原件。按 0.3 选清单指定 job 导入，选其原子对象，点 **3D视图 → N 侧栏 → QCBlender → 导入外部结果 → NBO 记录**。
 
    [用户截图待引用：C06-01，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Agent Computer Use：仅选P02 Job2原子对象，在导入外部结果中点击NBO记录](screenshot/C06-entry-GUI.jpg)
 
 2. 对话框 **Gaussian Log / Out** 选同文件，**Gaussian job (1-based)** 与 **NBO block within job (1-based)** 按清单填，确认等待。NBO 几何关联要同段同构型，不能借优化多构型段作最终关联。
 
    [用户截图待引用：C06-02，活动对象、参数与结果同屏；参数变化保留前后画面]
 
-3. 选生成 NBO 记录对象，在 **对象属性 → NBO Records** 选择一条 NBO 和 E(2)，核对条数、占据、能量单位、原子编号、供受体、E(2) kcal/mol 与原文行；NBO 不自动等同 canonical MO。
+   本例填 **Gaussian job (1-based)=2、NBO block within job (1-based)=1**。文件为 `water_neutral_nbo_opt_freq.out`；对象保持P02 Job2，不用Job1优化轨迹关联。
+
+   ![Agent Computer Use：Gaussian Log/Out、Job2、block1原生导入对话框](screenshot/C06-dialog-GUI.jpg)
+
+3. 选生成 NBO 记录对象，在 **Properties → 对象属性 → QCBlender · 对象与量子化学 → NBO Records** 选择一条 NBO 和 E(2)，核对条数、占据、能量单位、原子编号、供受体、E(2) kcal/mol 与原文行；NBO 不自动等同 canonical MO。
 
    [用户截图待引用：C06-03，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   分别把 **NBO row (1-based)**、**E(2) row (1-based)** 从1改成2，确认选中的是不同源记录。第2条NBO为O1–H3 BD，第2条E(2)为2→6、0.59 kcal/mol。源行按原始文件整行核对，显示末尾空白可省略。
+
+   ![Agent Computer Use：第1条NBO与E(2)，7轨道、2相互作用及原文行](screenshot/C06-record1-GUI.jpg)
+
+   ![Agent Computer Use：分别选择第2条NBO与E(2)，核对源编号与数值](screenshot/C06-record2-GUI.jpg)
 
 4. 在 **External Result Browser** 按编号/类型/占据、供受体/E(2) 筛选排序，点击 **应用筛选**，核对筛选不改源记录。恢复全部，撤销/重做导入核对关联。
 
    [用户截图待引用：C06-04，活动对象、参数与结果同屏；参数变化保留前后画面]
 
+   本例在 **对象属性 → QCBlender · 对象与量子化学 → External Result Browser** 将 **Orbital type=BD、Orbital sort=Occupancy high to low、E(2) sort=E(2) high to low**，点击 **应用筛选**；应显示2条轨道、2条E(2)。复原全部类型与默认范围后再点应用。Agent实际点击了上述组合；编号、范围、空结果和全部排序组合另由MCP用独立预期核对，不冒称逐项点击。
+
+   ![Agent Computer Use：BD筛选和降序，应用后显示2轨道、2条E(2)](screenshot/C06-filter-BD-GUI.jpg)
+
 5. 对同文件逐字节 `.log` 别名重复入口检查，摘要必须一致。别名在自己的 inputs 建立，不改原文件。
 
    [用户截图待引用：C06-05，活动对象、参数与结果同屏；参数变化保留前后画面]
 
+   用相同字节的 `water_neutral_nbo_opt_freq.log` 再导入Job2/block1，新增记录对象而原记录保持。随后在3D视图执行 **Edit（编辑）→ 撤销**，确认别名对象消失；执行 **Edit（编辑）→ 重做**，确认别名对象及其原子父对象关联恢复。菜单复验Passed；本批快捷键尝试未恢复，失败截图单独留在证据目录，教程使用实际确认的菜单路径。
+
+   ![Agent Computer Use：相同SHA的log别名，Job2/block1](screenshot/C06-cold-native-dialog-GUI.jpg)
+
+   ![Agent Computer Use：撤销后别名对象消失，原out记录保持](screenshot/C06-cold-native-undo-GUI.jpg)
+
+   ![Agent Computer Use：Edit重做菜单恢复log对象；MCP核对完整分析和父对象](screenshot/C06-cold-native-menu-redo-GUI.jpg)
+
 6. 按 0.4 保存 `C06.png/.blend/.qcdata/`；总览必须同时拍到可读 NBO/E(2) 面板和关联分子。
 
    [用户截图待引用：C06-06，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   可复现总览：选 `.log` NBO对象，在对象属性展开 **NBO Records** 并将两行索引设为1；把3D视图和属性编辑器分宽，使关联水分子与全部记录同屏。渲染单独选参考原子层，点击 **创建视图与检查工具 → 创建取景相机**，Margin=0.05，Eevee、1920×1080；NBO表本身是属性数据，用界面截图记录。
+
+   ![Agent Computer Use观察：log别名、7条NBO/2条E(2)、单位、源行和关联水分子](screenshot/C06-cold-records-overview-GUI.jpg)
+
+   ![MCP复用相机构图及渲染：P02 Job2水分子，表格数据另见界面图](screenshot/C06-render.png)
+
+   本批保存 **C06-final.blend + .qcdata** 与同条目ZIP；关闭GUI进程后，原地、中文移动、解包三个新原生后台进程分别读取38文件、3 Dataset/33数组、NBO关联和全部元数据，并重渲染核对像素一致。证据见[当前验证索引](../acceptance/tutorial-cu-validation.json)的 `C06_NBO_records_browser_alias_and_cold_chain`。独立人工/科研签署仍为Not Run。
 
 
 

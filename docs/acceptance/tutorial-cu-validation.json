@@ -3442,6 +3442,283 @@
         3392
       ],
       "original_source_project_and_data_unchanged": true
+    },
+    "C06_NBO_records_browser_alias_and_cold_chain": {
+      "status": "Passed",
+      "scope": "P02 Job2/block1 NBO/E2 native import and rows; native BD/descending browser; independent MCP range/sort cases; native alias import/undo/menu redo; portable save/archive and three serial cold rerenders",
+      "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+      "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+      "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+      "input": {
+        "path": "tests/data/local/log-examples/water_neutral_nbo_opt_freq.out",
+        "alias": "tests/data/local/aliases/water_neutral_nbo_opt_freq.log",
+        "sha256": "9493d24655fb261a2c945d292ad517567f3024996594a25f678199df74017519",
+        "job": 2,
+        "block": 1,
+        "redistribution": "Not authorized by local use; source permission unknown"
+      },
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/native-import-records.json",
+          "sha256": "638ccf50a3930d239f2300cee5065c680b074681333fb10f3c157d0e7ea03974",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/filters.json",
+          "sha256": "29d4228e057895a5dd1f481e3b9428500cd4d324729dbf7640164f00a37eb934",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/alias.json",
+          "sha256": "f3c473c5235abb6f8204f16e900de293d9e6be933292f1383943041457ef5ad0",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/cold-native-menu-undo-redo.json",
+          "sha256": "a9851dc0140c03882544a1bd732ad60156ad638368b41bb1ec3bfdcc432ae82a",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/preservation-final.json",
+          "sha256": "641d74eb9f8367286e361c1929dbf53bda7ee534e1a3158511bf882d37c59d54",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/final-cold-original/readback-render.json",
+          "sha256": "6710b43ca9d0cc48ecdc8686a524b65d683dcb051cff4bbf481654a123de4906",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/final-cold-moved/readback-render.json",
+          "sha256": "013c921f803164de9a887db12ad39939ecfeb28d105048525a0b8afc4ffb63b6",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/final-cold-unpacked/readback-render.json",
+          "sha256": "a05a3f844a7d5afa4e8e60d6c366f416685db332b1b89473879877177206baa7",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/final-cold-chain.json",
+          "sha256": "dfb05d3742e7b185f9877aca4d39553c87af22b8e8cb841748058f37d491222d",
+          "status": "Passed"
+        }
+      ],
+      "diagnostics": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/source-line-diagnostic.json",
+          "sha256": "5a46b118611a56b1187b078ae87b13d9ee3ab7036b9d50713e1c497715744915",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/filter-script-diagnostic.json",
+          "sha256": "fd986ef4b0aee8b05903f222cbcffc0103c57601e830a71a0cc9ec78eaef64aa",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/undo-mcp-invocation-diagnostic.json",
+          "sha256": "bc727dc931361cc6daff4e9b55f356f9df6d271e0a80e2dce7fbb98cd1dec625",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/native-only-undo-redo.json",
+          "sha256": "6387f5646d5dbe229906ec4c27a2fed60a789fb9bae0a44e1db4b3768eefb58e",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/full-native-undo-redo.json",
+          "sha256": "3c432bfbd6f2d3d89e0007fbee3ce0eeeaa85ff2a649c6b78c09591724c6ffce",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/cold-native-undo-redo.json",
+          "sha256": "a9f083aa70ff3f52ed893a3f07933c64be7238a71bebce1d8032a7cb6e2f84da",
+          "status": "Failed"
+        }
+      ],
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/C06-entry-GUI.jpg",
+          "sha256": "4f80329340184538750fa6155c7e89e74efec2b3b73cd0812570e4bc610184c4"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C06-dialog-GUI.jpg",
+          "sha256": "3f8d1ac99a40d167d49f952c16fa8b198f47fccc06bc27de18a937e3a231a75b"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C06-record1-GUI.jpg",
+          "sha256": "031204ea3c445963d75fda7df2750af3971a885eab8fdcb9dce6c06ccbe5f4af"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C06-record2-GUI.jpg",
+          "sha256": "64acfe62af1657ba860b683fe03d7bbdd28aca96b47865d521dcd92b5037b216"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C06-filter-BD-GUI.jpg",
+          "sha256": "e2955c2a9dac974883ff7c3fc3ff6f260677d48dffe9fda44b615466b77a4c43"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C06-cold-native-dialog-GUI.jpg",
+          "sha256": "ba57d635bed9eaadaa59088e85fe629f2415baa70d7effc7870db06b64edf4f5"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C06-cold-native-undo-GUI.jpg",
+          "sha256": "407971ef1ec23d28625158274cd2883dfa045a0c680a0abeceb009d6dab65f38"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C06-cold-native-menu-redo-GUI.jpg",
+          "sha256": "e3fce4742456f3b04f24d881eee4d47e1f275b9faead4b0d4ab1d0380611b315"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C06-cold-records-overview-GUI.jpg",
+          "sha256": "d703108e789f4688cef56a001ee1a6c244250568e4915ccfa48c504b3c4ff61d"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C06-render.png",
+          "sha256": "17748029d190ed69ce0607a100e48b6270a948a338e3528476d43992ecfc47e9"
+        }
+      ],
+      "raw_capture_records": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-alias-before-undo-MCP.jpg",
+          "sha256": "ede94b6e699df81e82e1d62ac4ad03b13daed2e92939c41a31eded451b7d34fc"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-alias-dialog-MCP-GUI.jpg",
+          "sha256": "98fa535d32e7b0a2355bbe60749e3b4fd1eb0b3e8e24c2a0e491b200f85f3148"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-cold-native-dialog-GUI.jpg",
+          "sha256": "ba57d635bed9eaadaa59088e85fe629f2415baa70d7effc7870db06b64edf4f5"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-cold-native-import-GUI.jpg",
+          "sha256": "9d4f72b6899e95bbd2946e0cc04ebd8180330300ef79704d300c25038c8a4c28"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-cold-native-menu-redo-GUI.jpg",
+          "sha256": "e3fce4742456f3b04f24d881eee4d47e1f275b9faead4b0d4ab1d0380611b315"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-cold-native-redo-GUI.jpg",
+          "sha256": "42266866770ffbcee24d32c98e0932d6fec09947562c32d693468d9243217a1c"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-cold-native-undo-GUI.jpg",
+          "sha256": "407971ef1ec23d28625158274cd2883dfa045a0c680a0abeceb009d6dab65f38"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-cold-records-overview-GUI.jpg",
+          "sha256": "d703108e789f4688cef56a001ee1a6c244250568e4915ccfa48c504b3c4ff61d"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-dialog-GUI.jpg",
+          "sha256": "3f8d1ac99a40d167d49f952c16fa8b198f47fccc06bc27de18a937e3a231a75b"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-entry-GUI.jpg",
+          "sha256": "4f80329340184538750fa6155c7e89e74efec2b3b73cd0812570e4bc610184c4"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-filter-BD-GUI.jpg",
+          "sha256": "e2955c2a9dac974883ff7c3fc3ff6f260677d48dffe9fda44b615466b77a4c43"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-full-native-dialog-GUI.jpg",
+          "sha256": "aca61c349640b447c90cb9fc0639074e1dfe291f9cb39444c6a54dad78104bb7"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-full-native-import-GUI.jpg",
+          "sha256": "685a7673a529b3777be816a74cc1e435070d65b7be3e2486058ffa4bf48b9dd3"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-full-native-undo-GUI.jpg",
+          "sha256": "eb5f3f8b20fc0f386d6bcffa389e77cc2d2aa3e0747b239aff78e35805144850"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-native-undo-GUI.jpg",
+          "sha256": "3174835c455eb8ffba799693b80b7c9db2aaf849849bfbc4747a3436bdc6e7ae"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-record1-GUI.jpg",
+          "sha256": "031204ea3c445963d75fda7df2750af3971a885eab8fdcb9dce6c06ccbe5f4af"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-record2-GUI.jpg",
+          "sha256": "64acfe62af1657ba860b683fe03d7bbdd28aca96b47865d521dcd92b5037b216"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-third-before-undo-GUI.jpg",
+          "sha256": "f1ca1198be6e07bda3a0a3f978b5e5009358a7835d7bddad8f1787ce0adb7c53"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-third-redo-GUI.jpg",
+          "sha256": "241fff18d7aae73603a6265d2e26901d6dd2c658c73f4fe9c434842c35ea94f1"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-third-undo-GUI.jpg",
+          "sha256": "856398f08a6b14ec549d8f93d09e06ee9c20cb77bf05fe4511fa5aa1008ad516"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/screenshots/C06-undo-GUI.jpg",
+          "sha256": "3de1088857566b27e1ed459d7345845da31b987acf52b2bc227b7515de27c923"
+        }
+      ],
+      "checks": {
+        "native_import_and_row_identity_units": "Passed",
+        "native_BD_descending_filter": "Passed",
+        "MCP_27_independent_filter_sort_cases": "Passed",
+        "native_alias_undo_menu_redo": "Passed",
+        "shortcut_redo_observation": "Failed",
+        "three_paths_cold_38_files_33_arrays": "Passed",
+        "three_real_rerenders_exact_pixels": "Passed",
+        "visible_overview_and_render_inspection": "Passed",
+        "full_C_N_and_unified_qualification": "Not Run",
+        "independent_signature": "Not Run"
+      },
+      "diagnostic_resolution": "Source line trailing whitespace follows parser rstrip. Self-copy path script error fixed separately. Redo shortcut did not restore during CU attempts; fresh native Edit menu redo restores exact alias analysis and parent, so product fix not justified; failed observations retained.",
+      "project": {
+        "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/C06-final.blend",
+        "sha256": "41ceafb6b8d12f252ffe4106160df90534e17c761ff518828e911a15fbbdc233",
+        "files": 38,
+        "datasets": 3,
+        "arrays": 33
+      },
+      "moved_project": "outputs/projects/tutorial-cu-full/中文移动/C06-final/C06-final.blend",
+      "unpacked_project": "outputs/projects/tutorial-cu-full/unpacked/C06-final/C06-final.blend",
+      "scripts": {
+        "C06-filter-checks.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/scripts/C06-filter-checks.py",
+          "sha256": "bb81b0caa665abbab713ae97273a58f7a860b020f0edbb619e8ea3ea943d0878"
+        },
+        "C06-final-cold.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/scripts/C06-final-cold.py",
+          "sha256": "5932d8562d0a0b57f464f170c5e208f422edcdf65732fe8376c7962f13bdc406"
+        },
+        "C06-preserve.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/scripts/C06-preserve.py",
+          "sha256": "866138a2c21644736e0f0aeb8c3501a077e387e971710b54f1e07c42b6c914b3"
+        },
+        "launch-C06-cold.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/scripts/launch-C06-cold.py",
+          "sha256": "9c028997c8d8bbeb64bb524906381b3b228627f82c2cdb2a7c78d33778f66d26"
+        },
+        "launch-C06.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/scripts/launch-C06.py",
+          "sha256": "6b04d3fe31c138bcc08d6b2c490754f4accf5dd55b481bb5c9b50c6c4fb0165d"
+        },
+        "run-C06-final-cold.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/scripts/run-C06-final-cold.py",
+          "sha256": "38c07a8637a8e50cd8b46f260497f835ba172fe78cb1ee1a25984b728db6a7b3"
+        }
+      },
+      "processes_exited": [
+        412,
+        29060,
+        42592,
+        28056,
+        50404
+      ]
     }
   },
   "historical_partial_supplement": {

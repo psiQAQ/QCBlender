@@ -56,3 +56,5 @@ Blocked by: 01
 2026-10-02 C05/P02优化标注：PID44884实际点击创建当前版本视图，独立Mesh/树/标注数据/材质与步4保持Passed；MCP逐步独立NumPy距离/角度、文字步号、锚点与引线Passed（第1步0.990Å/106.000°，第4步0.989Å/100.037°）。合成退化与临时标注/层移除MCP单列Passed，GUI移除Not Run。12文件、2Dataset/8数组、5视图/8标注保全；20136/51556/7836原路径/中文移动/解包新进程冷读并重放四步Passed。3图紧接步骤、37登记项，原C02工程不变、全部进程退出。IRC及完整C/N/统一资格仍Not Run，02claimed、03pending。证据full/C05-followup/cold-chain.json。
 
 2026-10-02 C01独立密度：PID3392在2eddb6a候选新进程冷读175科学文件、9Dataset/221数组、17引用、7体积源Passed；总=Alpha+Beta、自旋=Alpha−Beta数组与单位/网格核对Passed，四张1920×1080重新渲染及直接视觉检查Passed。原92d498c保存工程/数据不变，进程退出。该密度检查点的移动/解包、C05 IRC、后续案例和统一资格仍Not Run；02claimed，03pending。证据full/C01-density-cold/readback-render.json。
+
+2026-10-02 C06：PID412/29060原生NBO Job2/block1、out与同SHA log、行1/2与BD筛选/排序及Edit菜单撤销重做Passed；27组合由MCP独立核对，快捷键失败单列保留不改写。38文件/3Dataset/33数组保全及ZIP核对，42592/28056/50404串行原地/中文移动/解包冷读与重渲染像素一致Passed，全进程退出。9截图和1渲染紧接步骤，40操作登记。产品未改；C07-C13、剩余C01/C05边界、统一资格与合并归档仍Not Run，02claimed、03pending。证据full/C06/final-cold-chain.json。

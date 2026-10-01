@@ -2857,6 +2857,206 @@
         ],
         "requires_current_result_assertions": true
       }
+    },
+    {
+      "id": "nbo-log-out-import-and-rows",
+      "title": "NBO Log/Out导入与逐行查看",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions with independently scoped MCP readback",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "P02 Job2 atoms for import; created NBO record object for row/filter actions",
+        "visible_entry": "仅选P02 Job2参考原子层；N侧栏→QCBlender→导入外部结果→NBO记录；对象属性→QCBlender→NBO Records",
+        "validated_scope": "out与同SHA log、Job2/block1；7轨道/2E2，行1/2原子/数值/单位/源行，无canonical MO映射",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/native-import-records.json",
+            "sha256": "638ccf50a3930d239f2300cee5065c680b074681333fb10f3c157d0e7ea03974",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/alias.json",
+            "sha256": "f3c473c5235abb6f8204f16e900de293d9e6be933292f1383943041457ef5ad0",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C06-entry-GUI.jpg",
+            "sha256": "4f80329340184538750fa6155c7e89e74efec2b3b73cd0812570e4bc610184c4"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C06-dialog-GUI.jpg",
+            "sha256": "3f8d1ac99a40d167d49f952c16fa8b198f47fccc06bc27de18a937e3a231a75b"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C06-record1-GUI.jpg",
+            "sha256": "031204ea3c445963d75fda7df2750af3971a885eab8fdcb9dce6c06ccbe5f4af"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C06-record2-GUI.jpg",
+            "sha256": "64acfe62af1657ba860b683fe03d7bbdd28aca96b47865d521dcd92b5037b216"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C06-cold-native-dialog-GUI.jpg",
+            "sha256": "ba57d635bed9eaadaa59088e85fe629f2415baa70d7effc7870db06b64edf4f5"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C06-cold-records-overview-GUI.jpg",
+            "sha256": "d703108e789f4688cef56a001ee1a6c244250568e4915ccfa48c504b3c4ff61d"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/blender/nbo.py": "67b548afac2b59fd18955a2c2f24407e465cdfe1afe1943db43a69e9fd1dfeef",
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/nbo.py": "6e68c96174803940f8012a54ba4b977c2df5792de45057345e3ec6597b89fd4f"
+      },
+      "fingerprint_review": "Review import operator, parser, browser callbacks, interfaces, Blender and dependencies; initial file list is not exhaustive.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "out与同SHA log、Job2/block1；7轨道/2E2，行1/2原子/数值/单位/源行，无canonical MO映射",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/final-cold-chain.json",
+            "sha256": "dfb05d3742e7b185f9877aca4d39553c87af22b8e8cb841748058f37d491222d",
+            "status": "Passed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nbo-browser-bd-filter-sort",
+      "title": "NBO浏览器BD筛选与降序",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions with independently scoped MCP readback",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "P02 Job2 atoms for import; created NBO record object for row/filter actions",
+        "visible_entry": "仅选NBO记录对象；对象属性→QCBlender→External Result Browser→应用筛选",
+        "validated_scope": "Orbital type BD、Occupancy high to low、E2 high to low；2/2输出；其他27组合由MCP单列",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/filters.json",
+            "sha256": "29d4228e057895a5dd1f481e3b9428500cd4d324729dbf7640164f00a37eb934",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C06-filter-BD-GUI.jpg",
+            "sha256": "e2955c2a9dac974883ff7c3fc3ff6f260677d48dffe9fda44b615466b77a4c43"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/blender/nbo.py": "67b548afac2b59fd18955a2c2f24407e465cdfe1afe1943db43a69e9fd1dfeef",
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/nbo.py": "6e68c96174803940f8012a54ba4b977c2df5792de45057345e3ec6597b89fd4f"
+      },
+      "fingerprint_review": "Review import operator, parser, browser callbacks, interfaces, Blender and dependencies; initial file list is not exhaustive.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Orbital type BD、Occupancy high to low、E2 high to low；2/2输出；其他27组合由MCP单列",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/final-cold-chain.json",
+            "sha256": "dfb05d3742e7b185f9877aca4d39553c87af22b8e8cb841748058f37d491222d",
+            "status": "Passed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nbo-import-native-menu-undo-redo",
+      "title": "NBO导入撤销与菜单重做",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions with independently scoped MCP readback",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "P02 Job2 atoms for import; created NBO record object for row/filter actions",
+        "visible_entry": "P02参考原子层导入相同log别名；3D View→Edit→撤销/重做",
+        "validated_scope": "原生导入、撤销去除别名、Edit菜单重做恢复完整记录/父对象；快捷键恢复失败单列，不登记成功",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/cold-native-menu-undo-redo.json",
+            "sha256": "a9851dc0140c03882544a1bd732ad60156ad638368b41bb1ec3bfdcc432ae82a",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C06-cold-native-undo-GUI.jpg",
+            "sha256": "407971ef1ec23d28625158274cd2883dfa045a0c680a0abeceb009d6dab65f38"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C06-cold-native-menu-redo-GUI.jpg",
+            "sha256": "e3fce4742456f3b04f24d881eee4d47e1f275b9faead4b0d4ab1d0380611b315"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/blender/nbo.py": "67b548afac2b59fd18955a2c2f24407e465cdfe1afe1943db43a69e9fd1dfeef",
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/nbo.py": "6e68c96174803940f8012a54ba4b977c2df5792de45057345e3ec6597b89fd4f"
+      },
+      "fingerprint_review": "Review import operator, parser, browser callbacks, interfaces, Blender and dependencies; initial file list is not exhaustive.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "原生导入、撤销去除别名、Edit菜单重做恢复完整记录/父对象；快捷键恢复失败单列，不登记成功",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C06/final-cold-chain.json",
+            "sha256": "dfb05d3742e7b185f9877aca4d39553c87af22b8e8cb841748058f37d491222d",
+            "status": "Passed"
+          }
+        ]
+      }
     }
   ]
 }
