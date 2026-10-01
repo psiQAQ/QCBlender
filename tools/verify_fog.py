@@ -32,6 +32,9 @@ if '--reopen-fog' in sys.argv:
     report = json.loads((OUT / 'report.json').read_text(encoding='utf-8'))
     obj = bpy.data.objects[report['object']]
     assert obj.qc_settings.volume is not None
+    modifier = obj.modifiers[0]
+    item = next(s for s in modifier.node_group.interface.items_tree if s.name == 'Material')
+    assert any(slot.material == modifier[item.identifier] for slot in obj.material_slots)
     actual = render('fog-reopened')
     previous = bpy.data.images.load(str(OUT / 'fog.png'), check_existing=False)
     try:
@@ -54,6 +57,11 @@ else:
     modifier = obj.modifiers[0]
     item = next(s for s in modifier.node_group.interface.items_tree if s.name == 'Material')
     mat = modifier[item.identifier]
+    assert len(obj.material_slots) == 1 and obj.material_slots[0].material == mat
+    obj.data.materials.clear()
+    assert fog._ensure_fog_material_slot(obj)
+    assert not fog._ensure_fog_material_slot(obj)
+    assert len(obj.material_slots) == 1 and obj.material_slots[0].material == mat
     assert mat['qc_transfer'].startswith('scale * abs(value)')
     assert fog.fog_material('electron_number_density')['qc_transfer'].startswith('scale * max(value, 0)')
     opacity = mat.node_tree.nodes['Optical Scale'].outputs[0]
@@ -100,7 +108,8 @@ else:
     assert hashlib.sha256(cache.read_bytes()).hexdigest() == digest
     project.save_project(OUT / 'fog.blend')
     report = {'status': 'Passed', 'blender': bpy.app.version_string,
-              'operator': 'Passed', 'zero_opacity': 'Passed', 'signed_color_render': 'Passed',
+              'material_slot_binding': 'Passed', 'operator': 'Passed',
+              'zero_opacity': 'Passed', 'signed_color_render': 'Passed',
               'source_cache_unchanged': 'Passed', 'cold_open_render': 'Not Run',
               'plane_box_clip_render': 'Passed', 'opacity_curve_render': 'Passed',
               'visible_pixels': int((visible[:, 3] > .05).sum()), 'object': obj.name}

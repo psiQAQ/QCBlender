@@ -69,11 +69,13 @@ class CopyPolicy(unittest.TestCase):
         states = {}
         for obj, mat in ((source, source_material), (first, original), (second, original)):
             modifier = {'material': mat}
+            obj.material_slots = [types.SimpleNamespace(material=mat)]
             item = types.SimpleNamespace(identifier='material', socket_type='NodeSocketMaterial')
             states[id(obj)] = {'obj': obj, 'kind': 'field', 'mapping': (False, False),
                                'modifier': modifier, 'sockets': {'Positive Material': item},
                                'values': {'Positive Material': mat},
-                               'materials': {'Positive Material': (mat, [('socket', modifier, 'material')])}}
+                               'materials': {'Positive Material': (mat, [('socket', modifier, 'material'),
+                                                                        ('slot', obj.material_slots[0], None)])}}
         views = types.ModuleType('qcblender.blender.views')
         views.node_by_type = lambda nodes, kind: None
         with (patch.object(copy, '_state', side_effect=lambda obj: states[id(obj)]),
@@ -84,6 +86,79 @@ class CopyPolicy(unittest.TestCase):
         self.assertIsNot(first_material, second_material)
         self.assertIsNot(first_material, original)
         self.assertIs(states[id(source)]['modifier']['material'], source_material)
+        self.assertIs(first.material_slots[0].material, first_material)
+        self.assertIs(second.material_slots[0].material, second_material)
+        self.assertIs(source.material_slots[0].material, source_material)
+
+    def test_fog_material_refs_preserve_unrelated_and_missing_slots(self):
+        mat = {'qc_fog': True}
+        mat = types.SimpleNamespace(use_nodes=True, get=mat.get)
+        other = types.SimpleNamespace(use_nodes=True)
+        obj = View('fog')
+        obj['qc_view_kind'] = 'fog'
+        matched = types.SimpleNamespace(material=mat)
+        unrelated = types.SimpleNamespace(material=other)
+        obj.material_slots = [unrelated, matched, types.SimpleNamespace(material=None)]
+
+        class Modifier(dict):
+            node_group = types.SimpleNamespace(nodes=[])
+
+        modifier = Modifier(material=mat)
+        sockets = {'Material': types.SimpleNamespace(identifier='material', default_value=mat)}
+        refs = copy._materials(obj, modifier, sockets, (False, False))['Material'][1]
+        self.assertEqual(refs, [('socket', modifier, 'material'), ('slot', matched, None)])
+        self.assertIs(unrelated.material, other)
+        obj.material_slots = []
+        refs = copy._materials(obj, modifier, sockets, (False, False))['Material'][1]
+        self.assertEqual(refs, [('socket', modifier, 'material')])
+
+    def test_material_slot_write_failure_restores_all_target_references(self):
+        class Material:
+            use_nodes = True
+
+            def __init__(self):
+                self.node_tree = types.SimpleNamespace(nodes=[])
+
+            def get(self, key):
+                return None
+
+            def copy(self):
+                return Material()
+
+        original, source_material = Material(), Material()
+
+        class RejectingSlot:
+            material = property(lambda self: original)
+
+            @material.setter
+            def material(self, value):
+                if value is not original:
+                    raise RuntimeError('slot write failed')
+
+        source, first, second = View('source'), View('first'), View('second')
+        states = {}
+        for obj, mat in ((source, source_material), (first, original), (second, original)):
+            modifier = {'material': mat}
+            slot = RejectingSlot() if obj is second else types.SimpleNamespace(material=mat)
+            obj.material_slots = [slot]
+            item = types.SimpleNamespace(identifier='material', socket_type='NodeSocketMaterial')
+            states[id(obj)] = {'obj': obj, 'kind': 'field', 'mapping': (False, False),
+                               'modifier': modifier, 'sockets': {'Positive Material': item},
+                               'values': {'Positive Material': mat},
+                               'materials': {'Positive Material': (mat, [('socket', modifier, 'material'),
+                                                                        ('slot', slot, None)])}}
+        views = types.ModuleType('qcblender.blender.views')
+        views.node_by_type = lambda nodes, kind: None
+        with (patch.object(copy, '_state', side_effect=lambda obj: states[id(obj)]),
+              patch.dict(sys.modules, {'qcblender.blender.views': views}),
+              patch.object(copy.bpy.data.materials, 'remove') as remove):
+            with self.assertRaisesRegex(RuntimeError, 'slot write failed'):
+                copy.copy_parameters(source, [first, second], False, True, False)
+        for obj in (first, second):
+            self.assertIs(states[id(obj)]['modifier']['material'], original)
+            self.assertIs(obj.material_slots[0].material, original)
+        self.assertIs(states[id(source)]['modifier']['material'], source_material)
+        self.assertEqual(remove.call_count, 2)
 
     def test_standard_socket_default_need_not_be_explicit_modifier_property(self):
         items = [types.SimpleNamespace(name=name, identifier='input_' + str(i),

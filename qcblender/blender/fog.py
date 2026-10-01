@@ -138,6 +138,7 @@ def fog_view(source):
     tree = bpy.data.node_groups.new('QC Fog View v1', 'GeometryNodeTree')
     tree.is_modifier = True
     mat = fog_material(json.loads(source['qc_field'])['quantity'])
+    obj.data.materials.append(mat)
     socket(tree, 'Material', 'NodeSocketMaterial', default=mat)
     socket(tree, 'Geometry', 'NodeSocketGeometry', 'OUTPUT')
     inputs, output = tree.nodes.new('NodeGroupInput'), tree.nodes.new('NodeGroupOutput')
@@ -156,6 +157,59 @@ def fog_view(source):
     bpy.context.view_layer.objects.active = obj
     obj.select_set(True)
     return obj
+
+
+def _ensure_fog_material_slot(obj):
+    if (obj.get('qc_view_kind') != 'fog' or obj.type != 'MESH'
+            or obj.library or not obj.is_editable or obj.data.library or not obj.data.is_editable):
+        return False
+    from .graph import view_modifier
+    try:
+        modifier = view_modifier(obj)
+    except ValueError:
+        return False
+    tree = modifier.node_group
+    groups = [node for node in tree.nodes if node.bl_idname == 'GeometryNodeGroup'
+              and node.node_tree and node.node_tree.get('qc_asset_id') == 'qc.volume_fog.v1']
+    inputs = [item for item in tree.interface.items_tree if item.item_type == 'SOCKET'
+              and item.in_out == 'INPUT' and item.name == 'Material'
+              and item.socket_type == 'NodeSocketMaterial']
+    if len(groups) != 1 or len(inputs) != 1:
+        return False
+    item = inputs[0]
+    material_input = groups[0].inputs.get('Material')
+    if material_input is None or len(material_input.links) != 1:
+        return False
+    source = material_input.links[0].from_socket
+    if source.node.bl_idname != 'NodeGroupInput' or source.identifier != item.identifier:
+        return False
+    mat = modifier.get(item.identifier, item.default_value)
+    if not mat or not mat.use_nodes or not mat.get('qc_fog'):
+        return False
+    if any(slot.material == mat for slot in obj.material_slots):
+        return False
+    obj.data.materials.append(mat)
+    return True
+
+
+@bpy.app.handlers.persistent
+def _restore_fog_material_slots(_unused=None):
+    for obj in bpy.data.objects:
+        _ensure_fog_material_slot(obj)
+
+
+def register():
+    if _restore_fog_material_slots not in bpy.app.handlers.load_post:
+        bpy.app.handlers.load_post.append(_restore_fog_material_slots)
+    if not bpy.app.timers.is_registered(_restore_fog_material_slots):
+        bpy.app.timers.register(_restore_fog_material_slots, first_interval=0)
+
+
+def unregister():
+    if _restore_fog_material_slots in bpy.app.handlers.load_post:
+        bpy.app.handlers.load_post.remove(_restore_fog_material_slots)
+    if bpy.app.timers.is_registered(_restore_fog_material_slots):
+        bpy.app.timers.unregister(_restore_fog_material_slots)
 
 
 class QCBLENDER_OT_fog(bpy.types.Operator):

@@ -294,7 +294,10 @@ def _materials(obj, modifier, sockets, mapping):
                 raise ValueError(f'{name} is missing a node material')
             if (obj.get('qc_view_kind') == 'fog') != bool(mat.get('qc_fog')):
                 raise ValueError(f'{name} is not the expected QC material')
-            roles[name] = (mat, [('socket', modifier, sockets[name].identifier)])
+            refs = [('socket', modifier, sockets[name].identifier)]
+            if obj.get('qc_view_kind') == 'fog':
+                refs.extend(('slot', slot, None) for slot in obj.material_slots if slot.material == mat)
+            roles[name] = (mat, refs)
     tree = modifier.node_group
     if mapping[0]:
         groups = [node for node in tree.nodes if node.bl_idname == 'GeometryNodeGroup'
@@ -505,10 +508,13 @@ def copy_parameters(source_obj, targets, geometry=True, appearance=True, numeric
                 modifier[key] = source['values'][name]
             for role, clone in plan['copies'].items():
                 for ref_kind, owner, key in target['materials'][role][1]:
-                    old = owner.get(key, _MISSING) if ref_kind == 'socket' else owner.default_value
+                    old = (owner.get(key, _MISSING) if ref_kind == 'socket' else
+                           owner.material if ref_kind == 'slot' else owner.default_value)
                     changes.append((ref_kind, owner, key, old))
                     if ref_kind == 'socket':
                         owner[key] = clone
+                    elif ref_kind == 'slot':
+                        owner.material = clone
                     else:
                         owner.default_value = clone
             target['obj'].update_tag()
@@ -519,6 +525,8 @@ def copy_parameters(source_obj, targets, geometry=True, appearance=True, numeric
                     del owner[key]
                 else:
                     owner[key] = old
+            elif ref_kind == 'slot':
+                owner.material = old
             else:
                 owner.default_value = old
         for plan in plans:

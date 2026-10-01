@@ -10,11 +10,12 @@ def register():
     bpy.types.Object.qc_settings = bpy.props.PointerProperty(type=QCViewSettings)
     from .blender.source_browser import refresh_loaded_sources
     from .blender.editor_ui import object_context_menu
-    from .blender import asset_library, charts, interaction, result_browser
+    from .blender import asset_library, charts, fog, interaction, result_browser
     try:
         asset_library.register()
         interaction.register_tool()
         charts.register()
+        fog.register()
         result_browser.attach_properties()
         bpy.app.handlers.load_post.append(refresh_loaded_sources)
         bpy.app.handlers.save_post.append(refresh_loaded_sources)
@@ -44,9 +45,10 @@ def unregister():
     if _hooks_registered:
         bpy.types.VIEW3D_MT_object_context_menu.remove(object_context_menu)
         _hooks_registered = False
-    from .blender import asset_library, charts, interaction, result_browser
+    from .blender import asset_library, charts, fog, interaction, result_browser
     result_browser.detach_properties()
     charts.unregister()
+    fog.unregister()
     interaction.unregister_tool()
     asset_library.unregister()
     _metadata.clear()

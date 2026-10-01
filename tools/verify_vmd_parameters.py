@@ -322,18 +322,32 @@ def check_copy(out):
     fog = module('blender.fog').fog_view(source)
     fog.hide_render = True
     fog_target = layers.copy_layer(fog, bpy.context.collection)
-    source_nodes = copying._material_nodes(copying._state(fog)['materials']['Material'][0])
-    target_nodes = copying._material_nodes(copying._state(fog_target)['materials']['Material'][0])
+    source_mat = copying._state(fog)['materials']['Material'][0]
+    target_mat = copying._state(fog_target)['materials']['Material'][0]
+    assert fog.material_slots[0].material == source_mat
+    assert fog_target.material_slots[0].material == target_mat and target_mat != source_mat
+    unrelated = bpy.data.materials.new('Fog unrelated slot')
+    fog_target.data.materials.append(unrelated)
+    source_nodes = copying._material_nodes(source_mat)
+    target_nodes = copying._material_nodes(target_mat)
     source_nodes['Opacity Scale'].outputs[0].default_value = 31
     target_nodes['Plane Enabled'].outputs[0].default_value = 1
     target_nodes['Plane Origin'].inputs[0].default_value = 2
     activate(fog)
     fog_target.select_set(True)
     assert bpy.ops.qcblender.copy_display_parameters() == {'FINISHED'}
-    target_nodes = copying._material_nodes(copying._state(fog_target)['materials']['Material'][0])
+    copied_mat = copying._state(fog_target)['materials']['Material'][0]
+    assert fog_target.material_slots[0].material == copied_mat
+    assert fog_target.material_slots[1].material == unrelated
+    assert copied_mat != target_mat and copied_mat != source_mat
+    target_nodes = copying._material_nodes(copied_mat)
     assert target_nodes['Opacity Scale'].outputs[0].default_value == 31
     assert target_nodes['Plane Enabled'].outputs[0].default_value == 1
     assert target_nodes['Plane Origin'].inputs[0].default_value == 2
+    fog_target.data.materials.clear()
+    assert bpy.ops.qcblender.copy_display_parameters() == {'FINISHED'}
+    assert len(fog_target.material_slots) == 0
+    assert copying._state(fog_target)['materials']['Material'][0] != source_mat
     # Atomic selection is local to the target, including legacy saved charge views.
     atoms = next(obj for obj in bpy.context.scene.objects if obj.get('qc_view_kind') == 'atoms')
     activate(atoms)
