@@ -1344,6 +1344,30 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    预期/需记录：两符号与三样式确实变化；各量符号含义正确。
 
+   公共组手动连接：先在C13的场显示对象上执行“复制当前显示”，保持副本活动；切换到Geometry Nodes编辑器，修改器选择该副本的显示树。保留原对象和原树。通过 **添加 → 表示 → 表面** 分别添加 **QC Style Isosurface v3** 和 **QC Surface Representation**。把树中指向对应Volume源的Object Info的Geometry输出拖到新等值面组的Volume输入，等值面Geometry输出拖到表面表示Geometry输入，表面表示Geometry输出拖到该副本Group Output的Geometry输入。新等值面组Style保持0，避免两层重复转换。
+
+   ![Agent实际添加菜单：表示/表面公共资产](screenshot/N04-01-catalog.jpg)
+
+   在新等值面节点上输入Isovalue=0.003（P05 Pair1/Total，electron/bohr³），正负Phase均开启；需要颜色时在Positive Material/Negative Material选择副本已有的正/负材质。表面表示Style依次设0、1、2，记录实际显示和三次截图；返回需要保留的样式后保存。
+
+   ![Agent实际Volume与输出接线](screenshot/N04-02-iso-linked.jpg)
+
+   ![Agent原生输入Isovalue=0.003](screenshot/N04-03-isovalue.jpg)
+
+   ![Agent实际连接独立表面表示分支；MCP辅助对象和材质准备单列](screenshot/N05-01-surface-linked.jpg)
+
+   ![Agent原生Style=1；独立边数断言Passed](screenshot/N05-02-wire.jpg)
+
+   ![Agent原生Style=2；独立顶点数断言Passed](screenshot/N05-03-points.jpg)
+
+   维护者渲染：以下仅显示独立公共分支，原层在诊断渲染期间临时隐藏，随后完全恢复。MCP原生求值得到实体4770顶点/4762面，线框152384顶点/76192面，点200340顶点/381600面；相关参数、接口和冷读报告见验证索引 `remaining_public_surface_assets`。
+
+   ![MCP原生渲染：公共实体分支](screenshot/N04-style-0.png)
+
+   ![MCP原生渲染：公共线框分支](screenshot/N04-style-1.png)
+
+   ![MCP原生渲染：公共点分支](screenshot/N04-style-2.png)
+
    [用户截图待引用：N04，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
 
 5. **N05 独立等值与透明度**：C01/C13场；关Link Thresholds、改两阈值；材质属性 → QCBlender · 节点材质 → Positive Opacity / Negative Opacity分别调两透明度。
@@ -1443,6 +1467,16 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 10. **N10 QC Style Volume Fog**：C01自旋雾；几何表示/颜色映射/材质控制。
 
    预期/需记录：颜色/阈值/不透明度变化，全透明无雾。
+
+   公共组手动连接：在C01已创建的自旋雾副本上保持活动，Geometry Nodes编辑器选择副本的显示修改器；通过 **添加 → 表示 → 体积 → QC Style Volume Fog v1** 添加公共组。Object Info的Geometry输出接其Volume输入，公共组Geometry输出接该副本Group Output。Material选择对应雾材质；该组只赋材质，颜色/阈值/Opacity Scale在材质面板或其着色树中调整，科学字段不改变。
+
+   ![Agent实际体积公共资产添加菜单](screenshot/N10-01-catalog.jpg)
+
+   ![Agent实际两条Geometry接线；signed光学材质由MCP另行准备](screenshot/N10-02-fog-linked.jpg)
+
+   维护者补验使用C13真实Pair1/Total带符号变形密度的独立Volume分支。Opacity Scale=0渲染全透明，40有非零alpha；本例Eevee光照下RGB偏暗，另用Cycles16 samples/640×360检查可见雾。下图是低采样诊断，参数和MCP渲染工具身份见索引，不作为C01用户点击或科研签名。48文件/3Dataset/66数组与两个内嵌节点库在新进程冷读通过，原工程和科学数组未变。
+
+   ![MCP原生Cycles诊断：真实带符号变形密度雾，光学缩放40](screenshot/N10-fog-Cycles-40.png)
 
    [用户截图待引用：N10，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
 

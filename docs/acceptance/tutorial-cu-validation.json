@@ -558,7 +558,7 @@
     "docs/acceptance/tutorial-validation.json",
     "docs/acceptance/cleanup-validation.json"
   ],
-  "remaining_click_steps": "Remaining three public assets (qc.isosurface.v3/qc.surface_style.v1/qc.volume_fog.v1) independent Add/connect, same-final-source unified qualification, main merge and preservation-first archive/cleanup. C08-C12 native Undo/Redo and real internal field/recovery boundaries Passed at deb9416/c736bb9; user/scientific signatures remain Not Run.",
+  "remaining_click_steps": "Three remaining public assets independent Add/connect and C08-C12 native Undo/Redo Passed at deb9416/c736bb9. Remaining: full coverage audit, same-final-source unified qualification, main merge and preservation-first archive/cleanup. User/scientific signatures remain Not Run.",
   "cleanup": {
     "status": "Passed",
     "scope": "This screenshot supplement only; full GUI task remains claimed",
@@ -6246,6 +6246,154 @@
         "independent_signature": "Not Run"
       },
       "rebuild": "Run retained launch-undo-case.py for one case at a time using recorded locked installation; apply undo-case-MCP.py phases prepare/undo/redo/restore in separate MCP calls, then saved exact-PID close script; run run-undo-cold.py with new paths and preservation manifests. Evidence scripts do not replace native undo with an emulation."
+    },
+    "remaining_public_surface_assets": {
+      "status": "Passed",
+      "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+      "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+      "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+      "scope": "Independent Add/connect of three catalog assets through actual Computer Use, new-branch native scientific binding and material preparation through MCP, fixed interfaces and independent geometry oracle, portable save and new serial cold process. All nine public assets now have recorded first Add/connect scope; no independent human signature.",
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/completion.json",
+          "sha256": "5b89f0e576213ae12628b80f1d0e3701e9a6e5652fb0b77d5f8451f6698ba8aa",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/iso-GUI.json",
+          "sha256": "45b08dacecffcaeb324a4ca32b22bb3a9ea0d1ce39ef473f3c093340ff3fafc4",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/surface-GUI.json",
+          "sha256": "a628ed0c1f6bc3bea02506c8683541ebd232307e76c71ab8b824ea0a23d5bf1c",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/surface-wire-GUI.json",
+          "sha256": "d92e506f69a0f4f6138ec66673b3e07ef1d1c1351d168c554a3d3c99eb006b86",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/surface-points-GUI.json",
+          "sha256": "1e629d0f0cab3499bd4300a9d45cedffa43cb64ac29e614009ab66f3906a2b96",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/fog-GUI.json",
+          "sha256": "0dfc334710ca2d370d13dd7f8e4114df907fec4a9850fe409f8a44dc61b6a19c",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/fog-scaffold.json",
+          "sha256": "f66d10ae34eb0d602507164fcc645f02efff6d1f266216a5e99af6e70457efec",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/checks-MCP.json",
+          "sha256": "65ce069964ff6aace4127f2576e50872c248748941e042bd35e67d660d243b01",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/render-MCP.json",
+          "sha256": "e8f5539268fa219f8b0719153552aeab77fccf92c918d40c4573a776d09e42a5",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/fog-Cycles-MCP.json",
+          "sha256": "a9da7d6db28fb1f206b236a7cb86117fd2e3d432f2b3b696f5fe17e20b74abac",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/preservation.json",
+          "sha256": "e6a1ece6ad284ad4ee71e903c4153715726fe970bb9c620431e0f20b4a98a719",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/project-path-map.json",
+          "sha256": "17f8309107911d7eae17a10cdb6d48a470b5a167d6e5b57342b19159195cb105",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/cold-readback.json",
+          "sha256": "bfd234e4c42237168dce03df456d6630e6ca3105b871b08e887937bd7cec6f6f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/cold-exit.json",
+          "sha256": "ead112f0f3a81f5c7e576e52e0e9df1ceeb8d107695305ce91aa76367b774c79",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/close-confirmed.json",
+          "sha256": "1c103dd21819b98798bf64c169172b0da25a4402a7fa1f74c67234b60eb56d35",
+          "status": "Passed"
+        }
+      ],
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/N04-01-catalog.jpg",
+          "sha256": "701bd8fa744c0171ba36b7445975e20a2a3e9b20d1855ebdc54d1baf2b328ea7"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N04-02-iso-linked.jpg",
+          "sha256": "c4cb1dbc108d9d49689959d0655d241e63f2c09d020ee0edf6c2e576ac3bb921"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N04-03-isovalue.jpg",
+          "sha256": "471f807e25686a7ba6aed72051c85290e4ce06a1d43bc47f39c63200720b9168"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N05-01-surface-linked.jpg",
+          "sha256": "2596c2957cf996f6ce8f6410b72ecacc73d5ecb7733fb11f4180ca811a711d0b"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N05-02-wire.jpg",
+          "sha256": "d2391872eba1d26f10005264b721637a9968b1fc87e780bd2d15ed82c26356a3"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N05-03-points.jpg",
+          "sha256": "088c9c0b7967eabb4b96586d5fcb1752745b487b3731c2ca532e181759083c78"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N10-01-catalog.jpg",
+          "sha256": "ad8ef710ce92e669082adcfa11192c7120a5ebd064635f555964887fcf9d3af5"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N10-02-fog-linked.jpg",
+          "sha256": "b2d7994bbc8191b7f79ca6d0bfd48b94181f51124e75fe5d54ed07bf0ce24cff"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N04-style-0.png",
+          "sha256": "646796b827485fecd69f89f1f5b1250a58b540d446e4daf632cd1897e3fda236"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N04-style-1.png",
+          "sha256": "40ae587f7ddf9f5ab3f1f36bbe1058f21fce6c24a31284f639c184e3912f5562"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N04-style-2.png",
+          "sha256": "dfaab27f6aa4e05b7a987bf4e465be5dc6daf3d7f043c483453bfebe4496959e"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N10-fog-Cycles-40.png",
+          "sha256": "008685c68c97199971a80b2390eee16d316e7829bf4a3502b4f8d6f33f1e4593"
+        }
+      ],
+      "project": "D:\\workspace\\QCBlender\\outputs\\projects\\tutorial-cu-full\\cases\\public-surfaces\\N04-N10-public-surfaces.blend",
+      "files": 48,
+      "objects": 19,
+      "datasets": 3,
+      "arrays": 66,
+      "cold_pid": 14372,
+      "public_library_original_paths_unavailable": true,
+      "original_project_and_scene_and_raw_arrays_unchanged": true,
+      "all_processes_exited": true,
+      "visual_notes": "Surface solid/wire/point renders directly inspected; Eevee fog alpha zero/nonzero passed but current lighting RGB is dark; Cycles16 diagnostic visibly shows signed fog. Rendering preparation is MCP, catalog Add/core links are actual Computer Use.",
+      "rebuild": "From retained C13 project/input and locked candidate, prepare independent auxiliary carriers, follow N04/N10 catalog Add/core links, run scripts/check-public-surfaces.py phases checks/renders/save through MCP, save normally and close exact GUI PID, run run-public-cold.py in new output locations. Helper snapshot and commands are retained in evidence/scripts.",
+      "unified_qualification": "Not Run",
+      "user_walkthrough": "Not Run",
+      "independent_signature": "Not Run"
     }
   },
   "historical_partial_supplement": {

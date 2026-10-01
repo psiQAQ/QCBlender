@@ -4605,6 +4605,248 @@
         ],
         "limitations": "用户复做及独立科研签署 Not Run；异步开始不是恢复成功，必须等待终态并核对绑定和数组"
       }
+    },
+    {
+      "id": "public-isosurface-add-connect",
+      "title": "公共等值面节点独立添加与连接",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native catalog Add, placement and core socket drags; MCP preparation/assertions separately recorded",
+        "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+        "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+        "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "单PID52692中原C13工程的独立空Mesh载体，MCP辅助Object Info/Group Output与科学绑定；原场Volume对象→公共组→输出",
+        "visible_entry": "Geometry Nodes → 添加 → 表示 → 表面 → QC Style Isosurface v3",
+        "validated_scope": "真实P05 Pair1/Total Volume输入，两条实际GUI连接，Isovalue=.003原生输入；独立MCP验证正负相/阈值/透明度",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/iso-GUI.json",
+            "sha256": "45b08dacecffcaeb324a4ca32b22bb3a9ea0d1ce39ef473f3c093340ff3fafc4",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/checks-MCP.json",
+            "sha256": "65ce069964ff6aace4127f2576e50872c248748941e042bd35e67d660d243b01",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/completion.json",
+            "sha256": "5b89f0e576213ae12628b80f1d0e3701e9a6e5652fb0b77d5f8451f6698ba8aa",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/N04-01-catalog.jpg",
+            "sha256": "701bd8fa744c0171ba36b7445975e20a2a3e9b20d1855ebdc54d1baf2b328ea7"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N04-02-iso-linked.jpg",
+            "sha256": "c4cb1dbc108d9d49689959d0655d241e63f2c09d020ee0edf6c2e576ac3bb921"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N04-03-isovalue.jpg",
+            "sha256": "471f807e25686a7ba6aed72051c85290e4ce06a1d43bc47f39c63200720b9168"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/assets.py": "7b9738469040f90dc915d45c2322d29029f44c5453db2e0531eb12980ca46536",
+        "qcblender/blender/fog.py": "5473cd6b27afd12e7ea949582db385dc98fae92b877993375f4a669428be6bf0",
+        "qcblender/blender/asset_library.py": "3d22ca8e6c41f0fc6c0c141986cc6e964e59858507c01a7daa8da96dc493f6a4",
+        "qcblender/asset_catalog.py": "6ea330239015f93758c75b207870de1ff57facf1c8d5bd418fcdeb35c5ac9b85",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "dependencies.lock.json": "661ac6d6ad41071591b3dda24edb9148363c535e70f6f648128bfd99e8d96e67",
+        "science-sources.lock.json": "05d330d49e4cc9cbe110ecff7fd714a3ef05667b915b14e8abb8c9ef2d5a9165",
+        "assets/nodes.blend": "57a4f8c4fb547aa74fa6cf0df54502ef0b5ef0fbd5b1b5b029d19df6a1b180ab"
+      },
+      "fingerprint_review": "Review transitive helper, native Blender version, catalog library content, interface and dependencies before reuse. Frozen three group signatures and fixed Socket contracts are in checks-MCP.json.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "真实P05 Pair1/Total Volume输入，两条实际GUI连接，Isovalue=.003原生输入；独立MCP验证正负相/阈值/透明度",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/checks-MCP.json",
+            "sha256": "65ce069964ff6aace4127f2576e50872c248748941e042bd35e67d660d243b01",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/cold-readback.json",
+            "sha256": "bfd234e4c42237168dce03df456d6630e6ca3105b871b08e887937bd7cec6f6f",
+            "status": "Passed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "public-surface-style-add-connect",
+      "title": "公共表面表示节点独立添加与连接",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native catalog Add, placement and core socket drags; MCP preparation/assertions separately recorded",
+        "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+        "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+        "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "单PID52692中原C13工程的独立空Mesh载体，MCP辅助Object Info/Group Output与科学绑定；原场Volume对象→公共组→输出",
+        "visible_entry": "Geometry Nodes → 添加 → 表示 → 表面 → QC Surface Representation",
+        "validated_scope": "等值面Geometry→Surface Representation→Group Output实际GUI连接，原生Style0/1/2；MCP按源边数与顶点数独立核对线框/点",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/surface-GUI.json",
+            "sha256": "a628ed0c1f6bc3bea02506c8683541ebd232307e76c71ab8b824ea0a23d5bf1c",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/checks-MCP.json",
+            "sha256": "65ce069964ff6aace4127f2576e50872c248748941e042bd35e67d660d243b01",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/completion.json",
+            "sha256": "5b89f0e576213ae12628b80f1d0e3701e9a6e5652fb0b77d5f8451f6698ba8aa",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/N05-01-surface-linked.jpg",
+            "sha256": "2596c2957cf996f6ce8f6410b72ecacc73d5ecb7733fb11f4180ca811a711d0b"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N05-02-wire.jpg",
+            "sha256": "d2391872eba1d26f10005264b721637a9968b1fc87e780bd2d15ed82c26356a3"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N05-03-points.jpg",
+            "sha256": "088c9c0b7967eabb4b96586d5fcb1752745b487b3731c2ca532e181759083c78"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/assets.py": "7b9738469040f90dc915d45c2322d29029f44c5453db2e0531eb12980ca46536",
+        "qcblender/blender/fog.py": "5473cd6b27afd12e7ea949582db385dc98fae92b877993375f4a669428be6bf0",
+        "qcblender/blender/asset_library.py": "3d22ca8e6c41f0fc6c0c141986cc6e964e59858507c01a7daa8da96dc493f6a4",
+        "qcblender/asset_catalog.py": "6ea330239015f93758c75b207870de1ff57facf1c8d5bd418fcdeb35c5ac9b85",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "dependencies.lock.json": "661ac6d6ad41071591b3dda24edb9148363c535e70f6f648128bfd99e8d96e67",
+        "science-sources.lock.json": "05d330d49e4cc9cbe110ecff7fd714a3ef05667b915b14e8abb8c9ef2d5a9165",
+        "assets/nodes.blend": "57a4f8c4fb547aa74fa6cf0df54502ef0b5ef0fbd5b1b5b029d19df6a1b180ab"
+      },
+      "fingerprint_review": "Review transitive helper, native Blender version, catalog library content, interface and dependencies before reuse. Frozen three group signatures and fixed Socket contracts are in checks-MCP.json.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "等值面Geometry→Surface Representation→Group Output实际GUI连接，原生Style0/1/2；MCP按源边数与顶点数独立核对线框/点",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/checks-MCP.json",
+            "sha256": "65ce069964ff6aace4127f2576e50872c248748941e042bd35e67d660d243b01",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/cold-readback.json",
+            "sha256": "bfd234e4c42237168dce03df456d6630e6ca3105b871b08e887937bd7cec6f6f",
+            "status": "Passed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "public-volume-fog-add-connect",
+      "title": "公共体积雾节点独立添加与连接",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native catalog Add, placement and core socket drags; MCP preparation/assertions separately recorded",
+        "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+        "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+        "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "单PID52692中原C13工程的独立空Mesh载体，MCP辅助Object Info/Group Output与科学绑定；原场Volume对象→公共组→输出",
+        "visible_entry": "Geometry Nodes → 添加 → 表示 → 体积 → QC Style Volume Fog v1",
+        "validated_scope": "真实P05 signed deformation field；两条实际GUI连接；光学材质由MCP另行准备，零/非零alpha与Cycles可见结果为MCP原生渲染",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/fog-GUI.json",
+            "sha256": "0dfc334710ca2d370d13dd7f8e4114df907fec4a9850fe409f8a44dc61b6a19c",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/checks-MCP.json",
+            "sha256": "65ce069964ff6aace4127f2576e50872c248748941e042bd35e67d660d243b01",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/completion.json",
+            "sha256": "5b89f0e576213ae12628b80f1d0e3701e9a6e5652fb0b77d5f8451f6698ba8aa",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/N10-01-catalog.jpg",
+            "sha256": "ad8ef710ce92e669082adcfa11192c7120a5ebd064635f555964887fcf9d3af5"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N10-02-fog-linked.jpg",
+            "sha256": "b2d7994bbc8191b7f79ca6d0bfd48b94181f51124e75fe5d54ed07bf0ce24cff"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/assets.py": "7b9738469040f90dc915d45c2322d29029f44c5453db2e0531eb12980ca46536",
+        "qcblender/blender/fog.py": "5473cd6b27afd12e7ea949582db385dc98fae92b877993375f4a669428be6bf0",
+        "qcblender/blender/asset_library.py": "3d22ca8e6c41f0fc6c0c141986cc6e964e59858507c01a7daa8da96dc493f6a4",
+        "qcblender/asset_catalog.py": "6ea330239015f93758c75b207870de1ff57facf1c8d5bd418fcdeb35c5ac9b85",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "dependencies.lock.json": "661ac6d6ad41071591b3dda24edb9148363c535e70f6f648128bfd99e8d96e67",
+        "science-sources.lock.json": "05d330d49e4cc9cbe110ecff7fd714a3ef05667b915b14e8abb8c9ef2d5a9165",
+        "assets/nodes.blend": "57a4f8c4fb547aa74fa6cf0df54502ef0b5ef0fbd5b1b5b029d19df6a1b180ab"
+      },
+      "fingerprint_review": "Review transitive helper, native Blender version, catalog library content, interface and dependencies before reuse. Frozen three group signatures and fixed Socket contracts are in checks-MCP.json.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "真实P05 signed deformation field；两条实际GUI连接；光学材质由MCP另行准备，零/非零alpha与Cycles可见结果为MCP原生渲染",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/checks-MCP.json",
+            "sha256": "65ce069964ff6aace4127f2576e50872c248748941e042bd35e67d660d243b01",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/cold-readback.json",
+            "sha256": "bfd234e4c42237168dce03df456d6630e6ca3105b871b08e887937bd7cec6f6f",
+            "status": "Passed"
+          }
+        ]
+      }
     }
   ]
 }

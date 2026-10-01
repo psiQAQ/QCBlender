@@ -35,3 +35,5 @@ Blocked by: none
 2026-10-02 C13真实Pair1/Total导入GUI Passed；独立133950个Cube值/六原子/表绑定、10显示组合、两个真实异步错误拒绝及独立复制/原生撤销重做MCP Passed。48文件/3Dataset/66数组/1VDB/4引用保全，三处串行冷读和12次像素一致渲染Passed，全进程退出。11图紧接步骤，登记62项；BOHR常数/接口缩写/空材质测试诊断保留。C12可见启动自动缓存Passed另列；完整教程剩余边界、统一资格和合并归档待完成。证据full/C13/cold-chain.json。
 
 2026-10-02：真实内部核区无效掩码的探针拒绝/9点剖面断线与CSV留空、洋红实渲染、84段等值线独立单元守卫Passed；配对Cube网格origin诊断偏移明确拒绝且不重采样。N18首次CU重建缓存/重新定位同Dataset Passed，缺科学数组与错误manifest经MCP拒绝且绑定不变；52源数组及56顶点/54面恢复一致。两个独立工程各55配套文件/3Dataset/108数组/1VDB保全并在新进程冷读与渲染像素一致；原历史证据和失败验证器诊断保留。7图紧接SOP步骤，操作登记64项，源deb9416/候选c736bb9完整身份见索引。全部Blender退出，重复冷图核对后清理。02仍claimed、03pending；其余三个公共资产、C08–C12撤销重做、统一资格与合并归档待完成。
+
+2026-10-02 三个公共资产：qc.isosurface.v3、qc.surface_style.v1、qc.volume_fog.v1独立菜单添加和六条核心接线GUI Passed；固定Socket接口、正负相、三样式独立边/顶点数、独立阈值与opacity属性MCP Passed，原对象/节点布局/绑定/66数组未变。48文件/3Dataset/两个内嵌库保全，PID14372新进程冷读全快照/点求值Passed，全部进程退出。12图紧接N04/N10步骤，登记67项；Eevee雾alpha通过但本例RGB偏暗，Cycles可见诊断分别记录，辅助准备不冒称GUI。02仍claimed、03pending，统一资格及合并归档待完成。
