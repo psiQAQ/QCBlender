@@ -115,6 +115,43 @@ def evaluated_vertices(owner):
         evaluated.to_mesh_clear()
 
 
+def check_layer_visibility(owner):
+    parts = [child for child in owner.children if child.get('qc_annotation')]
+    assert parts and not owner.hide_get() and not owner.hide_render
+    baseline = {child: (child.hide_get(), child.hide_render) for child in parts}
+    sentinel = bpy.data.objects.new('QC annotation visibility unrelated child', None)
+    owner.users_collection[0].objects.link(sentinel)
+    sentinel.parent = owner
+    chosen = next(child for child in parts if not child.hide_viewport)
+    chosen.hide_set(True)
+    expected = {child: (child.hide_get(), child.hide_render) for child in parts}
+    try:
+        for _ in range(2):
+            assert bpy.ops.qcblender.layer_action(target=owner.name, action='VISIBILITY') == {'FINISHED'}
+            assert owner.hide_get() and all(child.hide_get() for child in parts)
+            assert not sentinel.hide_get() and not sentinel.hide_render
+            assert all(child.hide_render == expected[child][1] for child in parts)
+            assert bpy.ops.qcblender.layer_action(target=owner.name, action='VISIBILITY') == {'FINISHED'}
+            assert {child: (child.hide_get(), child.hide_render) for child in parts} == expected
+            assert bpy.ops.qcblender.layer_action(target=owner.name, action='RENDER') == {'FINISHED'}
+            assert owner.hide_render and all(child.hide_render for child in parts)
+            assert not sentinel.hide_get() and not sentinel.hide_render
+            assert all(child.hide_get() == expected[child][0] for child in parts)
+            assert bpy.ops.qcblender.layer_action(target=owner.name, action='RENDER') == {'FINISHED'}
+            assert {child: (child.hide_get(), child.hide_render) for child in parts} == expected
+        assert bpy.ops.qcblender.layer_action(target=owner.name, action='VISIBILITY') == {'FINISHED'}
+        assert bpy.ops.qcblender.layer_action(target=owner.name, action='SELECT') == {'FINISHED'}
+        assert not owner.hide_get()
+        assert {child: (child.hide_get(), child.hide_render) for child in parts} == expected
+        assert all('qc_layer_restore_viewport' not in child and 'qc_layer_restore_render' not in child
+                   for child in parts)
+    finally:
+        bpy.data.objects.remove(sentinel, do_unlink=True)
+        for child, (viewport, render) in baseline.items():
+            child.hide_set(viewport)
+            child.hide_render = render
+
+
 def check_annotations(out):
     out.mkdir(parents=True, exist_ok=True)
     before_arrays = evidence.hashes()
@@ -188,6 +225,8 @@ def check_annotations(out):
         assert label != source_label and label.data != source_label.data
         assert label.data.materials[0] != source_label.data.materials[0]
         assert leaders(copied)[key][0].data != leaders(methane)[key][0].data
+    check_layer_visibility(methane)
+    check_layer_visibility(copied)
     copied_before = snapshot(copied)
     source_before = snapshot(methane)
     key = next(iter(labels(copied)))

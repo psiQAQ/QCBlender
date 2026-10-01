@@ -23,6 +23,8 @@ def sync_chart_children(obj):
         carriers = (child for child in obj.children if 'qc_contour_owner' in child)
         parts = (part for carrier in carriers for part in
                  (carrier, *(child for child in carrier.children if child.get('qc_contour_label'))))
+    elif kind == 'atoms':
+        parts = (child for child in obj.children if child.get('qc_annotation'))
     elif kind == 'analysis':
         markers = (child for child in obj.children if child.get('qc_result_focus'))
         parts = (part for marker in markers for part in
