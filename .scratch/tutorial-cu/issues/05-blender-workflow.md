@@ -19,3 +19,5 @@ Blocked by: none
 2026-10-01 当前登记22条，均绑定原GUI批次和实现/报告/截图摘要；C04新增同构型源关联首次点击证据，历史电荷/偶极操作独立登记。根指令与交互规则继续明确跨历史复用、MCP→命令行→Computer Use、功能调整后复验及单进程保存/关闭顺序。核对22个ID和全部引用摘要Passed，PID44636已退出、当前无Blender进程；证据full/C04/completion/verification.json。完整教程02仍claimed、03仍pending，主分支合并与归档待其验收。
 
 2026-10-01 本批新增N06/07/08公共资产与打包关联库4项成功操作，登记共26项；原报告/截图摘要核对Passed，保存与三个新可见进程冷重开Passed。原节点库路径不存在的移动/解包副本仍求值一致；所有本批进程正常退出。完整教程02继续claimed、03 pending，独立签署Not Run。证据full/C04/public-nodes/preservation.json。
+
+2026-10-02 登记44项：C07新增成对场导入、范围/交换、错误原子拒绝、菜单撤销重做；每项限定实际GUI范围和MCP准备，绑定实现/输入/候选及报告截图摘要。重复操作用MCP，冷读用串行原生后台进程，当前无Blender；完整教程状态不变。证据full/C07/documentation-final.json。

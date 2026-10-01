@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "date": "2026-10-01",
+  "date": "2026-10-02",
   "status": "Not Run",
   "scope": "Full C01-C13/N01-N18 GUI acceptance remains incomplete. Passed results are limited to individually cited reports and their original candidate identities.",
   "identity": {
@@ -551,7 +551,7 @@
     "docs/acceptance/tutorial-validation.json",
     "docs/acceptance/cleanup-validation.json"
   ],
-  "remaining_click_steps": "Complete still-uncovered C04 invalid-mask and public-asset/error-recovery boundaries; C05 IRC annotation updates and remaining current-version/removal conditions; C06-C13 and remaining N01-N18 cases. Complete outstanding checkpoint relocation checks and unified same-final-source/candidate qualification before main merge/archive. C01 density original-path cold readback and four rerenders, C05 static annotation render three-path/nine-render chain, and P02 optimization annotation four-step/three-path checks are separately Passed with their own reports. Full walkthrough and independent scientific signature remain Not Run.",
+  "remaining_click_steps": "Complete C04 invalid-mask/error boundaries, C05 IRC annotation/current-view/removal checks, C08-C13 and remaining N01-N18 scope. Finish density-checkpoint relocation and same-final-source/candidate unified qualification before main merge/archive. C06 and C07 scoped native actions, independent data/filters and three-path cold chains are separately Passed; historical batch identities retained. Full walkthrough and independent scientific signature remain Not Run.",
   "cleanup": {
     "status": "Passed",
     "scope": "This screenshot supplement only; full GUI task remains claimed",
@@ -3719,6 +3719,333 @@
         28056,
         50404
       ]
+    },
+    "C07_paired_fields_scatter_and_cold_chain": {
+      "status": "Passed",
+      "scope": "C07 paired-field native import/scatter/refusal/menu undo; independently checked arrays/color; serial portable three-path readback and nine native renders",
+      "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+      "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+      "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+      "inputs": [
+        {
+          "id": "P03-water-dimer",
+          "path": "tests/data/tutorial/P03/water-dimer.fchk",
+          "sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+          "size": 38191
+        },
+        {
+          "id": "P03-igmh-dg_inter.cub",
+          "path": "tests/data/local/public-tutorial/P03/igmh/dg_inter.cub",
+          "sha256": "daf5a7e79c7dcc67b244f3dc1d2d314795c9f318c931e4f25d36e72ea168a28e",
+          "size": 7732649
+        },
+        {
+          "id": "P03-igmh-sl2r.cub",
+          "path": "tests/data/local/public-tutorial/P03/igmh/sl2r.cub",
+          "sha256": "18a33c308c868c9f7747128f1a23c04fc69df37fd5b9681aa5dd35ef20997958",
+          "size": 7732649
+        },
+        {
+          "id": "P03-iri-func2.cub",
+          "path": "tests/data/local/public-tutorial/P03/iri/func2.cub",
+          "sha256": "f56bd9fddaaea4452a73c2d303262d90a34267370ea6ea68019d1f1d16a9bf61",
+          "size": 7732649
+        },
+        {
+          "id": "P03-iri-func1.cub",
+          "path": "tests/data/local/public-tutorial/P03/iri/func1.cub",
+          "sha256": "98efc19dd7ab101047c8f6176e24bc9651dbd47efae8a605cd2dd43d1754f5f4",
+          "size": 7732649
+        }
+      ],
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/reference.json",
+          "sha256": "588783cf4077d971a696fdd2b03dff3992536850eabdbd2175ce6408d97e4658",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/igmh-native-import.json",
+          "sha256": "94006994dc0d2c9f86ac99ae8d60d2a553fea462c9bd55c68ed497127ef69c91",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/iri-native-import.json",
+          "sha256": "7dcfc46c17772046cf5a455958d0d4f52832832e73903ee1ca58209d16bd8609",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/igmh-filter-GUI.json",
+          "sha256": "f5064cf740f1d1b6166d1a04140a3f82d3a2fb1dab6103a5c1bcc9116ee1dd6b",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/igmh-swap-GUI.json",
+          "sha256": "2fca863ae7aee24d7fe8f7f8d82f0577f73b14055b4618bd9110c1f86c6ba15e",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/filter-batch.json",
+          "sha256": "b78e269e75e0af0f2cb1732fffe7192e669b057a46139c1e76af94bcc95c291c",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/igmh-render-filter.json",
+          "sha256": "bd95a91ecbb8c7802c73fd95f20aa4a541f26fb2e323e00175fb000b127abeda",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/wrong-pair-refusal.json",
+          "sha256": "cee186bb37b4c53035313789eecbefe10c84a10fdbf7d996aaccccc51af236d8",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/surface-color.json",
+          "sha256": "11131005285cbee4886673bcedad420a8713aaea8c8159de4c80d47052d31efd",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/renders-v2.json",
+          "sha256": "8faad52b26d5ecc9531ea0f156765a64902614bb1fcc71f5835af5c1f64eda9c",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/render-visual-review-v2.json",
+          "sha256": "f8bde2cd63ce63172a9130a24d019887db483596ce144302cbf6cb14d58ddcdc",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/native-menu-undo-redo.json",
+          "sha256": "bdf5b5d454d791708db26c25b6b9901a5ef74eea4797baeb62d3527a0fa62a99",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/temporary-pair-removal.json",
+          "sha256": "1a064bd94a37dac9d3f660e95ee51249a004969f448766c1847085adef19f79e",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/preservation.json",
+          "sha256": "e7a801ded19de3ca51a67172b28ad03da541a768fb8ba037b3a9c1cc54124710",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/path-map.json",
+          "sha256": "ac059122b09999b18bd15809828ae9ea92a866d0b4f2c249a9505b58b6681e9f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/cold-original/readback-render.json",
+          "sha256": "4a7edbd769a18a34e79d4e4d8ed691e0c7e3e6b5b5073c89c9cfe8cc65804f25",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/cold-moved/readback-render.json",
+          "sha256": "15fdda32a11a78438cc68d5fe7cf337c37d5eb6aaa823ce6fa3e6060ad30234b",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/cold-unpacked/readback-render.json",
+          "sha256": "af4dd088cc1800aa8dcd83cfc0c8c3bcf5f8e4d192d0ea668b8a83c25430054a",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/cold-chain.json",
+          "sha256": "c3a3338a547a4400793ed319a5fda2a06589ca8d52dd8cf51a65a9ed2be38b9b",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/cold-render-prune.json",
+          "sha256": "325bf3e2161988870a00447f965cf0ce8a4162a94658dd048f1c5e300adad470",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/exit-26312-host.json",
+          "sha256": "174f9dda5ce7eb3d1299eb2b87f68987b8afbef3b3059acdda80bfd5a3b4c581",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/job-log-preservation.json",
+          "sha256": "1a318341f27579f167a7c6035ed73bbcf682ee4b82d295f569db992f4cf41d22",
+          "status": "Passed"
+        }
+      ],
+      "diagnostics": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/initial-render-visual-review.json",
+          "sha256": "081b416112cae5353f7ba574c263c40b17cf3c54c9e494f78d8a7006e8461e08",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/undo-context-diagnostic.json",
+          "sha256": "8f6b5c3e8ef4b2cd03dadd74cb5479983b3208ff5edbf18e0035f122839fd9b8",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/redo-comparison-diagnostic.json",
+          "sha256": "d067f319d3c47ed9219a48349589a00231812ac84c35a0e6c6da1c440987482e",
+          "status": "Failed"
+        }
+      ],
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/C07-entry-GUI.jpg",
+          "sha256": "55a7688d8a18de98fba83f9d9e2067f5c77660e7ecd10300769a54e98e603cb2"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C07-IGMH-dialog-GUI.jpg",
+          "sha256": "6c49939a583af374f7d31c24af9fd571bdce2c81b710399a9e3a2167a9ae703d"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C07-IGMH-imported-GUI.jpg",
+          "sha256": "d5eb135d64e58bb41439050fdeb4cdaa7f77bf3a2469918e5f5e214dc420d8a4"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C07-IRI-dialog-GUI.jpg",
+          "sha256": "0f9cb245e1b6846c3b28af7e16f96c965504c86b93467b91e3b1084f32666f77"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C07-IGMH-filter-GUI.jpg",
+          "sha256": "9f6b833e6e7d24d7a054ecc1fdbe8211374d95d6cbc8518442cca17f9c8b6124"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C07-IGMH-swap-GUI.jpg",
+          "sha256": "8b7423a86fb9a776c89a25a9e52c4779e9bc1fc71ac7a9b22ddbe70a351fdd85"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C07-wrong-pair-dialog-GUI.jpg",
+          "sha256": "d767180d5af6e1e20c2c2a9c643a0df8fb53299261e30b6b6bf700e3944fd66d"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C07-wrong-pair-refused-GUI.jpg",
+          "sha256": "253c27faeb8bf9623f92b356df2a3ab64be563a95d27cb6ca4a79aeb4eeba7c2"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C07-native-undo-GUI.jpg",
+          "sha256": "06f216eb122dba51aae3e3a7d28580b08de042d1b88bbbb3c50288961767eef0"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C07-native-redo-GUI.jpg",
+          "sha256": "557ffcc2bbdee0eadf4bc934b3c9229dc6b22510864ed8c2d10fbb6eed402a32"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C07-saved-overview-MCP.jpg",
+          "sha256": "278f9f0b64c0ee0d7d67c73b08893f9dc2faed455b6bffa68191bbf950bb623e"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C07-igmh-v2.png",
+          "sha256": "7d7c14455667ec0580d487c36bcc69ac6bc76a0918e888d558fa03f396ea7c05"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C07-iri-v2.png",
+          "sha256": "aaa685e84f4b2c1c5d4e95267390080f32a706775eef40b1700450e5a92fc249"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C07-scatter-v2.png",
+          "sha256": "2d4528e3d0465231a885438af775ef3a2cfccfa8f2ab260b5a6981dc82ea765f"
+        }
+      ],
+      "scripts": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/scripts/C07-check-filter.py",
+          "sha256": "6bd018d20d460667e07cf56f04d64d0df01ad4f7be99ed777d5b2381bfb5ddef"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/scripts/C07-check-pair-v2.py",
+          "sha256": "840c6ce64a7b755e2a42de41f54fe8b85f7461748410f12dce328ee3fe986355"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/scripts/C07-check-pair.py",
+          "sha256": "141b529f4c4a58ab996686a0b9eb2bbd6d9af65fa4d1ccb95723cdd8a5c0b327"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/scripts/C07-cold.py",
+          "sha256": "d30147e2f7fcd121732dfdd680a64a778d1f844abd95e863ce8f4dee81803854"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/scripts/C07-filter-batch.py",
+          "sha256": "9b9e23664b53f8955c043b19bddf2c40a680f22f95472f4b5873e8f660d7b651"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/scripts/C07-preserve.py",
+          "sha256": "8e6b2879d003dab036a22a726f2eafe9960896709de41ea7f0a0d3601a57f30e"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/scripts/C07-render-v2.py",
+          "sha256": "85351103bdf318cbc31a621a4ac9a8fcf0903d3da4fb4a99c30209a92b30c477"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/scripts/C07-render.py",
+          "sha256": "d4639c1077a9f7c53893387d6b16544df08a592e03eb6a5eff09b4abb66b8541"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/scripts/C07-surface-check.py",
+          "sha256": "613169afc500fceaaf7abdd952437fafbe4e3d6de0265d7197784c3beb3abdab"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/scripts/finalize-C07-docs.py",
+          "sha256": "105e78b9b7bbe712c9448ff06447b9f8a9fa02627da87b5e593f61130543c2f9"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/scripts/launch-C07.py",
+          "sha256": "ec22f1585630a187f0f955cb29c3f012a305003394742a86fcf9cbf2a6b98a72"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/scripts/register-C07.py",
+          "sha256": "8ae05607c77772b266ed7c9b77e27bf8bcc505b4c31e03766d17a73a46579e79"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/scripts/run-C07-cold.py",
+          "sha256": "30ebdd0b9ff30dcda1aae3dc35c3ae32e2d7e088ae2dfddae9fabceaaac2e068"
+        }
+      ],
+      "checks": {
+        "native_IGMH_and_IRI_selection_confirmation": "Passed",
+        "independent_raw_539448_values_and_6_atom_association": "Passed",
+        "native_scatter_bounds_toggle_and_swap": "Passed",
+        "MCP_empty_restore_and_IRI_equivalent_swap": "Passed",
+        "native_wrong_atom_refusal": "Passed",
+        "separate_grid_mismatch_refusal": "Not Run",
+        "MCP_all_surface_vertices_independent_color_sample": "Passed",
+        "native_menu_pair_undo_redo": "Passed",
+        "three_paths_44_files_66_arrays_4_volumes": "Passed",
+        "nine_native_renders_exact_pixels": "Passed",
+        "agent_actual_three_render_visual_inspection": "Passed",
+        "full_C_N_and_unified_qualification": "Not Run",
+        "independent_signature": "Not Run"
+      },
+      "execution_methods": {
+        "GUI": "Entry, IGMH fields and confirmation, IRI selection/confirmation, scatter enable/update/swap, wrong-pair confirmation, native menu undo/redo",
+        "MCP": "IRI/range/wrong-pair numeric preparation, independent arrays/filters/color, reused camera/render and portable save/archive",
+        "CLI": "Three serial native background Blender readbacks and nine renders",
+        "user_actions": "Not Run",
+        "independent_scientific_signature": "Not Run"
+      },
+      "diagnostic_resolution": "First render framing made legends edge-on; readable camera/legend v2 rendered and viewed. Native undo snapshot excluded three MCP-created cameras, so pair removal tested separately. Independent VDB encodings differ on repeat import; redo preserved its exact restored manifest/VDB bytes and scientific arrays. Raw failure receipts unchanged.",
+      "project": {
+        "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/C07.blend",
+        "sha256": "fa3ee439db35964564bb3cb8a8c0930e84d8e493e9a58717d9f23e6fb49ed460",
+        "files": 44,
+        "datasets": 3,
+        "arrays": 66,
+        "volumes": 4
+      },
+      "moved_project": "outputs/projects/tutorial-cu-full/中文移动/C07/C07.blend",
+      "unpacked_project": "outputs/projects/tutorial-cu-full/unpacked/C07/C07.blend",
+      "processes_exited": [
+        26312,
+        19520,
+        10632,
+        44636
+      ],
+      "cleanup": {
+        "report": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/cold-render-prune.json",
+          "sha256": "325bf3e2161988870a00447f965cf0ce8a4162a94658dd048f1c5e300adad470",
+          "status": "Passed"
+        },
+        "original_three_v2_pngs_retained": true
+      }
     }
   },
   "historical_partial_supplement": {

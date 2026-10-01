@@ -828,7 +828,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    [用户截图待引用：C06-04，活动对象、参数与结果同屏；参数变化保留前后画面]
 
-   本例在 **对象属性 → QCBlender · 对象与量子化学 → External Result Browser** 将 **Orbital type=BD、Orbital sort=Occupancy high to low、E(2) sort=E(2) high to low**，点击 **应用筛选**；应显示2条轨道、2条E(2)。复原全部类型与默认范围后再点应用。Agent实际点击了上述组合；编号、范围、空结果和全部排序组合另由MCP用独立预期核对，不冒称逐项点击。
+   本例在 **对象属性 → QCBlender · 对象与量子化学 → External Result Browser** 将 **Orbital type=BD、Orbital order=Occupancy, high to low、E(2) order=E(2), high to low**，点击 **应用筛选**；应显示2条轨道、2条E(2)。复原全部类型与默认范围后再点应用。Agent实际点击了上述组合；编号、范围、空结果和全部排序组合另由MCP用独立预期核对，不冒称逐项点击。
 
    ![Agent Computer Use：BD筛选和降序，应用后显示2轨道、2条E(2)](screenshot/C06-filter-BD-GUI.jpg)
 
@@ -862,30 +862,67 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
 **真实输入预期：** P03参考与成对场6原子、片段 **1–3 / 4–6**，各Cube同为 **91×38×156**；Multiwfn **2026.9.20**。IGMH Geometry=`igmh/dg_inter.cub`，electron/bohr^4；Color=`igmh/sl2r.cub`，electron/bohr^3。IRI Geometry=`iri/func2.cub`，`a.u. (electron^-0.1 bohr^-0.7)`；Color=`iri/func1.cub`，electron/bohr^3；**a=1.1**。IGMH几何值域1.01735e-10..0.0185476，IRI几何0.0593502..11.432；颜色−194.599..+0.295371，原值不除100。色域截断只是显示。
 
-1. 导入 P03 参考 FCHK，选择同构型原子对象，点 **导入外部结果 → IGMH / IRI 成对场**。
+1. 按C01的导入入口导入 **P03/water-dimer.fchk**；只选择生成的参考原子对象（本例名为 **QCBlender tutorial; PySCF 2.13.1; water-dimer; CC BY 4.0**），使其为活动对象。在 **3D视图 → N侧栏 → QCBlender → 导入外部结果** 点击 **IGMH / IRI 成对场**。
 
-   [用户截图待引用：C07-01，活动对象、参数与结果同屏；参数变化保留前后画面]
+   [用户截图待引用：C07-01，活动原子对象与实际导入入口同屏]
 
-2. **Analysis** 选 IGMH，分别在 **Geometry Cube** 与 **sign(lambda2)rho Cube** 填清单文件，填 **Geometry value unit、Color value unit、Color minimum/maximum**，确认。再次以 IRI 输入其成对文件和 **IRI density exponent a**；片段、方法/版本、a、网格与单位按真实生成记录核对，不能用另一类几何场替代。
+   ![Agent Computer Use：P03参考原子对象与成对场导入入口](screenshot/C07-entry-GUI.jpg)
 
-   [用户截图待引用：C07-02，活动对象、参数与结果同屏；参数变化保留前后画面]
+2. **Analysis** 选 **IGMH**，**Geometry Cube** 填 `P03/igmh/dg_inter.cub`，**sign(lambda2)rho Cube** 填 `P03/igmh/sl2r.cub`；**Geometry value unit=electron/bohr^4、Color value unit=electron/bohr^3、Color minimum=-0.04、Color maximum=0.04**，确认。完成后重新只选择同一参考原子对象，再次打开对话框，选 **IRI**，Geometry填 `P03/iri/func2.cub`，Color填 `P03/iri/func1.cub`，几何单位填 `a.u. (electron^-0.1 bohr^-0.7)`，颜色单位及色域同上，**IRI density exponent a=1.1**，确认。
 
-3. 选几何场改等值与色域：位置由几何场、颜色由第二场决定；查看来源核对两输入 SHA 与完全相同网格。
+   预期分别出现 **QC delta_g** 与 **QC iri_function** 几何场及对应颜色源和散点层。两场各有539,448个原始体素，网格/原子构型匹配；导入显示最多50,000散点。片段、方法/版本、a、网格与单位按生成清单核对；导入不执行IGMH/IRI计算。
 
-   [用户截图待引用：C07-03，活动对象、参数与结果同屏；参数变化保留前后画面]
+   [用户截图待引用：C07-02，分别保留IGMH与IRI对话框、活动参考对象和导入结果]
 
-4. 选散点对象，打开 **对象属性 → External Result Browser**，核对横/纵轴量名/单位，改上下界并点 **更新散点**，交换轴重复。核对匹配总数/显示数；最多显示 50,000 点是显示抽样，不是删除科学数组。
+   ![Agent Computer Use输入并确认：IGMH两文件、单位和色域](screenshot/C07-IGMH-dialog-GUI.jpg)
 
-   [用户截图待引用：C07-04，活动对象、参数与结果同屏；参数变化保留前后画面]
+   ![Agent Computer Use观察：IGMH导入结果；全部数组及关联另由MCP核对](screenshot/C07-IGMH-imported-GUI.jpg)
 
-5. 错误输入检查前重新选择 **P03参考原子对象**，重新打开配对导入，选 **IGMH** 并重填对应单位。Geometry使用 **P03/igmh/dg_inter.cub**，Color误选 **P05/nocv/nocv-pair1.cub**，应先因原子身份/构型不匹配拒绝；记录实际错误，这个组合不单独证明网格检查通过。然后恢复正确配对；不修改原Cube。
+   ![Agent Computer Use选择IRI并确认：路径和数值由MCP准备，a为1.1](screenshot/C07-IRI-dialog-GUI.jpg)
 
-   [用户截图待引用：C07-05，活动对象、参数与结果同屏；参数变化保留前后画面]
+3. 只选择 **QC delta_g**，在 **Properties → 对象属性 → QCBlender · 对象与量子化学 → 几何表示** 把 **Isovalue** 设为 **0.005**；**QC iri_function** 设为 **1.0**。在各对象的 **颜色映射** 设置 **Color Minimum=-0.04、Color Center=0、Color Maximum=0.04**。位置取自几何场、颜色取自第二场；按N14查看来源，核对两输入摘要与网格，原值不除100。
 
-6. 对应 N06/N07/N14/N16，按 0.4 保存 `C07-igmh.png`、`C07-iri.png`、`C07-scatter.png`、总览与工程。
+   本例该阈值下IGMH为4,992顶点/4,906面、IRI为3,150顶点/3,140面（不含图例文字）。成图先只显示参考原子与当前几何场，按N17创建取景相机，**Margin=0.05、Eevee、1920×1080**。本示例视角绕X轴0.9 rad；在 **图例排版** 启用 **Show Legend**，把 **Legend Rotation** 的X角也设为 **0.9 rad（约51.566°）**，使量名、单位和−0.04/0/+0.04可读。初次构图前确认角度字段所用单位。
 
-   [用户截图待引用：C07-06，活动对象、参数与结果同屏；参数变化保留前后画面]
+   [用户截图待引用：C07-03，分别保留两几何场参数、颜色源和可读图例]
 
+   ![MCP复用显示控件与相机构图，真实EEVEE渲染：IGMH 0.005，颜色取自独立sign(lambda2)rho场](screenshot/C07-igmh-v2.png)
+
+   ![MCP复用显示控件与相机构图，真实EEVEE渲染：IRI 1.0、a=1.1](screenshot/C07-iri-v2.png)
+
+4. 只选择 **QC δg–sign(λ₂)ρ distribution** 散点对象，打开 **Properties → 对象属性 → QCBlender · 对象与量子化学 → External Result Browser**。默认横轴为 `sign_lambda2_rho [electron/bohr^3]`，纵轴为 `delta_g [electron/bohr^4]`。启用四个范围开关，填 **X from=-0.04、X to=0.04、Y from=0.001、Y to=0.02**，点击 **更新散点**，预期匹配/显示均为 **36,391**。
+
+   勾选 **Swap scatter axes**，保持这四个数值，再点 **更新散点**，预期为 **28,630**：交换后范围作用于新的轴，表示的筛选区域也随之改变。若要保持物理区域相同，须同时交换X/Y范围。IRI散点用颜色−0.04..0.04、IRI 0.1..2筛选为12,736点；同步交换范围后仍为12,736。恢复全部范围时匹配539,448、显示50,000，显示抽样不删除科学数组。
+
+   [用户截图待引用：C07-04，范围开关、轴量/单位与匹配/显示数；交换前后分别保存]
+
+   ![Agent Computer Use启用范围并更新：36,391点；范围数值由MCP准备](screenshot/C07-IGMH-filter-GUI.jpg)
+
+   ![Agent Computer Use交换轴并更新：相同数字应用于新轴后为28,630点](screenshot/C07-IGMH-swap-GUI.jpg)
+
+   ![MCP恢复IGMH 36,391点范围并真实渲染；量名和单位另见上方面板截图](screenshot/C07-scatter-v2.png)
+
+5. 重新只选择 **P03参考原子对象**，打开成对场导入，选 **IGMH** 并重填对应单位。Geometry用 **P03/igmh/dg_inter.cub**，Color误选 **P05/nocv/nocv-pair1.cub**；预期拒绝并报告 **Atom identities/order differ; an explicit atom mapping is required**，原有对象及数据绑定不变。此例验证原子身份拒绝，网格拒绝需要另一组明确输入。
+
+   恢复正确配对再导入，在3D视图执行 **Edit（编辑）→ 撤销**，新生成五个配对对象消失；执行 **Edit（编辑）→ 重做**，这些对象及科学绑定恢复。保留一个正确显示组，避免重复图层叠加。
+
+   [用户截图待引用：C07-05，错误输入/拒绝信息，以及正确导入的撤销与重做结果]
+
+   ![MCP准备错误配对、Agent Computer Use确认：P03几何与P05颜色](screenshot/C07-wrong-pair-dialog-GUI.jpg)
+
+   ![Agent Computer Use观察拒绝；MCP核对原有对象与绑定不变](screenshot/C07-wrong-pair-refused-GUI.jpg)
+
+   ![Agent Computer Use执行Edit菜单撤销：新增配对对象移除](screenshot/C07-native-undo-GUI.jpg)
+
+   ![Agent Computer Use执行Edit菜单重做：对象与同一科学记录恢复](screenshot/C07-native-redo-GUI.jpg)
+
+6. 对应N06/N07/N14/N16，按0.4导出两表面和散点PNG，保存总览与 **C07.blend + C07.qcdata**，点击 **N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程**。本批效果图文件带 `-v2` 后缀；用户自己的文件可沿用 `C07-igmh.png`、`C07-iri.png`、`C07-scatter.png`。
+
+   [用户截图待引用：C07-06，保存路径、活动对象、图例和保存后的工程；冷重开另留截图]
+
+   ![Computer Use观察与截图：MCP保存后的IGMH总览；保存和控件设置由MCP执行](screenshot/C07-saved-overview-MCP.jpg)
+
+   本批保全44文件、3 Dataset/66数组和4体积文件，关闭GUI后依次在三个新原生后台进程读取原路径、中文移动和ZIP解包工程；九次真实重渲染像素一致。报告、输入/候选摘要及工具身份见[当前验证索引](../acceptance/tutorial-cu-validation.json)的 `C07_paired_fields_scatter_and_cold_chain`。该冷读为命令行技术证据，用户复做及独立科研签署仍为Not Run。
 
 
 ### C08 ESP 极值与面积分布

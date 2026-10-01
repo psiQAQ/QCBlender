@@ -3057,6 +3057,274 @@
           }
         ]
       }
+    },
+    {
+      "id": "paired-field-igmh-iri-import",
+      "title": "IGMH和IRI成对场导入",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use actions and separately identified MCP preparation/assertions",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "仅选操作对应原子或散点对象；本批唯一GUI PID26312",
+        "visible_entry": "仅选择P03水二聚体参考原子对象，N侧栏→QCBlender→导入外部结果→IGMH / IRI 成对场",
+        "validated_scope": "IGMH真实路径/单位/色域用Computer Use输入；IRI参数用MCP准备、Analysis选择与确认用Computer Use；6原子、539448体素全数组、单位、关联、50000抽样经MCP独立核对",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/igmh-native-import.json",
+            "sha256": "94006994dc0d2c9f86ac99ae8d60d2a553fea462c9bd55c68ed497127ef69c91",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/iri-native-import.json",
+            "sha256": "7dcfc46c17772046cf5a455958d0d4f52832832e73903ee1ca58209d16bd8609",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C07-entry-GUI.jpg",
+            "sha256": "55a7688d8a18de98fba83f9d9e2067f5c77660e7ecd10300769a54e98e603cb2"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C07-IGMH-dialog-GUI.jpg",
+            "sha256": "6c49939a583af374f7d31c24af9fd571bdce2c81b710399a9e3a2167a9ae703d"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C07-IGMH-imported-GUI.jpg",
+            "sha256": "d5eb135d64e58bb41439050fdeb4cdaa7f77bf3a2469918e5f5e214dc420d8a4"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C07-IRI-dialog-GUI.jpg",
+            "sha256": "0f9cb245e1b6846c3b28af7e16f96c965504c86b93467b91e3b1084f32666f77"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/external_fields.py": "1c83fd33cb8a561caa312450e74a52bd8bfc09dc6d654eb03c2468cb7869c8cb",
+        "qcblender/external_fields.py": "87458b8656ca5fa157b6872ffe725de36e080662b5b623102600cd0f25dec508",
+        "qcblender/association.py": "e9b8f0d9e462f3ecf0e5b6c428f3cce2a5378404871c50bd23a58cf825fee000",
+        "qcblender/cube.py": "9af0ad7091af18b5d526e368ff1ccacc129f2544df3e19573a76e926a57cfe14",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/scalars.py": "1e17b26bf258a6a10963410d597a248b31cb60998b9a030d3fa03b6e7df7ac89",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432"
+      },
+      "fingerprint_review": "核对相关实现、公共资产、接口、回调、依赖和Blender版本；此初始文件集合不是影响范围的全部证明。",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "IGMH真实路径/单位/色域用Computer Use输入；IRI参数用MCP准备、Analysis选择与确认用Computer Use；6原子、539448体素全数组、单位、关联、50000抽样经MCP独立核对",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Not Run",
+        "current_batch_replay_reports": []
+      }
+    },
+    {
+      "id": "paired-field-scatter-ranges-swap",
+      "title": "成对场散点范围与交换轴",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use actions and separately identified MCP preparation/assertions",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "仅选操作对应原子或散点对象；本批唯一GUI PID26312",
+        "visible_entry": "仅选择IGMH散点对象；对象属性→QCBlender→External Result Browser→范围开关、Swap scatter axes、更新散点",
+        "validated_scope": "MCP准备X=-.04..+.04,Y=.001...02；Computer Use开启四界、应用、交换轴再应用；36391和28630逐点独立核对；数值文本输入不在本次点击覆盖范围",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/igmh-filter-GUI.json",
+            "sha256": "f5064cf740f1d1b6166d1a04140a3f82d3a2fb1dab6103a5c1bcc9116ee1dd6b",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/igmh-swap-GUI.json",
+            "sha256": "2fca863ae7aee24d7fe8f7f8d82f0577f73b14055b4618bd9110c1f86c6ba15e",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C07-IGMH-filter-GUI.jpg",
+            "sha256": "9f6b833e6e7d24d7a054ecc1fdbe8211374d95d6cbc8518442cca17f9c8b6124"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C07-IGMH-swap-GUI.jpg",
+            "sha256": "8b7423a86fb9a776c89a25a9e52c4779e9bc1fc71ac7a9b22ddbe70a351fdd85"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/external_fields.py": "1c83fd33cb8a561caa312450e74a52bd8bfc09dc6d654eb03c2468cb7869c8cb",
+        "qcblender/external_fields.py": "87458b8656ca5fa157b6872ffe725de36e080662b5b623102600cd0f25dec508",
+        "qcblender/association.py": "e9b8f0d9e462f3ecf0e5b6c428f3cce2a5378404871c50bd23a58cf825fee000",
+        "qcblender/cube.py": "9af0ad7091af18b5d526e368ff1ccacc129f2544df3e19573a76e926a57cfe14",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/scalars.py": "1e17b26bf258a6a10963410d597a248b31cb60998b9a030d3fa03b6e7df7ac89",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432"
+      },
+      "fingerprint_review": "核对相关实现、公共资产、接口、回调、依赖和Blender版本；此初始文件集合不是影响范围的全部证明。",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP准备X=-.04..+.04,Y=.001...02；Computer Use开启四界、应用、交换轴再应用；36391和28630逐点独立核对；数值文本输入不在本次点击覆盖范围",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/filter-batch.json",
+            "sha256": "b78e269e75e0af0f2cb1732fffe7192e669b057a46139c1e76af94bcc95c291c",
+            "status": "Passed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "paired-field-wrong-atom-refusal",
+      "title": "成对场错误原子输入拒绝",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use actions and separately identified MCP preparation/assertions",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "仅选操作对应原子或散点对象；本批唯一GUI PID26312",
+        "visible_entry": "仅选择P03参考原子对象，成对场导入IGMH：几何P03 dg_inter.cub、错误颜色P05 nocv-pair1.cub",
+        "validated_scope": "MCP准备对话框、Computer Use确认；错误Atom identities/order differ；原有对象和绑定不变；该输入不证明网格拒绝",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/wrong-pair-refusal.json",
+            "sha256": "cee186bb37b4c53035313789eecbefe10c84a10fdbf7d996aaccccc51af236d8",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C07-wrong-pair-dialog-GUI.jpg",
+            "sha256": "d767180d5af6e1e20c2c2a9c643a0df8fb53299261e30b6b6bf700e3944fd66d"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C07-wrong-pair-refused-GUI.jpg",
+            "sha256": "253c27faeb8bf9623f92b356df2a3ab64be563a95d27cb6ca4a79aeb4eeba7c2"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/external_fields.py": "1c83fd33cb8a561caa312450e74a52bd8bfc09dc6d654eb03c2468cb7869c8cb",
+        "qcblender/external_fields.py": "87458b8656ca5fa157b6872ffe725de36e080662b5b623102600cd0f25dec508",
+        "qcblender/association.py": "e9b8f0d9e462f3ecf0e5b6c428f3cce2a5378404871c50bd23a58cf825fee000",
+        "qcblender/cube.py": "9af0ad7091af18b5d526e368ff1ccacc129f2544df3e19573a76e926a57cfe14",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/scalars.py": "1e17b26bf258a6a10963410d597a248b31cb60998b9a030d3fa03b6e7df7ac89",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432"
+      },
+      "fingerprint_review": "核对相关实现、公共资产、接口、回调、依赖和Blender版本；此初始文件集合不是影响范围的全部证明。",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP准备对话框、Computer Use确认；错误Atom identities/order differ；原有对象和绑定不变；该输入不证明网格拒绝",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Not Run",
+        "current_batch_replay_reports": []
+      }
+    },
+    {
+      "id": "paired-field-native-menu-undo-redo",
+      "title": "成对场导入的原生菜单撤销与重做",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use Edit menu actions; separately scoped MCP assertions",
+        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID26312；正确IGMH配对新增五个对象后，Edit菜单撤销、重做",
+        "visible_entry": "3D视图 → Edit（编辑）→ 撤销 / 重做",
+        "validated_scope": "撤销移除新增五对象；重做恢复完整新增绑定和保存的同一manifest、数组与VDB；不包含MCP非撤销编辑的跨历史全场景保留保证",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/native-menu-undo-redo.json",
+            "sha256": "bdf5b5d454d791708db26c25b6b9901a5ef74eea4797baeb62d3527a0fa62a99",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C07-native-undo-GUI.jpg",
+            "sha256": "06f216eb122dba51aae3e3a7d28580b08de042d1b88bbbb3c50288961767eef0"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C07-native-redo-GUI.jpg",
+            "sha256": "557ffcc2bbdee0eadf4bc934b3c9229dc6b22510864ed8c2d10fbb6eed402a32"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/external_fields.py": "1c83fd33cb8a561caa312450e74a52bd8bfc09dc6d654eb03c2468cb7869c8cb",
+        "qcblender/external_fields.py": "87458b8656ca5fa157b6872ffe725de36e080662b5b623102600cd0f25dec508",
+        "qcblender/association.py": "e9b8f0d9e462f3ecf0e5b6c428f3cce2a5378404871c50bd23a58cf825fee000",
+        "qcblender/cube.py": "9af0ad7091af18b5d526e368ff1ccacc129f2544df3e19573a76e926a57cfe14",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/scalars.py": "1e17b26bf258a6a10963410d597a248b31cb60998b9a030d3fa03b6e7df7ac89",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432"
+      },
+      "fingerprint_review": "核对相关实现、公共资产、接口、回调、依赖和Blender版本；此初始文件集合不是影响范围的全部证明。",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "原生undo上下文须由已有工具保留；MCP无法提供同一上下文时回到Computer Use，不用重建对象伪装撤销",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Not Run",
+        "current_batch_replay_reports": []
+      }
     }
   ]
 }
