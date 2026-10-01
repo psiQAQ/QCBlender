@@ -1096,25 +1096,53 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
 ### C11 IRC 逐步 Mayer 键级
 
-**真实输入预期：** 同C10三步、每步六对Mayer；原子对 **1,2** 值 **0.987331413844 / 0.987349305673 / 0.987331413844**，无量纲。可换对1,3：**0.950875651565 / 0.950844120525 / 0.950875651565**，复核独立曲线。结果来自同构型PySCF AO密度/重叠矩阵，文本采用兼容输入语法，其producer不是Multiwfn。
+**真实输入预期：** 承接C10的三步H2O2，每步六对Mayer。原子对 **1,2** 的三个源值为 **0.987331413844 / 0.987349305673 / 0.987331413844**；原子对 **1,3** 为 **0.950875651565 / 0.950844120525 / 0.950875651565**，单位 **dimensionless**。它们由同构型 **PySCF 2.13.1** 的实际收敛RHF/STO-3G AO密度/重叠矩阵计算。文本采用Multiwfn兼容语法，producer为PySCF；距离推断显示键不等于Mayer键级。
 
-1. 打开 C10 工程另存 C11，选 **IRC 根原子对象**，在 **对象属性 → IRC Path → Import Mayer Results** 在 **CSV manifest: step,mayer_output** 指定清单的 Mayer CSV。
+1. 关闭其他Blender，打开已保存、**尚无Mayer表**的C10工程，保留原件，最后另存C11。保持CSV及三个 `mayer-step-001/002/003.txt` 的相对位置。缺步检查先在 **inputs/P04/** 复制 `mayer-pyscf.csv` 为 **checks-missing-mayer.csv**，删除step3数据行并保存UTF-8。只选 **IRC path根原子**，打开 **Properties → 对象属性 → QCBlender · 对象与量子化学 → IRC Path → Import Mayer Results**，在 **CSV manifest: step,mayer_output** 指定副本并点 **确定**。预期 **Mayer step count differs from the IRC path**，没有新Mayer表/数组/曲线，原步号不变。已有表的重复导入拒绝不能代替缺步检查；本批缺步由MCP执行，错误对话框GUI未执行。
 
-   [用户截图待引用：C11-01，活动对象、参数与结果同屏；参数变化保留前后画面]
+   [用户截图待引用：C11-01，未导入的根对象、缺步CSV、实际错误及原工程未变]
 
-2. 选择新 Mayer 记录对象，在 **IRC Path** 填 **Atom A (1-based)、Atom B (1-based)**，点击实际按钮 **Plot Pair**；核对原子对、每步值/无量纲单位和源文本。
+2. 同一入口填写完整 **P04/mayer-pyscf.csv**，点 **确定**。预期新增 **QC IRC Mayer orders** 子表、默认 **QC Mayer 1-2** 曲线及 **QC Mayer selected step** 游标，并自动选中子表。只选该表，在同一 **对象属性 → IRC Path** 核对 **Atom A (1-based)=1、Atom B (1-based)=2**。C10停在第二步时面板显示 **Step 2 / 3**、**Mayer order: 0.987349**；三点曲线中间最高，游标位于当前步。面板键级显示六位有效数字，完整源值以上文和Dataset为准。
 
-   [用户截图待引用：C11-02，活动对象、参数与结果同屏；参数变化保留前后画面]
+   [用户截图待引用：C11-02，完整CSV对话框、自动子表/曲线/游标和当前步键级]
 
-3. 切 IRC 步观察构型、键级曲线游标及显示值同步，再换原子对点 Plot Pair。距离推断显示键不是 Mayer 值。
+   ![Agent Computer Use：从IRC path根的对象属性打开Import Mayer Results](screenshot/C11-fixed-entry-GUI.jpg)
 
-   [用户截图待引用：C11-03，活动对象、参数与结果同屏；参数变化保留前后画面]
+   ![Agent Computer Use：完整P04 Mayer CSV对话框并确认；源值由MCP独立核对](screenshot/C11-fixed-dialog-GUI.jpg)
 
-4. 缺步检查在**尚无Mayer表的IRC根**上执行：重新打开C10工程的独立副本，或从完整steps.csv新建IRC路径，再选根对象。在 **inputs/P04/** 复制Mayer CSV为 **checks-missing-mayer.csv**，删除step3的数据行并保存UTF-8，相对文本路径保留；用副本导入应报 **Mayer step count differs from the IRC path**，且不产生新表。记录副本摘要/实际错误，再导入完整原CSV；已有Mayer表的拒绝不计为缺步检查通过。按 0.4 保存 `C11-curve.png`、`C11-records.png`、总览与工程。
+   ![Agent Computer Use导入后自动生成1,2曲线；MCP核对当前第二步游标](screenshot/C11-fixed-pair12-GUI.jpg)
 
-   [用户截图待引用：C11-04，活动对象、参数与结果同屏；参数变化保留前后画面]
+3. 保持 **QC IRC Mayer orders表**为唯一活动对象，将 **Atom B (1-based)** 从2改为 **3**，保持A=1，再点 **Plot Pair**。仅修改编号不会自动重绘。预期替换为 **QC Mayer 1-3** 曲线，第二步最低，面板 **Mayer order: 0.950844**；默认1,2的曲线不再作为当前对显示。原子对编号是源FCHK的1-based顺序。
 
+   [用户截图待引用：C11-03，Atom A/B、Plot Pair、1,3谷形曲线与第二步键级]
 
+   ![Agent Computer Use将Atom B改为3并点击Plot Pair；MCP核对三点曲线和完整源值](screenshot/C11-fixed-pair13-GUI.jpg)
+
+4. 保持表活动，在 **对象属性 → IRC Path** 用 **Previous/Next** 走 **2→1→2→3→2**，逐步核对根构型、能量游标、Mayer游标和三种C10标注。1,3的三值应与上文一致。再将B改回2、点 **Plot Pair**，重放相同步序，核对1,2源值；完成后恢复 **B=3、Plot Pair、步2**。本批两对八次步进复用C10已经成功确认的GUI入口，通过MCP核对源坐标/原子身份、能量、完整键级、标注值/文字/锚点/引线。图像高低与曲线局部坐标是归一化显示，物理值取源记录。
+
+   [用户截图待引用：C11-04，两原子对分别保留步1/2/3、游标、构型及标注]
+
+5. 选表将B临时设为 **999** 并点 **Plot Pair**，预期 **Selected atom pair is absent from Mayer results**，已有曲线、游标、数组不变；恢复B=3并重绘。再只选根 **IRC path**，使用完整CSV再次导入，预期 **This IRC path already has a Mayer import** 且没有重复子表；本批这两项为MCP错误输入检查，GUI错误对话框未执行。
+
+   [用户截图待引用：C11-05，非法原子对、重复导入实际错误和原曲线保留]
+
+6. 按0.4和C10的照明/标注样式，用 **EEVEE、1920×1080、Standard、正交相机绕X轴90°** 输出三图。能量曲线及其游标的局部X偏移 **−6**；Mayer曲线及游标偏移 **3**。Mayer图仅显示Mayer曲线与游标，相机 **(5,−25,1.5)**、Scale **6**；构型图仅显示根原子和三种标注/引线，相机 **(2.8,−25,0)**、Scale **11**；总览显示根原子及两曲线/游标、隐藏标注，相机 **(0.5,−25,1)**、Scale **15**。总览左为hartree能量、右为无量纲Mayer；没有物理轴刻度，不能从画面直接读出物理值。
+
+   标注的 **Visible/show_leader** 控制在每次IRC切步时重新应用；只为某张图临时改变对象渲染开关时，切步后按该图重新核对可见对象。科学记录、标注值和当前步游标不因构图修改。下图排版及渲染通过MCP执行，原生图片已逐张检查。
+
+   [用户截图待引用：C11-06，Mayer图、构型标注图、左能量/右键级总览及实际相机参数]
+
+   ![原生EEVEE：源原子对1,3的三点归一化Mayer曲线，步2谷底游标](screenshot/C11-curve.png)
+
+   ![原生EEVEE：步2真实构型和沿用C10的距离、角度、二面角](screenshot/C11-geometry.png)
+
+   ![原生EEVEE：左能量曲线、中央真实构型、右Mayer曲线；单位分别来自源记录](screenshot/C11-overview.png)
+
+7. 在 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程** 另存 **C11-final.blend + C11-final.qcdata**，按N16导出配套ZIP。及时关闭并确认进程退出，再在新Blender依次打开原路径、中文移动副本和ZIP解包副本，每次完成后关闭再开下一处。检查两份Dataset/九数组、六对象引用、1,3逐步值和源构型，并重出三图。本批13文件全部摘要一致，三处冷读和九次像素一致渲染Passed；九份重复冷渲染已清理，三张原图与报告仍可取。
+
+   [用户截图待引用：C11-07，独立保存位置、两份数据和三个新进程冷重开结果]
+
+   本批Mayer首次导入和1,3切换由Agent Computer Use完成，源值/错误边界与重复步进由MCP核对，冷读由串行原生后台Blender完成。证据见[当前验证索引](../acceptance/tutorial-cu-validation.json)的 `C11_Mayer_native_import_pairs_and_cold_chain`；本项Passed不代表完整教程或统一资格完成。用户复做与独立科研签署仍Not Run，历史[cleanup-validation.json](../acceptance/cleanup-validation.json)保持原身份。
 
 ### C12 ETS-NOCV 真实结果表
 

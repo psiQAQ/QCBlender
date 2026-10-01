@@ -16,6 +16,10 @@
 
 ## 当前任务与候选
 
+C11原生Mayer导入自动曲线与1,3 Plot Pair通过；6对×3步18源值、两对8次步进/标注同步与非法/重复/缺步输入MCP Passed。deb9416以两行对象上下文override修复Properties嵌套poll缺陷，新候选c736bb9；13文件/2Dataset/9数组/6引用保全，三处串行冷读和9次像素一致渲染Passed，全进程退出。原导入Failed及临时渲染开关断言诊断保留；7图紧接步骤，登记57项。完整教程、统一资格与合并归档仍待完成。
+
+当前C11证据、原工程和重建脚本：`outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/`；修复前失败证据在其上一级。新候选：`outputs/candidates/current/tutorial-irc-mayer-context-deb9416/qcblender-0.0.1.zip`，构建/安装/专项证据：`outputs/evidence/2026-10-02/tutorial-irc-mayer-context/`。移动/解包工程在`outputs/projects/tutorial-cu-full/`对应C11目录；旧候选通过不继承给本候选。
+
 C10真实三步H2O2导入、Next/Previous和IRC当前版本视图预期拒绝GUI Passed；四原子身份/坐标/FCHK能量、三种源编号测量/文字/锚点/引线及重复步号/端点不变MCP Passed。8文件/1Dataset/5数组/3引用、三处串行冷重开逐步重放与九次像素一致实渲染Passed，全进程退出；10图紧接教程步骤，登记55项。原子编号/快照类型断言诊断保留，重复冷渲染核对后清理。产品未改，完整教程/统一资格及合并归档仍待完成。
 
 证据及重建脚本：`outputs/evidence/2026-10-02/tutorial-cu/full/C10/`；保留`C10-final.blend + .qcdata`和ZIP，作为无Mayer导入的C11检查点。移动/解包副本在`outputs/projects/tutorial-cu-full/`对应C10目录；沿用13401c6/cc4e7ac候选身份。

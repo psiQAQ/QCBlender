@@ -558,7 +558,7 @@
     "docs/acceptance/tutorial-validation.json",
     "docs/acceptance/cleanup-validation.json"
   ],
-  "remaining_click_steps": "C11-C13, C04 invalid-mask boundaries, density checkpoint relocation, remaining N scope and same-final-source unified qualification before main merge/archive. C10 real IRC annotations/current-version rejection and serial cold chain Passed. User walkthrough and independent scientific signature remain Not Run.",
+  "remaining_click_steps": "C12-C13, C04 invalid-mask boundaries, density checkpoint relocation, remaining N scope and same-final-source unified qualification before main merge/archive. C10/C11 scoped checks Passed with distinct source/candidate identities. User walkthrough and independent scientific signature remain Not Run.",
   "cleanup": {
     "status": "Passed",
     "scope": "This screenshot supplement only; full GUI task remains claimed",
@@ -4802,6 +4802,271 @@
       "user_walkthrough": "Not Run",
       "independent_signature": "Not Run",
       "rebuild": "Retained batch scripts and reference-oracle with manifest SHA, central P04 inputs and candidate13401c6/locked environment; new batch paths required."
+    },
+    "C11_Mayer_native_import_pairs_and_cold_chain": {
+      "status": "Passed",
+      "scope": "Scoped C11 fixed native import/autoplot, native 1,3 pair plot, independent 18 raw orders, two-pair step replay, guards, render and serial three-path cold chain",
+      "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+      "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+      "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+      "inputs": [
+        {
+          "id": "P04-steps.csv",
+          "path": "tests/data/tutorial/P04/steps.csv",
+          "sha256": "e364c78eb296bb63048f6ce6b64226b4ada40bce553e7bc2e05c70d8b198f1ba",
+          "bytes": 62
+        },
+        {
+          "id": "P04-mayer-pyscf.csv",
+          "path": "tests/data/tutorial/P04/mayer-pyscf.csv",
+          "sha256": "3627fbb0c0e271882dd9852c94efd3f6691f724bb9636465edcfe52d362d65fc",
+          "bytes": 103
+        },
+        {
+          "id": "P04-step-001.fchk",
+          "path": "tests/data/tutorial/P04/step-001.fchk",
+          "sha256": "c801d883cea1804103adc3ca5cf217922c531d65f4a0002cb604492e8980cb2d",
+          "bytes": 7557
+        },
+        {
+          "id": "P04-step-001-mayer-pyscf.txt",
+          "path": "tests/data/tutorial/P04/step-001-mayer-pyscf.txt",
+          "sha256": "c3f338abb2e16455520ad6307ac9d0bac3dd91dbd4e042212cc26c9bd1e69732",
+          "bytes": 339
+        },
+        {
+          "id": "P04-step-002.fchk",
+          "path": "tests/data/tutorial/P04/step-002.fchk",
+          "sha256": "9c8cdd3b495694dce0ca59da58d823df2fc892ce70831477f6d0fca24a492219",
+          "bytes": 7557
+        },
+        {
+          "id": "P04-step-002-mayer-pyscf.txt",
+          "path": "tests/data/tutorial/P04/step-002-mayer-pyscf.txt",
+          "sha256": "96967cb1f1aeecfac0684edbb8f7b7d6b99ce92edd95afd54c42ca2793636c34",
+          "bytes": 339
+        },
+        {
+          "id": "P04-step-003.fchk",
+          "path": "tests/data/tutorial/P04/step-003.fchk",
+          "sha256": "d09831388dcae43afdddb490a2aa6a091622849c05491f68617750f457d37d20",
+          "bytes": 7557
+        },
+        {
+          "id": "P04-step-003-mayer-pyscf.txt",
+          "path": "tests/data/tutorial/P04/step-003-mayer-pyscf.txt",
+          "sha256": "5dc0029ac64223d9adf14562092afc17439d18d65542eab0719ecedca06e1014",
+          "bytes": 339
+        }
+      ],
+      "input_manifest_sha256": "59c192d18a9cd2c9cf904eb7a844e757a2884ccd095ccc55d73aae4b0d7b71dd",
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/mcp-ready.json",
+          "sha256": "a8134b90a0c7d8e4f84865b8e95dfed3b9049042b0a3eb17348a691ae586cb7e",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/native-import-and-pair13-oracle.json",
+          "sha256": "c6cb7e9a29abe282c1e04d093285183574d5b9231c955153f5401b28c9d684cf",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/step-pair-batch.json",
+          "sha256": "daa2b65f360ed741ee71138e8db72c19f14a41e9768e805c41e6952e821f3dbf",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/invalid-pair-from-1-2.json",
+          "sha256": "24fca7199de931e4444c497ead694b6433d1c14006b2ece9710badb9e3ad2975",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/invalid-pair-from-1-3.json",
+          "sha256": "24fca7199de931e4444c497ead694b6433d1c14006b2ece9710badb9e3ad2975",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/existing-import-guard.json",
+          "sha256": "c5831df068fc7e320306f9519b6b2d97666cd0e027763626f8930488b56ead44",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/operation-reuse-review.json",
+          "sha256": "4f512dd8897bf84e04a199a45b1f6826891675dd2be1b739e388003c26da8582",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/renders.json",
+          "sha256": "9c9ace1714d09aa4475ea23891c8c2350a1c961beadc4088cf2af7619a2f160e",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/render-visual-review.json",
+          "sha256": "29464e40f2b001f31041d1a048d8ba5e9a7a09fb1cb675f7168ea97394587d7f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/preservation-final.json",
+          "sha256": "9821edd1cf710bfc3a1ccec464b57e294314ecd9d6d2097facea1bfb1afec6fc",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/saved-clean-confirmation.json",
+          "sha256": "f0a5e068a86e42c4ca729d33f6972abee1a10bb4a77b97d4941b436487e09921",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/exit-40356-host.json",
+          "sha256": "1cdf755031430b4ab832f951f132daf12652368cca0135d2230064026fed379f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/path-map.json",
+          "sha256": "0be1b3de788cfc49040bb1b9d6b9be2f25b7589a4f030ff3b89b20b663cef9ac",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/cold-chain-v2.json",
+          "sha256": "a6e020780a2fc3304e78d5bd19fca6601463ddbdcf71487ee89ee4b985b2a2db",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/cold-original-v2/readback-render.json",
+          "sha256": "4c46ef3e58a6d3062936cbe95f4de59163475afddd1e465e79dbad031a07ff0e",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/cold-moved-v2/readback-render.json",
+          "sha256": "84aaffa8588ac8aeac57deca0f0e259e246c573a74b5cfc9562cedcd05341393",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/cold-unpacked-v2/readback-render.json",
+          "sha256": "213cb6ca1985dfa015a5d744de37acf81a558a2a82a686d18ebd7d981fb3f39a",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/cold-original-v2/annotation-visibility-refresh.json",
+          "sha256": "90d529bcc413fe300b89abe2d87b8e05d80242f5c4358868042936de78ce6d7e",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/cold-moved-v2/annotation-visibility-refresh.json",
+          "sha256": "90d529bcc413fe300b89abe2d87b8e05d80242f5c4358868042936de78ce6d7e",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/cold-unpacked-v2/annotation-visibility-refresh.json",
+          "sha256": "90d529bcc413fe300b89abe2d87b8e05d80242f5c4358868042936de78ce6d7e",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/cold-render-prune-v2.json",
+          "sha256": "aa132d5f047413262a89e28ff3c218c39c552d3d131a88851b78885cec3e101b",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/missing-step-guard.json",
+          "sha256": "93e53102ea94ad5d8844e31a0d4e78f5322a05753be9f6a2cb13112b52b18ea4",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/preservation-failed-import.json",
+          "sha256": "faf7b7a56390592edcadaf9292691b2b5ac9562eb7ce7a23de55adf403182dc9",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/failed-cold-readback.json",
+          "sha256": "8551e6e3f01edb0d2b6f42734a0a102d304cb9fe1b5757f774a0f7ba237a99dc",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-irc-mayer-context/build.json",
+          "sha256": "e140291f015989ecd51e05874931dc482918329f429e640b2542eb1dbb52256f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-irc-mayer-context/installation-command.json",
+          "sha256": "3f8fba26c5cea208851b0a864cfdd0b7c7f370322d00e7fd1c3b72bdd517ad0c",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-irc-mayer-context/installed-IRC-command.json",
+          "sha256": "bd594ccc7e89fff511955604902d62a0e7763c985641fd3e86b74ed1d85763e3",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-irc-mayer-context/installed-IRC-cold-command.json",
+          "sha256": "e5baf7d56ca6d606e9c3051c25d7ec79a9d662b58ba34e72345c1827fe66cbd4",
+          "status": "Passed"
+        }
+      ],
+      "diagnostics": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/native-import-context-defect.json",
+          "sha256": "e8a5362c289bf6e91a0b5c2c9b0ff9235c4e7f68c9d7ec8b19082f8f0d82d8be",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/cold-original/readback-render.json",
+          "sha256": "c17c21eaaa9bb56efdd26c2c59596da2469430653d23e5d78c08fdc3bf844ca4",
+          "status": "Failed"
+        }
+      ],
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/C11-fixed-entry-GUI.jpg",
+          "sha256": "e0ca4661d19490275b678465b0603ab48c70163ae09e6202263a23fae6a9e696"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C11-fixed-dialog-GUI.jpg",
+          "sha256": "39f384d1ccfbdf85422ac851f9df0cc79f97b0f9dfb88ec0b19a4bc50c5572f0"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C11-fixed-pair12-GUI.jpg",
+          "sha256": "506aa78c56e6c2873bb40d27939728a0659f535fd5596b72da3421e7d49284a3"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C11-fixed-pair13-GUI.jpg",
+          "sha256": "9d45a5939780d46d8d57c052dd03fff3c06bdb4f65c2310b13c884406b37ff84"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C11-curve.png",
+          "sha256": "76e44b4f80e97fbe721da482d01492d0405db5d8c8df2016e79bdaf750214739"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C11-geometry.png",
+          "sha256": "a25aa52f03eb786e71af06c5a9ea74c1ad40a3884a2dcaaec5dc758f310e0b3a"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C11-overview.png",
+          "sha256": "b977acb181aef8ada797f6c36b82aac3c14dd3c3aa6124d162b800194b4912e6"
+        }
+      ],
+      "project": {
+        "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/C11-final.blend",
+        "sha256": "d9c9a480d8d588a2b615f9f6eea03e36cac5f276262b63a6e8db51af3fa7f7ae",
+        "files": 13,
+        "datasets": 2,
+        "arrays": 9,
+        "references": 6,
+        "volumes": 0
+      },
+      "moved_project": "outputs/projects/tutorial-cu-full/中文移动/C11/C11-final.blend",
+      "unpacked_project": "outputs/projects/tutorial-cu-full/unpacked/C11/C11-final.blend",
+      "processes_exited": [
+        40356,
+        52844,
+        31332,
+        15732,
+        54032
+      ],
+      "user_walkthrough": "Not Run",
+      "independent_signature": "Not Run",
+      "rebuild": "Retained scripts/reference oracle, central SHA-bound P04 inputs, C10 checkpoint and candidate deb9416/locked environment; use new batch paths.",
+      "prior_defect": "Source13401c6 native Properties context import created Mayer table but nested plot poll failed. Failed evidence and failed-engineering cold readback retained; deb9416 object override fixed and real GUI retested.",
+      "visibility_scope": "Initial cold-load state exact; step update honors persisted annotation Visible/show_leader. Per-render masks reapplied explicitly."
     }
   },
   "historical_partial_supplement": {

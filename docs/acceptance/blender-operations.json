@@ -4023,6 +4023,132 @@
         "requires_current_result_assertions": true,
         "current_batch_replay_reports": []
       }
+    },
+    {
+      "id": "irc-mayer-import",
+      "title": "真实IRC逐步Mayer导入与自动曲线",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; source/raw-value checks separately via MCP",
+        "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+        "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+        "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID40356；导入前只选IRC path根，切换原子对只选QC IRC Mayer orders表；四原子源编号1–4",
+        "visible_entry": "Object Mode，只选尚无Mayer表的IRC path根；Properties→对象属性→QCBlender · 对象与量子化学→IRC Path→Import Mayer Results；CSV manifest: step,mayer_output填写P04/mayer-pyscf.csv后确定",
+        "validated_scope": "Computer Use从真实C10三步根对象导入，自动生成6对×3步表、1,2曲线和当前步2游标；MCP核对四数组、18源值及源摘要。限定已匹配三步原子编号/构型的文本清单。",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/native-import-and-pair13-oracle.json",
+            "sha256": "c6cb7e9a29abe282c1e04d093285183574d5b9231c955153f5401b28c9d684cf",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C11-fixed-entry-GUI.jpg",
+            "sha256": "e0ca4661d19490275b678465b0603ab48c70163ae09e6202263a23fae6a9e696"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C11-fixed-dialog-GUI.jpg",
+            "sha256": "39f384d1ccfbdf85422ac851f9df0cc79f97b0f9dfb88ec0b19a4bc50c5572f0"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C11-fixed-pair12-GUI.jpg",
+            "sha256": "506aa78c56e6c2873bb40d27939728a0659f535fd5596b72da3421e7d49284a3"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/irc.py": "87a1edb4efd53dbcdc83fcf13be0b793669619d54f160688378f9ee6e086e8e7",
+        "qcblender/irc.py": "80941cc9fb90277031b7512ee48f131b76f50fa7e6055d2949ed63b84b5117a1",
+        "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/blender/external_results.py": "71f9612f82db00b3f1de9554bc05bc1ca8759dc9937318310fa65f02c1fef5d7",
+        "qcblender/blender/geometry.py": "b3f453dc1943e7488b1bee33c761b874178c9ad9c8a25e855732cb50ddbd82ca",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
+      },
+      "fingerprint_review": "Review callbacks, transitive helpers, interfaces and dependencies before reuse; changed Mayer import retested natively.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Computer Use从真实C10三步根对象导入，自动生成6对×3步表、1,2曲线和当前步2游标；MCP核对四数组、18源值及源摘要。限定已匹配三步原子编号/构型的文本清单。",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": []
+      }
+    },
+    {
+      "id": "irc-mayer-pair-plot",
+      "title": "Mayer原子对选择并重绘",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; source/raw-value checks separately via MCP",
+        "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+        "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+        "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID40356；导入前只选IRC path根，切换原子对只选QC IRC Mayer orders表；四原子源编号1–4",
+        "visible_entry": "只选QC IRC Mayer orders子表；同Properties→IRC Path；Atom A (1-based)=1，Atom B (1-based)=3，再点Plot Pair",
+        "validated_scope": "Computer Use把Atom B从2改为3并点击Plot Pair，生成1,3谷形曲线；MCP核对三值、当前步2值0.950844120525及独立归一化游标，后续两对逐步重放与非法pair拒绝单列。",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/native-import-and-pair13-oracle.json",
+            "sha256": "c6cb7e9a29abe282c1e04d093285183574d5b9231c955153f5401b28c9d684cf",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C11-fixed-pair13-GUI.jpg",
+            "sha256": "9d45a5939780d46d8d57c052dd03fff3c06bdb4f65c2310b13c884406b37ff84"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/irc.py": "87a1edb4efd53dbcdc83fcf13be0b793669619d54f160688378f9ee6e086e8e7",
+        "qcblender/irc.py": "80941cc9fb90277031b7512ee48f131b76f50fa7e6055d2949ed63b84b5117a1",
+        "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/blender/external_results.py": "71f9612f82db00b3f1de9554bc05bc1ca8759dc9937318310fa65f02c1fef5d7",
+        "qcblender/blender/geometry.py": "b3f453dc1943e7488b1bee33c761b874178c9ad9c8a25e855732cb50ddbd82ca",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
+      },
+      "fingerprint_review": "Review callbacks, transitive helpers, interfaces and dependencies before reuse; changed Mayer import retested natively.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Computer Use把Atom B从2改为3并点击Plot Pair，生成1,3谷形曲线；MCP核对三值、当前步2值0.950844120525及独立归一化游标，后续两对逐步重放与非法pair拒绝单列。",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/step-pair-batch.json",
+            "sha256": "daa2b65f360ed741ee71138e8db72c19f14a41e9768e805c41e6952e821f3dbf",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/invalid-pair-from-1-3.json",
+            "sha256": "24fca7199de931e4444c497ead694b6433d1c14006b2ece9710badb9e3ad2975",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/invalid-pair-from-1-2.json",
+            "sha256": "24fca7199de931e4444c497ead694b6433d1c14006b2ece9710badb9e3ad2975",
+            "status": "Passed"
+          }
+        ]
+      }
     }
   ]
 }
