@@ -558,7 +558,7 @@
     "docs/acceptance/tutorial-validation.json",
     "docs/acceptance/cleanup-validation.json"
   ],
-  "remaining_click_steps": "C10-C13, C04 invalid-mask boundaries, C05 IRC annotations/current-version, density checkpoint relocation, remaining N scope and same-final-source unified qualification before main merge/archive. C09 scoped actions and three-path cold chain Passed. Full walkthrough/user and independent scientific signature remain Not Run.",
+  "remaining_click_steps": "C11-C13, C04 invalid-mask boundaries, density checkpoint relocation, remaining N scope and same-final-source unified qualification before main merge/archive. C10 real IRC annotations/current-version rejection and serial cold chain Passed. User walkthrough and independent scientific signature remain Not Run.",
   "cleanup": {
     "status": "Passed",
     "scope": "This screenshot supplement only; full GUI task remains claimed",
@@ -4596,6 +4596,212 @@
       "user_walkthrough": "Not Run",
       "independent_signature": "Not Run",
       "rebuild": "Retained batch scripts, central manifest inputs, candidate13401c6 and existing locked environment; new batch paths required."
+    },
+    "C10_IRC_annotations_and_cold_chain": {
+      "status": "Passed",
+      "scope": "Scoped C10 real IRC import, native step1/2/3/Previous, three source-coordinate annotations, supported current-version rejection and serial cold chain",
+      "source_commit": "13401c6a42dabd3844d7f1896ebdd6106188f774",
+      "product_tree": "a8db95a942a2bca82fdf147727bce0dc3a57200f",
+      "candidate_sha256": "cc4e7ac23d22a0c6c5f919c72b15615d8e440fe630838e64853512cfaa356ffd",
+      "input_manifest_sha256": "59c192d18a9cd2c9cf904eb7a844e757a2884ccd095ccc55d73aae4b0d7b71dd",
+      "input_reference": {
+        "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/native-import-oracle.json",
+        "sha256": "ea9d92db7e7f7ce3963789397e732cc5acd70f4759115af446a4b42daa6c895b",
+        "status": "Passed"
+      },
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/baseline.json",
+          "sha256": "a4217f41f60e5f7e2cff2195d64b3efa6216787bc7479706d76be34b318b136a",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/mcp-ready-52336.json",
+          "sha256": "4855bdc7ca1c36a37b72f374eeaa79a87cca0cab83a9fdcfbc8a51c387507bb1",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/native-import-oracle.json",
+          "sha256": "ea9d92db7e7f7ce3963789397e732cc5acd70f4759115af446a4b42daa6c895b",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/duplicate-step-guard.json",
+          "sha256": "f5e94c44d5448b1929a50a352371d4dd307f41416dac5b377a946bc923b4ea99",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/annotation-reuse.json",
+          "sha256": "e0bb7b70ffeb18a1dd268cd143a4af46a5c7d198bf3ee67548676acdd45f51cb",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/step-1-oracle.json",
+          "sha256": "f13d9e570e79dd065bdbd66ad310f6dbb508daf810814268143d95d5717d2db7",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/step-2-oracle.json",
+          "sha256": "10bd78e7e5b7b94056ea0f039154981a01711d991c1560719e57485d8956ec44",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/step-3-oracle.json",
+          "sha256": "046c83912a3476f2f24a89a54025b56b3d0cddd8c8d7cbb719a0607f6d1e9ac1",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/previous-step2-oracle.json",
+          "sha256": "10bd78e7e5b7b94056ea0f039154981a01711d991c1560719e57485d8956ec44",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/current-view-guard.json",
+          "sha256": "a3317f470c745d72615868547d4e9246fa6b95380008a6ce10edac7deab7fd02",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/endpoint-guards.json",
+          "sha256": "5815a2039d2cc8789d444ec7fa4e26334d4a014f065a10d5f3240750f9bfed80",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/save-archive-reuse.json",
+          "sha256": "d40a2dcffef8b7a831bd6631a794a624abadd44b6cf1d26116d4549a6a1f7c85",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/render-visual-review.json",
+          "sha256": "cad8d5e26c4e82c813b39f7661178db76f9a29ece2036701c08fdb15f4b96925",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/renders.json",
+          "sha256": "33d1431e70ae15794fb59901acd32a30923ffe6e55873022ecf0245194219fbf",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/preservation-final.json",
+          "sha256": "4e3d0e1b022a8c3142ee5b44827279a61dfb5a5996129f523bf3221b667728b6",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/close-request.json",
+          "sha256": "fd8a79729636aa66b753dc087b5af2f250c1f66bb625630a145385f338ec746d",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/exit-52336-host.json",
+          "sha256": "b85b54ea077403339fc457f813ca51a406a62e2df2f6ddee9767bdde788ffe70",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/path-map.json",
+          "sha256": "d8dd864974b714b6eeab27dc3ff2e18998bc39730b8888d513a47fafd669ec46",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/cold-chain.json",
+          "sha256": "c99b68cddce1ded6c7c07986c4d5c2df3677f4cec7a9be74d056e348314b47c7",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/cold-original/readback-render.json",
+          "sha256": "b0d7c10a3a19cb4441c3e51559e254e9c477d8dbb3cfc7ca9345b8e79e29f332",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/cold-moved/readback-render.json",
+          "sha256": "98694386964c43295c86fcc9f630b2f59e4b129e86bf0f98faccfb66e5d81522",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/cold-unpacked/readback-render.json",
+          "sha256": "319346b32bd46dd9cd7bd2a50f59e465b0d5c25730474dab8d51a7a97a4ed8ad",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/cold-render-prune.json",
+          "sha256": "5bfd963afdc7f59a08e5b05b5d74c922c3e93808ee2c0df2e6aa610b34ccce4a",
+          "status": "Passed"
+        }
+      ],
+      "diagnostics": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/atom-id-oracle-diagnostic.json",
+          "sha256": "66a0b524f6109afebf99059e02b4babf94b64ca487c9c6f5378f919c9555fa8b",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/state-preflight-diagnostic.json",
+          "sha256": "db9ce786629a187e404b33dbebb2abaa536eafdafb94e250e2776b9a06fbb066",
+          "status": "Failed"
+        }
+      ],
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/C10-entry-GUI.jpg",
+          "sha256": "453f500f71b953e4988d93e21335527dffdeaf5343d4cfb2f8383fa8bec1ac72"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C10-dialog-GUI.jpg",
+          "sha256": "5d355d379a91bfd4d9eb56a0e4b674e4b9a99eb788078899cccebdcfe4eadc67"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C10-step1-GUI.jpg",
+          "sha256": "81721472480873997877a90f761f8d15d86c2459020aa41b147e263e68cc2daf"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C10-step2-GUI.jpg",
+          "sha256": "ec186cfcab5f4e3196bc3698644f1ff6fa1c12ae01586f98a5f1263975004cbc"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C10-step3-GUI.jpg",
+          "sha256": "9890d0d27ece713064e5b7b69faf2905def488f395c88c309ec829557d4ea7a2"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C10-current-view-rejection-GUI.jpg",
+          "sha256": "1e36d2ec0d9c063ce64ec7c0f0f1136dbd38bf59e06497552e8648bb834e9411"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C10-saved-GUI.jpg",
+          "sha256": "18b3a198e9904369b54f93cc21886f8f61d430618c67967025f6985fa91f6b99"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C10-curve.png",
+          "sha256": "d8c0e0fc3e4fe183eab42d5b5ff9216d80c4bcc8a3385c8d6a4d8a48379aea5a"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C10-steps.png",
+          "sha256": "35e4149b458538d06c46413c9c262b185e837c1b264e757924b5f94ca42ea71c"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C10-overview.png",
+          "sha256": "09c0e6f16bed505afbf9cd42b26d33bf507289ecbc99b742cd4ad74b2c90986c"
+        }
+      ],
+      "project": {
+        "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/C10-final.blend",
+        "sha256": "46c35c1625d1bb0102cda0d040154079a428d21bc3db5a9b4e33ce2a3d6e8057",
+        "files": 8,
+        "datasets": 1,
+        "arrays": 5,
+        "references": 3,
+        "volumes": 0
+      },
+      "steps": 3,
+      "atoms": 4,
+      "moved_project": "outputs/projects/tutorial-cu-full/中文移动/C10/C10-final.blend",
+      "unpacked_project": "outputs/projects/tutorial-cu-full/unpacked/C10/C10-final.blend",
+      "processes_exited": [
+        52336,
+        50044,
+        3720,
+        31196
+      ],
+      "user_walkthrough": "Not Run",
+      "independent_signature": "Not Run",
+      "rebuild": "Retained batch scripts and reference-oracle with manifest SHA, central P04 inputs and candidate13401c6/locked environment; new batch paths required."
     }
   },
   "historical_partial_supplement": {

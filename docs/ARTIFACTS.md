@@ -16,6 +16,10 @@
 
 ## 当前任务与候选
 
+C10真实三步H2O2导入、Next/Previous和IRC当前版本视图预期拒绝GUI Passed；四原子身份/坐标/FCHK能量、三种源编号测量/文字/锚点/引线及重复步号/端点不变MCP Passed。8文件/1Dataset/5数组/3引用、三处串行冷重开逐步重放与九次像素一致实渲染Passed，全进程退出；10图紧接教程步骤，登记55项。原子编号/快照类型断言诊断保留，重复冷渲染核对后清理。产品未改，完整教程/统一资格及合并归档仍待完成。
+
+证据及重建脚本：`outputs/evidence/2026-10-02/tutorial-cu/full/C10/`；保留`C10-final.blend + .qcdata`和ZIP，作为无Mayer导入的C11检查点。移动/解包副本在`outputs/projects/tutorial-cu-full/`对应C10目录；沿用13401c6/cc4e7ac候选身份。
+
 C09首次AIM导入、立即属性记录1/2、路径组1/2和数值范围GUI Passed；独立原文11CP/10路径408点/550属性、28筛选及7错误边界Passed。120文件/8Dataset/224数组/4体积/20引用保全与三处串行冷重开、九次像素一致实渲染Passed，全部进程退出。8界面截图和3效果图紧接步骤，登记52项。首次属性面板int/string键缺陷以13401c6最小修复，新候选cc4e7ac完整摘要见索引；原Failed与排版/脚本诊断保留，九份重复冷渲染核对后清理。完整教程/统一资格及合并归档仍待完成。
 
 证据及重建脚本：`outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/`，原失败及修复前工程在上一级C09；修复构建/安装/10项科学检查与大样本59CP/58路径专项在`outputs/evidence/2026-10-02/tutorial-aim-records/`。保留fixed中的`C09-final.blend + .qcdata`和ZIP，移动/解包副本在`outputs/projects/tutorial-cu-full/`对应C09目录；最新候选`outputs/candidates/current/tutorial-aim-records-13401c6/`。

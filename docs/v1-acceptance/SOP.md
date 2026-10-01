@@ -1035,34 +1035,63 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
    本批28组MCP筛选和7项错误边界、120文件/8Dataset/224数组/4体积/20引用保全Passed；三处串行原生冷读与九次重新渲染像素一致Passed。首次原生导入、立即属性显示及路径选择证据和MCP准备分别记录。报告/输入/候选身份见[当前验证索引](../acceptance/tutorial-cu-validation.json)的 `C09_AIM_properties_paths_filters_and_cold_chain`；历史清理证据仍引用[cleanup-validation.json](../acceptance/cleanup-validation.json)。用户复做及独立科研签署仍Not Run。
 
 
-### C10 真实 IRC 步序与能量
+### C10 真实 IRC 步序、能量与随步标注
 
-**真实输入预期：** H2O2四原子 **[O,O,H,H]**，RHF/STO-3G，中性单重态18电子；原生geomeTRIC **1.1.1** 双向IRC，61接受帧，截取0-based **29/30(TS)/31**。CSV中的1/2/3依次对应它们，FCHK打印能量 **−148.764884 / −148.764883 / −148.764884 Eh**；TS唯一虚频 **−48.1434547807 cm^-1**、最大梯度 **1.893862e-8 Eh/bohr**。三点邻近TS，构型变化小，核对坐标/游标而非要求肉眼发生大反应；不能把该短段称为完整61步路径。
+**真实输入预期：** H2O2四原子 **[O,O,H,H]**，RHF/STO-3G，中性单重态18电子；原生geomeTRIC **1.1.1** 双向IRC，61接受帧，截取0-based **29/30(TS)/31**。CSV中的1/2/3依次对应它们，FCHK打印能量 **−148.764884 / −148.764883 / −148.764884 Eh**；TS唯一虚频 **−48.1434547807 cm^-1**、最大梯度 **1.893862e-8 Eh/bohr**。三点邻近TS，构型变化小，核对坐标/游标；本例展示这一短段，不作为完整61步路径。
 
-1. 按清单保持 P04 CSV 和逐步 FCHK 相对目录。CSV 是 UTF-8，首行为 `step,fchk`，步号从 1 连续，文件顺序与记录的反应方向一致；输入来自真实 IRC 计算。
+1. 新建独立工程，按清单保持 **P04/steps.csv** 和 **step-001/002/003.fchk** 的相对目录。CSV是UTF-8，首行为 `step,fchk`，步号从1连续。先在 **inputs/P04/** 复制CSV为 **checks-duplicate.csv**，将第二条数据的step改为1，保留FCHK相对路径。点击 **3D视图 → N侧栏 → QCBlender → 工作流 → 导入 IRC 路径**，在 **CSV manifest: step,fchk** 输入这个副本并点 **确定**。预期拒绝并报告 **Step numbers must be explicit, unique and contiguous from 1**，场景没有新IRC对象。记录副本摘要和错误，保留原件；本批该错误输入由MCP执行并核对未变，GUI错误对话框未执行。
 
-   [用户截图待引用：C10-01，活动对象、参数与结果同屏；参数变化保留前后画面]
+   [用户截图待引用：C10-01，错误CSV副本、实际错误与未新增对象]
 
-2. 在 **N 侧栏 → 工作流 → 导入 IRC 路径** 在 **CSV manifest: step,fchk** 指定 steps CSV，等待建立根原子视图与曲线；选**IRC 根原子对象**，打开 **对象属性 → IRC Path**。
+2. 同一入口选择完整 **P04/steps.csv**，点 **确定**。预期生成根原子 **IRC path**、能量曲线 **QC IRC energy** 和当前步标记 **QC IRC selected step**。只选 **IRC path**，在 **Properties → 对象属性 → QCBlender · 对象与量子化学 → IRC Path** 查看 **Step 1 / 3** 和 **Energy: −148.7648840000 hartree**。原子源编号是 **1/2/3/4**；数据内部 `qc_atom_id` 是 **0/1/2/3**。
 
-   [用户截图待引用：C10-02，活动对象、参数与结果同屏；参数变化保留前后画面]
+   [用户截图待引用：C10-02，完整清单、导入结果与对象属性中的步号/能量]
 
-3. 点击 **Previous/Next** 遍历每步，核对步号、原子身份/坐标、hartree 能量及曲线游标。确认端点和当前清单；能量须对应该步 FCHK。
+   ![Computer Use打开导入IRC路径，唯一活动窗口与空白工程](screenshot/C10-entry-GUI.jpg)
 
-   [用户截图待引用：C10-03，活动对象、参数与结果同屏；参数变化保留前后画面]
+   ![Computer Use填写P04清单并确认；MCP独立核对源坐标和能量](screenshot/C10-dialog-GUI.jpg)
 
-4. 在 C05 同入口添加当前步距离/角度/二面角标注，换步核对文字和锚点同步；局部集合保持固定编号，需要时重新计算。
+3. 保持根原子，按C05在 **对象属性 → 几何表示** 将 **Style=0** 设为球棍，**Atom Radius=0.25、Bond Radius=0.07**。在 **3D视图 → N侧栏 → QCBlender → 创建视图与检查工具** 依次点击 **创建距离标注、创建角度标注、创建二面角标注**：源原子顺序分别为 **1,2**、**3,1,2**、**3,1,2,4**，小数位 **6**、字号 **0.14**，保持引线显示。源编号指FCHK行顺序。
 
-   [用户截图待引用：C10-04，活动对象、参数与结果同屏；参数变化保留前后画面]
+   本示例三标签偏移分别为 **(1.7,−0.4,−0.9)、(1.7,−0.4,−0.2)、(1.7,−0.4,0.8)**，黄色 **(1,0.8,0.2,1)**，绕X轴 **90°**，正对后文Y方向相机。三种标注本批复用已确认GUI入口，通过MCP建立；用户可按C05的设置图标与 **Face All to Camera** 调整。
 
-5. 在 **inputs/P04/** 复制steps.csv为 **checks-duplicate.csv**，用文本编辑器把第二行数据的step也改为1，保留FCHK相对路径，保存UTF-8；用该副本导入应拒绝重复编号，记录副本摘要和错误。再用完整原CSV导入；原件不改。
+   [用户截图待引用：C10-03，源编号顺序、三种标注、偏移和引线]
 
-   [用户截图待引用：C10-05，活动对象、参数与结果同屏；参数变化保留前后画面]
+4. 只选 **IRC path**，打开前述 **对象属性 → IRC Path**，点击 **Next** 从1到2，再到3；点击 **Previous** 返回2。逐步核对四原子身份、坐标、能量曲线游标和标签中的 **IRC Step**。距离1,2三步约 **1.401927844 / 1.401928051 / 1.401927844 Å**；角3,1,2约 **99.818649 / 99.818565 / 99.818650°**；二面角3,1,2,4约 **171.760508 / −179.999999984 / −171.760508°**。第二步六位小数显示 **−180.000000°**。这些数值由对应源坐标计算，不由画面长度判断。
 
-6. 对应 N15/N16/N18，按 0.4 保存 `C10-curve.png`、`C10-steps.png`、总览与工程。
+   [用户截图待引用：C10-04，每步能量、游标、三种标注和返回第二步]
 
-   [用户截图待引用：C10-06，活动对象、参数与结果同屏；参数变化保留前后画面]
+   ![Computer Use步1：源坐标、FCHK能量与三种随步标注](screenshot/C10-step1-GUI.jpg)
 
+   ![Computer Use点击Next至TS步2，能量峰值与标注同步](screenshot/C10-step2-GUI.jpg)
+
+   ![Computer Use点击Next至步3；另已检查Previous返回步2](screenshot/C10-step3-GUI.jpg)
+
+5. 在步3再次点 **Next**，或步1再点 **Previous**，预期报告 **IRC step is outside the imported path** 且步号、几何、曲线和标注不变。本批这两项端点检查通过MCP执行。
+
+   回到步2，只选根原子，在 **3D视图 → N侧栏 → QCBlender → 创建视图与检查工具 → 创建当前版本视图** 点击。当前IRC路径预期拒绝，提示 **Creating a current-version IRC view cannot preserve the full path; keep the current view**，保留完整原路径；不得将这项通过理解为已创建IRC副本。局部选择按固定源编号在原层操作；IRC不创建局部显示副本，选择变化后需要时按当前步重新计算集合。
+
+   [用户截图待引用：C10-05，端点和当前版本视图拒绝、原路径未变]
+
+   ![Computer Use点击当前版本视图后的预期拒绝；MCP核对原步2和全部对象未变](screenshot/C10-current-view-rejection-GUI.jpg)
+
+6. 按0.4用 **EEVEE、1920×1080、正交相机绕X轴90°** 输出曲线、三种标注和总览。曲线对象与游标局部X偏移 **−5**；曲线相机位置 **(−3,−20,1.5)**、Scale **6**，原子/标注相机 **(2.8,−20,0)**、Scale **11**，总览相机 **(1,−20,1)**、Scale **14**。曲线图仅显示曲线和游标；标注图仅显示根原子和三标签/引线；总览二者均显示。图的高低是归一化显示，物理能量取对象属性的hartree记录；曲线没有物理能量刻度。
+
+   标签使用上面的黄色发光材质，Strength **1**；世界Background灰色 **(0.12,0.12,0.12)**、Strength **0.8**、Standard视图变换；两Sun能量 **2/0.35**、角宽 **0.35 rad**，Euler XYZ旋转 **(0.7,−0.3,−0.4)/(−0.4,0.4,2.5) rad**。相机/照明与排版通过MCP复用，只影响显示。
+
+   点击 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程**，保存 **C10-final.blend + C10-final.qcdata**，按N16归档ZIP。完成后关闭并确认进程退出；原路径、中文移动路径和解包路径依次在新进程打开，核对三步数据、标注与渲染，每次关闭后再打开下一处。C11从这份尚未导入Mayer的工程继续并另存。
+
+   [用户截图待引用：C10-06，三张效果图、保存位置与三处冷重开]
+
+   ![原生EEVEE渲染：三步归一化能量曲线及步2游标](screenshot/C10-curve.png)
+
+   ![原生EEVEE渲染：四原子及步2的距离、角度、二面角](screenshot/C10-steps.png)
+
+   ![原生EEVEE渲染：曲线与源构型标注总览](screenshot/C10-overview.png)
+
+   ![Computer Use观察截图：MCP保存的工程路径、步2能量及对象](screenshot/C10-saved-GUI.jpg)
+
+   本批真实导入与Previous/Next、当前版本拒绝原生操作Passed；独立坐标/能量/三种测量及错误输入由MCP核对Passed。8文件、1 Dataset/5数组/3对象引用保全，三处串行冷重开各重放1→2→3→2和三图，九次渲染像素一致Passed，全部进程退出。证据见[当前验证索引](../acceptance/tutorial-cu-validation.json)的 `C10_IRC_annotations_and_cold_chain`；用户复做及独立科研签署仍Not Run。历史[cleanup-validation.json](../acceptance/cleanup-validation.json)按原批次维护。
 
 
 ### C11 IRC 逐步 Mayer 键级

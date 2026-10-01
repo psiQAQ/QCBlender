@@ -3813,6 +3813,216 @@
         "requires_current_result_assertions": true,
         "current_batch_replay_reports": []
       }
+    },
+    {
+      "id": "irc-path-import",
+      "title": "真实IRC CSV路径导入",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP preparation and independent source oracle separately recorded",
+        "source_commit": "13401c6a42dabd3844d7f1896ebdd6106188f774",
+        "product_tree": "a8db95a942a2bca82fdf147727bce0dc3a57200f",
+        "candidate_sha256": "cc4e7ac23d22a0c6c5f919c72b15615d8e440fe630838e64853512cfaa356ffd",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID52336；仅选择IRC path根原子；源编号标注按1-based顺序，mesh qc_atom_id为0-based",
+        "visible_entry": "新工程、Object Mode；3D视图→N侧栏→QCBlender→工作流→导入 IRC 路径→CSV manifest: step,fchk",
+        "validated_scope": "Computer Use打开、填写P04/steps.csv并确认；真实三步H2O2、四原子[8,8,1,1]、5数组与源摘要由MCP独立核对",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/native-import-oracle.json",
+            "sha256": "ea9d92db7e7f7ce3963789397e732cc5acd70f4759115af446a4b42daa6c895b",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C10-entry-GUI.jpg",
+            "sha256": "453f500f71b953e4988d93e21335527dffdeaf5343d4cfb2f8383fa8bec1ac72"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C10-dialog-GUI.jpg",
+            "sha256": "5d355d379a91bfd4d9eb56a0e4b674e4b9a99eb788078899cccebdcfe4eadc67"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/irc.py": "a7da528854039e0e3bb9c030e87d081602448f6adc9ef7777b670106dbd6a23f",
+        "qcblender/irc.py": "80941cc9fb90277031b7512ee48f131b76f50fa7e6055d2949ed63b84b5117a1",
+        "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530",
+        "qcblender/measurements.py": "15d52ae7c9ca8b98cd53ed9d0030f4b848d1387f845c57f7c5892f7717a53fdc",
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/geometry.py": "b3f453dc1943e7488b1bee33c761b874178c9ad9c8a25e855732cb50ddbd82ca",
+        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
+      },
+      "fingerprint_review": "Listed files are the initial scope; review transitive helper, callback, interface and dependency changes before reuse.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Computer Use打开、填写P04/steps.csv并确认；真实三步H2O2、四原子[8,8,1,1]、5数组与源摘要由MCP独立核对",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": []
+      }
+    },
+    {
+      "id": "irc-step-navigation",
+      "title": "IRC Previous/Next步序和随步标注",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP preparation and independent source oracle separately recorded",
+        "source_commit": "13401c6a42dabd3844d7f1896ebdd6106188f774",
+        "product_tree": "a8db95a942a2bca82fdf147727bce0dc3a57200f",
+        "candidate_sha256": "cc4e7ac23d22a0c6c5f919c72b15615d8e440fe630838e64853512cfaa356ffd",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID52336；仅选择IRC path根原子；源编号标注按1-based顺序，mesh qc_atom_id为0-based",
+        "visible_entry": "只选IRC path根原子；Properties→对象属性→QCBlender·对象与量子化学→IRC Path→Previous/Next",
+        "validated_scope": "Computer Use实际1→2→3→2；每步源坐标/原子身份/能量/能量曲线游标和三种测量、文字、锚点、引线独立核对；三标注由已登记操作MCP建立",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/step-1-oracle.json",
+            "sha256": "f13d9e570e79dd065bdbd66ad310f6dbb508daf810814268143d95d5717d2db7",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/step-2-oracle.json",
+            "sha256": "10bd78e7e5b7b94056ea0f039154981a01711d991c1560719e57485d8956ec44",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/step-3-oracle.json",
+            "sha256": "046c83912a3476f2f24a89a54025b56b3d0cddd8c8d7cbb719a0607f6d1e9ac1",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/previous-step2-oracle.json",
+            "sha256": "10bd78e7e5b7b94056ea0f039154981a01711d991c1560719e57485d8956ec44",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C10-step1-GUI.jpg",
+            "sha256": "81721472480873997877a90f761f8d15d86c2459020aa41b147e263e68cc2daf"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C10-step2-GUI.jpg",
+            "sha256": "ec186cfcab5f4e3196bc3698644f1ff6fa1c12ae01586f98a5f1263975004cbc"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C10-step3-GUI.jpg",
+            "sha256": "9890d0d27ece713064e5b7b69faf2905def488f395c88c309ec829557d4ea7a2"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/irc.py": "a7da528854039e0e3bb9c030e87d081602448f6adc9ef7777b670106dbd6a23f",
+        "qcblender/irc.py": "80941cc9fb90277031b7512ee48f131b76f50fa7e6055d2949ed63b84b5117a1",
+        "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530",
+        "qcblender/measurements.py": "15d52ae7c9ca8b98cd53ed9d0030f4b848d1387f845c57f7c5892f7717a53fdc",
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/geometry.py": "b3f453dc1943e7488b1bee33c761b874178c9ad9c8a25e855732cb50ddbd82ca",
+        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
+      },
+      "fingerprint_review": "Listed files are the initial scope; review transitive helper, callback, interface and dependency changes before reuse.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Computer Use实际1→2→3→2；每步源坐标/原子身份/能量/能量曲线游标和三种测量、文字、锚点、引线独立核对；三标注由已登记操作MCP建立",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/endpoint-guards.json",
+            "sha256": "5815a2039d2cc8789d444ec7fa4e26334d4a014f065a10d5f3240750f9bfed80",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/cold-original/readback-render.json",
+            "sha256": "b0d7c10a3a19cb4441c3e51559e254e9c477d8dbb3cfc7ca9345b8e79e29f332",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/cold-moved/readback-render.json",
+            "sha256": "98694386964c43295c86fcc9f630b2f59e4b129e86bf0f98faccfb66e5d81522",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/cold-unpacked/readback-render.json",
+            "sha256": "319346b32bd46dd9cd7bd2a50f59e465b0d5c25730474dab8d51a7a97a4ed8ad",
+            "status": "Passed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "irc-current-version-rejection",
+      "title": "IRC当前版本视图受支持的拒绝",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP preparation and independent source oracle separately recorded",
+        "source_commit": "13401c6a42dabd3844d7f1896ebdd6106188f774",
+        "product_tree": "a8db95a942a2bca82fdf147727bce0dc3a57200f",
+        "candidate_sha256": "cc4e7ac23d22a0c6c5f919c72b15615d8e440fe630838e64853512cfaa356ffd",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID52336；仅选择IRC path根原子；源编号标注按1-based顺序，mesh qc_atom_id为0-based",
+        "visible_entry": "只选IRC path根原子；3D视图→N侧栏→QCBlender→创建视图与检查工具→创建当前版本视图",
+        "validated_scope": "Computer Use点击后明确拒绝不能保留完整路径；原对象、数据块、当前步2、坐标、标注和曲线未变。Passed指预期拒绝正确，不表示可复制完整IRC",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/current-view-guard.json",
+            "sha256": "a3317f470c745d72615868547d4e9246fa6b95380008a6ce10edac7deab7fd02",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C10-current-view-rejection-GUI.jpg",
+            "sha256": "1e36d2ec0d9c063ce64ec7c0f0f1136dbd38bf59e06497552e8648bb834e9411"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/irc.py": "a7da528854039e0e3bb9c030e87d081602448f6adc9ef7777b670106dbd6a23f",
+        "qcblender/irc.py": "80941cc9fb90277031b7512ee48f131b76f50fa7e6055d2949ed63b84b5117a1",
+        "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530",
+        "qcblender/measurements.py": "15d52ae7c9ca8b98cd53ed9d0030f4b848d1387f845c57f7c5892f7717a53fdc",
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/geometry.py": "b3f453dc1943e7488b1bee33c761b874178c9ad9c8a25e855732cb50ddbd82ca",
+        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
+      },
+      "fingerprint_review": "Listed files are the initial scope; review transitive helper, callback, interface and dependency changes before reuse.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Computer Use点击后明确拒绝不能保留完整路径；原对象、数据块、当前步2、坐标、标注和曲线未变。Passed指预期拒绝正确，不表示可复制完整IRC",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": []
+      }
     }
   ]
 }
