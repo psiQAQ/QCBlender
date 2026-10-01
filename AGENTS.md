@@ -29,7 +29,7 @@
 
 ## Blender 交互
 
-遵守 [Blender 交互与操作复用规则](docs/agents/blender-interaction.md)，使用 [操作登记表](docs/acceptance/blender-operations.json) 跨历史复用已成功确认的 Computer Use 操作。对应功能未变时优先 MCP，能力不足时用命令行，Computer Use 用于首次确认、变更后复验和兜底；仅操作一个 Blender 进程，完成工程及时保存自包含数据并正常关闭。理由：减少重复点击，并避免 MCP 连接到错误进程；复用入口证据仍须核对本批实际结果。
+遵守 [Blender 交互与操作复用规则](docs/agents/blender-interaction.md)，使用 [操作登记表](docs/acceptance/blender-operations.json) 跨历史复用已成功确认的 Computer Use 操作。对应功能未变时优先 MCP，能力不足时用命令行，Computer Use 用于首次确认、变更后复验和兜底；仅操作一个 Blender 进程，完成工程及时保存自包含数据并正常关闭。每次交互前查询登记表并核对连接 PID；相关功能修改后重新通过 Computer Use 确认，再更新记录；确认当前工程已保存且进程退出后才启动下一工程。理由：减少重复点击，并避免 MCP 连接到错误进程；复用入口证据仍须核对本批实际结果。
 
 ## 阶段产物维护
 

@@ -10,7 +10,7 @@
 
 ## Blender 操作复用
 
-维护者遵守 [单进程与操作复用规则](agents/blender-interaction.md)。先查询 [登记表](acceptance/blender-operations.json)：已通过真实 GUI 确认且功能未变的操作，优先 MCP、其次已有命令行，Computer Use 用于首次或变更后确认及兜底。按工程保存、关闭、确认退出后再切换；每批结果与历史 GUI 证据分开记录。
+维护者遵守 [单进程与操作复用规则](agents/blender-interaction.md)。先查询 [登记表](acceptance/blender-operations.json)：已通过真实 GUI 确认且功能未变的操作，优先 MCP、其次已有命令行，Computer Use 用于首次或变更后确认及兜底。相关功能变更后重新做 Computer Use 验证并更新登记表；切换工程或重连 MCP 时重新核对 PID。按工程保存、关闭、确认退出后再切换；每批结果与历史 GUI 证据分开记录。
 
 ## 本批目录与命令记录
 
