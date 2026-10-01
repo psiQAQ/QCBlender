@@ -340,6 +340,9 @@ class QCBLENDER_MT_object(bpy.types.Menu):
         action_button(layout, context, 'slice', 'qcblender.create_slice', '创建切片')
         action_button(layout, context, 'probe', 'qcblender.probe_field', '读取游标处场值')
         draw_probe_actions(layout, context)
+        if (context.object.get('qc_view_kind') in ('field', 'slice', 'atoms')
+                and len(context.selected_objects) == 2):
+            layout.operator('qcblender.map_scalar', text='Map Selected Field to Active Surface')
         layout.operator('qcblender.create_framed_camera', text='创建取景相机')
         if context.object.get('qc_view_kind') in ('atoms', 'field', 'slice', 'fog'):
             layout.operator('qcblender.copy_display_parameters', text='复制显示参数到选中视图')
