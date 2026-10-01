@@ -519,15 +519,35 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    ![MCP复用映射操作：密度0.004表面按ESP着色，21点数值核对](screenshot/C04-02-density-ESP-mapped-MCP.jpg)
 
-3. 填 **Color Minimum=−0.05、Color Center=0、Color Maximum=+0.05**，须严格递增；在 **图例排版** 开 **显示图例**（Show Legend），改 长宽/字号/小数/方向/旋转/位置。点击 **零中心对称** 输入 **R=0.05**，再 **读取有效范围** 对照一次读取结果；记录并恢复成图色域。材质属性改色带/Reverse，范围外用端点颜色，无效采样为洋红。
+3. 填 **Color Minimum=−0.05、Color Center=0、Color Maximum=+0.05**，须严格递增；在 **图例排版** 开 **显示图例**（Show Legend），改 长宽/字号/小数/方向/旋转/位置。点击 **零中心对称** 输入 **R=0.05**，再 **读取有效范围** 对照一次读取结果；记录并恢复成图色域。示例排版填长度 **2.6**、宽度 **0.25**、字号 **0.2**（均为本地布局单位），小数位数 **3**，开启竖向排列，旋转 **(0,0,0.3)**（rad），位置 **(3.5,0,0)**。在 **材质属性 → QCBlender · 节点材质** 修改 Color map 中间停靠点 **0.5→0.4**，将 **Reverse (0 or 1)** 从 **0→1**，确认表面和图例颜色方向同时反转；成图前恢复中点 **0.5** 与 Reverse **0**。原生撤销用 **编辑 → 撤销**，重做用 **编辑 → 重做**。范围外用端点颜色，无效采样为洋红；本批1800点均有效，无效域颜色仍须另行验收。
 
    [用户截图待引用：C04-03，活动对象、参数与结果同屏；参数变化保留前后画面]
 
-   ![Agent点击：色域对称、读取范围和图例显隐；其余排版与色带待补验](screenshot/C04-03-zero-centered-dialog.jpg)
+   ![Agent点击：零中心对称与读取有效范围；图例排版和色带操作见下列补验图](screenshot/C04-03-zero-centered-dialog.jpg)
 
-   ![Agent点击：色域对称、读取范围和图例显隐；其余排版与色带待补验](screenshot/C04-03-valid-range.jpg)
+   ![Agent点击：零中心对称与读取有效范围；图例排版和色带操作见下列补验图](screenshot/C04-03-valid-range.jpg)
 
-   ![Agent点击：色域对称、读取范围和图例显隐；其余排版与色带待补验](screenshot/C04-03-legend-visible-restored-range.jpg)
+   ![Agent点击：色域对称、读取范围和图例显隐；排版与色带见下列补验图](screenshot/C04-03-legend-visible-restored-range.jpg)
+
+   ![Agent点击：图例默认排版](screenshot/C04-03-legend-default.jpg)
+
+   ![Agent点击：长度2.6、宽度0.25、字号0.2、小数3](screenshot/C04-03-legend-dimensions.jpg)
+
+   ![Agent点击：切换竖向排列](screenshot/C04-03-legend-vertical.jpg)
+
+   ![Agent点击：图例Z旋转0.3 rad](screenshot/C04-03-legend-rotated.jpg)
+
+   ![Agent点击：图例X位置3.5](screenshot/C04-03-legend-positioned.jpg)
+
+   ![Agent点击：材质属性中的Color map与Reverse入口](screenshot/C04-03-material-before.jpg)
+
+   ![Agent点击：Reverse=1，表面与图例方向同时反转](screenshot/C04-03-material-reversed.jpg)
+
+   ![Agent点击：色带中间停靠点改为0.4](screenshot/C04-03-ramp-middle-changed.jpg)
+
+   ![Agent点击：编辑菜单重做Reverse修改](screenshot/C04-03-material-menu-redo.jpg)
+
+   ![Agent点击：恢复中点0.5与Reverse=0](screenshot/C04-03-material-restored.jpg)
 
 4. 旧多选映射使用新的未映射层独立复核：先选步骤2的密度表面，点 **N 侧栏 → 创建视图与检查工具 → 创建当前版本视图**，保留原层，新标准密度层尚未绑定色场。临时开启 ESP 表面的视口可见性，取消其他选择，在 Outliner 先选 ESP 表面，再 Shift 选新密度表面使其活动，确认恰好选中两个对象；F3 搜索 **Map Selected Field to Active Surface**，确认后核对与步骤2相同的来源。再用 **选择／替换着色场** 替换一次，范围和图例位置保留；恢复独立 ESP 表面隐藏。
 
@@ -570,6 +590,8 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
    [用户截图待引用：C04-10，活动对象、参数与结果同屏；参数变化保留前后画面]
 
    ![MCP保存阶段工程；完整C04渲染与冷重开待补验](screenshot/C04-10-mapping-checkpoint-saved-MCP.jpg)
+
+   ![MCP保存图例阶段工程；154数组保持原摘要，完整C04及本工程冷重开待补验](screenshot/C04-10-legend-checkpoint-saved.jpg)
 
 
 

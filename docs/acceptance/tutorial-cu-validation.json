@@ -1044,6 +1044,140 @@
         "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/verification-checkpoint.json",
         "sha256": "ed410e005a6e9e1feef925b3500014ba145b01b599ff7a1c5f24139ed7351eac",
         "scope": "C04 checkpoint evidence only; full C04 remains Not Run"
+      },
+      "legend_supplement": {
+        "status": "Passed",
+        "scope": "Actual GUI layout/material controls and checkpoint original cold readback; full C04 and new checkpoint cold reopen Not Run",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legend/checkpoint-cold-readback.json",
+            "sha256": "824f7e805b292125611f3b1c3701d8e79d7b5668a3c822751136d3e2e4bf541f",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legend/layout-GUI-readback.json",
+            "sha256": "a433e1ae48b8fa754602a4071ec83eb2a878ca57dabf3775d391303f9fd742f4",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legend/material-before.json",
+            "sha256": "36c262cb264650db9fb620055fab42fc83f8a01ea4d0a1c650068cefc70d352d",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legend/reverse-one-GUI.json",
+            "sha256": "b01b2b354da87375ce6fb768b418ef6e871198035ee71b7916eb024b5a2ebc75",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legend/ramp-change-GUI.json",
+            "sha256": "0c2753de4d8e7074bc73b4ea88b156b3d73f6b38be7da006c6f86e59d9d1a147",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legend/ramp-undo-GUI.json",
+            "sha256": "96516215b35898997857a95556308b73f17c3619240b6744b8b3ebc53d9eb1d5",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legend/reverse-menu-redo-GUI.json",
+            "sha256": "6edd31ec539803b948747c8643b8e52dd3ff46316241d77f0db6ced7b701f074",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legend/layout-material-final.json",
+            "sha256": "52f3127aea816ea4fd02998e5af2dbf8a4b7ee1a176ba6314e7baf365aaf89cf",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legend/portable-legend-checkpoint.json",
+            "sha256": "7f65bec185753d55c472d987bb74b7b1039f7fd67f7091a88e8bbff2bb9a79a9",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legend/exit-verified.json",
+            "sha256": "3c1abd2a94498fa11f98484623b4dff9ad024babc2127e6be7d36185e3fda81d",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-03-legend-default.jpg",
+            "sha256": "0ae0e580180fe4aeae7f2d8a27d64539ba6f953f0d60d8dfd9968c4164be0307"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-03-legend-dimensions.jpg",
+            "sha256": "1cd9da10a8aea0157a2a294024f6183996c9d36c3419ed46118898d64e4fe477"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-03-legend-positioned.jpg",
+            "sha256": "a713963517749d3013111877c492fff064f87cfb9bbf5d808ca638e1c2befeb0"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-03-legend-rotated.jpg",
+            "sha256": "8de3e58a34cf6343f8d250c5eca9d81555c4b6c28016616bf582dde7facc40c2"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-03-legend-vertical.jpg",
+            "sha256": "44632b35991d066146c8b894efe428014548162c8bea21a479402632f4987b17"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-03-material-before.jpg",
+            "sha256": "f3b2e079a2acc5868ce786fe68411cbfb386862d3e8a9d719f7f7bd5d2fde22d"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-03-material-menu-redo.jpg",
+            "sha256": "d433001e31e822e6571d0b760f3e49e09b3abb5cf6690213bb075d4ee557cf11"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-03-material-restored.jpg",
+            "sha256": "648126bf962e737f84d69c52df84ea6cbf3b96e0f40b43eeec080a1d2c84e371"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-03-material-reversed.jpg",
+            "sha256": "23923e055f6882e45e1cb55f98eb3596548e6d5e36a1bf94e5a8033486382f4b"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-03-ramp-middle-changed.jpg",
+            "sha256": "e1e4b8c69d6ff49b5284e49312ab24b610618a411da02bd1107e1b009f80647a"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-10-legend-checkpoint-saved.jpg",
+            "sha256": "cda368d8c912bfd55dccc9e6569f4f5cc8f1e35af858c0b6190eebe109680952"
+          }
+        ],
+        "project": "D:\\workspace\\QCBlender\\outputs\\projects\\tutorial-cu-full\\cases\\C04\\C04-legend-checkpoint.blend",
+        "project_sha256": "7d855b6b24477ec7bae21aa94c33e1178466ef58d8fa7e7d9155aee54520af27",
+        "datasets": 3,
+        "arrays": 154,
+        "refs": 5,
+        "volumes": 2,
+        "files": 74,
+        "cold_reopen": "Not Run",
+        "independent_signature": "Not Run",
+        "preservation": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legend/preservation.json",
+          "sha256": "4abbb944f22431475f94092f5b94b45958ce69cfe15736bab071871b5b990bb2",
+          "status": "Passed"
+        },
+        "diagnostics": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legend/redo-hotkey-diagnostic.json",
+            "sha256": "c69b6a247821c38df3a868e2e1bd33ecc0987adbc52399791269c7904caf4caa",
+            "status": "Failed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legend/save-attempt1-diagnostic.json",
+            "sha256": "7d9fe79a09fa01b2a02d8c30da5060533a744fdb6a1042cf4c633ec848deb625",
+            "status": "Failed"
+          }
+        ],
+        "verification": {
+          "status": "Passed",
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/legend/verification.json",
+          "sha256": "47f11564eacdb37bdde5fba5957d3cdf869c27aa28c675363ce37aa94613077c",
+          "scope": "C04 layout/material evidence and two preserved checkpoints only"
+        }
       }
     }
   },
