@@ -975,6 +975,22 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    ![Agent Computer Use：Element=0、First=2、Last=3；MCP核对氢编号2、3](screenshot/N01-first2-last3-GUI.jpg)
 
+   公共资产练习使用 C05 的 P03 水二聚体副本：在 **显示层 → 复制** 后，仅选新副本为活动对象，清除局部限制，保持元素0、First=1、Last=0；副本标注可暂时隐藏。切换 **Geometry Nodes** 工作区，取消图钉，选择副本修改器树。在底部编辑器点 **添加 → 原子选择 → QC Select Atoms**，单击空白处放置。保留原图，按 N02 接入新增显示分支；不要修改公共资产内部节点。
+
+   [用户截图待引用：N01-public，活动副本、添加菜单、选择输入和结果]
+
+   ![Agent Computer Use：从添加菜单选择 QC Select Atoms](screenshot/N01-public-add-menu-GUI.jpg)
+
+   ![Agent Computer Use：在独立副本放置公共选择资产](screenshot/N01-public-added-GUI.jpg)
+
+   N02 分支连好后，在新选择节点勾选 **选中项（Selection）**，设 **Element=8、First=1、Last=0**，只显示氧1、4。取消勾选应为空；恢复勾选并设 Element=0、First=2、Last=3，应显示氢2、3。再测 Element=8、First=1、Last=3，只保留氧1；First=2、Last=3时为空。核对实际源编号，不能只比较显示数量：两个氧和两个氢在本例都求值得到84顶点、160面。恢复全原子参数后继续 N02。
+
+   ![Agent Computer Use：Selection 输出接入表示节点的 Selection](screenshot/N01-public-selection-wire-GUI.jpg)
+
+   ![Agent原生输入Element=8；MCP核对氧编号1、4，科学数组不变](screenshot/N01-public-oxygen-GUI.jpg)
+
+   ![Agent原生关闭Selection；MCP核对零顶点](screenshot/N01-public-selection-off-GUI.jpg)
+
 2. **N02 QC Style Atoms and Bonds**：原子；对象属性→几何表示；球棍/空间填充/键，改原子与键半径。
 
    预期/需记录：轮廓不同；半径Å，键是距离推断。
@@ -992,6 +1008,22 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
    ![Agent Computer Use：键半径0.12 Å；源数组不变](screenshot/N02-bond-radius012-GUI.jpg)
 
    ![Agent Computer Use：球棍原子半径0.35 Å；原层参数不变](screenshot/N02-atom-radius035-GUI.jpg)
+
+   保持 N01 副本活动，在 **添加 → 表示 → 原子与键 → QC Style Atoms and Bonds** 放置资产。连接 **组输入 → 几何数据** 到新表示节点 **几何数据**，N01 节点 **Selection → Selection**；选择副本的元素材质，再将新表示节点 **几何数据** 接 **组输出 → 几何数据**，替换旧显示输出。本批示例为辅助组输入/输出创建、专用材质和布局由 MCP 准备，三条显示分支接线由 Computer Use 实际拖放；你可直接使用副本原有组输入和组输出。
+
+   [用户截图待引用：N02-public，活动副本、显示分支接线与三种样式]
+
+   ![Agent Computer Use：原子与键目录中的公共表示资产](screenshot/N02-public-add-menu-GUI.jpg)
+
+   ![Agent Computer Use：新公共表示节点放置于独立副本](screenshot/N02-public-added-GUI.jpg)
+
+   ![Agent实际拖放选择及几何接线；辅助输入/输出、材质和布局由MCP准备](screenshot/N01-N02-public-route-GUI.jpg)
+
+   全6原子选择时，将新节点 **Style (0 ball-stick, 1 space-fill, 2 bonds)** 依次设 **0、1、2**，球棍、空间填充和键线分别应为300/252/48顶点、512/480/32面；此计数适用于本批Quality=2、Atom Radius=0.25 Å、Bond Radius=0.07 Å、VDW Scale=1。核对4条O–H键及源编号1–6。改 Atom Radius 或 Bond Radius 时，只改变相应显示半径，不改变科学坐标；对象属性的两半径操作示例见上方。最后恢复Style=0，再按 N09 加裁剪。
+
+   ![Agent原生Style=1；MCP核对六原子空间填充252顶点](screenshot/N02-public-spacefill-GUI.jpg)
+
+   ![Agent原生Style=2；MCP核对4条真实O–H推断键及全部源编号](screenshot/N02-public-bonds-GUI.jpg)
 
 3. **N03 氢显隐**：C05含氢原子；局部选择与标注的三个氢按钮、撤销重做。
 
@@ -1076,6 +1108,28 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
    预期/需记录：平面/盒分别裁预期区域，原始数据不变。
 
    [用户截图待引用：N09，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
+
+   先用 N01/N02 的 P03 全6原子副本练习；C01 的场显示可使用同一裁剪入口，按其几何另外记录预期。保持副本活动、Style=0，在 **Geometry Nodes → 添加 → 空间 → 裁剪 → QC Clip Geometry** 放置资产。连接 **QC Style Atoms and Bonds → 几何数据 → QC Clip Geometry → 几何数据 → 组输出**，替换之前直通输出；Plane Enabled 与 Box Enabled 均关闭时，应与未裁剪几何完全相同。
+
+   [用户截图待引用：N09-public，活动副本、裁剪分支、边界输入及保留区域]
+
+   ![Agent Computer Use：空间、裁剪目录中的 QC Clip Geometry](screenshot/N09-public-add-menu-GUI.jpg)
+
+   ![Agent Computer Use：放置公共裁剪资产](screenshot/N09-public-added-GUI.jpg)
+
+   ![Agent实际拖放表示到裁剪、裁剪到输出；边界向量由MCP准备](screenshot/N09-public-route-GUI.jpg)
+
+   设置平面 **Origin=(0,0,1.45) Å、法线=(0,0,1)**，方框 **Minimum=(−0.5,−2,−2) Å、Maximum=(0.5,2,5) Å**。仅勾选平面Enabled时保留上方水分子源编号4、5、6；再同时勾选方框Enabled时保留编号4的部分几何；关闭平面、只保留方框时保留氧1、4及与其关联的部分键几何。每次比较裁剪前后位置和源编号，科学数组保持不变。本批依次核对150、50、100顶点与CPU半空间/闭区间盒参考完全一致；这是所记录质量、半径和边界的计数，不能代用于其他视图或场网格。最后关闭两项Enabled，恢复300顶点、512面。
+
+   ![Agent原生开启平面裁剪；MCP逐顶点核对保留4、5、6](screenshot/N09-public-plane-GUI.jpg)
+
+   ![Agent原生同时开启平面和方框；MCP核对交集50顶点、编号4](screenshot/N09-public-intersection-GUI.jpg)
+
+   ![Agent原生仅保留方框裁剪；MCP核对100顶点及源编号1、4](screenshot/N09-public-box-GUI.jpg)
+
+   按0.4先 **打包关联库**，再 **保存自包含工程** 和 **归档工程**；关闭本进程后，分别在新进程读取原工程、中文移动副本、ZIP解包副本。核对公共节点接口、所有输入、源编号和科学数组。Agent本批保存、归档及冷重开使用已登记操作的MCP/命令行复用；三个副本图、几何、50数组和48标注完全一致，移动/解包位置未取得外部节点库仍能求值。完整C05成图与其他案例验收分别记录。
+
+   ![Computer Use观察已保存工程；裁剪恢复及MCP打包保存，完整成图另验收](screenshot/N09-public-restored-saved-MCP-observation.jpg)
 
 10. **N10 QC Style Volume Fog**：C01自旋雾；几何表示/颜色映射/材质控制。
 

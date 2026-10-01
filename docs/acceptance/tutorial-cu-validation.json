@@ -2717,6 +2717,275 @@
         41240,
         51472
       ]
+    },
+    "C05_public_atom_assets": {
+      "status": "Passed",
+      "scope": "Only scoped N01/N02/N09 native addition/wiring/inputs and portable checkpoint cold chain; complete C05 and full C-N Not Run",
+      "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+      "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+      "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/cold-chain.json",
+          "sha256": "ff4b96e15d1f4ec4a55b47ebb1c4c4970f012a169fbc1ad6f9d2213493b0c561",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/cold-moved-v2.json",
+          "sha256": "be335bea898ddfe94eee802a3328025c2b535ee1325d1ac23281dc63dbef341d",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/cold-original.json",
+          "sha256": "09e7cc54509268b2e2e0e8b718b1885421edf67f79df98bdb2607056ad78165c",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/cold-unpacked.json",
+          "sha256": "6ccdfbb0ae1e2d7bcea960c3f61859cbc206665d739787ce1d0c3be207ff4437",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/original-engineering-readback.json",
+          "sha256": "7ccb1e4a20c7e92ab757c3dc9c0b7f5f76d43d387e89ab6041bba545a0c3c30e",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/preservation-public.json",
+          "sha256": "26da78223b61f9bdf46df37a14a51bf651ab7454cc078cd77a7e61135139d431",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/public-all-atoms-GUI-MCP.json",
+          "sha256": "9cb97ab0e0b7ca4acb4836dbca9fdb201cfd393739c63f5765584375903c282f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/public-bonds-GUI-MCP.json",
+          "sha256": "0ce8dcccfaf88afb206d05ecadad52057f547ab3d2d6dfe796579649350112c0",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/public-clip-box-GUI-MCP.json",
+          "sha256": "9cf4cfdd94cc0b18c2129b8dd7eff30905b7323bb5ba0db34c3ab994481b508c",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/public-clip-disabled-GUI-MCP.json",
+          "sha256": "cf18db9837a9ec06e1e2cc4f0855460840cc5692db03638866b73a6849eb82c2",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/public-clip-intersection-GUI-MCP.json",
+          "sha256": "0b2f3b0c1146218f648ab750be315785f96f95009a7a8c7695ed3881e750596b",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/public-clip-plane-GUI-MCP.json",
+          "sha256": "ec78d6394c978628eacc3cd8514d4eb7b5ca1bf5c73ede31eba9a4dc34234f20",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/public-clip-restored-GUI-MCP.json",
+          "sha256": "e9039b1fb56727a68a0c3c16d0a3cdd4d2ad720cecc3bdfd4748e867838d7c73",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/public-hydrogen-range-MCP.json",
+          "sha256": "5d45258983fac4123932c309795812acf1349dcf2229ff1001189e9126e307fe",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/public-hydrogen-same-count-MCP.json",
+          "sha256": "f7b70f23553cf4056d977bbc775832adc6843de26cc39637edd1299f8d584ee2",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/public-oxygen-GUI-MCP.json",
+          "sha256": "c174e1e91d0db60033619239f88b9323da19ae8276b292a0653f55d7ec3c904c",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/public-oxygen-one-MCP.json",
+          "sha256": "042f7f0df952652264ece3ff8cfc3614a04e7db0e463baf6ec2d45306de8984b",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/public-oxygen-range-empty-MCP.json",
+          "sha256": "86ea51248726cca4ad842f7099d85cd84e561b9e9dab6bd775c561e1d510198f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/public-selection-off-GUI-MCP.json",
+          "sha256": "d7f191915747846fba537aec1dac741dc6143a277b1251db89e3bd601aedb5c6",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/public-spacefill-GUI-MCP.json",
+          "sha256": "6728dbb285c25ab4a6eed2bfd9e0132dc0c5cce7dd9f3a04bbf0d89abf8dad58",
+          "status": "Passed"
+        }
+      ],
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/N01-N02-public-route-GUI.jpg",
+          "sha256": "b3aa0db2bd4f56ab4172a9c8f68063f32286e78c97d98bead1486814112a8b14"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N01-public-add-menu-GUI.jpg",
+          "sha256": "900a6bef790699357583d843cea71efaf0faa311921f977b63d8a4a31f131a83"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N01-public-added-GUI.jpg",
+          "sha256": "11eb04063ef440058cd0764b298aa7add47d597378257aa3a66d612ac6fdc9c1"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N01-public-oxygen-GUI.jpg",
+          "sha256": "eb65134d9c236674536221420cdee402b749c00a09052e9eb8fbb926bd165712"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N01-public-selection-off-GUI.jpg",
+          "sha256": "d03b6db2e8e0355f01cf854b861cb486f17c7056d1fdcccc0d5eac351bb94117"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N01-public-selection-wire-GUI.jpg",
+          "sha256": "cc555a6a5b314621b36741c78b224a9b0bb3fa9b01509245a92ecb2c5e8b5b04"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N02-public-add-menu-GUI.jpg",
+          "sha256": "c6265107d97437d62c413053164187ab225301e90a540c5d631928de2773d65b"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N02-public-added-GUI.jpg",
+          "sha256": "9edc538faaa5c520618c53a85328eeabea771603e06dc501daa567828000f997"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N02-public-bonds-GUI.jpg",
+          "sha256": "f389cdcf51b1760889958e76d23f647cbfa4e9295cf4ab19708be690206549c7"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N02-public-spacefill-GUI.jpg",
+          "sha256": "07b188b949f28bc1531b953e11cbb2460c51069286a63c0cc22befdaf178be67"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N09-public-add-menu-GUI.jpg",
+          "sha256": "55faca361b3111854d3cc8337039ba87b6c0d35bef8bcbc4b8bd03e15f4d52c2"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N09-public-added-GUI.jpg",
+          "sha256": "14195cb7540dd6a920df47c5514608883198e0f02dfae8909346c4918dc0817c"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N09-public-box-GUI.jpg",
+          "sha256": "f7252a4f9e9dc6ef318bcb02a147024b8d248fe0c594fe0cc3dddd56bda2806e"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N09-public-intersection-GUI.jpg",
+          "sha256": "cdb8596d1b25e2272c0f3fe565185da4e9eb008ec52ee7ed7400940be0bb1422"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N09-public-plane-GUI.jpg",
+          "sha256": "9f6fefd958712f5404159d5587fd9eea7a52a012b73d97e50342826f576fc4cf"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N09-public-restored-saved-MCP-observation.jpg",
+          "sha256": "ccfbbb0aab371fb72bab9624918f33e7ffc840f68dd31744135b801ada564812"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N09-public-route-GUI.jpg",
+          "sha256": "492398134226ef32366211432c412dbd911bc108d2d058624dd516bfe8865790"
+        }
+      ],
+      "checks": {
+        "native_addition_and_five_wires": "Passed",
+        "fixed_selection_interface_and_atom_identity": "Passed",
+        "native_three_styles": "Passed",
+        "native_clip_enable_flags_and_independent_CPU_vertices": "Passed",
+        "original_engineering_unchanged": "Passed",
+        "scientific_arrays_unchanged": "Passed",
+        "portable_save_and_archive": "Passed",
+        "original_moved_unpacked_native_cold": "Passed",
+        "complete_C05_render": "Not Run",
+        "full_C_N": "Not Run",
+        "independent_scientific_signature": "Not Run"
+      },
+      "project": {
+        "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/C05-public-atoms.blend",
+        "sha256": "2715a2ff189834ace8681dcdeb5a94a49bb44bb12960ff86317ed4d871b8e91f",
+        "files": 24,
+        "datasets": 1,
+        "arrays": 50,
+        "atom_views": 6,
+        "annotation_objects": 48,
+        "packed_libraries": 2
+      },
+      "diagnostics": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/preparation-diagnostic.json",
+          "sha256": "4600f587f0eec454887c68395648e07fe0c5fe00eb3732d1a2e3dbc07004b36a",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/public-script-diagnostics.json",
+          "sha256": "4f162bee259c4f5c8bc79af5be5e68fbd5d4770c2c06988621ab5854c5d28fc5",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/cold-moved.json",
+          "sha256": "cb97f1c5abff7f01732469305671826adb673f045ca74d86cef6cc1f643cbdfb",
+          "status": "Failed"
+        }
+      ],
+      "scripts": {
+        "C05-public-check.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/scripts/C05-public-check.py",
+          "sha256": "b51c49a2d890cd9067286d79dbdae88afddae07433b7eeb41450aed48e91f0b9"
+        },
+        "C05-public-clip-check.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/scripts/C05-public-clip-check.py",
+          "sha256": "7aa354b722c6ac71b3b4e39e71af2bea3a0bcf8401853d5f4daca86da5f4e975"
+        },
+        "C05-public-cold-v2.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/scripts/C05-public-cold-v2.py",
+          "sha256": "2e5bd9ee4e5bb8f6ed79594bcd15f652be552744ee9bb282c9938bce0d428a30"
+        },
+        "C05-public-cold.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/scripts/C05-public-cold.py",
+          "sha256": "18db020c7a09a3b1c8e574bb9ed9424ddb4cf4ebb0623bd11354eabfaa0e6aba"
+        },
+        "C05-public-prepare-v1.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/scripts/C05-public-prepare-v1.py",
+          "sha256": "6918133a6d4162acbbc2740e1bcdea9b80e78600cc801c364fb31bb60134fbf9"
+        },
+        "C05-public-prepare.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/scripts/C05-public-prepare.py",
+          "sha256": "aaa8f575d30708490d1b30ef25e3c77a398cf142ec5afd32db543a03a4a34488"
+        },
+        "C05-public-preserve.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/scripts/C05-public-preserve.py",
+          "sha256": "19314d93ee25bc64d63ceaa09f12d0e8567d4fe2a8099322cef60e9240e977d9"
+        },
+        "launch-C05-public-atoms.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/scripts/launch-C05-public-atoms.py",
+          "sha256": "07062abccf38d58e3432ab56ba7742c7979cb5135ad6e1e4f152856da97071a0"
+        },
+        "resume-C05-public-cold.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/scripts/resume-C05-public-cold.py",
+          "sha256": "52299806e4a08f3e68f7614044904b40455a5a9de86f52a986aa228980435984"
+        },
+        "run-C05-public-cold.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C05-public-atoms/scripts/run-C05-public-cold.py",
+          "sha256": "ad6a6a3b14e05ba26540158401a24b2cb133d3f67453ba3685f427198c401ffe"
+        }
+      },
+      "processes_exited": [
+        51408,
+        53228,
+        18312,
+        10068,
+        20956
+      ],
+      "remaining": "C05 first-use angle/dihedral and degenerate checks, step-updated annotations, complete three PNG exports and render cold chain; C01 density checkpoint, real invalid-mask fixture, other uncovered public assets, C06-C13 and unified fixed-candidate qualification; main merge/archive."
     }
   },
   "historical_partial_supplement": {
