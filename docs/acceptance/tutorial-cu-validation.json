@@ -542,6 +542,9 @@
       "path": "outputs/evidence/2026-10-01/tutorial-cu/storage-result.json",
       "sha256": "92f7dd35f2655fca785018a5c00d774ec26146e58e598e3bffb6e058505e16f7"
     },
-    "archive_receipt": "outputs/evidence/2026-10-01/tutorial-cu/closing.json"
+    "archive_receipt": "outputs/evidence/2026-10-01/tutorial-cu/closing.json",
+    "archive_status": "Not Run",
+    "archive_reason": "Automatic approval review rejected grouped action because full GUI task02 is claimed and task03 pending; user selected interface-validation-before-merge condition must be respected.",
+    "archive_receipt_sha256": "5ca015bdf1e63a28878cbdf5a096c14a24e85e47eb31e3d578c85b16ec207d23"
   }
 }
