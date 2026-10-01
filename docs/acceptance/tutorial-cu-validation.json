@@ -551,7 +551,7 @@
     "docs/acceptance/tutorial-validation.json",
     "docs/acceptance/cleanup-validation.json"
   ],
-  "remaining_click_steps": "Complete C04-C13 and standalone N01-N18 public-asset/editor, error/recovery and per-case save/move/unpack cold gates; C01 density-specific cold reopen remains pending. Selected C03 P03 Cube/cub phases and real geometry/color mapping with three visible cold reopens passed. Keep full walkthrough and independent scientific signature Not Run.",
+  "remaining_click_steps": "Complete still-uncovered C04 invalid-mask and public-asset/error-recovery boundaries; C05 IRC annotation updates and remaining current-version/removal conditions; C06-C13 and remaining N01-N18 cases. Complete outstanding checkpoint relocation checks and unified same-final-source/candidate qualification before main merge/archive. C01 density original-path cold readback and four rerenders, C05 static annotation render three-path/nine-render chain, and P02 optimization annotation four-step/three-path checks are separately Passed with their own reports. Full walkthrough and independent scientific signature remain Not Run.",
   "cleanup": {
     "status": "Passed",
     "scope": "This screenshot supplement only; full GUI task remains claimed",
@@ -3334,6 +3334,114 @@
         7836
       ],
       "remaining": "IRC annotation updates and current-version refusal; removal GUI click not claimed; remaining C01/C04 boundaries and public assets, C06-C13, same-final-source qualification and merge/archive."
+    },
+    "C01_density_checkpoint_cold": {
+      "status": "Passed",
+      "scope": "Specific previously saved C01-density checkpoint cold readback and four actual density rerenders on installed 2eddb6a. Relocated checkpoint and unified final-source qualification Not Run.",
+      "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+      "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+      "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+      "historical_project_source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C01-density-cold/readback-render.json",
+          "sha256": "7fe79f323a871513df228c7cb42ffb3fbea47c4cd20739297d32c340929920f0",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C01-density-cold/exit.json",
+          "sha256": "d72430f015868dd23f4097c84cf4eb1c769353194b928a02082f01407f93be65",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C01-density-cold/visual-check.json",
+          "sha256": "6ab9d391609ed983fefa2b8d60981a7b29d037d0037a97a624993383803bd4b9",
+          "status": "Passed"
+        }
+      ],
+      "project": {
+        "path": "outputs/projects/tutorial-cu-full/unpacked/C01/C01-density.blend",
+        "sha256": "f8dfd95726e6234724f7a736f10481925bf24cb7ecfda66c46a9f647a692c8bf",
+        "scientific_files": 175,
+        "datasets": 9,
+        "arrays": 221,
+        "object_references": 17,
+        "vdb_sources": 7
+      },
+      "renders": {
+        "total": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C01-density-cold/C01-total-cold.png",
+          "sha256": "e383deb0b00d9de74eff40283a851690c6af923873b862bf50c03c5ae79140b9",
+          "pixel_sha256": "4157a639325e8cf4bf59e01a6ab2fb49af4bff66e9d5cbc2c5435430a5536092",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "quantity": "electron_number_density",
+          "visual_inspection": "Not Run"
+        },
+        "alpha": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C01-density-cold/C01-alpha-cold.png",
+          "sha256": "73deb1b26010f43fce35c22b2e868fc0a23559183b8108c6117c9c5cafcdc125",
+          "pixel_sha256": "94bcb689a78bae86d949192c98cd06c84dab00f65b7c1ba803963c722d9cd1c8",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "quantity": "alpha_density",
+          "visual_inspection": "Not Run"
+        },
+        "beta": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C01-density-cold/C01-beta-cold.png",
+          "sha256": "d8e88734d8c11d9122d68d570210033844a27f9f692208973d115e1d61e1d5de",
+          "pixel_sha256": "62f33455ea30e094a499c3c456d2f0c682dfc54bc2375ecb7cafe46d2efa334e",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "quantity": "beta_density",
+          "visual_inspection": "Not Run"
+        },
+        "spin": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C01-density-cold/C01-spin-cold.png",
+          "sha256": "a243062f1c299eda8d18cf56868515b32e4a39665522e3bb3f736f3e4d7781f3",
+          "pixel_sha256": "379c68dff530d2b19d9fe7cc8d6438c56b09f81917c79b5b4e8e19d14c18961c",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "quantity": "spin_density",
+          "visual_inspection": "Not Run"
+        }
+      },
+      "density_reference_checks": {
+        "total_equals_alpha_plus_beta_max_error": 1.1102230246251565e-16,
+        "spin_equals_alpha_minus_beta_max_error": 8.326672684688674e-17,
+        "unit": "electron/bohr^3"
+      },
+      "checks": {
+        "new_process_cold_readback": "Passed",
+        "source_hashes_units_vdb": "Passed",
+        "density_array_relations": "Passed",
+        "four_actual_rerenders": "Passed",
+        "four_render_visual_checks": "Passed",
+        "density_checkpoint_move_unpacked": "Not Run",
+        "full_C_N_final_source_and_independent_signature": "Not Run"
+      },
+      "scripts": {
+        "C01-density-cold.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C01-density-cold/scripts/C01-density-cold.py",
+          "sha256": "84a3eacb9ce89f2185c1f920afc675c98508440bf91fc452287bfce116ee9625"
+        },
+        "run-C01-density-cold.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C01-density-cold/scripts/run-C01-density-cold.py",
+          "sha256": "a7f316c04c7f89a8775fcf01c1c3eecaa82c5b6d6d0b39623ea7db5d7c0ca6dd"
+        }
+      },
+      "processes_exited": [
+        3392
+      ],
+      "original_source_project_and_data_unchanged": true
     }
   },
   "historical_partial_supplement": {

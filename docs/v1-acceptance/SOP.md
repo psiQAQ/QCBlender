@@ -293,6 +293,8 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
 
 
+   密度检查点复核：保存于步骤6的 `C01-density.blend + .qcdata` 已在2eddb6a候选的新原生后台进程冷重开，175配套文件、9 Dataset/221数组、17对象引用及7体积源一致；四密度重新渲染并检查，总密度=Alpha+Beta、自旋密度=Alpha−Beta关系通过。详见[点击补验索引](../acceptance/tutorial-cu-validation.json)的 `C01_density_checkpoint_cold`，原候选/保存身份与本批冷读身份分别记录。此检查点的中文移动/解包及最终统一候选资格另行维护；已有雾工程三路径证据保持原批次。
+
 ### C02 Log/Out 能量、振动与优化
 
 **真实输入预期：** Job2 是中性单重态水，3原子 O/H/H，RHF/STO-3G，10电子；目标电子能量 **−74.9659011806 Eh**（与Job1最终优化步一致）。模式1/2/3频率 **2169.7613/4141.3837/4392.5759 cm^-1**，IR **7.2483/44.2724/29.9428 km/mol**；先选模式3。Job1有4优化步，能量依次 **−74.9643287914、−74.9649723283、−74.9659003010、−74.9659011806 Eh**。两扩展名都要完成导入。导入回归的下一文件固定 **P03/water-dimer.fchk**，预期6原子及其SHA；无P02 FCHK。

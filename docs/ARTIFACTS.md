@@ -16,6 +16,8 @@
 
 ## 当前任务与候选
 
+C01独立密度检查点：2eddb6a候选新原生进程冷读、175科学文件/9Dataset/221数组/17引用/7体积源、四密度关系及四图重渲染Passed，PID3392已退出。证据、PNG与重建脚本`outputs/evidence/2026-10-02/tutorial-cu/full/C01-density-cold/`；保留原`outputs/projects/tutorial-cu-full/unpacked/C01/C01-density.blend + .qcdata`，摘要未变。原保存批次92d498c与本批资格分开；该检查点移动/解包和最终统一资格仍Not Run。
+
 C05/P02优化标注与当前版本：实际GUI创建新层、MCP独立四步测量/标注同步及临时副本移除Passed；合成退化边界单列。证据与重建脚本`outputs/evidence/2026-10-02/tutorial-cu/full/C05-followup/`，保留`C05-optimization-annotations.blend + .qcdata`和同条目ZIP（12文件、2Dataset/8数组、5视图/8标注）。原路径、中文移动和解包分别新进程冷读并重放四步Passed，原C02工程不变，全部进程退出。3张图紧接C05步骤，37操作登记；IRC、GUI移除点击、完整案例与统一资格仍分开待验收。
 
 C05角度/二面角创建与朝向原生GUIPassed，独立参考112.770°/0.000°；三张1920×1080实渲染已按步骤展示。证据与重建脚本：`outputs/evidence/2026-10-02/tutorial-cu/full/C05-final/`；保留`C05-final.blend + .qcdata`及ZIP（24文件、1Dataset/50数组、6视图/52标注）。原路径、中文移动和解包三个新进程及9次像素一致重渲染Passed，完整变换链核对；失败诊断原样保留，全部进程退出。操作登记36项；剩余C05边界/随步、后续案例、统一资格与合并归档仍待完成。
