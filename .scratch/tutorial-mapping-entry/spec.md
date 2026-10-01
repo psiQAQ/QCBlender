@@ -15,3 +15,7 @@ qcblender/blender/editor_ui.py 的 QCBLENDER_MT_object.draw 增加既有操作�
 - 官方 Blender UI 发布说明：普通搜索通过菜单项检索；Developer Extras 使 raw operators 出现在结果中。https://developer.blender.org/docs/release_notes/2.90/user_interface/
 - 官方 Python API Operator 示例采用 bpy.types.VIEW3D_MT_object.append(menu_func)。https://docs.blender.org/api/3.6/bpy.types.Operator.html
 - scalars.py 中既有 QCBLENDER_OT_map_scalar 保持 poll、invoke 和 execute。
+
+## 完成状态
+最小菜单修复已完成。主 Agent 在源码 b7090967e6618c15449efec278bcd47a0f018d54 对应候选、Blender 5.1.1 zh_HANS 和 Developer Extras=false 下验证顶部子菜单、F3 检索及新建未映射接收视图的实际执行。GUI 与取样证据、候选 SHA-256 和环境见 issues/01-add-mapping-entry.md。
+完整 C04 教程与独立人工签署仍为 Not Run；本结论仅覆盖最小菜单修复。
