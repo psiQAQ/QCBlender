@@ -44,6 +44,30 @@ def snapshot():
     return result
 
 
+def panel_labels(obj):
+    # Isolate the layout sink; use the real installed panel and bound source cache.
+    from types import SimpleNamespace
+
+    class Labels:
+        def __init__(self):
+            self.text = []
+
+        def label(self, *, text):
+            self.text.append(text)
+
+        def prop(self, *args, **kwargs):
+            pass
+
+    layout = Labels()
+    panel = importlib.import_module(MODULE + '.blender.external_results').QCBLENDER_PT_external_results
+    panel.draw(SimpleNamespace(layout=layout), SimpleNamespace(object=obj))
+    expected = storage.load_dataset(bpy.path.abspath(obj['qc_dataset'])).metadata['analysis']['properties']['1']
+    assert 'CP_type: ' + expected['CP_type'] in layout.text
+    for key in ('Corresponding nucleus', 'Density of all electrons', 'Position (Angstrom)'):
+        assert f'{key}: {expected[key]}'[:110] in layout.text, (key, layout.text)
+    return len(layout.text)
+
+
 if args.reopen:
     report = json.loads(REPORT.read_text(encoding='utf-8'))
     assert snapshot() == report['snapshot']
@@ -85,6 +109,9 @@ else:
     valid = storage.load_dataset(bpy.path.abspath(cp['qc_dataset']))
     assert len(valid.metadata['analysis']['properties']) == 59
     assert valid.metadata['diagnostics'] == []
+    immediate_panel_labels = panel_labels(cp)
+    browser.refresh_source(cp)
+    assert panel_labels(cp) == immediate_panel_labels
     text = (sources / 'CPprop.txt').read_text(encoding='utf-8')
     errors = {}
     for name, altered, message in (
@@ -161,6 +188,8 @@ else:
               'actual_cp_count': 59, 'actual_path_count': 58, 'valid_association': 'Passed',
               'errors_preserve_scene': 'Passed', 'error_messages': errors,
               'missing_diagnostics': 'Passed', 'point_path_visibility_render': 'Passed',
+              'panel_labels_before_and_after_refresh': 'Passed',
+              'immediate_panel_label_count': immediate_panel_labels,
               'saved_cold_reopen': 'Not Run', 'moved_cold_reopen': 'Not Run', 'snapshot': snapshot()}
 REPORT.write_text(json.dumps(report, indent=2), encoding='utf-8')
 print(json.dumps({k: v for k, v in report.items() if k != 'snapshot'}))

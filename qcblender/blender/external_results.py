@@ -291,6 +291,7 @@ class QCBLENDER_PT_external_results(bpy.types.Panel):
             for key, value in records[index].items():
                 layout.label(text=f'{key}: {value}'[:110])
             if role.startswith('aim_') and role != 'aim_paths':
-                properties = analysis['properties'].get(str(records[index]['serial']), {})
+                serial = records[index]['serial']
+                properties = analysis['properties'].get(str(serial), analysis['properties'].get(serial, {}))
                 for key, value in properties.items():
                     layout.label(text=f'{key}: {value}'[:110])
