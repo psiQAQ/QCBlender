@@ -4,7 +4,7 @@
 
 本教程保留 **C01–C13** 科学案例和 **N01–N18** 节点/交互检查编号。按钮位置与当前插件界面一致；对话框及部分控件仍使用英文。操作结果只记 **Passed / Failed / Not Run**。用户实际点击、Agent Computer Use 点击、MCP操作与数据核对、独立科研签署分别记录；Agent 不填写使用者签名。
 
-本文的 Agent 示例截图紧接相应操作展示，原始 JPEG 保存在同级 `screenshot/` 目录。截图是本批实际 Computer Use 操作画面，保留你的逐步骤截图占位；各图的候选身份、输入、参数和检查范围见 [点击补验索引](../acceptance/tutorial-cu-validation.json)。C02、密度生成/取样/CSV、氢显隐与首次保存使用90ff9bf候选；IR层显隐复验、最终剖面、相机、渲染及冷重开使用1554ee2候选。完整C/N点击覆盖及独立科研签署仍为Not Run。
+本文的 Agent 示例截图紧接相应操作展示，原始 JPEG 保存在同级 `screenshot/` 目录。截图是本批实际 Computer Use 操作画面，保留你的逐步骤截图占位；各图的候选身份、输入、参数和检查范围见 [点击补验索引](../acceptance/tutorial-cu-validation.json)。C02、密度生成/取样/CSV、氢显隐与首次保存使用90ff9bf候选；IR层显隐复验、最终剖面、相机、渲染及冷重开使用1554ee2候选。完整C/N点击覆盖及独立科研签署仍为Not Run。你复现时，将自己的截图保存到 `screenshot/`，在对应占位下一行填写 `![用户复做：C02-01](screenshot/C02-01-user.png)`；使用独立文件名，保留 Agent 示例便于对照。
 
 ## 0. 准备、安装与通用操作
 

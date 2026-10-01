@@ -1195,5 +1195,11 @@
     "deleted_bytes": 1845200762,
     "net_bytes_reduced": 1573886482,
     "old_blocked_tasks_resolved": false
+  },
+  "computer_use_supplement": {
+    "path": "docs/acceptance/tutorial-cu-validation.json",
+    "status": "Passed",
+    "scope": "Performed subset only; full click walkthrough and independent signature Not Run",
+    "new_candidate_source": "1554ee2ac7ae308ccf1aa1922ed93192adf0b3b1"
   }
 }

@@ -1,0 +1,547 @@
+{
+  "schema": 1,
+  "date": "2026-10-01",
+  "status": "Passed",
+  "scope": "Performed Computer Use supplement and step screenshots; partial C02/C04/C05 plus common camera/render/save/cold reopen. Full C01-C13/N01-N18 click walkthrough Not Run.",
+  "identity": {
+    "user_walkthrough": "Not Run",
+    "agent_computer_use_performed_scope": "Passed",
+    "agent_full_walkthrough": "Not Run",
+    "mcp_read_only_checks": "Passed",
+    "independent_scientific_signature": "Not Run",
+    "signature": null
+  },
+  "source": {
+    "commit": "1554ee2ac7ae308ccf1aa1922ed93192adf0b3b1",
+    "product_tree": "05abfc2a62ba066d0869736d428db174218fc6ad",
+    "python_files_matched_to_candidate_and_installation": 68,
+    "file_manifest": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/source-hashes.json",
+      "sha256": "1c075ff7428f8e259a989aa531b03a33e1809e5646f3eb33a862b7c8feb469b8"
+    },
+    "public_interfaces_scientific_contract_dependencies_lockfiles": "Unchanged"
+  },
+  "candidates": {
+    "1554ee2": {
+      "path": "outputs/candidates/current/tutorial-cu-1554ee2/qcblender-0.0.1.zip",
+      "bytes": 50633643,
+      "sha256": "694e27cbc328a64b9fe6bb07d6236273474de26de13af8d6f8e2c9cdbc98c4cd",
+      "source_commit": "1554ee2ac7ae308ccf1aa1922ed93192adf0b3b1",
+      "scope": "IR text visibility fix, native installation/assets/helpers, final profile/camera/render, visible cold reopen and shared-environment science regression"
+    },
+    "90ff9bf": {
+      "source_commit": "90ff9bf799aaa299225cd188ce8f05e1b6baf895",
+      "sha256": "4a0ac3e46c163dd32a53057ddb2f4e414901d7c56b95d59aa6d17a8df3b739ca",
+      "path": "outputs/candidates/current/public-tutorial-90ff9bf/qcblender-0.0.1.zip",
+      "scope": "Initial actual GUI energy/modes, Log Job2-new FCHK, density/probe/profile CSV, hydrogen and portable save; historical full MCP evidence remains in tutorial-validation.json"
+    }
+  },
+  "environment": {
+    "system": "Windows x64",
+    "blender": "5.1.1",
+    "binary": "C:/Program Files/Blender Foundation/Blender 5.1/blender.exe",
+    "locale": "zh_HANS",
+    "profiles": [
+      "outputs/runs/cu/1/p",
+      "outputs/runs/cu/2/p"
+    ],
+    "profile_availability": "Deleted after owned processes exited and evidence/project/candidate hashes were verified; unknown recovery files remain",
+    "science_site": "outputs/science",
+    "locked_wheels": "outputs/wheels/qualified",
+    "backend_record_sha256": "6b8557d257b5855ee0f2845d3bd30fb1befbe65ef58a8b5c0858eebbec4c3afc"
+  },
+  "inputs": [
+    {
+      "sample": "P02/water_neutral_nbo_opt_freq.out",
+      "sha256": "9493d24655fb261a2c945d292ad517567f3024996594a25f678199df74017519",
+      "path": "tests/data/local/log-examples/water_neutral_nbo_opt_freq.out",
+      "redistribution": "Not confirmed; obtain from original source per SOURCES.md"
+    },
+    {
+      "sample": "P03/water-dimer.fchk",
+      "sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+      "public_manifest": "docs/v1-acceptance/tutorial-samples.json"
+    }
+  ],
+  "coverage": {
+    "C02_energy_and_three_mode_playback": {
+      "status": "Passed",
+      "energy_hartree": -74.9659011806,
+      "frequencies_cm_1": [
+        2169.7613,
+        4141.3837,
+        4392.5759
+      ],
+      "ir_km_mol": [
+        7.2483,
+        44.2724,
+        29.9428
+      ],
+      "amplitude_angstrom": 0.35,
+      "cycles_per_second": 1.0,
+      "method": "Actual mode selection and timeline play/pause; MCP observed frame advancement"
+    },
+    "C02_Log_Job2_new_FCHK_dialog": {
+      "status": "Passed",
+      "new_job_number": 1,
+      "new_preview_digest": "",
+      "imported_atoms": 6,
+      "source_energy_hartree": -152.01382
+    },
+    "C04_density_click_probe_and_line_profile": {
+      "status": "Passed",
+      "quantity": "electron_number_density",
+      "unit": "electron/bohr^3",
+      "spacing_angstrom": 0.7,
+      "margin_angstrom": 3,
+      "memory_mib": 512,
+      "shape": [
+        12,
+        10,
+        15
+      ],
+      "start_angstrom": [
+        0,
+        -2,
+        1.45
+      ],
+      "end_angstrom": [
+        0,
+        2,
+        1.45
+      ],
+      "samples": 101,
+      "valid": 101,
+      "distance_angstrom": [
+        0,
+        4
+      ],
+      "CSV": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/C04-density-profile.csv",
+        "sha256": "b27ff094975cd111eab88fbc9ee74210ab1ccc0a238cdec8fb0b4d9389ce69a3"
+      },
+      "ESP_click_check": "Not Run"
+    },
+    "C05_hydrogen_and_undo_redo": {
+      "status": "Passed",
+      "source_numbers": {
+        "all": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "hidden_hydrogen": [
+          1,
+          4
+        ],
+        "keep_hydrogen_2": [
+          1,
+          2,
+          4
+        ]
+      },
+      "redo_method": "Edit menu Redo; final state checked by MCP"
+    },
+    "C05_IR_layer_children": {
+      "status": "Passed",
+      "legacy_saved_label": "Passed",
+      "new_label_and_renamed_datablock": "Passed",
+      "viewport_render_independent": "Passed",
+      "unrelated_labels_and_individual_choice_preserved": "Passed",
+      "original_defect_screenshot": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/raw-screenshots/C04-08-profile-result.jpg",
+        "sha256": "650e1888d4adb16ddd87f7e903b2a4a4c5a9a7fb488c51238cfb3879f32c35f9"
+      }
+    },
+    "common_camera_render_portable_save_and_cold_reopen": {
+      "status": "Passed",
+      "camera": "ORTHO",
+      "margin_per_side": 0.05,
+      "ortho_scale": 10.034567832946777,
+      "renderer": "EEVEE",
+      "resolution": [
+        1920,
+        1080,
+        100
+      ],
+      "view_transform": "AgX",
+      "lighting": "Default point light and world; only profile and labels renderable",
+      "render_evidence": "Native Render Result screen capture; GUI Image Save As Not Run",
+      "datasets": 4,
+      "arrays": 119,
+      "volumes": 1,
+      "preserved_files": 67
+    },
+    "native_installed_candidate_assets_helpers": "Passed",
+    "shared_environment_science": {
+      "status": "Passed",
+      "tests": 69,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "full_C01_C13_N01_N18_Clicks": "Not Run",
+    "CU_moved_and_archive_unpacked_reopens": "Not Run",
+    "independent_scientific_signature": "Not Run"
+  },
+  "screenshots": [
+    {
+      "path": "docs/v1-acceptance/screenshot/00-qcblender-sidebar.jpg",
+      "bytes": 190042,
+      "sha256": "ee325419c30c41a868fd75c62b93e14f19807d07cd4432dd8b94ef4ae2ecc2b0",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/00-04-camera.jpg",
+      "bytes": 183421,
+      "sha256": "36458586eff1dd883374aee89ec00eb5ada48abde8c23232b91a4f03661649a5",
+      "candidate": "1554ee2",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/00-04-render.jpg",
+      "bytes": 59980,
+      "sha256": "2dfa90ce0495c53d4a3a629b23869cbf148c8aee6ceddca7d2961463ca0e1748",
+      "candidate": "1554ee2",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/00-04-portable-save.jpg",
+      "bytes": 230248,
+      "sha256": "c97392816ffd29079bd96f9190628a45863e99bab824cded8e1e0d83d3cc93cb",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/00-04-cold-final.jpg",
+      "bytes": 185781,
+      "sha256": "0b2e4ac99d37f8ec20e79eb8c39cbc7e3e0ac5937450e623263ba59078eaf5ce",
+      "candidate": "1554ee2",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C02-01-log-file.jpg",
+      "bytes": 188069,
+      "sha256": "5090133704f4e408369977e96aeaac1e3bc2cd3851d6fcf6ad9248a6ee86f499",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C02-01-job2.jpg",
+      "bytes": 205958,
+      "sha256": "e8961857d7243e68a1edb8d0f80e7111428f9fffb8a3e94cc10cd77b4776efa5",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C02-01-energy-modes.jpg",
+      "bytes": 188887,
+      "sha256": "1f7dd20d89282a8d0f7fa9af5ac8eafc8dafa3e8a511032a58a391be0dee43cd",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C02-02-mode3-parameters.jpg",
+      "bytes": 189331,
+      "sha256": "8c3bf6de61c5d001e02d4d5e66b466f11029e3f3d8ef3627b2103589e1389f9b",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C02-02-mode1-playing.jpg",
+      "bytes": 188576,
+      "sha256": "a485b597a008d081dbbd42f1890dfd4b95aa3b239da0edce03a874ad6bf0a53e",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C02-02-mode2-playing.jpg",
+      "bytes": 190858,
+      "sha256": "3b3ad155ca575f3a3ac16e9cb9a16f9e36cea56791dd1fbd0f82fd1023e5b344",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C02-05-fchk-new-dialog.jpg",
+      "bytes": 200216,
+      "sha256": "a9ec1d00c5b4707e6505f766b925ff6c9f944148b408fa8972278f2869d0a457",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C02-05-fchk-success.jpg",
+      "bytes": 207889,
+      "sha256": "3190825e6bec7a8ade03cbc4238f3e98510163f0a0f3c3bc8b278e1baa69c4fd",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C04-01-density-dialog.jpg",
+      "bytes": 207055,
+      "sha256": "060131a17b306e9691f651e3483b2828784588cc79ebdb2efcdf68c1f4f2d62e",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C04-07-click-probe-preview.jpg",
+      "bytes": 222566,
+      "sha256": "0a6d89066d45a9c2db40491be12e770e62820673713bd2616c054e6feefb01ba",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C04-08-cursor-start.jpg",
+      "bytes": 194975,
+      "sha256": "c8c17dde9e725b4de78b9c9e756f85569e3f88b143362463e8526ae898dfbc96",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C04-08-profile-dialog.jpg",
+      "bytes": 212756,
+      "sha256": "62c1972b2d34580d11cbbdf09b9741f64c6282e2644d74213ca70b2bfd9f7bff",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C04-08-profile-final.jpg",
+      "bytes": 257891,
+      "sha256": "bdbe4543593a32c880125b1f308a16e8996ece5ab2ed1cc7951b029cc7d71ffd",
+      "candidate": "1554ee2",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C04-08-profile-csv.jpg",
+      "bytes": 210707,
+      "sha256": "ad1b75909704a9ad586dcf01854918f9af02759c6a434ada9a9a0499d3717e1c",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C05-01-all-hydrogens.jpg",
+      "bytes": 250375,
+      "sha256": "310e9f74a65264d62a850bdba73d2479df1fbdc409efa4ee3549e6c0281ff38f",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C05-01-hidden-hydrogens.jpg",
+      "bytes": 244989,
+      "sha256": "9607f3504b709586d41f9f95969c60e0bcc73eb9cf544da0aef475de42c425ee",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C05-01-keep-hydrogen-2.jpg",
+      "bytes": 246402,
+      "sha256": "463da7f4910e0ed3491466e1cd241f521abd74f5d1a362de7364035be37b0ac8",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C05-01-redo-menu.jpg",
+      "bytes": 245160,
+      "sha256": "4a0cd165beabb1064ebb97939b248e420fbc0fc8caf95b4effc8f7a7e4fba56a",
+      "candidate": "90ff9bf",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/C05-06-ir-layer-hidden.jpg",
+      "bytes": 250183,
+      "sha256": "f62fa93cf8d2e6368f178cb979a0819e36b0e9d9ac2c36fc6d08158cb798ac63",
+      "candidate": "1554ee2",
+      "method": "Agent Computer Use native sky capture; unedited",
+      "media_type": "image/jpeg"
+    }
+  ],
+  "project": {
+    "path": "outputs/projects/tutorial-cu-20261001/tutorial-clicks.blend",
+    "sha256": "b827eaa23f8a448968b9f692bcd24fe93d34b6de6e9fb800a09de0efa49ec89e",
+    "data": "outputs/projects/tutorial-cu-20261001/tutorial-clicks.qcdata/",
+    "cold_report": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/cold-final.json",
+      "sha256": "008dfc731bc9990f0a3ea9d40752700f41e1d2bf192434983e89afbbd22d12c6"
+    }
+  },
+  "reports": {
+    "document-and-source-check.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/document-and-source-check.json",
+      "sha256": "ec6043628b8c5930caf137f46f1c1cfb7a1c3abb96b4441ab0d82277373ec2a7"
+    },
+    "install-fixed-command.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/install-fixed-command.json",
+      "sha256": "aa28b57fa9ae078eb2c4386b386600f40fda3ed0097411d865c023e86915a967"
+    },
+    "install-fixed-report.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/install-fixed-report.json",
+      "sha256": "53b3787289b7f94f0acfc17cdb7ca8cb5ffa62c28dc6f1851daff0377e1e17ab"
+    },
+    "spectrum-fixed-command.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/spectrum-fixed-command.json",
+      "sha256": "45a7a8d7d6978e50dae15703f6e5500b442687ff77d5763e143c6505dab588e6"
+    },
+    "spectrum-fixed-report.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/spectrum-fixed-report.json",
+      "sha256": "d2d9b307ef9ce025a8af2530002aa5a5ad554afcffdd8bf4ff2da79ee751b004"
+    },
+    "node-helpers-fixed-command.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/node-helpers-fixed-command.json",
+      "sha256": "81a9145954120300c1d00101a15b5c74cce8e9ac09833015c9da38e1faecffb7"
+    },
+    "inputs-ready-command.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/inputs-ready-command.json",
+      "sha256": "e2892156bd28c902d716e05140f2ddcc52db57fdcae72c2486d60dd4219fe87d"
+    },
+    "science-ready-command.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/science-ready-command.json",
+      "sha256": "90a2170ae05f90971a27d1451ab7f6edfbba4eb4fc128a773acdbb28eee7cffc"
+    },
+    "science-ready-report.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/science-ready-report.json",
+      "sha256": "fe05b6e626b883c0c8694029f79bb0b3bfe218829849cc14cd0596761fd54226"
+    },
+    "fchk-new-dialog.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/fchk-new-dialog.json",
+      "sha256": "f0b2fd35dfd51c7790d34e39aae24531d7fab453b1a2401cddfa0816d2efc4bf"
+    },
+    "log-job2-to-fchk.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/log-job2-to-fchk.json",
+      "sha256": "d64073705d9d17ab757882299cc486b5289637229cf5913aafeceddf73bc926f"
+    },
+    "mode1-playing.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/mode1-playing.json",
+      "sha256": "6aae6f47cbdd0265ecad7c6bbf0478d0de83542cc1540c4985fcc1521a9c6c9b"
+    },
+    "mode2-playing.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/mode2-playing.json",
+      "sha256": "4f2903e336622473c8b8a6a084e823fd544cbda88be452b961bb327eaf4bbd89"
+    },
+    "mode3.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/mode3.json",
+      "sha256": "e1dadeb7345ba1e799b5d35782de5585f2e18ae8ebdd1cc26aa2e90f69b7c8f2"
+    },
+    "surface-click-probe-confirmed.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/surface-click-probe-confirmed.json",
+      "sha256": "8e710481f7d396e7591134abc2a8891911ae581c4f1852fac1a057d38e43526e"
+    },
+    "profile-csv-checked.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/profile-csv-checked.json",
+      "sha256": "0c932ab46880a81a0b6161c78475c2730e80e0ec9509800b14565896478d18ae"
+    },
+    "hydrogen-hidden.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/hydrogen-hidden.json",
+      "sha256": "9ced05c227abe6691da5bfb64e4fc663c502baabc2df77ac2229df292462bfe3"
+    },
+    "hydrogen-undo.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/hydrogen-undo.json",
+      "sha256": "2c39d565f985c1558085db1d13ed57c93b568cb79f400b7c91b89dc3cedd8ffb"
+    },
+    "hydrogen-redo-menu.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/hydrogen-redo-menu.json",
+      "sha256": "fd26a6c5d6c46d2de37d0a65f5569312f7df27736614a14ba242ba64572839fc"
+    },
+    "spectrum-cu-hidden.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/spectrum-cu-hidden.json",
+      "sha256": "dda41a4ac64692badf333ecb06f8ad64311d25e6e28b9b36d4ec41fa35982561"
+    },
+    "spectrum-cu-render-hidden.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/spectrum-cu-render-hidden.json",
+      "sha256": "cf638fa895f6af2201af9f0928b74a0dc2f15534e826fd0586fb180ae3821961"
+    },
+    "cold-fixed.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/cold-fixed.json",
+      "sha256": "afd103bb3c17409c20a19b69b4f3732cfee835ddaee5079eb2c3c41317e9fd6e"
+    },
+    "cold-final.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/cold-final.json",
+      "sha256": "008dfc731bc9990f0a3ea9d40752700f41e1d2bf192434983e89afbbd22d12c6"
+    },
+    "actions-final.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/actions-final.json",
+      "sha256": "02d498608efb13f64f352709b291eaa4c1a0fd1c5e1d6f5b5ace279ab0e92b5a"
+    },
+    "closing-preservation.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/closing-preservation.json",
+      "sha256": "b4efebb76a13dff9f4718c8acf2b62e6c81f44ecb270132b132dd0517a7a7872"
+    },
+    "capture-format-mapping.json": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/capture-format-mapping.json",
+      "sha256": "1a0c4d8c9535b1de9545630d5adadb22462559ac5e92c1d17caf1fe89f0f4d45"
+    }
+  },
+  "diagnostics": {
+    "science_first_attempt": {
+      "status": "Failed",
+      "reason": "Two existing tests read explicit checkout ROOT; required log copies absent. Copied only indexed log-examples with SHA-256, then all69 Passed.",
+      "report": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/science-fixed-report.json",
+        "sha256": "f0315bb018476aa8b812edba24a46c8e638e83339745afef34fe358a03d777f4"
+      },
+      "input_mapping": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/explicit-input-copies.json",
+        "sha256": "b3074fd7722160c76d13d24f5b676daff472703e7ad467e0e535e9bbd2c44a84"
+      }
+    },
+    "probe_preview_before_Enter": {
+      "status": "Failed",
+      "reason": "Preview not committed; actual Enter confirmation persisted valid probe.",
+      "report": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/surface-click-probe.json",
+        "sha256": "825b472f79cad8ebc75ba2dc3cc23a862c45ea0dc13701c1ed747f0903694080"
+      }
+    }
+  },
+  "evidence_root": "outputs/evidence/2026-10-01/tutorial-cu/",
+  "rebuild": [
+    "Create a clean worktree at source.commit; use new output and isolated profile directories.",
+    "Verify inputs via local-inputs.json and SOURCES; explicitly copy indexed log-examples for tests requiring checkout ROOT.",
+    "Verify existing locked wheels and qualified backend record, explicitly copy record to worktree outputs/backend-wheel.json.",
+    "Run tools/build_extension.py with explicit --blender, --wheels-dir and --output-dir; generated ZIP gets a new digest.",
+    "Replay native commands recorded in *-command.json against the newly built candidate; do not overwrite this batch reports.",
+    "Follow SOP for actual clicks. Use fresh native sky states before actions and save returned image/jpeg bytes as jpg. MCP reads confirm Dataset/array/unit values separately."
+  ],
+  "history": [
+    "docs/acceptance/tutorial-validation.json",
+    "docs/acceptance/cleanup-validation.json"
+  ],
+  "remaining_click_steps": "All unpictured instructions retain user placeholders. C01/C03/C06-C13, remaining C02/C04/C05 operations, fullN, moved/archived GUI reopens and GUI image export remain Not Run in this supplement.",
+  "cleanup": {
+    "status": "Passed",
+    "scope": "This screenshot supplement only; full GUI task remains claimed",
+    "removed_files": 8643,
+    "removed_bytes": 488083431,
+    "protected_hashes_verified": 42660,
+    "storage_report": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/storage-result.json",
+      "sha256": "92f7dd35f2655fca785018a5c00d774ec26146e58e598e3bffb6e058505e16f7"
+    },
+    "archive_receipt": "outputs/evidence/2026-10-01/tutorial-cu/closing.json"
+  }
+}
