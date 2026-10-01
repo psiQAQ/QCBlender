@@ -649,7 +649,11 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    本例成图：密度/ESP表面与分子从正面观察；图例的 **Legend Rotation** 设为 **X=90°、Y=0°、Z≈17.19°（0.3 rad）**，使刻度朝向相机。自由切片从顶面观察，更新当前平面等值线并等待完成后取景。剖面从正面观察，创建相机后在 **F9 → Margin per side** 设为 **0.20**，切片可用 **0.15**，其余 **0.05**。检查完整单位和刻度处于相机画幅内，再渲染。独立示例工程保存各成图相机；这些排版参数不修改科学数组。
 
-   ![MCP导出并另存阶段工程：7 Dataset、222数组、117配套文件；新工程冷重开待验收](screenshot/C04-10-association-exports-saved-MCP.jpg)
+   ![MCP导出并另存工程：7 Dataset、222数组、117配套文件；三路径冷重开报告见验证索引](screenshot/C04-10-association-exports-saved-MCP.jpg)
+
+   ![MCP在新可见进程核对中文移动工程、CSV和渲染；Computer Use观察截图](screenshot/C04-10-completion-cold-moved-MCP.jpg)
+
+   ![MCP在新可见进程核对ZIP解包工程、CSV和渲染；Computer Use观察截图](screenshot/C04-10-completion-cold-unpacked-MCP.jpg)
 
    ![MCP另存检查点：6 Dataset、172数组；此图尚非最终C04成图](screenshot/C04-10-slice-fixed-checkpoint-saved-MCP.jpg)
 

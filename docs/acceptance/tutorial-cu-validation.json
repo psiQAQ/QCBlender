@@ -1699,6 +1699,118 @@
         "sha256": "11be4c5c2b2b45fbbf55e08f81aeb1307f032ca1f86c86da9046c0a455c5ce3b",
         "status": "Passed"
       }
+    },
+    "C04_completion_cold_chain": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/preservation-cold-chain.json",
+      "sha256": "2e32804873889ad3cc9f2ce952f2134e9e0556deba58c57ea356dd38c7779c5b",
+      "status": "Passed",
+      "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
+      "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+      "scope": "C04 association/export checkpoint three-path cold readback and render only; complete C04/C-N and unified qualification Not Run",
+      "project": "D:\\workspace\\QCBlender\\outputs\\projects\\tutorial-cu-full\\cases\\C04\\C04-association-exports.blend",
+      "project_sha256": "42fac1ddf79531bd0ecf8ec40d86d0b3cd2f7b3b3344c6e3b0f5da4798a8ade7",
+      "reports": {
+        "original/readback-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-original/readback-MCP.json",
+          "sha256": "659c16a47d1fa1066ec2efa3a6afe866490f0e165be78e1210a5c30cfc1fad4b",
+          "status": "Passed"
+        },
+        "original/render-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-original/render-MCP.json",
+          "sha256": "d8c529a8fd316fa785c5f3d40bb0abb2e9318a175e9521743ee107f112ca1b70",
+          "status": "Passed"
+        },
+        "original/exit-verified.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-original/exit-verified.json",
+          "sha256": "ab5c4928c17a49ab72aaf6a9069005517e49f95d39a0ea4b33be6b1acb4b02cd",
+          "status": "Passed"
+        },
+        "original/process.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-original/process.json",
+          "sha256": "9ffbe07985c2c16573cd122b1f16bb6eef0072fe6dfa2fa33fee67d7c3dcd5bd"
+        },
+        "original/quit-scheduled.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-original/quit-scheduled.json",
+          "sha256": "345512fc56affa09c0cc7909bfe2572202b03380f564b99586810e7a41e19f55"
+        },
+        "original/visible.log": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-original/visible.log",
+          "sha256": "91653e05e4eff00fb31eda2d30e7047ea1d09ad2f5a921a6d5ac8ef7fd407aa4"
+        },
+        "moved/readback-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-moved/readback-MCP.json",
+          "sha256": "f2c0771f06c1c118cbd113f19716667d3de14d8d0ab2b8d144ae18aa4c38a1f0",
+          "status": "Passed"
+        },
+        "moved/render-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-moved/render-MCP.json",
+          "sha256": "3ffb507b234ce679bf01af0a2d242f43c89b9140ae43109f5976007e31f74656",
+          "status": "Passed"
+        },
+        "moved/exit-verified.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-moved/exit-verified.json",
+          "sha256": "32c1d1e092fbf9ce8051c4153280e305b1066dbd15bbc8b4ed3bada49c07a848",
+          "status": "Passed"
+        },
+        "moved/process.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-moved/process.json",
+          "sha256": "dbed96d557d5db53e4debc5824b4a3b8bcfc7be15727ec017b8121a0d0ac6a64"
+        },
+        "moved/quit-scheduled.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-moved/quit-scheduled.json",
+          "sha256": "15013cddec6c6a6cc18d16c3cd9aee606140f3f48050d74c82aac0b0a870d6b4"
+        },
+        "moved/visible.log": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-moved/visible.log",
+          "sha256": "01764753f5d254ff734d83f67dca0dbbdd463bf4b654022a4a319ec0fbdee23a"
+        },
+        "unpacked/readback-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-unpacked/readback-MCP.json",
+          "sha256": "6686715fe53d5141e3b4e711750c29bf834e5908715fe30750b2cdb063ce2ef0",
+          "status": "Passed"
+        },
+        "unpacked/render-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-unpacked/render-MCP.json",
+          "sha256": "bca6beff8f8e9f26e6afc324043a38e548811e0cef6d60c15734acd9a8045efe",
+          "status": "Passed"
+        },
+        "unpacked/exit-verified.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-unpacked/exit-verified.json",
+          "sha256": "f2f857eaa5dea2cd0748418aeb7c01cf7a8e3df9822863f647bd0a680c64f5b1",
+          "status": "Passed"
+        },
+        "unpacked/process.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-unpacked/process.json",
+          "sha256": "1eafa884fc67945ddf38c8a061170912c854729b3daa9ab2743fdba1416b56d7"
+        },
+        "unpacked/quit-scheduled.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-unpacked/quit-scheduled.json",
+          "sha256": "a788add5ba11856c9ae7da6e9f973a89e657d2bc65cb323c19e259962fed8270"
+        },
+        "unpacked/visible.log": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/cold-unpacked/visible.log",
+          "sha256": "fd487ee05d9311528bc7b9c86b45eef3f65898aa92069cbcf93b9ef4313716ac"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-10-completion-cold-moved-MCP.jpg",
+          "sha256": "216a7dd026c1cfc7e7e7d7b3ab4966f9a555cfdc9cf4d549c0eb8a99844e165b",
+          "mode": "moved",
+          "method": "MCP native readback/render; Computer Use observation; viewport profiles hidden via MCP for composition"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-10-completion-cold-unpacked-MCP.jpg",
+          "sha256": "b7cbb9f9fcaf1dd7ed7c35a86604c28aefa1cab248e44485110a88211e69676e",
+          "mode": "unpacked",
+          "method": "MCP native readback/render; Computer Use observation; viewport profiles hidden via MCP for composition"
+        }
+      ],
+      "original": "Passed",
+      "moved": "Passed",
+      "unpacked": "Passed",
+      "user_operation": "Not Run",
+      "independent_scientific_signature": "Not Run"
     }
   },
   "historical_partial_supplement": {
