@@ -127,7 +127,13 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    [用户截图待引用：0.4-03，活动对象、参数与结果同屏；参数变化保留前后画面]
 
-4. 在 **N 侧栏 → 工程与诊断 → 保存自包含工程** 选择 `cases/CXX/CXX.blend`，确认同名 `CXX.qcdata/` 已生成。工程包含节点、材质、选择、动画设置和科学数组；原始外部文件、导出的 CSV 另行保留。
+4. 若本例在几何节点编辑器中通过“添加”菜单加入公共资产，先点 **文件 → 外部数据 → 打包关联库**，再保存。该步骤把关联的节点库嵌入 `.blend`；普通“打包资源”是另一项菜单，不能据此判断节点库已打包。仅使用插件自动创建的本地节点组时可直接保存。
+
+   [用户截图待引用：0.4-04a，打包关联库菜单；移动后新进程的节点和结果]
+
+   ![Agent原生菜单操作：文件、外部数据、打包关联库；随后MCP核对内嵌库摘要](screenshot/N18-pack-linked-libraries-menu-GUI.jpg)
+
+   在 **N 侧栏 → 工程与诊断 → 保存自包含工程** 选择 `cases/CXX/CXX.blend`，确认同名 `CXX.qcdata/` 已生成。工程包含节点、材质、选择、动画设置和科学数组；原始外部文件、导出的 CSV 另行保留。
 
    [用户截图待引用：0.4-04，活动对象、参数与结果同屏；参数变化保留前后画面]
 
@@ -919,7 +925,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
 ## 2. N01–N18 节点与交互检查
 
-以上教程先通过对象/材质属性操作。需查看实际节点时，选指定视图，将一个编辑器切为 **Geometry Node Editor**，取消其图钉固定，选择该视图的 Geometry Nodes 修改器/节点组。修改器输入与对象属性共享参数；内部绑定 Dataset 的节点不作为独立通用资产。**Asset Browser → QCBlender Nodes** 按目录查找九个公共资产，添加到独立测试副本，核对已有输入/输出并接入真实视图。操作前保存，新增节点或改接线仅在副本进行；记录实际节点名、接线、原值→新值和可见变化，不以节点名称存在计 Passed。
+以上教程先通过对象/材质属性操作。需查看实际节点时，选指定视图，将一个编辑器切为 **Geometry Node Editor**，取消其图钉固定，选择该视图的 Geometry Nodes 修改器/节点组。修改器输入与对象属性共享参数；内部绑定 Dataset 的节点不作为独立通用资产。**Asset Browser → QCBlender Nodes** 按目录查找九个公共资产，在几何节点编辑器的 **添加** 菜单选择对应目录/资产并单击放置，添加到独立测试副本，核对已有输入/输出并接入真实视图。操作前保存，新增节点或改接线仅在副本进行；记录实际节点名、接线、原值→新值和可见变化，不以节点名称存在计 Passed。
 
 新建视图的外层节点按可见Frame查找：原子 **Atoms: selection and representation**；振动 **Modes: displacement and animation**；等值面 **Field: source and isosurface**；映射 **Scalar: sampling and colors**；电荷 **Charge: attributes and colors**；图例 **Legend: range and labels**；切片 **Slice: plane placement**。Frame用于阅读，不增加物理量或公共节点；实际节点和接线仍以所选视图为准。
 
@@ -959,17 +965,59 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    [用户截图待引用：N06，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
 
+   选 C04 的密度/ESP 映射视图，在 **N 侧栏 → 显示层** 选该层，点 **复制**；仅选新副本作为活动对象，切换 **Geometry Nodes** 工作区，底部编辑器取消图钉，选择副本的修改器树。原视图保持原参数。示例副本为 `QC electron_number_density.003`。
+
+   ![Agent原生显示层复制；此后节点调整仅作用于副本](screenshot/N15-field-copy-GUI.jpg)
+
+   在几何节点编辑器点 **添加 → 数据 → 采样 → QC Sample Scalar Field** 并放置。找到绑定 ESP 源对象的 **物体信息**，将其 **几何数据** 输出接新节点 **体积（Volume）**；将 **位置（Position）** 节点的输出接新节点 **位置**。将新节点 **值（Value）** 和 **有效（Valid）** 接副本颜色映射节点对应输入，替换旧取样输入；密度等值面几何仍连接颜色节点，不能把 ESP 源体积用作密度等值面输入。
+
+   ![Agent原生添加取样资产；后续Value/Valid接线由MCP完成](screenshot/N06-sample-asset-added-GUI.jpg)
+
+   仅在副本测试：断开新取样节点的位置输入，依次输入 **(0,0,0)**、**(0,−2,0)**、**(0,−2,1.45) Å**。这使表面每个点读取同一位置，颜色应一致；本批粗网格三点ESP约为 **1.224086233、−0.044865982、−0.022647081 hartree/e**。这些是 C04 所记录网格的插值值，换网格时重新核对，不作为所有构型的常数。域外/无效检查另见 N17。
+
+   ![位置默认0/0/0；GUI体积接线、MCP数据核对；表面与图例分别计算](screenshot/N06-sample-origin-linked-GUI.jpg)
+
+   ![Agent原生把取样位置Y改为−2；162个真实表面顶点均与独立插值参考一致](screenshot/N06-sample-Y-negative-two-GUI.jpg)
+
+   ![Agent原生把取样位置Z改为1.45；科学值见同批报告](screenshot/N06-sample-Z-one-point-four-five-GUI.jpg)
+
+   最后重新连接 **位置 → 位置**，恢复表面逐点采样。副本几何、值、有效性和颜色分量应与断开前相同，源视图不变。
+
+   ![Agent原生恢复Position接线；MCP核对副本求值摘要恢复且原视图不变](screenshot/N06-sample-Position-restored-GUI.jpg)
+
 7. **N07 QC Map Scalar Colors v2**：C04映射视图；颜色映射、零中心/有效范围、图例排版、材质色带。
 
    预期/需记录：色标/量单位同步，范围递增，无效洋红，副本布局独立。
 
    [用户截图待引用：N07，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
 
+   保持 N06 副本活动，在几何节点编辑器 **添加 → 颜色映射 → QC Map Scalar Colors v2** 放置资产。将密度等值面输出接其 **几何数据**，新取样节点 **值/有效** 接对应输入；**材质**选择副本原颜色映射节点的专用材质。新节点输出替换旧颜色节点到 **合并几何** 的连线，不能在多输入合并口同时保留两份表面。
+
+   ![Agent原生放置颜色资产；接线和副本专用材质由MCP设置](screenshot/N07-color-asset-added-GUI.jpg)
+
+   ![MCP连接新颜色节点；同色域下副本几何和颜色分量与原管线相同](screenshot/N07-color-asset-connected-MCP.jpg)
+
+   测试节点独立输入时，先关闭副本 **Show Legend**，暂时断开新节点三个色域输入，填 **Color Minimum=−0.05、Color Center=0、色彩最大值=0.05**；再把最大值改为 **0.1**。正值区的颜色分量应改变，负值区仍按 −0.05..0 映射，零仍为中心。随后将三个色域输入接回 **组输入** 对应输出，并恢复图例；使表面和图例共同使用修改器的 −0.05/0/+0.05 色域。
+
+   ![Agent原生把色彩最大值改为0.1；MCP独立核对零中心分段映射，测试期间图例关闭](screenshot/N07-color-upper-bound-GUI.jpg)
+
+   副本图例可单独设位置 **(−3,0,0)**、长度 **1.5**、宽度 **0.4**、字号 **0.15**；源视图的节点坐标、Frame、材质、色域和求值结果应保留原值。
+
+   ![MCP调整副本图例；Computer Use观察截图，原显示层不变](screenshot/N07-field-copy-legend-independent-MCP.jpg)
+
 8. **N08 QC Planar Slice**：C04切片；空间观察、定平面/Gizmo、切片等值线。
 
    预期/需记录：平面/分辨率/曲线变化，采样与单位一致。
 
    [用户截图待引用：N08，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
+
+   选 C04 的 ESP 切片层，按 N06 的复制步骤生成独立副本，示例名 `C04 public slice asset test`；仅选副本，编辑其 Geometry Nodes 修改器树。在 **添加 → 空间 → 切片 → QC Planar Slice** 放置新资产。将 **组输入 → 中心/旋转** 接新节点对应输入；**宽度=6、高度=6、分辨率=101**。用新节点输出替换旧平面节点到颜色节点的几何连线，保留原有 ESP Volume/Position 采样及材质。
+
+   ![Agent原生加入平面资产，MCP绑定中心/旋转并连接真实ESP切片](screenshot/N08-slice-asset-connected-MCP.jpg)
+
+   把新节点 **分辨率 101→51**：切片网格顶点应由 **10,201→2,601**，范围仍为 X/Y **−3..3 Å**、Z **1.45 Å**，取样量和单位不变。本项测试新增节点的网格；等值线的重建沿用 C04 步骤，不根据原有曲线宣称已重建为51分辨率。最后将新节点 **宽度/高度/分辨率** 接回组输入，恢复共享参数101，核对副本几何恢复、原层未变。
+
+   ![Agent原生修改新平面节点分辨率；MCP核对2601顶点和21点独立插值参考](screenshot/N08-slice-resolution-51-GUI.jpg)
 
 9. **N09 QC Clip Geometry**：C01原子/场；添加裁剪控件后空间观察。
 
@@ -1030,6 +1078,14 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
    预期/需记录：新进程和移动副本来源/数组/节点/图例可读，摘要核对。
 
    [用户截图待引用：N18，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
+
+   N06–N08 加入公共资产后，先执行 0.4 的 **打包关联库**，再用 **保存自包含工程** 另存并归档。示例工程 `C04-public-nodes-packed.blend + .qcdata` 含两个内嵌节点库；三次冷重开分别使用新的唯一可见进程，MCP核对17个对象引用、7个Dataset、222数组、4个体积文件和117文件摘要。移动和解包时原相对路径的节点库不存在，内嵌资产仍求值正常。
+
+   ![MCP另存并归档公共节点工程；Computer Use观察截图](screenshot/N18-public-nodes-packed-saved-MCP.jpg)
+
+   ![中文移动副本冷重开，外部节点库不存在；MCP求值核对、Computer Use观察](screenshot/N18-public-nodes-cold-moved-MCP.jpg)
+
+   ![ZIP解包副本冷重开，内嵌节点库和科学数组完整；MCP核对、Computer Use观察](screenshot/N18-public-nodes-cold-unpacked-MCP.jpg)
 
 
 

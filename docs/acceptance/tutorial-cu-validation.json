@@ -1811,6 +1811,345 @@
       "unpacked": "Passed",
       "user_operation": "Not Run",
       "independent_scientific_signature": "Not Run"
+    },
+    "C04_public_asset_chain": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/preservation.json",
+      "sha256": "600579762974febc7f9de6583f4971ec0a67ab31e7ee1ba5ca33f8467fc0aecc",
+      "status": "Passed",
+      "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
+      "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+      "scope": "First native Add public N06/N07/N08 edits; selective wiring by GUI and MCP; packed libraries and three-path cold readback; complete C-N and unified qualification Not Run",
+      "project": "D:\\workspace\\QCBlender\\outputs\\projects\\tutorial-cu-full\\cases\\C04\\C04-public-nodes-packed.blend",
+      "project_sha256": "3c2e75c0e1e89ab027332ffa2bf29ea9e946690c346a7ceeb967c52a828ac532",
+      "reports": {
+        "asset-library-identity-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/asset-library-identity-MCP.json",
+          "sha256": "ca03e10aac6114617a48690252ebbe8656d42d6c5f156d307d8177a1885b9ab2",
+          "status": "Passed"
+        },
+        "baseline-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/baseline-MCP.json",
+          "sha256": "9fcf067e4b4c0934292e13bdb792f8be3183a1cc9d82a4f23fe65733ec628148",
+          "status": "Passed"
+        },
+        "cold-moved/exit-verified.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-moved/exit-verified.json",
+          "sha256": "12a35d8e023d24816b96c31eea713b6d5b2022fa2597cb9ec0644b56b538db50",
+          "status": "Passed"
+        },
+        "cold-moved/mcp-ready-3720.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-moved/mcp-ready-3720.json",
+          "sha256": "055002f8343484a2c8345a70d6e49b2d563c1de7ed84741e0e2cbedbb7789c3e",
+          "status": "Passed"
+        },
+        "cold-moved/process.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-moved/process.json",
+          "sha256": "836ea58ebae9ac3796f3a2b92fa727e92ea1db5bc9b58bab51417f1c87b7e58c",
+          "status": "Not Run"
+        },
+        "cold-moved/quit-request.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-moved/quit-request.json",
+          "sha256": "dbe2835748e6349f3079be0046b343e349e25d3b24ab4f88b20f7fad764ad600",
+          "status": "Passed"
+        },
+        "cold-moved/readback-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-moved/readback-MCP.json",
+          "sha256": "15596bff5c55777457f2877b1665a4483b9b0959cbf0ec1a2caf562ddfa4ac19",
+          "status": "Passed"
+        },
+        "cold-original/exit-verified.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-original/exit-verified.json",
+          "sha256": "3461e3cc709f93060c01a6c7c0cced5413fe4ec9b07725bc9cadeff8268eb3c8",
+          "status": "Passed"
+        },
+        "cold-original/mcp-ready-19364.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-original/mcp-ready-19364.json",
+          "sha256": "bc504c2fb19ac214f941a55b3345cf3e9a11945dd78e6d09255a12a2eb05d6c6",
+          "status": "Passed"
+        },
+        "cold-original/process.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-original/process.json",
+          "sha256": "56b773351e9ff170c71f0e0cffd40d6671cd20dcc3c479e766bbf81e46322249",
+          "status": "Not Run"
+        },
+        "cold-original/quit-request.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-original/quit-request.json",
+          "sha256": "4aaf19587e88622d3ba252100c859d2ebbc80731ae1ab2b6658f28db8beea71a",
+          "status": "Passed"
+        },
+        "cold-original/readback-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-original/readback-MCP.json",
+          "sha256": "897a978df3ebcac6042c3450b74fb65060b35b6dd8fe4459ca26b1eeccad2a49",
+          "status": "Passed"
+        },
+        "cold-original/readback-v1-harness-diagnostic.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-original/readback-v1-harness-diagnostic.json",
+          "sha256": "a866324c562cefcc6172e0338cc22ee7cfa67c905ff1be9786a16e2d4b2e46d9",
+          "status": "Failed"
+        },
+        "cold-unpacked/exit-verified.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-unpacked/exit-verified.json",
+          "sha256": "aa010390829e05ba0ab1221fecc88d95ee104a143778022e8264b622db6328ac",
+          "status": "Passed"
+        },
+        "cold-unpacked/mcp-ready-50676.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-unpacked/mcp-ready-50676.json",
+          "sha256": "609b30393ca46b84d23baa1fb799556d724d066f904580c1fcd0c7ad0e2115fe",
+          "status": "Passed"
+        },
+        "cold-unpacked/process.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-unpacked/process.json",
+          "sha256": "f1408932a4dd662705cdb43d8cb75f13ef9d29b64f331181d92a4fd52e475a72",
+          "status": "Not Run"
+        },
+        "cold-unpacked/quit-request.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-unpacked/quit-request.json",
+          "sha256": "6a594a2bf8bcbd69eaf507cc56ce37e7dbc6dc8e766fb1b542d97752c1f68c7c",
+          "status": "Passed"
+        },
+        "cold-unpacked/readback-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-unpacked/readback-MCP.json",
+          "sha256": "591ac6083c5d8da9c8984635b1b3ca8b83eadf16ff50e22c2a4c72d8d1075b5e",
+          "status": "Passed"
+        },
+        "color-asset-added-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/color-asset-added-MCP.json",
+          "sha256": "6c5e5e8e1990de55899a8401523ddae5eeb4a3d5ab4ef5b2c1ae8ce83b8bd71a",
+          "status": "Passed"
+        },
+        "color-asset-connected-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/color-asset-connected-MCP.json",
+          "sha256": "55a24ace54c038b10e2fbaf650f8781153b0314f1a1dfd3cb30da71b768579a0",
+          "status": "Passed"
+        },
+        "color-upper-bound-GUI-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/color-upper-bound-GUI-MCP.json",
+          "sha256": "b3b15c82a09162600cf3f12abf33f8bb02d241db705331f2630ef96196fa68f9",
+          "status": "Passed"
+        },
+        "exit-verified.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/exit-verified.json",
+          "sha256": "a9a1078de8f4dc5c26c7489890441cad81aef7e323d25fa7fd7d5f8bb47b0366",
+          "status": "Passed"
+        },
+        "field-copy-legend-independence.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/field-copy-legend-independence.json",
+          "sha256": "537f2f2218ff0fb5ae6afb0894f46b3ad1edf82728191d4b32fe6d5aa64cb408",
+          "status": "Passed"
+        },
+        "harness-diagnostics.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/harness-diagnostics.json",
+          "sha256": "ab2df75ba0cf0d5a45477e76b4a39bbdd222cdcfbbdf3f1304716a5667c64528",
+          "status": "Failed"
+        },
+        "harness-surface-diagnostics.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/harness-surface-diagnostics.json",
+          "sha256": "ad56e601d4a632155220aa56b9f606b29f4d672e96c934ea8807b39a683396af",
+          "status": "Failed"
+        },
+        "mcp-ready-22680.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/mcp-ready-22680.json",
+          "sha256": "fca5eb102b8ebfbe3fd7a81177f027e21a7b8f975a632962fa3316c89afc3f93",
+          "status": "Passed"
+        },
+        "pack-linked-libraries-GUI-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/pack-linked-libraries-GUI-MCP.json",
+          "sha256": "463658691ceabe11d31c5de1f8c9b66decc85a3e6c5209aba52524c4527e8154",
+          "status": "Passed"
+        },
+        "portable-public-nodes-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/portable-public-nodes-MCP.json",
+          "sha256": "ff471c699ec09b081669f66000f15ac96ca5ebb6e98e0357a036ef94c155b508",
+          "status": "Passed"
+        },
+        "process.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/process.json",
+          "sha256": "28cd3cd68154183b2705b369cb46628e8e85adc3771fc335eee3af694a4ffede",
+          "status": "Not Run"
+        },
+        "public-sample-before-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/public-sample-before-MCP.json",
+          "sha256": "605d3ca2daa5d2fc750c908eb1a5d724a6dc4a646c95b07892bfffaa1df10669",
+          "status": "Passed"
+        },
+        "quit-request.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/quit-request.json",
+          "sha256": "7436c7816fc75afd45b4442cd158e8d731ade0ad046c81378183331261975bd5",
+          "status": "Passed"
+        },
+        "sample-color-final-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/sample-color-final-MCP.json",
+          "sha256": "a710cf2d07d2b053c8834977c1cabbdf7d912a7f51955f28c23977378bbf2c42",
+          "status": "Passed"
+        },
+        "sample-origin-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/sample-origin-MCP.json",
+          "sha256": "b1193112e89e84f8b92d4852f9ba32ef52a7768feef722fe2ac8e398e41b40ff",
+          "status": "Passed"
+        },
+        "sample-position-0p0--2p0-0p0-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/sample-position-0p0--2p0-0p0-MCP.json",
+          "sha256": "152b25492a4d53e1fed91b5e62c754d9b2d677cde8298f997030c18d933e2efd",
+          "status": "Passed"
+        },
+        "sample-position-0p0--2p0-1p4500000476837158-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/sample-position-0p0--2p0-1p4500000476837158-MCP.json",
+          "sha256": "fb00b2ed572538ea9b20c43bd4156f8f720f46edee98782e3b5f88732670ddf6",
+          "status": "Passed"
+        },
+        "sample-restored-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/sample-restored-MCP.json",
+          "sha256": "ee6563f1db567d377850e08a5e37bc398618f520947492feff1eddbf2fc638e0",
+          "status": "Passed"
+        },
+        "saved-before-asset-test.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/saved-before-asset-test.json",
+          "sha256": "250f5a5a531d5074e7358f327a729a09cf06a95993237f5ef3433273dc2793d2",
+          "status": "Passed"
+        },
+        "slice-before-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/slice-before-MCP.json",
+          "sha256": "78a2eb0e5edcb9245b1b14f7b1c0bf662d88a16795944ab84128438f31f8e5e0",
+          "status": "Passed"
+        },
+        "slice-connected-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/slice-connected-MCP.json",
+          "sha256": "2325b9e594173bc14a83de2c373c97ef89c1c228beb923bdfde376e8bf20ed6d",
+          "status": "Passed"
+        },
+        "slice-resolution-GUI-MCP.json": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/slice-resolution-GUI-MCP.json",
+          "sha256": "50a93c362d421fb08975b37f5a87ff49aaab6342680bc02f641001ed5ba96420",
+          "status": "Passed"
+        }
+      },
+      "screenshots": {
+        "N06-sample-asset-added-GUI.jpg": {
+          "path": "docs/v1-acceptance/screenshot/N06-sample-asset-added-GUI.jpg",
+          "sha256": "cdae1d35eb5b102da5887e58b59233ad25003fb70c54649332b9a22d5c3e8db1",
+          "raw_path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/screenshots/N06-sample-asset-added-GUI.jpg"
+        },
+        "N06-sample-origin-linked-GUI.jpg": {
+          "path": "docs/v1-acceptance/screenshot/N06-sample-origin-linked-GUI.jpg",
+          "sha256": "472086994f10d08f17691b91bb1d6f1b5057b9d17eeaa2fdf104301a1389c2c1",
+          "raw_path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/screenshots/N06-sample-origin-linked-GUI.jpg"
+        },
+        "N06-sample-Position-restored-GUI.jpg": {
+          "path": "docs/v1-acceptance/screenshot/N06-sample-Position-restored-GUI.jpg",
+          "sha256": "5f411b51ec81836ab78a3ec89031b3fba936cdd3c833cde665a4965b70cdc335",
+          "raw_path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/screenshots/N06-sample-Position-restored-GUI.jpg"
+        },
+        "N06-sample-Y-negative-two-GUI.jpg": {
+          "path": "docs/v1-acceptance/screenshot/N06-sample-Y-negative-two-GUI.jpg",
+          "sha256": "072c8dcb9cb904486e70f96fe4531933e4b1b46be1e9125b843634fae8db7814",
+          "raw_path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/screenshots/N06-sample-Y-negative-two-GUI.jpg"
+        },
+        "N06-sample-Z-one-point-four-five-GUI.jpg": {
+          "path": "docs/v1-acceptance/screenshot/N06-sample-Z-one-point-four-five-GUI.jpg",
+          "sha256": "8e063ec8a6219d1169eade2954e0735b6d18d1a2fba6d23bc2204023ddc96226",
+          "raw_path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/screenshots/N06-sample-Z-one-point-four-five-GUI.jpg"
+        },
+        "N07-color-asset-added-GUI.jpg": {
+          "path": "docs/v1-acceptance/screenshot/N07-color-asset-added-GUI.jpg",
+          "sha256": "f8b68d689d61f45d6055dfefd050ffc6cd0a23cfe87754d24d5438ad745b6526",
+          "raw_path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/screenshots/N07-color-asset-added-GUI.jpg"
+        },
+        "N07-color-asset-connected-MCP.jpg": {
+          "path": "docs/v1-acceptance/screenshot/N07-color-asset-connected-MCP.jpg",
+          "sha256": "904da68172394ff97485a3c601a40509ec3f2c869bfd110d7f0b75002cea313a",
+          "raw_path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/screenshots/N07-color-asset-connected-MCP.jpg"
+        },
+        "N07-color-upper-bound-GUI.jpg": {
+          "path": "docs/v1-acceptance/screenshot/N07-color-upper-bound-GUI.jpg",
+          "sha256": "fc467f54e2d112180964005e6be481be0accf37267601d93be71cc00ef9ba583",
+          "raw_path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/screenshots/N07-color-upper-bound-GUI.jpg"
+        },
+        "N07-field-copy-legend-independent-MCP.jpg": {
+          "path": "docs/v1-acceptance/screenshot/N07-field-copy-legend-independent-MCP.jpg",
+          "sha256": "687396b79671b3ceabf652db7d5b19816c16203dfb566a9518d8c7d2b8ac8d46",
+          "raw_path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/screenshots/N07-field-copy-legend-independent-MCP.jpg"
+        },
+        "N08-slice-asset-connected-MCP.jpg": {
+          "path": "docs/v1-acceptance/screenshot/N08-slice-asset-connected-MCP.jpg",
+          "sha256": "095051b06294133d4a465c00c2e0b674ff5d79250a3822d87ec1d2e64ae8ab05",
+          "raw_path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/screenshots/N08-slice-asset-connected-MCP.jpg"
+        },
+        "N08-slice-resolution-51-GUI.jpg": {
+          "path": "docs/v1-acceptance/screenshot/N08-slice-resolution-51-GUI.jpg",
+          "sha256": "7bdd3825b5ced8782579fbe2c55f40377a8ff1e8a583427bbcb09d42abfb6096",
+          "raw_path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/screenshots/N08-slice-resolution-51-GUI.jpg"
+        },
+        "N15-field-copy-GUI.jpg": {
+          "path": "docs/v1-acceptance/screenshot/N15-field-copy-GUI.jpg",
+          "sha256": "3500fd804503ec409120ef438a1e87d39e664468227f868220afb83c43d5090f",
+          "raw_path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/screenshots/N15-field-copy-GUI.jpg"
+        },
+        "N18-pack-linked-libraries-menu-GUI.jpg": {
+          "path": "docs/v1-acceptance/screenshot/N18-pack-linked-libraries-menu-GUI.jpg",
+          "sha256": "de757cfd5de17571e7ff4f34bce0b1aed3f31f5184f26f20908603ffe727d3b7",
+          "raw_path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/screenshots/N18-pack-linked-libraries-menu-GUI.jpg"
+        },
+        "N18-public-nodes-cold-moved-MCP.jpg": {
+          "path": "docs/v1-acceptance/screenshot/N18-public-nodes-cold-moved-MCP.jpg",
+          "sha256": "16d7ec82f011f0a967c5bb3b7dadbea3dbb74058b21c1430a4430f7d93f7cd53",
+          "raw_path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/screenshots/N18-public-nodes-cold-moved-MCP.jpg"
+        },
+        "N18-public-nodes-cold-unpacked-MCP.jpg": {
+          "path": "docs/v1-acceptance/screenshot/N18-public-nodes-cold-unpacked-MCP.jpg",
+          "sha256": "0e2137f1703407471efbae932ca03ae25cd367481b739fd4ffbf76cf97fef94a",
+          "raw_path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/screenshots/N18-public-nodes-cold-unpacked-MCP.jpg"
+        },
+        "N18-public-nodes-packed-saved-MCP.jpg": {
+          "path": "docs/v1-acceptance/screenshot/N18-public-nodes-packed-saved-MCP.jpg",
+          "sha256": "a79812dece820dc8768d68d8e8c8997cd58262002b211fada4c8a8c890bd18ba",
+          "raw_path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/screenshots/N18-public-nodes-packed-saved-MCP.jpg"
+        }
+      },
+      "scripts": {
+        "C04-public-node-state.py": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/scripts/C04-public-node-state.py",
+          "sha256": "4a912282131eae974fcbc5fccce9608ce120da6a829f8fb2d226be693ab3368c"
+        },
+        "verify-C04-public-sample.py": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/scripts/verify-C04-public-sample.py",
+          "sha256": "6f176487e1fd432cba69d0172fca76d632fbcb3068b6ac739ff8e1838fe5ce3f"
+        },
+        "verify-C04-public-slice.py": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/scripts/verify-C04-public-slice.py",
+          "sha256": "1468f2854416c2650d4fed0cf282de635b8ea18cabd9f90e1c1dc3c88b04faad"
+        },
+        "save-C04-public-nodes.py": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/scripts/save-C04-public-nodes.py",
+          "sha256": "0b518d482aa2a1acc1c2234ef9c4c57395912f2ba30bbd2458090509fad26807"
+        },
+        "launch-C04-public-nodes.py": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/scripts/launch-C04-public-nodes.py",
+          "sha256": "e6671e986c7c4bfe15f316c730106ebd57c72e27ed7fe82fa0ed3e3b30e1ca78"
+        },
+        "launch-C04-public-nodes-cold.py": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/scripts/launch-C04-public-nodes-cold.py",
+          "sha256": "0ba5c3786c9c7251d031868c88519ca7517f2a065dc35f0132dcbc46b5713624"
+        },
+        "read-C04-public-nodes-cold.py": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/scripts/read-C04-public-nodes-cold.py",
+          "sha256": "af34fc0ff1ee51d6ba1e1cbcec5c729533fca8dd3e80c89991655c2453a1f3a5"
+        },
+        "preserve-C04-public-nodes.py": {
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/scripts/preserve-C04-public-nodes.py",
+          "sha256": "e8a3a5bfa48355a32a214b75461f115008dfa489dd8a8cc0e51377612309f3cc"
+        }
+      },
+      "harness_failures": "Retained as diagnostics, not product regressions; readback serialization corrected and rerun on same process",
+      "remaining": "Other public assets N01/N02/N04/N09; real internal invalid-mask fixture; remaining C05-C13 and unified qualification",
+      "method_annotations": {
+        "sample-origin-MCP.json": "Position 0/0/0 was the new node default; native Add/Volume wire were GUI actions, numeric verification was MCP. Do not count default origin as an explicit GUI parameter edit.",
+        "cold_readback": "MCP native file open replay after previous confirmed GUI operation; screenshots are Computer Use observations, not new clicking evidence."
+      },
+      "documentation_followup": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/documentation-finalization.json",
+        "sha256": "4afd0ba8aef68812e44ccfd0a8b5edc025b78d8a9a683d2881fe2bf108a66085",
+        "status": "Passed"
+      }
     }
   },
   "historical_partial_supplement": {

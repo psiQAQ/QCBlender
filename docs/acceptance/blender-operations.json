@@ -1672,6 +1672,343 @@
         "requires_current_result_assertions": true,
         "current_batch_replay_status": "Not Run"
       }
+    },
+    {
+      "id": "public-scalar-sampling-node",
+      "title": "公共取样资产添加和位置输入",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use native Add/menu/socket/parameter actions as scoped; MCP bindings and independent numeric assertions separately identified",
+        "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
+        "product_tree": "4086224b13cdd50fa4495c1e00004e0d8dd15d49",
+        "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "QC electron_number_density.003; C04密度/ESP副本",
+        "visible_entry": "Geometry Nodes > 添加 > 数据 > 采样 > QC Sample Scalar Field",
+        "validated_scope": "GUI添加、Volume/Position连线、Y=-2/Z=1.45输入及Position恢复；Value/Valid由MCP连接；162表面点与130图例点分开；不覆盖真实内部无效掩码",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/sample-position-0p0--2p0-0p0-MCP.json",
+            "sha256": "152b25492a4d53e1fed91b5e62c754d9b2d677cde8298f997030c18d933e2efd",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/sample-position-0p0--2p0-1p4500000476837158-MCP.json",
+            "sha256": "fb00b2ed572538ea9b20c43bd4156f8f720f46edee98782e3b5f88732670ddf6",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/sample-restored-MCP.json",
+            "sha256": "ee6563f1db567d377850e08a5e37bc398618f520947492feff1eddbf2fc638e0",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/N06-sample-asset-added-GUI.jpg",
+            "sha256": "cdae1d35eb5b102da5887e58b59233ad25003fb70c54649332b9a22d5c3e8db1"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N06-sample-Y-negative-two-GUI.jpg",
+            "sha256": "072c8dcb9cb904486e70f96fe4531933e4b1b46be1e9125b843634fae8db7814"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N06-sample-Z-one-point-four-five-GUI.jpg",
+            "sha256": "8e063ec8a6219d1169eade2954e0735b6d18d1a2fba6d23bc2204023ddc96226"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N06-sample-Position-restored-GUI.jpg",
+            "sha256": "5f411b51ec81836ab78a3ec89031b3fba936cdd3c833cde665a4965b70cdc335"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/assets.py": "7b9738469040f90dc915d45c2322d29029f44c5453db2e0531eb12980ca46536",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/project.py": "30181040074a4ec38ce7f06e1d55e2dabc16e80a47ec4a1c95b5e1f75d543df4",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
+      },
+      "asset_library_sha256": "e170a83bb0a3f92f389ee34c939fe87592f81e2275d61899dc8df34b020af52c",
+      "fingerprint_review": "Review Blender version, immutable asset library bytes, transitive helper/UI/interface/unit/dependency changes before reuse; file list is not exhaustive.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP binds real source/position/value/valid/material and evaluates real arrays; packed_file content and cold view/array assertions. First/changed native entry needs CU.",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-original/readback-MCP.json",
+            "sha256": "897a978df3ebcac6042c3450b74fb65060b35b6dd8fe4459ca26b1eeccad2a49",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-moved/readback-MCP.json",
+            "sha256": "15596bff5c55777457f2877b1665a4483b9b0959cbf0ec1a2caf562ddfa4ac19",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-unpacked/readback-MCP.json",
+            "sha256": "591ac6083c5d8da9c8984635b1b3ca8b83eadf16ff50e22c2a4c72d8d1075b5e",
+            "status": "Passed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "public-scalar-color-node",
+      "title": "公共颜色资产添加与最大值输入",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use native Add/menu/socket/parameter actions as scoped; MCP bindings and independent numeric assertions separately identified",
+        "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
+        "product_tree": "4086224b13cdd50fa4495c1e00004e0d8dd15d49",
+        "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "同一C04密度/ESP副本，图例测试期间关闭后恢复",
+        "visible_entry": "Geometry Nodes > 添加 > 颜色映射 > QC Map Scalar Colors v2",
+        "validated_scope": "GUI添加、最大值0.05→0.1；MCP真实接线/材质/共享色域恢复，68正值点改变，原视图不变；不是本轮全C/N通过",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/color-asset-connected-MCP.json",
+            "sha256": "55a24ace54c038b10e2fbaf650f8781153b0314f1a1dfd3cb30da71b768579a0",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/color-upper-bound-GUI-MCP.json",
+            "sha256": "b3b15c82a09162600cf3f12abf33f8bb02d241db705331f2630ef96196fa68f9",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/sample-color-final-MCP.json",
+            "sha256": "a710cf2d07d2b053c8834977c1cabbdf7d912a7f51955f28c23977378bbf2c42",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/N07-color-asset-added-GUI.jpg",
+            "sha256": "f8b68d689d61f45d6055dfefd050ffc6cd0a23cfe87754d24d5438ad745b6526"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N07-color-asset-connected-MCP.jpg",
+            "sha256": "904da68172394ff97485a3c601a40509ec3f2c869bfd110d7f0b75002cea313a"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N07-color-upper-bound-GUI.jpg",
+            "sha256": "fc467f54e2d112180964005e6be481be0accf37267601d93be71cc00ef9ba583"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/assets.py": "7b9738469040f90dc915d45c2322d29029f44c5453db2e0531eb12980ca46536",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/project.py": "30181040074a4ec38ce7f06e1d55e2dabc16e80a47ec4a1c95b5e1f75d543df4",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
+      },
+      "asset_library_sha256": "e170a83bb0a3f92f389ee34c939fe87592f81e2275d61899dc8df34b020af52c",
+      "fingerprint_review": "Review Blender version, immutable asset library bytes, transitive helper/UI/interface/unit/dependency changes before reuse; file list is not exhaustive.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP binds real source/position/value/valid/material and evaluates real arrays; packed_file content and cold view/array assertions. First/changed native entry needs CU.",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-original/readback-MCP.json",
+            "sha256": "897a978df3ebcac6042c3450b74fb65060b35b6dd8fe4459ca26b1eeccad2a49",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-moved/readback-MCP.json",
+            "sha256": "15596bff5c55777457f2877b1665a4483b9b0959cbf0ec1a2caf562ddfa4ac19",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-unpacked/readback-MCP.json",
+            "sha256": "591ac6083c5d8da9c8984635b1b3ca8b83eadf16ff50e22c2a4c72d8d1075b5e",
+            "status": "Passed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "public-planar-slice-node",
+      "title": "公共平面资产添加与分辨率输入",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use native Add/menu/socket/parameter actions as scoped; MCP bindings and independent numeric assertions separately identified",
+        "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
+        "product_tree": "4086224b13cdd50fa4495c1e00004e0d8dd15d49",
+        "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "QC scalar slice.001的独立副本 C04 public slice asset test",
+        "visible_entry": "Geometry Nodes > 添加 > 空间 > 切片 > QC Planar Slice",
+        "validated_scope": "GUI添加、分辨率101→51；MCP真实接线、2601点/21参考点与共享参数恢复；不把既有等值线称为51分辨率重建",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/slice-connected-MCP.json",
+            "sha256": "2325b9e594173bc14a83de2c373c97ef89c1c228beb923bdfde376e8bf20ed6d",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/slice-resolution-GUI-MCP.json",
+            "sha256": "50a93c362d421fb08975b37f5a87ff49aaab6342680bc02f641001ed5ba96420",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/pack-linked-libraries-GUI-MCP.json",
+            "sha256": "463658691ceabe11d31c5de1f8c9b66decc85a3e6c5209aba52524c4527e8154",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/N08-slice-asset-connected-MCP.jpg",
+            "sha256": "095051b06294133d4a465c00c2e0b674ff5d79250a3822d87ec1d2e64ae8ab05"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N08-slice-resolution-51-GUI.jpg",
+            "sha256": "7bdd3825b5ced8782579fbe2c55f40377a8ff1e8a583427bbcb09d42abfb6096"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/assets.py": "7b9738469040f90dc915d45c2322d29029f44c5453db2e0531eb12980ca46536",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/project.py": "30181040074a4ec38ce7f06e1d55e2dabc16e80a47ec4a1c95b5e1f75d543df4",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
+      },
+      "asset_library_sha256": "e170a83bb0a3f92f389ee34c939fe87592f81e2275d61899dc8df34b020af52c",
+      "fingerprint_review": "Review Blender version, immutable asset library bytes, transitive helper/UI/interface/unit/dependency changes before reuse; file list is not exhaustive.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP binds real source/position/value/valid/material and evaluates real arrays; packed_file content and cold view/array assertions. First/changed native entry needs CU.",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-original/readback-MCP.json",
+            "sha256": "897a978df3ebcac6042c3450b74fb65060b35b6dd8fe4459ca26b1eeccad2a49",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-moved/readback-MCP.json",
+            "sha256": "15596bff5c55777457f2877b1665a4483b9b0959cbf0ec1a2caf562ddfa4ac19",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-unpacked/readback-MCP.json",
+            "sha256": "591ac6083c5d8da9c8984635b1b3ca8b83eadf16ff50e22c2a4c72d8d1075b5e",
+            "status": "Passed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pack-linked-node-libraries",
+      "title": "打包关联节点库",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use native Add/menu/socket/parameter actions as scoped; MCP bindings and independent numeric assertions separately identified",
+        "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
+        "product_tree": "4086224b13cdd50fa4495c1e00004e0d8dd15d49",
+        "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "已添加公共资产的C04副本工程，先打包后保存自包含工程",
+        "visible_entry": "文件 > 外部数据 > 打包关联库",
+        "validated_scope": "实际FILE_OT_pack_libraries；两份577053字节节点库摘要与候选一致；新原路径/中文移动/ZIP解包进程求值一致；普通资源打包未用作替代",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/pack-linked-libraries-GUI-MCP.json",
+            "sha256": "463658691ceabe11d31c5de1f8c9b66decc85a3e6c5209aba52524c4527e8154",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-original/readback-MCP.json",
+            "sha256": "897a978df3ebcac6042c3450b74fb65060b35b6dd8fe4459ca26b1eeccad2a49",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-moved/readback-MCP.json",
+            "sha256": "15596bff5c55777457f2877b1665a4483b9b0959cbf0ec1a2caf562ddfa4ac19",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-unpacked/readback-MCP.json",
+            "sha256": "591ac6083c5d8da9c8984635b1b3ca8b83eadf16ff50e22c2a4c72d8d1075b5e",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/N18-pack-linked-libraries-menu-GUI.jpg",
+            "sha256": "de757cfd5de17571e7ff4f34bce0b1aed3f31f5184f26f20908603ffe727d3b7"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N18-public-nodes-cold-moved-MCP.jpg",
+            "sha256": "16d7ec82f011f0a967c5bb3b7dadbea3dbb74058b21c1430a4430f7d93f7cd53"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/N18-public-nodes-cold-unpacked-MCP.jpg",
+            "sha256": "0e2137f1703407471efbae932ca03ae25cd367481b739fd4ffbf76cf97fef94a"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/assets.py": "7b9738469040f90dc915d45c2322d29029f44c5453db2e0531eb12980ca46536",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/project.py": "30181040074a4ec38ce7f06e1d55e2dabc16e80a47ec4a1c95b5e1f75d543df4",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
+      },
+      "asset_library_sha256": "e170a83bb0a3f92f389ee34c939fe87592f81e2275d61899dc8df34b020af52c",
+      "fingerprint_review": "Review Blender version, immutable asset library bytes, transitive helper/UI/interface/unit/dependency changes before reuse; file list is not exhaustive.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP binds real source/position/value/valid/material and evaluates real arrays; packed_file content and cold view/array assertions. First/changed native entry needs CU.",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-original/readback-MCP.json",
+            "sha256": "897a978df3ebcac6042c3450b74fb65060b35b6dd8fe4459ca26b1eeccad2a49",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-moved/readback-MCP.json",
+            "sha256": "15596bff5c55777457f2877b1665a4483b9b0959cbf0ec1a2caf562ddfa4ac19",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/cold-unpacked/readback-MCP.json",
+            "sha256": "591ac6083c5d8da9c8984635b1b3ca8b83eadf16ff50e22c2a4c72d8d1075b5e",
+            "status": "Passed"
+          }
+        ]
+      }
     }
   ]
 }

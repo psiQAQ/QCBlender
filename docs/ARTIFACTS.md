@@ -16,6 +16,8 @@
 
 ## 当前任务与候选
 
+C04公共节点N06/N07/N08新增资产、接线/参数调整及恢复Passed，同候选e26d22a；GUI操作与MCP接线/独立参考分列。工程 `outputs/projects/tutorial-cu-full/cases/C04/C04-public-nodes-packed.blend + .qcdata` 和同名ZIP保全117文件、7 Dataset/222数组、17引用及4体积；两份关联节点库已原生打包。原路径、中文移动和解包冷重开Passed，后两者外部节点库不存在仍能求值一致。证据/重建脚本和截图摘要见 `outputs/evidence/2026-10-01/tutorial-cu/full/C04/public-nodes/preservation.json`；移动映射在cold-moved/unpacked的process.json；16张图紧接SOP对应步骤，登记26项。四进程均正常退出。完整C04/C-N、统一资格和main合并/归档仍Not Run，未清理活跃候选配置。
+
 C04源关联/导出补验使用同一e26d22a候选：GUI关联按钮及0.001 Å容差确认Passed，源选择和独立数据核对由MCP完成；六类PNG、三个CSV、7 Dataset/222数组/15引用/4体积与117配套文件保全，原检查点摘要不变。证据/重建脚本见 `outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/preservation.json`；新工程为 `outputs/projects/tutorial-cu-full/cases/C04/C04-association-exports.blend + .qcdata`，同名ZIP117条目逐字节核对。原路径、中文移动及ZIP解包副本分别在唯一新可见进程完成MCP冷重开、三份CSV复导出及像素一致的渲染核对Passed；117文件、7 Dataset/222数组、15引用及4体积摘要一致，三个进程均正常退出。冷重开报告与重建脚本见同批 `preservation-cold-chain.json`；两张Computer Use观察截图紧接C04-10，操作工具标为MCP。长路径验证脚本原失败与修正版分别保留，插件数据读取通过。完整C04/C-N与统一资格仍Not Run；电荷/偶极图保留b709096历史身份，操作登记22项。
 
 C04切片绑定路径修复候选为 `outputs/candidates/current/tutorial-slice-e26d22a/qcblender-0.0.1.zip`，源码 `e26d22a`；原生四平面及身份拒绝守卫、GUI定平面/Gizmo/等值线/探针和ESP剖面补验Passed，证据与重建脚本见 `outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/preservation.json`，原生报告见 `outputs/evidence/2026-10-01/tutorial-cu/slice-plane/`。保全工程 `outputs/projects/tutorial-cu-full/cases/C04/C04-slice-fixed-checkpoint.blend + .qcdata` 共95文件、6 Dataset/172数组；原路径新进程冷读和三份CSV复导出Passed。此95文件阶段工程的完整成图及移动/解包链条未复验；后续117文件工程的成图和三路径冷重开见上方completion批次。完整C-N及统一资格仍Not Run；阶段进程已退出，隔离配置保留待后续验证。

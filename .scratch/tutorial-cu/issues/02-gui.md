@@ -42,3 +42,5 @@ Blocked by: 01
 本批已执行的C02能量/三模式/连续导入、C04密度取样/剖面CSV、C05氢显隐/撤销重做/IR子文字、通用相机渲染/保存冷重开 Passed，24张原生截图紧接SOP操作。IR文字缺陷在1554ee2修复，新候选安装/资产/helper及69项科学回归Passed。完整C01–C13/N01–N18点击覆盖及其余C操作仍Not Run；C01移动/解包冷重开已在后续独立批次通过，雾材质预览修复候选的即时刷新、复制、新建及保存/导出已通过；修复工程原路径/中文移动/归档解包冷重开已通过，其余完整覆盖待完成，因此02保持claimed，不因截图交付而resolved。索引：docs/acceptance/tutorial-cu-validation.json。
 
 2026-10-01 C04关联工程三路径冷重开：PID52464/50260/34032分别在新可见进程完成原路径、中文移动与ZIP解包MCP读取和原生渲染；7 Dataset/222数组/15引用/4体积/117文件、源关联/探针/切片、三份CSV及精确像素一致Passed。两个Computer Use观察截图紧接C04-10，原路径空白截图仅留诊断；长路径验证脚本失败及修正记录独立保留，插件Dataset读取Passed。全部进程正常退出且工程摘要未改写。完整C04/C-N与统一资格仍Not Run，02保持claimed，03 pending；证据completion/preservation-cold-chain.json。
+
+2026-10-01 C04公共资产：N06原生Volume/Position连线和Y/Z输入、N07最大值、N08分辨率101→51Passed；部分其他连线由MCP完成。162表面点/68正值变化/2601切片点与21点CPU参考核对，恢复后原层未变。两节点库原生打包后另存117文件工程，7 Dataset/222数组/17引用/4体积、原路径PID19364、移动3720、解包50676冷重开Passed；后两处原库路径不存在。原PID22680及三冷重开进程均正常退出；16截图紧接N06/07/08/15/18，26登记项，脚本失败诊断独立保留。完整C04/C-N/统一资格Not Run，02保持claimed、03 pending；证据public-nodes/preservation.json。
