@@ -939,6 +939,112 @@
         "scope": "C03 selected P03 Cube/cub phases and real geometry/color mapping, save/archive and all three visible cold reopens; complete N asset-editor coverage and other cases Not Run"
       },
       "N04_N07_complete_public_asset_editor_checks": "Not Run"
+    },
+    "C04_current_candidate": {
+      "status": "Not Run",
+      "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+      "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+      "performed_scope": "Passed",
+      "scope": "C04 steps1-2 and zero-centered/valid-range/legend-visibility substeps Passed; remaining step3 layout/material reverse, steps4-10, full N cases, render and cold chain Not Run",
+      "reports": {
+        "import-readback-MCP.json": {
+          "status": "Passed",
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/import-readback-MCP.json",
+          "sha256": "36233280f9a3c88b129849c34550324cf06d67158e0780322dc66855b8d23232",
+          "scope": "C04 source atom order and scientific metadata"
+        },
+        "generation-GUI-readback.json": {
+          "status": "Passed",
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/generation-GUI-readback.json",
+          "sha256": "ed3fa1e82dfb7fb9847dffb7a97a7302a3470da1c5cb47029ae1c1a576ac939e",
+          "scope": "GUI-generated density and ESP, equal grids, arrays and units"
+        },
+        "mapping-MCP.json": {
+          "status": "Passed",
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/mapping-MCP.json",
+          "sha256": "b5cac21efd632b819463ae90a9ad4f2c23d59c9bcdad63d9aabf11318c497581",
+          "scope": "MCP mapping replay; 21 CPU sample comparisons"
+        },
+        "zero-centered-GUI.json": {
+          "status": "Passed",
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/zero-centered-GUI.json",
+          "sha256": "8fb869ad9efca9d76edfe3009e9b7e5e319e825e7fc27fd4f241dd40b4f2befe",
+          "scope": "Actual GUI zero-centered range R=.05"
+        },
+        "valid-range-GUI.json": {
+          "status": "Passed",
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/valid-range-GUI.json",
+          "sha256": "06312438a6bbbac3235de509bf33f0a535e448bbc08de051b8c9b6bf1f73cbc3",
+          "scope": "Actual GUI valid range compared to scientific array extrema"
+        },
+        "portable-checkpoint-MCP.json": {
+          "status": "Passed",
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/portable-checkpoint-MCP.json",
+          "sha256": "af839dae3f2f09894c4b44155d44a1a524dff63474101fd04798fcb65696691f",
+          "scope": "Checkpoint portable save with three Datasets, arrays and VDBs"
+        },
+        "post-save-state.json": {
+          "status": "Passed",
+          "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/post-save-state.json",
+          "sha256": "65cd7b2de1efa356e132631076a32a92c2562f407d4114d1996e3b9443de2049",
+          "scope": "Saved project dirty state only"
+        }
+      },
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-01-density-generated.jpg",
+          "sha256": "5af5d405dcd84c8b40020cb6e5f64b18f227439140479d57d20f57ebdd92f9f7"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-01-density-generation-parameters.jpg",
+          "sha256": "c89e7660c8e18405d5e65092deaa5b9aa333a6aaacbb9f10dced533d92e87854"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-01-ESP-generation-parameters.jpg",
+          "sha256": "e6018ed339d52f4def2c5b3608958ec631defc357630183c09eae154e7a095fe"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-02-density-ESP-mapped-MCP.jpg",
+          "sha256": "08808dea8a4b1201d72a5634046857ea6bd369e202763c5ad7220f20452f5ac2"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-03-legend-visible-restored-range.jpg",
+          "sha256": "5b72f4396c0ae174b511188cc373e374875baabced64bb74c0c363639180506e"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-03-valid-range.jpg",
+          "sha256": "bac4b27f49569d6dea3d11db7a9794a51ffcdf6d151d852e3476f3d23ad8d7ef"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-03-zero-centered-dialog.jpg",
+          "sha256": "e0e8f7507da824a3325d4d87c63c299d0ff8ee634b57b88912d187405ff5f9aa"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-10-mapping-checkpoint-saved-MCP.jpg",
+          "sha256": "1c01c674333f54f8c55c12758f6d3c1a52aeec9992c5db8e9683f416f95fd24f"
+        }
+      ],
+      "project": "D:\\workspace\\QCBlender\\outputs\\projects\\tutorial-cu-full\\cases\\C04\\C04-mapping-checkpoint.blend",
+      "project_sha256": "69435bc8f3d93aac6857c08b4b666553e82b4909634fa7789476d5cd73a3e21b",
+      "datasets": 3,
+      "arrays": 154,
+      "object_refs": 5,
+      "volumes": 2,
+      "files": 74,
+      "cold_reopen": "Not Run",
+      "independent_signature": "Not Run",
+      "preservation": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/preservation-checkpoint.json",
+        "sha256": "52731f8abed27593ba7f3a13acef9a0584ea4f54e2561434e1ae38cc6cab4a6e",
+        "scope": "C04 checkpoint evidence only; full C04 remains Not Run"
+      },
+      "verification": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/verification-checkpoint.json",
+        "sha256": "ed410e005a6e9e1feef925b3500014ba145b01b599ff7a1c5f24139ed7351eac",
+        "scope": "C04 checkpoint evidence only; full C04 remains Not Run"
+      }
     }
   },
   "historical_partial_supplement": {

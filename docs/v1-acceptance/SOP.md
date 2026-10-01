@@ -501,9 +501,15 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
 **真实输入预期：** 水二聚体6原子 **[O,H,H,O,H,H]**，中性单重态20电子，RHF/6-31G(d)，能量 **−152.013820 Eh**。源SHA为 `02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a`。Mulliken原子1/2/4为 **−0.928340742/+0.461442520/−0.920221916 e**；偶极源向量为约 **(0,0,1.67243888) e·bohr**，界面以Debye展示，核对保留的单位换算记录。切片中心 **(0,0,1.45) Å**；游标剖面起点 **(0,−2,1.45)**、终点 **(0,+2,1.45) Å**，Geometry、101点、距离0..4 Å。源关联使用逐字节别名 **P03/water-dimer.fch**，不能用P02单水Log与水二聚体关联。
 
-1. 导入 P03 FCHK，选原子对象分别 **生成量子化学场 → Electron density / Electrostatic potential**，使用同一指定网格；核对密度单位 electron/bohr^3、ESP hartree/e。ESP 核附近无效点不算物理零。
+1. 导入 P03 FCHK，选原子对象分别 **N 侧栏 → QCBlender → 工作流 → 生成量子化学场**，Quantity 选择 **Electron density / Electrostatic potential**，两次均设置 **Grid spacing=0.7 Å、Grid margin=3 Å、Memory budget=512 MiB**；这是展示网格，定量使用须另做收敛检查。核对密度单位 electron/bohr^3、ESP hartree/e。ESP 核附近无效点不算物理零。
 
    [用户截图待引用：C04-01，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Agent点击：密度/ESP生成参数与密度结果；网格0.7 Å](screenshot/C04-01-density-generation-parameters.jpg)
+
+   ![Agent点击：密度/ESP生成参数与密度结果；网格0.7 Å](screenshot/C04-01-density-generated.jpg)
+
+   ![Agent点击：密度/ESP生成参数与密度结果；网格0.7 Å](screenshot/C04-01-ESP-generation-parameters.jpg)
 
    ![Agent操作示例：密度生成示例；ESP 须另行操作](screenshot/C04-01-density-dialog.jpg)
 
@@ -511,9 +517,17 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    [用户截图待引用：C04-02，活动对象、参数与结果同屏；参数变化保留前后画面]
 
+   ![MCP复用映射操作：密度0.004表面按ESP着色，21点数值核对](screenshot/C04-02-density-ESP-mapped-MCP.jpg)
+
 3. 填 **Color Minimum=−0.05、Color Center=0、Color Maximum=+0.05**，须严格递增；在 **图例排版** 开 **显示图例**（Show Legend），改 长宽/字号/小数/方向/旋转/位置。点击 **零中心对称** 输入 **R=0.05**，再 **读取有效范围** 对照一次读取结果；记录并恢复成图色域。材质属性改色带/Reverse，范围外用端点颜色，无效采样为洋红。
 
    [用户截图待引用：C04-03，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Agent点击：色域对称、读取范围和图例显隐；其余排版与色带待补验](screenshot/C04-03-zero-centered-dialog.jpg)
+
+   ![Agent点击：色域对称、读取范围和图例显隐；其余排版与色带待补验](screenshot/C04-03-valid-range.jpg)
+
+   ![Agent点击：色域对称、读取范围和图例显隐；其余排版与色带待补验](screenshot/C04-03-legend-visible-restored-range.jpg)
 
 4. 旧多选映射使用新的未映射层独立复核：先选步骤2的密度表面，点 **N 侧栏 → 创建视图与检查工具 → 创建当前版本视图**，保留原层，新标准密度层尚未绑定色场。临时开启 ESP 表面的视口可见性，取消其他选择，在 Outliner 先选 ESP 表面，再 Shift 选新密度表面使其活动，确认恰好选中两个对象；F3 搜索 **Map Selected Field to Active Surface**，确认后核对与步骤2相同的来源。再用 **选择／替换着色场** 替换一次，范围和图例位置保留；恢复独立 ESP 表面隐藏。
 
@@ -554,6 +568,8 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 10. 对应 N06–N11/N17，按 0.4 保存；冷重开与移动后再次导出 CSV，核对保存数组/摘要。证据：`C04.png`、`C04-esp.png`、`C04-charge.png`、`C04-dipole.png`、`C04-slice.png`、`C04-profile.png`、CSV 和工程。
 
    [用户截图待引用：C04-10，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![MCP保存阶段工程；完整C04渲染与冷重开待补验](screenshot/C04-10-mapping-checkpoint-saved-MCP.jpg)
 
 
 

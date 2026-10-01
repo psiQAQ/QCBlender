@@ -6,6 +6,8 @@ Blocked by: 01
 
 ## Comments
 
+- 2026-10-01 C04阶段：原生密度/ESP生成Passed，同12×10×15网格1800点全有效；MCP复用映射21点最大误差1.53e-8 hartree/e。色域对称/有效范围读取与图例显隐点击Passed，范围已恢复±.05；阶段工程3 Dataset/154数组/5引用/2 VDB/74文件保全后正常关闭PID52684。8截图紧接SOP步骤；图例排版/材质、后续C04步骤、无效域及完整冷重开仍Not Run，02保持claimed。证据full/C04/preservation-checkpoint.json。
+
 - 2026-10-01 C03：双符号阈值/显隐/实面线框点/透明度GUI及cub别名MCP复验Passed；真实delta_g_inter按sign_lambda2_rho着色和替换GUI Passed，4992有效顶点/21点CPU取样误差7.3e-10。完整工程3 Dataset/18数组/9引用/3 VDB/ZIP26条目；PID47676原路径、41132中文移动、31580解包分别新可见进程MCP冷重开/渲染Passed，像素一致；全部正常退出。截图紧接C03步骤，操作登记11项；NCIPLOT特定语义未选样本、独立公共资产编辑器检查及全C/N仍Not Run，02保持claimed。证据full/C03/preservation-complete.json。
 
 - 2026-10-01 C03初段：实际 Cube/cub 导入 Passed，6原子、91×38×156、全部科学数组一致；cub经GUI声明 sign_lambda2_rho/electron/bohr^3，所有数组保持原摘要。6张截图紧接C03-01/02，声明登记为第7项可复用操作；本批后续重复操作按用户新偏好优先MCP。两符号/映射/保存/冷重开仍Not Run。

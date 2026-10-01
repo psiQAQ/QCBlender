@@ -744,6 +744,120 @@
         "current_batch_replay_status": "Not Run",
         "requires_current_result_assertions": true
       }
+    },
+    {
+      "id": "generate-density-esp",
+      "title": "生成电子密度与 ESP",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use native clicks with MCP data assertions",
+        "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+        "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
+        "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "P03 原子对象生成密度与ESP；后续密度表面活动，ESP为绑定色场",
+        "input_sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+        "visible_entry": "N侧栏 → QCBlender → 工作流 → 生成量子化学场；原子对象活动",
+        "validated_scope": "仅P03水二聚体、0.7 Å间距、3 Å余量、512 MiB；密度electron/bohr^3、ESP hartree/e；所选1800格点均有效，未验证无效域",
+        "reports": [
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/generation-GUI-readback.json",
+            "sha256": "ed3fa1e82dfb7fb9847dffb7a97a7302a3470da1c5cb47029ae1c1a576ac939e",
+            "scope": "GUI-generated density and ESP, equal grids, arrays and units"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-01-density-generation-parameters.jpg",
+            "sha256": "c89e7660c8e18405d5e65092deaa5b9aa333a6aaacbb9f10dced533d92e87854"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-01-ESP-generation-parameters.jpg",
+            "sha256": "e6018ed339d52f4def2c5b3608958ec631defc357630183c09eae154e7a095fe"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/worker.py": "f96a838a18427611c085f531339cf8ed5c3be11f15fa815732a708f8092f0a37",
+        "qcblender/evaluate.py": "172e7f0c7ff6406bb998c8f94d32858218b11ea9d0db5ef5a00917c682afe397"
+      },
+      "fingerprint_review": "Review transitive helpers, callbacks, public interfaces, Blender and dependency changes before reuse; listed files are an initial operation-specific set.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "仅P03水二聚体、0.7 Å间距、3 Å余量、512 MiB；密度electron/bohr^3、ESP hartree/e；所选1800格点均有效，未验证无效域",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true
+      }
+    },
+    {
+      "id": "scalar-color-range",
+      "title": "色域对称与读取有效范围",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use native clicks with MCP data assertions",
+        "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+        "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
+        "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "P03 原子对象生成密度与ESP；后续密度表面活动，ESP为绑定色场",
+        "input_sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+        "visible_entry": "对象属性 → QCBlender → 颜色映射 → 零中心对称 / 读取有效范围",
+        "validated_scope": "仅密度绑定ESP场，R=.05；读取全有效网格范围−0.112428957..2.405981950 hartree/e后恢复±.05；不包含图例排版或色带反转",
+        "reports": [
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/zero-centered-GUI.json",
+            "sha256": "8fb869ad9efca9d76edfe3009e9b7e5e319e825e7fc27fd4f241dd40b4f2befe",
+            "scope": "Actual GUI zero-centered range R=.05"
+          },
+          {
+            "status": "Passed",
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/valid-range-GUI.json",
+            "sha256": "06312438a6bbbac3235de509bf33f0a535e448bbc08de051b8c9b6bf1f73cbc3",
+            "scope": "Actual GUI valid range compared to scientific array extrema"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-03-valid-range.jpg",
+            "sha256": "bac4b27f49569d6dea3d11db7a9794a51ffcdf6d151d852e3476f3d23ad8d7ef"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-03-zero-centered-dialog.jpg",
+            "sha256": "e0e8f7507da824a3325d4d87c63c299d0ff8ee634b57b88912d187405ff5f9aa"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/color_ranges.py": "b98e223cb8e543d2ad23867a3ce25afa9797371a16dc550cea0924ae73c781ef",
+        "qcblender/blender/source_browser.py": "8be0aa54c40d92cd6e3625b70aab3fc765e7548ab0ef071f1918e6e4e2c4e8a4",
+        "qcblender/blender/editor_ui.py": "269798fc1a5580e591902594f80d5194fa99e368f20d426f99279d75098c0d40",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/worker.py": "f96a838a18427611c085f531339cf8ed5c3be11f15fa815732a708f8092f0a37"
+      },
+      "fingerprint_review": "Review transitive helpers, callbacks, public interfaces, Blender and dependency changes before reuse; listed files are an initial operation-specific set.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "仅密度绑定ESP场，R=.05；读取全有效网格范围−0.112428957..2.405981950 hartree/e后恢复±.05；不包含图例排版或色带反转",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true
+      }
     }
   ]
 }
