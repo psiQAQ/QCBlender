@@ -984,24 +984,55 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
 ### C09 AIM 临界点、路径与属性
 
-**真实输入预期：** 11临界点属性记录、10路径；源点1类型 **C/(3,−3)**，坐标 **(−0.724,0,3.384) Å**（PDB打印精度），对应源核6(H)，Density of all electrons **0.4316646446**，源属性单位约定按CPprop原文。本样本实际点类型以原文件为准，空类型保持不存在；不要为了C/N/O/F齐全制造记录。
+**真实输入预期：** P03水二聚体6原子。临界点源编号1–6为 **C/(3,−3)**、7–11为 **N/(3,−1)**，共11条；没有O/F层。10条路径共408点。核点C接近参考原子，显示标记可能被原子球遮挡；临时隐藏参考原子可查看全部点，源坐标不变。精确单位以CPprop原文为准，不从标记颜色推断物理量。
 
-1. 导入 P03 同构型参考 FCHK，选原子对象，点 **导入外部结果 → AIM 拓扑**，分别填 **CPs PDB、Paths PDB、CP properties text (optional)**。有真实属性才填第三项。
+1. 按C04导入 **P03/water-dimer.fchk**，只选它的**原子对象**，保持Object Mode。打开 **3D视图 → N侧栏 → QCBlender → 导入外部结果 → AIM 拓扑**。分别填 **CPs PDB=P03/aim/CPs.pdb、Paths PDB=P03/aim/paths.pdb、CP properties text (optional)=P03/aim/CPprop.txt**，点击 **确定**。预期生成 **QC AIM CP C、QC AIM CP N、QC AIM bond paths**，父级关联该参考原子，科学摘要保留三份输入来源。属性可选，但本教程使用真实CPprop文件。
 
-   [用户截图待引用：C09-01，活动对象、参数与结果同屏；参数变化保留前后画面]
+   [用户截图待引用：C09-01，原子活动对象、三个路径与成功结果]
 
-2. 选生成 C/N/O/F 点层和路径层，在 **External Analysis Records** 查类型、坐标、路径组、属性值/单位和原子关联；本样本没有的类型不凭空构造。
+   ![Computer Use打开AIM拓扑入口；活动对象与参数条件由MCP准备](screenshot/C09-fixed-entry-GUI.jpg)
 
-   [用户截图待引用：C09-02，活动对象、参数与结果同屏；参数变化保留前后画面]
+   ![MCP填写三个路径，Computer Use点击确定导入真实AIM数据](screenshot/C09-fixed-dialog-GUI.jpg)
 
-3. 在 **External Result Browser** 选源编号，按已有数值过滤，点 **应用筛选**；分别开关点/标签/路径，选另一类型须换对应层。筛选恢复后源记录不变。
+2. 只选 **QC AIM CP C**，打开 **Properties → 对象属性 → QCBlender · 对象与量子化学 → External Analysis Records**。首次导入即可查看 **Record (1-based)=1**，不用刷新或重开：源点1为 **C/(3,−3)**、核 **6(H)**、PDB位置 **(−0.724,0,3.384) Å**、**Density of all electrons=0.4316646446**。将记录改为2：核 **5(H)**、PDB位置 **(0.724,0,3.384) Å**，密度相同。属性文本另有更高打印精度的Bohr/Å位置，与PDB精度分别核对；对应核编号采用源记录，不按当前排序重编号。
 
-   [用户截图待引用：C09-03，活动对象、参数与结果同屏；参数变化保留前后画面]
+   在Outliner选择 **QC AIM bond paths**，仍用**对象属性**，展开 **External Result Browser**：**10 recorded AIM paths**。**Path (1-based)=1** 显示 **Source residue 1 | 9 points**；改为2显示 **Source residue 2 | 47 points**。路径显隐和线宽使用原生对象/曲线控件；路径组不等于临界点源编号。
 
-4. 对应 N13/N16，按 0.4 保存 `C09-points.png`、`C09-paths.png`、总览与工程。
+   [用户截图待引用：C09-02，首次属性记录1/2，以及路径组1/2及点数]
 
-   [用户截图待引用：C09-04，活动对象、参数与结果同屏；参数变化保留前后画面]
+   ![首次导入即显示CP类型、对应核、位置和真实电子密度](screenshot/C09-fixed-record1-GUI.jpg)
 
+   ![Computer Use切换记录2：对应核5H，源坐标与电子密度](screenshot/C09-fixed-record2-GUI.jpg)
+
+   ![Computer Use选择路径层：10组中的源组1，9点](screenshot/C09-path1-GUI.jpg)
+
+   ![Computer Use切换路径2：源组2，47点](screenshot/C09-path2-GUI.jpg)
+
+3. 只选 **QC AIM CP C**，展开 **对象属性 → QCBlender → External Result Browser**。保持 **Source number=0**（全部源编号），**Numeric CP property** 精确填 **Density of all electrons**。启用 **Selected CP property value** 两个范围开关，填 **从=0.432、到=0.433**，勾选 **Show source label、Show matching points**，保持首条匹配并点 **应用筛选**：预期2条，原始源编号 **4、5**，坐标 **(−0.724,0,0.484)、(0.724,0,0.484) Å**；突出源4，标签值 **0.432922**。范围输入失焦时可能只显示两位小数，激活输入确认完整0.432/0.433。**Source number** 是原始源编号；**Record/Match (1-based)** 是当前对应列表的位置。
+
+   换选 **QC AIM CP N**，同一属性键设范围 **0..0.02** 并应用：预期只保留源 **9**，位置 **(0,0,1.451) Å**、密度 **0.01088848625**，标签按六位有效数字显示 **0.0108885**。开关 **Show matching points/Show source label** 验证点与标签独立显示；类型须换对应对象。取消范围开关、Source number=0并应用可恢复全部源点。原始属性不随筛选改变。
+
+   [用户截图待引用：C09-03，精确属性键、完整范围、匹配源编号、坐标和显隐]
+
+   ![MCP准备精确参数，Computer Use启用范围并应用：C源4/5保留](screenshot/C09-fixed-filter-GUI.jpg)
+
+4. 对应N13/N16，按0.4分别导出点图、路径图、总览。本示例点图保留上面的C4/5与N9范围，只显示参考原子、两点层及标签；路径图只显示参考原子和完整路径；总览显示二者。核点与原子球、O-H路径与键在Y方向投影重叠，旋转观察或隐藏参考原子可逐项检查。
+
+   下图使用 **EEVEE、1920×1080、正交相机Scale=9、位置(X,Y,Z)=(1,−12,1.65)、绕X轴90°**。源标签字号 **0.11**、绕X轴90°、局部Y偏移 **−0.6**；C标签局部Z偏移 **−1.05**，N标签 **0.15**。灯光和白色标签发光材质沿用C08显示参数，第二Sun能量0.35。这些参数只影响排版与照明，不改变科学坐标/属性。
+
+   点击 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程**，保存 **C09-final.blend + C09-final.qcdata**，按N16导出配套ZIP。完成后正常关闭并确认退出；原路径、中文移动路径和解包路径依次在一个新Blender进程打开，每次读取科学数据、标签、筛选和路径后关闭，再开下一处。示例效果图带 `-v3` 后缀。
+
+   [用户截图待引用：C09-04，三张效果图、保存路径和三处冷重开]
+
+   ![MCP配置相机和显示，原生EEVEE渲染：源核点与N9，C核点嵌在原子球内](screenshot/C09-points-v3.png)
+
+   ![原生EEVEE渲染：完整源路径，O-H路径与参考键可能投影重叠](screenshot/C09-paths-v3.png)
+
+   ![原生EEVEE渲染：参考分子、源C/N标记和路径总览](screenshot/C09-overview-v3.png)
+
+   ![Computer Use观察截图：MCP保存的最终工程与属性范围](screenshot/C09-saved-GUI.jpg)
+
+   本批28组MCP筛选和7项错误边界、120文件/8Dataset/224数组/4体积/20引用保全Passed；三处串行原生冷读与九次重新渲染像素一致Passed。首次原生导入、立即属性显示及路径选择证据和MCP准备分别记录。报告/输入/候选身份见[当前验证索引](../acceptance/tutorial-cu-validation.json)的 `C09_AIM_properties_paths_filters_and_cold_chain`；历史清理证据仍引用[cleanup-validation.json](../acceptance/cleanup-validation.json)。用户复做及独立科研签署仍Not Run。
 
 
 ### C10 真实 IRC 步序与能量

@@ -16,6 +16,10 @@
 
 ## 当前任务与候选
 
+C09首次AIM导入、立即属性记录1/2、路径组1/2和数值范围GUI Passed；独立原文11CP/10路径408点/550属性、28筛选及7错误边界Passed。120文件/8Dataset/224数组/4体积/20引用保全与三处串行冷重开、九次像素一致实渲染Passed，全部进程退出。8界面截图和3效果图紧接步骤，登记52项。首次属性面板int/string键缺陷以13401c6最小修复，新候选cc4e7ac完整摘要见索引；原Failed与排版/脚本诊断保留，九份重复冷渲染核对后清理。完整教程/统一资格及合并归档仍待完成。
+
+证据及重建脚本：`outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/`，原失败及修复前工程在上一级C09；修复构建/安装/10项科学检查与大样本59CP/58路径专项在`outputs/evidence/2026-10-02/tutorial-aim-records/`。保留fixed中的`C09-final.blend + .qcdata`和ZIP，移动/解包副本在`outputs/projects/tutorial-cu-full/`对应C09目录；最新候选`outputs/candidates/current/tutorial-aim-records-13401c6/`。
+
 C08 ESP：原生入口/确认、记录2、极值范围和两面积模式，以及35组MCP筛选/5错误输入核对Passed。证据、原始诊断、输入/候选摘要与重建脚本：`outputs/evidence/2026-10-02/tutorial-cu/full/C08/`；最终工程`C08-final.blend + .qcdata`及ZIP保留120文件、8Dataset/224数组/4体积/20引用。中文移动和解包工程在`outputs/projects/tutorial-cu-full/`对应C08目录。三个串行新进程和6次重渲染像素一致Passed，全部退出；8界面图和2效果图紧接步骤，登记48项。6份重复冷渲染删除7,746,576字节，原图/日志/摘要收据保留；初始构图和保存设置诊断保留，完整教程/统一资格待完成。
 
 C07成对场：IGMH/IRI导入、散点范围/交换、错误原子配对拒绝和Edit菜单撤销重做GUI及独立MCP核对Passed；参数准备范围单列。证据、原始成功/失败日志与重建脚本：`outputs/evidence/2026-10-02/tutorial-cu/full/C07/`。保留`C07.blend + .qcdata`和ZIP（44文件、3Dataset/66数组、4体积），中文移动与解包副本在`outputs/projects/tutorial-cu-full/`对应C07目录；三个新串行进程与九次真实重渲染像素一致Passed，全部进程退出。11截图、3效果图紧接步骤，44操作登记；9份已核对重复冷渲染删除，原图和摘要收据保留。原失败构图和两项断言诊断原样保留；完整C/N与统一资格待验收。

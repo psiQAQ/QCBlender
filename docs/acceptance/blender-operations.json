@@ -3574,6 +3574,245 @@
           }
         ]
       }
+    },
+    {
+      "id": "aim-topology-import",
+      "title": "AIM临界点、路径和真实属性导入",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP preparation and raw-source oracle separately recorded",
+        "source_commit": "13401c6a42dabd3844d7f1896ebdd6106188f774",
+        "product_tree": "a8db95a942a2bca82fdf147727bce0dc3a57200f",
+        "candidate_sha256": "cc4e7ac23d22a0c6c5f919c72b15615d8e440fe630838e64853512cfaa356ffd",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID14660；仅选择对应参考原子/C点/路径层，无多选顺序",
+        "visible_entry": "只选同构型原子对象；3D视图→N侧栏→QCBlender→导入外部结果→AIM 拓扑",
+        "validated_scope": "Computer Use打开入口并确认导入；MCP准备三个路径。11CP、10路径408点、550已解析原文属性及关联核对；文本填写不在点击覆盖内",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/immediate-panel-verified.json",
+            "sha256": "0d893e285c650736e04ee080c382cd101894ad54e7c7fe4a32be4c4053382bcd",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/native-import-records.json",
+            "sha256": "fa4935845782733118da783b1926873b5e7febd43eb98ad4cfb0fd873e9f0dc1",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C09-fixed-entry-GUI.jpg",
+            "sha256": "f5bb86c50ee6ba973d8ae40fbab4770c3a99d7cf82dd0805b8da7e5ae4dc3064"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C09-fixed-dialog-GUI.jpg",
+            "sha256": "983d476e96a5aa68fcecff43a3afb8b387b682e7495afcd838f12cef00144608"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/external_results.py": "71f9612f82db00b3f1de9554bc05bc1ca8759dc9937318310fa65f02c1fef5d7",
+        "qcblender/analysis_data.py": "de5ccf196fb485465e76ba0cc122da3192f421104b5c52122f9061364e1650d8",
+        "qcblender/external_results.py": "34dae8703d9d6e2234c64132c78f33252e7e74d7b1a1410e58804920e5ebd7fb",
+        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/blender/capabilities.py": "e99bbdbf87fb0a2e08160c65e6d2b405a917d4ca5bc738b2baae46c89f099386"
+      },
+      "fingerprint_review": "Listed files are the initial scope; review transitive helper, callback, interface and dependency changes before reuse.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Computer Use打开入口并确认导入；MCP准备三个路径。11CP、10路径408点、550已解析原文属性及关联核对；文本填写不在点击覆盖内",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": []
+      }
+    },
+    {
+      "id": "aim-immediate-properties-records",
+      "title": "首次导入立即显示AIM属性并切换记录",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP preparation and raw-source oracle separately recorded",
+        "source_commit": "13401c6a42dabd3844d7f1896ebdd6106188f774",
+        "product_tree": "a8db95a942a2bca82fdf147727bce0dc3a57200f",
+        "candidate_sha256": "cc4e7ac23d22a0c6c5f919c72b15615d8e440fe630838e64853512cfaa356ffd",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID14660；仅选择对应参考原子/C点/路径层，无多选顺序",
+        "visible_entry": "只选QC AIM CP C；对象属性→QCBlender→External Analysis Records→Record (1-based)",
+        "validated_scope": "Computer Use展开并切换记录2，首次导入不刷新/重开显示CP_type、对应核、Bohr/Å位置和电子密度；源1/2分别核6H/5H，密度.4316646446；MCP选择对象",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/immediate-panel-verified.json",
+            "sha256": "0d893e285c650736e04ee080c382cd101894ad54e7c7fe4a32be4c4053382bcd",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C09-fixed-record1-GUI.jpg",
+            "sha256": "89d95dcee71ec7f2163557833fe39373d3863f5060e2d5f83d64e62ecd357cab"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C09-fixed-record2-GUI.jpg",
+            "sha256": "b93b2b4b52cd17e6f8472058ba7081fdbc895956539986528e4848ec61041c43"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/external_results.py": "71f9612f82db00b3f1de9554bc05bc1ca8759dc9937318310fa65f02c1fef5d7",
+        "qcblender/analysis_data.py": "de5ccf196fb485465e76ba0cc122da3192f421104b5c52122f9061364e1650d8",
+        "qcblender/external_results.py": "34dae8703d9d6e2234c64132c78f33252e7e74d7b1a1410e58804920e5ebd7fb",
+        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/blender/capabilities.py": "e99bbdbf87fb0a2e08160c65e6d2b405a917d4ca5bc738b2baae46c89f099386"
+      },
+      "fingerprint_review": "Listed files are the initial scope; review transitive helper, callback, interface and dependency changes before reuse.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Computer Use展开并切换记录2，首次导入不刷新/重开显示CP_type、对应核、Bohr/Å位置和电子密度；源1/2分别核6H/5H，密度.4316646446；MCP选择对象",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": []
+      }
+    },
+    {
+      "id": "aim-numeric-property-filter",
+      "title": "AIM真实属性范围筛选与原始编号",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP preparation and raw-source oracle separately recorded",
+        "source_commit": "13401c6a42dabd3844d7f1896ebdd6106188f774",
+        "product_tree": "a8db95a942a2bca82fdf147727bce0dc3a57200f",
+        "candidate_sha256": "cc4e7ac23d22a0c6c5f919c72b15615d8e440fe630838e64853512cfaa356ffd",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID14660；仅选择对应参考原子/C点/路径层，无多选顺序",
+        "visible_entry": "只选QC AIM CP C；对象属性→External Result Browser→Numeric CP property→范围开关→应用筛选",
+        "validated_scope": "Computer Use启用两界并应用Density of all electrons .432.. .433，保留源4/5且坐标正确；MCP准备数字/属性键，并另查28组合和7错误边界",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/native-numeric-filter.json",
+            "sha256": "d0d972f9624ce24f00645b158c50018566cdd9dbb5d10413634db6e163f60b5a",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C09-fixed-filter-GUI.jpg",
+            "sha256": "1578c5971452d9e23f0f77b37667eccdc48321331eef521a20129ad8bd86e6ff"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/external_results.py": "71f9612f82db00b3f1de9554bc05bc1ca8759dc9937318310fa65f02c1fef5d7",
+        "qcblender/analysis_data.py": "de5ccf196fb485465e76ba0cc122da3192f421104b5c52122f9061364e1650d8",
+        "qcblender/external_results.py": "34dae8703d9d6e2234c64132c78f33252e7e74d7b1a1410e58804920e5ebd7fb",
+        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/blender/capabilities.py": "e99bbdbf87fb0a2e08160c65e6d2b405a917d4ca5bc738b2baae46c89f099386"
+      },
+      "fingerprint_review": "Listed files are the initial scope; review transitive helper, callback, interface and dependency changes before reuse.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Computer Use启用两界并应用Density of all electrons .432.. .433，保留源4/5且坐标正确；MCP准备数字/属性键，并另查28组合和7错误边界",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/filter-batch.json",
+            "sha256": "11daba6b05d99726970280b12171808c0c4ea7fe79a8f82cf138d7522534868e",
+            "status": "Passed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "aim-path-record-selection",
+      "title": "AIM路径源组与点数查看",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP preparation and raw-source oracle separately recorded",
+        "source_commit": "13401c6a42dabd3844d7f1896ebdd6106188f774",
+        "product_tree": "a8db95a942a2bca82fdf147727bce0dc3a57200f",
+        "candidate_sha256": "cc4e7ac23d22a0c6c5f919c72b15615d8e440fe630838e64853512cfaa356ffd",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID14660；仅选择对应参考原子/C点/路径层，无多选顺序",
+        "visible_entry": "Outliner选QC AIM bond paths；对象属性→External Result Browser→Path (1-based)",
+        "validated_scope": "Computer Use选路径层、对象属性并切换路径1→2；10组中源组1为9点、组2为47点；原生全部408点由MCP独立核对",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/native-path-records.json",
+            "sha256": "065ee34aa7c0ce903148276964ab12df2df03a93704bb0868b13358076b77515",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C09-path1-GUI.jpg",
+            "sha256": "865b8be592cd26ec4dabc125c6ac35d6d452333aba0e2753a12205d8f522e31f"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C09-path2-GUI.jpg",
+            "sha256": "a107b9767bc4e3d9ec1694e6bb20db9b51c922fe9565852fa0fe9d6957bef5fa"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/external_results.py": "71f9612f82db00b3f1de9554bc05bc1ca8759dc9937318310fa65f02c1fef5d7",
+        "qcblender/analysis_data.py": "de5ccf196fb485465e76ba0cc122da3192f421104b5c52122f9061364e1650d8",
+        "qcblender/external_results.py": "34dae8703d9d6e2234c64132c78f33252e7e74d7b1a1410e58804920e5ebd7fb",
+        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/blender/capabilities.py": "e99bbdbf87fb0a2e08160c65e6d2b405a917d4ca5bc738b2baae46c89f099386"
+      },
+      "fingerprint_review": "Listed files are the initial scope; review transitive helper, callback, interface and dependency changes before reuse.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Computer Use选路径层、对象属性并切换路径1→2；10组中源组1为9点、组2为47点；原生全部408点由MCP独立核对",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": []
+      }
     }
   ]
 }

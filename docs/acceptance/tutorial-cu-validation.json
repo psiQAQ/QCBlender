@@ -54,6 +54,13 @@
       "path": "D:\\workspace\\QCBlender\\outputs\\candidates\\current\\tutorial-slice-e26d22a\\qcblender-0.0.1.zip",
       "sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
       "scope": "Mixed Dataset path identity repair; native guards, actual slice/probe/profile GUI and original checkpoint cold readback Passed; complete final qualification Not Run"
+    },
+    "13401c6": {
+      "source_commit": "13401c6a42dabd3844d7f1896ebdd6106188f774",
+      "product_tree": "a8db95a942a2bca82fdf147727bce0dc3a57200f",
+      "sha256": "cc4e7ac23d22a0c6c5f919c72b15615d8e440fe630838e64853512cfaa356ffd",
+      "path": "outputs/candidates/current/tutorial-aim-records-13401c6/qcblender-0.0.1.zip",
+      "scope": "Immediate AIM property panel repair; scoped installation/science/GUI and C09 serial cold chain Passed; full final qualification Not Run"
     }
   },
   "environment": {
@@ -551,7 +558,7 @@
     "docs/acceptance/tutorial-validation.json",
     "docs/acceptance/cleanup-validation.json"
   ],
-  "remaining_click_steps": "Complete C04 invalid-mask/error boundaries, C05 IRC annotation/current-view/removal checks, C09-C13 and remaining N01-N18 scope. Finish density-checkpoint relocation and same-final-source/candidate unified qualification before main merge/archive. C06-C08 scoped native actions, independent data/filters and three-path cold chains separately Passed; historical identities retained. Full walkthrough and independent scientific signature remain Not Run.",
+  "remaining_click_steps": "C10-C13, C04 invalid-mask boundaries, C05 IRC annotations/current-version, density checkpoint relocation, remaining N scope and same-final-source unified qualification before main merge/archive. C09 scoped actions and three-path cold chain Passed. Full walkthrough/user and independent scientific signature remain Not Run.",
   "cleanup": {
     "status": "Passed",
     "scope": "This screenshot supplement only; full GUI task remains claimed",
@@ -4345,6 +4352,250 @@
         },
         "original_two_v2_pngs_retained": true
       }
+    },
+    "C09_AIM_properties_paths_filters_and_cold_chain": {
+      "status": "Passed",
+      "scope": "Scoped C09 native first import/immediate CP properties, native path1/2, independent raw oracle/filters and three-path preservation",
+      "source_commit": "13401c6a42dabd3844d7f1896ebdd6106188f774",
+      "product_tree": "a8db95a942a2bca82fdf147727bce0dc3a57200f",
+      "candidate_sha256": "cc4e7ac23d22a0c6c5f919c72b15615d8e440fe630838e64853512cfaa356ffd",
+      "inputs": [
+        {
+          "id": "P03-water-dimer",
+          "path": "tests/data/tutorial/P03/water-dimer.fchk",
+          "sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+          "size": 38191
+        },
+        {
+          "id": "P03-aim-CPs.pdb",
+          "path": "tests/data/tutorial/P03/aim/CPs.pdb",
+          "sha256": "9d275abfd9128da4128da1d1752999741a62490ff0072fb0b4a11a56d25be1a1",
+          "size": 926
+        },
+        {
+          "id": "P03-aim-paths.pdb",
+          "path": "tests/data/tutorial/P03/aim/paths.pdb",
+          "sha256": "9bf08cc0b4707f9dcc56957e8d125dbbd678a9d44a7e714fb739f65f22f32b7f",
+          "size": 32690
+        },
+        {
+          "id": "P03-aim-CPprop.txt",
+          "path": "tests/data/tutorial/P03/aim/CPprop.txt",
+          "sha256": "e8381272fb737a522ce07dbbc3dbbc58dbdd1a1207555d10e7abbe474522699d",
+          "size": 37709
+        }
+      ],
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/baseline.json",
+          "sha256": "252f5846a81c75f5d37e6fcfa20bfb9cf0f0bc913dd5b9e1365f6d49c14d35e6",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/native-import-records.json",
+          "sha256": "fa4935845782733118da783b1926873b5e7febd43eb98ad4cfb0fd873e9f0dc1",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/immediate-panel-verified.json",
+          "sha256": "0d893e285c650736e04ee080c382cd101894ad54e7c7fe4a32be4c4053382bcd",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/native-numeric-filter.json",
+          "sha256": "d0d972f9624ce24f00645b158c50018566cdd9dbb5d10413634db6e163f60b5a",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/native-path-records.json",
+          "sha256": "065ee34aa7c0ce903148276964ab12df2df03a93704bb0868b13358076b77515",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/filter-batch.json",
+          "sha256": "11daba6b05d99726970280b12171808c0c4ea7fe79a8f82cf138d7522534868e",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/point-path-visibility.json",
+          "sha256": "3a36eb419ea01bac6566e803fa7cd476d021e1b4b6fcc1120b0557cd70fbaa24",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/renders-v3.json",
+          "sha256": "e13909dc28881ae36b7a43a1c4ea01b8d4a49e23b5d5fe18800527560247f739",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/render-visual-review.json",
+          "sha256": "7f01dfbd39025ee6be1df5350f53ce3f86bbca5fdd36dd4552209d720fe117cf",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/preservation-final.json",
+          "sha256": "9e2c2db6a452071a349bb0718cac8c7298a3755cea43758eef4f212a2e9866b1",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/close-request.json",
+          "sha256": "b7ea069dd0cf0d6661e0ac1443f14fa6fce69bc908379180b03c2d2102a6acfe",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/exit-14660-host.json",
+          "sha256": "07d0cb94390194905905b7bfbd5c8d61008c378fe2f513ff83030753914eade2",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/path-map.json",
+          "sha256": "2473d5c9ae77189592ced6f8f1a648c215a8e5ad04a806ebc745315b89d0a6a4",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/cold-chain.json",
+          "sha256": "8e413203ab706e32f25ac42de591b8f482266d94a088fa939571a27668c15b5e",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/cold-original/readback-render.json",
+          "sha256": "d65d9a2154bb03c87407b99df488d8a2f90d555c62b42c581d2a229cd8969dcc",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/cold-moved/readback-render.json",
+          "sha256": "01857722df364fc232a0bd0651a3578aedbc7f45e83ce139b5c4ef085198b9cc",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/cold-unpacked/readback-render.json",
+          "sha256": "0e166c1381bf840ddc3bcb1c5593b721e6cb6d14c51a3be27eccdd8002d00596",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/cold-render-prune.json",
+          "sha256": "fa2e67116f3a3cea561e7c6074903c6e0ce32d20e80239a64cb71b3bef67c967",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-aim-records/science-tests.json",
+          "sha256": "d7a49db9c32550d8aa1569ee126b1e0249706d0298d30339df971bef53c5b968",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-aim-records/build.json",
+          "sha256": "326612b157c62a87f569f11176dcae3485e503279dcf2a2c2fa3cd29d3c84b37",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-aim-records/installation-v3-command.json",
+          "sha256": "f578464be6d0c926385056bf2e6d9f0b4518a4378269e9c44424b5c97f181c31",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-aim-records/installed-AIM-v3-command.json",
+          "sha256": "ee49723ca257a71fd2a38d639b2237aa9bd7a14939311a87d45f3ba58a79fd69",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-aim-records/installation-summary.json",
+          "sha256": "7c2efb08debc6191aee0bb77269c3578ddcf59d213261c842c4809cfb40b31b3",
+          "status": "Passed"
+        }
+      ],
+      "diagnostics": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/render-layout-diagnostic.json",
+          "sha256": "beec060bce82f8b174dbec3c91d5d6391124d30d43fb9d8c1bbf64bfa1408ec9",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/render-layout-v2-diagnostic.json",
+          "sha256": "ea92796f93ffc7fe529cff733972a478072bbb52cd536bdd53efe941c8652e61",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/preservation-script-diagnostic.json",
+          "sha256": "4acba54202ff9d7e9dd0b2a2f606f979d58f46c3d6f7e5812f27b3e845fa2fda",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/immediate-panel-defect.json",
+          "sha256": "926229b4a6e39d6db9821084bd71607fb19f34a1f15c30002349a03296d860ea",
+          "status": "Failed"
+        }
+      ],
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/C09-fixed-entry-GUI.jpg",
+          "sha256": "f5bb86c50ee6ba973d8ae40fbab4770c3a99d7cf82dd0805b8da7e5ae4dc3064"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C09-fixed-dialog-GUI.jpg",
+          "sha256": "983d476e96a5aa68fcecff43a3afb8b387b682e7495afcd838f12cef00144608"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C09-fixed-record1-GUI.jpg",
+          "sha256": "89d95dcee71ec7f2163557833fe39373d3863f5060e2d5f83d64e62ecd357cab"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C09-fixed-record2-GUI.jpg",
+          "sha256": "b93b2b4b52cd17e6f8472058ba7081fdbc895956539986528e4848ec61041c43"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C09-fixed-filter-GUI.jpg",
+          "sha256": "1578c5971452d9e23f0f77b37667eccdc48321331eef521a20129ad8bd86e6ff"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C09-path1-GUI.jpg",
+          "sha256": "865b8be592cd26ec4dabc125c6ac35d6d452333aba0e2753a12205d8f522e31f"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C09-path2-GUI.jpg",
+          "sha256": "a107b9767bc4e3d9ec1694e6bb20db9b51c922fe9565852fa0fe9d6957bef5fa"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C09-saved-GUI.jpg",
+          "sha256": "77f4dfe8859e03204ec9216e8b119e460b93b96ca1a3c8202ece2fdd81a9f3e0"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C09-points-v3.png",
+          "sha256": "b9eac84ca51112d0429b05d669d0cd3dcbb9f0d9caa7ec230b1ab95f8a8f63c1"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C09-paths-v3.png",
+          "sha256": "35baa8c371052a543ce59a04277be7e279236d8eafa8029f0f2895b7d666d27a"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C09-overview-v3.png",
+          "sha256": "54aa3637f00fb7b08fd7ffe2aa07603bbf0578e6124a3dcfa62dd5123bb68c82"
+        }
+      ],
+      "project": {
+        "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C09/fixed/C09-final.blend",
+        "sha256": "a50fea3632f60706bed81c29d5dd14ca77788878911d01e9439f537e0731c0b5",
+        "files": 120,
+        "datasets": 8,
+        "arrays": 224,
+        "volumes": 4,
+        "references": 20
+      },
+      "raw_source": {
+        "critical_points": 11,
+        "paths": 10,
+        "path_points": 408,
+        "parsed_properties": 550
+      },
+      "moved_project": "outputs/projects/tutorial-cu-full/中文移动/C09/C09-final.blend",
+      "unpacked_project": "outputs/projects/tutorial-cu-full/unpacked/C09/C09-final.blend",
+      "processes_exited": [
+        14660,
+        39828,
+        34000,
+        47672
+      ],
+      "user_walkthrough": "Not Run",
+      "independent_signature": "Not Run",
+      "rebuild": "Retained batch scripts, central manifest inputs, candidate13401c6 and existing locked environment; new batch paths required."
     }
   },
   "historical_partial_supplement": {
