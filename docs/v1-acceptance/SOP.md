@@ -1098,7 +1098,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
 **真实输入预期：** 承接C10的三步H2O2，每步六对Mayer。原子对 **1,2** 的三个源值为 **0.987331413844 / 0.987349305673 / 0.987331413844**；原子对 **1,3** 为 **0.950875651565 / 0.950844120525 / 0.950875651565**，单位 **dimensionless**。它们由同构型 **PySCF 2.13.1** 的实际收敛RHF/STO-3G AO密度/重叠矩阵计算。文本采用Multiwfn兼容语法，producer为PySCF；距离推断显示键不等于Mayer键级。
 
-1. 关闭其他Blender，打开已保存、**尚无Mayer表**的C10工程，保留原件，最后另存C11。保持CSV及三个 `mayer-step-001/002/003.txt` 的相对位置。缺步检查先在 **inputs/P04/** 复制 `mayer-pyscf.csv` 为 **checks-missing-mayer.csv**，删除step3数据行并保存UTF-8。只选 **IRC path根原子**，打开 **Properties → 对象属性 → QCBlender · 对象与量子化学 → IRC Path → Import Mayer Results**，在 **CSV manifest: step,mayer_output** 指定副本并点 **确定**。预期 **Mayer step count differs from the IRC path**，没有新Mayer表/数组/曲线，原步号不变。已有表的重复导入拒绝不能代替缺步检查；本批缺步由MCP执行，错误对话框GUI未执行。
+1. 关闭其他Blender，打开已保存、**尚无Mayer表**的C10工程，保留原件，最后另存C11。保持CSV及三个 `step-001-mayer-pyscf.txt`, `step-002-mayer-pyscf.txt`, `step-003-mayer-pyscf.txt` 的相对位置。缺步检查先在 **inputs/P04/** 复制 `mayer-pyscf.csv` 为 **checks-missing-mayer.csv**，删除step3数据行并保存UTF-8。只选 **IRC path根原子**，打开 **Properties → 对象属性 → QCBlender · 对象与量子化学 → IRC Path → Import Mayer Results**，在 **CSV manifest: step,mayer_output** 指定副本并点 **确定**。预期 **Mayer step count differs from the IRC path**，没有新Mayer表/数组/曲线，原步号不变。已有表的重复导入拒绝不能代替缺步检查；本批缺步由MCP执行，错误对话框GUI未执行。
 
    [用户截图待引用：C11-01，未导入的根对象、缺步CSV、实际错误及原工程未变]
 
