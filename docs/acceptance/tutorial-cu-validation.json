@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "date": "2026-10-01",
-  "status": "Passed",
-  "scope": "Performed Computer Use supplement and step screenshots; partial C02/C04/C05 plus common camera/render/save/cold reopen. Full C01-C13/N01-N18 click walkthrough Not Run.",
+  "status": "Not Run",
+  "scope": "Full C01-C13/N01-N18 GUI acceptance remains incomplete. Passed results are limited to individually cited reports and their original candidate identities.",
   "identity": {
     "user_walkthrough": "Not Run",
     "agent_computer_use_performed_scope": "Passed",
@@ -34,6 +34,12 @@
       "sha256": "4a0ac3e46c163dd32a53057ddb2f4e414901d7c56b95d59aa6d17a8df3b739ca",
       "path": "outputs/candidates/current/public-tutorial-90ff9bf/qcblender-0.0.1.zip",
       "scope": "Initial actual GUI energy/modes, Log Job2-new FCHK, density/probe/profile CSV, hydrogen and portable save; historical full MCP evidence remains in tutorial-validation.json"
+    },
+    "92d498c": {
+      "path": "outputs/candidates/current/tutorial-fog-92d498c/qcblender-0.0.1.zip",
+      "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+      "sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+      "scope": "Fog repair; partial GUI evidence in full_batch_progress"
     }
   },
   "environment": {
@@ -531,7 +537,7 @@
     "docs/acceptance/tutorial-validation.json",
     "docs/acceptance/cleanup-validation.json"
   ],
-  "remaining_click_steps": "All unpictured instructions retain user placeholders. C01/C03/C06-C13, remaining C02/C04/C05 operations, fullN, moved/archived GUI reopens and GUI image export remain Not Run in this supplement.",
+  "remaining_click_steps": "Complete outstanding C03-C13 and N01-N18 GUI interactions and per-case save/move/cold reopen gates; C01 density-specific cold reopen also pending. Current C02 primary portable project passed all three actual new-process reopens and F12, with 4 Dataset,69 arrays,5 refs. Do not inherit historical MCP/partial candidate passes.",
   "cleanup": {
     "status": "Passed",
     "scope": "This screenshot supplement only; full GUI task remains claimed",
@@ -546,5 +552,256 @@
     "archive_status": "Not Run",
     "archive_reason": "Automatic approval review rejected grouped action because full GUI task02 is claimed and task03 pending; user selected interface-validation-before-merge condition must be respected.",
     "archive_receipt_sha256": "5ca015bdf1e63a28878cbdf5a096c14a24e85e47eb31e3d578c85b16ec207d23"
+  },
+  "full_batch_progress": {
+    "overall": "Not Run",
+    "scope": "Incremental full-scope walkthrough; historical supplement statuses remain unchanged",
+    "candidate_source": "1554ee2ac7ae308ccf1aa1922ed93192adf0b3b1",
+    "candidate_sha256": "694e27cbc328a64b9fe6bb07d6236273474de26de13af8d6f8e2c9cdbc98c4cd",
+    "reports": {
+      "C01_unpacked": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C01-unpacked-readback.json"
+      },
+      "C01_fog_zero": {
+        "status": "Failed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C01-fog-zero-render.json"
+      },
+      "C01_fog_slot_diagnostic": {
+        "status": "Passed",
+        "scope": "Diagnostic only; repaired candidate Not Run",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C01-fog-slot-diagnostic.json"
+      },
+      "C01_density_exports": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C01-density-exports.json",
+        "sha256": "30819ff3180ffe1a8639618aefe6914090b02484793f69a4c6f3bfe68207da19",
+        "scope": "Native F12 and Image Save As exports; MCP read-only scene/file checks"
+      },
+      "C01_density_portable": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C01-density-portable.json",
+        "sha256": "8cdf807862cbbb3f1de3d9fdb0673f304c30a325a37e2a235ac9a2ceb5565152",
+        "scope": "Native Save Portable QC Project; file and read-only reference checks, not a cold reopen"
+      },
+      "C01_fog_fixed_GUI": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/fog/gui-material-preview.json",
+        "sha256": "0792abbeb4e3d62754a2aafed994a1b4d55896af958a40393f8e6a89636cb415",
+        "scope": "C01-05 native GUI material-preview scale/ramp and independent copy; new fog creation; MCP readonly materials and unchanged scientific files"
+      },
+      "C01_fog_fixed_portable_render": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/fog/portable-render.json",
+        "sha256": "4d36129c29b8371172e0bd0c2b40b6f024b50bed2d40773cbf4fd599c116c488",
+        "scope": "Native Save Portable QC Project and F12 Image Save As; filesystem and object readback only"
+      },
+      "C01_fog_fixed_final_save": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/fog/final-save.json",
+        "sha256": "a662fb09429a8d88b8e33fe70289f277539b98cbb9f6c8fc83fec3e390fe5e22",
+        "scope": "Native Ctrl S final state after render export"
+      },
+      "C01_fog_fixed_original": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/fog/cold-original/readback.json",
+        "sha256": "4ddff16ea2ebe19e42e5dd88cf82e415bc7296eb56fec5007b2512d11352a4f9",
+        "scope": "New-process GUI File Open and Material Preview; MCP readonly portable files, refs and fog independent material bindings",
+        "candidate_source": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf"
+      },
+      "C01_fog_fixed_original_render": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/fog/cold-original/render.json",
+        "sha256": "8a4516d5f975c1da29f0696e4f06075f1db1d31140edae12e6cc91aeec1b15a6",
+        "scope": "Native new-process File Open and F12 render; visual fog result matches expected enabled scale20 layer with scale0 copy, readonly metadata only",
+        "candidate_source": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf"
+      },
+      "C01_fog_fixed_moved": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/fog/cold-moved/readback.json",
+        "sha256": "5313f514550eaa08a0a57dd6987fbf46f3fb3aef42805a0b263e7d0afa2b0b67",
+        "scope": "Native GUI new-process moved File Open and F12; MCP readonly Dataset/array/volume/material and file checks",
+        "candidate_source": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf"
+      },
+      "C01_fog_fixed_unpacked": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/fog/cold-unpacked/readback.json",
+        "sha256": "015499547d0b9942a27d1ac34139d08d88098ea6a0a9674dde28877891b839b5",
+        "scope": "GUI-created archive unpacked and opened by native File Open in new process; F12 and MCP readonly data checks",
+        "candidate_source": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf"
+      },
+      "C01_fog_fixed_archive_copies": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/fog/relocation.json",
+        "sha256": "884bb7a165ab6ae2bbb7f4334be0592c630c567c50fbab74a6c1984c6b2e1db0",
+        "scope": "GUI-created fixed project archive and byte-verified moved/unpacked copies; GUI cold reopens Not Run",
+        "candidate_source": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf"
+      },
+      "C02_optimization_choose1": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/optimization-choose1.json",
+        "sha256": "f052133711f00c0f4546da8ba6c942326068d612d68edc18d1ef761a6ea5f59a",
+        "status": "Passed",
+        "scope": "C02 optimization current step only; full walkthrough incomplete"
+      },
+      "C02_optimization_copy_independence": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/optimization-copy-independence.json",
+        "sha256": "ca40ec619526565be66c587b6fb9aa2799885a60a970bff7bb0cc58b7ea9b373",
+        "status": "Passed",
+        "scope": "Native optimization step switch; MCP read-only source record, geometry and IDs"
+      },
+      "C02_optimization_copy_step2": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/optimization-copy-step2.json",
+        "sha256": "82e07ae55d73b746f8a505181a21f8c975089866e07e7dea0afe8e5f15416c8d",
+        "status": "Passed",
+        "scope": "C02 optimization current step only; full walkthrough incomplete"
+      },
+      "C02_optimization_portable": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/optimization-portable.json",
+        "sha256": "f12d7d14af3b9d23bc7ed158e60747c8199a63036ebbf83729a1ed2378acf9ee",
+        "status": "Passed",
+        "scope": "Native GUI portable save for optimization view and independent copy; cold reopen and complete C02 not yet run"
+      },
+      "C02_optimization_previous3": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/optimization-previous3.json",
+        "sha256": "16bb9df5ddcbbb4a8d123d44455151719481f2879dbb7f059c9e8cda076b2166",
+        "status": "Passed",
+        "scope": "C02 optimization current step only; full walkthrough incomplete"
+      },
+      "C02_optimization_step1": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/optimization-step1.json",
+        "sha256": "f052133711f00c0f4546da8ba6c942326068d612d68edc18d1ef761a6ea5f59a",
+        "status": "Passed",
+        "scope": "C02 optimization current step only; full walkthrough incomplete"
+      },
+      "C02_optimization_step2": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/optimization-step2.json",
+        "sha256": "9d0ec9e118267608929f868057e003f2fdb03cbe10a0c9b94c0af3d0b4ca3287",
+        "status": "Passed",
+        "scope": "C02 optimization current step only; full walkthrough incomplete"
+      },
+      "C02_optimization_step3": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/optimization-step3.json",
+        "sha256": "16bb9df5ddcbbb4a8d123d44455151719481f2879dbb7f059c9e8cda076b2166",
+        "status": "Passed",
+        "scope": "C02 optimization current step only; full walkthrough incomplete"
+      },
+      "C02_optimization_step4": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/optimization-step4.json",
+        "sha256": "ccaefa4ec6a348dca78f29f709881cb60604a58fd279e9367ec5a46f5a877ba1",
+        "status": "Passed",
+        "scope": "C02 optimization current step only; full walkthrough incomplete"
+      },
+      "C02_energy_source_readback": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/energy-source-readback.json",
+        "sha256": "90cc49e8174b1c8e948c588bcfc9b30f493cef8e9187d1202d2ab81ad5772680",
+        "status": "Passed",
+        "scope": "energy-source-readback"
+      },
+      "C02_mode1_playing_readback": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/mode1-playing-readback.json",
+        "sha256": "7e68855cc694083af1c6d3beaf7593ed23f95c323827d1e4ce709d08fb50a320",
+        "status": "Passed",
+        "scope": "Native selected mode and animation parameters; MCP read-only identity, equilibrium, displacement and IR color checks"
+      },
+      "C02_mode2_playing_readback": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/mode2-playing-readback.json",
+        "sha256": "8bb52f9f3ca76542ed03ad40373f8cced0810914af8625c6935e7fe83304ddab",
+        "status": "Passed",
+        "scope": "Native selected mode and animation parameters; MCP read-only identity, equilibrium, displacement and IR color checks"
+      },
+      "C02_mode3_phase_vectors": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/mode3-phase-vectors.json",
+        "sha256": "71b5975da256b0dec4355dd390b52c9a8e2491c0a419a6f55597e1e3960736d7",
+        "status": "Passed",
+        "scope": "Native selected mode and animation parameters; MCP read-only identity, equilibrium, displacement and IR color checks"
+      },
+      "C02_mode3_playback_readback": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/mode3-playback-readback.json",
+        "sha256": "825321895b07945b88be48f67ebabba150ade26cc52666771a2b29d11cd13420",
+        "status": "Passed",
+        "scope": "Native selected mode and animation parameters; MCP read-only identity, equilibrium, displacement and IR color checks"
+      },
+      "C02_new_fchk_dialog_reset_asserted": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/new-fchk-dialog-reset-asserted.json",
+        "sha256": "e984a3fcfbd2bfeb6e25c8b1e715fb6f83b663b92106603fb944588556261ef3",
+        "status": "Passed",
+        "scope": "new-fchk-dialog-reset-asserted"
+      },
+      "C02_log_job2_fchk_import": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/log-job2-fchk-import.json",
+        "sha256": "2f1b9103da6fd7d03ba8681c4a5a848f2420472a8005396a8d94d6d7045a0f9e",
+        "status": "Passed",
+        "scope": "log-job2-fchk-import"
+      },
+      "C02_portable_render_archive": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/portable-render-archive.json",
+        "sha256": "2e44aa85ac6b1a4c7d0c33e54d6d89809b55e0f2287711a9c4e6254c1ee77f45",
+        "status": "Passed",
+        "scope": "Native camera, F12 PNG export, portable save and project archive; cold reopen Not Run"
+      },
+      "C02_cold_original": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/cold-original/readback.json",
+        "sha256": "bde2b190457cf8618694787c8a98eb3dcdc36613a5d927f64a9356869044fa18",
+        "scope": "Native File Open in a new visible process and F12; read-only Dataset/array/reference/optimization-copy/vibration/material checks"
+      },
+      "C02_cold_moved": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/cold-moved/readback.json",
+        "sha256": "346e23d0c169aafdf5b7f41617ec190d179ceef3982a1f99bbd770cd7c10019a",
+        "scope": "Native File Open in a new visible process and F12; read-only Dataset/array/reference/optimization-copy/vibration/material checks"
+      },
+      "C02_cold_unpacked": {
+        "status": "Passed",
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/cold-unpacked/readback.json",
+        "sha256": "84b8117e62300123d76a682fac7d996ac4699cf566e0951d758a11db95323e72",
+        "scope": "Native File Open in a new visible process and F12; read-only Dataset/array/reference/optimization-copy/vibration/material checks"
+      }
+    },
+    "agent_full_walkthrough": "Not Run",
+    "user_walkthrough": "Not Run",
+    "independent_scientific_signature": "Not Run",
+    "preservation": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/full/fog/preservation-cold-chain.json",
+      "scope": "Fog fixed original/moved/unpacked GUI cold reopens and renders; full C/N remains Not Run"
+    },
+    "current_candidate": {
+      "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+      "sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+      "profile": "outputs/runs/cu/4/p",
+      "scope": "Fog fixed cold chain and C02 native scientific views/import/optimization/render/save/archive; full C/N GUI acceptance incomplete."
+    },
+    "C02_optimization": {
+      "status": "Passed",
+      "scope": "Native Job1 import, optimization creation, steps1-4, Previous4-to3, Choose Step3-to1, copy1-to2 independently and portable save",
+      "cold_reopen": "Not Run",
+      "other_C02_steps_current_candidate": "Not Run",
+      "full_C02": "Not Run"
+    },
+    "optimization_preservation": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/preservation-optimization.json"
+    },
+    "C02_current_candidate": {
+      "status": "Passed",
+      "energy_source_records": "Passed",
+      "three_modes_and_IR": "Passed",
+      "optimization_and_independent_copy": "Passed",
+      "Log_Job2_new_FCHK": "Passed",
+      "camera_F12_PNG_portable_archive": "Passed",
+      "cold_original": "Passed",
+      "cold_moved": "Passed",
+      "cold_unpacked": "Passed",
+      "datasets": 4,
+      "arrays": 69,
+      "refs": 5,
+      "preservation": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/preservation-vibrations-render.json",
+      "scope": "C02 performed scientific record, vibration, optimization/copy, continuous import and camera/render/save/archive/three-path cold reopen steps; cross-case N15/N16 coverage remains separate.",
+      "cold_preservation": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/preservation-cold-chain.json"
+    }
+  },
+  "historical_partial_supplement": {
+    "status": "Passed",
+    "scope": "Performed Computer Use supplement and step screenshots; partial C02/C04/C05 plus common camera/render/save/cold reopen. Full C01-C13/N01-N18 click walkthrough Not Run.",
+    "source_commit": "1554ee2ac7ae308ccf1aa1922ed93192adf0b3b1"
   }
 }

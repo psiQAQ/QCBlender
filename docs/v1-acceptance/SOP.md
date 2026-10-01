@@ -4,7 +4,7 @@
 
 本教程保留 **C01–C13** 科学案例和 **N01–N18** 节点/交互检查编号。按钮位置与当前插件界面一致；对话框及部分控件仍使用英文。操作结果只记 **Passed / Failed / Not Run**。用户实际点击、Agent Computer Use 点击、MCP操作与数据核对、独立科研签署分别记录；Agent 不填写使用者签名。
 
-本文的 Agent 示例截图紧接相应操作展示，原始 JPEG 保存在同级 `screenshot/` 目录。截图是本批实际 Computer Use 操作画面，保留你的逐步骤截图占位；各图的候选身份、输入、参数和检查范围见 [点击补验索引](../acceptance/tutorial-cu-validation.json)。C02、密度生成/取样/CSV、氢显隐与首次保存使用90ff9bf候选；IR层显隐复验、最终剖面、相机、渲染及冷重开使用1554ee2候选。完整C/N点击覆盖及独立科研签署仍为Not Run。你复现时，将自己的截图保存到 `screenshot/`，在对应占位下一行填写 `![用户复做：C02-01](screenshot/C02-01-user.png)`；使用独立文件名，保留 Agent 示例便于对照。
+本文的 Agent 示例截图紧接相应操作展示，原始 JPEG 保存在同级 `screenshot/` 目录。截图是本批实际 Computer Use 操作画面，保留你的逐步骤截图占位；各图的候选身份、输入、参数和检查范围见 [点击补验索引](../acceptance/tutorial-cu-validation.json)。C02、密度生成/取样/CSV、氢显隐与首次保存使用90ff9bf候选；IR层显隐复验、最终剖面、相机、渲染及冷重开使用1554ee2候选。候选92d498c的C01雾修复与三路径冷重开、C02能量/振动/优化/连续导入/渲染/三路径冷重开截图同样逐步骤展示，具体范围见索引 full_batch_progress；完整C/N点击覆盖及独立科研签署仍为Not Run。你复现时，将自己的截图保存到 `screenshot/`，在对应占位下一行填写 `![用户复做：C02-01](screenshot/C02-01-user.png)`；使用独立文件名，保留 Agent 示例便于对照。
 
 ## 0. 准备、安装与通用操作
 
@@ -161,7 +161,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
 | 案例 | 文件/源身份 | 本例展示设置 |
 | --- | --- | --- |
-| C01 | P01/o2-uhf.fchk、o2-uhf.fch；UHF/STO-3G O2 | Alpha MO9、Beta HOMO7；MO阈值0.045 bohr^-3/2；自旋±0.002 electron/bohr^3 |
+| C01 | P01/o2-uhf.fchk、o2-uhf.fch；UHF/STO-3G O2 | Alpha MO9、Beta MO7（均按源编号选择）；MO阈值0.045 bohr^-3/2；自旋±0.002 electron/bohr^3 |
 | C02 | P02/water_neutral_nbo_opt_freq.out/.log；Job2频率、Job1优化 | 模式3；Amplitude 0.35 Å；Cycles per second 1 |
 | C03 | P03/igmh/sl2r.cub、P03/color.cube | sign_lambda2_rho，electron/bohr^3，倍率1；正负阈值0.02 |
 | C04 | P03/water-dimer.fchk | 密度等值0.004 electron/bohr^3；ESP色域−0.05/0/+0.05 hartree/e；Mulliken；偶极1.5 Å/D |
@@ -179,31 +179,111 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
 ### C01 FCHK、开壳层轨道与密度
 
-**真实输入预期：** O2 2原子，源顺序 O1/O2，坐标 (0,0,−0.6)/(0,0,+0.6) Å；中性三重态16电子，Alpha9/Beta7，源能量 **−147.633453 Eh**，每通道10个MO。选 Alpha/Source number/9 与 Beta/HOMO（应解析为7）；预览占据/轨道能量以源记录为准，不另填未知值。两FCHK入口 SHA 同为 `ef562c4b210e7c380219282d7684370cca1f0e8349dffa1d4388af5831472e36`。
+**真实输入预期：** O2 2原子，源顺序 O1/O2，坐标 (0,0,−0.6)/(0,0,+0.6) Å；中性三重态16电子，Alpha9/Beta7，源能量 **−147.633453 Eh**，每通道10个MO。选 Alpha/Source number/9 与 Beta/Source number/7。本样本 Alpha8/9、Beta6/7 各自能量相同；当前自动 HOMO 预览分别选择 Alpha8、Beta6。固定本例轨道须使用 Source number；预览占据/轨道能量以源记录为准，不另填未知值。两FCHK入口 SHA 同为 `ef562c4b210e7c380219282d7684370cca1f0e8349dffa1d4388af5831472e36`。
 
 1. 按 0.3 导入 P01 FCHK，再逐字节别名 `.fch`；选择各自原子对象，核对原子身份/顺序、坐标、方法、基组、电荷、多重度、电子数和电子总能量，两入口记录一致。
 
    [用户截图待引用：C01-01，活动对象、参数与结果同屏；参数变化保留前后画面]
 
-2. 保持 FCHK 原子视图活动，点击 **工作流 → 生成量子化学场**；Quantity 选 **Molecular orbital**，分别选 **Alpha/Beta**，按清单选 **Orbital → Source number** 并填 **Orbital number (1-based)**，或按已核对身份选 HOMO/LUMO。记录预览 Source MO、occupation、Energy；输入清单网格 **Grid spacing (angstrom)**、**Grid margin (angstrom)** 与 **Memory budget (MiB)**，确认等待生成。
+   ![Agent Computer Use：FCHK 源记录与原子身份](screenshot/C01-01-source-fchk.jpg)
+
+   ![Agent Computer Use：逐字节 FCH 别名导入](screenshot/C01-01-fch-import.jpg)
+
+2. 保持 FCHK 原子视图活动，点击 **工作流 → 生成量子化学场**；Quantity 选 **Molecular orbital**，分别选 **Alpha/Beta**，按清单选 **Orbital → Source number** 并填 **Orbital number (1-based)**，本例成图固定选 Alpha9/Beta7；另行选择 HOMO/LUMO 时，以预览返回的源编号为准，简并轨道不凭占据最高编号推断。记录预览 Source MO、occupation、Energy；输入清单网格 **Grid spacing (angstrom)**、**Grid margin (angstrom)** 与 **Memory budget (MiB)**，确认等待生成。
 
    [用户截图待引用：C01-02，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Agent Computer Use：Alpha 按源编号选择 MO9](screenshot/C01-02-alpha-mo9-settings.jpg)
+
+   ![Agent Computer Use：Beta 按源编号选择 MO7](screenshot/C01-02-beta-mo7-settings.jpg)
 
 3. 选择新 MO 场，在 **对象属性 → 科学记录与振动模式** 查量名/单位与轨道身份；在 **几何表示** 改正相/负相显隐、阈值、**Link Thresholds**、独立负阈值及实体/线框/点表示。材质属性改变两相颜色、透明度，验证相位与物理电荷不混淆。
 
    [用户截图待引用：C01-03，活动对象、参数与结果同屏；参数变化保留前后画面]
 
+   ![Agent Computer Use：独立正负阈值](screenshot/C01-03-independent-thresholds.jpg)
+
+   ![Agent Computer Use：两相颜色与独立透明度](screenshot/C01-03-independent-opacity.jpg)
+
 4. 重新选择源原子对象，依次生成 **Electron density、Alpha density、Beta density、Spin density**，各次使用完全相同网格。分别选择生成场核对单位及自旋约定；数值核对总=Alpha+Beta、自旋=Alpha−Beta需源数组或数据核对证据，不能根据图形断言成立。
 
    [用户截图待引用：C01-04，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Agent Computer Use：总电子密度](screenshot/C01-04-total-result.jpg)
+
+   ![Agent Computer Use：自旋密度阈值 0.002](screenshot/C01-04-spin-002.jpg)
 
 5. 选自旋场，点击 **创建视图与检查工具 → 创建体积雾**；选新雾视图，调整颜色、Opacity Range/Scale、Display Threshold 和材质曲线，记录全透明时实际结果。选场/原子视图点击 **添加裁剪控件**，在 **空间观察** 分别开关平面与盒裁剪，原始数组不变。
 
    [用户截图待引用：C01-05，活动对象、参数与结果同屏；参数变化保留前后画面]
 
+   ![Agent Computer Use：体积雾的颜色及透明度控件](screenshot/C01-05-fog-restored.jpg)
+
+   ![Agent Computer Use：盒裁剪开启；数组摘要另行核对](screenshot/C01-05-box-on-x0.jpg)
+
+   ![Agent Computer Use：Opacity Scale 为 0 时体积雾消失](screenshot/C01-05-fixed-scale0.jpg)
+
+   ![Agent Computer Use：Opacity Scale 恢复 40 后体积雾即时出现](screenshot/C01-05-fixed-scale40-restored.jpg)
+
+   ![Agent Computer Use：不透明度渐变全黑时体积雾消失](screenshot/C01-05-fixed-ramp-black.jpg)
+
+   ![Agent Computer Use：恢复黑白渐变后体积雾即时出现](screenshot/C01-05-fixed-ramp-white.jpg)
+
+   ![Agent Computer Use：复制层为 0，原层保持 40 且仍可见](screenshot/C01-05-fixed-copy-independent.jpg)
+
+   ![Agent Computer Use：修复候选新建雾层及其材质](screenshot/C01-05-fixed-new-material.jpg)
+
 6. 对应 N01/N02/N04/N05/N09/N10；按 0.4 完成渲染保存。固定证据：`C01.png`、`C01-mo.png`、`C01-total.png`、`C01-alpha.png`、`C01-beta.png`、`C01-spin.png`、`C01.blend` 和配套目录。逐个改参数时另留前后截图。
 
    [用户截图待引用：C01-06，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Agent Computer Use：轨道渲染及图像另存](screenshot/C01-06-mo-saved.jpg)
+
+   ![Agent Computer Use：总电子密度原生渲染及保存](screenshot/C01-06-total-saved.jpg)
+
+   ![Agent Computer Use：Alpha 密度原生渲染及保存](screenshot/C01-06-alpha-saved.jpg)
+
+   ![Agent Computer Use：Beta 密度原生渲染及保存](screenshot/C01-06-beta-saved.jpg)
+
+   ![Agent Computer Use：自旋密度原生渲染及保存](screenshot/C01-06-spin-saved.jpg)
+
+   ![Agent Computer Use：密度展示另存自包含工程](screenshot/C01-06-density-portable-saved.jpg)
+
+   ![Agent Computer Use：自包含工程保存完成](screenshot/C01-06-portable-saved.jpg)
+
+   ![Agent Computer Use：新进程通过文件菜单冷重开](screenshot/C01-06-cold-restored.jpg)
+
+   ![Agent Computer Use：冷重开后重新渲染](screenshot/C01-06-cold-render.jpg)
+
+   ![Agent Computer Use：归档工程文件对话框](screenshot/C01-06-archive-dialog.jpg)
+
+   ![Agent Computer Use：工程归档完成](screenshot/C01-06-archive-saved.jpg)
+
+   ![Agent Computer Use：中文移动路径的文件打开对话框](screenshot/C01-06-moved-open-dialog.jpg)
+
+   ![Agent Computer Use：中文移动副本冷重开](screenshot/C01-06-moved-restored.jpg)
+
+   ![Agent Computer Use：移动副本重新渲染](screenshot/C01-06-moved-render.jpg)
+
+   ![Agent Computer Use：归档解包后的新进程冷重开](screenshot/C01-06-unpacked-restored.jpg)
+
+   ![Agent Computer Use：解包工程重新渲染](screenshot/C01-06-unpacked-render.jpg)
+
+   ![Agent Computer Use：修复复验另存自包含工程](screenshot/C01-06-fog-fixed-portable.jpg)
+
+   ![Agent Computer Use：新建雾层原生 F12 渲染](screenshot/C01-06-fog-fixed-render.jpg)
+
+   ![Agent Computer Use：修复工程原路径冷重开（92d498c候选）](screenshot/C01-06-fog-fixed-cold-restored.jpg)
+
+   ![Agent Computer Use：修复工程原路径冷重开后渲染（92d498c候选）](screenshot/C01-06-fog-fixed-cold-render.jpg)
+
+   ![Agent Computer Use：修复工程中文移动副本冷重开（92d498c候选）](screenshot/C01-06-fog-fixed-moved-restored.jpg)
+
+   ![Agent Computer Use：修复工程中文移动副本重新渲染（92d498c候选）](screenshot/C01-06-fog-fixed-moved-render.jpg)
+
+   ![Agent Computer Use：修复工程归档解包副本冷重开（92d498c候选）](screenshot/C01-06-fog-fixed-unpacked-restored.jpg)
+
+   ![Agent Computer Use：修复工程归档解包副本重新渲染（92d498c候选）](screenshot/C01-06-fog-fixed-unpacked-render.jpg)
 
 
 
@@ -215,6 +295,14 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    [用户截图待引用：C02-01，活动对象、参数与结果同屏；参数变化保留前后画面]
 
+   ![Agent操作示例（候选92d498c）：C02-01-log-alias-job2-preview](screenshot/C02-01-log-alias-job2-preview.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-01-log-source](screenshot/C02-01-log-source.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-01-calculation-source](screenshot/C02-01-calculation-source.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-01-zpe-record](screenshot/C02-01-zpe-record.jpg)
+
    ![Agent操作示例：选择真实 Log 文件](screenshot/C02-01-log-file.jpg)
 
    ![Agent操作示例：选择 Job 2 频率计算段](screenshot/C02-01-job2.jpg)
@@ -224,6 +312,20 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 2. 同一面板模式列表选清单指定模式，核对源编号、频率、IR 强度与 IR 棒图高亮。在同级 **高级参数** 勾选 **Animate**，填写指定 **Amplitude (angstrom)** 和 **Cycles per second**，到 Timeline 点击播放，观察实际帧推进，再暂停；改变 Phase 和模式重复。在 **几何表示 → Show Displacement Vectors** 开位移箭头。平衡源坐标不变；播放速度不是物理振动频率。
 
    [用户截图待引用：C02-02，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Agent操作示例（候选92d498c）：C02-02-mode3-playback](screenshot/C02-02-mode3-playback.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-02-mode3-phase-vectors](screenshot/C02-02-mode3-phase-vectors.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-02-mode1-playback](screenshot/C02-02-mode1-playback.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-02-mode2-playback](screenshot/C02-02-mode2-playback.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-02-ir-mode1](screenshot/C02-02-ir-mode1.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-02-ir-mode2-full](screenshot/C02-02-ir-mode2-full.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-02-ir-mode3](screenshot/C02-02-ir-mode3.jpg)
 
    ![Agent操作示例：模式3与振动显示参数](screenshot/C02-02-mode3-parameters.jpg)
 
@@ -235,21 +337,73 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    [用户截图待引用：C02-03，活动对象、参数与结果同屏；参数变化保留前后画面]
 
+   ![Agent操作示例（候选92d498c）：C02-03-job1-preview](screenshot/C02-03-job1-preview.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-04-optimization-step1](screenshot/C02-04-optimization-step1.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-04-optimization-step2](screenshot/C02-04-optimization-step2.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-04-optimization-step3](screenshot/C02-04-optimization-step3.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-04-optimization-step4](screenshot/C02-04-optimization-step4.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-04-choose-step-dialog](screenshot/C02-04-choose-step-dialog.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-04-ballstick-converged](screenshot/C02-04-ballstick-converged.jpg)
+
 4. 在 Display Layers 复制优化轨迹，分别切到不同步，核对互不影响；原视图仍保留其已核实性质，轨迹不借用最终电荷、偶极或模式。C05 的标注也在 P02/P04 可操作的步序上核对随步更新。
 
    [用户截图待引用：C02-04，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Agent操作示例（候选92d498c）：C02-04-copy-step2](screenshot/C02-04-copy-step2.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-04-original-still-step1](screenshot/C02-04-original-still-step1.jpg)
 
 5. **导入状态回归：** 本工程再次导入 Log，明确选 **Job 2** 并完成；随后点击 **导入 Gaussian / Cube** 打开**新文件对话框**导入 **P03/water-dimer.fchk**。核对新的计算段参数从 1 开始，导入成功、来源 SHA 为该 FCHK，未继承 Log 的摘要/job；不得以脚本执行 Operator 代替此项真实点击。
 
    [用户截图待引用：C02-05，活动对象、参数与结果同屏；参数变化保留前后画面]
 
+   ![Agent操作示例（候选92d498c）：C02-05-new-dialog-reset](screenshot/C02-05-new-dialog-reset.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-05-fchk-file-selected](screenshot/C02-05-fchk-file-selected.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-05-fchk-six-atoms](screenshot/C02-05-fchk-six-atoms.jpg)
+
    ![Agent操作示例：Log Job 2 后打开新的 FCHK 文件对话框](screenshot/C02-05-fchk-new-dialog.jpg)
 
    ![Agent操作示例：新 FCHK 导入结果](screenshot/C02-05-fchk-success.jpg)
 
-6. 对应 N12/N15/N16，按 0.4 保存。证据：`C02.png`、`C02-energy.png`、`C02-vibration.png`、`C02-ir.png`、`C02-optimization.png`、`C02-reimport.png` 及工程。
+6. 为清楚显示 IR 文字，可在 **世界属性 → 表面 → 颜色** 设为白色（RGBA 1/1/1/1，Strength 1）；在 Outliner 选择 **QC IR labels**，到 **材质属性** 新建材质，设基础色为黑色（RGBA 0/0/0/1）。这是展示设置，不改变科学数组。将原子视图与 IR 棒图一起选中，创建取景相机；若独立渲染窗口无法操作，可在主窗口切换 **图像编辑器 → Render Result → 图像 → 另存为** 导出 F12 结果。对应 N12/N15/N16，按 0.4 保存。证据：`C02.png`、`C02-energy.png`、`C02-vibration.png`、`C02-ir.png`、`C02-optimization.png`、`C02-reimport.png` 及工程。
 
    [用户截图待引用：C02-06，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![Agent操作示例（候选92d498c，独立进程冷重开）：C02-06-cold-original-restored](screenshot/C02-06-cold-original-restored.jpg)
+
+   ![Agent操作示例（候选92d498c，独立进程冷重开）：C02-06-cold-original-render](screenshot/C02-06-cold-original-render.jpg)
+
+   ![Agent操作示例（候选92d498c，独立进程冷重开）：C02-06-cold-moved-restored](screenshot/C02-06-cold-moved-restored.jpg)
+
+   ![Agent操作示例（候选92d498c，独立进程冷重开）：C02-06-cold-moved-render](screenshot/C02-06-cold-moved-render.jpg)
+
+   ![Agent操作示例（候选92d498c，独立进程冷重开）：C02-06-cold-unpacked-restored](screenshot/C02-06-cold-unpacked-restored.jpg)
+
+   ![Agent操作示例（候选92d498c，独立进程冷重开）：C02-06-cold-unpacked-render](screenshot/C02-06-cold-unpacked-render.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-06-camera](screenshot/C02-06-camera.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-06-white-background](screenshot/C02-06-white-background.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-06-black-label-material](screenshot/C02-06-black-label-material.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-06-render](screenshot/C02-06-render.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-06-png-save-dialog](screenshot/C02-06-png-save-dialog.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-06-portable-saved](screenshot/C02-06-portable-saved.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-06-archive-saved](screenshot/C02-06-archive-saved.jpg)
+
+   ![Agent操作示例（候选92d498c）：C02-04-portable-saved](screenshot/C02-04-portable-saved.jpg)
 
 
 
