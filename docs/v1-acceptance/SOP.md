@@ -607,6 +607,14 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    ![Agent点击显式阈值与标签；MCP取景后观察，−0.02/0/0.02 hartree/e](screenshot/C04-06-fixed-explicit-contours-framed.jpg)
 
+   维护者内部无效域示例：本批用真实水二聚体 FCHK 在核附近计算5³ ESP，124点有效、核点1点无效。21×21、0.18×0.18 Å的核点切片全部位于源网格内部，其中121点无效；原生材质实际渲染为洋红。诊断阈值20/25/30 hartree/e生成84段等值线，独立逐单元核对其全部位于有效单元。此小网格仅验证无效掩码传播，不代表全分子或收敛结果；公开教程的0.7 Å网格不能据此声称命中核排除区。操作复用已确认的入口，经MCP执行、原生命令行冷读；科学源数组保持不变。完整参数和工程见验证索引 `field_guards_and_recovery`。
+
+   [用户截图待引用：C04-06-内部无效域，若本批真实命中无效区域，记录场来源、平面、单位、阈值与结果]
+
+   ![MCP创建诊断切片，原生Blender渲染：内部核区无效采样为洋红；显示范围10至70 hartree/e](screenshot/C04-internal-mask-magenta.png)
+
+   ![MCP原生异步等值线，20/25/30 hartree/e；84段线全部位于有效单元，核区无效范围不连线](screenshot/C04-internal-mask-contours.png)
+
 7. 选 ESP 场，在 **3D Viewport → N → View → 3D Cursor** 输入清单坐标，点击 **创建视图与检查工具 → 读取游标处场值**。分别在 **(0,0,1.45)**、核邻近 **(0,0,0)** 和域外 **(20,20,20) Å** 读取。核附近是否无效由实际网格掩码决定，0.7 Å 网格未必命中核的排除区；若核邻近仍有效，如实记录值，并将“无效域读数”保留 Not Run，另由同批数据核对验证真实无效格点，不能凭坐标宣称无效。无效/域外不能记物理0。点 **点击探针 · 几何场** 后在表面点击预览，按 **Enter** 保存取点结果；按 **Escape** 恢复进入探针前的状态。绑定色场的密度表面再用 **点击探针 · 绑定色场**，同样点击后按 Enter 保存，记录采样位置/单位和实际结果。
 
    [用户截图待引用：C04-07，活动对象、参数与结果同屏；参数变化保留前后画面]
@@ -640,6 +648,12 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
    ![Agent操作示例：导出剖面CSV，101个有效采样点；场单位electron/bohr^3](screenshot/C04-08-profile-csv.jpg)
 
    上述密度示例沿用步骤1的网格间距0.7 Å、Margin 3 Å，从(0, −2, 1.45)到(0, 2, 1.45)，Samples=101。步骤8的 ESP 检查仍需改选 ESP 场单独执行，两种场的单位分别记录。
+
+   维护者内部掩码补验：同一真实诊断场在−0.1至+0.1 Å核点线段取9个样本，有效性依次为True/True/True/False/False/False/True/True/True；无效CSV值留空，曲线在核区断开。有效游标点(.075,.075,.075) Å的实际Blender坐标独立插值一致；核点及邻近点拒绝无效贡献角点，(.11,0,0) Å拒绝域外读取。此结果与上方全分子场GUI示例分别记录。
+
+   [用户截图待引用：C04-08-内部无效域，实际场来源、起终点、单位与断线结果]
+
+   ![MCP创建真实内部掩码剖面并导出CSV，Computer Use仅观察截图：核区三样本留空且曲线断开](screenshot/C04-internal-mask-profile-MCP.jpg)
 
 9. 源关联复核：导入 **P03/water-dimer.fch** 别名。在 **3D Viewport / Outliner** 先选新导入的原子对象，再按 `Shift` 选原有 FCHK 原子对象，使原对象成为活动参考。转到 **Properties → Object → QCBlender · 对象与量子化学 → 关联选中数据源**。本例逐字节别名保持相同原子顺序和构型，**Align rigid rotation/translation** 不勾选，**Maximum atom deviation (angstrom)** 保持 **0.001 Å**；双击数值框可查看完整精度，未编辑时可能显示为 `0.00`。点击 **确定**，预期提示 **Atom order and geometry matched; each source retains its own properties**，两源 Dataset、理论层次和能量记录分别保留。需要刚体配准的其他输入另行核对；线性/单中心几何不自动唯一配准。
 
@@ -1474,11 +1488,31 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    [用户截图待引用：N17，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
 
-18. **N18 保存/移动/冷重开**：每例执行0.4；保存自包含工程、归档、恢复。
+18. **N18 保存/移动/冷重开与恢复**：每例先执行0.4，保留完整`.blend + .qcdata`、输入及摘要。一个工程完成后保存并正常退出，确认该Blender进程退出，才打开下一工程或冷重开副本。
 
-   预期/需记录：新进程和移动副本来源/数组/节点/图例可读，摘要核对。
+   若显示缓存确实丢失，先复制工程与完整配套数据作为恢复副本，只打开此副本。活动对象选需要恢复的**QC标量场视图**，在 **3D Viewport → N → QCBlender → 工程与诊断 → 重建显示缓存** 点击一次；等待真实作业完成，核对原数组、来源、单位、VDB绑定和显示几何。该操作从已保存科学数组生成缓存；缺科学数组应恢复原配套数据。示例为核附近诊断ESP，显示阈值30 hartree/e、56顶点/54面。
 
-   [用户截图待引用：N18，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
+   [用户截图待引用：N18-01，活动场对象、重建按钮、完成状态与恢复结果]
+
+   ![Agent首次Computer Use点击重建显示缓存；MCP随后核对终态与全部科学数组、关联对象和几何](screenshot/N18-recovery-entry-GUI.jpg)
+
+   若同一Dataset目录已移动，保持对应QC场对象活动，点 **工程与诊断 → 重新定位数据**。文件浏览器进入保留的同一Dataset目录，选择`manifest.json`；编辑文件名后按Enter提交文字，再点击确认。核对关联对象和体积路径均更新，科学身份及数组摘要一致。只用原Dataset，其他Dataset的manifest会明确拒绝。
+
+   [用户截图待引用：N18-02，同一Dataset的manifest、实际路径及完成后的场对象]
+
+   ![Agent首次Computer Use在原生文件对话框选择同一Dataset的manifest.json并确认；MCP核对路径迁移与科学身份](screenshot/N18-relocate-dialog-GUI.jpg)
+
+   恢复失败时记录原错误和日志，保留工程及输入。缺科学数组、不匹配manifest均须明确失败，不把它们当作物理零或新数据。维护者本批只在独立诊断副本暂存一份数组后执行拒绝检查，随后按SHA恢复；用户教程不要求删除配套数据。
+
+   [用户截图待引用：N18-03，若发生失败，记录完整错误及输入身份；正常工程无需人为破坏数据]
+
+   ![MCP缺科学数组请求留下的错误报告，Computer Use仅观察截图；数组随后按原SHA恢复，绑定未被替换](screenshot/N18-missing-array-MCP.jpg)
+
+   恢复完成后仍在该唯一进程点 **工程与诊断 → 保存自包含工程** 另存；核对`.blend + .qcdata`后正常关闭。新进程冷重开，复核Dataset、数组、体积、节点和渲染。中文移动和归档解包继续按0.4逐个执行。此诊断工程55个配套文件、3个Dataset/108数组/1个VDB一致，冷读和重渲染像素一致；示例图仅为核区小网格片段。
+
+   [用户截图待引用：N18-04，保存目标、唯一新进程的工程路径、科学记录与恢复渲染]
+
+   ![MCP保存恢复后的核区诊断ESP，原生Blender渲染；新进程冷读及像素一致，阈值30 hartree/e](screenshot/N18-recovered-diagnostic.png)
 
    N06–N08 加入公共资产后，先执行 0.4 的 **打包关联库**，再用 **保存自包含工程** 另存并归档。示例工程 `C04-public-nodes-packed.blend + .qcdata` 含两个内嵌节点库；三次冷重开分别使用新的唯一可见进程，MCP核对17个对象引用、7个Dataset、222数组、4个体积文件和117文件摘要。移动和解包时原相对路径的节点库不存在，内嵌资产仍求值正常。
 

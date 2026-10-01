@@ -558,7 +558,7 @@
     "docs/acceptance/tutorial-validation.json",
     "docs/acceptance/cleanup-validation.json"
   ],
-  "remaining_click_steps": "C04 internal invalid-mask boundary, paired-field grid mismatch refusal, remaining three public assets and C08-C12 Undo/Redo/N18 scope, same-final-source unified qualification before main merge/archive. C01 density checkpoint relocation and C13 scoped checks Passed; user and scientific signatures remain Not Run.",
+  "remaining_click_steps": "Remaining three public assets (qc.isosurface.v3/qc.surface_style.v1/qc.volume_fog.v1) independent Add/connect, C08-C12 native Undo/Redo, same-final-source unified qualification, main merge and preservation-first archive/cleanup. Real internal mask propagation, paired-grid mismatch and N18 recovery now Passed at deb9416/c736bb9; user/scientific signatures remain Not Run.",
   "cleanup": {
     "status": "Passed",
     "scope": "This screenshot supplement only; full GUI task remains claimed",
@@ -5592,6 +5592,330 @@
         "run-density-boundary.py": {
           "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/C01-density/scripts/run-density-boundary.py",
           "sha256": "8cd0fba5272e87061b8a1c734a3ae5d1aeb6e00591458ab65f516a3bf799c065"
+        }
+      }
+    },
+    "field_guards_and_recovery": {
+      "status": "Passed",
+      "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+      "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+      "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+      "scope": "Real internal nuclear ESP mask/probe/profile/material/contours; diagnostic paired-grid mismatch; first CU cache rebuild and identical Dataset relocation; MCP scientific-array/mismatched-manifest refusals; serial preserved fresh cold readback. No claim of full final candidate qualification or user/scientific signature.",
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/generation.json",
+          "sha256": "d56ab151dc627f9502cfc37db6b7b4d9691899b63c272ef3490f029aeec35c92",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/generation-exit.json",
+          "sha256": "dd102b8e308df328922fb126fcd4a7aca5d84b568b14f13f2bd60fafacde779c",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-mask-probe-profile.json",
+          "sha256": "b61a4e1432241ca3a4380f7f23ce65e05a286e9827535844cebec7b48a3db17a",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/diagnostic-input.json",
+          "sha256": "ff308e02b3a5743b25173064ad7dab24176bbcec47d2de1b1f4dd6747cfc3006",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/paired-grid-refusal.json",
+          "sha256": "745bacc5c2ddbe10a74c4ad8beb50a9cce090311026622b6b563498794ea10ef",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/cache-rebuild-GUI.json",
+          "sha256": "be9ac2ef2df774564559fd090b874975975951211ccd07698b02842550d6d01a",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/relocate-GUI.json",
+          "sha256": "174225ff24b9135d4fe6bf6639a64439b74ad6da33a031beca430eed24058297",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/relocate-mismatch-MCP.json",
+          "sha256": "bcccfe85686eff780eab2ac65e80f26ae11c961475a1d6f7324a333fa3f60284",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/missing-array-refusal.json",
+          "sha256": "78a42eb40f6f9d4544150558eaece8d6612f94b0bcb4e61c917b679822ee8f92",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/preservation-v2.json",
+          "sha256": "8cbc0b2ca1a2d69f3fd438b0bea7c1fcd0c8ecf52590d0051b3b9cdcdb7739cb",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/project-path-map.json",
+          "sha256": "7980a43ded5b5180987a30a41cab9aec054dbd12f377842cddb01ea8a1be2aed",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/cold-readback.json",
+          "sha256": "58ce19f249e36f462953c13197a884b839c7f0715c8752fc7ee8a15c7e34bf02",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/cold-exit.json",
+          "sha256": "e38d812af0e162753c00d385314ec064b2ae1c52bb1685dce8e1a1d298296430",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/cold-completion.json",
+          "sha256": "c8270459fcff47e1585f72b2fe43a21c6c6dd145ed8f7fb7b81001d2a2b0a967",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/render-prune.json",
+          "sha256": "66498e2ea47bdf96197b2826f51bcc57172b5fb027e944e0dc6679eeb45ef2a9",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/reuse-review.json",
+          "sha256": "32baf0bca16089bc9646418806348e6988f43bbb51754e3138d464b0187bcf2a",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/close-confirmed.json",
+          "sha256": "5d046afe561bd912a4463af2b7d9ec533ac91f5e1a86e7eb73cdba0298d6d1ff",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-display/slice-sampling.json",
+          "sha256": "7a7f4a40c5b84ce84a32fb48140c4dc3411545a7765fece8ba28cd95e0d2eb08",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-display/contour-verified.json",
+          "sha256": "a47ad6b8ac1a9f3d2b27d499ea66c0ded9d17c955e4ce0178494477ea29eebf3",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-display/preservation.json",
+          "sha256": "6fac69a9c6534b25222dcb97e5e08317d8296fdc883405df36a9cbca83a4d346",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-display/visual-inspection.json",
+          "sha256": "ffa5a39561a1fa6008dbc6bcc8ee5afb3fb5d1919bf7727829c19e7fcde26f8d",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-display/project-path-map.json",
+          "sha256": "a4ea5c5d4ed9d816b9fe4f74c98fc1daeb87563cf15640b0e60e2582bdc6923c",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-display/cold-readback.json",
+          "sha256": "e61e2080765566e8a52dc68ae670df495c1a14e4658a73b162ba1d919a17fb50",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-display/cold-exit.json",
+          "sha256": "57ef5666adcae436ba4c06e529dbefe08bc4f5435a21ab971bd7e968d011aca9",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-display/completion.json",
+          "sha256": "0309b4fa63fb02737d7d72bc21f2d8586fa76ec004542cd60eba650bc0edec23",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-display/render-prune.json",
+          "sha256": "d073d4fddd57e064d336095793e36dd1571442c524385b8d187b71a2c2d98429",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-display/close-confirmed.json",
+          "sha256": "25ea43ef0c4fdd275dd0478faa810f8295d1be1770e16734e18ff4589c49c65c",
+          "status": "Passed"
+        }
+      ],
+      "diagnostics": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/probe-coordinate-diagnostic.json",
+          "sha256": "9861f15746ad6483b7c3cba9d7d44c4c834d7c27424d0ed5f2a06cf22bad0d4f",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/preservation-enumeration-diagnostic.json",
+          "sha256": "bd7e5ee44fbc6497a3b631d55d47ee2c5ae501aac58ca414e835356f719e51c3",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-display/verification-diagnostic.json",
+          "sha256": "2d914dc0c810323b5c998b4f4f4f1fff78f88f4bb004e5125aaaea507d248c8b",
+          "status": "Failed"
+        }
+      ],
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-internal-mask-profile-MCP.jpg",
+          "sha256": "ab7400e18463ba492504e1998c3af13173997eb9d34e1f0740fe468295cf4b49"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N18-recovery-entry-GUI.jpg",
+          "sha256": "d96c8cda727119dd65a71ec772548cbd71c740d8c68305d6bd55859623df4ac5"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N18-relocate-dialog-GUI.jpg",
+          "sha256": "f11258807396d0f3a9aedf565a1acce2d859a2df4884c15c99c4ad68bf2827ad"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N18-missing-array-MCP.jpg",
+          "sha256": "7eb15a3f3698bf24e83b6116f9f6b63409b0d51a77481a4ae2e866510eb16823"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/N18-recovered-diagnostic.png",
+          "sha256": "7a851edaed0fd3037554540695f64b89738102e4cd9a61ffb4587e33f37c9e4b"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-internal-mask-magenta.png",
+          "sha256": "6de432421871fe44ca9c7091747fcb9d018c7c884e4e63aefab1dfc6ee866711"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C04-internal-mask-contours.png",
+          "sha256": "975fe58b29d8b675ba5f09c2b362c2e725f2aae6a5df31124210c0db4ad2d9a3"
+        }
+      ],
+      "input_sha256": {
+        "water-dimer.fchk": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+        "dg_inter.cub": "daf5a7e79c7dcc67b244f3dc1d2d314795c9f318c931e4f25d36e72ea168a28e",
+        "sl2r.cub": "18a33c308c868c9f7747128f1a23c04fc69df37fd5b9681aa5dd35ef20997958"
+      },
+      "parameters": {
+        "grid_shape": [
+          5,
+          5,
+          5
+        ],
+        "origin_angstrom": [
+          -0.1,
+          -0.1,
+          -0.1
+        ],
+        "step_angstrom": 0.05,
+        "valid": 124,
+        "invalid_indices": [
+          [
+            2,
+            2,
+            2
+          ]
+        ],
+        "nuclear_exclusion_radius_bohr": 0.02,
+        "slice_resolution": 21,
+        "slice_width_height_angstrom": 0.18,
+        "slice_valid": 320,
+        "slice_invalid": 121,
+        "diagnostic_contour_levels_hartree_per_e": [
+          20,
+          25,
+          30
+        ],
+        "contour_segments": 84,
+        "recovery_isovalue_hartree_per_e": 30,
+        "recovered_vertices": 56
+      },
+      "projects": [
+        "outputs/projects/tutorial-cu-full/cases/field-guards/field-guards-final.blend",
+        "outputs/projects/tutorial-cu-full/cases/internal-mask-display/internal-display-final.blend"
+      ],
+      "processes": {
+        "generation": 52440,
+        "recovery_gui": 52956,
+        "recovery_cold": 49904,
+        "slice_mcp_visible": 26832,
+        "slice_cold": 35524,
+        "all_exited": true,
+        "native_worker_children": "Recorded separately in starts and unchanged request/result/log evidence"
+      },
+      "checks": {
+        "actual_internal_mask": "Passed",
+        "independent_probe_value": "Passed",
+        "invalid_and_outside_refusal": "Passed",
+        "profile_gap_and_empty_csv": "Passed",
+        "paired_grid_refusal_without_resampling": "Passed",
+        "native_cache_rebuild_GUI": "Passed",
+        "native_relocate_GUI": "Passed",
+        "missing_scientific_array_refusal": "Passed",
+        "mismatched_manifest_refusal": "Passed",
+        "material_actual_magenta_render": "Passed",
+        "independent_contour_guard": "Passed",
+        "arrays_binding_geometry_unchanged": "Passed",
+        "fresh_cold_readback": "Passed",
+        "retained_renders_and_prune_receipts": "Passed"
+      },
+      "remaining": {
+        "unified_final_source_qualification": "Not Run",
+        "user_walkthrough": "Not Run",
+        "independent_signature": "Not Run"
+      },
+      "limits": "Tiny grid diagnoses nuclear exclusion and propagation; it is not a convergence test or public-user full-molecule field. Negative copies are maintainer-owned diagnostic materials. No scientific input is altered.",
+      "rebuild": "Use retained native generation/probe/contour/cold scripts with a new evidence directory and recorded locked installed candidate; set fresh owned PID after startup. Worker request/result/log and independent raw-array/hash reports preserve exact parameters.",
+      "scripts": {
+        "scripts/field-boundary-cold.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/scripts/field-boundary-cold.py",
+          "sha256": "23676f2cc181ee9a4a392fb39a9921bc4a27c63eabd87e49487340f4829f3755"
+        },
+        "scripts/field-boundary-generate.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/scripts/field-boundary-generate.py",
+          "sha256": "11012921e8b69940aadb4a1d902c82331b477128804f273e7f9d1dad5f34e012"
+        },
+        "scripts/field-boundary-preserve.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/scripts/field-boundary-preserve.py",
+          "sha256": "602c1d05d8b90c7643071e86633d0b0f2993c9660b50bddaa9275b3a88b98bb6"
+        },
+        "scripts/field-boundary-probe-diagnostic.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/scripts/field-boundary-probe-diagnostic.py",
+          "sha256": "625002f90c5ef5532ee3a1c1f6bd6038d3e1f38ccb7c802ea13186636b8315b2"
+        },
+        "scripts/field-boundary-probe.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/scripts/field-boundary-probe.py",
+          "sha256": "dfc1629285a2d6954d1b847b8e45d4bb3d62998c3d4a4369871bc0d0472130d6"
+        },
+        "scripts/launch-field-boundaries.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/scripts/launch-field-boundaries.py",
+          "sha256": "1d0403c78143b5c9b15889cda37e7907057a0b40ef9e60e126db957ebaae5006"
+        },
+        "scripts/prepare-field-boundaries.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/scripts/prepare-field-boundaries.py",
+          "sha256": "da5c3e147ba987448ab94f5bb8b37a2a0c8beca3345b78bf9b32233975f712cf"
+        },
+        "scripts/run-field-boundary-cold.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/scripts/run-field-boundary-cold.py",
+          "sha256": "10c6533eb8d97b61f3dfc55b990de73332773f801f661acf5fbd351843c89c62"
+        },
+        "internal-display/scripts/internal-mask-display-cold.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-display/scripts/internal-mask-display-cold.py",
+          "sha256": "d79ea5b75f1d23c65399beeea2b6222dadb0b3ce948ea0c9eaf1b14af424b773"
+        },
+        "internal-display/scripts/internal-mask-display-create.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-display/scripts/internal-mask-display-create.py",
+          "sha256": "1e97d23733a8d1495b838ee7ae20dd096008e739c0ecb85be384ddba3a20010c"
+        },
+        "internal-display/scripts/internal-mask-display-verify-diagnostic.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-display/scripts/internal-mask-display-verify-diagnostic.py",
+          "sha256": "541c461099f60fb2fc23a2964e0f257ffd30614ef4b5dffe293b08c4ed9625a7"
+        },
+        "internal-display/scripts/internal-mask-display-verify.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-display/scripts/internal-mask-display-verify.py",
+          "sha256": "584a07310c1741eb4d2351bb570ca029f089930a1cc5f59fd2970cc33e21a975"
+        },
+        "internal-display/scripts/launch-internal-mask-display.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-display/scripts/launch-internal-mask-display.py",
+          "sha256": "0979773044ad744d649fa14df5bedd60c38a213bedbf2ee714c4771860ff9570"
+        },
+        "internal-display/scripts/run-internal-mask-display-cold.py": {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/internal-display/scripts/run-internal-mask-display-cold.py",
+          "sha256": "34c5bea4e2a72148f9e4b52cba5790077a297fe6d1e3311e5ad77b03be8aed89"
         }
       }
     }
