@@ -1,0 +1,338 @@
+{
+  "schema": 1,
+  "updated": "2026-10-01",
+  "rules": "docs/agents/blender-interaction.md",
+  "operation_ids_are_stable": true,
+  "history_is_not_current_batch_pass": true,
+  "single_blender_process": true,
+  "records": [
+    {
+      "id": "cube-cub-import",
+      "title": "普通 Cube/cub 导入",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use native clicks with MCP read-only assertions",
+        "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+        "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
+        "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "活动文件分别 color.cube、sl2r.cub；原子和场自动生成",
+        "visible_entry": "N 侧栏 → QCBlender → 工作流 → 导入 Gaussian / Cube",
+        "validated_scope": "6原子、91×38×156、相同全部数组与输入摘要、unknown_scalar/unknown；限所记录 P03 样本",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/cube-cub-import.json",
+            "sha256": "5cd911d5cd815fcd4d2d5e4668f55a1ec067b56a4d9338e1d7c8f260055cbe2a",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-01-cube-imported.jpg",
+            "sha256": "9cec1276a0bbb9eac23154678f21d7bcc5e5b82eb0d1c4af7340737450f586e8"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C03-01-cub-imported.jpg",
+            "sha256": "c4b80e0d2912ed05e77d6ab426ed0c2398a4677b4e91407eef36fa4da63c3655"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/blender/geometry.py": "b3f453dc1943e7488b1bee33c761b874178c9ad9c8a25e855732cb50ddbd82ca",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/cube.py": "9af0ad7091af18b5d526e368ff1ccacc129f2544df3e19573a76e926a57cfe14",
+        "qcblender/data.py": "58a45c8c03b99508db1dbd74d36b38bff518d64361b561249a0320293a7c1a70"
+      },
+      "fingerprint_review": "Include transitive helpers, registration, interfaces and dependency changes when reviewing reuse; listed files are an initial operation-specific set, not exhaustive proof of no impact.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP 可执行 import_calculation 并等待真实异步作业，CLI 可执行已有导入验证；首次/变更后的文件对话框重置检查仍需 GUI",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true
+      }
+    },
+    {
+      "id": "log-job2-new-fchk",
+      "title": "Log Job2 后新 FCHK 导入",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use native clicks with MCP read-only assertions",
+        "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+        "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
+        "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "先 Log Job2 完成，再打开新的 FCHK 导入；活动参考为新导入结果",
+        "visible_entry": "N 侧栏 → QCBlender → 工作流 → 导入 Gaussian / Cube",
+        "validated_scope": "P02 水日志、P03 水二聚体 FCHK；新对话框 job=1、preview摘要空、FCHK6原子",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/new-fchk-dialog-reset-asserted.json",
+            "sha256": "e984a3fcfbd2bfeb6e25c8b1e715fb6f83b663b92106603fb944588556261ef3",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/log-job2-fchk-import.json",
+            "sha256": "2f1b9103da6fd7d03ba8681c4a5a848f2420472a8005396a8d94d6d7045a0f9e",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C02-05-new-dialog-reset.jpg",
+            "sha256": "08463256a4926dc1f4a5ad3124c303d531d64a465aa71e46d7e097fef6addc23"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C02-05-fchk-six-atoms.jpg",
+            "sha256": "4c06399d5a215829afe9b9448c9b024021dcd98b20f97c692f81bcdcb325af88"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/blender/geometry.py": "b3f453dc1943e7488b1bee33c761b874178c9ad9c8a25e855732cb50ddbd82ca",
+        "qcblender/data.py": "58a45c8c03b99508db1dbd74d36b38bff518d64361b561249a0320293a7c1a70"
+      },
+      "fingerprint_review": "Include transitive helpers, registration, interfaces and dependency changes when reviewing reuse; listed files are an initial operation-specific set, not exhaustive proof of no impact.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP 可复用导入与结果核对；直接 EXEC_DEFAULT 导入不能证明新对话框重置，相关 GUI 不变证据须单独引用",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true
+      }
+    },
+    {
+      "id": "optimization-steps",
+      "title": "优化步切换与独立复制",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use native clicks with MCP read-only assertions",
+        "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+        "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
+        "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "活动优化轨迹；复制后只改变副本",
+        "visible_entry": "对象属性 → Optimization Trajectory → Previous / Next / Choose Step",
+        "validated_scope": "P02 Job1：1—4步；副本停2，原层停1；独立 mesh 与外层节点树",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/optimization-copy-independence.json",
+            "sha256": "ca40ec619526565be66c587b6fb9aa2799885a60a970bff7bb0cc58b7ea9b373",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C02-06-portable-saved.jpg",
+            "sha256": "5cebe62cf9685de15c984ec9c53ddabfd6a0c421e6cfa6bbe9384bd2a1b71a9c"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/optimization.py": "7fabbdce3791ecea4d26680589bd816a727d20b494801242278d7e705471823b",
+        "qcblender/blender/copy_display.py": "5248dce188947476bbcb44230fe305dafb31772e59e2c78d4f2235a4d26ca614",
+        "qcblender/blender/properties.py": "e1298699b93264877856bb1d6fd2662a4905f3a056c223c40df15b1af4ab0666",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/data.py": "58a45c8c03b99508db1dbd74d36b38bff518d64361b561249a0320293a7c1a70"
+      },
+      "fingerprint_review": "Include transitive helpers, registration, interfaces and dependency changes when reviewing reuse; listed files are an initial operation-specific set, not exhaustive proof of no impact.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP 可调用 optimization_step 并核对坐标/来源/能量，复制需沿用已有 helper 并核对独立性",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true
+      }
+    },
+    {
+      "id": "vibration-mode-and-parameters",
+      "title": "选择振动模式与播放参数",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use native clicks with MCP read-only assertions",
+        "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+        "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
+        "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "活动振动原子对象及其三个有效模式",
+        "visible_entry": "对象属性 → QCBlender → 科学记录与振动模式",
+        "validated_scope": "P02 Job2：3模式；振幅0.35Å，1cycle/s；模式3相位π/2、箭头Scale1；IR频率/强度按报告",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/mode1-playing-readback.json",
+            "sha256": "7e68855cc694083af1c6d3beaf7593ed23f95c323827d1e4ce709d08fb50a320",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/mode2-playing-readback.json",
+            "sha256": "8bb52f9f3ca76542ed03ad40373f8cced0810914af8625c6935e7fe83304ddab",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/mode3-phase-vectors.json",
+            "sha256": "71b5975da256b0dec4355dd390b52c9a8e2491c0a419a6f55597e1e3960736d7",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C02-02-mode3-playback.jpg",
+            "sha256": "ae1f730e948ec94c99c599a23b93998866353c9a4443812c2e666f28cd4bfcf3"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C02-02-mode3-phase-vectors.jpg",
+            "sha256": "54846daef15784218f8a4d3a99463376f79f5909e3a5638f6a6e1feb2911d9dc"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/properties.py": "e1298699b93264877856bb1d6fd2662a4905f3a056c223c40df15b1af4ab0666",
+        "qcblender/blender/editor_ui.py": "269798fc1a5580e591902594f80d5194fa99e368f20d426f99279d75098c0d40",
+        "qcblender/blender/charts.py": "fff768253e3a791469dfa718c163762b86389224803af26e81ee4d0fcfb9e6e4",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/data.py": "58a45c8c03b99508db1dbd74d36b38bff518d64361b561249a0320293a7c1a70"
+      },
+      "fingerprint_review": "Include transitive helpers, registration, interfaces and dependency changes when reviewing reuse; listed files are an initial operation-specific set, not exhaustive proof of no impact.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP 可设置已有对象属性和公开节点 socket，核对模式源编号/位移/帧求值；不以单帧读取证明持续播放",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true
+      }
+    },
+    {
+      "id": "portable-save-and-archive",
+      "title": "保存自包含工程与归档",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use native clicks with MCP read-only assertions",
+        "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+        "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
+        "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "当前工程已完成；归档前保存",
+        "visible_entry": "N 侧栏 → QCBlender → 工程与诊断 → 保存自包含工程 / 归档工程",
+        "validated_scope": "C02：4 Dataset、69数组、5引用、45配套文件；ZIP46条目；其他工程逐项核对自身数据",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/portable-render-archive.json",
+            "sha256": "2e44aa85ac6b1a4c7d0c33e54d6d89809b55e0f2287711a9c4e6254c1ee77f45",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C02-06-portable-saved.jpg",
+            "sha256": "5cebe62cf9685de15c984ec9c53ddabfd6a0c421e6cfa6bbe9384bd2a1b71a9c"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C02-06-archive-saved.jpg",
+            "sha256": "cc2965fdbe2b9e8b7494d74d88b6662cb23670a9e9bf52c761682dff8413480a"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/project.py": "30181040074a4ec38ce7f06e1d55e2dabc16e80a47ec4a1c95b5e1f75d543df4",
+        "qcblender/data.py": "58a45c8c03b99508db1dbd74d36b38bff518d64361b561249a0320293a7c1a70"
+      },
+      "fingerprint_review": "Include transitive helpers, registration, interfaces and dependency changes when reviewing reuse; listed files are an initial operation-specific set, not exhaustive proof of no impact.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP 可调用 save_project(filepath=...)、archive_project(filepath=...)；保存后核对引用、数组和完整ZIP条目",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true
+      }
+    },
+    {
+      "id": "cold-open-and-render",
+      "title": "新进程打开工程与渲染",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use native clicks with MCP read-only assertions",
+        "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+        "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
+        "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "上一个 Blender PID 已退出；本批工程原路径、中文移动和归档解包副本",
+        "visible_entry": "File → Open；F12",
+        "validated_scope": "C02三个独立进程，项目摘要及全部配套数据一致；依次打开，禁止同时启动",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/cold-original/readback.json",
+            "sha256": "bde2b190457cf8618694787c8a98eb3dcdc36613a5d927f64a9356869044fa18",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/cold-moved/readback.json",
+            "sha256": "346e23d0c169aafdf5b7f41617ec190d179ceef3982a1f99bbd770cd7c10019a",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/cold-unpacked/readback.json",
+            "sha256": "84b8117e62300123d76a682fac7d996ac4699cf566e0951d758a11db95323e72",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C02-06-cold-original-restored.jpg",
+            "sha256": "bf3cf2071de84b9070e95c4cdf47439d67daac22288db859775e08f0fe596df9"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C02-06-cold-original-render.jpg",
+            "sha256": "b9089d6dc71fdcba311728814cad4cb89661d817cca612f5431bb6a06bf32d22"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/project.py": "30181040074a4ec38ce7f06e1d55e2dabc16e80a47ec4a1c95b5e1f75d543df4",
+        "qcblender/blender/camera.py": "772edbed6be940510b575126bb4993abe63b43283c8e6146566edb3668ee1410",
+        "qcblender/data.py": "58a45c8c03b99508db1dbd74d36b38bff518d64361b561249a0320293a7c1a70"
+      },
+      "fingerprint_review": "Include transitive helpers, registration, interfaces and dependency changes when reviewing reuse; listed files are an initial operation-specific set, not exhaustive proof of no impact.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP 或 CLI 打开、渲染和读取当前工程；仍需真实新进程、记录PID、文件摘要与冷重开结果，保存历史渲染不能冒充本次渲染",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true
+      }
+    }
+  ]
+}

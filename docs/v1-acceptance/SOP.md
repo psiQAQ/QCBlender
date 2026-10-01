@@ -2,7 +2,7 @@
 
 适用 **Windows x64、Blender 5.1.1**。取得 QCBlender 扩展 ZIP 和本教程指定样本后，即可在 Blender 中完成导入、调整、渲染和保存；安装包包含必要运行库。公开安装包是否可取得见 [README](../../README.md)，来源、许可及获取说明见 [SOURCES](SOURCES.md)。本教程绑定 [冻结样本清单](tutorial-samples.json)；P01/P03/P04/P05 在样本包中，C02/C06 所用 P02 需原站单独获取，其再分发许可未确认。安装包和样本包目前为本地交付，尚无已发布远程下载地址。
 
-本教程保留 **C01–C13** 科学案例和 **N01–N18** 节点/交互检查编号。按钮位置与当前插件界面一致；对话框及部分控件仍使用英文。操作结果只记 **Passed / Failed / Not Run**。用户实际点击、Agent Computer Use 点击、MCP操作与数据核对、独立科研签署分别记录；Agent 不填写使用者签名。
+本教程保留 **C01–C13** 科学案例和 **N01–N18** 节点/交互检查编号。按钮位置与当前插件界面一致；对话框及部分控件仍使用英文。操作结果只记 **Passed / Failed / Not Run**。用户实际点击、Agent Computer Use 点击、MCP操作与数据核对、独立科研签署分别记录；Agent 不填写使用者签名。维护者按 [交互规则](../agents/blender-interaction.md) 和 [操作登记表](../acceptance/blender-operations.json) 复用已确认且功能未变的操作，MCP/命令行复验单独记录，完整案例结果仍逐项验收。
 
 本文的 Agent 示例截图紧接相应操作展示，原始 JPEG 保存在同级 `screenshot/` 目录。截图是本批实际 Computer Use 操作画面，保留你的逐步骤截图占位；各图的候选身份、输入、参数和检查范围见 [点击补验索引](../acceptance/tutorial-cu-validation.json)。C02、密度生成/取样/CSV、氢显隐与首次保存使用90ff9bf候选；IR层显隐复验、最终剖面、相机、渲染及冷重开使用1554ee2候选。候选92d498c的C01雾修复与三路径冷重开、C02能量/振动/优化/连续导入/渲染/三路径冷重开截图同样逐步骤展示，具体范围见索引 full_batch_progress；完整C/N点击覆盖及独立科研签署仍为Not Run。你复现时，将自己的截图保存到 `screenshot/`，在对应占位下一行填写 `![用户复做：C02-01](screenshot/C02-01-user.png)`；使用独立文件名，保留 Agent 示例便于对照。
 

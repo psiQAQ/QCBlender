@@ -803,5 +803,18 @@
     "status": "Passed",
     "scope": "Performed Computer Use supplement and step screenshots; partial C02/C04/C05 plus common camera/render/save/cold reopen. Full C01-C13/N01-N18 click walkthrough Not Run.",
     "source_commit": "1554ee2ac7ae308ccf1aa1922ed93192adf0b3b1"
+  },
+  "execution_policy": {
+    "rules": "docs/agents/blender-interaction.md",
+    "registry": "docs/acceptance/blender-operations.json",
+    "approved": "2026-10-01 user instruction",
+    "order": [
+      "MCP for GUI-confirmed unchanged operations",
+      "existing CLI when MCP insufficient",
+      "Computer Use for first confirmation, changed features and fallback"
+    ],
+    "historical_GUI_and_current_replay_are_distinct": true,
+    "single_Blender_process": true,
+    "full_case_results_still_required": true
   }
 }
