@@ -4149,6 +4149,249 @@
           }
         ]
       }
+    },
+    {
+      "id": "ets-nocv-import",
+      "title": "真实ETS-NOCV表导入",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP prepared numeric bounds and independently checked source/results",
+        "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+        "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+        "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID34052；导入只选六原子根，查阅/筛选/排序只选新表",
+        "visible_entry": "只选C12 CO-BH3 atoms根；3D视图N侧栏→QCBlender→导入外部结果→ETS-NOCV 表；ETS-NOCV output text=ets-nocv.txt，Pair energy unit=kcal/mol，确定",
+        "validated_scope": "Computer Use导入11个真实打印pair记录；原文件头24pair/48轨道不等于打印行数，引用complex.fchk为user_assigned；导入保持根活动，须手动选新表。",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/native-import-records-oracle.json",
+            "sha256": "7e926011c2d618d3a396b7b8f7760cca6d48d2fbfd038b387c749cae9a9270fb",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C12-entry-GUI.jpg",
+            "sha256": "3a972410e15906f5ae83942167670448770636d9fc567a88d532ddc6a346fbc5"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C12-dialog-GUI.jpg",
+            "sha256": "28f1633453f20d3a3c534db3e29030e757a9962ef0b3de25b3915153f236d851"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/external_results.py": "71f9612f82db00b3f1de9554bc05bc1ca8759dc9937318310fa65f02c1fef5d7",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+        "qcblender/analysis_data.py": "de5ccf196fb485465e76ba0cc122da3192f421104b5c52122f9061364e1650d8",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/capabilities.py": "e99bbdbf87fb0a2e08160c65e6d2b405a917d4ca5bc738b2baae46c89f099386",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
+      },
+      "fingerprint_review": "Review transitive helpers, callbacks, interfaces and dependencies; listed files are an initial scoped fingerprint set.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Computer Use导入11个真实打印pair记录；原文件头24pair/48轨道不等于打印行数，引用complex.fchk为user_assigned；导入保持根活动，须手动选新表。",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/filters-and-boundaries.json",
+            "sha256": "cbee7306a5e576b991c1b075dfd836d1ae13f55fdf97d8e0b598e2e7b5a63c41",
+            "status": "Passed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ets-nocv-source-records",
+      "title": "ETS-NOCV源记录查阅",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP prepared numeric bounds and independently checked source/results",
+        "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+        "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+        "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID34052；导入只选六原子根，查阅/筛选/排序只选新表",
+        "visible_entry": "只选QC ETS-NOCV pairs表；Properties→对象属性→QCBlender · 对象与量子化学→External Analysis Records；Record (1-based)从1改2",
+        "validated_scope": "Computer Use查阅pair1/2全部显示字段与源行7/8；MCP独立原文核对全部11行/全部字段及来源摘要。",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/native-import-records-oracle.json",
+            "sha256": "7e926011c2d618d3a396b7b8f7760cca6d48d2fbfd038b387c749cae9a9270fb",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C12-record1-GUI.jpg",
+            "sha256": "910778cb19f72f7e99904089473870039821875ac61046118ebe1c1c64c49877"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C12-record2-GUI.jpg",
+            "sha256": "458ae64e8747749e4a76203640da21c9b7be8652194d8d22eb8693fecfc6d1e5"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/external_results.py": "71f9612f82db00b3f1de9554bc05bc1ca8759dc9937318310fa65f02c1fef5d7",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+        "qcblender/analysis_data.py": "de5ccf196fb485465e76ba0cc122da3192f421104b5c52122f9061364e1650d8",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/capabilities.py": "e99bbdbf87fb0a2e08160c65e6d2b405a917d4ca5bc738b2baae46c89f099386",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
+      },
+      "fingerprint_review": "Review transitive helpers, callbacks, interfaces and dependencies; listed files are an initial scoped fingerprint set.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Computer Use查阅pair1/2全部显示字段与源行7/8；MCP独立原文核对全部11行/全部字段及来源摘要。",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": []
+      }
+    },
+    {
+      "id": "ets-nocv-filter",
+      "title": "ETS-NOCV编号自旋与本征值筛选",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP prepared numeric bounds and independently checked source/results",
+        "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+        "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+        "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID34052；导入只选六原子根，查阅/筛选/排序只选新表",
+        "visible_entry": "只选表；同对象属性→External Result Browser；Pair number=1，Spin=总数/Total，应用筛选；Pair=0、Negative orbital、两本征值范围勾选、应用筛选",
+        "validated_scope": "Computer Use编号1、Total菜单、negative菜单、范围开关和应用筛选；负范围-0.6..-0.5数值由MCP准备，精确indexes=[0]；无pair场时不创建场或改科学数组。",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/native-pair1-spin-filter.json",
+            "sha256": "60802939829debaa56297c48f827d1ef12dfed0de7d919794fb98d20921d7823",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/native-negative-filter.json",
+            "sha256": "7309c6c9b14c220ced5cee1df412755a431adcbbd5a44940b7c81a769f540d69",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C12-pair1-filter-GUI.jpg",
+            "sha256": "60595a83e699ccebd080688dcbd235f94cfd0d512b46728a7977b2b6d8ddf058"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C12-negative-filter-GUI.jpg",
+            "sha256": "c87f31a2c6f7da1c5f6f0b6078abcb1dede7b0069980973a4dce51a7128c81ba"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/external_results.py": "71f9612f82db00b3f1de9554bc05bc1ca8759dc9937318310fa65f02c1fef5d7",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+        "qcblender/analysis_data.py": "de5ccf196fb485465e76ba0cc122da3192f421104b5c52122f9061364e1650d8",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/capabilities.py": "e99bbdbf87fb0a2e08160c65e6d2b405a917d4ca5bc738b2baae46c89f099386",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
+      },
+      "fingerprint_review": "Review transitive helpers, callbacks, interfaces and dependencies; listed files are an initial scoped fingerprint set.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Computer Use编号1、Total菜单、negative菜单、范围开关和应用筛选；负范围-0.6..-0.5数值由MCP准备，精确indexes=[0]；无pair场时不创建场或改科学数组。",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/filters-and-boundaries.json",
+            "sha256": "cbee7306a5e576b991c1b075dfd836d1ae13f55fdf97d8e0b598e2e7b5a63c41",
+            "status": "Passed"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ets-nocv-sort",
+      "title": "ETS-NOCV排序及匹配行",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP prepared numeric bounds and independently checked source/results",
+        "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+        "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+        "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "唯一GUI PID34052；导入只选六原子根，查阅/筛选/排序只选新表",
+        "visible_entry": "只选表；同External Result Browser→排序→Positive eigenvalue，应用筛选；MCP准备Pair0、Total及关闭范围",
+        "validated_scope": "Computer Use排序菜单与Apply；独立核对11行顺序11,10,9,8,6,7,5,4,2,3,1和首行source_line17；不继承为其他排序的GUI点击。",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/native-sort.json",
+            "sha256": "f561a3dd0c9a7ce18a825b3fa1869db0aa7d0534ba8dfc1050c6702c4b3f3935",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C12-sort-GUI.jpg",
+            "sha256": "95feaadcc54c0915cf3e021132e4bb6af8841550615732fa7b16772e9d76b70a"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/external_results.py": "71f9612f82db00b3f1de9554bc05bc1ca8759dc9937318310fa65f02c1fef5d7",
+        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+        "qcblender/analysis_data.py": "de5ccf196fb485465e76ba0cc122da3192f421104b5c52122f9061364e1650d8",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/capabilities.py": "e99bbdbf87fb0a2e08160c65e6d2b405a917d4ca5bc738b2baae46c89f099386",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
+      },
+      "fingerprint_review": "Review transitive helpers, callbacks, interfaces and dependencies; listed files are an initial scoped fingerprint set.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Computer Use排序菜单与Apply；独立核对11行顺序11,10,9,8,6,7,5,4,2,3,1和首行source_line17；不继承为其他排序的GUI点击。",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/filters-and-boundaries.json",
+            "sha256": "cbee7306a5e576b991c1b075dfd836d1ae13f55fdf97d8e0b598e2e7b5a63c41",
+            "status": "Passed"
+          }
+        ]
+      }
     }
   ]
 }

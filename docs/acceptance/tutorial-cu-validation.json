@@ -558,7 +558,7 @@
     "docs/acceptance/tutorial-validation.json",
     "docs/acceptance/cleanup-validation.json"
   ],
-  "remaining_click_steps": "C12-C13, C04 invalid-mask boundaries, density checkpoint relocation, remaining N scope and same-final-source unified qualification before main merge/archive. C10/C11 scoped checks Passed with distinct source/candidate identities. User walkthrough and independent scientific signature remain Not Run.",
+  "remaining_click_steps": "C13, C04 invalid-mask boundaries, density checkpoint relocation, remaining N scope and same-final-source unified qualification before main merge/archive. C12 scoped records/render/CLI cold checks Passed; historical GUI/MCP signatures remain distinct.",
   "cleanup": {
     "status": "Passed",
     "scope": "This screenshot supplement only; full GUI task remains claimed",
@@ -5067,6 +5067,212 @@
       "rebuild": "Retained scripts/reference oracle, central SHA-bound P04 inputs, C10 checkpoint and candidate deb9416/locked environment; use new batch paths.",
       "prior_defect": "Source13401c6 native Properties context import created Mayer table but nested plot poll failed. Failed evidence and failed-engineering cold readback retained; deb9416 object override fixed and real GUI retested.",
       "visibility_scope": "Initial cold-load state exact; step update honors persisted annotation Visible/show_leader. Per-render masks reapplied explicitly."
+    },
+    "C12_ETS_NOCV_records_filters_and_cold_chain": {
+      "status": "Passed",
+      "scope": "Scoped real source rows, native import/record/filter/sort, independent 25 filters and 3 guards, portable save and serial CLI cold/render chain",
+      "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+      "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+      "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+      "inputs": [
+        {
+          "id": "P05-complex",
+          "path": "tests/data/tutorial/P05/complex.fchk",
+          "sha256": "57f2f6c70b5ff468c2718e27e90827ab5beed175b80952942b8b441f4cf85479",
+          "bytes": 63671
+        },
+        {
+          "id": "P05-co",
+          "path": "tests/data/tutorial/P05/co.fchk",
+          "sha256": "eeebe9fc4dd4f19d5ef3216573ce39dc70ff0f5b20b7ff92c4abda78ec80eb63",
+          "bytes": 23980
+        },
+        {
+          "id": "P05-bh3",
+          "path": "tests/data/tutorial/P05/bh3.fchk",
+          "sha256": "d96b81b4623de934074a49f479690a8631145afafca76d4d5f5717b5863d19d3",
+          "bytes": 14542
+        },
+        {
+          "id": "P05-ets-nocv.txt",
+          "path": "tests/data/tutorial/P05/nocv/ets-nocv.txt",
+          "sha256": "47e71830f05a745817d4a4c6f857b7bafaa4f5cf51fcede9f208dd13962c29be",
+          "bytes": 1310
+        },
+        {
+          "id": "P05-nocv-pair1.cub",
+          "path": "tests/data/local/public-tutorial/P05/nocv/nocv-pair1.cub",
+          "sha256": "d6d3ec263d5173261791f997eabd78b8112f6685abc3bd851c70deec86a82e33",
+          "bytes": 1922861
+        }
+      ],
+      "input_manifest_sha256": "59c192d18a9cd2c9cf904eb7a844e757a2884ccd095ccc55d73aae4b0d7b71dd",
+      "reports": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/fchk-reuse-review.json",
+          "sha256": "f37ab3ddbb82a97e7e6c0475179133b400eca362e35b1f3b134cfdf53193a458",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/reference-import-oracle.json",
+          "sha256": "62fae64707df4fda95238dd4a27c0eb783a0da5e2f11c7a3bdd1759e4841102d",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/native-import-records-oracle.json",
+          "sha256": "7e926011c2d618d3a396b7b8f7760cca6d48d2fbfd038b387c749cae9a9270fb",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/native-pair1-spin-filter.json",
+          "sha256": "60802939829debaa56297c48f827d1ef12dfed0de7d919794fb98d20921d7823",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/native-negative-filter.json",
+          "sha256": "7309c6c9b14c220ced5cee1df412755a431adcbbd5a44940b7c81a769f540d69",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/native-sort.json",
+          "sha256": "f561a3dd0c9a7ce18a825b3fa1869db0aa7d0534ba8dfc1050c6702c4b3f3935",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/filters-and-boundaries.json",
+          "sha256": "cbee7306a5e576b991c1b075dfd836d1ae13f55fdf97d8e0b598e2e7b5a63c41",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/renders.json",
+          "sha256": "e40d55d0e7175dcabb60c6e4a0ff5466811d79d7ccba740728c66cdfaab91aa0",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/render-visual-review.json",
+          "sha256": "fe4f45022922266d4b24351d40b53d40fef30fcebdb775052d4643939057db6c",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/preservation-final.json",
+          "sha256": "1f2f0db8964f0d4831f20365b241c637e9cf77feaba5bab2dbead7afd629eb69",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/close-request.json",
+          "sha256": "6421eaf56323df289bb349c1b4b788378c0a88ddf29b0320c1ec1eb9d9ae0922",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/close-confirmed.json",
+          "sha256": "adf90710a34411842a66098f43bb48008b0293b600ce4c073ee31b2c80e721cd",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/preserved-path-mapping.json",
+          "sha256": "332b427d2487bf443b25d5362d11caa408f9ed86737f67a883d9a42dbf7e23b3",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/cold-chain-v2.json",
+          "sha256": "452ced0a3abd4c6113dbf0274c87d0578e8a04edc4ade3e536bfede2a7395f69",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/cold-render-prune-v2.json",
+          "sha256": "5ffbfdc63e786ab710a168c18d2df99fbdc4f7132637952a253deb142a4f3602",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/cold-original-v2/readback-render.json",
+          "sha256": "4a75d6b5ce48239f284becb042593b1f53504c50ca90b11802e133c7e9f28899",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/cold-moved-v2/readback-render.json",
+          "sha256": "b1e560b87917d5186229e0949db44ef48b7ce10e5e117bea6c801404c52e501f",
+          "status": "Passed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/cold-unpacked-v2/readback-render.json",
+          "sha256": "e3d0537b1f9ad4252d099bd35f0685136c37ce3007cfc37cb7b60721c2ec3545",
+          "status": "Passed"
+        }
+      ],
+      "diagnostics": [
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/active-object-assumption-diagnostic.json",
+          "sha256": "c0ddda0c20374086a2ecceac4e3a2348e4cad9eafa7a55d0d3f0a4d120aac82e",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/filter-script-diagnostic.json",
+          "sha256": "257e97951f0fcd04fccab359d40474e379f0774738f63d49354dc1bca38216f3",
+          "status": "Failed"
+        },
+        {
+          "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/cold-original/readback-render.json",
+          "sha256": "8c8ae752a1db6abb9944e879077db2b515bbfe909b340cf7dbb2eab408195d8d",
+          "status": "Failed"
+        }
+      ],
+      "screenshots": [
+        {
+          "path": "docs/v1-acceptance/screenshot/C12-entry-GUI.jpg",
+          "sha256": "3a972410e15906f5ae83942167670448770636d9fc567a88d532ddc6a346fbc5"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C12-dialog-GUI.jpg",
+          "sha256": "28f1633453f20d3a3c534db3e29030e757a9962ef0b3de25b3915153f236d851"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C12-record1-GUI.jpg",
+          "sha256": "910778cb19f72f7e99904089473870039821875ac61046118ebe1c1c64c49877"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C12-record2-GUI.jpg",
+          "sha256": "458ae64e8747749e4a76203640da21c9b7be8652194d8d22eb8693fecfc6d1e5"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C12-pair1-filter-GUI.jpg",
+          "sha256": "60595a83e699ccebd080688dcbd235f94cfd0d512b46728a7977b2b6d8ddf058"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C12-negative-filter-GUI.jpg",
+          "sha256": "c87f31a2c6f7da1c5f6f0b6078abcb1dede7b0069980973a4dce51a7128c81ba"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C12-sort-GUI.jpg",
+          "sha256": "95feaadcc54c0915cf3e021132e4bb6af8841550615732fa7b16772e9d76b70a"
+        },
+        {
+          "path": "docs/v1-acceptance/screenshot/C12-overview.png",
+          "sha256": "4f5788113a898de17c56fa0427adaa49f4af989ac1ebdde3f19b032068153c36"
+        }
+      ],
+      "project": {
+        "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C12/C12-final.blend",
+        "sha256": "28819814d09db9c882ae5b261fb0abc293459a401c6f09fb026b852f24837d8c",
+        "files": 40,
+        "datasets": 2,
+        "arrays": 60,
+        "references": 2,
+        "volumes": 0
+      },
+      "moved_project": "outputs/projects/tutorial-cu-full/中文移动/C12/C12-final.blend",
+      "unpacked_project": "outputs/projects/tutorial-cu-full/unpacked/C12/C12-final.blend",
+      "processes_exited": [
+        34052,
+        21400,
+        50984,
+        14980,
+        22584
+      ],
+      "user_walkthrough": "Not Run",
+      "independent_signature": "Not Run",
+      "rebuild": "Retained scripts, independent source oracle, central SHA-bound P05 inputs, candidate deb9416 and locked environment; use new batch paths.",
+      "cache_scope": "Background scripts explicitly refresh source cache after enabling plugin; GUI startup timer recovery checked separately when opening C13.",
+      "render_scope": "Native molecule plus manually arranged source Font captions; table itself has no render geometry"
     }
   },
   "historical_partial_supplement": {

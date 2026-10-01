@@ -1146,25 +1146,51 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
 ### C12 ETS-NOCV 真实结果表
 
-**真实输入预期：** CO–BH3共6原子 **[C,O,B,H,H,H]**，22电子，中性单重态，RB3LYP/6-31G(d)，源能量 **−139.947332 Eh**。pair1 **Total** 对轨道 **1/48**，特征值 **±0.54550**，pair能量 **−57.02 kcal/mol**，原表行7。此能量为真实整体KS矩阵重构的 **Multiwfn近似**，不是F_TS过渡态方法；详情见清单/NOTICE。
+**真实输入预期：** `P05/complex.fchk` 为CO–BH3六原子 **[C,O,B,H,H,H]**，22电子，中性单重态，RB3LYP/6-31G(d)，源能量 **−139.947332 Eh**。`P05/nocv/ets-nocv.txt` 头部声明 **24 pair、48 orbital**，实际只打印 **11行**（阈值1e−3）；插件展示这11行，不补算缺行。pair1 **Total**，轨道 **1/48**，特征值 **+0.54550/−0.54550**，pair能量 **−57.02 kcal/mol**，原文行7。pair2轨道 **2/47**，特征值 **+0.33615/−0.33615**，pair能量 **−11.91 kcal/mol**，原文行8。pair能量与两轨道能量是不同字段。此结果来自整体KS矩阵重构的 **Multiwfn近似**，不是F_TS过渡态方法；来源与许可见样本清单/NOTICE。
 
-1. 导入 P05 参考构型，选原子对象，点 **导入外部结果 → ETS-NOCV 表**。填 **ETS-NOCV output text**，**Pair energy unit** 选文件实际 kcal/mol 或 hartree。
+1. 关闭上一工程并确认其进程退出，新建Blender工程，在 **3D视图 → N侧栏 → QCBlender → 工作流 → 导入 Gaussian / Cube** 导入 `inputs/P05/complex.fchk`；本批该入口复用已有成功GUI记录，通过MCP导入并核对58数组和六个源原子编号。保持 **根原子对象**为唯一活动对象，展开同侧栏 **导入外部结果 → ETS-NOCV 表**。在 **ETS-NOCV output text** 指定 `inputs/P05/nocv/ets-nocv.txt`，**Pair energy unit** 选文件声明的 **kcal/mol**，点 **确定**。预期新增 **QC ETS-NOCV pairs** 子表。导入后根仍活动，不能在根对象上寻找表的记录面板。
 
-   [用户截图待引用：C12-01，活动对象、参数与结果同屏；参数变化保留前后画面]
+   [用户截图待引用：C12-01，唯一活动根、ETS-NOCV表入口、路径和单位对话框]
 
-2. 选新表对象，在 **External Analysis Records** 查 pair、spin、特征值、成对轨道编号、能量、原文行号和源 SHA，与同次真实输出核对。
+   ![Agent Computer Use：参考原子活动时的ETS-NOCV表导入入口](screenshot/C12-entry-GUI.jpg)
 
-   [用户截图待引用：C12-02，活动对象、参数与结果同屏；参数变化保留前后画面]
+   ![Agent Computer Use：真实ETS-NOCV文本路径与kcal/mol单位](screenshot/C12-dialog-GUI.jpg)
 
-3. 在 **External Result Browser** 按 pair/spin/能量等筛选排序，点击 **应用筛选**。字段缺失按缺失记录，不推断数值。已有唯一关联场时可定位；没有时不表示已生成 pair Cube。
+2. 在 **N侧栏 → Display Layers** 点击 **QC ETS-NOCV pairs 行左侧的选择箭头**，或在Outliner选该子表；保持它唯一活动。打开 **Properties → 对象属性 → QCBlender · 对象与量子化学 → External Analysis Records**。**Record (1-based)=1** 查看pair1全部字段、原文行7，再改为 **2** 核对pair2/行8。来源摘要可在同对象面板 **来源详情** 查阅。关联标记 **user_assigned** 表示用户把表分配给参考构型，不表示插件重新进行了ETS-NOCV计算。本批原文逐行独立核对11行的全部字段和来源摘要。
 
-   [用户截图待引用：C12-03，活动对象、参数与结果同屏；参数变化保留前后画面]
+   [用户截图待引用：C12-02，活动子表、Record 1/2、完整源字段与行号]
 
-4. 按 0.4 保存 `C12.png/.blend/.qcdata/`，图中同时可读结果表与参考分子。
+   ![Agent Computer Use：pair1记录及原文行7；全部源字段由MCP独立核对](screenshot/C12-record1-GUI.jpg)
 
-   [用户截图待引用：C12-04，活动对象、参数与结果同屏；参数变化保留前后画面]
+   ![Agent Computer Use：Record改2后显示pair2及原文行8](screenshot/C12-record2-GUI.jpg)
 
+3. 保持表活动，打开同对象属性的 **External Result Browser**。**Pair number=1**、**Spin=总数**（英文Total）、范围勾选关闭，点 **应用筛选**，预期 **Matching records: 1** 和pair1/行7。Pair number的 **0** 表示全部。再设Pair=0、Spin=总数、**Eigenvalue=Negative orbital**，勾选本征值 **从/到** 并填 **−0.6/−0.5**，点 **应用筛选**，仍只匹配pair1。数值已有符号，本征值不取绝对值。本批范围数值由MCP准备，菜单、勾选与应用由Computer Use实际执行。
 
+   [用户截图待引用：C12-03，Pair/Spin、负本征值上下限及筛选前后结果]
+
+   ![Agent Computer Use：Pair1与Total筛选仅保留一条源记录](screenshot/C12-pair1-filter-GUI.jpg)
+
+   ![Agent Computer Use启用负本征值范围并应用；MCP准备数值−0.6至−0.5](screenshot/C12-negative-filter-GUI.jpg)
+
+4. 取消两本征值范围及两pair能量范围勾选，Pair=0、Spin=总数，选择 **排序 → Positive eigenvalue**，点 **应用筛选**。预期11条，首条 **pair11、positive_eigenvalue=0.00147、source_line=17**，完整顺序 **11,10,9,8,6,7,5,4,2,3,1**；相同值按pair顺序稳定排列。修改控件后必须应用。Pair energy范围使用面板标出的 **kcal/mol**，例如−60到−50只匹配pair1。不存在的pair999、Alpha/Beta筛选得到空结果；倒置范围及声明单位不符应拒绝，原记录保持不变。本批25组筛选/排序和3个错误输入由MCP验证，错误对话框未逐项点击。完成后恢复 **Pair1、Spin总数、范围关闭、排序Pair、Record1**。
+
+   [用户截图待引用：C12-04，正本征值排序首行、能量范围、空结果和实际错误]
+
+   ![Agent Computer Use：正本征值排序后首条为pair11、源行17](screenshot/C12-sort-GUI.jpg)
+
+   筛选只改变显示顺序与匹配记录；已有唯一关联pair场时可定位它。本例尚未导入pair Cube，应用筛选不会生成密度场。字段缺失按缺失记录，不能推断其数值。
+
+5. 表对象只保存记录，没有可渲染网格。按0.4先选关联根分子出图，并用属性面板截图保存完整表记录。需要带说明文字的效果图时，可用Blender **Add → Text** 手动排版源字段；它是源记录说明，需同时保留单位、原文行号、打印范围和来源，不称为插件自动结果图。下图通过MCP设置原生Font对象并EEVEE渲染：1920×1080、Standard、正交相机 **(1.1,−20,0.1)**、绕X90°、Scale **12**；根显示位置X=−3、绕Z45°，仅改变显示变换，全部科学坐标/数组不变。文字位于Y=−1、朝向相机，默认Font，字号0.15–0.33。沿用C10两Sun照明，世界背景0.06灰/强度0.8；文字浅黄、Emission Strength=1。
+
+   [用户截图待引用：C12-05，表属性截图、六原子和手动源说明效果图；参数可自行调整]
+
+   ![原生EEVEE：六原子参考构型与手动排版的pair1/2源记录说明](screenshot/C12-overview.png)
+
+6. 在 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程** 保存 **C12-final.blend + C12-final.qcdata**，按N16打包ZIP；一个工程完成后及时关闭。确认退出后在新Blender依次打开原路径、中文移动副本、ZIP解包副本，每处核对11条源记录、2份Dataset、60数组、来源关联、筛选参数与渲染，关闭后再开下一处。本批40文件摘要和三处冷读/实际像素一致重渲染Passed；后台CLI在启用插件后显式执行已有 **刷新来源**，避免定时器尚未运行就调用依赖缓存的筛选按钮。首次后台时序Failed保留，不改写为通过。
+
+   [用户截图待引用：C12-06，保存位置与三个串行新进程冷重开结果]
+
+   本批入口/源记录/筛选/排序首次确认由Agent Computer Use执行，数组和原文、错误输入、保存由MCP核对，冷读/重渲染由串行原生后台Blender完成。证据见[当前验证索引](../acceptance/tutorial-cu-validation.json)的 `C12_ETS_NOCV_records_filters_and_cold_chain`；本项不代表完整教程或统一资格完成，用户复做及独立科研签署仍Not Run。历史[cleanup-validation.json](../acceptance/cleanup-validation.json)保持原身份。
 
 ### C13 NOCV pair Cube 与两符号密度
 

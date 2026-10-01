@@ -16,6 +16,10 @@
 
 ## 当前任务与候选
 
+C12真实ETS-NOCV首次导入、记录1/2、Pair/Total/负本征值范围与正本征值排序GUI Passed；11打印行与全部字段、25筛选排序和3错误边界MCP Passed。40文件/2Dataset/60数组/2引用保全，三处串行后台冷读和3次像素一致渲染Passed，全部进程退出。表无渲染网格，效果图手动排版源说明明确标注；8图紧接步骤，登记61项。原测试断言和后台启动缓存时序Failed保留；完整教程、统一资格和合并归档仍待完成。
+
+C12报告、脚本和原工程：`outputs/evidence/2026-10-02/tutorial-cu/full/C12/`；移动/解包：`outputs/projects/tutorial-cu-full/`对应C12目录。当前候选沿用源码deb9416，摘要c736bb9，逐批验证身份不继承。
+
 C11原生Mayer导入自动曲线与1,3 Plot Pair通过；6对×3步18源值、两对8次步进/标注同步与非法/重复/缺步输入MCP Passed。deb9416以两行对象上下文override修复Properties嵌套poll缺陷，新候选c736bb9；13文件/2Dataset/9数组/6引用保全，三处串行冷读和9次像素一致渲染Passed，全进程退出。原导入Failed及临时渲染开关断言诊断保留；7图紧接步骤，登记57项。完整教程、统一资格与合并归档仍待完成。
 
 当前C11证据、原工程和重建脚本：`outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/`；修复前失败证据在其上一级。新候选：`outputs/candidates/current/tutorial-irc-mayer-context-deb9416/qcblender-0.0.1.zip`，构建/安装/专项证据：`outputs/evidence/2026-10-02/tutorial-irc-mayer-context/`。移动/解包工程在`outputs/projects/tutorial-cu-full/`对应C11目录；旧候选通过不继承给本候选。
