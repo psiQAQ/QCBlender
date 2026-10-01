@@ -20,6 +20,7 @@ def register():
         bpy.app.handlers.load_post.append(refresh_loaded_sources)
         bpy.app.handlers.save_post.append(refresh_loaded_sources)
         bpy.types.VIEW3D_MT_object_context_menu.append(object_context_menu)
+        bpy.types.VIEW3D_MT_object.append(object_context_menu)
         _hooks_registered = True
         bpy.app.timers.register(refresh_loaded_sources, first_interval=0)
     except Exception:
@@ -44,6 +45,7 @@ def unregister():
         bpy.app.timers.unregister(refresh_loaded_sources)
     if _hooks_registered:
         bpy.types.VIEW3D_MT_object_context_menu.remove(object_context_menu)
+        bpy.types.VIEW3D_MT_object.remove(object_context_menu)
         _hooks_registered = False
     from .blender import asset_library, charts, fog, interaction, result_browser
     result_browser.detach_properties()
