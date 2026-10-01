@@ -238,6 +238,55 @@ def prepare(out):
     return report
 
 
+def check_reopened_slice_binding():
+    """New absolute-path slice must match its saved relative-path field volume."""
+    source = bpy.data.objects['Interaction affine field']
+    atoms = bpy.data.objects['Interaction affine atoms']
+    volume = source.qc_settings.volume
+    assert volume['qc_dataset'].startswith('//'), 'Cold-open volume must retain a portable link'
+    browser = module('blender.source_browser')
+    browser.refresh_source(source)
+    before_arrays = evidence.hashes()
+    activate(source)
+    assert bpy.ops.qcblender.create_slice(resolution=21) == {'FINISHED'}
+    section = bpy.context.object
+    section.name = 'Interaction cold-open new slice'
+    assert not section['qc_dataset'].startswith('//'), 'New slice must exercise the absolute link'
+    assert browser.binding_key(section) == browser.binding_key(volume)
+    assert browser.cached_metadata(section) == browser.cached_metadata(source)
+    browser.bound_field(section)
+    for mode in ('ij', 'jk', 'ki'):
+        assert bpy.ops.qcblender.define_slice_plane(mode=mode, position=.5) == {'FINISHED'}, mode
+        assert slice_state(section)['definition']['mode'] == mode
+    assert bpy.ops.qcblender.define_slice_plane(mode='atoms', configuration=atoms.name,
+                                                atom_1=1, atom_2=2, atom_3=3) == {'FINISHED'}
+    assert slice_state(section)['definition']['source_numbers'] == [1, 2, 3]
+    original = slice_state(section)
+    rejected = {}
+    changes = {
+        'dataset_path': ('qc_dataset', volume['qc_dataset'] + '-different', 'Field volume differs'),
+        'dataset_hash': ('qc_dataset_sha256', '0' * 64, 'Field volume differs'),
+        'source': ('qc_source_sha256', '0' * 64, 'Field volume differs'),
+        'field_metadata': ('qc_field', json.dumps(dict(json.loads(volume['qc_field']), unit='different')),
+                           'Field volume metadata differs'),
+    }
+    for name, (key, changed, message) in changes.items():
+        saved = volume[key]
+        try:
+            volume[key] = changed
+            rejected[name] = evidence.expect_error(lambda: browser.bound_field(section), message)
+            assert evidence.expect_error(lambda: bpy.ops.qcblender.define_slice_plane(
+                mode='jk', position=.5), '')
+            assert slice_state(section) == original, name + ' rejection changed the slice'
+        finally:
+            volume[key] = saved
+    browser.bound_field(section)
+    assert evidence.hashes() == before_arrays, 'New slice plane controls changed scientific arrays'
+    return {'relative_volume': volume['qc_dataset'], 'absolute_slice': section['qc_dataset'],
+            'binding': list(browser.binding_key(section)), 'planes': ['ij', 'jk', 'ki', 'atoms'],
+            'rejections': rejected, 'arrays_unchanged': 'Passed'}
+
+
 def reopen(out):
     report = json.loads((out / 'checks.json').read_text(encoding='utf-8'))
     moved = 'moved 中文 path' in Path(bpy.data.filepath).parts
@@ -250,6 +299,7 @@ def reopen(out):
             obj = bpy.data.objects[name]
             assert [obj.get('qc_dataset_sha256'), obj.get('qc_source_sha256')] == expected, name
             assert Path(bpy.path.abspath(obj['qc_dataset'])).resolve().is_relative_to(Path(bpy.data.filepath).parent)
+        status(report, key + '_new_slice_binding', check_reopened_slice_binding)
         report[key] = 'Passed'
         report['status'] = ('Passed' if report['cold_open'] == report['moved_cold_open'] == 'Passed'
                             else 'Not Run')

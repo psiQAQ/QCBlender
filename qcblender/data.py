@@ -32,6 +32,14 @@ def unprefixed_path(path):
     return Path(value)
 
 
+def dataset_path_key(path):
+    """Compare resolved host paths without filesystem access or storage prefixes."""
+    if not path:
+        return ''
+    normalized = os.path.normpath(path)
+    return os.path.normcase(os.path.normpath(unprefixed_path(normalized)))
+
+
 def resolve_asset(directory, relative):
     root = filesystem_path(directory).resolve(strict=True)
     path = Path(relative)

@@ -7,7 +7,7 @@ from functools import lru_cache
 import bpy
 from bpy.props import EnumProperty, StringProperty
 
-from ..data import SCHEMA, filesystem_path
+from ..data import SCHEMA, dataset_path_key, filesystem_path
 
 _metadata = {}
 
@@ -35,7 +35,7 @@ def source_object(obj):
 
 def binding_key(obj):
     obj = source_object(obj)
-    return (bpy.path.abspath(obj.get('qc_dataset', '')), obj.get('qc_dataset_sha256', ''))
+    return (dataset_path_key(bpy.path.abspath(obj.get('qc_dataset', ''))), obj.get('qc_dataset_sha256', ''))
 
 
 def read_metadata(obj):
