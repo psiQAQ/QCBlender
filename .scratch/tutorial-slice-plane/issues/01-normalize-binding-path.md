@@ -1,5 +1,5 @@
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Type: task
 Blocked by: none
 
@@ -21,7 +21,7 @@ binding_key 在 bpy.path.abspath 解析 Blender 相对路径后，用 data.datas
 - Passed: test_science_planes.py 3 passed，ij/jk/ki、atoms 及配置身份拒绝的纯几何检查。
 - Passed: 四个产品/测试/工具文件 AST parse 与 compile（不导入 bpy、不运行工具）。
 - Passed: AST 对比 bound_field/read_metadata 原守卫函数与基线完全相同；已有源码 BOM/换行保留；git diff --check。
-- Not Run: 新候选 ij/jk/ki/atoms 实际 GUI、冷重开和加强后的原生工具。等待主 Agent 验证后更新 resolved。
+- Passed: 主Agent在e26d22a同一候选完成原生prepare/reopen/中文移动reopen、四平面混合路径以及不同Dataset/hash/source/metadata拒绝守卫；实际GUI新建切片后ij/jk/ki/atoms及FREE/Gizmo/探针/等值线通过。独立21点参考误差小于2e-6；旧源3 Dataset/154数组不变。新工程6 Dataset/172数组与95文件保全，新可见PID52600原路径冷读/CSV复导出Passed。原生证据 outputs/evidence/2026-10-01/tutorial-cu/slice-plane/；GUI与保全索引 outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/preservation.json。完整C04及独立签署另保持Not Run。
 - Not Run: 完整 C04 教程和独立人工签署。
 
 ## 原生工具交接
