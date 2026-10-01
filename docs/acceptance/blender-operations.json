@@ -1537,6 +1537,141 @@
         "current_batch_replay_status": "Passed",
         "requires_current_result_assertions": true
       }
+    },
+    {
+      "id": "associate-matching-sources",
+      "title": "同构型原子源关联",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Agent Computer Use clicked actual association button and confirmed dialog; MCP selected moving then reference and read-only scientific assertions",
+        "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
+        "product_tree": "4086224b13cdd50fa4495c1e00004e0d8dd15d49",
+        "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "MCP先选FCH新原子源，再设原FCHK原子源为活动参考；GUI点击与确认",
+        "visible_entry": "Properties → Object → QCBlender · 对象与量子化学 → 关联选中数据源",
+        "validated_scope": "P03逐字节FCH别名；刚体关闭、容差0.001 Å、六原子映射及0偏差、科学数组不变；刚体配准与错序拒绝本GUI批次Not Run",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/import-fch-MCP.json",
+            "sha256": "189e05cfe151fb37428dc23ddbf4c80ddb0c2f2c0b2fee12ea9ff584dc0c93fd",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/association-GUI.json",
+            "sha256": "09379add6d902ef0ec580d00ddb50fb1ceaaba725a14386651e0f6aaf1741702",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-09-source-selection.jpg",
+            "sha256": "386bc81debe6eb737442d76e75dc00d3a57bb8f668f5e097a158ef0b1364550d"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-09-association-tolerance.jpg",
+            "sha256": "d7afad7b70663fd5ab54ce57c346bf43a9d4993632986cb9af2b2a8c0cefc491"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-09-association-success.jpg",
+            "sha256": "fb658b0f4dc822658d74489aa83ce3c22f592105f3304f86421f025f3f09db1a"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/association.py": "f7a3e17c966e95b5def5fe5f410463435d8a42867769dbb6d476b2d8ee618f19",
+        "qcblender/association.py": "e9b8f0d9e462f3ecf0e5b6c428f3cce2a5378404871c50bd23a58cf825fee000",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432"
+      },
+      "fingerprint_review": "Review callbacks and transitive helpers, Blender/dependency/interface changes as well as these files",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP设置两源及活动参考，调用associate_sources并核对身份、变换和全部数组；其他源类型/刚体功能须另确认范围",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Not Run"
+      }
+    },
+    {
+      "id": "atomic-charge-and-dipole",
+      "title": "Mulliken电荷着色与偶极显示参数",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-01",
+        "method": "Historical Agent Computer Use with MCP read-only independent color/vector assertions",
+        "source_commit": "b7090967e6618c15449efec278bcd47a0f018d54",
+        "product_tree": "9905f2c69eb28a7e33460b5fc6f02c7ad43bd896",
+        "candidate_sha256": "9795a9ea2c262f9c50f877a7373cf820a3a91794474817f515cdac4430dfe1d1",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "P03原子为活动对象；创建偶极后改选偶极，取消Properties固定",
+        "visible_entry": "Properties → Object → 科学记录与振动模式 → 设置原子电荷着色；N → 创建视图与检查工具 → 创建偶极矢量；Modifier → Angstrom per Debye",
+        "validated_scope": "Mulliken电荷及Maximum 1→0.5；偶极0.5→1.5 Å/Debye、3倍长度、单位换算/方向不变；当前批次导出不改写历史GUI身份",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/atomic/charge-GUI-readback.json",
+            "sha256": "9be9eb9746d957d82349d39a6ab1096de616f0e893294f292aacf1508139d0cf",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/atomic/charge-evaluated-visual-followup.json",
+            "sha256": "e60de0d497336e94788e2f3f12c0173284919c39750481bb74f1c484242fd8b6",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/atomic/dipole-GUI-created-baseline.json",
+            "sha256": "0ece8bce2f50ee386ef158f48b7d8225b1cb40024c2cdbc9de834e8d7a4c5486",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/atomic/dipole-GUI-scale-result.json",
+            "sha256": "0c4b3d59b666aca7a42ae2581c2f553fe083fa9fc3622aa1813eed46e99a879b",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-05-charge-mulliken-dialog.jpg",
+            "sha256": "1c6becd2208a51986eebfd3d4db292a26278d721c4fd9c54306ccecda9a17fd9"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-05-charge-range-half.jpg",
+            "sha256": "b125c1b247b0a2c7a1c80ebdf5c94f54e774aefe5ae5f435a9dd1d6ae14d496e"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-05-dipole-created-default.jpg",
+            "sha256": "ea70bee5b0b9c0444315f6c5f6fff1dfd221fd0a05a0b8f74c80db2f59ede105"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C04-05-dipole-scale-1_5.jpg",
+            "sha256": "f70765f2e7f4002c4c9ec029a4b849b5cea5bb1bf5d9bc51f1db5018399b0145"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/atomic_properties.py": "1da40d035c4155ea397ff3118cd5b7c182e9d86a19b588437e785c93ea4cc922",
+        "qcblender/blender/scalars.py": "1e17b26bf258a6a10963410d597a248b31cb60998b9a030d3fa03b6e7df7ac89",
+        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+        "qcblender/blender/graph.py": "887b365c7fd1c849fcf55bbdb4a5e37f01f146b674994198703d76dc951dc325",
+        "qcblender/data.py": "58a45c8c03b99508db1dbd74d36b38bff518d64361b561249a0320293a7c1a70"
+      },
+      "fingerprint_review": "Review callback/helper, dependency and unit changes before reuse; current render evidence does not replace control assertions",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "MCP调用color_charge/create_dipole并设置已覆盖输入；独立核对电荷数组/色值、Debye换算、箭头长度和科学数组",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Not Run"
+      }
     }
   ]
 }

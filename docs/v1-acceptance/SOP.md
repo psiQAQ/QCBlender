@@ -565,6 +565,14 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    [用户截图待引用：C04-05，活动对象、参数与结果同屏；参数变化保留前后画面]
 
+   ![Agent GUI选择Mulliken电荷；此图为b709096批次](screenshot/C04-05-charge-mulliken-dialog.jpg)
+
+   ![Agent GUI将Charge Maximum设为0.5 e；保留原科学电荷](screenshot/C04-05-charge-range-half.jpg)
+
+   ![Agent GUI创建偶极；默认0.5 Å/Debye](screenshot/C04-05-dipole-created-default.jpg)
+
+   ![Agent GUI将偶极设为1.5 Å/Debye；方向及源向量不变](screenshot/C04-05-dipole-scale-1_5.jpg)
+
 6. 选 ESP 场，点 **创建切片**；选新切片，在 **空间观察** 改 Center/Rotation/Width/Height，在 **几何表示** 改 **显示采样数/轴**（Resolution）。点 **按源网格或三个原子定平面**，选 **Grid ij / Grid jk / Grid ki / Three source atoms**，Associated atom view选水二聚体原子对象，First/Second/Third source atom分别填 **2/1/4**（三点非共线）；使用 3D Viewport 工具栏 **QC Slice Gizmo** 平移/旋转，核对平面记录。在对象属性 **切片等值线 → 开启等值线**，本例ESP切片选 **几何场**；先留 **阈值列表（空白：自动 9 条）** 为空，再填 **−0.02,0,0.02**（hartree/e）并点 **更新等值线**，等待异步曲线/标签更新，变更后无效单元不连线。
 
    [用户截图待引用：C04-06，活动对象、参数与结果同屏；参数变化保留前后画面]
@@ -625,13 +633,23 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    上述密度示例沿用步骤1的网格间距0.7 Å、Margin 3 Å，从(0, −2, 1.45)到(0, 2, 1.45)，Samples=101。步骤8的 ESP 检查仍需改选 ESP 场单独执行，两种场的单位分别记录。
 
-9. 源关联复核：导入 **P03/water-dimer.fch** 别名，选两个同构型原子对象，最后选参考对象，点 **对象属性主面板 → 关联选中数据源**。检查原子顺序和构型，按实际需要开启刚体配准；线性/单中心几何不自动唯一配准。两个理论层次/能量各自保留。
+9. 源关联复核：导入 **P03/water-dimer.fch** 别名。在 **3D Viewport / Outliner** 先选新导入的原子对象，再按 `Shift` 选原有 FCHK 原子对象，使原对象成为活动参考。转到 **Properties → Object → QCBlender · 对象与量子化学 → 关联选中数据源**。本例逐字节别名保持相同原子顺序和构型，**Align rigid rotation/translation** 不勾选，**Maximum atom deviation (angstrom)** 保持 **0.001 Å**；双击数值框可查看完整精度，未编辑时可能显示为 `0.00`。点击 **确定**，预期提示 **Atom order and geometry matched; each source retains its own properties**，两源 Dataset、理论层次和能量记录分别保留。需要刚体配准的其他输入另行核对；线性/单中心几何不自动唯一配准。
 
    [用户截图待引用：C04-09，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   ![MCP设置新源与活动参考；GUI关联按钮可用](screenshot/C04-09-source-selection.jpg)
+
+   ![Agent首次GUI关联：刚体配准关闭，完整容差0.001 Å](screenshot/C04-09-association-tolerance.jpg)
+
+   ![Agent GUI确认成功；MCP核对六原子映射和源数组不变](screenshot/C04-09-association-success.jpg)
 
 10. 对应 N06–N11/N17，按 0.4 保存；冷重开与移动后再次导出 CSV，核对保存数组/摘要。证据：`C04.png`、`C04-esp.png`、`C04-charge.png`、`C04-dipole.png`、`C04-slice.png`、`C04-profile.png`、CSV 和工程。
 
    [用户截图待引用：C04-10，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   本例成图：密度/ESP表面与分子从正面观察；图例的 **Legend Rotation** 设为 **X=90°、Y=0°、Z≈17.19°（0.3 rad）**，使刻度朝向相机。自由切片从顶面观察，更新当前平面等值线并等待完成后取景。剖面从正面观察，创建相机后在 **F9 → Margin per side** 设为 **0.20**，切片可用 **0.15**，其余 **0.05**。检查完整单位和刻度处于相机画幅内，再渲染。独立示例工程保存各成图相机；这些排版参数不修改科学数组。
+
+   ![MCP导出并另存阶段工程：7 Dataset、222数组、117配套文件；新工程冷重开待验收](screenshot/C04-10-association-exports-saved-MCP.jpg)
 
    ![MCP另存检查点：6 Dataset、172数组；此图尚非最终C04成图](screenshot/C04-10-slice-fixed-checkpoint-saved-MCP.jpg)
 

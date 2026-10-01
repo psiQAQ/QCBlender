@@ -6,6 +6,8 @@ Blocked by: 01
 
 ## Comments
 
+- 2026-10-01 C04关联/导出：同候选e26d22a的FCH真实异步导入MCP Passed；MCP设置选择顺序，GUI关联按钮与对话框确认Passed，6原子映射/0偏差/源数组不变。六类PNG、三CSV、7 Dataset/222数组/15引用/4体积/117文件工程与同条目ZIP保全；原87b9c检查点不变。PID44636正常退出，8张GUI/MCP示例截图紧接步骤；历史b709096电荷/偶极另登记，操作共22项。完整C04/新工程冷重开/全C-N仍Not Run，02保持claimed；证据full/C04/completion/preservation.json。
+
 - 2026-10-01 C04切片/探针/剖面补验：候选e26d22a，原失败的混合Dataset路径场景GUI ij/jk/ki/atoms及FREE/Gizmo Passed；三原子2/1/4另MCP重放。自动/显式等值线与标签不跨无效单元；ESP Geometry Enter/Escape与Color点击、游标有效/域外拒绝Passed。101点Geometry/Color剖面同值，域外46个CSV值空白；GUI图幅4→6不改数组。新工程6 Dataset/172数组/14引用/4体积/95文件保全，新PID52600冷读/CSV复导出Passed；20张示例截图紧接步骤，4操作登记。完整C04/全C-N仍Not Run，02保持claimed；证据full/C04/slice-retest/preservation.json。
 
 - 2026-10-01 C04旧入口补验：原候选默认F3无入口，796abe2右键菜单执行Passed但F3仍Failed；b709096补入顶部Object菜单后默认F3实际执行Passed。新未映射视图162顶点/21点CPU参考误差1.53e-8 hartree/e；选择由MCP设置，Outliner选择点击Not Run。三份阶段工程各74文件、3 Dataset/154数组保全，PID10796正常退出，5张截图紧接步骤。旧诊断保留，不继承旧候选Passed；完整C04、新阶段冷重开及全C/N仍Not Run，02保持claimed。证据mapping-top-menu/preservation.json。

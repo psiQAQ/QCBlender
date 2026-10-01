@@ -1680,6 +1680,25 @@
         "sha256": "003da3c6e87cae59885b858dabe17abb8361a6c4f0daff1c4ed3223053099176",
         "status": "Passed"
       }
+    },
+    "C04_association_exports": {
+      "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/preservation.json",
+      "sha256": "26e9222488bb1a40dd2e86f54405b03210e51a356cf95a217ac27a49bb4ac908",
+      "status": "Passed",
+      "scope": "C04 association, export and checkpoint preservation only; complete C04/full tutorial remain Not Run",
+      "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
+      "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+      "user_operation": "Not Run",
+      "agent_computer_use": "Passed: association button/dialog only; source selection MCP",
+      "mcp": "Passed: same-input import/data assertions, six export types, portable save/archive",
+      "project": "D:\\workspace\\QCBlender\\outputs\\projects\\tutorial-cu-full\\cases\\C04\\C04-association-exports.blend",
+      "cold_chain": "Not Run",
+      "independent_scientific_signature": "Not Run",
+      "verification": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/verification.json",
+        "sha256": "11be4c5c2b2b45fbbf55e08f81aeb1307f032ca1f86c86da9046c0a455c5ce3b",
+        "status": "Passed"
+      }
     }
   },
   "historical_partial_supplement": {
