@@ -16,6 +16,8 @@
 
 ## 当前任务与候选
 
+当前技术候选为`outputs/candidates/current/tutorial-a67d4b3/qcblender-0.0.1.zip`（a67d4b3，SHA-256见[最终技术资格索引](acceptance/tutorial-final-qualification.json)）。同批报告/日志/命令/脚本位于`outputs/evidence/2026-10-02/tutorial-cu/final-qualification/`；保全工程为`outputs/projects/tutorial-cu-full/qualification-a67d4b3/install/mo8.blend + .qcdata`和`legend/evidence.blend + .qcdata`，逐文件映射见`project-path-map.json`。新候选自动化技术资格Passed；完整GUI仅剩显示层首次移除确认，02claimed、03pending，未合并/归档。历史候选保留各自原身份及报告，待最终验收后按维护策略处理；重建顺序见DEVELOPMENT与索引。
+
 2026-10-02 三个公共资产：qc.isosurface.v3、qc.surface_style.v1、qc.volume_fog.v1独立菜单添加和六条核心接线GUI Passed；固定Socket接口、正负相、三样式独立边/顶点数、独立阈值与opacity属性MCP Passed，原对象/节点布局/绑定/66数组未变。48文件/3Dataset/两个内嵌库保全，PID14372新进程冷读全快照/点求值Passed，全部进程退出。12图紧接N04/N10步骤，登记67项；Eevee雾alpha通过但本例RGB偏暗，Cycles可见诊断分别记录，辅助准备不冒称GUI。02仍claimed、03pending，统一资格及合并归档待完成。
 
 公共表面/雾证据：`outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/public-surfaces/`；保全工程：`outputs/projects/tutorial-cu-full/cases/public-surfaces/N04-N10-public-surfaces.blend + .qcdata`。逐文件摘要与旧新映射见`preservation.json`/`project-path-map.json`；原始C13保留，实际菜单/连接图在SOP对应步骤。

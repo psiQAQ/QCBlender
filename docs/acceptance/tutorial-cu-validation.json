@@ -6413,5 +6413,14 @@
     "historical_GUI_and_current_replay_are_distinct": true,
     "single_Blender_process": true,
     "full_case_results_still_required": true
+  },
+  "current_automated_qualification": {
+    "path": "docs/acceptance/tutorial-final-qualification.json",
+    "sha256": "c0a17e06cc5085c4ad5c9e922ccfcaef23d89005677c13f79a9d154cc8e6fbb9",
+    "source_commit": "a67d4b352958e7efffdf559e280f10c7a44c8a34",
+    "candidate_sha256": "bd3a78e1089bc7afdf32987e2169a7059cdb9df23ee0f90cddf159302ebcdd23",
+    "status": "Passed",
+    "scope": "Automated technical checks only; full GUI Remove still Not Run",
+    "history": "All existing candidate/report identities retained"
   }
 }

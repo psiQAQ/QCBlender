@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "date": "2026-10-02",
+  "status": "Passed",
+  "scope": "本批自动化技术资格；完整GUI任务仍缺C05/N15首次移除点击，合并与归档尚未执行",
+  "source": {
+    "commit": "a67d4b352958e7efffdf559e280f10c7a44c8a34",
+    "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+    "files": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/source-hashes.json",
+      "sha256": "d44f4b506073f855ac07fa74caeaa7ab8eeaf95966379732d46360a4a4668c09"
+    },
+    "product_matches_GUI_checked_deb9416": true
+  },
+  "candidate": {
+    "path": "outputs/candidates/current/tutorial-a67d4b3/qcblender-0.0.1.zip",
+    "sha256": "bd3a78e1089bc7afdf32987e2169a7059cdb9df23ee0f90cddf159302ebcdd23",
+    "bytes": 50634497
+  },
+  "environment": {
+    "platform": "Windows x64",
+    "blender": "5.1.1",
+    "python": "3.13.9",
+    "preflight": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/preflight.json",
+      "sha256": "535b6754c8ac414acd4d6c3e4f9d9d9ec40930784d6011b65496e4a3eeefddd4"
+    },
+    "shared_science": "outputs/science",
+    "shared_build_tools": "outputs/build-site",
+    "locked_wheels": "outputs/wheels/qualified"
+  },
+  "checks": {
+    "science": {
+      "status": "Passed",
+      "tests": 69,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "related_unittests": {
+      "status": "Passed",
+      "tests": 31,
+      "passed": 30,
+      "skipped": 1,
+      "skip_reason": "Windows平台不运行POSIX大小写测试；Windows路径测试均已运行"
+    },
+    "node_atom_identity_and_fixed_interface": "Passed",
+    "public_samples": "Passed",
+    "offline_install_lifecycle": "Passed",
+    "public_node_assets": "Passed",
+    "nine_public_assets_complete_signature_comparison": "Passed",
+    "original_Chinese_moved_and_canonical_cold_open": "Passed",
+    "cache_rebuild_and_relocation": "Passed",
+    "legend_layout_legacy_compatibility_and_cold_open": "Passed",
+    "native_render_visual_inspection": "Passed",
+    "GUI_historical_reuse_review": "Passed",
+    "GUI_Remove": "Not Run",
+    "user_walkthrough": "Not Run",
+    "independent_scientific_signature": "Not Run",
+    "merge_main": "Not Run",
+    "archive_cleanup": "Not Run"
+  },
+  "evidence": {
+    "qualification": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/qualification-final.json",
+      "sha256": "9a9903f8b03c6ee1ae58e429d39d4eefec8d9101477caa39cd82df373fcfc10b"
+    },
+    "index": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/evidence-index-final.json",
+      "sha256": "af05f18a779f22ba436fcce2dcb366f1a0ca5e2cfd06ba7113dbfe191d5e8176"
+    },
+    "GUI_history": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/GUI-history-audit.json",
+      "sha256": "b5e1946c1877ad0e0708364409220f8a8d3c574b4625dbc6f3b2da7ce69ca4fc"
+    },
+    "GUI_reuse": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/GUI-reuse-review.json",
+      "sha256": "d9c09ab02718a498d720c6eaa746f659a9249569228a748519e91d4804d55a98"
+    },
+    "assets": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/asset-content.json",
+      "sha256": "811eb8b8efcd33221307f38c372e4e339fc05f3df9f3b45a858bcd438aebda86"
+    },
+    "project_mapping": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/project-path-map.json",
+      "sha256": "46697a9e31dafa928344453db06fe32d21b99218088bf3580c6515f860da6de7"
+    },
+    "visuals": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/visual-inspection.json",
+      "sha256": "13129af4366c161ca526416eaf14a64bc24575088bd29c145cef766aa9450089"
+    }
+  },
+  "projects": {
+    "install": "outputs/projects/tutorial-cu-full/qualification-a67d4b3/install/mo8.blend",
+    "legend": "outputs/projects/tutorial-cu-full/qualification-a67d4b3/legend/evidence.blend"
+  },
+  "commands": "本批 logs/ 与 *-command.json 保存完整命令、实际PID、退出码和日志摘要；scripts/final-complete-runner.py 保存串行执行步骤。",
+  "rebuild": "从上述提交取回源码，按docs/DEVELOPMENT.md增量准备核对共用环境和110输入；选择未使用的短批次，运行科学/节点/样本、打包安装、原地与中文移动冷重开、恢复与图例专项，再生成同批evidence-index并运行tools/qualify_package.py。新ZIP记录新摘要。",
+  "GUI_pending": {
+    "step": "C05第6步 / N15 Display Layers → 移除(Remove)",
+    "project": "outputs/projects/tutorial-cu-full/cases/layer-removal/C05-Remove-confirmation.blend",
+    "preparation": "Passed：仅独立临时副本及12复制标注，原工程/数组保全",
+    "execution": "Not Run：等待Computer Use界面删除临执行确认",
+    "process": "PID28844已保存后正常退出；当前无Blender",
+    "evidence": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/layer-removal/pending-confirmation.json"
+  },
+  "signature": null
+}
