@@ -266,6 +266,7 @@ def ir_spectrum(parent, frequencies, intensities):
     label = bpy.data.objects.new('QC IR labels', text)
     bpy.context.collection.objects.link(label)
     label.parent = obj
+    label['qc_spectrum_label'] = True
     label.location = (0, 0, -.35)
     label.rotation_euler = (math.pi/2, 0, 0)
     return obj

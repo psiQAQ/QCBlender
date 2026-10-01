@@ -16,6 +16,9 @@ def sync_chart_children(obj):
     kind = obj.get('qc_view_kind')
     if kind == 'profile':
         parts = (child for child in obj.children if child.get('qc_profile_tick'))
+    elif kind == 'spectrum':
+        parts = (child for child in obj.children if child.get('qc_spectrum_label')
+                 or (child.type == 'FONT' and child.data.name.startswith('QC IR axis labels')))
     elif kind == 'slice':
         carriers = (child for child in obj.children if 'qc_contour_owner' in child)
         parts = (part for carrier in carriers for part in
