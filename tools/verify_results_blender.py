@@ -5,6 +5,7 @@ saved evidence.blend and moved 中文 path/evidence.blend in separate cold Blend
 sessions and run --check reopen. No check is marked Passed before it executes.
 """
 import argparse
+import csv
 import hashlib
 import importlib
 import importlib.util
@@ -161,12 +162,13 @@ def reject_without_mutation(obj, action):
     return error
 
 
-def check_c07():
-    scatter = next(obj for obj in bpy.context.scene.objects if obj.get('qc_view_kind') == 'scatter')
-    active(scatter)
-    data = module('data').load_dataset(bpy.path.abspath(scatter['qc_dataset']))
+def check_c07(out):
+    record = role('paired')
+    active(record)
+    assert record.get('qc_data_record') and len(record.data.vertices) == 0 and not record.modifiers
+    data = module('data').load_dataset(bpy.path.abspath(record['qc_dataset']))
     before = source_arrays()
-    browser = scatter.qc_result_browser
+    browser = record.qc_result_browser
     browser.swap_axes = True
     fields = data.metadata['fields']
     x = data.arrays[fields[0]['array']].ravel()
@@ -174,49 +176,40 @@ def check_c07():
     valid = (data.arrays[fields[0]['valid_mask']].ravel() &
              data.arrays[fields[1]['valid_mask']].ravel() & np.isfinite(x) & np.isfinite(y))
     assert valid.any()
-    x, y = x[valid], y[valid]
     browser.x_low_on = browser.x_high_on = browser.y_low_on = browser.y_high_on = True
-    browser.x_low, browser.x_high = (float(np.nanquantile(x, q)) for q in (.2, .8))
-    browser.y_low, browser.y_high = (float(np.nanquantile(y, q)) for q in (.2, .8))
-    report = finish_modal('filter_result_scatter')
-    saved = state(scatter)
+    browser.x_low, browser.x_high = (float(np.quantile(x[valid], q)) for q in (.2, .8))
+    browser.y_low, browser.y_high = (float(np.quantile(y[valid], q)) for q in (.2, .8))
+    assert bpy.ops.qcblender.filter_result_scatter() == {'FINISHED'}
+    saved = state(record)
     assert saved['x_field'] == 0 and saved['y_field'] == 1
-    assert saved['matching_count'] == report['matching_count']
-    assert saved['displayed_count'] == len(scatter.data.vertices) <= 50000
-    assert saved['matching_count'] >= saved['displayed_count'] > 0
-    assert 'dataset' not in saved and source_arrays() == before
-    unchanged = object_snapshot(scatter)
-    original_swap = browser.swap_axes
-    changed_axes = reject_changed_modal('filter_result_scatter',
-                                        lambda: setattr(browser, 'swap_axes', not original_swap))
-    browser.swap_axes = original_swap
-    original_name = scatter.name
-    renamed = reject_changed_modal('filter_result_scatter',
-                                   lambda: setattr(scatter, 'name', original_name + ' pending'))
-    scatter.name = original_name
-    source = scatter.parent
-    assert source is not None
-    original_source_sha = source.get('qc_source_sha256')
-    assert isinstance(original_source_sha, str)
-    changed_source = reject_changed_modal('filter_result_scatter',
-                                          lambda: source.__setitem__('qc_source_sha256', '0' * 64))
-    source['qc_source_sha256'] = original_source_sha
-    assert object_snapshot(scatter) == unchanged
-    job = module('blender.jobs').Job('result_scatter', dataset=str(Path(bpy.path.abspath(scatter['qc_dataset']))),
-        dataset_sha256='0' * 64, x_field=0, y_field=1)
+    expected = np.flatnonzero(valid & (x >= saved['x_min']) & (x <= saved['x_max']) &
+                             (y >= saved['y_min']) & (y <= saved['y_max']))
+    assert len(expected) > 0 and len(record.data.vertices) == 0
+    report = finish_modal('export_data', kind='paired', scope='FILTERED', directory=str(out / 'csv'))
+    assert report['files'][0]['row_count'] == len(expected)
+    with (Path(report['directory']) / 'paired_voxels.csv').open(encoding='utf-8', newline='') as stream:
+        rows = csv.DictReader(stream)
+        for index in expected:
+            row = next(rows)
+            assert int(row['flat_index_0based']) == index
+            assert float(row['x_value']) == x[index] and float(row['y_value']) == y[index]
+        assert next(rows, None) is None
+    original_low, original_high = browser.x_low, browser.x_high
+    browser.x_low, browser.x_high = 1., -1.
+    invalid_range = reject_without_mutation(record, lambda: bpy.ops.qcblender.filter_result_scatter())
+    browser.x_low, browser.x_high = original_low, original_high
+    unchanged = object_snapshot(record)
+    job = module('blender.jobs').Job('export_data', dataset=bpy.path.abspath(record['qc_dataset']),
+        dataset_sha256='0' * 64, output_directory=str(out / 'csv'), kind='paired', scope='ALL', filters={})
     deadline = time.monotonic() + 180
-    while time.monotonic() < deadline:
-        failed = job.poll()
-        if failed is not None:
-            break
+    while (failed := job.poll()) is None:
+        if time.monotonic() > deadline:
+            job.cancel()
+            raise TimeoutError('Invalid paired Dataset digest')
         time.sleep(.1)
-    else:
-        job.cancel()
-        raise TimeoutError('Invalid scatter source digest')
-    assert failed['status'] == 'failed' and 'source changed' in failed['error'].lower(), failed
-    assert source_arrays() == before and object_snapshot(scatter) == unchanged
-    return {'scatter_job': report, 'changed_axes': changed_axes,
-            'renamed_target': renamed, 'changed_source': changed_source, 'bad_digest': 'Passed'}
+    assert failed['status'] == 'failed' and 'changed' in failed['error'].lower(), failed
+    assert source_arrays() == before and object_snapshot(record) == unchanged
+    return {'paired_csv_job': report, 'invalid_range': invalid_range, 'bad_digest': 'Passed'}
 
 
 def check_c08():
@@ -489,7 +482,7 @@ def prepare(case, out, source_root, fixture=None):
     area = next(area for area in bpy.context.screen.areas if area.type == 'VIEW_3D')
     region = next(region for region in area.regions if region.type == 'WINDOW')
     with bpy.context.temp_override(area=area, region=region):
-        checks = {'C07': lambda: check_c07(), 'C08': lambda: check_c08(),
+        checks = {'C07': lambda: check_c07(out), 'C08': lambda: check_c08(),
                   'C09': lambda: check_c09(), 'C12': lambda: check_c12(source_root),
                   'NBO': lambda: check_nbo(source_root)}[case]()
         expected = snapshot()

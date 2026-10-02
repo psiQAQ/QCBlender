@@ -95,7 +95,7 @@ def prepare(case, root=None):
         module('blender.scalars').add_mapping(surface, color, -.05, .05)
         color.hide_set(True)
         color.hide_render = True
-        module('blender.external_fields').scatter_view(paired, data, atoms)
+        module('blender.external_fields').paired_record(paired, data, atoms)
         active(surface)
     elif case == 'NBO':
         source = input_path('log-examples/water_neutral_nbo_opt_freq.out', root)

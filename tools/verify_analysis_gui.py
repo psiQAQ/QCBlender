@@ -23,8 +23,8 @@ def check():
                 obj = next(o for o in bpy.data.objects if o.get('qc_view_kind') == 'nbo')
                 panel = 'QCBLENDER_PT_nbo'
             elif kind == 'paired':
-                obj = next(o for o in bpy.data.objects if o.get('qc_view_kind') == 'scatter')
-                panel = 'QCBLENDER_PT_paired_scatter'
+                obj = next(o for o in bpy.data.objects if o.get('qc_analysis_role') == 'paired')
+                panel = 'QCBLENDER_PT_result_browser'
             elif kind == 'esp':
                 obj = next(o for o in bpy.data.objects if o.get('qc_analysis_role') == 'esp_area')
                 panel = 'QCBLENDER_PT_external_results'
