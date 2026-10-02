@@ -56,7 +56,7 @@ class QCBLENDER_OT_export_data(AsyncOperation, bpy.types.Operator):
     bl_idname = 'qcblender.export_data'
     bl_label = 'Export Scientific Data'
 
-    directory: StringProperty(name='Output directory', subtype='DIR_PATH')
+    directory: StringProperty(name='Output directory', subtype='DIR_PATH', options={'SKIP_SAVE'})
     kind: EnumProperty(name='Data', items=export_choices)
     scope: EnumProperty(name='Rows', items=[('ALL', 'All source records', ''),
         ('FILTERED', 'Current filter', 'Paired field values or ESP area bins')], default='ALL')

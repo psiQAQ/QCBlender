@@ -162,6 +162,27 @@ def reject_without_mutation(obj, action):
     return error
 
 
+def check_export_directory_defaults(record, out):
+    directory_property = bpy.ops.qcblender.export_data.get_rna_type().properties['directory']
+    assert directory_property.is_skip_save, 'One-time directory overrides must not become operator defaults'
+    preferences = bpy.context.preferences.addons[evidence.MODULE].preferences
+    original = preferences.data_output_directory
+    preferred, override = out / 'preferred-data', out / 'one-time-data'
+    try:
+        preferences.data_output_directory = str(preferred)
+        active(record)
+        explicit = finish_modal('export_data', kind='paired', scope='FILTERED', directory=str(override))
+        assert Path(explicit['directory']).parent.resolve() == override.resolve()
+        default = finish_modal('export_data', kind='paired', scope='FILTERED')
+        assert Path(default['directory']).parent.resolve() == preferred.resolve()
+        assert preferences.data_output_directory == str(preferred)
+        return {'rna_skip_save': 'Passed', 'explicit_directory': explicit['directory'],
+                'preferred_directory': default['directory'],
+                'consecutive_invoke_dialogs': 'Not Run: visible GUI regression required'}
+    finally:
+        preferences.data_output_directory = original
+
+
 def check_c07(out):
     record = role('paired')
     active(record)
@@ -209,7 +230,8 @@ def check_c07(out):
         time.sleep(.1)
     assert failed['status'] == 'failed' and 'changed' in failed['error'].lower(), failed
     assert source_arrays() == before and object_snapshot(record) == unchanged
-    return {'paired_csv_job': report, 'invalid_range': invalid_range, 'bad_digest': 'Passed'}
+    return {'paired_csv_job': report, 'invalid_range': invalid_range, 'bad_digest': 'Passed',
+            'export_directory_defaults': check_export_directory_defaults(record, out)}
 
 
 def check_c08():
