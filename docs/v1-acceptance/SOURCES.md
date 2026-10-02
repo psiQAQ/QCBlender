@@ -168,7 +168,7 @@ S08 的许可未核清前，验收可在本地使用；不得把该数据文件�
 
 P01/P03/P05 是自行定义的示意构型，未声称优化结构；本次场网格用于导入/显示检查，不声称科学网格收敛。Multiwfn 引用保存在样本 `NOTICE.md`。ETS-NOCV 逐体素公式、真实空间密度、构型/电子数/自旋与源值互校均 Passed，视觉表现另验。
 
-公开 ZIP 当前本地交付位置为 `outputs/runs/public-tutorial/samples/qcblender-public-tutorial-samples-v1.zip`，仅 27 份许可合格数据加清单/LICENSE/NOTICE；没有原站未知许可文件或程序二进制。尚未发布远程下载地址。小文件 Git 跟踪于 `tests/data/tutorial/`，较大 Cube 只保留主检出 `tests/data/local/public-tutorial/` 并进入集中索引；工作树读取大文件时显式 `--reference-root D:/workspace/QCBlender`。不要复制整套历史样本到工作树。
+公开 ZIP 当前本地交付位置为 `outputs/evidence/2026-10-02/tutorial-cu/final-samples/qcblender-public-tutorial-samples-v1.zip`，身份见[样本交付索引](../acceptance/tutorial-sample-delivery.json)。C01固定Alpha MO9/Beta MO7与自动HOMO Alpha8/Beta6分别记录；27份科学输入与旧包逐字节相同，旧批次报告继续绑定原包。当前包仅 27 份许可合格数据加清单/LICENSE/NOTICE；没有原站未知许可文件或程序二进制。尚未发布远程下载地址。小文件 Git 跟踪于 `tests/data/tutorial/`，较大 Cube 只保留主检出 `tests/data/local/public-tutorial/` 并进入集中索引；工作树读取大文件时显式 `--reference-root D:/workspace/QCBlender`。不要复制整套历史样本到工作树。
 
 P02 的独立获取适用 PowerShell，在公开样本解压根新建 `P02/` 后执行。该原站定位和本地读取说明**不授予再分发权限**；许可不明日志不得加入公开包，且未承诺下载者在其环境下拥有额外使用权。cclib 官方 [安装说明](https://cclib.readthedocs.io/en/stable/how_to_install.html)说明测试日志数据存在非自由许可问题，不能由代码仓库许可证替代逐文件许可核查。
 

@@ -82,3 +82,6 @@ Blocked by: 01
 2026-10-02 三个公共资产：qc.isosurface.v3、qc.surface_style.v1、qc.volume_fog.v1独立菜单添加和六条核心接线GUI Passed；固定Socket接口、正负相、三样式独立边/顶点数、独立阈值与opacity属性MCP Passed，原对象/节点布局/绑定/66数组未变。48文件/3Dataset/两个内嵌库保全，PID14372新进程冷读全快照/点求值Passed，全部进程退出。12图紧接N04/N10步骤，登记67项；Eevee雾alpha通过但本例RGB偏暗，Cycles可见诊断分别记录，辅助准备不冒称GUI。02仍claimed、03pending，统一资格及合并归档待完成。
 
 2026-10-02 固定整合提交a67d4b3/产品树3dd1305：110输入与11锁定wheels核对、69科学测试(零失败/错误/跳过)、31相关单测(30通过，POSIX专用1项在Windows跳过)、节点身份/固定接口、样本解析、全新候选bd3a78e安装/生命周期/公共资产、原地/中文移动/统一项目位置冷读、缓存恢复和图例专项Passed。九公共组完整签名及目录元数据与原GUI候选相同；67项操作353个历史引用摘要核对与6源码差异复用审阅Passed。工程已逐文件保全，原始报告不改写。C05/N15首次GUI移除等待临执行确认，02仍claimed、03pending；用户/独立科研签署Not Run。当前无Blender，main仍b453723；资格及重建入口见docs/acceptance/tutorial-final-qualification.json。
+
+
+2026-10-02 C01元数据复核：53ed4dc固定Alpha9/Beta7与自动HOMO Alpha8/Beta6，原FCHK简并轨道真实编号与错误beta_homo=7拒绝Passed。新样本包56faa42仅替换清单，27科学文件和许可说明字节不变，旧包/历史GUI报告保留；证据final-samples/completion.json，受控索引docs/acceptance/tutorial-sample-delivery.json。纯文档/测试变化，产品a67d4b3与候选bd3a78e不变；C05/N15首次移除仍等待临执行确认，02claimed、03pending，不合并或归档。

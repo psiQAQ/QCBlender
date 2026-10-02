@@ -4,14 +4,14 @@
 
 本教程保留 **C01–C13** 科学案例和 **N01–N18** 节点/交互检查编号。按钮位置与当前插件界面一致；对话框及部分控件仍使用英文。操作结果只记 **Passed / Failed / Not Run**。用户实际点击、Agent Computer Use 点击、MCP操作与数据核对、独立科研签署分别记录；Agent 不填写使用者签名。维护者按 [交互规则](../agents/blender-interaction.md) 和 [操作登记表](../acceptance/blender-operations.json) 复用已确认且功能未变的操作，MCP/命令行复验单独记录，完整案例结果仍逐项验收。
 
-本文的 Agent 示例截图紧接相应操作展示，原始 JPEG 保存在同级 `screenshot/` 目录。截图记录本批可见 Blender 状态；图注区分 Computer Use 实际点击与 MCP 执行后观察截图，保留你的逐步骤截图占位；各图的候选身份、输入、参数和检查范围见 [点击补验索引](../acceptance/tutorial-cu-validation.json)。C02、密度生成/取样/CSV、氢显隐与首次保存使用90ff9bf候选；IR层显隐复验、最终剖面、相机、渲染及冷重开使用1554ee2候选。候选92d498c的C01雾修复与三路径冷重开、C02能量/振动/优化/连续导入/渲染/三路径冷重开，以及C03双符号/独立着色/保存和MCP三路径冷重开截图同样逐步骤展示，候选e26d22a的C04切片/Gizmo/等值线、ESP几何及绑定色场探针、ESP剖面排版截图亦按步骤展示；其中MCP设置坐标、重放和冷重开单独标明。具体范围见索引 full_batch_progress；完整C/N点击覆盖及独立科研签署仍为Not Run。你复现时，将自己的截图保存到 `screenshot/`，在对应占位下一行填写 `![用户复做：C02-01](screenshot/C02-01-user.png)`；使用独立文件名，保留 Agent 示例便于对照。
+本文的 Agent 示例截图紧接相应操作展示，原始 JPEG 保存在同级 `screenshot/` 目录。截图记录本批可见 Blender 状态；图注区分 Computer Use 实际点击与 MCP 执行后观察截图，保留你的逐步骤截图占位；各图的候选身份、输入、参数和检查范围见 [点击补验索引](../acceptance/tutorial-cu-validation.json)。C02、密度生成/取样/CSV、氢显隐与首次保存使用90ff9bf候选；IR层显隐复验、最终剖面、相机、渲染及冷重开使用1554ee2候选。候选92d498c的C01雾修复与三路径冷重开、C02能量/振动/优化/连续导入/渲染/三路径冷重开，以及C03双符号/独立着色/保存和MCP三路径冷重开截图同样逐步骤展示，候选e26d22a的C04切片/Gizmo/等值线、ESP几何及绑定色场探针、ESP剖面排版截图亦按步骤展示；其中MCP设置坐标、重放和冷重开单独标明。具体范围见索引 full_batch_progress；完整C/N技术验收仅剩C05/N15首次显示层移除点击确认；独立科研签署仍为Not Run。你复现时，将自己的截图保存到 `screenshot/`，在对应占位下一行填写 `![用户复做：C02-01](screenshot/C02-01-user.png)`；使用独立文件名，保留 Agent 示例便于对照。
 
 ## 0. 准备、安装与通用操作
 
 ### 0.1 取得材料并建立本次目录
 
 1. 取得实际扩展安装 ZIP，核对提供者记录的版本、文件大小和 SHA-256；源码仓库 ZIP 不能直接安装为扩展。使用公开包时记录下载地址；维护者提供候选时记录候选身份。
-2. 向提供者取得 **qcblender-public-tutorial-samples-v1.zip**，SHA-256 为 `a4ccfc3ef91921817d17284196ba23ccfb7cce7b1643cdfa41af8e8a6103f85b`。核对后解压到本次 `inputs/`，保留包内 P01/P03/P04/P05 目录、LICENSE、NOTICE 和 `tutorial-samples.json`，署名 **QCBlender contributors**。按 [SOURCES 的公开教程获取说明](SOURCES.md#公开教程样本与独立获取2026-09-30) 单独取得 P02。新计算数据使用 CC BY 4.0；第三方材料保留原许可。公开包只收录允许分发的文件。受限或许可未知的材料按原站获取步骤取得并核对摘要，不能因其可下载便视为可再分发。取得不了必要文件时，在相应案例记录阻塞和 Not Run，其他案例可以继续。
+2. 向提供者取得 **qcblender-public-tutorial-samples-v1.zip**（当前交付身份见[样本交付索引](../acceptance/tutorial-sample-delivery.json)），SHA-256 为 `56faa42ad555d1e9fce9e33bc839779ab92935a89429dcae8db29d53b92e3b4f`。核对后解压到本次 `inputs/`，保留包内 P01/P03/P04/P05 目录、LICENSE、NOTICE 和 `tutorial-samples.json`，署名 **QCBlender contributors**。按 [SOURCES 的公开教程获取说明](SOURCES.md#公开教程样本与独立获取2026-09-30) 单独取得 P02。新计算数据使用 CC BY 4.0；第三方材料保留原许可。公开包只收录允许分发的文件。受限或许可未知的材料按原站获取步骤取得并核对摘要，不能因其可下载便视为可再分发。取得不了必要文件时，在相应案例记录阻塞和 Not Run，其他案例可以继续。
 3. 在自己的工作目录新建一个独立批次目录，例如 `QCBlender-tutorial/2026-09-30-run01/`，下面建立 `inputs/`、`cases/C01/` 至 `cases/C13/` 和 `moved/`。输入保持样本包的相对目录结构，尤其 IRC 的 CSV 与逐步 FCHK/Mayer 文本不能分离。不要覆盖上一批工程或用户已有文件。
 4. Windows PowerShell 中逐一核对安装 ZIP 和本次所用文件：
 

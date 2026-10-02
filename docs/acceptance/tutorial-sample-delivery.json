@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "date": "2026-10-02",
+  "status": "Passed",
+  "scope": "当前公开教程样本元数据修正与包身份；不重写历史GUI/科学资格，不表示独立人工签署",
+  "source_commit": "53ed4dc2bb0f743f35b4435c79fe0b2b0b971178",
+  "product_source_commit": "a67d4b352958e7efffdf559e280f10c7a44c8a34",
+  "product_unchanged": "Passed",
+  "manifest": {
+    "path": "docs/v1-acceptance/tutorial-samples.json",
+    "sha256": "59c192d18a9cd2c9cf904eb7a844e757a2884ccd095ccc55d73aae4b0d7b71dd"
+  },
+  "package": {
+    "path": "outputs/evidence/2026-10-02/tutorial-cu/final-samples/qcblender-public-tutorial-samples-v1.zip",
+    "sha256": "56faa42ad555d1e9fce9e33bc839779ab92935a89429dcae8db29d53b92e3b4f",
+    "bytes": 12173151,
+    "availability": "本地交付，未发布"
+  },
+  "previous_package": {
+    "path": "outputs/evidence/2026-09-30/public-tutorial/samples/qcblender-public-tutorial-samples-v1.zip",
+    "sha256": "a4ccfc3ef91921817d17284196ba23ccfb7cce7b1643cdfa41af8e8a6103f85b",
+    "availability": "历史包保留；原报告仍绑定此身份"
+  },
+  "c01_choices": {
+    "alpha_mo": 9,
+    "beta_mo": 7,
+    "alpha_homo": 8,
+    "beta_homo": 6
+  },
+  "unchanged_members": {
+    "scientific_files": 27,
+    "LICENSE_NOTICE": "Passed"
+  },
+  "checks": {
+    "sample_hash_license_parse_scientific_checks": "Passed",
+    "fixed_MO_and_source_HOMO_identity": "Passed",
+    "incorrect_beta_homo_7_rejection": "Passed",
+    "blender_preferences_and_registry": "Passed",
+    "new_GUI_execution": "Not Run",
+    "independent_scientific_signature": "Not Run"
+  },
+  "reports": {
+    "completion.json": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-samples/completion.json",
+      "sha256": "8a9436979862919c07cbe3bfff9a4eb00449230395a7a715cd6cee99af9dcc7a"
+    },
+    "tutorial-samples.json": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-samples/tutorial-samples.json",
+      "sha256": "ddcedcbf1eaf69e90a2410ad5f94965fccffa61395eb0bf222401f6c2f6268ea"
+    },
+    "package-members.json": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-samples/package-members.json",
+      "sha256": "9810d2a0c76d1f2e6762b70291894c3eee8d8c2e74d7a8155ffc16d9b3069aa6"
+    },
+    "negative-beta-homo.json": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-samples/negative-beta-homo.json",
+      "sha256": "0bc3956464ab1ad7ce8d8a21c2f8dc63c878510735461469145a2b77d12ee585"
+    },
+    "verification-command.json": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-samples/verification-command.json",
+      "sha256": "1c52516fb8b720eb88b7049a42a4bf9989d1300d607b146530330ea35ae482ea"
+    },
+    "blender-preference-check.json": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-samples/blender-preference-check.json",
+      "sha256": "424009b64b7386127afb89b68c27dfa6af822dc842e96b2a088a539d180ca30e"
+    }
+  },
+  "rebuild": "取回source_commit并保留原包；运行本批scripts/repackage-final-tutorial-samples.py的元数据替换步骤，将输出改为新独立批次。只替换tutorial-samples.json，逐字节验证其他成员，再使用tools/verify_tutorial_samples.py --reference-root <主检出> --package <新包> --report <新报告>。生成新摘要，保留旧报告。无需重新计算科学输入或改变依赖。",
+  "signature": null
+}
