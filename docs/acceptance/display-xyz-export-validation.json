@@ -1018,7 +1018,8 @@
       "bytes": 357,
       "sha256": "aa206f4717f05a84152e4820212274ccfd86d2ad99347dd92bd1a8fc4d88fc23"
     },
-    "note": "历史报告保持原始状态与摘要；修复后的Passed仅绑定新候选"
+    "note": "历史报告保持原始状态与摘要；修复后的Passed仅绑定新候选",
+    "original_build_script": "outputs/evidence/2026-10-02/display-xyz-export/final/scripts/build_display_xyz_export_final.py"
   },
   "preservation_map": {
     "path": "outputs/evidence/2026-10-02/display-xyz-export/final/preservation-map.json",
@@ -1029,8 +1030,8 @@
     "source_checkout": "以source_commit创建主仓库内独立worktree；按docs/DEVELOPMENT.md首次/增量路径检查工具、输入摘要、后端记录和锁定wheels",
     "inputs": "tests/data/local-inputs.json + docs/v1-acceptance/SOURCES.md + tutorial-samples.json；受限P02独立获取，缺输入在前置阶段停止",
     "shared_environment": "沿用outputs/build-site、outputs/science和outputs/wheels/qualified；核对每个wheel摘要，临时目录使用新的outputs/runs批次",
-    "commands": "本索引各checks的*-command.json保存实际命令/退出码/日志摘要；原脚本在final/scripts和scripts/workspace",
-    "build_script": "outputs/evidence/2026-10-02/display-xyz-export/final/scripts/build_display_xyz_export_final.py",
+    "commands": "各*-command.json和原批scripts为执行快照，含历史路径；通过closing映射复核字节。新批次按docs/DEVELOPMENT.md使用当前工具和qualified wheels，不依赖已删除候选/安装目录。",
+    "build_script": "tools/build_extension.py --blender <Blender 5.1.1> --wheels-dir outputs/wheels/qualified --output-dir <新批次>/dist",
     "verification_script": "outputs/evidence/2026-10-02/display-xyz-export/final/scripts/run_display_xyz_checks_final.py",
     "gui": "根据SOP关键步骤和blender-operations.json复核实现；仅操作一个PID，新功能/变更后的对话框重新通过Computer Use确认",
     "qualification": "tools/qualify_package.py --candidate <本次ZIP> --installed-dir <本次安装目录> --evidence-index <本批索引> --output <本批qualification.json>",
@@ -1041,5 +1042,14 @@
     "path": "outputs/evidence/2026-10-02/display-xyz-export/final/delivery-docs-qa.json",
     "sha256": "526ab0b6f8125db075c2bbda55524f239e6cb8b0432c883832576feedaeef35d",
     "status": "Passed"
+  },
+  "cleanup": {
+    "path": "docs/acceptance/display-xyz-export-cleanup.json",
+    "sha256": "dd54983b9c3e2bb13812966d50ff13a01ed1485a51483e7a638befafc3041519",
+    "status": "Passed",
+    "isolated_test_installation": "Removed after qualification; original report bytes and commands retained",
+    "earlier_candidate_archives": "Removed after hashes recorded; earlier GUI reports retain their original identity",
+    "latest_candidate": "Retained unchanged; rebuild would create a new candidate identity",
+    "preservation_routes": "closing/preservation-map.json and workspace-preservation-final.json take priority for current paths; historical maps retain per-snapshot hashes"
   }
 }

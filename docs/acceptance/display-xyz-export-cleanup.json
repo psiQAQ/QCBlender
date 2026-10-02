@@ -1,0 +1,126 @@
+{
+  "schema": 1,
+  "date": "2026-10-03",
+  "validation_batch_date": "2026-10-02",
+  "status": "Passed",
+  "scope": "This task closing; old permission/current-directory blockers independently deferred",
+  "source_commit": "9d3ff61d2e32c47357fe624cf93052bfed6dd041",
+  "product_tree": "58108f2c64d358ada1d5800be7e24f5cc45b7a10",
+  "candidate": {
+    "path": "outputs/candidates/current/display-xyz-export-9d3ff61/qcblender-0.0.1.zip",
+    "bytes": 50635717,
+    "sha256": "362b87d3d1f41ec949da8597a47b248e7ef74ca574d96454d1dda31100556ce9",
+    "availability": "本地待验收候选，未发布"
+  },
+  "archive_tags": [
+    {
+      "tag": "archive/2026-10-02/feat/display-precision",
+      "commit": "fab895f5bb4482f702823e2ea4c95604475ae62d",
+      "status": "Passed"
+    },
+    {
+      "tag": "archive/2026-10-02/feat/xyz-import",
+      "commit": "eff19dca51ecee45f1b1f46d750cffa5d7e68470",
+      "status": "Passed"
+    },
+    {
+      "tag": "archive/2026-10-02/feat/data-export",
+      "commit": "9d3ff61d2e32c47357fe624cf93052bfed6dd041",
+      "status": "Passed"
+    },
+    {
+      "tag": "archive/2026-10-02/chore/display-xyz-export",
+      "commit": "2a7c88c6db566391d0cc70635f82e1429684c880",
+      "status": "Passed"
+    }
+  ],
+  "worktrees_removed": 4,
+  "task_branches_deleted": 4,
+  "previous_archived_branch_deleted": 1,
+  "primary_cleanup": {
+    "files": 11095,
+    "bytes": 1073258330
+  },
+  "measurement": {
+    "method": "same preflight target-file cohort; no unenumerated directory totals",
+    "before_files": 11352,
+    "before_bytes": 1109272694,
+    "after_files": 114,
+    "after_bytes": 131610877,
+    "removed_cohort_files": 11238,
+    "removed_cohort_bytes": 977661817,
+    "primary_cleanup_excludes": "normal Git worktree/source-file removal, newly generated smoke archives and temporary source readback; preserved evidence size excluded from deleted bytes"
+  },
+  "protected_hashes_verified": 63383,
+  "post_cleanup_cold": {
+    "dataset_count": 12,
+    "arrays": 249,
+    "volume_files": 1,
+    "post_cleanup_cold": "Passed"
+  },
+  "post_cleanup_rebuild": "Passed",
+  "user_reproduction": "Not Run",
+  "independent_scientific_signature": "Not Run",
+  "legacy_deferred": {
+    "f458": "11 access-denied directories and associated branch retained; no force/ACL/ownership changes",
+    "b48c": {
+      "path": "C:\\Users\\ustcw\\.codex\\worktrees\\b48c\\QCBlender",
+      "task_files_removed": 56,
+      "status": "Not Run",
+      "directory": "empty; retained due to current-directory lock",
+      "reason": "[WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\\\Users\\\\ustcw\\\\.codex\\\\worktrees\\\\b48c\\\\QCBlender'"
+    }
+  },
+  "receipts": {
+    "post-cleanup": {
+      "path": "outputs/evidence/2026-10-02/display-xyz-export/closing/post-cleanup.json",
+      "sha256": "18ae471707271a135cc83983c40c3e68e03a84add4e14ef1420342457c654454"
+    },
+    "tags": {
+      "path": "outputs/evidence/2026-10-02/display-xyz-export/closing/tags.json",
+      "sha256": "8d2737a4db201c505d40c483c801b60575e3c63dbadc72508c9a7e87cc58e743"
+    },
+    "worktree-removal": {
+      "path": "outputs/evidence/2026-10-02/display-xyz-export/closing/worktree-removal.json",
+      "sha256": "cc2c918aea2347c938e8253409bd12e024b2a82a024a4d44a7c86119dbfacf2a"
+    },
+    "prune/applied": {
+      "path": "outputs/evidence/2026-10-02/display-xyz-export/closing/prune/applied.json",
+      "sha256": "945067f8188186f90ef446bf82dc25fbb86b34bdbfe45f7037c99da1c2258e59"
+    },
+    "retired-candidates-applied": {
+      "path": "outputs/evidence/2026-10-02/display-xyz-export/closing/retired-candidates-applied.json",
+      "sha256": "3c6305fbc8161075702c9dfb7afef715b9507d5f1c474202aa54b7e4bb548132"
+    },
+    "post-cleanup-environment": {
+      "path": "outputs/evidence/2026-10-02/display-xyz-export/closing/post-cleanup-environment.json",
+      "sha256": "eb33f769e4091115c4948848147480b83e9008f2328e5a4a245fd1a3534a9b04"
+    },
+    "post-cleanup-rebuild": {
+      "path": "outputs/evidence/2026-10-02/display-xyz-export/closing/post-cleanup-rebuild.json",
+      "sha256": "014f2c0318ba504185621e99a2ffcfe63165dd071ec3f4d33618c240e887624e"
+    },
+    "post-cleanup-project": {
+      "path": "outputs/evidence/2026-10-02/display-xyz-export/closing/post-cleanup-project.json",
+      "sha256": "7479969186c28a360afc1e3394c651310b6d5e20dacda655d71b70fc32ca050e"
+    },
+    "preservation-map": {
+      "path": "outputs/evidence/2026-10-02/display-xyz-export/closing/preservation-map.json",
+      "sha256": "abb1866961d5003803e414e891221aba0211fb6af8b01bd6743686912b0bc73a"
+    },
+    "workspace-preservation-final": {
+      "path": "outputs/evidence/2026-10-02/display-xyz-export/closing/workspace-preservation-final.json",
+      "sha256": "c18ee484a5dd75990fcb7735956e452ecdd4e45dc59cc66c0c207fceaec12d40"
+    },
+    "workspace-cleanup": {
+      "path": "outputs/evidence/2026-10-02/display-xyz-export/closing/workspace-cleanup.json",
+      "sha256": "5ff5493060e5455f4e1d258728c004eac31f3fcb21547f459e7fe2654e173237"
+    },
+    "legacy-deferred": {
+      "path": "outputs/evidence/2026-10-02/display-xyz-export/closing/legacy-deferred.json",
+      "sha256": "f1dc081d5da05a4d1317226def509b7b71e3dc66fdd9ae0406b4b235a3aacfa7"
+    }
+  },
+  "reconstruction": "docs/DEVELOPMENT.md; explicitly use outputs/wheels/qualified and a fresh outputs/runs batch, then qualify the new candidate",
+  "no_remote_publication": true
+}

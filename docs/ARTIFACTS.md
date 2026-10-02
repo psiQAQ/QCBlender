@@ -1,6 +1,6 @@
 # 产物查找入口
 
-更新：2026-10-02。本页路由当前文件、归档身份、重建方法与阻塞；各原始报告保留其执行时的状态和候选身份。任务状态在 `.scratch/`，开发顺序见 [DEVELOPMENT](DEVELOPMENT.md)，保留与清理边界见 [维护规则](agents/storage-maintenance.md)。
+更新：2026-10-03。本页路由当前文件、归档身份、重建方法与阻塞；各原始报告保留其执行时的状态和候选身份。任务状态在 `.scratch/`，开发顺序见 [DEVELOPMENT](DEVELOPMENT.md)，保留与清理边界见 [维护规则](agents/storage-maintenance.md)。
 
 ## 当前交付
 
@@ -13,9 +13,11 @@
 | 保全工程与数据 | `outputs/projects/display-xyz-export/gui/evidence.blend + evidence.qcdata/`，12Dataset/249数组/1VDB，原地及中文移动冷读Passed；`final/data/native-exports/`保存全量/筛选CSV，`final/gui/exports/`保存实际点击导出 |
 | 复用登记 | [Blender规则](agents/blender-interaction.md)、[操作登记](acceptance/blender-operations.json)；历史GUI身份不重写，产品单行目录修复后重新点击；旧图形工程另有兼容导出报告 |
 | 构建与重建 | 共用`outputs/build-site/`、`outputs/science/`、`outputs/wheels/qualified/`及后端记录保持；当前索引列源文件/wheel摘要、实际命令和脚本，按[DEVELOPMENT](DEVELOPMENT.md)在新批次重建并重新验证ZIP身份 |
-| 本轮归档与清理 | `.scratch/display-xyz-export/issues/06-archive.md`为任务状态；`outputs/evidence/2026-10-02/display-xyz-export/closing/`保存标签、逐文件保全/清理收据和空间统计；权限/占用对象不强制处理 |
+| 本轮归档与清理 | [清理收据](acceptance/display-xyz-export-cleanup.json)；四个注释标签及本轮工作树/分支清理Passed，另删一个已归档旧分支；11,095文件/1,073,258,330字节清理，63,383保留摘要核对。`closing/`保存映射和原收据；旧f458及空b48c占用按用户许可延期 |
 
 本批82科学测试、21相关单测、严格XYZ和七类CSV/取消/旧谱图、显示精度、九公共资产、安装及冷重开通过。完整C/N历史范围见[教程历史资格](acceptance/tutorial-final-qualification.json)；本批仅对改动及其受影响范围复验，不将旧报告绑定新ZIP。科学输入的唯一清单仍为`tests/data/local-inputs.json`，来源见[SOURCES](v1-acceptance/SOURCES.md)。
+
+本轮四个标签为`archive/2026-10-02/feat/display-precision`、`feat/xyz-import`、`feat/data-export`和`chore/display-xyz-export`（后三者沿用同一日期前缀），固定各分支最终提交；精确身份见清理收据。只保留9d3ff61候选，e317及b8a旧ZIP已删除，原科学/GUI报告、成功失败日志与摘要不改写。清理后离线重建Passed，临时ZIP已清理；新原生进程再次冷读保全工程Passed。原批命令中的runs/旧工作树路径通过`closing/preservation-map.json`、`workspace-preservation-final.json`定位保留字节，新验证使用新的批次。删除字节不计正常Git工作树移除及新增中央证据，不能当作全仓净空间变化。
 
 ## 历史教程归档、清理和阻塞
 
