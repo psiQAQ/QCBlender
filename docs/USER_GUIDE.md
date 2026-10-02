@@ -25,7 +25,7 @@
 | 局部选择、氢显隐 | 原子视图 | 对象属性 → 局部选择与标注 | 设置局部选择、隐藏氢等 |
 | 创建标注、优化视图 | 原子视图；优化需有逐步数据 | N 侧栏 → 创建视图与检查工具 | 创建编号／距离／角度／二面角标注、创建优化轨迹视图 |
 | 查看来源 | 对应 QC 视图 | 对象属性的 QCBlender 主面板 | 来源详情、刷新来源、关联选中数据源 |
-| 浏览外部结果 | 对应外部结果显示层 | 对象属性 → External Result Browser | 应用筛选、Apply Paired Field Filter、Swap value columns |
+| 浏览外部结果 | 对应外部结果显示层 | 对象属性 → External Result Browser | 应用筛选、Apply Filter、Swap value columns |
 | 管理显示层 | 对应 QC 显示层 | N 侧栏 → Display Layers | 显隐、复制、排序、删除图标；查看对象属性 |
 | 复制显示参数 | 多选同类 QC 视图，最后选参数来源 | 3D Viewport → 对象右键菜单 → QCBlender | 复制显示参数到选中视图 |
 | 创建相机 | 选中需要出图的 QC 视图 | N 侧栏 → 创建视图与检查工具 | 创建取景相机 |

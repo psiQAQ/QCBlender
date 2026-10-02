@@ -547,7 +547,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    ![历史示例（原参数/原候选）：MCP复用映射操作：密度0.004表面按ESP着色，21点数值核对](screenshot/C04-02-density-ESP-mapped-MCP.jpg)
 
-3. 填 **Color Minimum=−0.05、Color Center=0、Color Maximum=+0.05**，须严格递增；在 **图例排版** 开 **显示图例**（Show Legend），改 长宽/字号/小数/方向/旋转/位置。点击 **零中心对称** 输入 **R=0.05**，再 **读取有效范围** 对照一次读取结果；记录并恢复成图色域。示例排版填长度 **2.6**、宽度 **0.25**、字号 **0.2**（均为本地布局单位），小数位数 **3**，开启竖向排列，旋转 **(0,0,0.3)**（rad），位置 **(3.5,0,0)**。在 **材质属性 → QCBlender · 节点材质** 修改 Color map 中间停靠点 **0.5→0.4**，将 **Reverse (0 or 1)** 从 **0→1**，确认表面和图例颜色方向同时反转；成图前恢复中点 **0.5** 与 Reverse **0**。原生撤销用 **编辑 → 撤销**，重做用 **编辑 → 重做**。范围外用端点颜色，无效采样为洋红；本批1800点均有效，无效域颜色仍须另行验收。
+3. 填 **Color Minimum=−0.05、Color Center=0、Color Maximum=+0.05**，须严格递增；在 **图例排版** 开 **显示图例**（Show Legend），改 长宽/字号/小数/方向/旋转/位置。点击 **零中心对称** 输入 **R=0.05**，再 **读取有效范围** 对照一次读取结果；记录并恢复成图色域。示例排版填长度 **2.6**、宽度 **0.25**、字号 **0.2**（均为本地布局单位），小数位数 **3**，开启竖向排列，旋转 **(0,0,0.3)**（rad），位置 **(3.5,0,0)**。在 **材质属性 → QCBlender · 节点材质** 修改 Color map 中间停靠点 **0.5→0.4**，将 **Reverse (0 or 1)** 从 **0→1**，确认表面和图例颜色方向同时反转；成图前恢复中点 **0.5** 与 Reverse **0**。原生撤销用 **编辑 → 撤销**，重做用 **编辑 → 重做**。范围外用端点颜色，无效采样为洋红；历史0.7 Å批次1800点均有效；当前批次核对实际掩码与无效域颜色。
 
    [用户截图待引用：C04-03，活动对象、参数与结果同屏；参数变化保留前后画面]
 
@@ -651,7 +651,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    ![历史示例（原参数/原候选）：Agent操作示例：独立密度几何场取点预览，单位 electron/bohr^3；该示例不是 ESP 取点](screenshot/C04-07-click-probe-preview.jpg)
 
-8. 选ESP场或切片，将游标设起点 **(0,−2,1.45) Å**，点 **记录剖面起点**；保持 **同一个活动视图及绑定**，将游标设终点 **(0,+2,1.45) Å**，点 **采样线剖面数据**。Sample field先选Geometry、Samples=101；绑定色场视图可再明确选Color。新建 **QC line profile data** 是Empty分析记录，`qc_analysis_role=profile`。选此记录按0.5导出Data=profile，核对101行、距离0..4 Å、端点坐标、量/单位、valid及无效值空白；metadata保留源网格/绑定。每次采样是数据快照，不创建二维曲线、坐标轴或排版。
+8. 选ESP场或切片，将游标设起点 **(0,−2,1.45) Å**，点 **记录剖面起点**；保持 **同一个活动视图及绑定**，将游标设终点 **(0,+2,1.45) Å**，点 **采样线剖面数据**。Sample field先选Geometry、Samples=101；绑定色场视图可再明确选Color。新建 **QC line profile data** 是无可见图形的数据记录对象，`qc_analysis_role=profile`。选此记录按0.5导出Data=profile，核对101行、距离0..4 Å、端点坐标、量/单位、valid及无效值空白；metadata保留源网格/绑定。每次采样是数据快照，不创建二维曲线、坐标轴或排版。
 
    [用户截图待引用：C04-08，活动对象、参数与结果同屏；参数变化保留前后画面]
 
@@ -745,7 +745,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    ![历史示例（原参数/原候选）：Agent Computer Use观察：N侧栏中文按钮与对象属性英文按钮入口](screenshot/C05-04-two-entry-paths-GUI.jpg)
 
-   原生操作示例使用独立显示层 **C05 final annotations**，先恢复全部6个原子，仅选该层。角度输入 **2,1,3**、二面角输入 **2,1,4,5**，**Decimal places=3**；确认后分别为 **112.770°**、**0.000°**。本批 Computer Use 实际创建；独立 NumPy 参考和 MCP 同时核对源编号顺序、单位、锚点、引线及50个科学数组。
+   原生操作示例使用独立显示层 **C05 final annotations**，先恢复全部6个原子，仅选该层。角度输入 **2,1,3**、二面角输入 **2,1,4,5**，**Decimal places=3**；确认后分别为 **112.770°**、**0.000°**。历史示例中 Agent Computer Use 实际创建；独立 NumPy 参考和 MCP 同时核对源编号顺序、单位、锚点、引线及50个科学数组。
 
    ![历史示例（原参数/原候选）：Agent Computer Use：当前活动原子层与标注入口](screenshot/C05-final-entrances-GUI.jpg)
 
@@ -763,7 +763,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    ![历史示例（原参数/原候选）：Agent Computer Use：点击Face All to Camera；MCP核对实际旋转](screenshot/C05-final-face-camera-GUI.jpg)
 
-   可复现排版：保持原子对象位置/旋转为0、缩放为1，球棍 **Atom Radius=0.35 Å、Bond Radius=0.12 Å、Quality=2**。四项文字设 **Size=0.16、Color RGB=(0.03,0.03,0.03)、Decimal places=3、Leader width=0.008、Show leader与可见勾选**；隐藏重复的旧标注及对应引线。分别设置下表 Offset，然后再点 **Face All to Camera**。这些设置只影响显示；本批另用MCP核对父对象缩放(2,0.5,1.5)后科学测量和源数组不变，再恢复缩放。
+   可复现排版：保持原子对象位置/旋转为0、缩放为1，球棍 **Atom Radius=0.35 Å、Bond Radius=0.12 Å、Quality=2**。四项文字设 **Size=0.16、Color RGB=(0.03,0.03,0.03)、Decimal places=3、Leader width=0.008、Show leader与可见勾选**；隐藏重复的旧标注及对应引线。分别设置下表 Offset，然后再点 **Face All to Camera**。这些设置只影响显示；历史示例另用MCP核对父对象缩放(2,0.5,1.5)后科学测量和源数组不变，再恢复缩放。
 
    | 标注 | 源编号 | Offset X/Y/Z（局部 Å） |
    | --- | --- | --- |
@@ -905,7 +905,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
 2. **Analysis** 选 **IGMH**，**Geometry Cube** 填 `P03/igmh/dg_inter.cub`，**sign(lambda2)rho Cube** 填 `P03/igmh/sl2r.cub`；**Geometry value unit=electron/bohr^4、Color value unit=electron/bohr^3、Color minimum=-0.04、Color maximum=0.04**，确认。完成后重新只选择同一参考原子对象，再次打开对话框，选 **IRI**，Geometry填 `P03/iri/func2.cub`，Color填 `P03/iri/func1.cub`，几何单位填 `a.u. (electron^-0.1 bohr^-0.7)`，颜色单位及色域同上，**IRI density exponent a=1.1**，确认。
 
-   预期出现 **QC delta_g / QC iri_function** 几何场、颜色源及 **QC paired field data** Empty分析记录（`qc_analysis_role=paired`）。两输入各539,448个原始体素，网格/原子匹配；本样本全量有效体素539,448，按CSV核对。三维表面与图例保留。全量导出逐个有效体素写出，不受旧散点50,000显示抽样上限限制。片段、a、方法/版本与单位按源清单核对；导入不执行新的IGMH/IRI计算。
+   预期出现 **QC delta_g / QC iri_function** 几何场、颜色源及 **QC paired field data** 无可见图形的数据记录对象（`qc_analysis_role=paired`）。两输入各539,448个原始体素，网格/原子匹配；本样本全量有效体素539,448，按CSV核对。三维表面与图例保留。全量导出逐个有效体素写出，不受旧散点50,000显示抽样上限限制。片段、a、方法/版本与单位按源清单核对；导入不执行新的IGMH/IRI计算。
 
    [用户截图待引用：C07-02，分别保留IGMH与IRI对话框、活动参考对象和导入结果]
 
@@ -925,7 +925,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    ![历史示例（原参数/原候选）：MCP复用显示控件与相机构图，真实EEVEE渲染：IRI 1.0、a=1.1](screenshot/C07-iri-v2.png)
 
-4. 只选 **QC paired field data**，打开 **对象属性 → QCBlender → External Result Browser**，核对X为sign_lambda2_rho [electron/bohr^3]、Y为delta_g [electron/bohr^4]。启用四范围，填 **X from=−0.04、X to=0.04、Y from=0.001、Y to=0.02**，点 **Apply Paired Field Filter**，再按0.5导出Data=paired、Rows=Current filter。历史36,391匹配数仅作本轮CSV行数待核实预期；结果及metadata记录实际筛选。
+4. 只选 **QC paired field data**，打开 **对象属性 → QCBlender → External Result Browser**，核对X为sign_lambda2_rho [electron/bohr^3]、Y为delta_g [electron/bohr^4]。启用四范围，填 **X from=−0.04、X to=0.04、Y from=0.001、Y to=0.02**，点 **Apply Filter**，再按0.5导出Data=paired、Rows=Current filter。历史36,391匹配数仅作本轮CSV行数待核实预期；结果及metadata记录实际筛选。
 
    勾 **Swap value columns**，保持四数值并重新应用/导出；范围作用于交换后的量列，历史28,630行待本轮CSV核实。保持同一物理筛选区须同步交换X/Y范围。IRI颜色−0.04..0.04、IRI0.1..2历史12,736行也待本轮CSV核实，同步交换范围时应保留同一体素集合。再导出Rows=All source records，核对539,448个有效体素及原索引，不使用50,000显示抽样。
 
@@ -989,7 +989,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
 4. 只选 **QC ESP area distribution**，打开同一 **External Result Browser**。**Area bin selection=Center in range**，启用范围 **从=0、到=20 kcal/mol**，点击 **应用筛选**：预期4个中心2.5/7.5/12.5/17.5区间，**displayed=14.4784 Å²、Source percentages shown=19.7838%**。
 
-   改 **Recorded interval overlaps range**，保留0..20并应用：预期6个完整源bin，包括与0、20相接的边界区间，**displayed=21.2676 Å²、Source percentages shown=29.0608%**。保留完整bin，不按交集长度拆分。总面积始终 **73.1833 Å²**，源百分比不归一化。取消范围恢复40bin；原打印percent合计 **100.0002%**（舍入），按源表逐项核对。选面积记录按0.5导出Data=ESP_AREA，分别Rows=Current filter/All source records，核对中心、边界、面积与percent。新建面积记录使用Empty表，不生成柱图。
+   改 **Recorded interval overlaps range**，保留0..20并应用：预期6个完整源bin，包括与0、20相接的边界区间，**displayed=21.2676 Å²、Source percentages shown=29.0608%**。保留完整bin，不按交集长度拆分。总面积始终 **73.1833 Å²**，源百分比不归一化。取消范围恢复40bin；原打印percent合计 **100.0002%**（舍入），按源表逐项核对。选面积记录按0.5导出Data=ESP_AREA，分别Rows=Current filter/All source records，核对中心、边界、面积与percent。新建面积记录使用无可见图形的数据记录对象，不生成柱图。
 
    [用户截图待引用：C08-04，两模式分别保留范围、总面积、小计及源百分比]
 

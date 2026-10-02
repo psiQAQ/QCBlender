@@ -1,7 +1,7 @@
 # 同候选综合验收
 
 Triage: ready-for-agent
-Status: pending
+Status: claimed
 Blocked by: 04
 
 ## Acceptance
@@ -10,7 +10,7 @@ Blocked by: 04
 
 ## Answer
 
-尚未执行。
+主Agent领取；将从固定main提交构建新候选，在单一可见Blender与独立原生进程中串行复验。
 
 ## Comments
 
