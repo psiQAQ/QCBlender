@@ -6416,12 +6416,13 @@
   },
   "current_automated_qualification": {
     "path": "docs/acceptance/tutorial-final-qualification.json",
-    "sha256": "6166c11d366680e8a6641d48f199b27a9f1cdd9d192c4a0a70d9b9d9098b06d4",
+    "sha256": "a0846d481dc93665041f8e9118b4f1dd1483e3a67496d88fc56ad724b6e0d820",
     "source_commit": "a67d4b352958e7efffdf559e280f10c7a44c8a34",
     "candidate_sha256": "bd3a78e1089bc7afdf32987e2169a7059cdb9df23ee0f90cddf159302ebcdd23",
     "status": "Passed",
     "scope": "Current automated package qualification plus Agent C/N acceptance; separate user and scientific signatures remain Not Run",
-    "history": "All existing candidate/report identities retained"
+    "history": "All existing candidate/report identities retained",
+    "qualification_execution_commit": "4663117bc46fabbcc6b687704a022a163644e640"
   },
   "current_Agent_acceptance": {
     "path": "docs/acceptance/tutorial-final-qualification.json",

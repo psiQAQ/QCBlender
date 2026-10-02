@@ -59,16 +59,17 @@
     "independent_scientific_signature": "Not Run",
     "merge_main": "Not Run",
     "archive_cleanup": "Not Run",
-    "C01_C13_N01_N18_Agent_acceptance": "Passed"
+    "C01_C13_N01_N18_Agent_acceptance": "Passed",
+    "qualified_current_evidence_reports": 40
   },
   "evidence": {
     "qualification": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/qualification-final.json",
-      "sha256": "9a9903f8b03c6ee1ae58e429d39d4eefec8d9101477caa39cd82df373fcfc10b"
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/qualification-accepted.json",
+      "sha256": "ffd4206dafc73b198905f2e2cbfc6ad652e0fb2346848ec5c5470fd903c45759"
     },
     "index": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/evidence-index-final.json",
-      "sha256": "af05f18a779f22ba436fcce2dcb366f1a0ca5e2cfd06ba7113dbfe191d5e8176"
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/evidence-index-accepted.json",
+      "sha256": "06d6c437d61900525d220be7acaeffa1899a9c2cbafa657fd4ae51cef280a021"
     },
     "GUI_history": {
       "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/GUI-history-audit.json",
@@ -93,6 +94,14 @@
     "GUI_Remove": {
       "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/layer-removal/confirmed/completion.json",
       "sha256": "6940a4740d4930597ba5ae17449189a965f79d7ca000907a8c561d2e91291647"
+    },
+    "qualification_before_final_GUI": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/qualification-final.json",
+      "sha256": "9a9903f8b03c6ee1ae58e429d39d4eefec8d9101477caa39cd82df373fcfc10b"
+    },
+    "index_before_final_GUI": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/evidence-index-final.json",
+      "sha256": "af05f18a779f22ba436fcce2dcb366f1a0ca5e2cfd06ba7113dbfe191d5e8176"
     }
   },
   "projects": {
@@ -112,5 +121,6 @@
     "scope": "只删除目标及12所属标注，63原对象/50数组及其余节点图保留；原生自动激活并显示下一层，独立核对后MCP恢复原显隐；另存工程并新进程冷读",
     "evidence": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/layer-removal/confirmed/completion.json",
     "sha256": "6940a4740d4930597ba5ae17449189a965f79d7ca000907a8c561d2e91291647"
-  }
+  },
+  "qualification_execution_commit": "4663117bc46fabbcc6b687704a022a163644e640"
 }
