@@ -112,7 +112,7 @@ def atom_view(directory):
     socket(tree, 'Last Atom (0 = all)', 'NodeSocketInt', default=0, minimum=0)
     socket(tree, 'Style (0 ball-stick, 1 space-fill, 2 bonds)', 'NodeSocketInt', default=0, minimum=0)
     socket(tree, 'VDW Scale', 'NodeSocketFloat', default=1., minimum=.01)
-    socket(tree, 'Quality', 'NodeSocketInt', default=2, minimum=1)
+    socket(tree, 'Quality', 'NodeSocketInt', default=3, minimum=1)
     socket(tree, 'Material', 'NodeSocketMaterial', default=material('QC Elements', (.35, .35, .35, 1), 'qc_element_color'))
     socket(tree, 'Geometry', 'NodeSocketGeometry', 'OUTPUT')
     nodes, links = tree.nodes, tree.links

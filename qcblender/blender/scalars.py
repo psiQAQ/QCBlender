@@ -481,7 +481,7 @@ class QCBLENDER_OT_slice(bpy.types.Operator):
     bl_idname = 'qcblender.create_slice'
     bl_label = 'Create Scalar Slice'
     bl_options = {'REGISTER', 'UNDO'}
-    resolution: IntProperty(name='Samples per axis', default=101, min=2, max=1001)
+    resolution: IntProperty(name='Samples per axis', default=201, min=2, max=1001)
     minimum: FloatProperty(name='Color minimum (field unit)', default=-.05)
     maximum: FloatProperty(name='Color maximum (field unit)', default=.05)
 
