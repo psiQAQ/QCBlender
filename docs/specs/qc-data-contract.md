@@ -15,11 +15,16 @@
 | 电荷与偶极 | `charges`、`dipole` 中的量名/单位/数组引用 | 电荷 `[N]`，偶极 `[3]`，保持布居方法和原点 |
 | 振动 | `modes` 及 `mode_*` 数组 | 频率 `[M]`、位移 `[M,N,3]`；原始记录与归一化显示位移分开 |
 | 优化轨迹 | `optimization`、`optimization_positions[S,N,3]` | 每步保留构型、明确关联的能量、收敛表和原文位置；`positions` 仍为最终构型 |
+| 标准XYZ多帧 | `trajectory`、`trajectory_positions[F,N,3]`、`xyz_frames` | Å；每帧同原子数/元素顺序，帧号从1起；`positions`为第一帧，无优化/IRC/时间语义 |
 | 能量 | `energies` 及日志计算记录 | 方法、目标/参考/校正、状态与源位置；见第 4 节 |
 
 实际入口为 `readers.read_source(path, job_index=0)`、`association.compare_sources(reference, moving, allow_rigid=False, tolerance_angstrom=1e-3)`、`evaluate.evaluate_field(data, grid, quantity, spin='alpha', orbital=1, memory_mb=512, ...)`。Blender 使用 `views.atom_view(directory)`、`views.field_view(directory, parent=None, index=0)` 接入落盘 Dataset。
 
 非法 shape、非有限数据和身份不匹配返回具体诊断；缺字段表现为缺失能力。独立优化视图仅携带该步结构与轨迹记录，不继承最终构型的电荷/偶极/场。旧工程没有逐步数组时不合成步骤。
+
+标准XYZ接收元素符号或1–118原子序数与三个有限坐标；拒绝未知/dummy元素、额外列、截断、NaN/Inf以及扩展Properties/Lattice/PBC。原始UTF-8注释、文件SHA和逐帧SHA、来源行区间保留；IOData列适配器直接读取Å值，帧间空行只在解析副本中规范化。`trajectory`保存`kind='xyz'`、`array='trajectory_positions'`、`coordinate_unit='angstrom'`及`frames`；每帧有`frame/comment/sha256/line_start/line_end/coordinate_line_start/coordinate_line_end`。
+
+`scientific_geometry(data, kind='trajectory', step=frame)`返回当前帧不可写坐标和来源记录；Blender对象用`qc_trajectory_frame/count/record`记录离散选择。切帧保留原子ID/顺序、POINT属性、选择、材质/节点和标注，并按当前科学坐标重新推断连接。不推断能量、轨道或波函数，不插值/播放。科学来源关联对多帧XYZ明确拒绝，单帧仍按真实构型核对。
 
 ## 2. 通用场与单位
 
@@ -98,7 +103,7 @@ View 的布局变换与科学配准分开：移动对比图中的整个对象只
 
 振动位移保存源约定和一次性的规范化结果。节点使用规范化位移做 `R=R0+A*d*sin(phase)`；`A` 与播放速度是展示参数，原始频率保持不变。虚频保留符号；静态电子场保持在对应平衡构型，不随振动原子扭曲成“时变轨道”。
 
-IR 原始频率/强度列表与模式选择同步，显示棒状谱。Raman 活性不是 Raman 强度，当前未提供模拟 Raman 光谱或温度展宽处理。
+IR保留原始频率/强度列表及源模式身份，可显式导出CSV。振动播放与位移箭头继续使用正常模式；原始IR强度不由动画推断。Raman活性不是Raman强度，当前未提供模拟Raman光谱或温度展宽处理。
 
 分子偶极保存物理矢量、单位和源坐标原点。带净电荷体系的偶极依赖原点；改变显示箭头锚点只改变绘图位置。物理方向箭头作为默认，化学示意方向若提供，应有独立标签。
 
@@ -116,6 +121,14 @@ IR 原始频率/强度列表与模式选择同步，显示棒状谱。Raman 活�
 - 项目“打包”将配套目录和 `.blend` 一起归档，不默认把大型数组编码进 Blender 自定义属性。
 
 配套保存、原地/中文移动目录冷重开和缓存恢复的当前证据见 [VALIDATION](../VALIDATION.md)。
+
+### 显式CSV数据导出
+
+工程与诊断的“导出数据”按当前Dataset提供`IR/optimization/IRC/Mayer/profile/paired/ESP_AREA`。UTF-8 CSV逐项保存已有值，metadata.json记录源文件/Dataset摘要、量/单位、原始网格、有效掩码语义、筛选范围和列角色。profile保留端点、距离Å、valid与无效值空白；paired全量/筛选导出逐个有效体素及原索引，筛选后仍保留原数组；ESP_AREA保留完整源bin边界/中心/面积/percent，百分比不归一化。优化/IRC/Mayer按完整源步骤/原子对导出，不用当前面板行替代全表。
+
+跨工程Addon偏好`数据导出目录`使用绝对路径；留空时取已保存.blend父目录，否则取Windows真实系统Documents（包含系统重定向）。对话框`Output directory`可单次覆盖。每次在目标目录创建唯一结果子目录，先写完整暂存结果，成功后提交；取消/失败清理本次暂存，不覆盖已完成结果。导出目录不替代worker缓存或.qcdata。
+
+新建IR、IRC/Mayer、profile、paired和ESP面积记录不生成二维棒图、曲线/游标、剖面坐标轴、散点或柱图；三维构型/振动、场/切片/等值线/图例、AIM空间路径与数据表仍保留。旧工程图形不自动删除，其源Dataset仍可导出。本批界面/截图/保存与冷重开验证状态见[本批验证索引](../acceptance/display-xyz-export-validation.json)。
 
 ## 7. 缓存与状态
 

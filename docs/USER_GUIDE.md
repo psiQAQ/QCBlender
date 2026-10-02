@@ -10,7 +10,7 @@
 
 | 操作 | 需要选中的对象 | 编辑器与面板路径 | 可见按钮或控件 |
 | --- | --- | --- | --- |
-| 导入计算结果 | 无 | N 侧栏 → 工作流 | 导入 Gaussian / Cube |
+| 导入计算结果 | 无 | N 侧栏 → 工作流 | 导入 Gaussian / Cube / XYZ |
 | 生成 MO、密度或 ESP | 含轨道的 FCHK 原子视图 | N 侧栏 → 工作流 | 生成量子化学场 |
 | 查看能量、选择振动模式 | 含相应记录的原子视图 | 对象属性 → 科学记录与振动模式 | 能量列表、模式列表 |
 | 振动显示参数 | 已选模式的原子视图 | 对象属性 → 高级参数 | Animate、Amplitude (angstrom)、Phase、Cycles per second |
@@ -19,12 +19,13 @@
 | 声明 Cube 量与单位 | unknown_scalar 场视图 | 对象属性的 QCBlender 主面板 | 声明 Cube 物理量与单位 |
 | 绑定或替换着色场 | 要着色的几何视图 | 对象属性 → 颜色映射 | 选择／替换着色场 |
 | 创建切片、等值面或体积雾 | 有关联体场的标量视图 | N 侧栏 → 创建视图与检查工具 | 创建切片、创建等值面层、创建体积雾 |
-| 创建线剖面 | 有关联体场的场视图或切片 | N 侧栏 → 创建视图与检查工具 | 记录剖面起点、创建线剖面 |
-| 导出剖面 | 剖面曲线 | N 侧栏 → 创建视图与检查工具 | 导出剖面 CSV |
+| 采样线剖面数据 | 有关联体场的场视图或切片 | N侧栏 → 创建视图与检查工具 | 记录剖面起点、采样线剖面数据 |
+| 导出科学记录 | 含相应数据的原子、场或分析记录 | N侧栏 → 工程与诊断 | 导出数据；Data选择IR/optimization/IRC/Mayer/profile/paired/ESP_AREA |
+| 查看XYZ多帧 | XYZ多帧原子对象 | Properties → QCBlender → XYZ Frames | Previous、Next、Choose XYZ Frame |
 | 局部选择、氢显隐 | 原子视图 | 对象属性 → 局部选择与标注 | 设置局部选择、隐藏氢等 |
 | 创建标注、优化视图 | 原子视图；优化需有逐步数据 | N 侧栏 → 创建视图与检查工具 | 创建编号／距离／角度／二面角标注、创建优化轨迹视图 |
 | 查看来源 | 对应 QC 视图 | 对象属性的 QCBlender 主面板 | 来源详情、刷新来源、关联选中数据源 |
-| 浏览外部结果 | 对应外部结果显示层 | 对象属性 → External Result Browser | 应用筛选、更新散点 |
+| 浏览外部结果 | 对应外部结果显示层 | 对象属性 → External Result Browser | 应用筛选、Apply Paired Field Filter、Swap value columns |
 | 管理显示层 | 对应 QC 显示层 | N 侧栏 → Display Layers | 显隐、复制、排序、删除图标；查看对象属性 |
 | 复制显示参数 | 多选同类 QC 视图，最后选参数来源 | 3D Viewport → 对象右键菜单 → QCBlender | 复制显示参数到选中视图 |
 | 创建相机 | 选中需要出图的 QC 视图 | N 侧栏 → 创建视图与检查工具 | 创建取景相机 |
@@ -46,6 +47,8 @@
 | NBO、IGMH/IRI、ESP分析、AIM、IRC/Mayer、ETS-NOCV | [C06–C13](v1-acceptance/SOP.md#c06-nbo-与-e2)；格式说明见 [外部分析导入](EXTERNAL_ANALYSIS_IMPORT.md) |
 | 取景、渲染、保存、搬移、归档与恢复 | [每例出图与保存](v1-acceptance/SOP.md#04-相机渲染保存与移动冷重开每例执行) |
 | 节点、材质与交互覆盖 | [N01–N18](v1-acceptance/SOP.md#2-n01n18-节点与交互检查) |
+| 标准XYZ、离散帧、测量与独立副本 | [X01](v1-acceptance/SOP.md#x01-标准xyz与离散帧) |
+| CSV/metadata、默认目录、筛选与取消 | [通用数据导出](v1-acceptance/SOP.md#05-显式数据导出) |
 | 用户截图、Agent点击/数据核对和独立科研签署 | [结果记录](v1-acceptance/SOP.md#3-结果记录与独立科研签署) |
 
 源文件始终决定科学值和单位，显示操作不改科学数组。源编号从1起，坐标Å；键由距离推断，MO两符号表示相位，振动播放速度属于显示参数。两个来源关联、Cube单位声明、外部分析参数均须核对真实生成记录。保存使用 **N侧栏 → 工程与诊断 → 保存自包含工程**，并将同名 `.blend` 与 `.qcdata/` 一起移动。
@@ -53,3 +56,5 @@
 ## Gaussian 优化轨迹浏览
 
 操作步骤集中在 [SOP C02](v1-acceptance/SOP.md#c02-logout-能量振动与优化)：导入P02的Job1、创建独立轨迹，选新对象后在对象属性 **Optimization Trajectory** 使用 **Previous / Next / Choose Step**。Job2的模式/能量在 **科学记录与振动模式**。轨迹源值、截图和复做记录统一填写在C02。
+
+新建原子显示外层Quality=3，新建切片每轴201点；生成网格初值0.2 Å、边缘3 Å、512 MiB。公共QC Style Atoms and Bonds的Quality=2、QC Planar Slice的Resolution=101仍保留。Addon偏好“数据导出目录”留空时使用已保存.blend父目录，否则真实系统Documents；导出对话框Output directory可单次覆盖。导出目录不替代.qcdata工程数据。

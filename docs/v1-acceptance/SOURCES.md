@@ -152,11 +152,11 @@ S08 的许可未核清前，验收可在本地使用；不得把该数据文件�
 
 迁移逐文件映射和摘要核对在 `outputs/storage-cleanup/input-migration.json`。S01–S35 原始字节不变。生成日志中列出的冗余波函数、加和核对 Cube、轨道 Cube 等辅助原件仍作为参考资料保留在原目录；集中索引覆盖当前 SOP/回归读取和来源追溯所需输入。日志中的历史摘要不代表这些计算在本次重新执行。
 
-输入索引可用 Blender Python 执行 `tools/local_inputs.py` 完整核对；受影响场景由 `tools/prepare_sop_fixture.py` 通过已安装扩展重新读取/求值。重建密度与 ESP 使用 0.7 Å 的显示测试网格，原始波函数及外部分析条件不变，该网格不替代科学收敛检查。验证报告与科学量的源数组分别记录。
+输入索引可用Blender Python执行tools/local_inputs.py核对。历史tools/prepare_sop_fixture.py场景的密度/ESP采用0.7 Å显示网格，绑定原报告及原数组；当前教程生成初值为0.2 Å、margin3 Å、512 MiB，须以本批新数组核对。原始波函数和P03/P05外部Cube不变，显示网格不代替科学收敛检查。
 
 ## 公开教程样本与独立获取（2026-09-30）
 
-当前教程固定使用 [机器清单](tutorial-samples.json) 的 P01–P05，而非把 S01–S35 原件整体装入附件。逐文件 `archive_path` 是公开包解压根相对路径，`path` 是仓库规范路径，SHA-256/字节数、真实 producer、方法/基组/电荷/自旋、原子顺序、单位及实测期待值均在清单内。C01–C13 与 N01–N18 的映射、Job/block/pair 号及 Log Job 2 → 新 FCHK 的检查身份也由清单固定。显示阈值、色域、切片/剖线和网格默认值属于建议设置，GUI、渲染及人工签署保持 Not Run，由教程/综合验证分别更新。
+当前教程使用[机器清单](tutorial-samples.json)的P01–P06：v2包保留P01/P03/P04/P05原输入字节并增加P06标准XYZ，P02仍单独获取。archive_path是解压根相对路径，path是仓库路径；摘要、字节数、producer、科学条件/单位与源期待值按清单核对。C01–C13/N01–N18编号保留，X01新增XYZ。Log Job2→新FCHK重置回归继续执行；新界面截图与导出/冷重开状态见[本批验证索引](../acceptance/display-xyz-export-validation.json)，历史技术通过不自动继承。
 
 | 能力组 | 真实来源与计算条件 | 教程入口及分发状态 |
 | --- | --- | --- |
@@ -165,10 +165,11 @@ S08 的许可未核清前，验收可在本地使用；不得把该数据文件�
 | P03 | 自定义水二聚体，PySCF RHF/6-31G(d)，中性单重态，20 电子，源原子 `[8,1,1,8,1,1]`；Multiwfn 2026.9.20 真实 IGMH/IRI、ESP 表面极值/面积、AIM CP/路径/属性。片段 `1–3`、`4–6`；IRI a=1.1；双场同为 `91×38×156` | 包内 `P03/water-dimer.fchk/.fch`、`igmh/`、`iri/`、`esp/`、`aim/`；CC BY 4.0；C03–C05/C07–C09。独立 Cube 初始 unknown；按 manifest 识别量名与已有单位，倍率 1 |
 | P04 | 自定义 H₂O₂ 初始构型；PySCF RHF/STO-3G + geomeTRIC 1.1.1 原生 TS/双向 IRC，18 电子。TS 唯一虚频 `-48.1434547807 cm^-1`，最大梯度 `1.893862e-8 Eh/Bohr`；61 个接受帧，选 0-based 帧 29/30(TS)/31 三个连续点。每点重新真实 SCF，完整 FCHK 与同一 AO 密度/重叠矩阵 Mayer | 包内 `P04/steps.csv`、`mayer-pyscf.csv`、3 份 FCHK/3 份 Mayer；CC BY 4.0；C10/C11。三步 FCHK 能量 `-148.764884/-148.764883/-148.764884 Eh`。这是当前原生 IRC，不使用旧 S15 构型，也不是三点扫描；Mayer 文本明确 producer 为 PySCF，语法兼容 Multiwfn |
 | P05 | 自定义 CO/BH₃ 及整体几何，PySCF RB3LYP/6-31G(d)，整体 22 电子；同几何片段真实 SCF，Multiwfn 真实 ETS-NOCV。pair 1/Total 为轨道 1/48、特征值 ±0.54550、pair 能量 `-57.02 kcal/mol`；场 `47×50×57` | 包内 `P05/complex.fchk`、`co.fchk`、`bh3.fchk`、`nocv/ets-nocv.txt`、`nocv-pair1.cub`；CC BY 4.0；C12/C13。能量是整体 KS 轨道重构矩阵的 Multiwfn 近似，不是 F_TS 过渡态方法 |
+| P06 | 从P03水二聚体及P04三步FCHK提取坐标的标准XYZ；Å、17位有效数字，分别单帧6原子O/H/H/O/H/H与三帧4原子O/O/H/H。不携带FCHK能量/波函数或IRC语义 | v2包内`P06/water-dimer.xyz`、`P06/p04-three-frames.xyz`，源字节为`tests/data/xyz/`同名文件；CC BY 4.0、QCBlender contributors；X01。`tests/data/xyz/source.json`保留源FCHK与XYZ摘要、提取/单位换算说明；包身份以交付索引为准 |
 
-P01/P03/P05 是自行定义的示意构型，未声称优化结构；本次场网格用于导入/显示检查，不声称科学网格收敛。Multiwfn 引用保存在样本 `NOTICE.md`。ETS-NOCV 逐体素公式、真实空间密度、构型/电子数/自旋与源值互校均 Passed，视觉表现另验。
+P01/P03/P05 是自行定义的示意构型，未声称优化结构；原样本场网格用于导入/显示检查，不声称科学网格收敛。Multiwfn 引用保存在样本 `NOTICE.md`。ETS-NOCV 逐体素公式、真实空间密度、构型/电子数/自旋与源值互校均 Passed，视觉表现另验。
 
-公开 ZIP 当前本地交付位置为 `outputs/evidence/2026-10-02/tutorial-cu/final-samples/qcblender-public-tutorial-samples-v1.zip`，身份见[样本交付索引](../acceptance/tutorial-sample-delivery.json)。C01固定Alpha MO9/Beta MO7与自动HOMO Alpha8/Beta6分别记录；27份科学输入与旧包逐字节相同，旧批次报告继续绑定原包。当前包仅 27 份许可合格数据加清单/LICENSE/NOTICE；没有原站未知许可文件或程序二进制。尚未发布远程下载地址。小文件 Git 跟踪于 `tests/data/tutorial/`，较大 Cube 只保留主检出 `tests/data/local/public-tutorial/` 并进入集中索引；工作树读取大文件时显式 `--reference-root D:/workspace/QCBlender`。不要复制整套历史样本到工作树。
+公开教程采用 **qcblender-public-tutorial-samples-v2.zip**，实际交付位置、字节数及SHA见[样本交付索引](../acceptance/tutorial-sample-delivery.json)，不在本文硬编码包摘要。旧v1包及其报告按历史身份保留。C01固定Alpha MO9/Beta MO7与自动HOMO Alpha8/Beta6分别记录；P01/P03/P04/P05原科学输入字节不变，增加两份P06 XYZ及来源记录。包只含许可合格数据/清单/LICENSE/NOTICE，不含未知许可日志或程序。小文件位于tests/data/tutorial/及tests/data/xyz/，较大Cube仍由主检出tests/data/local/public-tutorial/集中保存；工作树读取时显式--reference-root D:/workspace/QCBlender，不复制历史整套材料。远程发布状态以交付索引为准。
 
 P02 的独立获取适用 PowerShell，在公开样本解压根新建 `P02/` 后执行。该原站定位和本地读取说明**不授予再分发权限**；许可不明日志不得加入公开包，且未承诺下载者在其环境下拥有额外使用权。cclib 官方 [安装说明](https://cclib.readthedocs.io/en/stable/how_to_install.html)说明测试日志数据存在非自由许可问题，不能由代码仓库许可证替代逐文件许可核查。
 
@@ -183,6 +184,6 @@ Copy-Item P02/water_neutral_nbo_opt_freq.out P02/water_neutral_nbo_opt_freq.log
 
 生成与验证脚本为 `tools/generate_tutorial_samples.py`、`tools/generate_tutorial_irc.py`、`tools/finalize_tutorial_samples.py`、`tools/verify_tutorial_samples.py`。根目录通过 `Path(__file__).resolve().parents[1]` 固定，外部工具/科学依赖取显式 reference-root；不依赖搬移旧生成脚本的 parents 层级。每次生成选新的不存在任务输出目录，保留真实输入/SCF CHK/Molden/FCHK、Multiwfn stdin/settings/stdout、TS Hessian/虚频/梯度和两方向 IRC 接受轨迹，避免覆盖原输入。
 
-完整本次证据为 `outputs/evidence/2026-09-30/public-tutorial/samples/`，科学/包验收 `final-validation.json`；GUI、独立冷重开、移动重开、科研签署为 Not Run。
+历史样本生成证据为 `outputs/evidence/2026-09-30/public-tutorial/samples/`，科学/包验收 `final-validation.json`；GUI、独立冷重开、移动重开、科研签署为 Not Run。
 
 维护者核查：`tools/verify_tutorial_samples.py` 的常规模式使用插件科学环境，不要求 PySCF。原始 PySCF CHK 与 FCHK 密度互校须在既有计算环境中显式加 `--checkpoints`；报告单列 `original_checkpoint_density`，未运行时为 Not Run。该环境仅用于材料生成和来源互校，用户安装与教程不需要它。
