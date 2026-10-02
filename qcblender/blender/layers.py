@@ -155,17 +155,6 @@ def copy_layer(source, collection):
             for input_socket in node.inputs:
                 if input_socket.type == 'MATERIAL' and input_socket.default_value:
                     input_socket.default_value = copy_material(input_socket.default_value)
-    # A copied vibration view needs its own IR selection colors.
-    if source.get('qc_view_kind') == 'atoms' and source.qc_settings.spectrum:
-        spectrum = copy_layer(source.qc_settings.spectrum, collection)
-        spectrum.parent = obj
-        obj.qc_settings.spectrum = spectrum
-        for label in source.qc_settings.spectrum.children:
-            if label.type == 'FONT':
-                copied = label.copy()
-                copied.data = label.data.copy()
-                collection.objects.link(copied)
-                copied.parent = spectrum
     try:
         copy_annotations(source, obj, collection)
         for child in source.children:
@@ -176,9 +165,6 @@ def copy_layer(source, collection):
         if source.get('qc_view_kind') == 'slice':
             from .charts import copy_contour_settings
             copy_contour_settings(source, obj)
-        elif source.get('qc_view_kind') == 'profile':
-            from .profile import copy_profile_ticks
-            copy_profile_ticks(source, obj, collection)
     except (ValueError, KeyError, OSError, TypeError):
         cleanup_result_children(obj)
         bpy.data.objects.remove(obj, do_unlink=True)
@@ -250,9 +236,6 @@ class QCBLENDER_OT_layer_action(bpy.types.Operator):
             if obj.get('qc_view_kind') == 'slice':
                 from .charts import cleanup_contours
                 cleanup_contours(obj)
-            elif obj.get('qc_view_kind') == 'profile':
-                from .profile import cleanup_profile_ticks
-                cleanup_profile_ticks(obj)
             index = layers.index(obj)
             # Keep scientific source objects and other display layers in place.
             for child in list(obj.children):

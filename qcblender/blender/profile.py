@@ -1,16 +1,13 @@
-"""Cursor-driven scalar line profiles with independent Blender curve views."""
+"""Cursor-driven scalar line profile sampling and saved data records."""
 import json
 
 import bpy
-from bpy.props import EnumProperty, IntProperty, StringProperty
-from bpy_extras.io_utils import ExportHelper
+from bpy.props import EnumProperty, IntProperty
 import numpy as np
 
 from ..data import load_dataset
-from ..profile import export_profile_csv, sample_profile, source_positions
-from ..plot_layout import DEFAULT_LAYOUT, profile_layout
+from ..profile import sample_profile, source_positions
 from .source_browser import color_volume, read_metadata
-from .views import bind, material
 
 
 def profile_source(obj, role):
@@ -33,117 +30,6 @@ def profile_source(obj, role):
         raise ValueError('Choose the geometry or color field')
     read_metadata(volume)
     return volume, json.loads(volume['qc_field'])
-
-
-def profile_curve(directory, data, location):
-    arrays = data.arrays
-    valid = arrays['profile_valid']
-    length = float(arrays['profile_distance'][-1])
-    curve = bpy.data.curves.new('QC line profile', 'CURVE')
-    curve.dimensions = '3D'
-    curve.bevel_resolution = 2
-    curve.materials.append(material('QC line profile', (.12, .34, .78, 1)))
-    obj = bpy.data.objects.new('QC line profile', curve)
-    bpy.context.collection.objects.link(obj)
-    obj.location = location
-    bind(obj, directory, data)
-    obj['qc_view_kind'] = 'profile'
-    for key, value in DEFAULT_LAYOUT.items():
-        obj['qc_profile_' + key] = value
-    obj['qc_chart'] = json.dumps({'x': 'distance along profile', 'x_unit': 'angstrom',
-                                  'x_min': 0., 'x_max': length, 'y_unit': data.metadata['profile']['field']['unit'],
-                                  'y_min': 0., 'y_max': 1., 'sample_count': len(valid),
-                                  'valid_count': int(valid.sum())})
-    layout = apply_profile_layout(obj, data)
-    for axis in 'xy':
-        obj['qc_profile_' + axis + '_min'], obj['qc_profile_' + axis + '_max'] = layout[axis + '_range']
-    return obj
-
-
-def cleanup_profile_ticks(owner):
-    """Remove the generated labels before replacing or deleting a profile view."""
-    for child in tuple(owner.children):
-        if not child.get('qc_profile_tick'):
-            continue
-        text = child.data
-        bpy.data.objects.remove(child, do_unlink=True)
-        if text.users == 0:
-            bpy.data.curves.remove(text)
-
-
-def copy_profile_ticks(source, target, collection):
-    """Copy saved chart labels without reopening its scientific Dataset."""
-    materials = dict(zip(source.data.materials, target.data.materials))
-    for child in tuple(source.children):
-        if not child.get('qc_profile_tick'):
-            continue
-        copied = child.copy()
-        copied.data = child.data.copy()
-        for index, mat in enumerate(copied.data.materials):
-            if mat is not None:
-                if mat not in materials:
-                    materials[mat] = mat.copy()
-                copied.data.materials[index] = materials[mat]
-        collection.objects.link(copied)
-        copied.parent = target
-    from .layers import sync_chart_children
-
-    sync_chart_children(target)
-
-
-def apply_profile_layout(obj, data):
-    """Rebuild only chart geometry and tick text from the saved profile samples."""
-    arrays = data.arrays
-    layout = profile_layout(arrays['profile_distance'], arrays['profile_values'],
-                            arrays['profile_valid'],
-                            {key: obj.get('qc_profile_' + key, value)
-                             for key, value in DEFAULT_LAYOUT.items()})
-    curve = obj.data
-    curve.splines.clear()
-    curve.bevel_depth = layout['line_width']
-
-    def add_path(points):
-        spline = curve.splines.new('POLY')
-        spline.points.add(len(points) - 1)
-        for vertex, position in zip(spline.points, points):
-            vertex.co = (*position, 1.)
-
-    for path in layout['paths']:
-        add_path(path)
-    add_path(((0., 0., 0.), (layout['width'], 0., 0.)))
-    add_path(((0., 0., 0.), (0., 0., layout['height'])))
-    for _, x, _ in layout['x_ticks']:
-        add_path(((x, 0., 0.), (x, 0., -.08)))
-    for _, y, _ in layout['y_ticks']:
-        add_path(((0., 0., y), (-.08, 0., y)))
-
-    cleanup_profile_ticks(obj)
-
-    def label(body, position, size=.14):
-        text = bpy.data.curves.new('QC profile label', 'FONT')
-        text.body, text.size = body, size
-        text.materials.append(curve.materials[0])
-        child = bpy.data.objects.new('QC profile label', text)
-        bpy.context.collection.objects.link(child)
-        child.parent = obj
-        child.location = position
-        child.rotation_euler.x = 1.5707963267948966
-        child['qc_profile_tick'] = True
-
-    for _, x, caption in layout['x_ticks']:
-        label(caption, (x-.1, 0., -.28))
-    for _, y, caption in layout['y_ticks']:
-        label(caption, (-.62, 0., y-.06))
-    label('Distance (Å)', (layout['width']/2-.5, 0., -.55))
-    label(data.metadata['profile']['field']['unit'], (-.62, 0., layout['height']+.18))
-    from .layers import sync_chart_children
-
-    sync_chart_children(obj)
-    chart = json.loads(obj['qc_chart'])
-    chart.update(x_min=layout['x_range'][0], x_max=layout['x_range'][1],
-                 y_min=layout['y_range'][0], y_max=layout['y_range'][1])
-    obj['qc_chart'] = json.dumps(chart)
-    return layout
 
 
 class QCBLENDER_OT_mark_profile_start(bpy.types.Operator):
@@ -174,7 +60,7 @@ class QCBLENDER_OT_mark_profile_start(bpy.types.Operator):
 
 class QCBLENDER_OT_create_line_profile(bpy.types.Operator):
     bl_idname = 'qcblender.create_line_profile'
-    bl_label = 'Create Line Profile to 3D Cursor'
+    bl_label = 'Sample Line Profile Data'
     bl_options = {'REGISTER', 'UNDO'}
 
     field_role: EnumProperty(name='Sample field', items=[('GEOMETRY', 'Geometry', ''), ('COLOR', 'Color', '')], default='GEOMETRY')
@@ -220,9 +106,8 @@ class QCBLENDER_OT_create_line_profile(bpy.types.Operator):
                                   volume['qc_dataset_sha256'], self.field_role, self.samples)
             from .external_results import store_analysis
             output = store_analysis(data)
-            location = obj.matrix_world.translation.copy()
-            location.x += 3
-            chart = profile_curve(output, data, location)
+            from .external_results import table_view
+            chart = table_view(output, data, obj, 'QC line profile data', 'profile')
             for selected in context.selected_objects:
                 selected.select_set(False)
             chart.select_set(True)
@@ -233,22 +118,13 @@ class QCBLENDER_OT_create_line_profile(bpy.types.Operator):
         return {'FINISHED'}
 
 
-class QCBLENDER_OT_export_line_profile(bpy.types.Operator, ExportHelper):
+class QCBLENDER_OT_export_line_profile(bpy.types.Operator):
     bl_idname = 'qcblender.export_line_profile'
-    bl_label = 'Export Line Profile CSV'
-    filename_ext = '.csv'
-    filter_glob: StringProperty(default='*.csv', options={'HIDDEN'})
+    bl_label = 'Export Line Profile Data'
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and context.object.get('qc_view_kind') == 'profile'
+        return context.object is not None and (context.object.get('qc_view_kind') == 'profile' or context.object.get('qc_analysis_role') == 'profile')
 
     def execute(self, context):
-        try:
-            read_metadata(context.object)
-            data = load_dataset(bpy.path.abspath(context.object['qc_dataset']))
-            export_profile_csv(data, self.filepath)
-        except (ValueError, OSError, KeyError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
-            return {'CANCELLED'}
-        return {'FINISHED'}
+        return bpy.ops.qcblender.export_data('INVOKE_DEFAULT')

@@ -49,38 +49,7 @@ def point_view(directory, data, parent, points, name, color, role):
 
 
 def area_view(directory, data, parent):
-    from .views import bind, material
-    bins = data.metadata['analysis']['area_bins']
-    centers = [row['center'] for row in bins]
-    areas = [row['area'] for row in bins]
-    low, width, height = min(centers), max(centers) - min(centers), max(areas)
-    width = width or 1
-    height = height or 1
-    vertices, faces = [], []
-    half_bar_width = min(.4, 1.6 / len(bins))
-    for index, (center, area) in enumerate(zip(centers, areas)):
-        x = (center - low) / width * 4
-        y = area / height * 3
-        start = len(vertices)
-        vertices.extend([(x-half_bar_width, 0, 0), (x+half_bar_width, 0, 0),
-                         (x+half_bar_width, 0, y), (x-half_bar_width, 0, y)])
-        faces.append((start, start+1, start+2, start+3))
-    mesh = bpy.data.meshes.new('QC ESP area distribution')
-    mesh.from_pydata(vertices, [], faces)
-    mesh.update()
-    mesh.materials.append(material('QC ESP area bars', (.16, .47, .78, 1)))
-    obj = bpy.data.objects.new('QC ESP area distribution', mesh)
-    bpy.context.collection.objects.link(obj)
-    obj.parent = parent
-    obj.location = (0, -5, 0)
-    bind(obj, directory, data)
-    obj['qc_view_kind'] = 'analysis'
-    obj['qc_analysis_role'] = 'esp_area'
-    obj['qc_analysis_index'] = 1
-    obj['qc_chart'] = json.dumps({'x_min': low, 'x_max': max(centers), 'y_max': max(areas),
-                                  'x_unit': data.metadata['analysis']['distribution_center_unit'],
-                                  'y_unit': data.metadata['analysis']['area_unit']})
-    return obj
+    return table_view(directory, data, parent, 'QC ESP area data', 'esp_area')
 
 
 def path_view(directory, data, parent):
@@ -113,6 +82,7 @@ def table_view(directory, data, parent, name, role):
     obj.parent = parent
     bind(obj, directory, data)
     obj['qc_view_kind'] = 'analysis'
+    obj['qc_data_record'] = True
     obj['qc_analysis_role'] = role
     obj['qc_analysis_index'] = 1
     return obj

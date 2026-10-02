@@ -21,7 +21,7 @@ def _render_collection_enabled(obj, layer_collection):
 
 
 def _renderable(obj, context):
-    return (obj.name in context.scene.objects and not obj.hide_render
+    return (obj.name in context.scene.objects and not obj.get('qc_data_record') and not obj.hide_render
             and _render_collection_enabled(obj, context.view_layer.layer_collection))
 
 

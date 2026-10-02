@@ -9,49 +9,8 @@ from .ui import AsyncOperation
 
 
 def scatter_view(directory, data, parent):
-    import numpy as np
-    from ..result_filters import scatter_selection
-    from .views import bind, material
-
-    selected = scatter_selection(data)
-    points = selected['points']
-    minimum = points.min(axis=0) if len(points) else np.zeros(2)
-    maximum = points.max(axis=0) if len(points) else np.zeros(2)
-    span = maximum - minimum
-    span[span == 0] = 1
-    scaled = (points - minimum) / span * 4
-    mesh = bpy.data.meshes.new('QC field scatter')
-    mesh.from_pydata([(float(x), 0, float(y)) for x, y in scaled], [], [])
-    mesh.update()
-    obj = bpy.data.objects.new('QC δg–sign(λ₂)ρ distribution', mesh)
-    bpy.context.collection.objects.link(obj)
-    obj.parent = parent
-    obj.location = (0, -5, 0)
-    bind(obj, directory, data)
-    obj['qc_view_kind'] = 'scatter'
-    obj['qc_scatter'] = json.dumps({'x_quantity': data.metadata['fields'][1]['quantity'],
-                                    'x_unit': data.metadata['fields'][1]['unit'],
-                                    'y_quantity': data.metadata['fields'][0]['quantity'],
-                                    'y_unit': data.metadata['fields'][0]['unit'],
-                                    'minimum': minimum.tolist(), 'maximum': maximum.tolist(),
-                                    'matching_count': selected['matching_count'],
-                                    'sample_count': len(points), 'axis_scale': 'linear'})
-    tree = bpy.data.node_groups.new('QC scatter points', 'GeometryNodeTree')
-    tree.is_modifier = True
-    tree.interface.new_socket(name='Geometry', in_out='INPUT', socket_type='NodeSocketGeometry')
-    tree.interface.new_socket(name='Geometry', in_out='OUTPUT', socket_type='NodeSocketGeometry')
-    nodes, links = tree.nodes, tree.links
-    inputs, output = nodes.new('NodeGroupInput'), nodes.new('NodeGroupOutput')
-    to_points = nodes.new('GeometryNodeMeshToPoints')
-    to_points.mode = 'VERTICES'
-    to_points.inputs['Radius'].default_value = .012
-    assign = nodes.new('GeometryNodeSetMaterial')
-    assign.inputs['Material'].default_value = material('QC scatter', (.16, .23, .68, 1))
-    links.new(inputs.outputs['Geometry'], to_points.inputs['Mesh'])
-    links.new(to_points.outputs['Points'], assign.inputs['Geometry'])
-    links.new(assign.outputs['Geometry'], output.inputs['Geometry'])
-    obj.modifiers.new('QC Scatter', 'NODES').node_group = tree
-    return obj
+    from .external_results import table_view
+    return table_view(directory, data, parent, 'QC paired field data', 'paired')
 
 
 class QCBLENDER_OT_import_paired_field(AsyncOperation, bpy.types.Operator):
@@ -132,30 +91,4 @@ class QCBLENDER_OT_import_paired_field(AsyncOperation, bpy.types.Operator):
         geometry['qc_analysis'] = json.dumps(dict(data.metadata['analysis'], reference=association))
         add_mapping(geometry, color, self.color_minimum, self.color_maximum)
         scatter_view(directory, data, parent)
-        self.report({'INFO'}, 'Imported paired external Cube fields and scatter distribution')
-
-
-class QCBLENDER_PT_paired_scatter(bpy.types.Panel):
-    bl_label = 'IGMH / IRI Scatter'
-    bl_idname = 'QCBLENDER_PT_paired_scatter'
-    bl_space_type = 'PROPERTIES'
-    bl_region_type = 'WINDOW'
-    bl_context = 'object'
-    bl_parent_id = 'QCBLENDER_PT_object'
-    bl_options = {'DEFAULT_CLOSED'}
-
-    @classmethod
-    def poll(cls, context):
-        return context.object is not None and context.object.get('qc_view_kind') == 'scatter'
-
-    def draw(self, context):
-        record = json.loads(context.object['qc_scatter'])
-        layout = self.layout
-        layout.label(text=record['x_quantity'] + ' [' + record['x_unit'] + ']')
-        layout.label(text=record['y_quantity'] + ' [' + record['y_unit'] + ']')
-        layout.label(text=f"Valid samples shown: {record['sample_count']}")
-        if 'matching_count' in record:
-            layout.label(text=f"Matching samples: {record['matching_count']}")
-        layout.label(text='Axes: linear; grid values unchanged')
-        for index, axis in enumerate('xy'):
-            layout.label(text=f"{axis}: {record['minimum'][index]:.6g} to {record['maximum'][index]:.6g}")
+        self.report({'INFO'}, 'Imported paired external Cube fields and data records')

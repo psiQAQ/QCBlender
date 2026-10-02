@@ -1,4 +1,4 @@
-"""Editable contour overlays, material palettes and profile axes."""
+"""Editable spatial contour overlays and material palettes."""
 
 import hashlib
 import json
@@ -10,7 +10,6 @@ from bpy.app.handlers import persistent
 from bpy.props import EnumProperty
 from mathutils import Euler, Matrix, Vector
 
-from ..plot_layout import DEFAULT_LAYOUT
 from .graph import view_modifier
 from .ui import AsyncOperation
 
@@ -510,73 +509,6 @@ class QCBLENDER_OT_contour_source(bpy.types.Operator):
         context.object['qc_contour_source'] = self.role
         _hide_contours(context.object)
         return {'FINISHED'}
-
-
-class QCBLENDER_OT_apply_profile_axes(bpy.types.Operator):
-    bl_idname = 'qcblender.apply_profile_axes'
-    bl_label = 'Apply Profile Axes'
-    bl_options = {'REGISTER', 'UNDO'}
-
-    @classmethod
-    def poll(cls, context):
-        return context.object is not None and context.object.get('qc_view_kind') == 'profile'
-
-    def execute(self, context):
-        from ..data import load_dataset
-        from .profile import apply_profile_layout
-        from .source_browser import read_metadata
-
-        obj = context.object
-        try:
-            chart = json.loads(obj['qc_chart'])
-            legacy = 'qc_profile_width' not in obj
-            for key, value in DEFAULT_LAYOUT.items():
-                if 'qc_profile_' + key not in obj:
-                    obj['qc_profile_' + key] = chart.get(key, value)
-            if legacy:
-                for axis in 'xy':
-                    if obj['qc_profile_' + axis + '_min'] >= obj['qc_profile_' + axis + '_max']:
-                        obj['qc_profile_' + axis + '_max'] = obj['qc_profile_' + axis + '_min'] + 1.
-            read_metadata(obj)
-            data = load_dataset(bpy.path.abspath(obj['qc_dataset']))
-            apply_profile_layout(obj, data)
-        except (ValueError, OSError, KeyError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
-            return {'CANCELLED'}
-        return {'FINISHED'}
-
-
-class QCBLENDER_PT_profile_axes(bpy.types.Panel):
-    bl_label = '剖面坐标轴与排版'
-    bl_idname = 'QCBLENDER_PT_profile_axes'
-    bl_parent_id = 'QCBLENDER_PT_object'
-    bl_space_type = 'PROPERTIES'
-    bl_region_type = 'WINDOW'
-    bl_context = 'object'
-    bl_options = {'DEFAULT_CLOSED'}
-
-    @classmethod
-    def poll(cls, context):
-        return context.object is not None and context.object.get('qc_view_kind') == 'profile'
-
-    def draw(self, context):
-        obj = context.object
-        layout = self.layout
-        if 'qc_profile_width' not in obj:
-            layout.operator('qcblender.apply_profile_axes', text='添加坐标轴控件')
-            return
-        layout.label(text='图幅与线宽使用本地布局单位')
-        for key, title in (('width', '图幅宽度'), ('height', '图幅高度'), ('line_width', '线宽')):
-            layout.prop(obj, f'["qc_profile_{key}"]', text=title)
-        for axis in 'xy':
-            layout.prop(obj, f'["qc_profile_{axis}_auto"]', text=axis.upper() + ' 自动范围')
-            if not obj.get(f'qc_profile_{axis}_auto', True):
-                row = layout.row(align=True)
-                row.prop(obj, f'["qc_profile_{axis}_min"]', text='最小值')
-                row.prop(obj, f'["qc_profile_{axis}_max"]', text='最大值')
-            layout.prop(obj, f'["qc_profile_{axis}_ticks"]', text=axis.upper() + ' 刻度数')
-        layout.prop(obj, '["qc_profile_precision"]', text='小数位数')
-        layout.operator('qcblender.apply_profile_axes', text='应用排版')
 
 
 def _watch_contours():

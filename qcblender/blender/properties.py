@@ -4,7 +4,6 @@ import math
 
 import bpy
 from bpy.props import CollectionProperty, IntProperty, PointerProperty, StringProperty
-import numpy as np
 
 from ..data import load_dataset
 from .graph import view_modifier, frame_nodes
@@ -30,11 +29,6 @@ def select_mode(settings, context):
     elif 'qc_mode_ir_km_mol' in obj:
         del obj['qc_mode_ir_km_mol']
     obj.data.update()
-    if settings.spectrum:
-        colors = np.tile([0.35, 0.45, 0.55, 1.], (2 * len(settings.modes), 1))
-        colors[index*2:index*2+2] = [1., 0.3, 0.04, 1.]
-        settings.spectrum.data.color_attributes['qc_ir_color'].data.foreach_set('color', colors.ravel())
-        settings.spectrum.data.update()
 
 
 class QCModeItem(bpy.types.PropertyGroup):
@@ -90,8 +84,6 @@ def setup_properties(obj, data):
         if frequency < 0:
             item.label += ' (imaginary)'
     add_animation_nodes(obj)
-    if ir is not None:
-        settings.spectrum = ir_spectrum(obj, frequencies, ir)
     select_mode(settings, bpy.context)
 
 
@@ -223,50 +215,3 @@ def add_mode_vectors(obj, displacement, inputs):
     links.new(original, joined.inputs['Geometry'])
     links.new(switch.outputs['Output'], joined.inputs['Geometry'])
     links.new(joined.outputs['Geometry'], output.inputs['Geometry'])
-
-
-def ir_spectrum(parent, frequencies, intensities):
-    from .views import material
-    height_scale = 2 / max(float(intensities.max()), 1e-12)
-    vertices = [(float(f) / 1000, 0, z) for f, intensity in zip(frequencies, intensities)
-                for z in (0, float(intensity) * height_scale)]
-    mesh = bpy.data.meshes.new('QC IR sticks')
-    mesh.from_pydata(vertices, [(2*i, 2*i+1) for i in range(len(frequencies))], [])
-    colors = mesh.color_attributes.new('qc_ir_color', 'FLOAT_COLOR', 'POINT')
-    colors.data.foreach_set('color', np.tile([0.35, 0.45, 0.55, 1.], (len(vertices), 1)).ravel())
-    obj = bpy.data.objects.new('QC IR stick spectrum', mesh)
-    bpy.context.collection.objects.link(obj)
-    obj.parent = parent
-    obj.location = (4, 0, 0)
-    obj['qc_frequency_scale'] = '1000 cm^-1 per Blender unit'
-    obj['qc_view_kind'] = 'spectrum'
-    obj['qc_intensity_scale'] = height_scale
-    obj['qc_intensity_unit'] = 'km/mol'
-    tree = bpy.data.node_groups.new('QC IR Sticks v1', 'GeometryNodeTree')
-    tree.interface.new_socket(name='Geometry', in_out='INPUT', socket_type='NodeSocketGeometry')
-    tree.interface.new_socket(name='Geometry', in_out='OUTPUT', socket_type='NodeSocketGeometry')
-    nodes, links = tree.nodes, tree.links
-    inputs, output = nodes.new('NodeGroupInput'), nodes.new('NodeGroupOutput')
-    curve = nodes.new('GeometryNodeMeshToCurve')
-    circle = nodes.new('GeometryNodeCurvePrimitiveCircle')
-    circle.inputs['Resolution'].default_value = 8
-    circle.inputs['Radius'].default_value = 0.012
-    tubes = nodes.new('GeometryNodeCurveToMesh')
-    assign = nodes.new('GeometryNodeSetMaterial')
-    assign.inputs['Material'].default_value = material('QC IR spectrum colors', (.4,.4,.4,1), 'qc_ir_color')
-    links.new(inputs.outputs['Geometry'], curve.inputs['Mesh'])
-    links.new(curve.outputs['Curve'], tubes.inputs['Curve'])
-    links.new(circle.outputs['Curve'], tubes.inputs['Profile Curve'])
-    links.new(tubes.outputs['Mesh'], assign.inputs['Geometry'])
-    links.new(assign.outputs['Geometry'], output.inputs['Geometry'])
-    obj.modifiers.new('QC IR sticks', 'NODES').node_group = tree
-    text = bpy.data.curves.new('QC IR axis labels', 'FONT')
-    text.body = 'IR sticks: x = frequency / 1000 cm^-1\nHeight scaled from km/mol; selected mode is orange'
-    text.size = .16
-    label = bpy.data.objects.new('QC IR labels', text)
-    bpy.context.collection.objects.link(label)
-    label.parent = obj
-    label['qc_spectrum_label'] = True
-    label.location = (0, 0, -.35)
-    label.rotation_euler = (math.pi/2, 0, 0)
-    return obj

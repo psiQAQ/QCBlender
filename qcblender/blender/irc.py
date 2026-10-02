@@ -1,4 +1,4 @@
-"""Ordered IRC geometry and energy views with imported Mayer overlays."""
+"""Ordered IRC configurations and imported energy and Mayer records."""
 import json
 
 import bpy
@@ -8,42 +8,6 @@ from bpy.props import EnumProperty, StringProperty
 def cache_step(root, data, step):
     root['qc_irc_record'] = json.dumps({'step': step, 'count': len(data.arrays['irc_energies']),
                                        'energy_hartree': float(data.arrays['irc_energies'][step - 1])})
-
-
-def curve_view(directory, data, parent, values, name, role, y_offset, unit):
-    from .views import bind, material
-    count = len(values)
-    low, high = min(values), max(values)
-    span = high - low or 1
-    coordinates = [(4 * index / max(1, count - 1), 0, 3 * (value - low) / span)
-                   for index, value in enumerate(values)]
-    curve = bpy.data.curves.new(name, 'CURVE')
-    curve.dimensions = '3D'
-    curve.bevel_depth = .02
-    curve.bevel_resolution = 2
-    spline = curve.splines.new('POLY')
-    spline.points.add(count - 1)
-    for point, xyz in zip(spline.points, coordinates):
-        point.co = (*xyz, 1)
-    curve.materials.append(material(name, (.12, .34, .78, 1)))
-    obj = bpy.data.objects.new(name, curve)
-    bpy.context.collection.objects.link(obj)
-    obj.parent = parent
-    obj.location = (0, y_offset, 0)
-    bind(obj, directory, data)
-    obj['qc_view_kind'] = 'analysis'
-    obj['qc_analysis_role'] = role
-    obj['qc_chart'] = json.dumps({'unit': unit, 'minimum': low, 'maximum': high,
-                                  'step_count': count, 'x': 'ordered IRC step'})
-    return obj, coordinates
-
-
-def cursor_view(directory, data, parent, coordinate, name, role, y_offset):
-    from .external_results import point_view
-    obj = point_view(directory, data, parent, [{'position_angstrom': coordinate}],
-                     name, (.95, .2, .12, 1), role)
-    obj.location = (0, y_offset, 0)
-    return obj
 
 
 class QCBLENDER_OT_import_irc(bpy.types.Operator):
@@ -75,10 +39,6 @@ class QCBLENDER_OT_import_irc(bpy.types.Operator):
             style = next(item for item in modifier.node_group.interface.items_tree
                          if item.item_type == 'SOCKET' and item.name == 'Style (0 ball-stick, 1 space-fill, 2 bonds)')
             modifier[style.identifier] = 1
-            energies = data.arrays['irc_energies'].tolist()
-            curve, coordinates = curve_view(directory, data, root, energies, 'QC IRC energy',
-                                            'irc_energy', -5, 'hartree')
-            cursor_view(directory, data, root, coordinates[0], 'QC IRC selected step', 'irc_cursor', -5)
         except (ValueError, OSError, KeyError, TypeError, MemoryError) as error:
             self.report({'ERROR'}, str(error))
             return {'CANCELLED'}
@@ -114,24 +74,11 @@ class QCBLENDER_OT_irc_step(bpy.types.Operator):
             if attr is None or attr.domain != 'POINT' or attr.data_type != 'FLOAT_VECTOR' or len(attr.data) != len(positions):
                 raise ValueError('IRC equilibrium positions are missing or invalid')
             prepared = prepare_annotations(root, positions, record)
-            cursors = []
-            for child in root.children:
-                if child.get('qc_analysis_role') in ('irc_cursor', 'irc_mayer_cursor'):
-                    role = 'irc_energy' if child['qc_analysis_role'] == 'irc_cursor' else 'irc_mayer_curve'
-                    line = next((item for item in root.children if item.get('qc_analysis_role') == role), None)
-                    if (line is None or line.type != 'CURVE' or len(line.data.splines) != 1
-                            or len(line.data.splines[0].points) != len(data.arrays['irc_energies'])
-                            or child.type != 'MESH' or len(child.data.vertices) != 1):
-                        raise ValueError('IRC chart cursor no longer matches the imported path')
-                    cursors.append((child, line.data.splines[0].points[step - 1].co[:3]))
             root.data.vertices.foreach_set('co', positions.ravel())
             root.data.attributes['qc_equilibrium_position'].data.foreach_set('vector', positions.ravel())
             root.data.update()
             root['qc_irc_step'] = step
             cache_step(root, data, step)
-            for child, coordinate in cursors:
-                child.data.vertices[0].co = coordinate
-                child.data.update()
             apply_annotations(prepared)
         except (ValueError, OSError, KeyError, TypeError) as error:
             self.report({'ERROR'}, str(error))
@@ -171,17 +118,15 @@ class QCBLENDER_OT_import_irc_mayer(bpy.types.Operator):
             context.view_layer.objects.active = obj
             root.select_set(False)
             obj.select_set(True)
-            with context.temp_override(object=obj, active_object=obj):
-                bpy.ops.qcblender.plot_irc_mayer()
         except (ValueError, OSError, KeyError, TypeError, MemoryError) as error:
             self.report({'ERROR'}, str(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
 
-class QCBLENDER_OT_plot_irc_mayer(bpy.types.Operator):
-    bl_idname = 'qcblender.plot_irc_mayer'
-    bl_label = 'Plot Selected Mayer Pair'
+class QCBLENDER_OT_select_irc_mayer_pair(bpy.types.Operator):
+    bl_idname = 'qcblender.select_irc_mayer_pair'
+    bl_label = 'Read Selected Mayer Pair'
     bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod
@@ -190,25 +135,19 @@ class QCBLENDER_OT_plot_irc_mayer(bpy.types.Operator):
 
     def execute(self, context):
         from ..data import load_dataset
+        from .source_browser import read_metadata
         obj = context.object
         try:
+            read_metadata(obj)
             data = load_dataset(bpy.path.abspath(obj['qc_dataset']))
             pair = sorted((int(obj['qc_pair_a']), int(obj['qc_pair_b'])))
             matches = [index for index, value in enumerate(data.arrays['mayer_pairs']) if value.tolist() == pair]
             if len(matches) != 1:
                 raise ValueError('Selected atom pair is absent from Mayer results')
-            root = obj.parent
-            for child in list(root.children):
-                if child.get('qc_analysis_role') in ('irc_mayer_curve', 'irc_mayer_cursor'):
-                    bpy.data.objects.remove(child, do_unlink=True)
-            values = data.arrays['mayer_orders'][:, matches[0]].tolist()
-            curve, coordinates = curve_view(bpy.path.abspath(obj['qc_dataset']), data, root, values,
-                                            f'QC Mayer {pair[0]}-{pair[1]}', 'irc_mayer_curve', -10, 'dimensionless')
-            cursor_view(bpy.path.abspath(obj['qc_dataset']), data, root, coordinates[int(root['qc_irc_step']) - 1],
-                        'QC Mayer selected step', 'irc_mayer_cursor', -10)
             obj['qc_mayer_pair_index'] = matches[0]
-            obj['qc_mayer_display_values'] = values
-        except (ValueError, OSError, KeyError) as error:
+            obj['qc_mayer_display_pair'] = pair
+            obj['qc_mayer_display_values'] = data.arrays['mayer_orders'][:, matches[0]].tolist()
+        except (ValueError, OSError, KeyError, TypeError) as error:
             self.report({'ERROR'}, str(error))
             return {'CANCELLED'}
         return {'FINISHED'}
@@ -247,9 +186,9 @@ class QCBLENDER_PT_irc(bpy.types.Panel):
         if obj.get('qc_analysis_role') == 'irc_mayer':
             layout.prop(obj, '["qc_pair_a"]', text='Atom A (1-based)')
             layout.prop(obj, '["qc_pair_b"]', text='Atom B (1-based)')
-            layout.operator('qcblender.plot_irc_mayer', text='Plot Pair')
+            layout.operator('qcblender.select_irc_mayer_pair', text='Read Pair')
             values = obj.get('qc_mayer_display_values', [])
-            if 1 <= step <= len(values):
-                layout.label(text=f"Mayer order: {values[step-1]:.6g}")
-            else:
-                layout.label(text='Mayer order: 未记录；点击 Plot Pair 读取')
+            pair = sorted((int(obj['qc_pair_a']), int(obj['qc_pair_b'])))
+            if list(obj.get('qc_mayer_display_pair', [])) == pair and 1 <= step <= len(values):
+                layout.label(text=f'Mayer order: {values[step - 1]:.6g}')
+            layout.operator('qcblender.export_data', text='Export Mayer Data')
