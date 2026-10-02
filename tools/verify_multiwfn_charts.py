@@ -1,4 +1,4 @@
-"""Installed C07 chart checks. Run prepare, then reopen saved and moved blends separately.
+"""Installed C07 spatial contour and sampled data checks. Run prepare, then reopen saved and moved blends separately.
 
 blender --background --factory-startup --python tools/verify_multiwfn_charts.py -- \
   --mode prepare \
@@ -219,39 +219,22 @@ def check_profile(source_field, out):
     dataset = module('data').load_dataset(bpy.path.abspath(profile['qc_dataset']))
     assert dataset.arrays['profile_values'].shape == (101,)
     assert int(dataset.arrays['profile_valid'].sum()) == 101
-    assert json.loads(profile['qc_chart'])['sample_count'] == 101
-    first = out / 'profile-before.csv'
-    second = out / 'profile-after.csv'
-    assert bpy.ops.qcblender.export_line_profile('EXEC_DEFAULT', filepath=str(first)) == {'FINISHED'}
+    assert profile.get('qc_data_record') and profile.get('qc_analysis_role') == 'profile'
+    assert profile.type == 'MESH' and len(profile.data.vertices) == 0 and not profile.children
+    exported = module('data_export').export_dataset(bpy.path.abspath(profile['qc_dataset']), out / 'csv', 'profile')
+    first = Path(exported['directory']) / 'profile.csv'
     values = dataset.arrays['profile_values'].copy()
-    profile['qc_profile_width'] = 6.
-    profile['qc_profile_height'] = 4.
-    profile['qc_profile_y_auto'] = False
-    profile['qc_profile_y_min'] = float(values.min()) - 1.
-    profile['qc_profile_y_max'] = float(values.max()) + 1.
-    profile['qc_profile_precision'] = 3
-    assert bpy.ops.qcblender.apply_profile_axes() == {'FINISHED'}
-    assert bpy.ops.qcblender.export_line_profile('EXEC_DEFAULT', filepath=str(second)) == {'FINISHED'}
-    assert first.read_bytes() == second.read_bytes(), 'Profile layout changed exported scientific CSV'
-    refreshed = module('data').load_dataset(bpy.path.abspath(profile['qc_dataset']))
-    np.testing.assert_array_equal(refreshed.arrays['profile_values'], values)
-    ticks = [child for child in profile.children if child.get('qc_profile_tick')]
-    assert ticks and profile.data.materials[0] is not None
-
     copied = module('blender.layers').copy_layer(profile, bpy.context.collection)
     copied.name = 'QC charts C07 profile copy'
-    copied_ticks = [child for child in copied.children if child.get('qc_profile_tick')]
-    assert len(copied_ticks) == len(ticks) and copied.data.materials[0] != profile.data.materials[0]
-    original_texts = {child.data.as_pointer() for child in ticks}
-    assert all(child.data.as_pointer() not in original_texts
-               and child.data.materials[0] == copied.data.materials[0] for child in copied_ticks)
-    doomed = {child.name for child in copied_ticks}
-    doomed_curves = {child.data.name for child in copied_ticks}
+    assert copied.data != profile.data and len(copied.data.vertices) == 0
+    copied_export = module('data_export').export_dataset(bpy.path.abspath(copied['qc_dataset']), out / 'csv', 'profile')
+    second = Path(copied_export['directory']) / 'profile.csv'
+    assert first.read_bytes() == second.read_bytes()
+    refreshed = module('data').load_dataset(bpy.path.abspath(profile['qc_dataset']))
+    np.testing.assert_array_equal(refreshed.arrays['profile_values'], values)
     assert bpy.ops.qcblender.layer_action(target=copied.name, action='REMOVE') == {'FINISHED'}
-    assert all(name not in bpy.data.objects for name in doomed)
-    assert all(name not in bpy.data.curves for name in doomed_curves)
-    assert all(child.name in bpy.data.objects for child in ticks)
-    return {'profile': profile.name, 'sample_count': 101, 'ticks': len(ticks),
+    assert profile.name in bpy.data.objects
+    return {'profile': profile.name, 'sample_count': 101,
             'csv_sha256': hashlib.sha256(first.read_bytes()).hexdigest()}
 
 
@@ -270,7 +253,7 @@ def prepare(out):
     out.mkdir(parents=True, exist_ok=True)
     report = {'checks': {name: 'Not Run' for name in (
         'real_c07_binding', 'contour_worker_error_cancel_identity_copy_remove_palette',
-        'profile_101_csv_layout_copy_remove', 'scientific_arrays_unchanged',
+        'profile_101_record_csv_copy_remove', 'scientific_arrays_unchanged',
         'portable_save', 'cold_open', 'moved_cold_open', 'gui_modal_and_watcher')},
         'status': 'Not Run'}
     try:
@@ -279,7 +262,7 @@ def prepare(out):
         original = evidence.hashes()
         contour = record(report, 'contour_worker_error_cancel_identity_copy_remove_palette',
                          lambda: check_contours(field, out))
-        profile = record(report, 'profile_101_csv_layout_copy_remove', lambda: check_profile(field, out))
+        profile = record(report, 'profile_101_record_csv_copy_remove', lambda: check_profile(field, out))
         after = evidence.hashes()
         record(report, 'scientific_arrays_unchanged', lambda: unchanged_source_arrays(original, after))
         report['charts'] = {'contour': contour, 'profile': profile}
@@ -306,11 +289,11 @@ def reopen(out):
         assert sum(bool(child.get('qc_contour_label')) for child in carrier.children) == contour['labels']
         profile_record = report['charts']['profile']
         profile = bpy.data.objects[profile_record['profile']]
-        assert sum(bool(child.get('qc_profile_tick')) for child in profile.children) == profile_record['ticks']
+        assert profile.get('qc_data_record') and len(profile.data.vertices) == 0 and not profile.children
         data = module('data').load_dataset(bpy.path.abspath(profile['qc_dataset']))
         assert len(data.arrays['profile_values']) == 101
-        csv = out / ('profile-moved.csv' if moved else 'profile-reopen.csv')
-        module('profile').export_profile_csv(data, csv)
+        exported = module('data_export').export_dataset(bpy.path.abspath(profile['qc_dataset']), out / 'csv', 'profile')
+        csv = Path(exported['directory']) / 'profile.csv'
         assert hashlib.sha256(csv.read_bytes()).hexdigest() == profile_record['csv_sha256']
         for obj in (sliced, profile):
             assert Path(bpy.path.abspath(obj['qc_dataset'])).resolve().is_relative_to(Path(bpy.data.filepath).parent)

@@ -316,19 +316,6 @@ else:
     mode = int(np.argmax(source.arrays['mode_ir_intensities']))
     atoms.qc_settings.active_mode = mode
     set_controls(atoms, Animate=True, **{'Show Displacement Vectors': True, 'Amplitude (angstrom)': .35})
-    spectrum = atoms.qc_settings.spectrum
-    spectrum.matrix_world = Matrix.Translation((3,-1.5,0)) @ Matrix.Rotation(-np.pi/2, 4, 'X') @ Matrix.Scale(1.5, 4)
-    for label in spectrum.children:
-        hide(label)
-    caption('IR sticks | frequency / 1000 cm^-1\nHeight from km/mol; selected mode in orange', 3, -2.3, .20)
-    spectrum_material = next(n.inputs['Material'].default_value for n in spectrum.modifiers[0].node_group.nodes
-                             if n.bl_idname == 'GeometryNodeSetMaterial')
-    nodes, links = spectrum_material.node_tree.nodes, spectrum_material.node_tree.links
-    emission = nodes.new('ShaderNodeEmission')
-    color = next(n for n in nodes if n.type == 'ATTRIBUTE')
-    emission.inputs['Strength'].default_value = .45
-    links.new(color.outputs['Color'], emission.inputs['Color'])
-    links.new(emission.outputs[0], next(n for n in nodes if n.type == 'OUTPUT_MATERIAL').inputs['Surface'])
     scene.render.fps, scene.frame_start, scene.frame_end, scene.frame_step = 24, 0, 47, 1
     caption('Neutral DVB | B3LYP / STO-3G | 54 normal modes', -10, 5.5, .34)
     caption(f'Mode {mode+1} | {atoms["qc_mode_frequency_cm-1"]:.4f} cm^-1', -10, -4.7)
@@ -368,7 +355,7 @@ else:
 report['layers'] = []
 for obj in layers.display_layers(scene):
     entry = {'name': obj.name, 'kind': obj['qc_view_kind'], 'visible_render': not obj.hide_render}
-    if obj.modifiers and obj['qc_view_kind'] != 'spectrum':
+    if obj.modifiers:
         modifier, names = controls(obj)
         entry['parameters'] = {k: (list(modifier[v]) if hasattr(modifier.get(v), 'to_list') else modifier.get(v))
                                for k, v in names.items() if not isinstance(modifier.get(v), bpy.types.ID)}

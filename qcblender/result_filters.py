@@ -1,10 +1,5 @@
 """Read-only selection of external result records and paired-field samples."""
-import hashlib
-from io import BytesIO
 import math
-from pathlib import Path
-
-import numpy as np
 
 
 def _limits(value, lower, upper):
@@ -16,78 +11,6 @@ def _range(lower, upper, label):
         raise ValueError(f'{label} range must be finite')
     if lower is not None and upper is not None and lower > upper:
         raise ValueError(f'{label} minimum exceeds maximum')
-
-
-def scatter_selection(data, x_field=1, y_field=0, x_min=None, x_max=None,
-                      y_min=None, y_max=None, maximum=50000):
-    """Filter every valid voxel, then deterministically retain at most maximum."""
-    if {x_field, y_field} != {0, 1} or len(data.metadata['fields']) != 2:
-        raise ValueError('Choose the two distinct paired fields as scatter axes')
-    _range(x_min, x_max, 'X')
-    _range(y_min, y_max, 'Y')
-    if not 1 <= maximum <= 50000:
-        raise ValueError('Scatter display limit must be from 1 to 50000')
-    fields = data.metadata['fields']
-    x = data.arrays[fields[x_field]['array']].ravel()
-    y = data.arrays[fields[y_field]['array']].ravel()
-    valid = (data.arrays[fields[x_field]['valid_mask']].ravel() &
-             data.arrays[fields[y_field]['valid_mask']].ravel() &
-             np.isfinite(x) & np.isfinite(y))
-    if x_min is not None:
-        valid &= x >= x_min
-    if x_max is not None:
-        valid &= x <= x_max
-    if y_min is not None:
-        valid &= y >= y_min
-    if y_max is not None:
-        valid &= y <= y_max
-    indexes = np.flatnonzero(valid)
-    matching = len(indexes)
-    if matching > maximum:
-        indexes = indexes[np.linspace(0, matching - 1, maximum, dtype=np.int64)]
-    return {'points': np.stack((x[indexes], y[indexes]), axis=1),
-            'flat_indices': indexes, 'matching_count': matching,
-            'displayed_count': len(indexes), 'x_field': x_field, 'y_field': y_field}
-
-
-def scatter_report(request, directory, cancelled=lambda: False):
-    """Worker entry: verify the bound dataset and write display points only."""
-    from .data import load_dataset
-
-    if cancelled():
-        raise RuntimeError('Scatter filtering cancelled')
-    source = Path(request['dataset'])
-    digest = hashlib.sha256((source / 'manifest.json').read_bytes()).hexdigest()
-    if digest != request['dataset_sha256']:
-        raise ValueError('Scatter source changed after the request was created')
-    selected = scatter_selection(load_dataset(source), request['x_field'], request['y_field'],
-                                 request.get('x_min'), request.get('x_max'),
-                                 request.get('y_min'), request.get('y_max'))
-    if cancelled():
-        raise RuntimeError('Scatter filtering cancelled')
-    points_path = Path(directory) / 'scatter.npy'
-    np.save(points_path, selected['points'], allow_pickle=False)
-    report = {key: selected[key] for key in ('matching_count', 'displayed_count', 'x_field', 'y_field')}
-    report['scatter_sha256'] = hashlib.sha256(points_path.read_bytes()).hexdigest()
-    return report
-
-
-def verified_scatter_points(path, report, x_field, y_field):
-    """Load exactly the worker bytes named by its result report."""
-    raw = Path(path).read_bytes()
-    if hashlib.sha256(raw).hexdigest() != report.get('scatter_sha256'):
-        raise ValueError('Worker scatter array differs from its reported SHA-256')
-    points = np.load(BytesIO(raw), allow_pickle=False)
-    if (not isinstance(points, np.ndarray) or points.dtype.kind != 'f'
-            or points.ndim != 2 or points.shape[1] != 2
-            or type(report.get('matching_count')) is not int
-            or type(report.get('displayed_count')) is not int
-            or not 0 <= report['displayed_count'] <= report['matching_count']
-            or len(points) != report['displayed_count'] or len(points) > 50000
-            or not np.isfinite(points).all()
-            or (report.get('x_field'), report.get('y_field')) != (x_field, y_field)):
-        raise ValueError('Worker returned invalid scatter points')
-    return points
 
 
 def point_selection(analysis, serial=None, kind=None, value_min=None, value_max=None,

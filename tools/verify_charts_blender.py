@@ -5,7 +5,6 @@ import importlib
 import json
 from pathlib import Path
 import sys
-from types import SimpleNamespace
 
 import bpy
 import numpy as np
@@ -19,9 +18,7 @@ args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
 bpy.ops.preferences.addon_enable(module=args.module)
 views = importlib.import_module(args.module + '.blender.views')
 charts = importlib.import_module(args.module + '.blender.charts')
-profiles = importlib.import_module(args.module + '.blender.profile')
 contours = importlib.import_module(args.module + '.contours')
-layout = importlib.import_module(args.module + '.plot_layout')
 storage = importlib.import_module(args.module + '.data')
 
 source = views.field_view(args.dataset)
@@ -132,59 +129,10 @@ slice_obj.hide_render = False
 charts._watch_contours()
 assert not carrier.hide_render and not label.hide_render
 
-curve = bpy.data.curves.new('QC profile layout test', 'CURVE')
-curve.dimensions = '3D'
-curve.materials.append(views.material('QC profile test', (.1, .3, .7, 1)))
-profile_obj = bpy.data.objects.new('QC profile layout test', curve)
-bpy.context.collection.objects.link(profile_obj)
-profile_obj['qc_chart'] = json.dumps({'x_min': 0., 'x_max': 3., 'y_min': 0.,
-                                     'y_max': 3., 'sample_count': 4, 'valid_count': 3})
-for key, value in layout.DEFAULT_LAYOUT.items():
-    profile_obj['qc_profile_' + key] = value
-data = SimpleNamespace(arrays={'profile_distance': np.array([0., 1., 2., 3.]),
-                               'profile_values': np.array([0., 1., 0., 3.]),
-                               'profile_valid': np.array([True, True, False, True])},
-                       metadata={'profile': {'field': {'unit': 'test-unit'}}})
-original = data.arrays['profile_values'].copy()
-result = profiles.apply_profile_layout(profile_obj, data)
-assert result['width'] == 4. and result['height'] == 3.
-tick = next(child for child in profile_obj.children if child.get('qc_profile_tick'))
-tick.hide_set(True)
-assert bpy.ops.qcblender.layer_action(target=profile_obj.name, action='VISIBILITY') == {'FINISHED'}
-assert all(child.hide_get() for child in profile_obj.children if child.get('qc_profile_tick'))
-assert bpy.ops.qcblender.layer_action(target=profile_obj.name, action='VISIBILITY') == {'FINISHED'}
-assert tick.hide_get() and any(not child.hide_get() for child in profile_obj.children
-                               if child.get('qc_profile_tick'))
-assert bpy.ops.qcblender.layer_action(target=profile_obj.name, action='RENDER') == {'FINISHED'}
-assert all(child.hide_render for child in profile_obj.children if child.get('qc_profile_tick'))
-assert bpy.ops.qcblender.layer_action(target=profile_obj.name, action='RENDER') == {'FINISHED'}
-assert all(not child.hide_render for child in profile_obj.children if child.get('qc_profile_tick'))
-profile_obj['qc_profile_width'] = 6.
-profile_obj['qc_profile_y_auto'] = False
-profile_obj['qc_profile_y_min'] = -.5
-profile_obj['qc_profile_y_max'] = 2.
-assert profiles.apply_profile_layout(profile_obj, data)['width'] == 6.
-profile_obj.hide_render = True
-charts._watch_contours()
-assert all(child.hide_render for child in profile_obj.children if child.get('qc_profile_tick'))
-profile_obj.hide_render = False
-charts._watch_contours()
-assert all(not child.hide_render for child in profile_obj.children if child.get('qc_profile_tick'))
-np.testing.assert_array_equal(original, data.arrays['profile_values'])
-profile_copy = profile_obj.copy()
-profile_copy.data = profile_obj.data.copy()
-bpy.context.collection.objects.link(profile_copy)
-profiles.copy_profile_ticks(profile_obj, profile_copy, bpy.context.collection)
-assert sum(bool(child.get('qc_profile_tick')) for child in profile_copy.children) == sum(
-    bool(child.get('qc_profile_tick')) for child in profile_obj.children)
-profiles.cleanup_profile_ticks(profile_copy)
-assert not any(child.get('qc_profile_tick') for child in profile_copy.children)
-
 args.out.parent.mkdir(parents=True, exist_ok=True)
 bpy.ops.wm.save_as_mainfile(filepath=str(args.out))
-names = (slice_obj.name, carrier.name, profile_obj.name)
+names = (slice_obj.name, carrier.name)
 bpy.ops.wm.open_mainfile(filepath=str(args.out))
 assert all(name in bpy.data.objects for name in names)
 assert bpy.data.objects[names[1]].parent == bpy.data.objects[names[0]]
-assert bpy.data.objects[names[2]]['qc_profile_width'] == 6.
 print('CHARTS_BLENDER_PASSED')

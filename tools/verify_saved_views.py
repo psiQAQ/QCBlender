@@ -30,7 +30,6 @@ if Path(bpy.data.filepath).stem == 'water-mode':
     assert len(obj.qc_settings.modes) == 3
     assert len(obj.qc_settings.energies) == 10
     assert obj.qc_settings.active_mode == 1
-    assert obj.qc_settings.spectrum is not None
     data = storage.load_dataset(bpy.path.abspath(obj['qc_dataset']))
     np.testing.assert_allclose([v.vector[:] for v in obj.data.attributes['qc_mode_displacement'].data],
                                data.arrays['mode_display_displacements'][1], atol=1e-7)

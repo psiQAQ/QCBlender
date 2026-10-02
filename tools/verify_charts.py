@@ -1,4 +1,4 @@
-"""Pure-Python checks for contours and profile layout."""
+"""Pure-Python checks for spatial contours."""
 
 from pathlib import Path
 import hashlib
@@ -12,7 +12,6 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from qcblender.contours import contour_report, levels_from_samples, plane_positions, trace_contours
-from qcblender.plot_layout import profile_layout
 
 
 plane = plane_positions((0, 0, 0), (1, 0, 0), (0, 1, 0), 2)
@@ -118,12 +117,4 @@ with patch.object(Path, 'read_bytes', return_value=b'manifest'):
     else:
         raise AssertionError('Contour worker must honor cancellation')
 
-layout = profile_layout([0., 1., 2., 3.], [0., 1., 9., 3.], [True, True, False, True])
-assert len(layout['paths']) == 1 and layout['width'] == 4. and layout['height'] == 3.
-assert layout['paths'][0][-1][0] == 4. / 3.
-cropped = profile_layout([0., 1., 2.], [0., 1., 2.], [True]*3,
-                         {'x_auto': False, 'x_min': .5, 'x_max': 1.5,
-                          'y_auto': False, 'y_min': .5, 'y_max': 1.5})
-assert len(cropped['paths']) == 1 and cropped['paths'][0][0] == (0., 0., 0.)
-assert cropped['paths'][0][-1] == (4., 0., 3.)
 print('CHARTS_PASSED')

@@ -13,6 +13,7 @@ View3D and Properties area. Computer Use still signs off visual placement.
 """
 import argparse
 import ast
+import csv
 import hashlib
 import importlib
 import inspect
@@ -159,6 +160,47 @@ def check_unknown_cube(report, output_dir):
     assert not bpy.ops.qcblender.generate_field.poll()
     assert len(bpy.context.scene.objects) == count
     report['real_unknown_cube'] = {'status': 'Passed', 'source': str(source)}
+
+
+def file_sha256(path):
+    digest = hashlib.sha256()
+    with path.open('rb') as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b''):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def check_data_records(report, output_dir):
+    storage = module('data')
+    exporter = module('data_export')
+    results = []
+    seen = set()
+    for obj in bpy.context.scene.objects:
+        if not obj.get('qc_data_record'):
+            continue
+        assert obj.type == 'MESH' and len(obj.data.vertices) == 0 and not obj.modifiers
+        source = Path(bpy.path.abspath(obj['qc_dataset']))
+        data = storage.load_dataset(source)
+        digest = hashlib.sha256((source / 'manifest.json').read_bytes()).hexdigest()
+        assert digest == obj['qc_dataset_sha256']
+        for kind in exporter.available_exports(data):
+            if (digest, kind) in seen:
+                continue
+            seen.add((digest, kind))
+            exported = exporter.export_dataset(source, output_dir / 'data-exports', kind)
+            destination = Path(exported['directory'])
+            metadata = json.loads((destination / 'metadata.json').read_text(encoding='utf-8'))
+            assert metadata['source'] == data.metadata['source']
+            assert metadata['dataset_manifest_sha256'] == digest
+            assert metadata['scientific_metadata'] == data.metadata
+            for record in exported['files']:
+                path = destination / record['filename']
+                assert file_sha256(path) == record['sha256']
+                with path.open(encoding='utf-8', newline='') as stream:
+                    assert sum(1 for _ in csv.DictReader(stream)) == record['row_count']
+            results.append({'object': obj.name, 'kind': kind, 'directory': str(destination)})
+    report['data_record_exports'] = ({'status': 'Passed', 'exports': results} if results else
+        {'status': 'Not Run', 'reason': 'This fixture contains no bound data record carriers'})
 
 
 def check_materials(report, objects):
@@ -403,6 +445,7 @@ def main():
             failures[label] = repr(error)
     try:
         run('panels', check_panels)
+        run('data_records', check_data_records, output_dir)
         required = {'core': ('atoms', 'field', 'slice', 'fog'), 'nbo': ('nbo',),
                     'analysis': ('analysis',), 'gui': ('field',)}[args.case]
         objects = {kind: next(obj for obj in bpy.context.scene.objects

@@ -1,97 +1,85 @@
-"""Check ordered FCHK and Mayer overlays in Blender with derived format fixtures."""
-from pathlib import Path
+"""Check real P04 ordered configurations, Mayer records and exported CSV in Blender."""
+import csv
+import hashlib
 import json
-import re
+from pathlib import Path
 import sys
 
 import bpy
+import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path[:0] = [str(ROOT), str(ROOT / 'outputs' / 'science')]
+sys.path[:0] = [str(ROOT), str(ROOT / 'outputs/science')]
 import qcblender
 from qcblender.data import load_dataset
+from qcblender.data_export import export_dataset
 from qcblender.irc import import_irc, import_irc_mayer
 from qcblender.blender.project import save_project
 
-OUT = ROOT / 'outputs' / 'irc-acceptance'
+OUT = ROOT / 'outputs/irc-acceptance'
 OUT.mkdir(parents=True, exist_ok=True)
 qcblender.register()
+SOURCE = ROOT / 'tests/data/tutorial/P04'
+
+
+def activate(obj):
+    for selected in bpy.context.selected_objects:
+        selected.select_set(False)
+    obj.select_set(True)
+    bpy.context.view_layer.objects.active = obj
 
 
 def check_mayer_view(root, expected, step):
     tables = [child for child in root.children if child.get('qc_analysis_role') == 'irc_mayer']
-    curves = [child for child in root.children if child.get('qc_analysis_role') == 'irc_mayer_curve']
-    cursors = [child for child in root.children if child.get('qc_analysis_role') == 'irc_mayer_cursor']
-    assert len(tables) == len(curves) == len(cursors) == 1
-    table, curve, cursor = tables[0], curves[0], cursors[0]
+    assert len(tables) == 1
+    assert not any(child.get('qc_analysis_role') in ('irc_energy', 'irc_cursor', 'irc_mayer_curve', 'irc_mayer_cursor') for child in root.children)
+    table = tables[0]
+    assert table.get('qc_data_record') and table.type == 'MESH' and len(table.data.vertices) == 0
     data = load_dataset(bpy.path.abspath(table['qc_dataset']))
-    assert set(data.arrays) == {'atomic_numbers', 'positions', 'mayer_pairs', 'mayer_orders'}
     for name in data.arrays:
-        assert data.arrays[name].tolist() == expected.arrays[name].tolist(), name
-    assert root['qc_irc_step'] == step
-    assert json.loads(root['qc_irc_record'])['step'] == step
-    assert [int(table['qc_pair_a']), int(table['qc_pair_b'])] == expected.arrays['mayer_pairs'][0].tolist()
+        np.testing.assert_array_equal(data.arrays[name], expected.arrays[name])
+    assert root['qc_irc_step'] == step and json.loads(root['qc_irc_record'])['step'] == step
+    activate(table)
+    assert bpy.ops.qcblender.select_irc_mayer_pair() == {'FINISHED'}
     assert table['qc_mayer_pair_index'] == 0
-    assert list(table['qc_mayer_display_values']) == expected.arrays['mayer_orders'][:, 0].tolist()
-    assert curve.type == 'CURVE' and len(curve.data.splines) == 1
-    assert len(curve.data.splines[0].points) == len(expected.arrays['mayer_orders'])
-    assert cursor.type == 'MESH' and len(cursor.data.vertices) == 1
-    coordinate = curve.data.splines[0].points[step - 1].co[:3]
-    assert all(abs(a - b) < 1e-6 for a, b in zip(cursor.data.vertices[0].co, coordinate))
+    np.testing.assert_array_equal(list(table['qc_mayer_display_values']), expected.arrays['mayer_orders'][:, 0])
+    report = export_dataset(bpy.path.abspath(table['qc_dataset']), OUT / 'csv', 'Mayer')
+    path = Path(report['directory']) / 'mayer.csv'
+    with path.open(encoding='utf-8', newline='') as stream:
+        rows = list(csv.DictReader(stream))
+    assert len(rows) == expected.arrays['mayer_orders'].size
+    assert report['files'][0]['sha256'] == hashlib.sha256(path.read_bytes()).hexdigest()
+    pairs = expected.arrays['mayer_pairs'].tolist()
+    for row in rows:
+        pair = [int(row['atom_a_1based']), int(row['atom_b_1based'])]
+        assert float(row['mayer_order']) == expected.arrays['mayer_orders'][int(row['step']) - 1, pairs.index(pair)]
     return table
 
 
+expected = import_irc(SOURCE / 'steps.csv')
+expected_mayer = import_irc_mayer(expected, SOURCE / 'mayer-pyscf.csv')
 if '--reopen' in sys.argv:
     root = next(obj for obj in bpy.data.objects if obj.get('qc_irc'))
-    data = load_dataset(bpy.path.abspath(root['qc_dataset']))
-    assert root['qc_irc_step'] == 2
-    assert len(data.arrays['irc_energies']) == 2
-    check_mayer_view(root, import_irc_mayer(data, OUT / 'mayer.csv'), 2)
-    print('IRC path and Mayer cold reopen Passed; real IRC fixture Not Run')
 else:
-    original = (ROOT / 'tests' / 'data' / 'iodata' / 'water_sto3g_hf_g03.fchk').read_text(encoding='ascii')
-    first = OUT / 'step1.fchk'
-    second = OUT / 'step2.fchk'
-    first.write_text(original, encoding='ascii')
-    changed = original.replace('-7.495929232844363E+01', '-7.495829232844363E+01')
-    lines = changed.splitlines(keepends=True)
-    index = next(i for i, line in enumerate(lines) if line.startswith('Current cartesian coordinates'))
-    lines[index + 1] = re.sub(r'[-+]?\d+\.\d+E[+-]\d+', '1.00000000E-01', lines[index + 1], count=1)
-    second.write_text(''.join(lines), encoding='ascii')
-    manifest = OUT / 'steps.csv'
-    manifest.write_text('step,fchk\n1,step1.fchk\n2,step2.fchk\n', encoding='utf-8')
-    data = import_irc(manifest)
-    assert data.arrays['irc_positions'].shape == (2, 3, 3)
-    assert data.arrays['irc_energies'][0] != data.arrays['irc_energies'][1]
-    bad = OUT / 'bad-order.csv'
-    bad.write_text('step,fchk\n1,step1.fchk\n3,step2.fchk\n', encoding='utf-8')
-    try:
-        import_irc(bad)
-    except ValueError as error:
-        assert 'contiguous' in str(error)
-    else:
-        raise AssertionError('Gapped IRC path accepted')
-    for step, value in [(1, .95), (2, .85)]:
-        (OUT / f'mayer{step}.txt').write_text('Bond orders with absolute value\n'
-            f'# 1: 1(O) 2(H) {value:.2f}\n# 2: 1(O) 3(H) 0.90\n'
-            'Total valences and free valences\n', encoding='utf-8')
-    mayer_manifest = OUT / 'mayer.csv'
-    mayer_manifest.write_text('step,mayer_output\n1,mayer1.txt\n2,mayer2.txt\n', encoding='utf-8')
-    expected_mayer = import_irc_mayer(data, mayer_manifest)
-    assert expected_mayer.arrays['mayer_orders'].shape == (2, 2)
-    assert bpy.ops.qcblender.import_irc_path(manifest_path=str(manifest)) == {'FINISHED'}
+    assert bpy.ops.qcblender.import_irc_path(manifest_path=str(SOURCE / 'steps.csv')) == {'FINISHED'}
     root = next(obj for obj in bpy.data.objects if obj.get('qc_irc'))
-    bpy.context.view_layer.objects.active = root
+    activate(root)
     assert bpy.ops.qcblender.irc_step(direction='NEXT') == {'FINISHED'}
-    assert root['qc_irc_step'] == 2
-    # Keep the invoking object's context fixed while import changes the active object.
-    # This exercises the nested Operator with the same stale object as a GUI event.
     with bpy.context.temp_override(object=root, active_object=root):
-        assert bpy.context.object == root
-        assert bpy.ops.qcblender.import_irc_mayer(manifest_path=str(mayer_manifest)) == {'FINISHED'}
-        assert bpy.context.object == root
-    table = check_mayer_view(root, expected_mayer, 2)
-    assert bpy.context.view_layer.objects.active == table
+        assert bpy.ops.qcblender.import_irc_mayer(manifest_path=str(SOURCE / 'mayer-pyscf.csv')) == {'FINISHED'}
+    table = bpy.context.view_layer.objects.active
     assert table.select_get() and not root.select_get()
+
+data = load_dataset(bpy.path.abspath(root['qc_dataset']))
+assert root['qc_irc_step'] == 2
+for name in expected.arrays:
+    np.testing.assert_array_equal(data.arrays[name], expected.arrays[name])
+np.testing.assert_allclose([v.co[:] for v in root.data.vertices], expected.arrays['irc_positions'][1], atol=1e-6)
+check_mayer_view(root, expected_mayer, 2)
+exported = export_dataset(bpy.path.abspath(root['qc_dataset']), OUT / 'csv', 'IRC')
+with (Path(exported['directory']) / 'irc_steps.csv').open(encoding='utf-8', newline='') as stream:
+    rows = list(csv.DictReader(stream))
+np.testing.assert_array_equal([float(row['energy_hartree']) for row in rows], expected.arrays['irc_energies'])
+if '--reopen' not in sys.argv:
     save_project(OUT / 'irc.blend')
-    print('IRC parser, Blender step and Mayer save Passed; real IRC fixture Not Run')
+print('Real P04 IRC configurations, Mayer records and CSV Passed')

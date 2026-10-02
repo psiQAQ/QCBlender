@@ -1,12 +1,14 @@
 """Installed-extension worker, provenance and portable-project regression."""
 import hashlib
 import argparse
+import csv
 import importlib
 import json
 from pathlib import Path
 import shutil
 import sys
 import time
+import uuid
 from types import SimpleNamespace
 from unittest.mock import patch
 
@@ -36,6 +38,9 @@ def finish(job):
             return report
         time.sleep(.1)
     job.cancel()
+    request = json.loads((job.directory / 'request.json').read_text(encoding='utf-8'))
+    if request.get('action') == 'export_data' and request.get('export_token'):
+        importlib.import_module(MODULE + '.data_export').cleanup_staging(request['output_directory'], request['export_token'])
     raise TimeoutError(str(job.directory))
 
 
@@ -102,10 +107,19 @@ else:
     assert data.metadata['source']['sha256'] == hashlib.sha256(fchk.read_bytes()).hexdigest()
     assert data.arrays['atomic_numbers'].tolist() == [6, 1, 1, 1, 1]
     report['new_dialog_resets_previous_preview'] = 'Passed'
-    spectrum = from_source[1].qc_settings.spectrum
-    assert spectrum and browser.source_group(spectrum)[0] == browser.source_group(from_source[1])[0]
-    assert any(title == 'Spectrum' for title, _ in browser.source_details(spectrum))
-    report['spectrum_parent_binding'] = 'Passed'
+    vibrational = storage.load_dataset(bpy.path.abspath(from_source[1]['qc_dataset']))
+    assert 'mode_frequencies' in vibrational.arrays and 'mode_ir_intensities' in vibrational.arrays
+    assert not any(child.get('qc_view_kind') == 'spectrum' for child in from_source[1].children)
+    exported = finish(Job('export_data', export_token=uuid.uuid4().hex, dataset=bpy.path.abspath(from_source[1]['qc_dataset']),
+        dataset_sha256=from_source[1]['qc_dataset_sha256'], output_directory=str(OUT / 'csv'),
+        kind='IR', scope='ALL', filters={}))
+    assert exported['status'] == 'succeeded', exported
+    assert exported['files'][0]['row_count'] == len(vibrational.arrays['mode_frequencies'])
+    with (Path(exported['directory']) / 'ir.csv').open(encoding='utf-8', newline='') as stream:
+        rows = list(csv.DictReader(stream))
+    np.testing.assert_array_equal([float(row['frequency_cm-1']) for row in rows], vibrational.arrays['mode_frequencies'])
+    np.testing.assert_array_equal([float(row['ir_intensity_km_mol']) for row in rows], vibrational.arrays['mode_ir_intensities'])
+    report['frequency_data_export'] = 'Passed'
     changed = OUT / source.name
     changed.write_bytes(source.read_bytes() + b'\nchanged after preview\n')
     rejected = finish(Job('import', source=str(changed), job_index=0, source_sha256=preview['source']['sha256']))

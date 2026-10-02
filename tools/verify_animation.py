@@ -34,8 +34,6 @@ for obj in bpy.data.objects:
 atoms = views.atom_view(job.directory / 'dataset')
 # This Gaussian orientation puts water in YZ; face its molecular plane toward the camera.
 atoms.rotation_euler[2] = np.pi / 2
-atoms.qc_settings.spectrum.rotation_euler[2] = -np.pi / 2
-atoms.qc_settings.spectrum.location = (0, -4, 0)
 atoms.qc_settings.active_mode = 1
 modifier = atoms.modifiers[0]
 inputs = {s.name: s.identifier for s in modifier.node_group.interface.items_tree

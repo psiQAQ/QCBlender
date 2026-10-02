@@ -42,16 +42,15 @@ if '--vibration-layers' in sys.argv:
         time.sleep(.1)
     assert result['status'] == 'succeeded', result
     source = views.atom_view(job.directory / 'dataset')
-    spectrum = source.qc_settings.spectrum
-    before = [tuple(v.color) for v in spectrum.data.color_attributes['qc_ir_color'].data]
+    before = np.array([tuple(v.vector) for v in source.data.attributes['qc_mode_displacement'].data])
     old_mode = source.qc_settings.active_mode
     action(source, 'DUPLICATE')
     copied = bpy.context.object
-    assert copied.qc_settings.spectrum != spectrum
+    assert copied.data != source.data and copied.modifiers[0].node_group != source.modifiers[0].node_group
     copied.qc_settings.active_mode = (old_mode + 1) % len(source.qc_settings.modes)
     assert source.qc_settings.active_mode == old_mode
-    assert [tuple(v.color) for v in spectrum.data.color_attributes['qc_ir_color'].data] == before
-    assert [tuple(v.color) for v in copied.qc_settings.spectrum.data.color_attributes['qc_ir_color'].data] != before
+    np.testing.assert_array_equal([tuple(v.vector) for v in source.data.attributes['qc_mode_displacement'].data], before)
+    assert not np.array_equal([tuple(v.vector) for v in copied.data.attributes['qc_mode_displacement'].data], before)
     np.testing.assert_array_equal([v.co[:] for v in copied.data.vertices], [v.co[:] for v in source.data.vertices])
     report['vibration_copy_independence'] = 'Passed'
 elif '--reopen-layers' in sys.argv:

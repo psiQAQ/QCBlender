@@ -7,6 +7,7 @@ from pathlib import Path
 import shutil
 import sys
 import time
+import uuid
 
 import bpy
 from mathutils import Matrix, Vector
@@ -27,6 +28,7 @@ layers = importlib.import_module(MODULE + '.blender.layers')
 browser = importlib.import_module(MODULE + '.blender.source_browser')
 scene = bpy.context.scene
 REPORT = OUT / 'profile.json'
+export_paths = {}
 
 
 def digest(path):
@@ -42,8 +44,22 @@ def snapshot():
 
 def export(obj, name):
     layers.activate(bpy.context, obj)
-    path = OUT / (name + '.csv')
-    assert bpy.ops.qcblender.export_line_profile(filepath=str(path)) == {'FINISHED'}
+    Job = importlib.import_module(MODULE + '.blender.jobs').Job
+    token = uuid.uuid4().hex
+    job = Job('export_data', export_token=token, dataset=bpy.path.abspath(obj['qc_dataset']),
+              dataset_sha256=obj['qc_dataset_sha256'], output_directory=str(OUT / 'csv'),
+              kind='profile', scope='ALL', filters={})
+    deadline = time.monotonic() + 180
+    while (report := job.poll()) is None:
+        if time.monotonic() > deadline:
+            job.cancel()
+            importlib.import_module(MODULE + '.data_export').cleanup_staging(OUT / 'csv', token)
+            raise TimeoutError(str(job.directory))
+        time.sleep(.1)
+    assert report['status'] == 'succeeded', report
+    path = Path(report['directory']) / 'profile.csv'
+    export_paths[name] = path
+    assert report['files'][0]['sha256'] == digest(path)
     return digest(path)
 
 
@@ -69,7 +85,9 @@ else:
         assert bpy.ops.qcblender.create_line_profile(field_role=role, samples=count) == {'FINISHED'}
         obj = bpy.context.object
         obj.name = name
-        assert obj.get('qc_view_kind') == 'profile' and obj in layers.display_layers(scene)
+        assert obj.get('qc_analysis_role') == 'profile' and obj.get('qc_data_record')
+        assert obj.type == 'MESH' and len(obj.data.vertices) == 0 and len(obj.modifiers) == 0
+        assert obj in layers.display_layers(scene)
         data = storage.load_dataset(bpy.path.abspath(obj['qc_dataset']))
         assert data.metadata['source']['kind'] == 'derived'
         csv_digests[name] = export(obj, name)
@@ -131,7 +149,7 @@ else:
     assert colored.metadata['profile']['field']['quantity'] == 'electron_number_density'
     assert colored.metadata['profile']['source_manifest_sha256'] == color['qc_dataset_sha256']
     checks['color_transform_source_distance'] = 'Passed'
-    # An explicitly synthetic affine field exercises the gap topology inside Blender.
+    # An explicitly synthetic affine field exercises invalid samples in a saved data record.
     grid_steps = np.array([[.5, .25, 0], [0, .5, .25], [.25, 0, .5]])
     coordinates = np.moveaxis(np.indices((5, 3, 3)), 0, -1) @ grid_steps
     af = {'array': 'scalar', 'valid_mask': 'valid', 'shape': [5, 3, 3], 'origin': [0, 0, 0],
@@ -147,24 +165,13 @@ else:
     analytic = views.field_view(directory)
     gap, data = create(analytic, coordinates[0, 1, 1], coordinates[4, 1, 1], 'Gap profile', count=5)
     np.testing.assert_array_equal(data.arrays['profile_valid'], [True, True, False, True, True])
-    # Sample paths precede the two axes and their ticks in the saved chart.
-    splines = list(gap.data.splines)
-    assert len(splines) == 4 + gap['qc_profile_x_ticks'] + gap['qc_profile_y_ticks']
-    assert [len(s.points) for s in splines[:2]] == [2, 2]
-    chart = json.loads(gap['qc_chart'])
-    expected = np.zeros((5, 3))
-    expected[:, 0] = ((data.arrays['profile_distance'] - chart['x_min'])
-                      * gap['qc_profile_width'] / (chart['x_max'] - chart['x_min']))
-    expected[:, 2] = ((data.arrays['profile_values'] - chart['y_min'])
-                      * gap['qc_profile_height'] / (chart['y_max'] - chart['y_min']))
-    for spline, indices in zip(splines[:2], ([0, 1], [3, 4]), strict=True):
-        np.testing.assert_allclose([point.co[:3] for point in spline.points], expected[indices], atol=1e-6)
+    assert len(gap.data.vertices) == 0 and not gap.children
     valid = data.arrays['profile_valid']
     np.testing.assert_allclose(data.arrays['profile_values'][valid], data.arrays['profile_positions'][valid] @ [2, -3, .5] + 1)
     _, outside = create(analytic, coordinates[0, 1, 1] - 2 * grid_steps[0], coordinates[4, 1, 1], 'Outside profile', count=13)
     assert not outside.arrays['profile_valid'][0]
     import csv
-    rows = list(csv.DictReader((OUT / 'Gap profile.csv').open(encoding='utf-8')))
+    rows = list(csv.DictReader(export_paths['Gap profile'].open(encoding='utf-8')))
     assert rows[2]['value'] == '' and rows[2]['valid'] == '0'
     layers.activate(bpy.context, analytic)
     scene.cursor.location = coordinates[0, 1, 1]
@@ -180,7 +187,8 @@ else:
     assert bpy.ops.qcblender.layer_action(target=curve.name, action='DUPLICATE') == {'FINISHED'}
     copied = bpy.context.object
     copied.name = 'MO profile copy'
-    assert copied.data != curve.data and copied.data.materials[0] != curve.data.materials[0]
+    assert copied.data != curve.data and len(copied.data.vertices) == 0
+    assert copied['qc_data_record'] and copied['qc_dataset_sha256'] == curve['qc_dataset_sha256']
     copied.location += Vector((0, 5, 0))
     assert export(copied, copied.name) == csv_digests[curve.name]
     csv_digests[copied.name] = csv_digests[curve.name]
@@ -189,14 +197,14 @@ else:
         assert snapshot()[name] == original
     for obj in scene.objects:
         if obj.get('qc_view_kind'):
-            obj.hide_render = obj != gap
+            obj.hide_render = obj not in (field, atom)
     area = next(a for a in bpy.context.screen.areas if a.type == 'VIEW_3D')
     area.spaces.active.region_3d.view_rotation = Matrix(((1, 0, 0), (0, 0, -1), (0, 1, 0))).to_quaternion()
-    layers.activate(bpy.context, gap)
+    layers.activate(bpy.context, field)
     scene.render.resolution_x, scene.render.resolution_y = 800, 600
     with bpy.context.temp_override(area=area, region=next(r for r in area.regions if r.type == 'WINDOW')):
         assert bpy.ops.qcblender.create_framed_camera() == {'FINISHED'}
-    scene.render.filepath = str(OUT / 'profile-gaps.png')
+    scene.render.filepath = str(OUT / 'profile-data-context.png')
     bpy.ops.render.render(write_still=True)
     project.save_project(OUT / 'profile.blend')
     moved = OUT / 'moved'
@@ -204,7 +212,7 @@ else:
     shutil.copy2(OUT / 'profile.blend', moved / 'profile.blend')
     shutil.copytree(OUT / 'profile.qcdata', moved / 'profile.qcdata', dirs_exist_ok=True)
     report = {'status': 'Passed', 'blender': bpy.app.version_string, 'checks': checks, 'errors': errors,
-              'affine_gap_curve_csv': 'Passed', 'copy_independence': 'Passed', 'source_arrays_unchanged': 'Passed',
+              'affine_gap_record_csv': 'Passed', 'copy_independence': 'Passed', 'source_arrays_unchanged': 'Passed',
               'source_details': 'Passed', 'snapshot': snapshot(), 'csv': csv_digests,
               'saved_cold_reopen_csv': 'Not Run', 'moved_cold_reopen_csv': 'Not Run'}
 REPORT.write_text(json.dumps(report, indent=2), encoding='utf-8')

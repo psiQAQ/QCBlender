@@ -1,8 +1,7 @@
-"""Result browsing keeps source records intact and filters before sampling."""
+"""Result browsing and CSV filtering preserve complete source records."""
 import os
 from pathlib import Path
 import tempfile
-from types import SimpleNamespace
 import unittest
 
 import numpy as np
@@ -11,8 +10,7 @@ from qcblender.external_fields import pair_cubes
 from qcblender.external_results import (aim_points, aim_properties, esp_area, esp_extrema,
                                         ets_nocv_pairs)
 from qcblender.result_filters import (area_selection, nbo_selection, nocv_selection,
-                                      point_label, point_selection, scatter_report,
-                                      scatter_selection, verified_scatter_points)
+                                      point_label, point_selection)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,61 +25,38 @@ NOCV = SOURCES / 'c10-c13/multiwfn-cobh3-20260927/COBH3-ETS-NOCV.txt'
 
 
 class ResultFilters(unittest.TestCase):
-    def test_full_valid_filter_precedes_deterministic_sampling(self):
-        data = SimpleNamespace(metadata={'fields': [
-            {'array': 'geometry', 'valid_mask': 'good'}, {'array': 'color', 'valid_mask': 'good'}]},
-            arrays={'geometry': np.arange(12, dtype=float),
-                    'color': np.arange(12, dtype=float) * -1,
-                    'good': np.array([True] * 11 + [False])})
-        first = scatter_selection(data, 1, 0, -8, -3, 3, 8, maximum=3)
-        second = scatter_selection(data, 1, 0, -8, -3, 3, 8, maximum=3)
-        self.assertEqual((first['matching_count'], first['displayed_count']), (6, 3))
-        np.testing.assert_array_equal(first['points'], second['points'])
-        np.testing.assert_array_equal(first['flat_indices'], [3, 5, 8])
-        large = SimpleNamespace(metadata=data.metadata, arrays={
-            'geometry': np.arange(100001, dtype=float),
-            'color': -np.arange(100001, dtype=float),
-            'good': np.ones(100001, dtype=bool)})
-        capped = scatter_selection(large, 1, 0, -100000, 0, 0, 100000)
-        self.assertEqual((capped['matching_count'], capped['displayed_count']), (100001, 50000))
-        with self.assertRaisesRegex(ValueError, 'minimum exceeds maximum'):
-            scatter_selection(data, x_min=1, x_max=0)
-
-    def test_real_pair_worker_contract_and_source_preservation(self):
+    def test_real_pair_csv_filter_and_source_preservation(self):
         if not all(path.is_file() for path in (C07 / 'dg_inter.cub', C07 / 'sl2r.cub')):
             self.skipTest('Real C07 Cube pair is required; set QCBLENDER_REFERENCE_ROOT')
+        import csv
         from qcblender.data import save_dataset
-
+        from qcblender.data_export import export_dataset
         data = pair_cubes(C07 / 'dg_inter.cub', C07 / 'sl2r.cub', 'IGMH',
                           'electron/bohr^4', 'electron/bohr^3')
-        original = data.arrays[data.metadata['fields'][0]['array']].copy()
+        original = {key: value.copy() for key, value in data.arrays.items()}
         output = ROOT / 'outputs/science-result-filters'
         output.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(dir=output) as temporary:
             directory = Path(temporary)
             source = directory / 'source'
             save_dataset(data, source)
-            import hashlib
-            digest = hashlib.sha256((source / 'manifest.json').read_bytes()).hexdigest()
-            request = {'dataset': str(source), 'dataset_sha256': digest,
-                       'x_field': 1, 'y_field': 0, 'x_min': -.05, 'x_max': .05,
-                       'y_min': 0, 'y_max': .05}
-            report = scatter_report(request, directory)
-            points = np.load(directory / 'scatter.npy', allow_pickle=False)
-            np.testing.assert_array_equal(
-                verified_scatter_points(directory / 'scatter.npy', report, 1, 0), points)
-            self.assertEqual(len(points), report['displayed_count'])
-            self.assertLessEqual(len(points), 50000)
-            self.assertGreaterEqual(report['matching_count'], len(points))
-            self.assertTrue(np.all((-0.05 <= points[:, 0]) & (points[:, 0] <= 0.05)))
-            with self.assertRaisesRegex(ValueError, 'invalid scatter points'):
-                verified_scatter_points(directory / 'scatter.npy',
-                                        dict(report, displayed_count=len(points) + 1), 1, 0)
-            with self.assertRaisesRegex(ValueError, 'SHA-256'):
-                verified_scatter_points(directory / 'scatter.npy', dict(report, scatter_sha256='0' * 64), 1, 0)
-            with self.assertRaisesRegex(ValueError, 'changed'):
-                scatter_report(dict(request, dataset_sha256='0' * 64), directory)
-        np.testing.assert_array_equal(data.arrays[data.metadata['fields'][0]['array']], original)
+            fields = data.metadata['fields']
+            x = data.arrays[fields[1]['array']].ravel()
+            y = data.arrays[fields[0]['array']].ravel()
+            valid = (data.arrays[fields[0]['valid_mask']].ravel() &
+                     data.arrays[fields[1]['valid_mask']].ravel())
+            expected = np.flatnonzero(valid & (x >= -.05) & (x <= .05) & (y >= 0) & (y <= .05))
+            report = export_dataset(source, directory / 'exports', 'paired', 'FILTERED',
+                                    {'x_field': 1, 'y_field': 0, 'x_min': -.05, 'x_max': .05,
+                                     'y_min': 0, 'y_max': .05})
+            with (Path(report['directory']) / 'paired_voxels.csv').open(encoding='utf-8', newline='') as stream:
+                rows = list(csv.DictReader(stream))
+            np.testing.assert_array_equal([int(row['flat_index_0based']) for row in rows], expected)
+            np.testing.assert_array_equal([float(row['x_value']) for row in rows], x[expected])
+            np.testing.assert_array_equal([float(row['y_value']) for row in rows], y[expected])
+            self.assertEqual(report['files'][0]['row_count'], len(expected))
+        for key, value in original.items():
+            np.testing.assert_array_equal(data.arrays[key], value)
 
     def test_real_esp_and_nocv_record_selection(self):
         if not all(path.is_file() for path in (C08 / 'surfanalysis.pdb', C08 / 'stdout.log',
