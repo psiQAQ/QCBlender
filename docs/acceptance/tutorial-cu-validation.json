@@ -565,7 +565,7 @@
     "docs/acceptance/tutorial-validation.json",
     "docs/acceptance/cleanup-validation.json"
   ],
-  "remaining_click_steps": "Agent C01-C13/N01-N18 acceptance and fixed-main qualification Passed. Remaining archive/cleanup blockers: protected dirty tutorial-cu worktree, protected recovery files in integration worktree, denied f458 and occupied b48c. User walkthrough and independent signature Not Run.",
+  "remaining_click_steps": "Agent C01-C13/N01-N18 acceptance, fixed-main qualification, merge and all eight current task worktree archives/removals Passed. User/scientific signatures remain Not Run. Inaccessible historical f458 and occupied b48c are deferred under the latest user decision; see task06 and ARTIFACTS.",
   "cleanup": {
     "status": "Passed",
     "scope": "This screenshot supplement only; full GUI task remains claimed",
@@ -6423,7 +6423,7 @@
   },
   "current_automated_qualification": {
     "path": "docs/acceptance/tutorial-final-qualification.json",
-    "sha256": "a5de06b83754f8670951093675f3a984bb3596f2baeb4f5f7c98a9904a163c70",
+    "sha256": "32cf96b5c398c45de0fc8dcfce68a24784899544c0bb4ad1fbd61912e00fc3c0",
     "source_commit": "b8a63cd8c7a2afe1edd50085ff41c862e9005868",
     "candidate_sha256": "706f760b248a7775206e7361460f85645573490ebf3e566f40d05e97eeec4c44",
     "status": "Passed",
@@ -6452,6 +6452,23 @@
   },
   "historical_phase_sections": "Existing report/progress/remaining fields describe their original phase. Current completion and source identity are routed by current_Agent_acceptance and current_automated_qualification.",
   "current_cleanup": {
+    "status": "Passed",
+    "scope": "Eight current tutorial task worktrees and merged branches normally removed; inaccessible historical branches/directories deferred under explicit latest user instruction",
+    "evidence": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/deferred-cleanup/completion.json",
+      "sha256": "7bc1035351e905fd95d3d9b3ce45a1dde89afe54199170a4fe8b7fe3768a8522"
+    },
+    "worktree_receipt": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/deferred-cleanup/worktree-removal.json",
+      "sha256": "938aee06a0ca3f2191d49d8bf1880ba7a11132353ddba99344cbabf2c0ee7d9f"
+    },
+    "deferred_legacy_receipt": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/deferred-cleanup/legacy-deferred.json",
+      "sha256": "49875d8be34c10517a0d9392b20473d85047d135f59cc8624e23fbed079f9241"
+    },
+    "deferred_task": ".scratch/tutorial-cu/issues/06-deferred-cleanup.md"
+  },
+  "historical_cleanup_before_followup": {
     "status": "Not Run",
     "evidence": {
       "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/post-cleanup.json",

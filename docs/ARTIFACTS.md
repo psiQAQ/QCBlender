@@ -17,14 +17,16 @@
 
 ## 归档、清理和阻塞
 
-主分支已本地 ff-only 合并到固定源码提交；八个带注释标签 `archive/2026-10-02/<完整分支名>` 的身份和提交可达性 Passed，详细分支名见 `outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/tags.json`。六个干净工作树及已合并分支正常移除；没有 push。
+主分支已本地 ff-only 合并到固定源码提交；八个带注释标签 `archive/2026-10-02/<完整分支名>` 的身份和提交可达性 Passed，详细分支名见 `outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/tags.json`。八个本轮工作树及已合并分支均正常移除；没有 push。
 
-清理收据统一在 `outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/`：
+本次继续处理收据位于 `outputs/evidence/2026-10-02/tutorial-cu/deferred-cleanup/`：`preflight.json`和`ignored-preservation.jsonl.gz`逐文件复核111份剩余材料，两份旧工作副本与main及原文件/基线/补丁完全一致；`worktree-removal.json`记录最后两个工作树及分支正常移除。31份恢复数据完整迁入 `outputs/projects/recovery/worktree-tutorial-irc-mayer-context/`，原文件没有删除，`recovery-move.json`保存全旧新路径与摘要，`recovery-cold.json`记录新Blender进程Dataset/科学数组/VDB读取Passed。`completion.json`及`legacy-deferred.json`记录本轮完成和用户允许延期的旧阻塞。
+
+上一批清理收据保留在 `outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/`：
 
 | 入口 | 内容 |
 | --- | --- |
 | `post-cleanup.json` | 清理后70项源码/JSON、110输入、11锁定wheels、188工程文件、38报告与1,934保留文件摘要核对；同口径目标清单前后空间 |
-| `cleanup.json` 与上级 `cleanup/<任务>/applied.json` | 七工作树的36,895文件 / 2,164,204,797字节已删除；31恢复数据由既有保护拒绝，原位保留 |
+| `cleanup.json` 与上级 `cleanup/<任务>/applied.json` | 七工作树的36,895文件 / 2,164,204,797字节已删除；31恢复数据当时由既有保护拒绝；本次已完整迁入受保护projects/recovery，见新收据 |
 | `retired-candidates-applied.json` | 11旧ZIP / 556,975,546字节已删除，最新候选保留；旧报告/摘要/源码标签保留，新重建需重新资格 |
 | `main-test-cleanup/` | 本批隔离测试环境与重复生成物4,987文件 / 338,705,325字节已删除；原worker请求、成功失败日志、结果与路径映射保留 |
 | `worktree-removal.json`、`legacy-blockers.json` | 真实移除/保留状态；权限及占用对象未强制处理 |
@@ -34,13 +36,11 @@
 
 | 未完成对象 | 当前原因与保留位置 |
 | --- | --- |
-| `.worktrees/tutorial-cu` / `chore/tutorial-cu` | 两份未提交修改保留原字节；基线、补丁与原文件保全在上级 `working-source-map.json` 及对应副本；不强制移除 |
-| `.worktrees/tutorial-irc-mayer-context` / `fix/tutorial-irc-mayer-context` | 31个恢复数组/体积/manifest被既有清理保护拒绝；原恢复文件、工作树及分支保留 |
 | 旧 f458 / `chore/repository-cleanup` | 11目录、3ZIP访问拒绝；原对象/分支保留，未修改ACL或所有权 |
 | 旧 b48c | 空 `outputs` 已正常移除，空根目录仍 WinError 32 占用；保留 |
 | 默认旧后端wheel | `outputs/wheels/<后端wheel>`不可读，原位保留；当前根后端记录与 `outputs/wheels/qualified/` 的可读wheel已配对核对 |
 
-`.scratch/tutorial-cu/issues/03-evidence.md` 保持 claimed，全工作树清理 Not Run；安全部分完成不代表全部阻塞解除。未知历史恢复文件及尚未解除引用的旧配置保留，不按进程名关闭未知窗口。
+按用户“无法处理的分支可以暂时放着”的最新范围，03已resolved；本轮八工作树归档清理Passed，旧f458/b48c清理单独延期到 `.scratch/tutorial-cu/issues/06-deferred-cleanup.md`（pending / ready-for-human）。旧权限检查仍Failed、延期清理Not Run，不改写旧结果；未知恢复文件及未解除引用的旧配置保留，不按进程名关闭未知窗口。
 
 归档前逐文件原始清单为上级 `inventory.jsonl.gz`，文本保全、独有二进制及旧新路径为 `working-source-map.json`、`binary-preservation.json` 和 `content/<sha256>`。原报告字节不改写；工作树旧路径通过映射定位。需恢复时另建目录、按映射核对摘要并冷重开，不覆盖现存用户工程。早期 `archive-preparation/` 为只读历史盘点，最终以 `archive-preparation-final/` 和本节收据为准。
 
@@ -50,6 +50,7 @@
 | --- | --- |
 | `outputs/build-site/`、`outputs/science/` | 共用锁定构建/科学环境；本批预检与69科学测试 Passed |
 | `outputs/wheels/qualified/`、`outputs/backend-wheel.json` | 显式配对的11锁定wheels与当前后端记录；打包传入 `--wheels-dir`，不凭同名旧wheel复用 |
+| `outputs/projects/recovery/worktree-tutorial-irc-mayer-context/` | 31份完整迁入的回归恢复数据，原数组/体积/manifest摘要不变；新原生Blender读取Passed，旧新路径见本次recovery-move.json |
 | `outputs/projects/tutorial-cu-full/` | 各案例原工程、中文移动和解包副本、撤销恢复/内部掩码/独立资产/最后Remove工程；按下表批次的 `project-path-map.json` 查摘要 |
 | `outputs/projects/public-tutorial-mcp-20261001/`、`public-tutorial-90ff9bf/` | 前批教程项目和科学配套保全；历史状态见各原报告 |
 | `outputs/projects/user-session-20260930/`、`cleanup-followup-original/`、`recovery/`、`outputs/recovery/` | 用户与恢复工程，含尚未完整保全的权限对象；保护 |
@@ -64,6 +65,7 @@
 
 | 批次 | 原始证据、工程与状态入口 |
 | --- | --- |
+| 2026-10-02后续工作树收尾 | `outputs/evidence/2026-10-02/tutorial-cu/deferred-cleanup/`；本轮八工作树/分支移除完毕，旧权限/占用按用户允许延期；31恢复文件完整迁移与原生读回 |
 | 2026-10-02 当前main技术资格 | `outputs/evidence/2026-10-02/tutorial-cu/main-qualification/`；[最终索引](acceptance/tutorial-final-qualification.json) |
 | 2026-10-02 GUI/MCP边界与完整案例 | `outputs/evidence/2026-10-02/tutorial-cu/full/`：C05各子批、C06–C13、`remaining-boundaries/{C01-density,field-guards,undo,public-surfaces,layer-removal}`；[补验索引](acceptance/tutorial-cu-validation.json) |
 | 2026-10-01 GUI/MCP与修复 | `outputs/evidence/2026-10-01/tutorial-cu/`：`full/C01-*.json`平铺报告、`full/C02`至`C05`、fog/mapping/slice；缺陷和修复证据保留原身份 |

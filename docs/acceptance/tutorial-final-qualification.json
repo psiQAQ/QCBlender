@@ -60,11 +60,13 @@
     "user_walkthrough": "Not Run",
     "independent_scientific_signature": "Not Run",
     "merge_main": "Passed",
-    "archive_cleanup": "Not Run",
+    "archive_cleanup": "Passed",
     "C01_C13_N01_N18_Agent_acceptance": "Passed",
     "qualified_current_evidence_reports": 38,
     "safe_cleanup_and_protected_readback": "Passed",
-    "annotated_archive_tags": "Passed"
+    "annotated_archive_tags": "Passed",
+    "deferred_legacy_cleanup": "Not Run",
+    "recovery_migration_and_native_readback": "Passed"
   },
   "evidence": {
     "qualification": {
@@ -120,24 +122,48 @@
       "sha256": "ef59f6a2a43154a527ef699547dc6752f622086613b06497dc1b7da7a0cef4e9"
     },
     "cleanup": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/cleanup.json",
-      "sha256": "966d45a9ef0c6d1ea963fe62eca5ed6ea9c2866adb86bc4deb7d83f3d40a1eb6"
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/deferred-cleanup/completion.json",
+      "sha256": "7bc1035351e905fd95d3d9b3ce45a1dde89afe54199170a4fe8b7fe3768a8522"
     },
     "worktree_removal": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/worktree-removal.json",
-      "sha256": "7b2682c268d2746999973fcf3ad082866ac1b8e72661b4c738c51d3a61fab548"
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/deferred-cleanup/worktree-removal.json",
+      "sha256": "938aee06a0ca3f2191d49d8bf1880ba7a11132353ddba99344cbabf2c0ee7d9f"
     },
     "merge_main": {
       "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/merge-main.json",
       "sha256": "dcaa18c460447496cdbba0fd6f31e1d767da698cc0c3797b03e50e0d948638c8"
     },
     "legacy_blockers": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/legacy-blockers.json",
-      "sha256": "51571ba3d310d188c8bc68c00360aa9bb1565ae9c4e66d9e3dab1ecb2fd62bef"
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/deferred-cleanup/legacy-deferred.json",
+      "sha256": "49875d8be34c10517a0d9392b20473d85047d135f59cc8624e23fbed079f9241"
     },
     "retired_candidates": {
       "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/retired-candidates-applied.json",
       "sha256": "9fd9e701aad73d45486a2c0164f3de533c3055495f90f0f5971c017b126502bc"
+    },
+    "historical_cleanup_before_followup": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/cleanup.json",
+      "sha256": "966d45a9ef0c6d1ea963fe62eca5ed6ea9c2866adb86bc4deb7d83f3d40a1eb6"
+    },
+    "historical_worktree_removal_before_followup": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/worktree-removal.json",
+      "sha256": "7b2682c268d2746999973fcf3ad082866ac1b8e72661b4c738c51d3a61fab548"
+    },
+    "historical_legacy_blockers_before_followup": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/legacy-blockers.json",
+      "sha256": "51571ba3d310d188c8bc68c00360aa9bb1565ae9c4e66d9e3dab1ecb2fd62bef"
+    },
+    "recovery_migration": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/deferred-cleanup/recovery-move.json",
+      "sha256": "e79cdcfbc7bf4926f6fabb6236f4dabb372728c546e20aa9de5b9e2af571aa74"
+    },
+    "recovery_readback": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/deferred-cleanup/recovery-cold.json",
+      "sha256": "a400e1dbb1036f5dd1b70153198aa391f90ab9826b5bed3dd88e5956cc75526a"
+    },
+    "redundant_source_copies": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/deferred-cleanup/redundant-working-copies.json",
+      "sha256": "80c948db9f60e0d8303550d125f28cc8b521b8fe9c917f31aff5a189dc6a373a"
     }
   },
   "projects": {
@@ -177,6 +203,30 @@
     "availability": "Old ZIP retired after new main qualification; original reports and identity retained"
   },
   "cleanup": {
+    "status": "Passed",
+    "scope": "Eight current tutorial task worktrees and merged branches normally removed; inaccessible historical branches/directories deferred under explicit latest user instruction",
+    "user_authorization": "进行处理，如果是无法处理的分支可以暂时放着",
+    "safe_removed_worktrees": 8,
+    "retained_new_worktrees": 0,
+    "archived_current_branches": 8,
+    "deferred_legacy_cleanup": "Not Run",
+    "deferred_task": ".scratch/tutorial-cu/issues/06-deferred-cleanup.md",
+    "previous_manifest_files_deleted": 41893,
+    "previous_manifest_bytes_deleted": 3059885668,
+    "recovery_files_moved_intact": 31,
+    "recovery_files_deleted": 0,
+    "recovery_native_readback": "Passed",
+    "current_receipt": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/deferred-cleanup/completion.json",
+      "sha256": "7bc1035351e905fd95d3d9b3ce45a1dde89afe54199170a4fe8b7fe3768a8522"
+    },
+    "deferred_objects": [
+      "f458: historical access-denied objects, registered worktree and branch retained",
+      "b48c: empty root remains occupied (WinError 32)"
+    ],
+    "route": "docs/ARTIFACTS.md"
+  },
+  "historical_cleanup_before_followup": {
     "status": "Not Run",
     "safe_removed_worktrees": 6,
     "retained_new_worktrees": 2,

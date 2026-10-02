@@ -1,7 +1,7 @@
 # 03 evidence
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Blocked by: 02
 
 ## Comments
@@ -31,3 +31,10 @@ Blocked by: 02
 八个注释archive标签Passed；六个干净工作树与分支正常移除。逐文件删除41,893份/3,059,885,668字节（总删除量，非全库净减少）；保留证据1,934项、110输入、11锁定wheels、188工程文件与38报告清理后摘要核对Passed。收据outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/，当前路由docs/ARTIFACTS.md。
 
 Status保持claimed：tutorial-cu两份未提交源文件受保护，整合工作树31个恢复文件被既有清理保护拒绝；均原位保留及精确保全。旧f458 11目录/3ZIP拒绝，b48c空根仍占用。全工作树清理Not Run，不修改ACL/取得所有权/force删除，不push。后续只处理这些确切阻塞，不重复已通过技术资格或首次GUI操作。
+
+
+## 当前验收结果
+
+2026-10-02 根据最新明确授权，继续安全处理并允许无法处理的历史分支延期。两份旧工作修改与main逐字节相同，原文件/基线/补丁及111项剩余忽略材料再次保全；31份已结束回归恢复数据完整迁入outputs/projects/recovery/worktree-tutorial-irc-mayer-context，原生Blender新PID17144读回Dataset/全部数组/VDB Passed，数据零删除。最后两个工作树及分支均正常移除，累计本轮8/8工作树/分支与8注释标签归档Passed。候选、70源码项、110输入、11锁定wheels及188主工程文件摘要再次Passed。收据outputs/evidence/2026-10-02/tutorial-cu/deferred-cleanup/completion.json。
+
+03 resolved对应用户更新后的范围；旧f458权限与b48c占用单独移交06 pending/ready-for-human，仍保留原对象/分支、Failed/Not Run状态，不代签科研验收、不push。历史Answer及原始收据保留原时间点的状态。
