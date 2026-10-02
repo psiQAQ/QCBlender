@@ -1,7 +1,7 @@
 # 02 gui
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Blocked by: 01
 
 ## Comments
@@ -85,3 +85,8 @@ Blocked by: 01
 
 
 2026-10-02 C01元数据复核：53ed4dc固定Alpha9/Beta7与自动HOMO Alpha8/Beta6，原FCHK简并轨道真实编号与错误beta_homo=7拒绝Passed。新样本包56faa42仅替换清单，27科学文件和许可说明字节不变，旧包/历史GUI报告保留；证据final-samples/completion.json，受控索引docs/acceptance/tutorial-sample-delivery.json。纯文档/测试变化，产品a67d4b3与候选bd3a78e不变；C05/N15首次移除仍等待临执行确认，02claimed、03pending，不合并或归档。
+
+
+## Answer
+
+2026-10-02：C01–C13/N01–N18 Agent技术验收完成；首次/变更操作通过实际CU，重复且相关实现未变操作按偏好复用MCP/CLI，67项历史353引用摘要与影响审阅Passed，最后移除新增第68项。最终a67d4b3/bd3a78e候选，C05临时层及12标注实际移除、原63对象/50数组/节点保护、新进程冷读Passed，源工程保持原字节。原生自动激活显示下一层按layers.activate独立核对，MCP恢复先前显隐后完整快照相同；两图紧接C05-06。当前无Blender。统一69科学测试、相关单测、安装/生命周期、公共资产、图例与原地/中文移动/统一保全位置冷读证据见docs/acceptance/tutorial-final-qualification.json；新样本包元数据断言及旧误值拒绝见tutorial-sample-delivery.json。用户复做/独立科研签署Not Run，Agent不代签；main合并和归档不属于此GUI状态。

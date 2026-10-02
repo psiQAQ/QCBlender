@@ -2,7 +2,7 @@
   "schema": 1,
   "date": "2026-10-02",
   "status": "Passed",
-  "scope": "本批自动化技术资格；完整GUI任务仍缺C05/N15首次移除点击，合并与归档尚未执行",
+  "scope": "本批自动化技术资格与C01–C13/N01–N18 Agent操作验收：实际GUI确认加已登记不变操作的MCP/命令行复用；用户及独立科研签署另列",
   "source": {
     "commit": "a67d4b352958e7efffdf559e280f10c7a44c8a34",
     "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
@@ -54,11 +54,12 @@
     "legend_layout_legacy_compatibility_and_cold_open": "Passed",
     "native_render_visual_inspection": "Passed",
     "GUI_historical_reuse_review": "Passed",
-    "GUI_Remove": "Not Run",
+    "GUI_Remove": "Passed",
     "user_walkthrough": "Not Run",
     "independent_scientific_signature": "Not Run",
     "merge_main": "Not Run",
-    "archive_cleanup": "Not Run"
+    "archive_cleanup": "Not Run",
+    "C01_C13_N01_N18_Agent_acceptance": "Passed"
   },
   "evidence": {
     "qualification": {
@@ -88,6 +89,10 @@
     "visuals": {
       "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/visual-inspection.json",
       "sha256": "13129af4366c161ca526416eaf14a64bc24575088bd29c145cef766aa9450089"
+    },
+    "GUI_Remove": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/layer-removal/confirmed/completion.json",
+      "sha256": "6940a4740d4930597ba5ae17449189a965f79d7ca000907a8c561d2e91291647"
     }
   },
   "projects": {
@@ -96,13 +101,16 @@
   },
   "commands": "本批 logs/ 与 *-command.json 保存完整命令、实际PID、退出码和日志摘要；scripts/final-complete-runner.py 保存串行执行步骤。",
   "rebuild": "从上述提交取回源码，按docs/DEVELOPMENT.md增量准备核对共用环境和110输入；选择未使用的短批次，运行科学/节点/样本、打包安装、原地与中文移动冷重开、恢复与图例专项，再生成同批evidence-index并运行tools/qualify_package.py。新ZIP记录新摘要。",
-  "GUI_pending": {
-    "step": "C05第6步 / N15 Display Layers → 移除(Remove)",
-    "project": "outputs/projects/tutorial-cu-full/cases/layer-removal/C05-Remove-confirmation.blend",
-    "preparation": "Passed：仅独立临时副本及12复制标注，原工程/数组保全",
-    "execution": "Not Run：等待Computer Use界面删除临执行确认",
-    "process": "PID28844已保存后正常退出；当前无Blender",
-    "evidence": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/layer-removal/pending-confirmation.json"
-  },
-  "signature": null
+  "signature": null,
+  "sample_delivery": "docs/acceptance/tutorial-sample-delivery.json",
+  "GUI_completed": {
+    "step": "C05第6步 / N15 Display Layers → 移除",
+    "project": "D:\\workspace\\QCBlender\\outputs\\projects\\tutorial-cu-full\\cases\\layer-removal\\C05-Remove-verified.blend",
+    "native_click": "Passed",
+    "cold_open": "Passed",
+    "all_owned_processes_exited": true,
+    "scope": "只删除目标及12所属标注，63原对象/50数组及其余节点图保留；原生自动激活并显示下一层，独立核对后MCP恢复原显隐；另存工程并新进程冷读",
+    "evidence": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/layer-removal/confirmed/completion.json",
+    "sha256": "6940a4740d4930597ba5ae17449189a965f79d7ca000907a8c561d2e91291647"
+  }
 }

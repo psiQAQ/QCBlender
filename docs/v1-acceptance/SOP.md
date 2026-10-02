@@ -4,7 +4,7 @@
 
 本教程保留 **C01–C13** 科学案例和 **N01–N18** 节点/交互检查编号。按钮位置与当前插件界面一致；对话框及部分控件仍使用英文。操作结果只记 **Passed / Failed / Not Run**。用户实际点击、Agent Computer Use 点击、MCP操作与数据核对、独立科研签署分别记录；Agent 不填写使用者签名。维护者按 [交互规则](../agents/blender-interaction.md) 和 [操作登记表](../acceptance/blender-operations.json) 复用已确认且功能未变的操作，MCP/命令行复验单独记录，完整案例结果仍逐项验收。
 
-本文的 Agent 示例截图紧接相应操作展示，原始 JPEG 保存在同级 `screenshot/` 目录。截图记录本批可见 Blender 状态；图注区分 Computer Use 实际点击与 MCP 执行后观察截图，保留你的逐步骤截图占位；各图的候选身份、输入、参数和检查范围见 [点击补验索引](../acceptance/tutorial-cu-validation.json)。C02、密度生成/取样/CSV、氢显隐与首次保存使用90ff9bf候选；IR层显隐复验、最终剖面、相机、渲染及冷重开使用1554ee2候选。候选92d498c的C01雾修复与三路径冷重开、C02能量/振动/优化/连续导入/渲染/三路径冷重开，以及C03双符号/独立着色/保存和MCP三路径冷重开截图同样逐步骤展示，候选e26d22a的C04切片/Gizmo/等值线、ESP几何及绑定色场探针、ESP剖面排版截图亦按步骤展示；其中MCP设置坐标、重放和冷重开单独标明。具体范围见索引 full_batch_progress；完整C/N技术验收仅剩C05/N15首次显示层移除点击确认；独立科研签署仍为Not Run。你复现时，将自己的截图保存到 `screenshot/`，在对应占位下一行填写 `![用户复做：C02-01](screenshot/C02-01-user.png)`；使用独立文件名，保留 Agent 示例便于对照。
+本文的 Agent 示例截图紧接相应操作展示，原始 JPEG 保存在同级 `screenshot/` 目录。截图记录本批可见 Blender 状态；图注区分 Computer Use 实际点击与 MCP 执行后观察截图，保留你的逐步骤截图占位；各图的候选身份、输入、参数和检查范围见 [点击补验索引](../acceptance/tutorial-cu-validation.json)。C02、密度生成/取样/CSV、氢显隐与首次保存使用90ff9bf候选；IR层显隐复验、最终剖面、相机、渲染及冷重开使用1554ee2候选。候选92d498c的C01雾修复与三路径冷重开、C02能量/振动/优化/连续导入/渲染/三路径冷重开，以及C03双符号/独立着色/保存和MCP三路径冷重开截图同样逐步骤展示，候选e26d22a的C04切片/Gizmo/等值线、ESP几何及绑定色场探针、ESP剖面排版截图亦按步骤展示；其中MCP设置坐标、重放和冷重开单独标明。具体范围见索引 full_batch_progress；完整C/N Agent技术验收已通过，包含实际GUI确认及已登记操作的MCP/命令行复用；用户复做与独立科研签署仍为Not Run。你复现时，将自己的截图保存到 `screenshot/`，在对应占位下一行填写 `![用户复做：C02-01](screenshot/C02-01-user.png)`；使用独立文件名，保留 Agent 示例便于对照。
 
 ## 0. 准备、安装与通用操作
 
@@ -771,6 +771,14 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 6. 在 **N 侧栏 → Display Layers** 选择层，用复制图标建立副本，改副本参数/材质确认原层不变；排序、视口/渲染显隐和删除只在副本测试。点击 **创建视图与检查工具 → 创建当前版本视图**，保留原层并核对新层。多选同类层，最后选参数源，在 **3D Viewport → 对象顶部菜单或对象右键菜单 → QCBlender → 复制显示参数到选中视图** 选类别；数值复制需同量/单位/电荷方法，不兼容时取消数值类别。目标位置、选择、裁剪和图例布局保留。
 
    [用户截图待引用：C05-06，活动对象、参数与结果同屏；参数变化保留前后画面]
+
+   移除练习：仅活动刚创建的独立临时副本，点击 **Display Layers → 移除**，确认副本及其所属标注消失，原层仍保留、科学源数组不变。当前插件会自动选中并显示列表中的下一层；若其先前隐藏，在该层行点击视口显隐图标恢复。只在副本操作，不移除原始源数据。
+
+   ![Agent Computer Use移除前：独立临时显示层处于活动状态，移除按钮与对象同屏](screenshot/C05-Remove-confirmed-before.jpg)
+
+   ![Agent Computer Use点击移除后：临时层及12个复制标注消失，下一层自动激活；MCP独立核对原对象及50数组，随后恢复先前显隐](screenshot/C05-Remove-confirmed-after.jpg)
+
+   [用户截图待引用：C05-06-Remove，独立副本移除前后；记录自动激活的下一层及显隐恢复]
 
    ![Agent Computer Use：复制原子显示层；MCP核对Mesh、外层树和8个标注数据独立](screenshot/C05-display-layer-copy-GUI.jpg)
 

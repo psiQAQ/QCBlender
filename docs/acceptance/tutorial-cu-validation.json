@@ -1,25 +1,25 @@
 {
   "schema": 1,
   "date": "2026-10-02",
-  "status": "Not Run",
-  "scope": "Full C01-C13/N01-N18 GUI acceptance remains incomplete. Passed results are limited to individually cited reports and their original candidate identities.",
+  "status": "Passed",
+  "scope": "Current C01-C13/N01-N18 Agent technical acceptance Passed under approved GUI-confirmed operation reuse policy; includes actual CU confirmation and MCP/CLI replay, not a claim that every step was re-clicked. User walkthrough and independent signature Not Run. Original phase reports retain their candidate identities and historical statuses.",
   "identity": {
     "user_walkthrough": "Not Run",
     "agent_computer_use_performed_scope": "Passed",
-    "agent_full_walkthrough": "Not Run",
+    "agent_full_walkthrough": "Passed",
     "mcp_read_only_checks": "Passed",
     "independent_scientific_signature": "Not Run",
-    "signature": null
+    "signature": null,
+    "agent_full_walkthrough_method": "First/changed actions by CU plus verified unchanged operation reuse via MCP/CLI"
   },
   "source": {
-    "commit": "1554ee2ac7ae308ccf1aa1922ed93192adf0b3b1",
-    "product_tree": "05abfc2a62ba066d0869736d428db174218fc6ad",
-    "python_files_matched_to_candidate_and_installation": 68,
-    "file_manifest": {
-      "path": "outputs/evidence/2026-10-01/tutorial-cu/source-hashes.json",
-      "sha256": "1c075ff7428f8e259a989aa531b03a33e1809e5646f3eb33a862b7c8feb469b8"
+    "commit": "a67d4b352958e7efffdf559e280f10c7a44c8a34",
+    "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+    "files": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/source-hashes.json",
+      "sha256": "d44f4b506073f855ac07fa74caeaa7ab8eeaf95966379732d46360a4a4668c09"
     },
-    "public_interfaces_scientific_contract_dependencies_lockfiles": "Unchanged"
+    "product_matches_GUI_checked_deb9416": true
   },
   "candidates": {
     "1554ee2": {
@@ -6416,11 +6416,32 @@
   },
   "current_automated_qualification": {
     "path": "docs/acceptance/tutorial-final-qualification.json",
-    "sha256": "c0a17e06cc5085c4ad5c9e922ccfcaef23d89005677c13f79a9d154cc8e6fbb9",
+    "sha256": "6166c11d366680e8a6641d48f199b27a9f1cdd9d192c4a0a70d9b9d9098b06d4",
     "source_commit": "a67d4b352958e7efffdf559e280f10c7a44c8a34",
     "candidate_sha256": "bd3a78e1089bc7afdf32987e2169a7059cdb9df23ee0f90cddf159302ebcdd23",
     "status": "Passed",
-    "scope": "Automated technical checks only; full GUI Remove still Not Run",
+    "scope": "Current automated package qualification plus Agent C/N acceptance; separate user and scientific signatures remain Not Run",
     "history": "All existing candidate/report identities retained"
-  }
+  },
+  "current_Agent_acceptance": {
+    "path": "docs/acceptance/tutorial-final-qualification.json",
+    "status": "Passed",
+    "scope": "Current technical acceptance plus reviewed historical GUI reuse; original phase reports retain their statuses and identities; independent/user signatures Not Run"
+  },
+  "historical_top_level_identity": {
+    "status": "Not Run",
+    "scope": "Full C01-C13/N01-N18 GUI acceptance remains incomplete. Passed results are limited to individually cited reports and their original candidate identities.",
+    "source": {
+      "commit": "1554ee2ac7ae308ccf1aa1922ed93192adf0b3b1",
+      "product_tree": "05abfc2a62ba066d0869736d428db174218fc6ad",
+      "python_files_matched_to_candidate_and_installation": 68,
+      "file_manifest": {
+        "path": "outputs/evidence/2026-10-01/tutorial-cu/source-hashes.json",
+        "sha256": "1c075ff7428f8e259a989aa531b03a33e1809e5646f3eb33a862b7c8feb469b8"
+      },
+      "public_interfaces_scientific_contract_dependencies_lockfiles": "Unchanged"
+    },
+    "agent_full_walkthrough": "Not Run"
+  },
+  "historical_phase_sections": "Existing report/progress/remaining fields describe their original phase. Current completion and source identity are routed by current_Agent_acceptance and current_automated_qualification."
 }

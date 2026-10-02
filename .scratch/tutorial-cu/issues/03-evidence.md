@@ -1,7 +1,7 @@
 # 03 evidence
 
 Triage: ready-for-agent
-Status: pending
+Status: claimed
 Blocked by: 02
 
 ## Comments
@@ -16,3 +16,6 @@ Blocked by: 02
 
 
 2026-10-02 C01元数据复核：53ed4dc固定Alpha9/Beta7与自动HOMO Alpha8/Beta6，原FCHK简并轨道真实编号与错误beta_homo=7拒绝Passed。新样本包56faa42仅替换清单，27科学文件和许可说明字节不变，旧包/历史GUI报告保留；证据final-samples/completion.json，受控索引docs/acceptance/tutorial-sample-delivery.json。纯文档/测试变化，产品a67d4b3与候选bd3a78e不变；C05/N15首次移除仍等待临执行确认，02claimed、03pending，不合并或归档。
+
+
+2026-10-02：02验收resolved，领取03。最后移除获明确用户许可，GUI/MCP/串行冷重开与原工程保护Passed，所有本批进程退出；68登记项与两图入SOP，当前统一索引分别维护Agent/user/independent身份。继续核对最新证据索引、main ff-only、注释archive标签及逐文件保全/安全清理；权限或未提交对象保留，不提前将清理写为完成。

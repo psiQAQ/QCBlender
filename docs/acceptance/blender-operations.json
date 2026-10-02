@@ -4847,6 +4847,73 @@
           }
         ]
       }
+    },
+    {
+      "id": "atom-display-layer-remove",
+      "title": "临时原子显示层与所属标注移除",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native Remove click; MCP assertions and visibility restoration; serial native cold-open",
+        "source_commit": "a67d4b352958e7efffdf559e280f10c7a44c8a34",
+        "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+        "candidate_sha256": "bd3a78e1089bc7afdf32987e2169a7059cdb9df23ee0f90cddf159302ebcdd23",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "只活动独立复制的C05 temporary Remove verification，12个复制标注归属此层；用户明确允许删除",
+        "visible_entry": "3D Viewport → N → QCBlender → Display Layers → 移除",
+        "validated_scope": "只删除目标及12所属标注，63原对象/50数组及其余节点图保留；原生自动激活并显示下一层，独立核对后MCP恢复原显隐；另存工程并新进程冷读",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/layer-removal/confirmed/before-check.json",
+            "sha256": "1a0acf914ac801fa8d92caf7710b1d64488596ec8db3150382f534e440a00bf9",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/layer-removal/confirmed/verification.json",
+            "sha256": "143867814bf6972ae2979551b0e53e327f89b5ac1c306352e4b630069101c0af",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/layer-removal/confirmed/cold-open.json",
+            "sha256": "a7325932c4cbcd0f16775bfe001e3473e3a54f1b1f89bc11e0567f99e5acef41",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/layer-removal/confirmed/completion.json",
+            "sha256": "6940a4740d4930597ba5ae17449189a965f79d7ca000907a8c561d2e91291647",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/C05-Remove-confirmed-before.jpg",
+            "sha256": "5b5eaabb99624c01aaa889b7f461ae64cb09de22256a4dad27df1a4f52a97a2b"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/C05-Remove-confirmed-after.jpg",
+            "sha256": "fbf0eaffd46f8c2fa5a4d3462080327a0779f179475cd23eb6d4f33646e01f46"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+        "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530",
+        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+        "qcblender/__init__.py": "3c81acbf5f7e5307891d5e961426263172e75da32c8afb2f1d2cb4f648ae6ad4"
+      },
+      "fingerprint_review": "Review removal cleanup, ownership helpers, activation/visibility callbacks, registration, native Blender version and interfaces before reuse; atom-layer scope does not imply GUI confirmation of other layer kinds.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Native layer_action REMOVE and protected result assertions for independently copied atom layers with owned annotations; GUI deletion approval remains subject to skill rules when explicitly re-clicking.",
+        "current_batch_replay_status": "Not Run",
+        "requires_current_result_assertions": true
+      }
     }
   ]
 }

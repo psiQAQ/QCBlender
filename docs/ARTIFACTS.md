@@ -20,7 +20,7 @@
 
 归档前保全位于`outputs/evidence/2026-10-02/tutorial-cu/archive-preparation/`：`inventory.jsonl.gz`记录8个教程工作树37,121份忽略文件、2,226,468,017字节；`summary.json`和`working-source-map.json`记录222项文本证据及另一个工作树2份未提交源码的原字节/基线/补丁保全。此批未删除任何文件，未知二进制与独立环境仍保留；清理依赖GUI验收与主分支合并，不将保全盘点视为清理完成。
 
-当前技术候选为`outputs/candidates/current/tutorial-a67d4b3/qcblender-0.0.1.zip`（a67d4b3，SHA-256见[最终技术资格索引](acceptance/tutorial-final-qualification.json)）。同批报告/日志/命令/脚本位于`outputs/evidence/2026-10-02/tutorial-cu/final-qualification/`；保全工程为`outputs/projects/tutorial-cu-full/qualification-a67d4b3/install/mo8.blend + .qcdata`和`legend/evidence.blend + .qcdata`，逐文件映射见`project-path-map.json`。新候选自动化技术资格Passed；完整GUI仅剩显示层首次移除确认，02claimed、03pending，未合并/归档。历史候选保留各自原身份及报告，待最终验收后按维护策略处理；重建顺序见DEVELOPMENT与索引。
+当前技术候选为`outputs/candidates/current/tutorial-a67d4b3/qcblender-0.0.1.zip`（a67d4b3，SHA-256见[最终技术资格索引](acceptance/tutorial-final-qualification.json)）。同批报告/日志/命令/脚本位于`outputs/evidence/2026-10-02/tutorial-cu/final-qualification/`；保全工程为`outputs/projects/tutorial-cu-full/qualification-a67d4b3/install/mo8.blend + .qcdata`和`legend/evidence.blend + .qcdata`，逐文件映射见`project-path-map.json`。新候选自动化技术资格及完整C/N Agent验收Passed；最后显示层移除实际GUI点击/13对象消失/63对象与50数组保护及新进程冷读已通过，操作登记68项。02resolved、03claimed，正在进行合并/归档；用户与独立科研签署Not Run。历史候选保留各自原身份及报告，待最终验收后按维护策略处理；重建顺序见DEVELOPMENT与索引。
 
 2026-10-02 三个公共资产：qc.isosurface.v3、qc.surface_style.v1、qc.volume_fog.v1独立菜单添加和六条核心接线GUI Passed；固定Socket接口、正负相、三样式独立边/顶点数、独立阈值与opacity属性MCP Passed，原对象/节点布局/绑定/66数组未变。48文件/3Dataset/两个内嵌库保全，PID14372新进程冷读全快照/点求值Passed，全部进程退出。12图紧接N04/N10步骤，登记67项；Eevee雾alpha通过但本例RGB偏暗，Cycles可见诊断分别记录，辅助准备不冒称GUI。02仍claimed、03pending，统一资格及合并归档待完成。
 
