@@ -1,0 +1,40 @@
+{
+  "license": "CC-BY-4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "attribution": "QCBlender contributors",
+  "source_notice": "tests/data/tutorial/NOTICE.md",
+  "source_manifest": "docs/v1-acceptance/tutorial-samples.json",
+  "derivation": "Coordinates extracted from owned PySCF FCHK with read_fchk; Bohr to angstrom using Dataset BOHR_ANGSTROM; 17 significant digits. No energy or wavefunction in XYZ.",
+  "samples": [
+    {
+      "file": "water-dimer.xyz",
+      "sha256": "901305016fba80e14d3b6cf84861c00b487c679fdef5b029508c01bc5f026d27",
+      "frames": 1,
+      "sources": [
+        {
+          "path": "tests/data/tutorial/P03/water-dimer.fchk",
+          "sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a"
+        }
+      ]
+    },
+    {
+      "file": "p04-three-frames.xyz",
+      "sha256": "4bbd6b14927c2ae1d6af95417b6564be0eb00d119d165d7e2c9dc2eef2d9027a",
+      "frames": 3,
+      "sources": [
+        {
+          "path": "tests/data/tutorial/P04/step-001.fchk",
+          "sha256": "c801d883cea1804103adc3ca5cf217922c531d65f4a0002cb604492e8980cb2d"
+        },
+        {
+          "path": "tests/data/tutorial/P04/step-002.fchk",
+          "sha256": "9c8cdd3b495694dce0ca59da58d823df2fc892ce70831477f6d0fca24a492219"
+        },
+        {
+          "path": "tests/data/tutorial/P04/step-003.fchk",
+          "sha256": "d09831388dcae43afdddb490a2aa6a091622849c05491f68617750f457d37d20"
+        }
+      ]
+    }
+  ]
+}

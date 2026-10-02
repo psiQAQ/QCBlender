@@ -28,6 +28,8 @@ def geometry_label(record):
     kind, step = record['kind'], record['step']
     if kind == 'source' and step is None:
         return 'Source geometry'
+    if kind == 'trajectory' and type(step) is int and step > 0:
+        return f'XYZ Frame {step}'
     if kind in ('optimization', 'irc') and type(step) is int and step > 0:
         return f'{"Optimization" if kind == "optimization" else "IRC"} Step {step}'
     raise ValueError('Annotation geometry kind or step is invalid')

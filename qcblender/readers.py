@@ -133,4 +133,7 @@ def read_source(path, job_index=0):
     if path.suffix.lower() in ('.log', '.out'):
         from .gaussian_log import read_log
         return read_log(path, job_index)
+    if path.suffix.lower() == '.xyz':
+        from .xyz import read_xyz
+        return read_xyz(path)
     raise ValueError(f'Unsupported input format: {path.suffix}')

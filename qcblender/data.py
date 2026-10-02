@@ -99,6 +99,8 @@ class Dataset:
     def validate(self):
         from .optimization import validate_optimization
         validate_optimization(self)
+        from .xyz import validate_trajectory
+        validate_trajectory(self)
         for name, array in self.arrays.items():
             if array.dtype.kind not in 'biuf' or array.ndim > 4 or not np.isfinite(array).all():
                 raise ValueError(f'Invalid scientific array: {name}')

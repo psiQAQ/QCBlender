@@ -26,10 +26,13 @@ def current_geometry(obj, data=None):
             raise ValueError('Atom identities or ordering changed: ' + name)
     optimization = obj.get('qc_optimization_step')
     irc = bool(obj.get('qc_irc'))
-    if optimization is not None and irc:
-        raise ValueError('Atom view has conflicting optimization and IRC identities')
-    kind = 'optimization' if optimization is not None else 'irc' if irc else 'source'
-    step = optimization if kind == 'optimization' else obj.get('qc_irc_step') if irc else None
+    frame = obj.get('qc_trajectory_frame')
+    if sum((optimization is not None, irc, frame is not None)) > 1:
+        raise ValueError('Atom view has conflicting trajectory identities')
+    if data.metadata.get('trajectory') and frame is None:
+        raise ValueError('XYZ atom view is missing its current frame identity')
+    kind = 'trajectory' if frame is not None else 'optimization' if optimization is not None else 'irc' if irc else 'source'
+    step = frame if kind == 'trajectory' else optimization if kind == 'optimization' else obj.get('qc_irc_step') if irc else None
     positions, record = scientific_geometry(data, kind, step)
     record['dataset_sha256'] = obj['qc_dataset_sha256']
     return positions, record

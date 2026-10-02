@@ -13,10 +13,18 @@ def scientific_geometry(data, kind='source', step=None):
         if step is not None:
             raise ValueError('Static source geometry has no trajectory step')
         positions = arrays['positions']
-    elif kind in ('optimization', 'irc'):
+    elif kind in ('optimization', 'irc', 'trajectory'):
         if type(step) is not int or step < 1:
             raise ValueError('Calculation step must be a positive integer')
-        if kind == 'optimization':
+        if kind == 'trajectory':
+            from .xyz import validate_trajectory
+            validate_trajectory(data)
+            trajectory = meta.get('trajectory')
+            if trajectory is None:
+                raise ValueError('XYZ trajectory is not available')
+            positions = arrays[trajectory['array']]
+            records = trajectory['frames']
+        elif kind == 'optimization':
             trajectory = meta.get('optimization', {})
             if trajectory.get('status') != 'available':
                 raise ValueError('Optimization trajectory is not available')
