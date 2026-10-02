@@ -2,77 +2,72 @@
   "schema": 1,
   "date": "2026-10-02",
   "status": "Passed",
-  "scope": "当前公开教程样本元数据修正与包身份；不重写历史GUI/科学资格，不表示独立人工签署",
-  "source_commit": "53ed4dc2bb0f743f35b4435c79fe0b2b0b971178",
-  "product_source_commit": "a67d4b352958e7efffdf559e280f10c7a44c8a34",
-  "product_unchanged": "Passed",
+  "scope": "当前v2公开包身份与XYZ来源；不继承旧候选GUI/科学通过",
+  "source_commit": "9d3ff61d2e32c47357fe624cf93052bfed6dd041",
+  "product_source_commit": "9d3ff61d2e32c47357fe624cf93052bfed6dd041",
   "manifest": {
     "path": "docs/v1-acceptance/tutorial-samples.json",
-    "sha256": "59c192d18a9cd2c9cf904eb7a844e757a2884ccd095ccc55d73aae4b0d7b71dd"
+    "bytes": 161816,
+    "sha256": "3e2d87de8e6e93f72765b90027e67393e33bf007de36895b4778d5febc9ab73c"
   },
   "package": {
+    "path": "outputs/evidence/2026-10-02/display-xyz-export/final/samples/qcblender-public-tutorial-samples-v2.zip",
+    "bytes": 12175753,
+    "sha256": "b4bc3e0ebbdf29ccb3905b16eeb898c94b9f16f209baae3c3ae1a8646b0348dd",
+    "availability": "本地交付，未发布"
+  },
+  "previous_package": {
     "path": "outputs/evidence/2026-10-02/tutorial-cu/final-samples/qcblender-public-tutorial-samples-v1.zip",
     "sha256": "56faa42ad555d1e9fce9e33bc839779ab92935a89429dcae8db29d53b92e3b4f",
     "bytes": 12173151,
     "availability": "本地交付，未发布"
   },
-  "previous_package": {
-    "path": "outputs/evidence/2026-09-30/public-tutorial/samples/qcblender-public-tutorial-samples-v1.zip",
-    "sha256": "a4ccfc3ef91921817d17284196ba23ccfb7cce7b1643cdfa41af8e8a6103f85b",
-    "availability": "历史包保留；原报告仍绑定此身份"
-  },
+  "previous_delivery_source_commit": "53ed4dc2bb0f743f35b4435c79fe0b2b0b971178",
   "c01_choices": {
     "alpha_mo": 9,
     "beta_mo": 7,
     "alpha_homo": 8,
     "beta_homo": 6
   },
-  "unchanged_members": {
-    "scientific_files": 27,
-    "LICENSE_NOTICE": "Passed"
+  "xyz": {
+    "single": "P06/water-dimer.xyz",
+    "multi": "P06/p04-three-frames.xyz",
+    "coordinate_unit": "angstrom",
+    "license": "CC BY 4.0"
   },
   "checks": {
-    "sample_hash_license_parse_scientific_checks": "Passed",
-    "fixed_MO_and_source_HOMO_identity": "Passed",
-    "incorrect_beta_homo_7_rejection": "Passed",
-    "blender_preferences_and_registry": "Passed",
-    "new_GUI_execution": "Not Run",
+    "sample_hash_license_parse": "Passed",
+    "science_regression": "Passed",
+    "xyz_native_and_gui": "Passed",
+    "user_replay": "Not Run",
     "independent_scientific_signature": "Not Run"
   },
   "reports": {
-    "completion.json": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-samples/completion.json",
-      "sha256": "8a9436979862919c07cbe3bfff9a4eb00449230395a7a715cd6cee99af9dcc7a"
+    "sample-package": {
+      "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/sample-package.json",
+      "bytes": 589,
+      "sha256": "e6765d66b3b887ec02194c77ea758599e64e22d75cd262c51c7a9968eaa571c3"
     },
-    "tutorial-samples.json": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-samples/tutorial-samples.json",
-      "sha256": "ddcedcbf1eaf69e90a2410ad5f94965fccffa61395eb0bf222401f6c2f6268ea"
+    "sample-final": {
+      "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/sample-final.json",
+      "bytes": 1190,
+      "sha256": "72d3737d0be74b67913d7e7faf1cdf8d33cff67a0920adc17d2e329704b8790b"
     },
-    "package-members.json": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-samples/package-members.json",
-      "sha256": "9810d2a0c76d1f2e6762b70291894c3eee8d8c2e74d7a8155ffc16d9b3069aa6"
-    },
-    "negative-beta-homo.json": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-samples/negative-beta-homo.json",
-      "sha256": "0bc3956464ab1ad7ce8d8a21c2f8dc63c878510735461469145a2b77d12ee585"
-    },
-    "verification-command.json": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-samples/verification-command.json",
-      "sha256": "1c52516fb8b720eb88b7049a42a4bf9989d1300d607b146530330ea35ae482ea"
-    },
-    "blender-preference-check.json": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-samples/blender-preference-check.json",
-      "sha256": "424009b64b7386127afb89b68c27dfa6af822dc842e96b2a088a539d180ca30e"
+    "sample-final-command": {
+      "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/sample-final-command.json",
+      "bytes": 1105,
+      "sha256": "9df804219462d1bd2124c2256519b58e73b8b0a8636c7ce7693d453d4ac5b838"
     }
   },
-  "rebuild": "取回source_commit并保留原包；运行本批scripts/repackage-final-tutorial-samples.py的元数据替换步骤，将输出改为新独立批次。只替换tutorial-samples.json，逐字节验证其他成员，再使用tools/verify_tutorial_samples.py --reference-root <主检出> --package <新包> --report <新报告>。生成新摘要，保留旧报告。无需重新计算科学输入或改变依赖。",
-  "signature": null,
-  "current_main_verification": {
-    "source_commit": "b8a63cd8c7a2afe1edd50085ff41c862e9005868",
-    "report": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/main-qualification/tutorial-samples.json",
-      "sha256": "ddcedcbf1eaf69e90a2410ad5f94965fccffa61395eb0bf222401f6c2f6268ea"
-    },
-    "status": "Passed"
+  "rebuild": {
+    "source_checkout": "以source_commit创建主仓库内独立worktree；按docs/DEVELOPMENT.md首次/增量路径检查工具、输入摘要、后端记录和锁定wheels",
+    "inputs": "tests/data/local-inputs.json + docs/v1-acceptance/SOURCES.md + tutorial-samples.json；受限P02独立获取，缺输入在前置阶段停止",
+    "shared_environment": "沿用outputs/build-site、outputs/science和outputs/wheels/qualified；核对每个wheel摘要，临时目录使用新的outputs/runs批次",
+    "commands": "本索引各checks的*-command.json保存实际命令/退出码/日志摘要；原脚本在final/scripts和scripts/workspace",
+    "build_script": "outputs/evidence/2026-10-02/display-xyz-export/final/scripts/build_display_xyz_export_final.py",
+    "verification_script": "outputs/evidence/2026-10-02/display-xyz-export/final/scripts/run_display_xyz_checks_final.py",
+    "gui": "根据SOP关键步骤和blender-operations.json复核实现；仅操作一个PID，新功能/变更后的对话框重新通过Computer Use确认",
+    "qualification": "tools/qualify_package.py --candidate <本次ZIP> --installed-dir <本次安装目录> --evidence-index <本批索引> --output <本批qualification.json>",
+    "identity": "重建生成新ZIP摘要并重新资格验证，不保证ZIP逐字节相同；本索引在源码固定后提交，不引用自身提交"
   }
 }

@@ -6,16 +6,18 @@
 
 | 对象 | 当前入口与状态 |
 | --- | --- |
-| 插件候选 | `outputs/candidates/current/tutorial-main-b8a63cd/qcblender-0.0.1.zip`，源码 `b8a63cd8c7a2afe1edd50085ff41c862e9005868`，SHA-256 `706f760b248a7775206e7361460f85645573490ebf3e566f40d05e97eeec4c44`；本地资格 Passed，未发布 |
-| 受控验证索引 | [最终技术资格](acceptance/tutorial-final-qualification.json)，同批 `outputs/evidence/2026-10-02/tutorial-cu/main-qualification/`，38份摘要绑定报告、命令、日志与原生渲染；源码、ZIP与安装原字节一致 |
-| 教程与截图 | [SOP](v1-acceptance/SOP.md) 保留 C01–C13 / N01–N18；截图紧接步骤，`docs/v1-acceptance/screenshot/`；Agent验收 Passed，用户复做/独立科研签署 Not Run |
-| 公开样本 | [样本交付](acceptance/tutorial-sample-delivery.json)；`outputs/evidence/2026-10-02/tutorial-cu/final-samples/qcblender-public-tutorial-samples-v1.zip`，SHA-256 `56faa42ad555d1e9fce9e33bc839779ab92935a89429dcae8db29d53b92e3b4f`；27科学文件与许可原字节保留，C01固定轨道与自动HOMO身份分开 |
-| 新候选保全工程 | `outputs/projects/tutorial-cu-full/qualification-main-b8a63cd/{install/mo8,legend/evidence}.blend` 及完整 `.qcdata`；188文件逐项摘要和新进程冷读 Passed，映射在同批 `project-path-map.json` |
-| 操作复用 | [Blender规则](agents/blender-interaction.md)、[68项登记](acceptance/blender-operations.json)；已确认且实现未变的操作优先MCP/命令行，首次/变更用CU；各旧GUI身份保持不变 |
+| 插件候选 | `outputs/candidates/current/display-xyz-export-9d3ff61/qcblender-0.0.1.zip`；源码`9d3ff61d2e32c47357fe624cf93052bfed6dd041`，SHA-256`362b87d3d1f41ec949da8597a47b248e7ef74ca574d96454d1dda31100556ce9`，50,635,717字节；本地资格Passed，未发布 |
+| 当前验证 | [显示/XYZ/CSV索引](acceptance/display-xyz-export-validation.json)；`outputs/evidence/2026-10-02/display-xyz-export/final/`的42份通过报告、qualification.json、证据索引与完整命令/日志；早期目录缺陷Failed保持在同任务gui/ |
+| 教程与截图 | [SOP](v1-acceptance/SOP.md)，C01–C13/N01–N18和新增X01；当前图位于`screenshot/display-xyz-export/`且紧接步骤，图注区分e317/9d及MCP准备；用户复做/独立签署Not Run |
+| 公开样本 | [样本交付](acceptance/tutorial-sample-delivery.json)；`outputs/evidence/2026-10-02/display-xyz-export/final/samples/qcblender-public-tutorial-samples-v2.zip`；SHA-256`b4bc3e0ebbdf29ccb3905b16eeb898c94b9f16f209baae3c3ae1a8646b0348dd`，12,175,753字节；P06两份XYZ，自有数据CC BY 4.0；P02独立获取 |
+| 保全工程与数据 | `outputs/projects/display-xyz-export/gui/evidence.blend + evidence.qcdata/`，12Dataset/249数组/1VDB，原地及中文移动冷读Passed；`final/data/native-exports/`保存全量/筛选CSV，`final/gui/exports/`保存实际点击导出 |
+| 复用登记 | [Blender规则](agents/blender-interaction.md)、[操作登记](acceptance/blender-operations.json)；历史GUI身份不重写，产品单行目录修复后重新点击；旧图形工程另有兼容导出报告 |
+| 构建与重建 | 共用`outputs/build-site/`、`outputs/science/`、`outputs/wheels/qualified/`及后端记录保持；当前索引列源文件/wheel摘要、实际命令和脚本，按[DEVELOPMENT](DEVELOPMENT.md)在新批次重建并重新验证ZIP身份 |
+| 本轮归档与清理 | `.scratch/display-xyz-export/issues/06-archive.md`为任务状态；`outputs/evidence/2026-10-02/display-xyz-export/closing/`保存标签、逐文件保全/清理收据和空间统计；权限/占用对象不强制处理 |
 
-69科学测试无失败/错误/跳过；31相关单测30通过、1项POSIX专用在Windows跳过；节点原子身份/固定接口、安装生命周期、九公共资产完整签名、原地/中文移动/统一工程冷读、缓存恢复、图例与原生渲染 Passed。新候选同旧GUI候选的三处文本仅有CRLF/LF差异，Python AST/JSON值一致；审阅见本批 `GUI-reuse-review.json`。样本输入的唯一清单为 `tests/data/local-inputs.json`，来源为 [SOURCES](v1-acceptance/SOURCES.md)。
+本批82科学测试、21相关单测、严格XYZ和七类CSV/取消/旧谱图、显示精度、九公共资产、安装及冷重开通过。完整C/N历史范围见[教程历史资格](acceptance/tutorial-final-qualification.json)；本批仅对改动及其受影响范围复验，不将旧报告绑定新ZIP。科学输入的唯一清单仍为`tests/data/local-inputs.json`，来源见[SOURCES](v1-acceptance/SOURCES.md)。
 
-## 归档、清理和阻塞
+## 历史教程归档、清理和阻塞
 
 主分支已本地 ff-only 合并到固定源码提交；八个带注释标签 `archive/2026-10-02/<完整分支名>` 的身份和提交可达性 Passed，详细分支名见 `outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/tags.json`。八个本轮工作树及已合并分支均正常移除；没有 push。
 

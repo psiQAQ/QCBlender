@@ -69,59 +69,140 @@
     },
     {
       "id": "log-job2-new-fchk",
-      "title": "Log Job2 后新 FCHK 导入",
+      "title": "工作流 → 导入 Gaussian / Cube / XYZ",
       "gui_validation": {
         "status": "Passed",
-        "date": "2026-10-01",
-        "method": "Agent Computer Use native clicks with MCP read-only assertions",
-        "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
-        "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
-        "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP readback (MCP preparation explicitly identified in report/screenshots)",
+        "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+        "product_tree": "31d34345fe37815e15ef0d492a4b81d5c9cba836",
+        "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98",
         "blender": "5.1.1",
         "locale": "zh_HANS",
-        "objects_and_order": "先 Log Job2 完成，再打开新的 FCHK 导入；活动参考为新导入结果",
-        "visible_entry": "N 侧栏 → QCBlender → 工作流 → 导入 Gaussian / Cube",
-        "validated_scope": "P02 水日志、P03 水二聚体 FCHK；新对话框 job=1、preview摘要空、FCHK6原子",
+        "objects_and_order": "真实P02 Log Job2→新对话框P03 FCHK；新job=1、无旧摘要并导入成功",
+        "visible_entry": "工作流 → 导入 Gaussian / Cube / XYZ",
+        "validated_scope": "真实P02 Log Job2→新对话框P03 FCHK；新job=1、无旧摘要并导入成功",
         "reports": [
           {
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/new-fchk-dialog-reset-asserted.json",
-            "sha256": "e984a3fcfbd2bfeb6e25c8b1e715fb6f83b663b92106603fb944588556261ef3",
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/gui/log-job2-fchk.json",
+            "bytes": 839,
+            "sha256": "96fc610d4c4fd39140be878e2ecd8c442a5861db63fdd950a53e97d63e26b647",
             "status": "Passed"
           },
           {
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/log-job2-fchk-import.json",
-            "sha256": "2f1b9103da6fd7d03ba8681c4a5a848f2420472a8005396a8d94d6d7045a0f9e",
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/gui/new-fchk-dialog-reset.json",
+            "bytes": 233,
+            "sha256": "ba9cd238c7daeab1ab216509946c43826149fec6daca5555c36234bb586a5b60",
             "status": "Passed"
           }
         ],
         "screenshots": [
           {
-            "path": "docs/v1-acceptance/screenshot/C02-05-new-dialog-reset.jpg",
-            "sha256": "08463256a4926dc1f4a5ad3124c303d531d64a465aa71e46d7e097fef6addc23"
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/C02-fchk-success-e317.jpg",
+            "sha256": "1410fc2bd1aa226a4727223b7af61e713b0b3f1e730cd000b12b40a40ab9dbe8",
+            "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+            "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98"
           },
           {
-            "path": "docs/v1-acceptance/screenshot/C02-05-fchk-six-atoms.jpg",
-            "sha256": "4c06399d5a215829afe9b9448c9b024021dcd98b20f97c692f81bcdcb325af88"
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/C02-job2-e317.jpg",
+            "sha256": "b3e0fcaabf5d7c299dd80b018ee641112b4ab4eb888ed9eeadb3e1ba92ea7e2f",
+            "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+            "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/C02-new-dialog-reset-e317.jpg",
+            "sha256": "561b8a7fea0659cb6d9e0b66cba7dd045e63e8e10d14f20b1ed20f3ca3eca5a6",
+            "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+            "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98"
           }
         ]
       },
       "implementation_fingerprints": {
-        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/ui.py": "5d2b5842817a5c318323aafcd6ed9ba68f373c9286929b3e2d3a996b109c4416",
+        "qcblender/blender/editor_ui.py": "a1a34a6ee156af3cf0297b178e2aeaaf4588f41b4ef1768682011ad0a385ac68",
         "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
-        "qcblender/blender/geometry.py": "b3f453dc1943e7488b1bee33c761b874178c9ad9c8a25e855732cb50ddbd82ca",
-        "qcblender/data.py": "58a45c8c03b99508db1dbd74d36b38bff518d64361b561249a0320293a7c1a70"
+        "qcblender/data.py": "d914a6bf4035e130380a82fe3e43f7c1b2721348ee479f61c5e94f674d11adfc",
+        "qcblender/blender/source_browser.py": "0a620bf011323ec76be163e3b0ed3cdb6148a44ebd67b7953eb090d31a0c5570",
+        "qcblender/blender/geometry.py": "c61453c02bd4bf40627055d7e7c974c5f4cd8429c05eb2c23edf9a930a73ca3e"
       },
-      "fingerprint_review": "Include transitive helpers, registration, interfaces and dependency changes when reviewing reuse; listed files are an initial operation-specific set, not exhaustive proof of no impact.",
+      "fingerprint_review": "覆盖对应Operator、回调、注册与共享helper；历史GUI保持原候选，e317到9d3ff61仅目录SKIP_SAVE修改，见本批reuse-review。",
       "reuse": {
         "preferred_order": [
           "MCP",
           "CLI",
           "Computer Use"
         ],
-        "coverage": "MCP 可复用导入与结果核对；直接 EXEC_DEFAULT 导入不能证明新对话框重置，相关 GUI 不变证据须单独引用",
-        "current_batch_replay_status": "Not Run",
-        "requires_current_result_assertions": true
-      }
+        "coverage": "真实P02 Log Job2→新对话框P03 FCHK；新job=1、无旧摘要并导入成功",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/gui/reuse-review.json",
+            "bytes": 5621,
+            "sha256": "fe9ea66651568d2bba292366a49f2110155e76703a8ed53726464867566af1e6"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/native-integration.json",
+            "bytes": 43693,
+            "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
+          }
+        ]
+      },
+      "history": [
+        {
+          "gui_validation": {
+            "status": "Passed",
+            "date": "2026-10-01",
+            "method": "Agent Computer Use native clicks with MCP read-only assertions",
+            "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+            "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
+            "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+            "blender": "5.1.1",
+            "locale": "zh_HANS",
+            "objects_and_order": "先 Log Job2 完成，再打开新的 FCHK 导入；活动参考为新导入结果",
+            "visible_entry": "N 侧栏 → QCBlender → 工作流 → 导入 Gaussian / Cube",
+            "validated_scope": "P02 水日志、P03 水二聚体 FCHK；新对话框 job=1、preview摘要空、FCHK6原子",
+            "reports": [
+              {
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/new-fchk-dialog-reset-asserted.json",
+                "sha256": "e984a3fcfbd2bfeb6e25c8b1e715fb6f83b663b92106603fb944588556261ef3",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/log-job2-fchk-import.json",
+                "sha256": "2f1b9103da6fd7d03ba8681c4a5a848f2420472a8005396a8d94d6d7045a0f9e",
+                "status": "Passed"
+              }
+            ],
+            "screenshots": [
+              {
+                "path": "docs/v1-acceptance/screenshot/C02-05-new-dialog-reset.jpg",
+                "sha256": "08463256a4926dc1f4a5ad3124c303d531d64a465aa71e46d7e097fef6addc23"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C02-05-fchk-six-atoms.jpg",
+                "sha256": "4c06399d5a215829afe9b9448c9b024021dcd98b20f97c692f81bcdcb325af88"
+              }
+            ]
+          },
+          "implementation_fingerprints": {
+            "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+            "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+            "qcblender/blender/geometry.py": "b3f453dc1943e7488b1bee33c761b874178c9ad9c8a25e855732cb50ddbd82ca",
+            "qcblender/data.py": "58a45c8c03b99508db1dbd74d36b38bff518d64361b561249a0320293a7c1a70"
+          },
+          "reuse": {
+            "preferred_order": [
+              "MCP",
+              "CLI",
+              "Computer Use"
+            ],
+            "coverage": "MCP 可复用导入与结果核对；直接 EXEC_DEFAULT 导入不能证明新对话框重置，相关 GUI 不变证据须单独引用",
+            "current_batch_replay_status": "Not Run",
+            "requires_current_result_assertions": true
+          }
+        }
+      ]
     },
     {
       "id": "optimization-steps",
@@ -747,57 +828,126 @@
     },
     {
       "id": "generate-density-esp",
-      "title": "生成电子密度与 ESP",
+      "title": "工作流 → 生成量子化学场",
       "gui_validation": {
         "status": "Passed",
-        "date": "2026-10-01",
-        "method": "Agent Computer Use native clicks with MCP data assertions",
-        "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
-        "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
-        "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP readback (MCP preparation explicitly identified in report/screenshots)",
+        "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+        "product_tree": "31d34345fe37815e15ef0d492a4b81d5c9cba836",
+        "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98",
         "blender": "5.1.1",
         "locale": "zh_HANS",
-        "objects_and_order": "P03 原子对象生成密度与ESP；后续密度表面活动，ESP为绑定色场",
-        "input_sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
-        "visible_entry": "N侧栏 → QCBlender → 工作流 → 生成量子化学场；原子对象活动",
-        "validated_scope": "仅P03水二聚体、0.7 Å间距、3 Å余量、512 MiB；密度electron/bohr^3、ESP hartree/e；所选1800格点均有效，未验证无效域",
+        "objects_and_order": "本批GUI只确认P03密度0.2Å/margin3Å/512MiB、39×31×49；ESP使用原生专项，历史ESP点击保留在history",
+        "visible_entry": "工作流 → 生成量子化学场",
+        "validated_scope": "本批GUI只确认P03密度0.2Å/margin3Å/512MiB、39×31×49；ESP使用原生专项，历史ESP点击保留在history",
         "reports": [
           {
-            "status": "Passed",
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/generation-GUI-readback.json",
-            "sha256": "ed3fa1e82dfb7fb9847dffb7a97a7302a3470da1c5cb47029ae1c1a576ac939e",
-            "scope": "GUI-generated density and ESP, equal grids, arrays and units"
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/gui/density-fine.json",
+            "bytes": 1448,
+            "sha256": "84af3145af186baa28a1eaace6a1e76f67c014b08a04bbe507f4c3ff8342f76d",
+            "status": "Passed"
           }
         ],
         "screenshots": [
           {
-            "path": "docs/v1-acceptance/screenshot/C04-01-density-generation-parameters.jpg",
-            "sha256": "c89e7660c8e18405d5e65092deaa5b9aa333a6aaacbb9f10dced533d92e87854"
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/C04-density-fine-dialog-e317.jpg",
+            "sha256": "40fa447b1bee832e21763b1b68052cf0a9ab1d0d026c6744f95eaabf88a57ddd",
+            "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+            "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98"
           },
           {
-            "path": "docs/v1-acceptance/screenshot/C04-01-ESP-generation-parameters.jpg",
-            "sha256": "e6018ed339d52f4def2c5b3608958ec631defc357630183c09eae154e7a095fe"
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/C04-density-fine-surface-e317.jpg",
+            "sha256": "e5d369edb952581f9108d4484a506401bb3c0cc1da72af6504ce0062b828567a",
+            "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+            "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98"
           }
         ]
       },
       "implementation_fingerprints": {
-        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+        "qcblender/blender/ui.py": "5d2b5842817a5c318323aafcd6ed9ba68f373c9286929b3e2d3a996b109c4416",
+        "qcblender/blender/editor_ui.py": "a1a34a6ee156af3cf0297b178e2aeaaf4588f41b4ef1768682011ad0a385ac68",
         "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
-        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
-        "qcblender/worker.py": "f96a838a18427611c085f531339cf8ed5c3be11f15fa815732a708f8092f0a37",
-        "qcblender/evaluate.py": "172e7f0c7ff6406bb998c8f94d32858218b11ea9d0db5ef5a00917c682afe397"
+        "qcblender/data.py": "d914a6bf4035e130380a82fe3e43f7c1b2721348ee479f61c5e94f674d11adfc",
+        "qcblender/evaluate.py": "172e7f0c7ff6406bb998c8f94d32858218b11ea9d0db5ef5a00917c682afe397",
+        "qcblender/blender/views.py": "448643935c96a09b37f9c0e74850cb388a0d1699480123736342ddc7f04e21e5"
       },
-      "fingerprint_review": "Review transitive helpers, callbacks, public interfaces, Blender and dependency changes before reuse; listed files are an initial operation-specific set.",
+      "fingerprint_review": "覆盖对应Operator、回调、注册与共享helper；历史GUI保持原候选，e317到9d3ff61仅目录SKIP_SAVE修改，见本批reuse-review。",
       "reuse": {
         "preferred_order": [
           "MCP",
           "CLI",
           "Computer Use"
         ],
-        "coverage": "仅P03水二聚体、0.7 Å间距、3 Å余量、512 MiB；密度electron/bohr^3、ESP hartree/e；所选1800格点均有效，未验证无效域",
-        "current_batch_replay_status": "Not Run",
-        "requires_current_result_assertions": true
-      }
+        "coverage": "本批GUI只确认P03密度0.2Å/margin3Å/512MiB、39×31×49；ESP使用原生专项，历史ESP点击保留在history",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/gui/reuse-review.json",
+            "bytes": 5621,
+            "sha256": "fe9ea66651568d2bba292366a49f2110155e76703a8ed53726464867566af1e6"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/native-integration.json",
+            "bytes": 43693,
+            "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
+          }
+        ]
+      },
+      "history": [
+        {
+          "gui_validation": {
+            "status": "Passed",
+            "date": "2026-10-01",
+            "method": "Agent Computer Use native clicks with MCP data assertions",
+            "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+            "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
+            "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+            "blender": "5.1.1",
+            "locale": "zh_HANS",
+            "objects_and_order": "P03 原子对象生成密度与ESP；后续密度表面活动，ESP为绑定色场",
+            "input_sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+            "visible_entry": "N侧栏 → QCBlender → 工作流 → 生成量子化学场；原子对象活动",
+            "validated_scope": "仅P03水二聚体、0.7 Å间距、3 Å余量、512 MiB；密度electron/bohr^3、ESP hartree/e；所选1800格点均有效，未验证无效域",
+            "reports": [
+              {
+                "status": "Passed",
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/generation-GUI-readback.json",
+                "sha256": "ed3fa1e82dfb7fb9847dffb7a97a7302a3470da1c5cb47029ae1c1a576ac939e",
+                "scope": "GUI-generated density and ESP, equal grids, arrays and units"
+              }
+            ],
+            "screenshots": [
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-01-density-generation-parameters.jpg",
+                "sha256": "c89e7660c8e18405d5e65092deaa5b9aa333a6aaacbb9f10dced533d92e87854"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-01-ESP-generation-parameters.jpg",
+                "sha256": "e6018ed339d52f4def2c5b3608958ec631defc357630183c09eae154e7a095fe"
+              }
+            ]
+          },
+          "implementation_fingerprints": {
+            "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+            "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+            "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+            "qcblender/worker.py": "f96a838a18427611c085f531339cf8ed5c3be11f15fa815732a708f8092f0a37",
+            "qcblender/evaluate.py": "172e7f0c7ff6406bb998c8f94d32858218b11ea9d0db5ef5a00917c682afe397"
+          },
+          "reuse": {
+            "preferred_order": [
+              "MCP",
+              "CLI",
+              "Computer Use"
+            ],
+            "coverage": "仅P03水二聚体、0.7 Å间距、3 Å余量、512 MiB；密度electron/bohr^3、ESP hartree/e；所选1800格点均有效，未验证无效域",
+            "current_batch_replay_status": "Not Run",
+            "requires_current_result_assertions": true
+          }
+        }
+      ]
     },
     {
       "id": "scalar-color-range",
@@ -1131,144 +1281,212 @@
     },
     {
       "id": "slice-plane-and-gizmo",
-      "title": "切片定平面与Gizmo",
+      "title": "创建视图与检查工具 → 创建场切片",
       "gui_validation": {
         "status": "Passed",
-        "date": "2026-10-01",
-        "method": "Computer Use actual named interaction; MCP parameter setup/replay and independent assertions explicitly separated",
-        "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
-        "product_tree": "4086224b13cdd50fa4495c1e00004e0d8dd15d49",
-        "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP readback (MCP preparation explicitly identified in report/screenshots)",
+        "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+        "product_tree": "31d34345fe37815e15ef0d492a4b81d5c9cba836",
+        "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98",
         "blender": "5.1.1",
         "locale": "zh_HANS",
-        "objects_and_order": "按报告的活动对象；ESP场/切片或绑定ESP的密度表面，原子平面关联P03水二聚体；选择与游标设置由MCP完成",
-        "input_sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
-        "visible_entry": "N侧栏 → 创建视图与检查工具 → 创建切片；对象属性 → 按源网格或三个原子定平面；3D工具栏 → QC Slice Gizmo",
-        "validated_scope": "新ESP切片；ij/jk/ki、原子1/2/3实际GUI，2/1/4 MCP重放；Center/Rotation/Width/Height及Gizmo平移/旋转/宽度；Resolution101。限定P03字段与对象条件",
+        "objects_and_order": "P03新密度切片默认201/轴；MCP配置密度色域，40401顶点。自由平面/gizmo复用历史登记范围",
+        "visible_entry": "创建视图与检查工具 → 创建场切片",
+        "validated_scope": "P03新密度切片默认201/轴；MCP配置密度色域，40401顶点。自由平面/gizmo复用历史登记范围",
         "reports": [
           {
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-grid-ij-created-GUI.json",
-            "sha256": "a396af32d12e239f13ade50446c9a447a601c2092b84fca671f4656d0a0da2f9",
-            "status": "Passed"
-          },
-          {
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-grid-jk-GUI.json",
-            "sha256": "608ebcf8b3c177fab1a800b2cbd0a5547f2c1d568a0877adcdd5566d94d491a6",
-            "status": "Passed"
-          },
-          {
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-grid-ki-GUI.json",
-            "sha256": "4b2ffe144dcab6392e651c1d90a3170e1d2901b87eb0de667ebcee7e3fdd85df",
-            "status": "Passed"
-          },
-          {
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-atoms-123-GUI.json",
-            "sha256": "9e10a8236a3572765ed69db2b6af665bf24db43ba8815ddab3711ef31afe8278",
-            "status": "Passed"
-          },
-          {
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-free-center-rotation-dimensions-GUI.json",
-            "sha256": "54bfab2125c0772d0e6088c1e681e8ff9c12fe16a5863c976c0a04f42a9f7072",
-            "status": "Passed"
-          },
-          {
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-free-gizmo-move-GUI.json",
-            "sha256": "d0b21d33897a22eb37b33ed7abea95a4db81a748acad0f5e18bcd0ce59861da7",
-            "status": "Passed"
-          },
-          {
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-free-gizmo-rotation-GUI.json",
-            "sha256": "9fe8fb854e0e7ab8b51d3c931cc7075580481fce9382de52a15f039042528ecd",
-            "status": "Passed"
-          },
-          {
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-free-gizmo-width-GUI.json",
-            "sha256": "0e8544fb934c52fd70951aa6ea01d25efecf587b0f5dc072ad310df729910b9b",
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/gui/slice201.json",
+            "bytes": 614,
+            "sha256": "d267e05ac4c112613811801d135597c8b587a0dd7ce2f9f8b087b07b2ad5beec",
             "status": "Passed"
           }
         ],
         "screenshots": [
           {
-            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-explicit-contours-framed.jpg",
-            "sha256": "6a6a5059b6baee0bd8254a3a24199d2d394db6472ca4ca5aab47355bfd908b4c",
-            "caption": "Agent点击显式阈值与标签；MCP取景后观察，−0.02/0/0.02 hartree/e"
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/C04-slice201-dialog-e317.jpg",
+            "sha256": "0fb573c8baacd100b85f2cd97faec971b16d7532ff4e3bbef1bdaad031773783",
+            "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+            "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98"
           },
           {
-            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-free-parameters.jpg",
-            "sha256": "b006c75c00ac6e5c604bdd6e63ce6d0edc83416125a45c88d2f1b99455b7eaa0",
-            "caption": "Agent点击：自由平面Center/Rotation/Width/Height；6×6 Å"
-          },
-          {
-            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-gizmo-move.jpg",
-            "sha256": "daa6d8a65d17dea62f1660a82321e557606a7c439b98b704bbf8dbba20686f92",
-            "caption": "Agent拖动：QC Slice Gizmo平移"
-          },
-          {
-            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-gizmo-rotation.jpg",
-            "sha256": "c5eca7a4c9e7de810149216c54e46aa9dd132db92bbe4e3a7d2fdba79b0e5e05",
-            "caption": "Agent拖动：QC Slice Gizmo旋转"
-          },
-          {
-            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-gizmo-width.jpg",
-            "sha256": "2ddb9c0567e166349a339a4774410b3e06d294931904b1f48830bb169a7c8a54",
-            "caption": "Agent拖动：QC Slice Gizmo改变宽度"
-          },
-          {
-            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-grid-ij.jpg",
-            "sha256": "652d83126d5cb6076ee03dbf54242a145b546d5e0152abf71514ab644db1a575",
-            "caption": "Agent点击：Grid ij，101×101采样"
-          },
-          {
-            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-grid-jk.jpg",
-            "sha256": "6683460f610336bab3a530bca4fd3ff028cb759e9470f1a9f3ccdf7ba7946271",
-            "caption": "Agent点击：Grid jk；混合绝对与相对绑定路径已通过复验"
-          },
-          {
-            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-grid-ki.jpg",
-            "sha256": "e4f6a33de2268d492bc71e26b0677072c71fa777412c76fd9584a453e9d6ec3f",
-            "caption": "Agent点击：Grid ki"
-          },
-          {
-            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-new-slice-dialog.jpg",
-            "sha256": "0c84fdfd62ae7d397ba4eec88efe07ac420a3fb9cef1c9174e74f508fd3a4f9c",
-            "caption": "Agent点击：创建新的ESP切片；候选e26d22a"
-          },
-          {
-            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-three-atoms-dialog.jpg",
-            "sha256": "e4479abb3b97451d2f490ad0a991d16e2297dd08058f0e6a755b393c364b68d8",
-            "caption": "Agent点击：首次三原子平面1/2/3；教程2/1/4另经MCP复验"
-          },
-          {
-            "path": "docs/v1-acceptance/screenshot/C04-06-fixed-three-atoms.jpg",
-            "sha256": "31b4033312f7cca61a607c151faabf74cd52dea6d22412ba65b157fba98c4058",
-            "caption": "Agent点击：三原子平面；5072个域外采样点以洋红显示"
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/C04-slice201-e317.jpg",
+            "sha256": "029a18ab1d250f9285b49a7526f8646ea67d5dc2eaf0dfb9a9d35d65cd5eff34",
+            "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+            "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98"
           }
         ]
       },
       "implementation_fingerprints": {
-        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
-        "qcblender/blender/interaction.py": "0130d6c98d3a56a1e021138ab98aa353cb7aa0c03f97bc02c945143f876ed265",
-        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
-        "qcblender/blender/graph.py": "887b365c7fd1c849fcf55bbdb4a5e37f01f146b674994198703d76dc951dc325",
-        "qcblender/blender/profile.py": "4eb27fa9f96261ccf01cf25e8803525692bf2ea8cd175530bc7e9dfc5a214cc1",
-        "qcblender/blender/charts.py": "fff768253e3a791469dfa718c163762b86389224803af26e81ee4d0fcfb9e6e4",
-        "qcblender/blender/layers.py": "4ff0f8284523a6dc8276635b69fd6bb5e952906b3546cc0b5be9437d0f46c211",
-        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
-        "qcblender/sampling.py": "6bcb428a41af4d634a029a24945e797ff19fe925f0a0a604b51a44bccc630966",
-        "qcblender/profile.py": "ef86e07aefa6d076641492e255765281d25fb47d2a1166eeb95830f886061a78",
-        "qcblender/planes.py": "551ef7107fbcce12992b73521238df3aaeceac01c5593a91a7b4a2da20bc3875"
+        "qcblender/blender/ui.py": "5d2b5842817a5c318323aafcd6ed9ba68f373c9286929b3e2d3a996b109c4416",
+        "qcblender/blender/editor_ui.py": "a1a34a6ee156af3cf0297b178e2aeaaf4588f41b4ef1768682011ad0a385ac68",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/data.py": "d914a6bf4035e130380a82fe3e43f7c1b2721348ee479f61c5e94f674d11adfc",
+        "qcblender/blender/scalars.py": "47ac9dcc0f75ff7495594dea811dc69f424d064a2e20d5868a7c2eef79308ec3"
       },
-      "fingerprint_review": "Review transitive helpers, callbacks, interfaces, Blender and dependency changes before reuse; this set is not exhaustive proof.",
+      "fingerprint_review": "覆盖对应Operator、回调、注册与共享helper；历史GUI保持原候选，e317到9d3ff61仅目录SKIP_SAVE修改，见本批reuse-review。",
       "reuse": {
         "preferred_order": [
           "MCP",
           "CLI",
           "Computer Use"
         ],
-        "coverage": "MCP调用原生define_slice_plane和节点公共参数；Gizmo语义可设置相同参数，但新交互行为变更仍须GUI确认",
+        "coverage": "P03新密度切片默认201/轴；MCP配置密度色域，40401顶点。自由平面/gizmo复用历史登记范围",
+        "requires_current_result_assertions": true,
         "current_batch_replay_status": "Passed",
-        "requires_current_result_assertions": true
-      }
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/gui/reuse-review.json",
+            "bytes": 5621,
+            "sha256": "fe9ea66651568d2bba292366a49f2110155e76703a8ed53726464867566af1e6"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/native-integration.json",
+            "bytes": 43693,
+            "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
+          }
+        ]
+      },
+      "history": [
+        {
+          "gui_validation": {
+            "status": "Passed",
+            "date": "2026-10-01",
+            "method": "Computer Use actual named interaction; MCP parameter setup/replay and independent assertions explicitly separated",
+            "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
+            "product_tree": "4086224b13cdd50fa4495c1e00004e0d8dd15d49",
+            "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+            "blender": "5.1.1",
+            "locale": "zh_HANS",
+            "objects_and_order": "按报告的活动对象；ESP场/切片或绑定ESP的密度表面，原子平面关联P03水二聚体；选择与游标设置由MCP完成",
+            "input_sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+            "visible_entry": "N侧栏 → 创建视图与检查工具 → 创建切片；对象属性 → 按源网格或三个原子定平面；3D工具栏 → QC Slice Gizmo",
+            "validated_scope": "新ESP切片；ij/jk/ki、原子1/2/3实际GUI，2/1/4 MCP重放；Center/Rotation/Width/Height及Gizmo平移/旋转/宽度；Resolution101。限定P03字段与对象条件",
+            "reports": [
+              {
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-grid-ij-created-GUI.json",
+                "sha256": "a396af32d12e239f13ade50446c9a447a601c2092b84fca671f4656d0a0da2f9",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-grid-jk-GUI.json",
+                "sha256": "608ebcf8b3c177fab1a800b2cbd0a5547f2c1d568a0877adcdd5566d94d491a6",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-grid-ki-GUI.json",
+                "sha256": "4b2ffe144dcab6392e651c1d90a3170e1d2901b87eb0de667ebcee7e3fdd85df",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-atoms-123-GUI.json",
+                "sha256": "9e10a8236a3572765ed69db2b6af665bf24db43ba8815ddab3711ef31afe8278",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-free-center-rotation-dimensions-GUI.json",
+                "sha256": "54bfab2125c0772d0e6088c1e681e8ff9c12fe16a5863c976c0a04f42a9f7072",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-free-gizmo-move-GUI.json",
+                "sha256": "d0b21d33897a22eb37b33ed7abea95a4db81a748acad0f5e18bcd0ce59861da7",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-free-gizmo-rotation-GUI.json",
+                "sha256": "9fe8fb854e0e7ab8b51d3c931cc7075580481fce9382de52a15f039042528ecd",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/slice-free-gizmo-width-GUI.json",
+                "sha256": "0e8544fb934c52fd70951aa6ea01d25efecf587b0f5dc072ad310df729910b9b",
+                "status": "Passed"
+              }
+            ],
+            "screenshots": [
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-06-fixed-explicit-contours-framed.jpg",
+                "sha256": "6a6a5059b6baee0bd8254a3a24199d2d394db6472ca4ca5aab47355bfd908b4c",
+                "caption": "Agent点击显式阈值与标签；MCP取景后观察，−0.02/0/0.02 hartree/e"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-06-fixed-free-parameters.jpg",
+                "sha256": "b006c75c00ac6e5c604bdd6e63ce6d0edc83416125a45c88d2f1b99455b7eaa0",
+                "caption": "Agent点击：自由平面Center/Rotation/Width/Height；6×6 Å"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-06-fixed-gizmo-move.jpg",
+                "sha256": "daa6d8a65d17dea62f1660a82321e557606a7c439b98b704bbf8dbba20686f92",
+                "caption": "Agent拖动：QC Slice Gizmo平移"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-06-fixed-gizmo-rotation.jpg",
+                "sha256": "c5eca7a4c9e7de810149216c54e46aa9dd132db92bbe4e3a7d2fdba79b0e5e05",
+                "caption": "Agent拖动：QC Slice Gizmo旋转"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-06-fixed-gizmo-width.jpg",
+                "sha256": "2ddb9c0567e166349a339a4774410b3e06d294931904b1f48830bb169a7c8a54",
+                "caption": "Agent拖动：QC Slice Gizmo改变宽度"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-06-fixed-grid-ij.jpg",
+                "sha256": "652d83126d5cb6076ee03dbf54242a145b546d5e0152abf71514ab644db1a575",
+                "caption": "Agent点击：Grid ij，101×101采样"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-06-fixed-grid-jk.jpg",
+                "sha256": "6683460f610336bab3a530bca4fd3ff028cb759e9470f1a9f3ccdf7ba7946271",
+                "caption": "Agent点击：Grid jk；混合绝对与相对绑定路径已通过复验"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-06-fixed-grid-ki.jpg",
+                "sha256": "e4f6a33de2268d492bc71e26b0677072c71fa777412c76fd9584a453e9d6ec3f",
+                "caption": "Agent点击：Grid ki"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-06-fixed-new-slice-dialog.jpg",
+                "sha256": "0c84fdfd62ae7d397ba4eec88efe07ac420a3fb9cef1c9174e74f508fd3a4f9c",
+                "caption": "Agent点击：创建新的ESP切片；候选e26d22a"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-06-fixed-three-atoms-dialog.jpg",
+                "sha256": "e4479abb3b97451d2f490ad0a991d16e2297dd08058f0e6a755b393c364b68d8",
+                "caption": "Agent点击：首次三原子平面1/2/3；教程2/1/4另经MCP复验"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-06-fixed-three-atoms.jpg",
+                "sha256": "31b4033312f7cca61a607c151faabf74cd52dea6d22412ba65b157fba98c4058",
+                "caption": "Agent点击：三原子平面；5072个域外采样点以洋红显示"
+              }
+            ]
+          },
+          "implementation_fingerprints": {
+            "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+            "qcblender/blender/interaction.py": "0130d6c98d3a56a1e021138ab98aa353cb7aa0c03f97bc02c945143f876ed265",
+            "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+            "qcblender/blender/graph.py": "887b365c7fd1c849fcf55bbdb4a5e37f01f146b674994198703d76dc951dc325",
+            "qcblender/blender/profile.py": "4eb27fa9f96261ccf01cf25e8803525692bf2ea8cd175530bc7e9dfc5a214cc1",
+            "qcblender/blender/charts.py": "fff768253e3a791469dfa718c163762b86389224803af26e81ee4d0fcfb9e6e4",
+            "qcblender/blender/layers.py": "4ff0f8284523a6dc8276635b69fd6bb5e952906b3546cc0b5be9437d0f46c211",
+            "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+            "qcblender/sampling.py": "6bcb428a41af4d634a029a24945e797ff19fe925f0a0a604b51a44bccc630966",
+            "qcblender/profile.py": "ef86e07aefa6d076641492e255765281d25fb47d2a1166eeb95830f886061a78",
+            "qcblender/planes.py": "551ef7107fbcce12992b73521238df3aaeceac01c5593a91a7b4a2da20bc3875"
+          },
+          "reuse": {
+            "preferred_order": [
+              "MCP",
+              "CLI",
+              "Computer Use"
+            ],
+            "coverage": "MCP调用原生define_slice_plane和节点公共参数；Gizmo语义可设置相同参数，但新交互行为变更仍须GUI确认",
+            "current_batch_replay_status": "Passed",
+            "requires_current_result_assertions": true
+          }
+        }
+      ]
     },
     {
       "id": "slice-contours",
@@ -1474,69 +1692,139 @@
     },
     {
       "id": "line-profile-and-layout",
-      "title": "线剖面、排版与CSV",
+      "title": "创建视图与检查工具 → 记录剖面起点 / 采样线剖面数据",
       "gui_validation": {
         "status": "Passed",
-        "date": "2026-10-01",
-        "method": "Computer Use actual named interaction; MCP parameter setup/replay and independent assertions explicitly separated",
-        "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
-        "product_tree": "4086224b13cdd50fa4495c1e00004e0d8dd15d49",
-        "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP readback (MCP preparation explicitly identified in report/screenshots)",
+        "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+        "product_tree": "31d34345fe37815e15ef0d492a4b81d5c9cba836",
+        "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98",
         "blender": "5.1.1",
         "locale": "zh_HANS",
-        "objects_and_order": "按报告的活动对象；ESP场/切片或绑定ESP的密度表面，原子平面关联P03水二聚体；选择与游标设置由MCP完成",
-        "input_sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
-        "visible_entry": "N侧栏 → 创建视图与检查工具 → 记录剖面起点 / 创建线剖面 / 导出剖面CSV；对象属性 → 剖面坐标轴与排版 → 应用排版",
-        "validated_scope": "本批GUI：COLOR采样101、宽度4→6和应用排版；游标坐标由MCP设置。Geometry同ESP和域外14Å剖面MCP重放；CSV复用历史90ff9bf GUI且实现未变，原路径冷重开复导出相同",
+        "objects_and_order": "P03密度，MCP设置(-2,0,1.8)→(2,0,1.8)Å，GUI采样101点；空Mesh记录，不创建曲线",
+        "visible_entry": "创建视图与检查工具 → 记录剖面起点 / 采样线剖面数据",
+        "validated_scope": "P03密度，MCP设置(-2,0,1.8)→(2,0,1.8)Å，GUI采样101点；空Mesh记录，不创建曲线",
         "reports": [
           {
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/profile-layout-GUI.json",
-            "sha256": "14422a128e2767bb1b913b683cb5123bdb4ef60de38417a3a60a8e7d0c06956f",
-            "status": "Passed"
-          },
-          {
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/ESP-profiles-GUI-MCP.json",
-            "sha256": "7be5e704e5839083cbd3dd1c38e8dc68c7cb1994ddb32dbcfc9d525d0fca6396",
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/gui/profile.json",
+            "bytes": 2744,
+            "sha256": "7a8483c01f7851f10eb88c8339de732f78afea6e9bbdbcb2f0ad0c72863551dc",
             "status": "Passed"
           }
         ],
         "screenshots": [
           {
-            "path": "docs/v1-acceptance/screenshot/C04-08-color-profile-dialog.jpg",
-            "sha256": "6103f5aba5e1abd8e2dc2c39089f276bf586c0f5cc92c0d3361aed064e8ba52f",
-            "caption": "Agent点击：Sample field选颜色，采样101点；游标坐标由MCP设置"
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/C04-profile-dialog-e317.jpg",
+            "sha256": "a5baa6a4fd9f2004bb15b172a492ecc606d219e95777c1ea2c37ab5d24a70e38",
+            "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+            "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98"
           },
           {
-            "path": "docs/v1-acceptance/screenshot/C04-08-color-profile-layout.jpg",
-            "sha256": "92366ab946a5ef65d97924e463477d779c3db5e27df4c7c2b7144a5a4a65711f",
-            "caption": "Agent点击图幅宽度6与应用排版；MCP正面取景，CSV仍覆盖0–4 Å"
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/C04-profile-record-e317.jpg",
+            "sha256": "b31c9d375c6c594d914e018258b61ac9fc30a011e9ad3b4a775f974de1a283bd",
+            "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+            "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98"
           }
         ]
       },
       "implementation_fingerprints": {
-        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
-        "qcblender/blender/interaction.py": "0130d6c98d3a56a1e021138ab98aa353cb7aa0c03f97bc02c945143f876ed265",
-        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
-        "qcblender/blender/graph.py": "887b365c7fd1c849fcf55bbdb4a5e37f01f146b674994198703d76dc951dc325",
-        "qcblender/blender/profile.py": "4eb27fa9f96261ccf01cf25e8803525692bf2ea8cd175530bc7e9dfc5a214cc1",
-        "qcblender/blender/charts.py": "fff768253e3a791469dfa718c163762b86389224803af26e81ee4d0fcfb9e6e4",
-        "qcblender/blender/layers.py": "4ff0f8284523a6dc8276635b69fd6bb5e952906b3546cc0b5be9437d0f46c211",
-        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
-        "qcblender/sampling.py": "6bcb428a41af4d634a029a24945e797ff19fe925f0a0a604b51a44bccc630966",
-        "qcblender/profile.py": "ef86e07aefa6d076641492e255765281d25fb47d2a1166eeb95830f886061a78",
-        "qcblender/planes.py": "551ef7107fbcce12992b73521238df3aaeceac01c5593a91a7b4a2da20bc3875"
+        "qcblender/blender/ui.py": "5d2b5842817a5c318323aafcd6ed9ba68f373c9286929b3e2d3a996b109c4416",
+        "qcblender/blender/editor_ui.py": "a1a34a6ee156af3cf0297b178e2aeaaf4588f41b4ef1768682011ad0a385ac68",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/data.py": "d914a6bf4035e130380a82fe3e43f7c1b2721348ee479f61c5e94f674d11adfc",
+        "qcblender/blender/profile.py": "187748f85c4f3204b2f2167e288058960d04900daa1546fb8fa9e8a866a37f4e",
+        "qcblender/blender/charts.py": "f32b8420c7024b09448f06289f9d0940418b31add915ca0ae29b1bc00a4bc02d",
+        "qcblender/profile.py": "ef86e07aefa6d076641492e255765281d25fb47d2a1166eeb95830f886061a78"
       },
-      "fingerprint_review": "Review transitive helpers, callbacks, interfaces, Blender and dependency changes before reuse; this set is not exhaustive proof.",
+      "fingerprint_review": "覆盖对应Operator、回调、注册与共享helper；历史GUI保持原候选，e317到9d3ff61仅目录SKIP_SAVE修改，见本批reuse-review。",
       "reuse": {
         "preferred_order": [
           "MCP",
           "CLI",
           "Computer Use"
         ],
-        "coverage": "MCP可调用mark_profile_start/create_line_profile/apply_profile_axes/export_line_profile；必须保持同一活动视图、区分GEOMETRY/COLOR、核对CSV无效值空白",
+        "coverage": "P03密度，MCP设置(-2,0,1.8)→(2,0,1.8)Å，GUI采样101点；空Mesh记录，不创建曲线",
+        "requires_current_result_assertions": true,
         "current_batch_replay_status": "Passed",
-        "requires_current_result_assertions": true
-      }
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/gui/reuse-review.json",
+            "bytes": 5621,
+            "sha256": "fe9ea66651568d2bba292366a49f2110155e76703a8ed53726464867566af1e6"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/native-integration.json",
+            "bytes": 43693,
+            "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
+          }
+        ]
+      },
+      "history": [
+        {
+          "gui_validation": {
+            "status": "Passed",
+            "date": "2026-10-01",
+            "method": "Computer Use actual named interaction; MCP parameter setup/replay and independent assertions explicitly separated",
+            "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
+            "product_tree": "4086224b13cdd50fa4495c1e00004e0d8dd15d49",
+            "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+            "blender": "5.1.1",
+            "locale": "zh_HANS",
+            "objects_and_order": "按报告的活动对象；ESP场/切片或绑定ESP的密度表面，原子平面关联P03水二聚体；选择与游标设置由MCP完成",
+            "input_sha256": "02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a",
+            "visible_entry": "N侧栏 → 创建视图与检查工具 → 记录剖面起点 / 创建线剖面 / 导出剖面CSV；对象属性 → 剖面坐标轴与排版 → 应用排版",
+            "validated_scope": "本批GUI：COLOR采样101、宽度4→6和应用排版；游标坐标由MCP设置。Geometry同ESP和域外14Å剖面MCP重放；CSV复用历史90ff9bf GUI且实现未变，原路径冷重开复导出相同",
+            "reports": [
+              {
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/profile-layout-GUI.json",
+                "sha256": "14422a128e2767bb1b913b683cb5123bdb4ef60de38417a3a60a8e7d0c06956f",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/slice-retest/ESP-profiles-GUI-MCP.json",
+                "sha256": "7be5e704e5839083cbd3dd1c38e8dc68c7cb1994ddb32dbcfc9d525d0fca6396",
+                "status": "Passed"
+              }
+            ],
+            "screenshots": [
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-08-color-profile-dialog.jpg",
+                "sha256": "6103f5aba5e1abd8e2dc2c39089f276bf586c0f5cc92c0d3361aed064e8ba52f",
+                "caption": "Agent点击：Sample field选颜色，采样101点；游标坐标由MCP设置"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-08-color-profile-layout.jpg",
+                "sha256": "92366ab946a5ef65d97924e463477d779c3db5e27df4c7c2b7144a5a4a65711f",
+                "caption": "Agent点击图幅宽度6与应用排版；MCP正面取景，CSV仍覆盖0–4 Å"
+              }
+            ]
+          },
+          "implementation_fingerprints": {
+            "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+            "qcblender/blender/interaction.py": "0130d6c98d3a56a1e021138ab98aa353cb7aa0c03f97bc02c945143f876ed265",
+            "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+            "qcblender/blender/graph.py": "887b365c7fd1c849fcf55bbdb4a5e37f01f146b674994198703d76dc951dc325",
+            "qcblender/blender/profile.py": "4eb27fa9f96261ccf01cf25e8803525692bf2ea8cd175530bc7e9dfc5a214cc1",
+            "qcblender/blender/charts.py": "fff768253e3a791469dfa718c163762b86389224803af26e81ee4d0fcfb9e6e4",
+            "qcblender/blender/layers.py": "4ff0f8284523a6dc8276635b69fd6bb5e952906b3546cc0b5be9437d0f46c211",
+            "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+            "qcblender/sampling.py": "6bcb428a41af4d634a029a24945e797ff19fe925f0a0a604b51a44bccc630966",
+            "qcblender/profile.py": "ef86e07aefa6d076641492e255765281d25fb47d2a1166eeb95830f886061a78",
+            "qcblender/planes.py": "551ef7107fbcce12992b73521238df3aaeceac01c5593a91a7b4a2da20bc3875"
+          },
+          "reuse": {
+            "preferred_order": [
+              "MCP",
+              "CLI",
+              "Computer Use"
+            ],
+            "coverage": "MCP可调用mark_profile_start/create_line_profile/apply_profile_axes/export_line_profile；必须保持同一活动视图、区分GEOMETRY/COLOR、核对CSV无效值空白",
+            "current_batch_replay_status": "Passed",
+            "requires_current_result_assertions": true
+          }
+        }
+      ]
     },
     {
       "id": "associate-matching-sources",
@@ -3134,75 +3422,138 @@
     },
     {
       "id": "paired-field-scatter-ranges-swap",
-      "title": "成对场散点范围与交换轴",
+      "title": "对象属性 → External Result Browser → Swap value columns / Apply Filter",
       "gui_validation": {
         "status": "Passed",
         "date": "2026-10-02",
-        "method": "Agent Computer Use actions and separately identified MCP preparation/assertions",
-        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
-        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
-        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "method": "Agent Computer Use native actions; MCP readback (MCP preparation explicitly identified in report/screenshots)",
+        "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+        "product_tree": "31d34345fe37815e15ef0d492a4b81d5c9cba836",
+        "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98",
         "blender": "5.1.1",
         "locale": "zh_HANS",
-        "objects_and_order": "仅选操作对应原子或散点对象；本批唯一GUI PID26312",
-        "visible_entry": "仅选择IGMH散点对象；对象属性→QCBlender→External Result Browser→范围开关、Swap scatter axes、更新散点",
-        "validated_scope": "MCP准备X=-.04..+.04,Y=.001...02；Computer Use开启四界、应用、交换轴再应用；36391和28630逐点独立核对；数值文本输入不在本次点击覆盖范围",
+        "objects_and_order": "MCP准备真实C07 IGMH Dataset，GUI交换值列/筛选，无新散点图；完整与筛选CSV原生核对",
+        "visible_entry": "对象属性 → External Result Browser → Swap value columns / Apply Filter",
+        "validated_scope": "MCP准备真实C07 IGMH Dataset，GUI交换值列/筛选，无新散点图；完整与筛选CSV原生核对",
         "reports": [
           {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/igmh-filter-GUI.json",
-            "sha256": "f5064cf740f1d1b6166d1a04140a3f82d3a2fb1dab6103a5c1bcc9116ee1dd6b",
-            "status": "Passed"
-          },
-          {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/igmh-swap-GUI.json",
-            "sha256": "2fca863ae7aee24d7fe8f7f8d82f0577f73b14055b4618bd9110c1f86c6ba15e",
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/gui/paired-filter.json",
+            "bytes": 523,
+            "sha256": "aedc290b189b8d2ece86fd4e3311ab74f5bde8f0c0c97e5bc4ac22ec5a7bf1f1",
             "status": "Passed"
           }
         ],
         "screenshots": [
           {
-            "path": "docs/v1-acceptance/screenshot/C07-IGMH-filter-GUI.jpg",
-            "sha256": "9f6b833e6e7d24d7a054ecc1fdbe8211374d95d6cbc8518442cca17f9c8b6124"
-          },
-          {
-            "path": "docs/v1-acceptance/screenshot/C07-IGMH-swap-GUI.jpg",
-            "sha256": "8b7423a86fb9a776c89a25a9e52c4779e9bc1fc71ac7a9b22ddbe70a351fdd85"
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/C07-voxel-browser-e317.jpg",
+            "sha256": "2652cc77c85738150ea49d8f84a1ebd6eea390067324f65d9d5bc73a15ccc340",
+            "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+            "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98"
           }
         ]
       },
       "implementation_fingerprints": {
-        "qcblender/blender/external_fields.py": "1c83fd33cb8a561caa312450e74a52bd8bfc09dc6d654eb03c2468cb7869c8cb",
-        "qcblender/external_fields.py": "87458b8656ca5fa157b6872ffe725de36e080662b5b623102600cd0f25dec508",
-        "qcblender/association.py": "e9b8f0d9e462f3ecf0e5b6c428f3cce2a5378404871c50bd23a58cf825fee000",
-        "qcblender/cube.py": "9af0ad7091af18b5d526e368ff1ccacc129f2544df3e19573a76e926a57cfe14",
-        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
-        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
-        "qcblender/blender/scalars.py": "1e17b26bf258a6a10963410d597a248b31cb60998b9a030d3fa03b6e7df7ac89",
-        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
-        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
-        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+        "qcblender/blender/ui.py": "5d2b5842817a5c318323aafcd6ed9ba68f373c9286929b3e2d3a996b109c4416",
+        "qcblender/blender/editor_ui.py": "a1a34a6ee156af3cf0297b178e2aeaaf4588f41b4ef1768682011ad0a385ac68",
         "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
-        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
-        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432"
+        "qcblender/data.py": "d914a6bf4035e130380a82fe3e43f7c1b2721348ee479f61c5e94f674d11adfc",
+        "qcblender/blender/result_browser.py": "aa94160e40cecffd8643aff46393749ca6c116e6214eb08c34816d4a2c5e8aa6",
+        "qcblender/blender/external_fields.py": "82f4a60e67652a1e1493bb33ee00177fab3075ad812d5b98251652cc48777776"
       },
-      "fingerprint_review": "核对相关实现、公共资产、接口、回调、依赖和Blender版本；此初始文件集合不是影响范围的全部证明。",
+      "fingerprint_review": "覆盖对应Operator、回调、注册与共享helper；历史GUI保持原候选，e317到9d3ff61仅目录SKIP_SAVE修改，见本批reuse-review。",
       "reuse": {
         "preferred_order": [
           "MCP",
           "CLI",
           "Computer Use"
         ],
-        "coverage": "MCP准备X=-.04..+.04,Y=.001...02；Computer Use开启四界、应用、交换轴再应用；36391和28630逐点独立核对；数值文本输入不在本次点击覆盖范围",
+        "coverage": "MCP准备真实C07 IGMH Dataset，GUI交换值列/筛选，无新散点图；完整与筛选CSV原生核对",
         "requires_current_result_assertions": true,
         "current_batch_replay_status": "Passed",
         "current_batch_replay_reports": [
           {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/filter-batch.json",
-            "sha256": "b78e269e75e0af0f2cb1732fffe7192e669b057a46139c1e76af94bcc95c291c",
-            "status": "Passed"
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/gui/reuse-review.json",
+            "bytes": 5621,
+            "sha256": "fe9ea66651568d2bba292366a49f2110155e76703a8ed53726464867566af1e6"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/native-integration.json",
+            "bytes": 43693,
+            "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
           }
         ]
-      }
+      },
+      "history": [
+        {
+          "gui_validation": {
+            "status": "Passed",
+            "date": "2026-10-02",
+            "method": "Agent Computer Use actions and separately identified MCP preparation/assertions",
+            "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+            "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+            "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+            "blender": "5.1.1",
+            "locale": "zh_HANS",
+            "objects_and_order": "仅选操作对应原子或散点对象；本批唯一GUI PID26312",
+            "visible_entry": "仅选择IGMH散点对象；对象属性→QCBlender→External Result Browser→范围开关、Swap scatter axes、更新散点",
+            "validated_scope": "MCP准备X=-.04..+.04,Y=.001...02；Computer Use开启四界、应用、交换轴再应用；36391和28630逐点独立核对；数值文本输入不在本次点击覆盖范围",
+            "reports": [
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/igmh-filter-GUI.json",
+                "sha256": "f5064cf740f1d1b6166d1a04140a3f82d3a2fb1dab6103a5c1bcc9116ee1dd6b",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/igmh-swap-GUI.json",
+                "sha256": "2fca863ae7aee24d7fe8f7f8d82f0577f73b14055b4618bd9110c1f86c6ba15e",
+                "status": "Passed"
+              }
+            ],
+            "screenshots": [
+              {
+                "path": "docs/v1-acceptance/screenshot/C07-IGMH-filter-GUI.jpg",
+                "sha256": "9f6b833e6e7d24d7a054ecc1fdbe8211374d95d6cbc8518442cca17f9c8b6124"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C07-IGMH-swap-GUI.jpg",
+                "sha256": "8b7423a86fb9a776c89a25a9e52c4779e9bc1fc71ac7a9b22ddbe70a351fdd85"
+              }
+            ]
+          },
+          "implementation_fingerprints": {
+            "qcblender/blender/external_fields.py": "1c83fd33cb8a561caa312450e74a52bd8bfc09dc6d654eb03c2468cb7869c8cb",
+            "qcblender/external_fields.py": "87458b8656ca5fa157b6872ffe725de36e080662b5b623102600cd0f25dec508",
+            "qcblender/association.py": "e9b8f0d9e462f3ecf0e5b6c428f3cce2a5378404871c50bd23a58cf825fee000",
+            "qcblender/cube.py": "9af0ad7091af18b5d526e368ff1ccacc129f2544df3e19573a76e926a57cfe14",
+            "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+            "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+            "qcblender/blender/scalars.py": "1e17b26bf258a6a10963410d597a248b31cb60998b9a030d3fa03b6e7df7ac89",
+            "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+            "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+            "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+            "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+            "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+            "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432"
+          },
+          "reuse": {
+            "preferred_order": [
+              "MCP",
+              "CLI",
+              "Computer Use"
+            ],
+            "coverage": "MCP准备X=-.04..+.04,Y=.001...02；Computer Use开启四界、应用、交换轴再应用；36391和28630逐点独立核对；数值文本输入不在本次点击覆盖范围",
+            "requires_current_result_assertions": true,
+            "current_batch_replay_status": "Passed",
+            "current_batch_replay_reports": [
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/filter-batch.json",
+                "sha256": "b78e269e75e0af0f2cb1732fffe7192e669b057a46139c1e76af94bcc95c291c",
+                "status": "Passed"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "paired-field-wrong-atom-refusal",
@@ -3507,73 +3858,136 @@
     },
     {
       "id": "esp-area-center-and-source-interval-filter",
-      "title": "ESP面积中心与完整源区间筛选",
+      "title": "对象属性 → External Result Browser → 应用筛选",
       "gui_validation": {
         "status": "Passed",
         "date": "2026-10-02",
-        "method": "Agent Computer Use native actions; MCP preparation and independent raw-source assertions separately identified",
-        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
-        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
-        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "method": "Agent Computer Use native actions; MCP readback (MCP preparation explicitly identified in report/screenshots)",
+        "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+        "product_tree": "31d34345fe37815e15ef0d492a4b81d5c9cba836",
+        "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98",
         "blender": "5.1.1",
         "locale": "zh_HANS",
-        "objects_and_order": "唯一GUI PID44016；仅选择对应ESP场/maximum/area对象，无多选顺序",
-        "visible_entry": "只选QC ESP area distribution；对象属性→QCBlender→External Result Browser→Area bin selection→应用筛选",
-        "validated_scope": "Computer Use开启0..20并应用Center in range，再选Recorded interval overlaps range并应用；4bin/14.4784 Å²/19.7838%与6bin/21.2676 Å²/29.0608%，原总面积73.1833、原百分比和坐标缩放保持；MCP准备数值",
+        "objects_and_order": "MCP准备真实ESP面积记录；GUI中心-10..10kcal/mol四bin，原源百分比19.1886%，无柱形图。源区间模式保留历史范围",
+        "visible_entry": "对象属性 → External Result Browser → 应用筛选",
+        "validated_scope": "MCP准备真实ESP面积记录；GUI中心-10..10kcal/mol四bin，原源百分比19.1886%，无柱形图。源区间模式保留历史范围",
         "reports": [
           {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/area-center-GUI.json",
-            "sha256": "b200293ba5cb32b9a179e1915784d978ac1acb1ef310993a2dd1fd35becb4456",
-            "status": "Passed"
-          },
-          {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/area-source-interval-GUI.json",
-            "sha256": "3d787de9d24132bbfd6065959885da9c82db0f2d63a8583703bdc5aca2a2a8f6",
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/gui/esp-area-filter.json",
+            "bytes": 687,
+            "sha256": "3c1795fb7d1d4380bf9c0630789a3a17aacf1118d01df2522e2a3efea73f3118",
             "status": "Passed"
           }
         ],
         "screenshots": [
           {
-            "path": "docs/v1-acceptance/screenshot/C08-area-center-GUI.jpg",
-            "sha256": "781c2bcd0820b41b5a1dbb6e07edcbf355e1825d886acb84c752a9339ff63af9"
-          },
-          {
-            "path": "docs/v1-acceptance/screenshot/C08-area-source-interval-GUI.jpg",
-            "sha256": "c706100657389d013090ef37e639583816abbc56d93de7ec0fa82e1fe4f63bb0"
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/C09-esp-area-data-e317.jpg",
+            "sha256": "449f9fa1749e8764a2bcf68377d580e65a0a4c3d324ac8fa549932b0872d3c75",
+            "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+            "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98"
           }
         ]
       },
       "implementation_fingerprints": {
-        "qcblender/blender/external_results.py": "afb27eb59f1e6920887d9b26f6f926bcdaf2ac0b96ff18e7b7d591581a02ca1f",
-        "qcblender/analysis_data.py": "de5ccf196fb485465e76ba0cc122da3192f421104b5c52122f9061364e1650d8",
-        "qcblender/external_results.py": "34dae8703d9d6e2234c64132c78f33252e7e74d7b1a1410e58804920e5ebd7fb",
-        "qcblender/readers.py": "69fd2c68c535aa987e0e6da93fcf22c37faae14d736ea61d3d0827491228ef3b",
-        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
-        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
-        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
-        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
-        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
-        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
-        "qcblender/blender/capabilities.py": "e99bbdbf87fb0a2e08160c65e6d2b405a917d4ca5bc738b2baae46c89f099386"
+        "qcblender/blender/ui.py": "5d2b5842817a5c318323aafcd6ed9ba68f373c9286929b3e2d3a996b109c4416",
+        "qcblender/blender/editor_ui.py": "a1a34a6ee156af3cf0297b178e2aeaaf4588f41b4ef1768682011ad0a385ac68",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/data.py": "d914a6bf4035e130380a82fe3e43f7c1b2721348ee479f61c5e94f674d11adfc",
+        "qcblender/blender/result_browser.py": "aa94160e40cecffd8643aff46393749ca6c116e6214eb08c34816d4a2c5e8aa6",
+        "qcblender/blender/external_results.py": "c5dd538d0ab99bf24050f60efe1f2ca159e08d6d3a9462206e308393abb43d26"
       },
-      "fingerprint_review": "核对传递helper、回调、公共接口、Blender和依赖变化；本文件集合不是功能未变的全部证明。",
+      "fingerprint_review": "覆盖对应Operator、回调、注册与共享helper；历史GUI保持原候选，e317到9d3ff61仅目录SKIP_SAVE修改，见本批reuse-review。",
       "reuse": {
         "preferred_order": [
           "MCP",
           "CLI",
           "Computer Use"
         ],
-        "coverage": "Computer Use开启0..20并应用Center in range，再选Recorded interval overlaps range并应用；4bin/14.4784 Å²/19.7838%与6bin/21.2676 Å²/29.0608%，原总面积73.1833、原百分比和坐标缩放保持；MCP准备数值",
+        "coverage": "MCP准备真实ESP面积记录；GUI中心-10..10kcal/mol四bin，原源百分比19.1886%，无柱形图。源区间模式保留历史范围",
         "requires_current_result_assertions": true,
         "current_batch_replay_status": "Passed",
         "current_batch_replay_reports": [
           {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/filter-batch.json",
-            "sha256": "3197b88dded724251ab87de26f46810a5af6b8ae2cab7b82fc1a79901dc2ce14",
-            "status": "Passed"
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/gui/reuse-review.json",
+            "bytes": 5621,
+            "sha256": "fe9ea66651568d2bba292366a49f2110155e76703a8ed53726464867566af1e6"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/native-integration.json",
+            "bytes": 43693,
+            "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
           }
         ]
-      }
+      },
+      "history": [
+        {
+          "gui_validation": {
+            "status": "Passed",
+            "date": "2026-10-02",
+            "method": "Agent Computer Use native actions; MCP preparation and independent raw-source assertions separately identified",
+            "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+            "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+            "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+            "blender": "5.1.1",
+            "locale": "zh_HANS",
+            "objects_and_order": "唯一GUI PID44016；仅选择对应ESP场/maximum/area对象，无多选顺序",
+            "visible_entry": "只选QC ESP area distribution；对象属性→QCBlender→External Result Browser→Area bin selection→应用筛选",
+            "validated_scope": "Computer Use开启0..20并应用Center in range，再选Recorded interval overlaps range并应用；4bin/14.4784 Å²/19.7838%与6bin/21.2676 Å²/29.0608%，原总面积73.1833、原百分比和坐标缩放保持；MCP准备数值",
+            "reports": [
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/area-center-GUI.json",
+                "sha256": "b200293ba5cb32b9a179e1915784d978ac1acb1ef310993a2dd1fd35becb4456",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/area-source-interval-GUI.json",
+                "sha256": "3d787de9d24132bbfd6065959885da9c82db0f2d63a8583703bdc5aca2a2a8f6",
+                "status": "Passed"
+              }
+            ],
+            "screenshots": [
+              {
+                "path": "docs/v1-acceptance/screenshot/C08-area-center-GUI.jpg",
+                "sha256": "781c2bcd0820b41b5a1dbb6e07edcbf355e1825d886acb84c752a9339ff63af9"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C08-area-source-interval-GUI.jpg",
+                "sha256": "c706100657389d013090ef37e639583816abbc56d93de7ec0fa82e1fe4f63bb0"
+              }
+            ]
+          },
+          "implementation_fingerprints": {
+            "qcblender/blender/external_results.py": "afb27eb59f1e6920887d9b26f6f926bcdaf2ac0b96ff18e7b7d591581a02ca1f",
+            "qcblender/analysis_data.py": "de5ccf196fb485465e76ba0cc122da3192f421104b5c52122f9061364e1650d8",
+            "qcblender/external_results.py": "34dae8703d9d6e2234c64132c78f33252e7e74d7b1a1410e58804920e5ebd7fb",
+            "qcblender/readers.py": "69fd2c68c535aa987e0e6da93fcf22c37faae14d736ea61d3d0827491228ef3b",
+            "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+            "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+            "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+            "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+            "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+            "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+            "qcblender/blender/capabilities.py": "e99bbdbf87fb0a2e08160c65e6d2b405a917d4ca5bc738b2baae46c89f099386"
+          },
+          "reuse": {
+            "preferred_order": [
+              "MCP",
+              "CLI",
+              "Computer Use"
+            ],
+            "coverage": "Computer Use开启0..20并应用Center in range，再选Recorded interval overlaps range并应用；4bin/14.4784 Å²/19.7838%与6bin/21.2676 Å²/29.0608%，原总面积73.1833、原百分比和坐标缩放保持；MCP准备数值",
+            "requires_current_result_assertions": true,
+            "current_batch_replay_status": "Passed",
+            "current_batch_replay_reports": [
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C08/filter-batch.json",
+                "sha256": "3197b88dded724251ab87de26f46810a5af6b8ae2cab7b82fc1a79901dc2ce14",
+                "status": "Passed"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "aim-topology-import",
@@ -4085,70 +4499,133 @@
     },
     {
       "id": "irc-mayer-pair-plot",
-      "title": "Mayer原子对选择并重绘",
+      "title": "对象属性 → IRC Path → Read Pair",
       "gui_validation": {
         "status": "Passed",
         "date": "2026-10-02",
-        "method": "Agent Computer Use native actions; source/raw-value checks separately via MCP",
-        "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
-        "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
-        "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+        "method": "Agent Computer Use native actions; MCP readback (MCP preparation explicitly identified in report/screenshots)",
+        "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+        "product_tree": "31d34345fe37815e15ef0d492a4b81d5c9cba836",
+        "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98",
         "blender": "5.1.1",
         "locale": "zh_HANS",
-        "objects_and_order": "唯一GUI PID40356；导入前只选IRC path根，切换原子对只选QC IRC Mayer orders表；四原子源编号1–4",
-        "visible_entry": "只选QC IRC Mayer orders子表；同Properties→IRC Path；Atom A (1-based)=1，Atom B (1-based)=3，再点Plot Pair",
-        "validated_scope": "Computer Use把Atom B从2改为3并点击Plot Pair，生成1,3谷形曲线；MCP核对三值、当前步2值0.950844120525及独立归一化游标，后续两对逐步重放与非法pair拒绝单列。",
+        "objects_and_order": "MCP准备真实IRC/Mayer源表；GUI读取1,2对三步原值，无新曲线",
+        "visible_entry": "对象属性 → IRC Path → Read Pair",
+        "validated_scope": "MCP准备真实IRC/Mayer源表；GUI读取1,2对三步原值，无新曲线",
         "reports": [
           {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/native-import-and-pair13-oracle.json",
-            "sha256": "c6cb7e9a29abe282c1e04d093285183574d5b9231c955153f5401b28c9d684cf",
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/gui/mayer-read-pair.json",
+            "bytes": 392,
+            "sha256": "852935b6c00cd38cb1331f8b632067f052be3c78ab39eef4165ee23309a15369",
             "status": "Passed"
           }
         ],
         "screenshots": [
           {
-            "path": "docs/v1-acceptance/screenshot/C11-fixed-pair13-GUI.jpg",
-            "sha256": "9d45a5939780d46d8d57c052dd03fff3c06bdb4f65c2310b13c884406b37ff84"
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/C11-mayer-read-pair-e317.jpg",
+            "sha256": "077cb5f29850dfe418aff2922d1042eeeba4498073f0473c7c985c720b2d47b5",
+            "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+            "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98"
           }
         ]
       },
       "implementation_fingerprints": {
-        "qcblender/blender/irc.py": "87a1edb4efd53dbcdc83fcf13be0b793669619d54f160688378f9ee6e086e8e7",
-        "qcblender/irc.py": "80941cc9fb90277031b7512ee48f131b76f50fa7e6055d2949ed63b84b5117a1",
-        "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530",
-        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
-        "qcblender/blender/external_results.py": "71f9612f82db00b3f1de9554bc05bc1ca8759dc9937318310fa65f02c1fef5d7",
-        "qcblender/blender/geometry.py": "b3f453dc1943e7488b1bee33c761b874178c9ad9c8a25e855732cb50ddbd82ca",
-        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
+        "qcblender/blender/ui.py": "5d2b5842817a5c318323aafcd6ed9ba68f373c9286929b3e2d3a996b109c4416",
+        "qcblender/blender/editor_ui.py": "a1a34a6ee156af3cf0297b178e2aeaaf4588f41b4ef1768682011ad0a385ac68",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/data.py": "d914a6bf4035e130380a82fe3e43f7c1b2721348ee479f61c5e94f674d11adfc",
+        "qcblender/blender/irc.py": "e789d5f01b3343cae52eddc169d20e3669bc50455aedc07db243269d69c2b175",
+        "qcblender/irc.py": "80941cc9fb90277031b7512ee48f131b76f50fa7e6055d2949ed63b84b5117a1"
       },
-      "fingerprint_review": "Review callbacks, transitive helpers, interfaces and dependencies before reuse; changed Mayer import retested natively.",
+      "fingerprint_review": "覆盖对应Operator、回调、注册与共享helper；历史GUI保持原候选，e317到9d3ff61仅目录SKIP_SAVE修改，见本批reuse-review。",
       "reuse": {
         "preferred_order": [
           "MCP",
           "CLI",
           "Computer Use"
         ],
-        "coverage": "Computer Use把Atom B从2改为3并点击Plot Pair，生成1,3谷形曲线；MCP核对三值、当前步2值0.950844120525及独立归一化游标，后续两对逐步重放与非法pair拒绝单列。",
-        "current_batch_replay_status": "Passed",
+        "coverage": "MCP准备真实IRC/Mayer源表；GUI读取1,2对三步原值，无新曲线",
         "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed",
         "current_batch_replay_reports": [
           {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/step-pair-batch.json",
-            "sha256": "daa2b65f360ed741ee71138e8db72c19f14a41e9768e805c41e6952e821f3dbf",
-            "status": "Passed"
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/gui/reuse-review.json",
+            "bytes": 5621,
+            "sha256": "fe9ea66651568d2bba292366a49f2110155e76703a8ed53726464867566af1e6"
           },
           {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/invalid-pair-from-1-3.json",
-            "sha256": "24fca7199de931e4444c497ead694b6433d1c14006b2ece9710badb9e3ad2975",
-            "status": "Passed"
-          },
-          {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/invalid-pair-from-1-2.json",
-            "sha256": "24fca7199de931e4444c497ead694b6433d1c14006b2ece9710badb9e3ad2975",
-            "status": "Passed"
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/native-integration.json",
+            "bytes": 43693,
+            "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
           }
         ]
-      }
+      },
+      "history": [
+        {
+          "gui_validation": {
+            "status": "Passed",
+            "date": "2026-10-02",
+            "method": "Agent Computer Use native actions; source/raw-value checks separately via MCP",
+            "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+            "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+            "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+            "blender": "5.1.1",
+            "locale": "zh_HANS",
+            "objects_and_order": "唯一GUI PID40356；导入前只选IRC path根，切换原子对只选QC IRC Mayer orders表；四原子源编号1–4",
+            "visible_entry": "只选QC IRC Mayer orders子表；同Properties→IRC Path；Atom A (1-based)=1，Atom B (1-based)=3，再点Plot Pair",
+            "validated_scope": "Computer Use把Atom B从2改为3并点击Plot Pair，生成1,3谷形曲线；MCP核对三值、当前步2值0.950844120525及独立归一化游标，后续两对逐步重放与非法pair拒绝单列。",
+            "reports": [
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/native-import-and-pair13-oracle.json",
+                "sha256": "c6cb7e9a29abe282c1e04d093285183574d5b9231c955153f5401b28c9d684cf",
+                "status": "Passed"
+              }
+            ],
+            "screenshots": [
+              {
+                "path": "docs/v1-acceptance/screenshot/C11-fixed-pair13-GUI.jpg",
+                "sha256": "9d45a5939780d46d8d57c052dd03fff3c06bdb4f65c2310b13c884406b37ff84"
+              }
+            ]
+          },
+          "implementation_fingerprints": {
+            "qcblender/blender/irc.py": "87a1edb4efd53dbcdc83fcf13be0b793669619d54f160688378f9ee6e086e8e7",
+            "qcblender/irc.py": "80941cc9fb90277031b7512ee48f131b76f50fa7e6055d2949ed63b84b5117a1",
+            "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530",
+            "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+            "qcblender/blender/external_results.py": "71f9612f82db00b3f1de9554bc05bc1ca8759dc9937318310fa65f02c1fef5d7",
+            "qcblender/blender/geometry.py": "b3f453dc1943e7488b1bee33c761b874178c9ad9c8a25e855732cb50ddbd82ca",
+            "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
+          },
+          "reuse": {
+            "preferred_order": [
+              "MCP",
+              "CLI",
+              "Computer Use"
+            ],
+            "coverage": "Computer Use把Atom B从2改为3并点击Plot Pair，生成1,3谷形曲线；MCP核对三值、当前步2值0.950844120525及独立归一化游标，后续两对逐步重放与非法pair拒绝单列。",
+            "current_batch_replay_status": "Passed",
+            "requires_current_result_assertions": true,
+            "current_batch_replay_reports": [
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/step-pair-batch.json",
+                "sha256": "daa2b65f360ed741ee71138e8db72c19f14a41e9768e805c41e6952e821f3dbf",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/invalid-pair-from-1-3.json",
+                "sha256": "24fca7199de931e4444c497ead694b6433d1c14006b2ece9710badb9e3ad2975",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C11/fixed/invalid-pair-from-1-2.json",
+                "sha256": "24fca7199de931e4444c497ead694b6433d1c14006b2ece9710badb9e3ad2975",
+                "status": "Passed"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "ets-nocv-import",
@@ -4913,6 +5390,273 @@
         "coverage": "Native layer_action REMOVE and protected result assertions for independently copied atom layers with owned annotations; GUI deletion approval remains subject to skill rules when explicitly re-clicking.",
         "current_batch_replay_status": "Not Run",
         "requires_current_result_assertions": true
+      }
+    },
+    {
+      "id": "standard-xyz-import",
+      "title": "工作流 → 导入 Gaussian / Cube / XYZ",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP readback (MCP preparation explicitly identified in report/screenshots)",
+        "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+        "product_tree": "31d34345fe37815e15ef0d492a4b81d5c9cba836",
+        "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "单帧water-dimer.xyz六原子Å，源身份/注释/原子编号、外层Quality3",
+        "visible_entry": "工作流 → 导入 Gaussian / Cube / XYZ",
+        "validated_scope": "单帧water-dimer.xyz六原子Å，源身份/注释/原子编号、外层Quality3",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/gui/xyz-single.json",
+            "bytes": 1245,
+            "sha256": "b7e7091ca5fd91c5a7e1ceed3cc226a1c491f4a4269977da1a3eea29c1b78240",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/X01-single-import-dialog.jpg",
+            "sha256": "7837fd3232c3fb1a65590fcfe6782f99e5c7550ce9853545e35c255575fe78a9",
+            "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+            "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/X01-single-quality3.jpg",
+            "sha256": "d5d086c33300cef6dd9b55ffa1c791d26a2d9b573b7d5f94ed1033570e85777f",
+            "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+            "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/ui.py": "5d2b5842817a5c318323aafcd6ed9ba68f373c9286929b3e2d3a996b109c4416",
+        "qcblender/blender/editor_ui.py": "a1a34a6ee156af3cf0297b178e2aeaaf4588f41b4ef1768682011ad0a385ac68",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/data.py": "d914a6bf4035e130380a82fe3e43f7c1b2721348ee479f61c5e94f674d11adfc",
+        "qcblender/xyz.py": "8c6651b1aada5ee8b5a3db1031f32aeea94964b140f149c0fa62fe7f40e2e652",
+        "qcblender/readers.py": "61680fa5925e6f7dc43359af44b9a4fd49fb377ebe5f425c90314808962ec723",
+        "qcblender/blender/views.py": "448643935c96a09b37f9c0e74850cb388a0d1699480123736342ddc7f04e21e5"
+      },
+      "fingerprint_review": "覆盖对应Operator、回调、注册与共享helper；历史GUI保持原候选，e317到9d3ff61仅目录SKIP_SAVE修改，见本批reuse-review。",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "单帧water-dimer.xyz六原子Å，源身份/注释/原子编号、外层Quality3",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/gui/reuse-review.json",
+            "bytes": 5621,
+            "sha256": "fe9ea66651568d2bba292366a49f2110155e76703a8ed53726464867566af1e6"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/native-integration.json",
+            "bytes": 43693,
+            "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
+          }
+        ]
+      }
+    },
+    {
+      "id": "xyz-discrete-frame-navigation",
+      "title": "对象属性 → XYZ Frames → Previous / Next / Choose XYZ Frame",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP readback (MCP preparation explicitly identified in report/screenshots)",
+        "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+        "product_tree": "31d34345fe37815e15ef0d492a4b81d5c9cba836",
+        "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "p04-three-frames.xyz四原子三帧，离散切换、坐标/ID、MCP建立的距离与二面角随帧",
+        "visible_entry": "对象属性 → XYZ Frames → Previous / Next / Choose XYZ Frame",
+        "validated_scope": "p04-three-frames.xyz四原子三帧，离散切换、坐标/ID、MCP建立的距离与二面角随帧",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/gui/xyz-frame2-next.json",
+            "bytes": 2550,
+            "sha256": "932a18b8331e0e1ea00c4518387f48b4bd0c0fdf0f664fa339da68a0dc2dacdf",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/gui/xyz-frame3-next.json",
+            "bytes": 2545,
+            "sha256": "219f8cf809bda38f70beccad815761916eb896cf88dc25a8524feb3c6ca58f29",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/gui/xyz-frame2-previous.json",
+            "bytes": 2550,
+            "sha256": "932a18b8331e0e1ea00c4518387f48b4bd0c0fdf0f664fa339da68a0dc2dacdf",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/gui/xyz-frame1-choose.json",
+            "bytes": 2537,
+            "sha256": "94c4f79aafb9d06850ef5f8fec472d84109d9ac4020c90064cd23b907b4965b5",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/X01-frame1.jpg",
+            "sha256": "b1536091f30234b60d63cce9c5877026310e8bfb6b10715bb20bde82ff292d08",
+            "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+            "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/X01-frame2-annotations.jpg",
+            "sha256": "009601c2d187f745a24e46c97f76fd419932291fe803c4616d084cfe82e21254",
+            "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+            "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/X01-frame3-annotations.jpg",
+            "sha256": "5b427f34c160a5439a9a7015e2c983ebadaa00f544d085db567db826aa61589b",
+            "source_commit": "e31799656a0111337984a47b919b8b8c121e57d3",
+            "candidate_sha256": "9d3894bb8a61b97aed424e6e483a5314b49c1267835173d99b371d441c06ff98"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/ui.py": "5d2b5842817a5c318323aafcd6ed9ba68f373c9286929b3e2d3a996b109c4416",
+        "qcblender/blender/editor_ui.py": "a1a34a6ee156af3cf0297b178e2aeaaf4588f41b4ef1768682011ad0a385ac68",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/data.py": "d914a6bf4035e130380a82fe3e43f7c1b2721348ee479f61c5e94f674d11adfc",
+        "qcblender/blender/trajectory.py": "e2c8de6b704d8958bcfdb58bc1cd90e812456c831156c57888b7ecb79592a755",
+        "qcblender/geometry.py": "815df0eed243e4e582fa1cbea94ebb75d464fc5fd9c8313b24ebbf07e020f1a6",
+        "qcblender/blender/geometry.py": "c61453c02bd4bf40627055d7e7c974c5f4cd8429c05eb2c23edf9a930a73ca3e"
+      },
+      "fingerprint_review": "覆盖对应Operator、回调、注册与共享helper；历史GUI保持原候选，e317到9d3ff61仅目录SKIP_SAVE修改，见本批reuse-review。",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "p04-three-frames.xyz四原子三帧，离散切换、坐标/ID、MCP建立的距离与二面角随帧",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/gui/reuse-review.json",
+            "bytes": 5621,
+            "sha256": "fe9ea66651568d2bba292366a49f2110155e76703a8ed53726464867566af1e6"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/native-integration.json",
+            "bytes": 43693,
+            "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
+          }
+        ]
+      }
+    },
+    {
+      "id": "explicit-csv-export-directory",
+      "title": "工程与诊断 → 导出数据",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-02",
+        "method": "Agent Computer Use native actions; MCP readback (MCP preparation explicitly identified in report/screenshots)",
+        "source_commit": "9d3ff61d2e32c47357fe624cf93052bfed6dd041",
+        "product_tree": "58108f2c64d358ada1d5800be7e24f5cc45b7a10",
+        "candidate_sha256": "362b87d3d1f41ec949da8597a47b248e7ef74ca574d96454d1dda31100556ce9",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "已保存工程默认目录、偏好（MCP配置）、GUI本次覆盖后再次恢复偏好；profile101、IR3、ESP_FILTERED4逐值/单位/来源。全部七类/取消为原生实worker证据",
+        "visible_entry": "工程与诊断 → 导出数据",
+        "validated_scope": "已保存工程默认目录、偏好（MCP配置）、GUI本次覆盖后再次恢复偏好；profile101、IR3、ESP_FILTERED4逐值/单位/来源。全部七类/取消为原生实worker证据",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/gui/export-directory-regression.json",
+            "bytes": 1297,
+            "sha256": "b8b833e62471067549e7eeef1a3d7390c1a6a755c59b67bebc47d1258c275705",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/gui/ir-export.json",
+            "bytes": 671,
+            "sha256": "96f4ff30ae5b06014d6470eb2c1772d221a82c946adbaaffa27992ad06957423",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/gui/esp-filtered-export.json",
+            "bytes": 789,
+            "sha256": "7868220925b84caa77de27bce0c0702c940401fc96523df5a3bfc1b03db5d382",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/D01-ESP-filtered-export-9d3ff61.jpg",
+            "sha256": "0cc58b3004b2fe442c13b78e1089875e8dd99ba3ebfab6c7973c1d9c7095e633",
+            "source_commit": "9d3ff61d2e32c47357fe624cf93052bfed6dd041",
+            "candidate_sha256": "362b87d3d1f41ec949da8597a47b248e7ef74ca574d96454d1dda31100556ce9"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/D01-export-default-saved-9d3ff61.jpg",
+            "sha256": "1927f30136a3932a769b20f9ff154aeec6f024abfc4310a8304668596e5699c6",
+            "source_commit": "9d3ff61d2e32c47357fe624cf93052bfed6dd041",
+            "candidate_sha256": "362b87d3d1f41ec949da8597a47b248e7ef74ca574d96454d1dda31100556ce9"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/D01-export-override-9d3ff61.jpg",
+            "sha256": "c7b8cfe696b87a5b91f37845696fc7fb10f62f8e8202bcd47779c7f3e46acdb6",
+            "source_commit": "9d3ff61d2e32c47357fe624cf93052bfed6dd041",
+            "candidate_sha256": "362b87d3d1f41ec949da8597a47b248e7ef74ca574d96454d1dda31100556ce9"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/D01-export-reset-9d3ff61.jpg",
+            "sha256": "e81b7c559cca1b748d22d167397bba9f6d355078c1d841a6bd4dd03854c63619",
+            "source_commit": "9d3ff61d2e32c47357fe624cf93052bfed6dd041",
+            "candidate_sha256": "362b87d3d1f41ec949da8597a47b248e7ef74ca574d96454d1dda31100556ce9"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/display-xyz-export/D01-IR-export-9d3ff61.jpg",
+            "sha256": "1ddb742d26b5a077cb3cf032ad8db8374efa15e7a7d3fa03df57a2f42cc1a058",
+            "source_commit": "9d3ff61d2e32c47357fe624cf93052bfed6dd041",
+            "candidate_sha256": "362b87d3d1f41ec949da8597a47b248e7ef74ca574d96454d1dda31100556ce9"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/ui.py": "5d2b5842817a5c318323aafcd6ed9ba68f373c9286929b3e2d3a996b109c4416",
+        "qcblender/blender/editor_ui.py": "a1a34a6ee156af3cf0297b178e2aeaaf4588f41b4ef1768682011ad0a385ac68",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+        "qcblender/data.py": "d914a6bf4035e130380a82fe3e43f7c1b2721348ee479f61c5e94f674d11adfc",
+        "qcblender/blender/data_export.py": "c7ae42d18b3aeaa0907405c84a2fa9a33a63a6aa0ea04c6b736a924e8f1f597b",
+        "qcblender/data_export.py": "b5532c587e2851aa50fe3bff4308c33b25701be313d2fe0904a843280fe23645",
+        "qcblender/__init__.py": "3c81acbf5f7e5307891d5e961426263172e75da32c8afb2f1d2cb4f648ae6ad4"
+      },
+      "fingerprint_review": "覆盖对应Operator、回调、注册与共享helper；历史GUI保持原候选，e317到9d3ff61仅目录SKIP_SAVE修改，见本批reuse-review。",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "已保存工程默认目录、偏好（MCP配置）、GUI本次覆盖后再次恢复偏好；profile101、IR3、ESP_FILTERED4逐值/单位/来源。全部七类/取消为原生实worker证据",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed",
+        "current_batch_replay_reports": [
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/gui/reuse-review.json",
+            "bytes": 5621,
+            "sha256": "fe9ea66651568d2bba292366a49f2110155e76703a8ed53726464867566af1e6"
+          },
+          {
+            "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/native-integration.json",
+            "bytes": 43693,
+            "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
+          }
+        ]
       }
     }
   ]
