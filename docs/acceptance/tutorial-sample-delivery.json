@@ -66,5 +66,13 @@
     }
   },
   "rebuild": "取回source_commit并保留原包；运行本批scripts/repackage-final-tutorial-samples.py的元数据替换步骤，将输出改为新独立批次。只替换tutorial-samples.json，逐字节验证其他成员，再使用tools/verify_tutorial_samples.py --reference-root <主检出> --package <新包> --report <新报告>。生成新摘要，保留旧报告。无需重新计算科学输入或改变依赖。",
-  "signature": null
+  "signature": null,
+  "current_main_verification": {
+    "source_commit": "b8a63cd8c7a2afe1edd50085ff41c862e9005868",
+    "report": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/main-qualification/tutorial-samples.json",
+      "sha256": "ddcedcbf1eaf69e90a2410ad5f94965fccffa61395eb0bf222401f6c2f6268ea"
+    },
+    "status": "Passed"
+  }
 }

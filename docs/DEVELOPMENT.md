@@ -115,12 +115,17 @@ prepare_build 固定工具版本，fetch_dependencies 核对每个 wheel，build
 
 ## 增量构建准备
 
-已有环境先运行输入检查，再核对已有工具、科学依赖和 wheels；缺少准备产物时回到首次路径，不隐式使用其他检出的 backend-wheel.json。
+已有环境先运行输入检查，再核对已有工具、科学依赖和 wheels；缺少准备产物时回到首次路径，不隐式使用其他检出的 backend-wheel.json。本仓库保留的现有合格缓存位于 `outputs/wheels/qualified/`；复用时明确设置以下路径，随后逐文件校验后端记录与 wheel。首次准备仍使用前文默认 `outputs/wheels/`，不要以文件名相同替代摘要核对。
+
+~~~powershell
+$wheels = "$repo/outputs/wheels/qualified"
+$env:QCBLENDER_WHEELS_DIR = $wheels
+~~~
 
 ~~~powershell
 $checkEnvironment = @'
 from importlib.metadata import distributions
-import hashlib, json
+import hashlib, json, os
 from pathlib import Path
 root = Path.cwd()
 expected = dict(line.split('==') for line in (root / 'tools/build-requirements.txt').read_text().splitlines() if line)
@@ -130,7 +135,7 @@ backend = json.loads((root / 'outputs/backend-wheel.json').read_text())
 packages = json.loads((root / 'dependencies.lock.json').read_text())['packages'] + [backend]
 science = {d.metadata['Name'].lower().replace('_', '-'): d.version for d in distributions(path=[str(root / 'outputs/science')])}
 for package in packages:
-    wheel = root / 'outputs/wheels' / package['filename']
+    wheel = Path(os.environ['QCBLENDER_WHEELS_DIR']) / package['filename']
     assert hashlib.sha256(wheel.read_bytes()).hexdigest() == package['sha256'], wheel
     assert science.get(package['name'].lower().replace('_', '-')) == package['version'], package['name']
 print('BUILD_ENVIRONMENT_PASSED')

@@ -22,3 +22,12 @@ Blocked by: 02
 
 
 2026-10-02 最终资格：在4663117文档提交上核对产品仍与固定打包源a67d4b3逐字节相同；40份候选绑定报告通过qualify_package.py，包含最后Remove实际点击/冷读及新样本轨道编号与旧误值拒绝。新qualification-accepted.json与evidence-index-accepted.json独立保存，旧报告原字节保留；JSON当前索引按.gitattributes使用LF以保证main检出后引用摘要相同。03继续claimed，进入main复核、保全和本地ff-only/归档。
+
+
+## Answer
+
+2026-10-02：本地main已ff-only合并b8a63cd，重新从固定main打包706f760b候选并完成38份同批资格报告；三个文本仅CRLF/LF差异、Python AST/JSON值与九公共组签名一致，70项源码/JSON原字节与候选一致。68实际GUI操作登记、C/N Agent验收Passed；用户/独立科研签署Not Run。
+
+八个注释archive标签Passed；六个干净工作树与分支正常移除。逐文件删除41,893份/3,059,885,668字节（总删除量，非全库净减少）；保留证据1,934项、110输入、11锁定wheels、188工程文件与38报告清理后摘要核对Passed。收据outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/，当前路由docs/ARTIFACTS.md。
+
+Status保持claimed：tutorial-cu两份未提交源文件受保护，整合工作树31个恢复文件被既有清理保护拒绝；均原位保留及精确保全。旧f458 11目录/3ZIP拒绝，b48c空根仍占用。全工作树清理Not Run，不修改ACL/取得所有权/force删除，不push。后续只处理这些确切阻塞，不重复已通过技术资格或首次GUI操作。

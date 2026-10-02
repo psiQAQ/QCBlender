@@ -13,13 +13,14 @@
     "agent_full_walkthrough_method": "First/changed actions by CU plus verified unchanged operation reuse via MCP/CLI"
   },
   "source": {
-    "commit": "a67d4b352958e7efffdf559e280f10c7a44c8a34",
+    "commit": "b8a63cd8c7a2afe1edd50085ff41c862e9005868",
     "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
     "files": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/source-hashes.json",
-      "sha256": "d44f4b506073f855ac07fa74caeaa7ab8eeaf95966379732d46360a4a4668c09"
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/main-qualification/source-hashes.json",
+      "sha256": "03d74f23b55d239de6d63e91755590bafed9d6ebd99708f636e364b42a5cb4e4"
     },
-    "product_matches_GUI_checked_deb9416": true
+    "product_matches_GUI_checked_deb9416": true,
+    "comparison": "Git product tree unchanged; exact current main-to-candidate source bytes checked. Three historical text files differ only CRLF/LF, Python AST/JSON values unchanged; nine full public asset signatures equal."
   },
   "candidates": {
     "1554ee2": {
@@ -27,40 +28,46 @@
       "bytes": 50633643,
       "sha256": "694e27cbc328a64b9fe6bb07d6236273474de26de13af8d6f8e2c9cdbc98c4cd",
       "source_commit": "1554ee2ac7ae308ccf1aa1922ed93192adf0b3b1",
-      "scope": "IR text visibility fix, native installation/assets/helpers, final profile/camera/render, visible cold reopen and shared-environment science regression"
+      "scope": "IR text visibility fix, native installation/assets/helpers, final profile/camera/render, visible cold reopen and shared-environment science regression",
+      "availability": "Old ZIP retired; original identity/report retained; rebuild using archived source and new qualification"
     },
     "90ff9bf": {
       "source_commit": "90ff9bf799aaa299225cd188ce8f05e1b6baf895",
       "sha256": "4a0ac3e46c163dd32a53057ddb2f4e414901d7c56b95d59aa6d17a8df3b739ca",
       "path": "outputs/candidates/current/public-tutorial-90ff9bf/qcblender-0.0.1.zip",
-      "scope": "Initial actual GUI energy/modes, Log Job2-new FCHK, density/probe/profile CSV, hydrogen and portable save; historical full MCP evidence remains in tutorial-validation.json"
+      "scope": "Initial actual GUI energy/modes, Log Job2-new FCHK, density/probe/profile CSV, hydrogen and portable save; historical full MCP evidence remains in tutorial-validation.json",
+      "availability": "Old ZIP retired; original identity/report retained; rebuild using archived source and new qualification"
     },
     "92d498c": {
       "path": "outputs/candidates/current/tutorial-fog-92d498c/qcblender-0.0.1.zip",
       "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
       "sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
-      "scope": "Fog repair; partial GUI evidence in full_batch_progress"
+      "scope": "Fog repair; partial GUI evidence in full_batch_progress",
+      "availability": "Old ZIP retired; original identity/report retained; rebuild using archived source and new qualification"
     },
     "b709096": {
       "source_commit": "b7090967e6618c15449efec278bcd47a0f018d54",
       "product_tree": "9905f2c69eb28a7e33460b5fc6f02c7ad43bd896",
       "path": "D:\\workspace\\QCBlender\\outputs\\candidates\\current\\tutorial-mapping-b709096\\qcblender-0.0.1.zip",
       "sha256": "9795a9ea2c262f9c50f877a7373cf820a3a91794474817f515cdac4430dfe1d1",
-      "scope": "Minimal menu entry repair; installation, lifecycle and actual F3 execution Passed; full qualification Not Run"
+      "scope": "Minimal menu entry repair; installation, lifecycle and actual F3 execution Passed; full qualification Not Run",
+      "availability": "Old ZIP retired; original identity/report retained; rebuild using archived source and new qualification"
     },
     "e26d22a": {
       "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
       "product_tree": "4086224b13cdd50fa4495c1e00004e0d8dd15d49",
       "path": "D:\\workspace\\QCBlender\\outputs\\candidates\\current\\tutorial-slice-e26d22a\\qcblender-0.0.1.zip",
       "sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
-      "scope": "Mixed Dataset path identity repair; native guards, actual slice/probe/profile GUI and original checkpoint cold readback Passed; complete final qualification Not Run"
+      "scope": "Mixed Dataset path identity repair; native guards, actual slice/probe/profile GUI and original checkpoint cold readback Passed; complete final qualification Not Run",
+      "availability": "Old ZIP retired; original identity/report retained; rebuild using archived source and new qualification"
     },
     "13401c6": {
       "source_commit": "13401c6a42dabd3844d7f1896ebdd6106188f774",
       "product_tree": "a8db95a942a2bca82fdf147727bce0dc3a57200f",
       "sha256": "cc4e7ac23d22a0c6c5f919c72b15615d8e440fe630838e64853512cfaa356ffd",
       "path": "outputs/candidates/current/tutorial-aim-records-13401c6/qcblender-0.0.1.zip",
-      "scope": "Immediate AIM property panel repair; scoped installation/science/GUI and C09 serial cold chain Passed; full final qualification Not Run"
+      "scope": "Immediate AIM property panel repair; scoped installation/science/GUI and C09 serial cold chain Passed; full final qualification Not Run",
+      "availability": "Old ZIP retired; original identity/report retained; rebuild using archived source and new qualification"
     }
   },
   "environment": {
@@ -558,7 +565,7 @@
     "docs/acceptance/tutorial-validation.json",
     "docs/acceptance/cleanup-validation.json"
   ],
-  "remaining_click_steps": "Three remaining public assets independent Add/connect and C08-C12 native Undo/Redo Passed at deb9416/c736bb9. Remaining: full coverage audit, same-final-source unified qualification, main merge and preservation-first archive/cleanup. User/scientific signatures remain Not Run.",
+  "remaining_click_steps": "Agent C01-C13/N01-N18 acceptance and fixed-main qualification Passed. Remaining archive/cleanup blockers: protected dirty tutorial-cu worktree, protected recovery files in integration worktree, denied f458 and occupied b48c. User walkthrough and independent signature Not Run.",
   "cleanup": {
     "status": "Passed",
     "scope": "This screenshot supplement only; full GUI task remains claimed",
@@ -6416,13 +6423,12 @@
   },
   "current_automated_qualification": {
     "path": "docs/acceptance/tutorial-final-qualification.json",
-    "sha256": "a0846d481dc93665041f8e9118b4f1dd1483e3a67496d88fc56ad724b6e0d820",
-    "source_commit": "a67d4b352958e7efffdf559e280f10c7a44c8a34",
-    "candidate_sha256": "bd3a78e1089bc7afdf32987e2169a7059cdb9df23ee0f90cddf159302ebcdd23",
+    "sha256": "a5de06b83754f8670951093675f3a984bb3596f2baeb4f5f7c98a9904a163c70",
+    "source_commit": "b8a63cd8c7a2afe1edd50085ff41c862e9005868",
+    "candidate_sha256": "706f760b248a7775206e7361460f85645573490ebf3e566f40d05e97eeec4c44",
     "status": "Passed",
-    "scope": "Current automated package qualification plus Agent C/N acceptance; separate user and scientific signatures remain Not Run",
-    "history": "All existing candidate/report identities retained",
-    "qualification_execution_commit": "4663117bc46fabbcc6b687704a022a163644e640"
+    "scope": "Fixed merged main package qualification plus Agent C/N acceptance under reviewed historical GUI reuse; user/scientific signatures Not Run",
+    "qualification_execution_commit": "b8a63cd8c7a2afe1edd50085ff41c862e9005868"
   },
   "current_Agent_acceptance": {
     "path": "docs/acceptance/tutorial-final-qualification.json",
@@ -6444,5 +6450,20 @@
     },
     "agent_full_walkthrough": "Not Run"
   },
-  "historical_phase_sections": "Existing report/progress/remaining fields describe their original phase. Current completion and source identity are routed by current_Agent_acceptance and current_automated_qualification."
+  "historical_phase_sections": "Existing report/progress/remaining fields describe their original phase. Current completion and source identity are routed by current_Agent_acceptance and current_automated_qualification.",
+  "current_cleanup": {
+    "status": "Not Run",
+    "evidence": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/post-cleanup.json",
+      "sha256": "f883c947165fe640c2c4eb28ac7a963037654f7376611d228ddbfabf3b139df3"
+    },
+    "worktree_receipt": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/worktree-removal.json",
+      "sha256": "7b2682c268d2746999973fcf3ad082866ac1b8e72661b4c738c51d3a61fab548"
+    },
+    "candidate_availability": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/retired-candidates-applied.json",
+      "sha256": "9fd9e701aad73d45486a2c0164f3de533c3055495f90f0f5971c017b126502bc"
+    }
+  }
 }

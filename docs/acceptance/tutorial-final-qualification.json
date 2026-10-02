@@ -4,26 +4,28 @@
   "status": "Passed",
   "scope": "本批自动化技术资格与C01–C13/N01–N18 Agent操作验收：实际GUI确认加已登记不变操作的MCP/命令行复用；用户及独立科研签署另列",
   "source": {
-    "commit": "a67d4b352958e7efffdf559e280f10c7a44c8a34",
+    "commit": "b8a63cd8c7a2afe1edd50085ff41c862e9005868",
     "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
     "files": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/source-hashes.json",
-      "sha256": "d44f4b506073f855ac07fa74caeaa7ab8eeaf95966379732d46360a4a4668c09"
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/main-qualification/source-hashes.json",
+      "sha256": "03d74f23b55d239de6d63e91755590bafed9d6ebd99708f636e364b42a5cb4e4"
     },
-    "product_matches_GUI_checked_deb9416": true
+    "product_matches_GUI_checked_deb9416": true,
+    "comparison": "Git product tree unchanged; exact current main-to-candidate source bytes checked. Three historical text files differ only CRLF/LF, Python AST/JSON values unchanged; nine full public asset signatures equal."
   },
   "candidate": {
-    "path": "outputs/candidates/current/tutorial-a67d4b3/qcblender-0.0.1.zip",
-    "sha256": "bd3a78e1089bc7afdf32987e2169a7059cdb9df23ee0f90cddf159302ebcdd23",
-    "bytes": 50634497
+    "path": "outputs/candidates/current/tutorial-main-b8a63cd/qcblender-0.0.1.zip",
+    "sha256": "706f760b248a7775206e7361460f85645573490ebf3e566f40d05e97eeec4c44",
+    "bytes": 50634514,
+    "availability": "Present; locally qualified, not published"
   },
   "environment": {
     "platform": "Windows x64",
     "blender": "5.1.1",
     "python": "3.13.9",
     "preflight": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/preflight.json",
-      "sha256": "535b6754c8ac414acd4d6c3e4f9d9d9ec40930784d6011b65496e4a3eeefddd4"
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/main-qualification/preflight.json",
+      "sha256": "524ce330a7c1dc3f99e515c0acbe5ab7d232a90d2c9e848969b0979c18420127"
     },
     "shared_science": "outputs/science",
     "shared_build_tools": "outputs/build-site",
@@ -57,39 +59,41 @@
     "GUI_Remove": "Passed",
     "user_walkthrough": "Not Run",
     "independent_scientific_signature": "Not Run",
-    "merge_main": "Not Run",
+    "merge_main": "Passed",
     "archive_cleanup": "Not Run",
     "C01_C13_N01_N18_Agent_acceptance": "Passed",
-    "qualified_current_evidence_reports": 40
+    "qualified_current_evidence_reports": 38,
+    "safe_cleanup_and_protected_readback": "Passed",
+    "annotated_archive_tags": "Passed"
   },
   "evidence": {
     "qualification": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/qualification-accepted.json",
-      "sha256": "ffd4206dafc73b198905f2e2cbfc6ad652e0fb2346848ec5c5470fd903c45759"
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/main-qualification/qualification-final.json",
+      "sha256": "e761af605b21da3e4566c179ae9a2fb6c2d11d8271fe646332e287f5dad706b1"
     },
     "index": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/evidence-index-accepted.json",
-      "sha256": "06d6c437d61900525d220be7acaeffa1899a9c2cbafa657fd4ae51cef280a021"
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/main-qualification/evidence-index-final.json",
+      "sha256": "4dd654e88f723e92ded07e94b18e8ad495c8fcc62031b04680533edf57cd314e"
     },
     "GUI_history": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/GUI-history-audit.json",
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/main-qualification/GUI-history-audit.json",
       "sha256": "b5e1946c1877ad0e0708364409220f8a8d3c574b4625dbc6f3b2da7ce69ca4fc"
     },
     "GUI_reuse": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/GUI-reuse-review.json",
-      "sha256": "d9c09ab02718a498d720c6eaa746f659a9249569228a748519e91d4804d55a98"
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/main-qualification/GUI-reuse-review.json",
+      "sha256": "5b31f2552a8bfd5646100628195f09c42ae16961f517930c14e204f4d46152bb"
     },
     "assets": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/asset-content.json",
-      "sha256": "811eb8b8efcd33221307f38c372e4e339fc05f3df9f3b45a858bcd438aebda86"
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/main-qualification/asset-content.json",
+      "sha256": "61c0c4381542364ef69f0bd9cfdb734d6b7161dfca03e68d34a4cffd9948a0d6"
     },
     "project_mapping": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/project-path-map.json",
-      "sha256": "46697a9e31dafa928344453db06fe32d21b99218088bf3580c6515f860da6de7"
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/main-qualification/project-path-map.json",
+      "sha256": "9d77c2a5860430a408fd172a06e809bfdc3e7d12f6b444dab2e314686661ef41"
     },
     "visuals": {
-      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/visual-inspection.json",
-      "sha256": "13129af4366c161ca526416eaf14a64bc24575088bd29c145cef766aa9450089"
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/main-qualification/visual-inspection.json",
+      "sha256": "4d24d7f21aa0ac3d4b0e400e7f593ca9c2493df8d81593dd00fe87ea7da3e91b"
     },
     "GUI_Remove": {
       "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/layer-removal/confirmed/completion.json",
@@ -102,14 +106,46 @@
     "index_before_final_GUI": {
       "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/evidence-index-final.json",
       "sha256": "af05f18a779f22ba436fcce2dcb366f1a0ca5e2cfd06ba7113dbfe191d5e8176"
+    },
+    "source_bytes": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/main-qualification/source-hashes.json",
+      "sha256": "03d74f23b55d239de6d63e91755590bafed9d6ebd99708f636e364b42a5cb4e4"
+    },
+    "post_cleanup": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/post-cleanup.json",
+      "sha256": "f883c947165fe640c2c4eb28ac7a963037654f7376611d228ddbfabf3b139df3"
+    },
+    "archive_tags": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/tags.json",
+      "sha256": "ef59f6a2a43154a527ef699547dc6752f622086613b06497dc1b7da7a0cef4e9"
+    },
+    "cleanup": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/cleanup.json",
+      "sha256": "966d45a9ef0c6d1ea963fe62eca5ed6ea9c2866adb86bc4deb7d83f3d40a1eb6"
+    },
+    "worktree_removal": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/worktree-removal.json",
+      "sha256": "7b2682c268d2746999973fcf3ad082866ac1b8e72661b4c738c51d3a61fab548"
+    },
+    "merge_main": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/merge-main.json",
+      "sha256": "dcaa18c460447496cdbba0fd6f31e1d767da698cc0c3797b03e50e0d948638c8"
+    },
+    "legacy_blockers": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/legacy-blockers.json",
+      "sha256": "51571ba3d310d188c8bc68c00360aa9bb1565ae9c4e66d9e3dab1ecb2fd62bef"
+    },
+    "retired_candidates": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/retired-candidates-applied.json",
+      "sha256": "9fd9e701aad73d45486a2c0164f3de533c3055495f90f0f5971c017b126502bc"
     }
   },
   "projects": {
-    "install": "outputs/projects/tutorial-cu-full/qualification-a67d4b3/install/mo8.blend",
-    "legend": "outputs/projects/tutorial-cu-full/qualification-a67d4b3/legend/evidence.blend"
+    "install": "outputs/projects/tutorial-cu-full/qualification-main-b8a63cd/install/mo8.blend",
+    "legend": "outputs/projects/tutorial-cu-full/qualification-main-b8a63cd/legend/evidence.blend"
   },
-  "commands": "本批 logs/ 与 *-command.json 保存完整命令、实际PID、退出码和日志摘要；scripts/final-complete-runner.py 保存串行执行步骤。",
-  "rebuild": "从上述提交取回源码，按docs/DEVELOPMENT.md增量准备核对共用环境和110输入；选择未使用的短批次，运行科学/节点/样本、打包安装、原地与中文移动冷重开、恢复与图例专项，再生成同批evidence-index并运行tools/qualify_package.py。新ZIP记录新摘要。",
+  "commands": "main-qualification/logs 与 *-command.json 保存完整命令、PID、退出码及摘要；scripts/final-complete-runner.py 为固定 main 的串行步骤。已结束的隔离配置清理，worker请求/成功失败结果及旧新路径在 closing/main-test-cleanup/。",
+  "rebuild": "取回固定source.commit并核对产品树及source-hashes；按docs/DEVELOPMENT.md显式选择outputs/wheels/qualified并核对outputs/backend-wheel.json、110输入和共用环境。在新的短批次构建、安装及专项检查，保存工程冷读，生成新报告索引并运行qualify_package.py。产生新ZIP摘要，不承诺历史ZIP字节复现。原脚本引用已清理批次，复跑必须修改输出位置；旧GUI通过只在登记条件和实现审阅成立时复用。",
   "signature": null,
   "sample_delivery": "docs/acceptance/tutorial-sample-delivery.json",
   "GUI_completed": {
@@ -122,5 +158,38 @@
     "evidence": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/layer-removal/confirmed/completion.json",
     "sha256": "6940a4740d4930597ba5ae17449189a965f79d7ca000907a8c561d2e91291647"
   },
-  "qualification_execution_commit": "4663117bc46fabbcc6b687704a022a163644e640"
+  "qualification_execution_commit": "b8a63cd8c7a2afe1edd50085ff41c862e9005868",
+  "historical_accepted_qualification": {
+    "source_commit": "a67d4b352958e7efffdf559e280f10c7a44c8a34",
+    "candidate": {
+      "path": "outputs/candidates/current/tutorial-a67d4b3/qcblender-0.0.1.zip",
+      "sha256": "bd3a78e1089bc7afdf32987e2169a7059cdb9df23ee0f90cddf159302ebcdd23",
+      "bytes": 50634497
+    },
+    "qualification": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/qualification-accepted.json",
+      "sha256": "ffd4206dafc73b198905f2e2cbfc6ad652e0fb2346848ec5c5470fd903c45759"
+    },
+    "index": {
+      "path": "outputs/evidence/2026-10-02/tutorial-cu/final-qualification/evidence-index-accepted.json",
+      "sha256": "06d6c437d61900525d220be7acaeffa1899a9c2cbafa657fd4ae51cef280a021"
+    },
+    "availability": "Old ZIP retired after new main qualification; original reports and identity retained"
+  },
+  "cleanup": {
+    "status": "Not Run",
+    "safe_removed_worktrees": 6,
+    "retained_new_worktrees": 2,
+    "deleted_manifest_files": 41893,
+    "deleted_manifest_bytes": 3059885668,
+    "space_accounting": "Gross successfully unlinked manifest file sizes; excludes ordinary Git worktree removal and central evidence growth",
+    "skipped_protected_recovery_files": 31,
+    "blockers": [
+      ".worktrees/tutorial-cu: two protected uncommitted files, raw/base/patch preserved",
+      ".worktrees/tutorial-irc-mayer-context: 31 protected recovery files; cleanup guard retained originals",
+      "f458: access-denied historical objects, worktree/branch retained",
+      "b48c: empty root remains occupied (WinError 32)"
+    ],
+    "route": "docs/ARTIFACTS.md"
+  }
 }
