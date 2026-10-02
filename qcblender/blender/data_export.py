@@ -28,9 +28,9 @@ def _enum_items(kinds):
 
 
 def export_choices(self, context):
-    from .source_browser import read_metadata
+    from .source_browser import cached_metadata
     try:
-        meta = read_metadata(context.object)
+        meta = cached_metadata(context.object)
         kinds = []
         if 'modes' in meta:
             kinds.append('IR')
@@ -68,6 +68,10 @@ class QCBLENDER_OT_export_data(AsyncOperation, bpy.types.Operator):
 
     def invoke(self, context, event):
         try:
+            from .source_browser import refresh_source
+            meta = refresh_source(context.object)
+            if 'error' in meta:
+                raise ValueError(meta['error'])
             self.directory = str(resolve_output_directory(context, self.directory))
             choices = export_choices(self, context)
             if not choices:

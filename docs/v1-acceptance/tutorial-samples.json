@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "date": "2026-09-30",
+  "date": "2026-10-02",
   "attribution": "QCBlender contributors",
   "groups": {
     "P01": {
@@ -20,6 +20,10 @@
       "public_material_status": "included"
     },
     "P05": {
+      "local_parse_status": "Passed",
+      "public_material_status": "included"
+    },
+    "P06": {
       "local_parse_status": "Passed",
       "public_material_status": "included"
     }
@@ -5117,6 +5121,175 @@
         "multiplicity": 1,
         "electron_count": 10
       }
+    },
+    "P06-water-dimer": {
+      "id": "P06-water-dimer",
+      "path": "tests/data/xyz/water-dimer.xyz",
+      "archive_path": "P06/water-dimer.xyz",
+      "local_key": null,
+      "bytes": 263,
+      "sha256": "901305016fba80e14d3b6cf84861c00b487c679fdef5b029508c01bc5f026d27",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "tests/data/xyz/source.json",
+      "source_url": null,
+      "acquire": "Extract P06 from the public tutorial ZIP; keep frame order.",
+      "role": "Standard XYZ geometry in angstrom",
+      "producer": "Coordinate-only extraction of owned P03/P04 FCHK; tests/data/xyz/source.json",
+      "calculation_group": "P06",
+      "quantity": "nuclear_positions",
+      "unit": "angstrom",
+      "expected": {
+        "atomic_numbers": [
+          8,
+          1,
+          1,
+          8,
+          1,
+          1
+        ],
+        "positions_angstrom": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.7586000004690396,
+            0.0,
+            0.5042999998437369
+          ],
+          [
+            -0.7586000004690396,
+            0.0,
+            0.5042999998437369
+          ],
+          [
+            0.0,
+            0.0,
+            2.8999999972839614
+          ],
+          [
+            0.7586000004690396,
+            0.0,
+            3.4042999997735843
+          ],
+          [
+            -0.7586000004690396,
+            0.0,
+            3.4042999997735843
+          ]
+        ],
+        "frames": [
+          {
+            "frame": 1,
+            "comment": "QCBlender P03/water-dimer.fchk / frame 1 / angstrom",
+            "line_start": 1,
+            "line_end": 8,
+            "coordinate_line_start": 3,
+            "coordinate_line_end": 8,
+            "sha256": "901305016fba80e14d3b6cf84861c00b487c679fdef5b029508c01bc5f026d27"
+          }
+        ],
+        "frame_count": 1
+      }
+    },
+    "P06-p04-frames": {
+      "id": "P06-p04-frames",
+      "path": "tests/data/xyz/p04-three-frames.xyz",
+      "archive_path": "P06/p04-three-frames.xyz",
+      "local_key": null,
+      "bytes": 936,
+      "sha256": "4bbd6b14927c2ae1d6af95417b6564be0eb00d119d165d7e2c9dc2eef2d9027a",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "tests/data/xyz/source.json",
+      "source_url": null,
+      "acquire": "Extract P06 from the public tutorial ZIP; keep frame order.",
+      "role": "Standard XYZ geometry in angstrom",
+      "producer": "Coordinate-only extraction of owned P03/P04 FCHK; tests/data/xyz/source.json",
+      "calculation_group": "P06",
+      "quantity": "nuclear_positions",
+      "unit": "angstrom",
+      "expected": {
+        "atomic_numbers": [
+          8,
+          8,
+          1,
+          1
+        ],
+        "positions_angstrom": [
+          [
+            -0.041656396670805965,
+            -0.03536337185786525,
+            -0.6997289775865264
+          ],
+          [
+            0.04166481656815609,
+            -0.035363331904985855,
+            0.6997206483372325
+          ],
+          [
+            0.9284245298546596,
+            0.03536331296044172,
+            -0.928168344583491
+          ],
+          [
+            -0.9284161053534677,
+            0.03536339085532711,
+            0.9281600100424249
+          ]
+        ],
+        "frames": [
+          {
+            "frame": 1,
+            "comment": "QCBlender P04/step-001.fchk / frame 1 / angstrom",
+            "line_start": 1,
+            "line_end": 6,
+            "coordinate_line_start": 3,
+            "coordinate_line_end": 6,
+            "sha256": "1c8c9bc3903828e0991dcc6600a0af7dc3ad3aa5cb5a8be6b55995e6063fc87c"
+          },
+          {
+            "frame": 2,
+            "comment": "QCBlender P04/step-002.fchk / frame 2 / angstrom",
+            "line_start": 7,
+            "line_end": 12,
+            "coordinate_line_start": 9,
+            "coordinate_line_end": 12,
+            "sha256": "b909a2ff69ea9678fc18a00b5a2ed8d3b95f21b658f452dbe4ba09b347f8ed1f"
+          },
+          {
+            "frame": 3,
+            "comment": "QCBlender P04/step-003.fchk / frame 3 / angstrom",
+            "line_start": 13,
+            "line_end": 18,
+            "coordinate_line_start": 15,
+            "coordinate_line_end": 18,
+            "sha256": "f54dbddd0ab52dbea379daf19ca75a83e349cc053afecd49055d585a6b882d98"
+          }
+        ],
+        "frame_count": 3
+      }
+    },
+    "P06-provenance": {
+      "id": "P06-provenance",
+      "path": "tests/data/xyz/source.json",
+      "archive_path": "P06/source.json",
+      "local_key": null,
+      "bytes": 1481,
+      "sha256": "82f38f0a8f64aa7160d8f343b08bca65125443927b123bf8ae0e1895aeace4ff",
+      "distribution": "included",
+      "license": "CC-BY-4.0",
+      "license_evidence": "tests/data/xyz/source.json",
+      "source_url": null,
+      "acquire": "Included in the public tutorial ZIP.",
+      "role": "XYZ coordinate provenance",
+      "producer": "QCBlender contributors",
+      "calculation_group": "P06",
+      "quantity": null,
+      "unit": null,
+      "expected": {}
     }
   },
   "cases": {
@@ -5136,11 +5309,12 @@
       },
       "local_parse_status": "Passed",
       "gui_status": "Not Run",
-      "display_defaults_status": "proposed; root visual check required",
+      "display_defaults_status": "proposed; current batch visual check required",
       "public_material_status": "included",
       "grid_defaults": {
-        "spacing_angstrom": 0.7,
-        "margin_angstrom": 3
+        "spacing_angstrom": 0.2,
+        "margin_angstrom": 3,
+        "memory_mb": 512
       }
     },
     "C02": {
@@ -5156,11 +5330,12 @@
       },
       "local_parse_status": "Passed",
       "gui_status": "Not Run",
-      "display_defaults_status": "proposed; root visual check required",
+      "display_defaults_status": "proposed; current batch visual check required",
       "public_material_status": "external; permission unverified",
       "grid_defaults": {
-        "spacing_angstrom": 0.7,
-        "margin_angstrom": 3
+        "spacing_angstrom": 0.2,
+        "margin_angstrom": 3,
+        "memory_mb": 512
       }
     },
     "C03": {
@@ -5177,11 +5352,12 @@
       },
       "local_parse_status": "Passed",
       "gui_status": "Not Run",
-      "display_defaults_status": "proposed; root visual check required",
+      "display_defaults_status": "proposed; current batch visual check required",
       "public_material_status": "included",
       "grid_defaults": {
-        "spacing_angstrom": 0.7,
-        "margin_angstrom": 3
+        "spacing_angstrom": 0.2,
+        "margin_angstrom": 3,
+        "memory_mb": 512
       }
     },
     "C04": {
@@ -5200,11 +5376,12 @@
       },
       "local_parse_status": "Passed",
       "gui_status": "Not Run",
-      "display_defaults_status": "proposed; root visual check required",
+      "display_defaults_status": "proposed; current batch visual check required",
       "public_material_status": "included",
       "grid_defaults": {
-        "spacing_angstrom": 0.7,
-        "margin_angstrom": 3
+        "spacing_angstrom": 0.2,
+        "margin_angstrom": 3,
+        "memory_mb": 512
       }
     },
     "C05": {
@@ -5222,11 +5399,12 @@
       },
       "local_parse_status": "Passed",
       "gui_status": "Not Run",
-      "display_defaults_status": "proposed; root visual check required",
+      "display_defaults_status": "proposed; current batch visual check required",
       "public_material_status": "included",
       "grid_defaults": {
-        "spacing_angstrom": 0.7,
-        "margin_angstrom": 3
+        "spacing_angstrom": 0.2,
+        "margin_angstrom": 3,
+        "memory_mb": 512
       }
     },
     "C06": {
@@ -5242,11 +5420,12 @@
       },
       "local_parse_status": "Passed",
       "gui_status": "Not Run",
-      "display_defaults_status": "proposed; root visual check required",
+      "display_defaults_status": "proposed; current batch visual check required",
       "public_material_status": "external; permission unverified",
       "grid_defaults": {
-        "spacing_angstrom": 0.7,
-        "margin_angstrom": 3
+        "spacing_angstrom": 0.2,
+        "margin_angstrom": 3,
+        "memory_mb": 512
       }
     },
     "C07": {
@@ -5281,11 +5460,12 @@
       },
       "local_parse_status": "Passed",
       "gui_status": "Not Run",
-      "display_defaults_status": "proposed; root visual check required",
+      "display_defaults_status": "proposed; current batch visual check required",
       "public_material_status": "included",
       "grid_defaults": {
-        "spacing_angstrom": 0.7,
-        "margin_angstrom": 3
+        "spacing_angstrom": 0.2,
+        "margin_angstrom": 3,
+        "memory_mb": 512
       }
     },
     "C08": {
@@ -5303,11 +5483,12 @@
       },
       "local_parse_status": "Passed",
       "gui_status": "Not Run",
-      "display_defaults_status": "proposed; root visual check required",
+      "display_defaults_status": "proposed; current batch visual check required",
       "public_material_status": "included",
       "grid_defaults": {
-        "spacing_angstrom": 0.7,
-        "margin_angstrom": 3
+        "spacing_angstrom": 0.2,
+        "margin_angstrom": 3,
+        "memory_mb": 512
       }
     },
     "C09": {
@@ -5324,11 +5505,12 @@
       },
       "local_parse_status": "Passed",
       "gui_status": "Not Run",
-      "display_defaults_status": "proposed; root visual check required",
+      "display_defaults_status": "proposed; current batch visual check required",
       "public_material_status": "included",
       "grid_defaults": {
-        "spacing_angstrom": 0.7,
-        "margin_angstrom": 3
+        "spacing_angstrom": 0.2,
+        "margin_angstrom": 3,
+        "memory_mb": 512
       }
     },
     "C10": {
@@ -5348,11 +5530,12 @@
       },
       "local_parse_status": "Passed",
       "gui_status": "Not Run",
-      "display_defaults_status": "proposed; root visual check required",
+      "display_defaults_status": "proposed; current batch visual check required",
       "public_material_status": "included",
       "grid_defaults": {
-        "spacing_angstrom": 0.7,
-        "margin_angstrom": 3
+        "spacing_angstrom": 0.2,
+        "margin_angstrom": 3,
+        "memory_mb": 512
       }
     },
     "C11": {
@@ -5372,11 +5555,12 @@
       },
       "local_parse_status": "Passed",
       "gui_status": "Not Run",
-      "display_defaults_status": "proposed; root visual check required",
+      "display_defaults_status": "proposed; current batch visual check required",
       "public_material_status": "included",
       "grid_defaults": {
-        "spacing_angstrom": 0.7,
-        "margin_angstrom": 3
+        "spacing_angstrom": 0.2,
+        "margin_angstrom": 3,
+        "memory_mb": 512
       }
     },
     "C12": {
@@ -5392,11 +5576,12 @@
       },
       "local_parse_status": "Passed",
       "gui_status": "Not Run",
-      "display_defaults_status": "proposed; root visual check required",
+      "display_defaults_status": "proposed; current batch visual check required",
       "public_material_status": "included",
       "grid_defaults": {
-        "spacing_angstrom": 0.7,
-        "margin_angstrom": 3
+        "spacing_angstrom": 0.2,
+        "margin_angstrom": 3,
+        "memory_mb": 512
       }
     },
     "C13": {
@@ -5414,11 +5599,41 @@
       },
       "local_parse_status": "Passed",
       "gui_status": "Not Run",
-      "display_defaults_status": "proposed; root visual check required",
+      "display_defaults_status": "proposed; current batch visual check required",
       "public_material_status": "included",
       "grid_defaults": {
-        "spacing_angstrom": 0.7,
-        "margin_angstrom": 3
+        "spacing_angstrom": 0.2,
+        "margin_angstrom": 3,
+        "memory_mb": 512
+      }
+    },
+    "X01": {
+      "group": "P06",
+      "files": [
+        "P06-water-dimer",
+        "P06-p04-frames",
+        "P06-provenance"
+      ],
+      "gui": {
+        "frames": [
+          1,
+          2,
+          3
+        ],
+        "quality": 3,
+        "distance_atoms": [
+          1,
+          2
+        ]
+      },
+      "local_parse_status": "Passed",
+      "gui_status": "Not Run",
+      "display_defaults_status": "proposed; current batch visual check required",
+      "public_material_status": "included",
+      "grid_defaults": {
+        "spacing_angstrom": 0.2,
+        "margin_angstrom": 3,
+        "memory_mb": 512
       }
     }
   },

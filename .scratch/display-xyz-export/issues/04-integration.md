@@ -1,7 +1,7 @@
 # 共享入口与教程集成
 
 Triage: ready-for-agent
-Status: pending
+Status: claimed
 Blocked by: 01, 02, 03
 
 ## Acceptance
@@ -10,7 +10,7 @@ Blocked by: 01, 02, 03
 
 ## Answer
 
-尚未执行。
+主 Agent 领取，整合已通过专属检查并合入 main 的精度、XYZ 与数据导出提交。
 
 ## Comments
 

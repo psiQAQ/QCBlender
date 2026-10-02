@@ -72,6 +72,8 @@ def cancel_operations():
     for operator, manager in list(_operations.values()):
         manager.event_timer_remove(operator._timer)
         operator._job.cancel()
+        if hasattr(operator, 'cleanup_export'):
+            operator.cleanup_export()
     _operations.clear()
 
 
@@ -121,8 +123,11 @@ class AsyncOperation:
 class QCBlenderPreferences(bpy.types.AddonPreferences):
     bl_idname = ADDON_ID
     runtime_report: StringProperty(name='Runtime report', default='')
+    data_output_directory: StringProperty(name='数据导出目录', subtype='DIR_PATH', default='')
 
     def draw(self, context):
+        self.layout.prop(self, 'data_output_directory')
+        self.layout.label(text='留空：已保存工程的目录；未保存工程使用系统文档目录')
         self.layout.operator('qcblender.check_runtime', icon='CHECKMARK')
         if self.runtime_report:
             report = json.loads(self.runtime_report)
@@ -147,10 +152,10 @@ class QCBLENDER_OT_check_runtime(AsyncOperation, bpy.types.Operator):
 
 class QCBLENDER_OT_import(AsyncOperation, bpy.types.Operator, ImportHelper):
     bl_idname = 'qcblender.import_calculation'
-    bl_label = 'Import Gaussian Result'
+    bl_label = 'Import Gaussian / Cube / XYZ'
     bl_options = {'REGISTER', 'UNDO'}
     filename_ext = '.fchk'
-    filter_glob: StringProperty(default='*.fchk;*.fch;*.cube;*.cub;*.log;*.out', options={'HIDDEN'})
+    filter_glob: StringProperty(default='*.fchk;*.fch;*.cube;*.cub;*.log;*.out;*.xyz', options={'HIDDEN'})
     job_number: IntProperty(name='Gaussian Log job number', default=1, min=1)
     source_sha256: StringProperty(options={'HIDDEN'})
 
@@ -177,9 +182,11 @@ class QCBLENDER_OT_import(AsyncOperation, bpy.types.Operator, ImportHelper):
         directory = self._job.directory / 'dataset'
         obj = atom_view(directory)
         data = load_dataset(directory)
+        from .trajectory import initialize_trajectory
+        initialize_trajectory(obj, data)
         for index in range(len(data.metadata.get('fields', []))):
             field_view(directory, obj, index)
-        self.report({'INFO'}, 'Imported Gaussian data; 1 Blender unit = 1 angstrom')
+        self.report({'INFO'}, 'Imported scientific data; 1 Blender unit = 1 angstrom')
 
 
 @lru_cache(maxsize=16)

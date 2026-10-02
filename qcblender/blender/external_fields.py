@@ -8,7 +8,7 @@ from bpy.props import EnumProperty, FloatProperty, StringProperty
 from .ui import AsyncOperation
 
 
-def scatter_view(directory, data, parent):
+def paired_record(directory, data, parent):
     from .external_results import table_view
     return table_view(directory, data, parent, 'QC paired field data', 'paired')
 
@@ -90,5 +90,5 @@ class QCBLENDER_OT_import_paired_field(AsyncOperation, bpy.types.Operator):
         color.hide_render = True
         geometry['qc_analysis'] = json.dumps(dict(data.metadata['analysis'], reference=association))
         add_mapping(geometry, color, self.color_minimum, self.color_maximum)
-        scatter_view(directory, data, parent)
+        paired_record(directory, data, parent)
         self.report({'INFO'}, 'Imported paired external Cube fields and data records')

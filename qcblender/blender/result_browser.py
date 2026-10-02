@@ -6,7 +6,7 @@ from bpy.props import BoolProperty, EnumProperty, FloatProperty, IntProperty, Po
 
 
 class QCBLENDER_PG_result_browser(bpy.types.PropertyGroup):
-    swap_axes: BoolProperty(name='Swap scatter axes', default=False)
+    swap_axes: BoolProperty(name='Swap value columns', default=False)
     x_low_on: BoolProperty(name='X minimum', default=False)
     x_high_on: BoolProperty(name='X maximum', default=False)
     y_low_on: BoolProperty(name='Y minimum', default=False)

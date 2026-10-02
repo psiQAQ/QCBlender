@@ -2,9 +2,16 @@
 import numpy as np
 
 
+def require_static_geometry(data):
+    if data.metadata.get('trajectory'):
+        raise ValueError('Multi-frame XYZ requires a single-frame source for scientific association')
+
+
 def compare_sources(reference, moving, allow_rigid=False, tolerance_angstrom=1e-3):
     reference.validate()
     moving.validate()
+    require_static_geometry(reference)
+    require_static_geometry(moving)
     if not np.isfinite(tolerance_angstrom) or tolerance_angstrom <= 0:
         raise ValueError('Association tolerance must be positive and finite')
     if not np.array_equal(reference.arrays['atomic_numbers'], moving.arrays['atomic_numbers']):

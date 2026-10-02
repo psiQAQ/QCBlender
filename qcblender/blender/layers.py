@@ -318,6 +318,11 @@ class QCBLENDER_OT_new_current_view(bpy.types.Operator):
                     raise ValueError('Creating a current-version IRC view cannot preserve the full path; keep the current view')
                 current_geometry(source)
                 obj = atom_view(directory)
+                from .trajectory import initialize_trajectory, set_frame
+                data = load_dataset(directory)
+                initialize_trajectory(obj, data)
+                if source.get('qc_trajectory_frame'):
+                    set_frame(obj, data, source['qc_trajectory_frame'])
                 created = obj
                 obj.parent = source.parent
                 if source.get('qc_optimization_step') is not None:

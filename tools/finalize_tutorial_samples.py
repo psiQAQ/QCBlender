@@ -66,7 +66,7 @@ a=read_cube(RUN/'P05/nocv/nocv-orb1.cub');b=read_cube(RUN/'P05/nocv/nocv-orb-neg
 files['P05-ets-nocv.txt']['expected']=dict(pairs=ets.metadata['analysis']['pairs'],energy_unit='kcal/mol',energy_method='Actual complex KS reconstruction; Multiwfn approximation, not F_TS',pair_density_formula_max_abs_error=err)
 f=nocv.metadata['fields'][0];v=get(nocv);files['P05-nocv-pair1.cub']['expected']=dict(shape=f['shape'],minimum=float(v.min()),maximum=float(v.max()),net_integral_electron=float(v.sum()*abs(np.linalg.det(np.array(f['steps'])))/0.529177210903**3));checks['P05']='Passed'
 cases={}
-def case(cid,g,ids,**gui):cases[cid]=dict(group=g,files=ids,gui=gui,local_parse_status='Passed',gui_status='Not Run',display_defaults_status='proposed; root visual check required',public_material_status='external; permission unverified' if g=='P02' else 'included',grid_defaults=dict(spacing_angstrom=.7,margin_angstrom=3))
+def case(cid,g,ids,**gui):cases[cid]=dict(group=g,files=ids,gui=gui,local_parse_status='Passed',gui_status='Not Run',display_defaults_status='proposed; root visual check required',public_material_status='external; permission unverified' if g=='P02' else 'included',grid_defaults=dict(spacing_angstrom=.2,margin_angstrom=3,memory_mb=512))
 case('C01','P01',['P01-o2-uhf','P01-fch'],alpha_mo=9,beta_mo=7,alpha_homo=8,beta_homo=6,isovalue=.045,spin_isovalue=.002)
 case('C02','P02',['P02-water_neutral_nbo_opt_freq.out'],job_number=2,mode_number=3,amplitude_angstrom=.35,cycles_per_second=1)
 case('C03','P03',['P03-igmh-sl2r.cub','P03-cube'],quantity='sign_lambda2_rho',unit='electron/bohr^3',scale_factor=1,isovalue=.02)

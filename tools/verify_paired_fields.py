@@ -6,16 +6,17 @@ import shutil
 import sys
 
 import bpy
+import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / 'outputs' / 'science')]
 import qcblender
 from qcblender.data import load_dataset, save_dataset
-from qcblender.external_fields import pair_cubes, scatter_points
+from qcblender.external_fields import pair_cubes
 from qcblender.worker import write_volume
 from qcblender.blender.views import atom_view, field_view
 from qcblender.blender.scalars import add_mapping
-from qcblender.blender.external_fields import scatter_view
+from qcblender.blender.external_results import table_view
 from qcblender.blender.project import save_project
 
 OUT = ROOT / 'outputs' / 'paired-fields'
@@ -27,7 +28,7 @@ if '--reopen' in sys.argv:
     data = load_dataset(bpy.path.abspath(geometry['qc_dataset']))
     assert len(data.metadata['fields']) == 2
     assert data.metadata['analysis']['kind'] == 'IGMH'
-    assert any(o.get('qc_view_kind') == 'scatter' for o in bpy.data.objects)
+    assert any(o.get('qc_analysis_role') == 'paired' for o in bpy.data.objects)
     assert geometry.qc_settings.volume is not None
     print('paired fields cold reopen Passed')
 else:
@@ -41,7 +42,8 @@ else:
     color.write_text(''.join(lines), encoding='ascii')
     data = pair_cubes(source, color, 'IGMH', 'dimensionless', 'electron/bohr^3')
     assert pair_cubes(source, color, 'IRI', 'dimensionless', 'electron/bohr^3').metadata['analysis']['kind'] == 'IRI'
-    assert len(scatter_points(data)) > 100
+    common = data.arrays[data.metadata['fields'][0]['valid_mask']] & data.arrays[data.metadata['fields'][1]['valid_mask']]
+    assert np.count_nonzero(common) > 100
     assert data.metadata['analysis']['color_source']['sha256'] == hashlib.sha256(color.read_bytes()).hexdigest()
     try:
         pair_cubes(source, ROOT / 'outputs' / 'visual-acceptance-v2' / 'unknown.cube',
@@ -80,8 +82,8 @@ else:
     color = field_view(directory, parent, 1)
     geometry['qc_analysis'] = json.dumps(data.metadata['analysis'])
     add_mapping(geometry, color, -.05, .05)
-    scatter = scatter_view(directory, data, parent)
-    assert len(scatter.data.vertices) > 100
+    record = table_view(directory, data, parent, 'Paired field data', 'paired')
+    assert record.get('qc_data_record') and len(record.data.vertices) == 0
     assert geometry.get('qc_color_source')
     save_project(OUT / 'paired.blend')
     print('paired fields parsing and Blender save Passed; scientific semantics Not Run')

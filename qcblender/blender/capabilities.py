@@ -68,7 +68,7 @@ def capability(context, action):
     elif action == 'atoms':
         relevant, ready, reason = atoms, atoms, '请选择 QC 原子视图'
     elif action == 'result_scatter':
-        relevant = kind == 'scatter'
+        relevant = kind == 'scatter' or (obj is not None and obj.get('qc_analysis_role') == 'paired')
         ready, reason = len(meta.get('fields', [])) == 2, '配对场来源缺失；请刷新来源'
     elif action == 'result_filter':
         relevant = kind == 'nbo' or (obj is not None and obj.get('qc_analysis_role') in
@@ -76,6 +76,8 @@ def capability(context, action):
         ready, reason = bool(meta.get('analysis')), '分析记录缺失；请刷新来源'
     else:
         raise ValueError('Unknown QC action: ' + action)
+    if relevant and action in ('aim', 'paired', 'nbo', 'nocv_table') and meta.get('trajectory'):
+        ready, reason = False, '多帧 XYZ 不作为科学关联参考；请使用单帧结构文件'
     if relevant and not bound:
         ready, reason = False, '数据集关联缺失；请恢复数据来源'
     if relevant and bound and 'error' in meta:

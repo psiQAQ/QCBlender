@@ -21,6 +21,20 @@ class XYZTests(unittest.TestCase):
             path.write_bytes(text.encode('utf-8'))
             return read_source(path)
 
+    def test_multiframe_scientific_association_is_explicitly_rejected(self):
+        from qcblender.association import compare_sources
+        from qcblender.analysis_data import analysis_dataset, spatial_check
+        multi = self.parse('2\nfirst\nH 0 0 0\nH 0.7 0 0\n2\nsecond\nH 0 0 0\nH 5 0 0\n')
+        single = self.parse('2\nsingle\nH 0 0 0\nH 0.7 0 0\n')
+        for reference, moving in ((multi, single), (single, multi), (multi, multi)):
+            with self.assertRaisesRegex(ValueError, 'single-frame'):
+                compare_sources(reference, moving)
+        with self.assertRaisesRegex(ValueError, 'single-frame'):
+            spatial_check([[0, 0, 0]], multi)
+        with self.assertRaisesRegex(ValueError, 'single-frame'):
+            analysis_dataset(multi, 'ETS-NOCV', [], {})
+        self.assertEqual(compare_sources(single, single)['status'], 'geometry_matched')
+
     def test_single_native_angstrom_and_source(self):
         text = '2\n  中文注释  \nH 0 0 0\n1 0.123456789012345 0 0\n'
         data = self.parse(text)

@@ -110,6 +110,10 @@ def source_group(obj):
     label = f"{name} | {sha[:12] or '未记录'}"
     if job != -1:
         label += f' | Job {job+1}'
+    if obj.get('qc_trajectory_frame'):
+        frame = obj['qc_trajectory_frame']
+        key = (*key, frame)
+        label += f' | XYZ Frame {frame}'
     if 'error' in meta:
         label += ' | 关联无法读取'
     return key, label
@@ -319,6 +323,12 @@ def source_details(obj):
                 entries.append((key, analysis[key]))
         for source in analysis.get('sources', []):
             entries.append(('External source', source))
+    if obj.get('qc_trajectory_frame'):
+        entries.append(('XYZ frame', dict(object_record(obj, 'qc_trajectory_record'),
+            frame=obj['qc_trajectory_frame'], count=obj['qc_trajectory_count'],
+            coordinate_unit=meta['coordinate_unit'], connections='distance_inferred_per_frame')))
+    elif meta.get('xyz_frames'):
+        entries.append(('XYZ source frame', meta['xyz_frames'][0]))
     if obj.get('qc_optimization_record'):
         entries.append(('Optimization step', object_record(obj, 'qc_optimization_record')))
     if obj.get('qc_local_selection_record'):

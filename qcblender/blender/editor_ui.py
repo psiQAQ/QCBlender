@@ -34,6 +34,8 @@ def summary(layout, obj):
     if obj.get('qc_irc'):
         step = record(obj, 'qc_irc_record')
         layout.label(text=f"IRC 步 {obj.get('qc_irc_step')} / {step.get('count', '未记录')}")
+    if obj.get('qc_trajectory_frame'):
+        layout.label(text=f"XYZ 帧 {obj['qc_trajectory_frame']} / {obj['qc_trajectory_count']}")
     if obj.get('qc_mode_frequency_cm-1') is not None:
         layout.label(text=f"振动 {obj.get('qc_mode_source_number')}: {obj['qc_mode_frequency_cm-1']:.4f} cm⁻¹")
     probe = record(obj, 'qc_probe')
@@ -71,7 +73,7 @@ class QCBLENDER_PT_main(bpy.types.Panel):
 
     def draw(self, context):
         layout = self.layout
-        layout.operator('qcblender.import_calculation', text='导入 Gaussian / Cube', icon='IMPORT')
+        layout.operator('qcblender.import_calculation', text='导入 Gaussian / Cube / XYZ', icon='IMPORT')
         layout.operator('qcblender.import_irc_path', text='导入 IRC 路径')
         action_button(layout, context, 'generate', 'qcblender.generate_field', '生成量子化学场', 'VOLUME_DATA')
         if is_qc(context):
@@ -118,7 +120,7 @@ class QCBLENDER_PT_create(bpy.types.Panel):
             ('clip', 'qcblender.add_clipping', '添加裁剪控件'),
             ('probe', 'qcblender.probe_field', '读取游标处场值'),
             ('profile_start', 'qcblender.mark_profile_start', '记录剖面起点'),
-            ('profile', 'qcblender.create_line_profile', '创建线剖面'),
+            ('profile', 'qcblender.create_line_profile', '采样线剖面数据'),
             ('dipole', 'qcblender.show_dipole', '创建偶极矢量')]:
             action_button(layout, context, action, operator, text)
         draw_probe_actions(layout, context)
@@ -129,8 +131,6 @@ class QCBLENDER_PT_create(bpy.types.Panel):
                 layout.operator('qcblender.add_annotation', text='创建' + title).kind = kind
             if obj.get('qc_optimization_available') and not obj.get('qc_optimization_step'):
                 layout.operator('qcblender.optimization_view', text='创建优化轨迹视图')
-        if obj.get('qc_view_kind') == 'profile':
-            layout.operator('qcblender.export_line_profile', text='导出剖面 CSV', icon='EXPORT')
         layout.operator('qcblender.new_current_view', text='创建当前版本视图')
         layout.operator('qcblender.create_framed_camera', text='创建取景相机', icon='CAMERA_DATA')
 
@@ -175,6 +175,10 @@ class QCBLENDER_PT_project(bpy.types.Panel):
             layout.operator('qcblender.' + operator, text=text)
         obj = context.object
         if obj is not None:
+            from .source_browser import source_object
+            from .data_export import export_choices
+            if source_object(obj).get('qc_dataset') and export_choices(None, context):
+                layout.operator('qcblender.export_data', text='导出数据', icon='EXPORT')
             for diagnostic in json.loads(obj.get('qc_diagnostics', '[]')):
                 for line in textwrap.wrap(diagnostic, width=40):
                     layout.label(text=line)

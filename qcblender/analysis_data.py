@@ -6,12 +6,14 @@ import re
 import numpy as np
 
 from .data import Dataset
+from .association import require_static_geometry
 from .external_results import (aim_paths, aim_points, aim_properties, esp_area,
                                esp_extrema, esp_extrema_unit, ets_nocv_pairs)
 from .readers import source_record
 
 
 def analysis_dataset(reference, kind, paths, result):
+    require_static_geometry(reference)
     sources = [source_record(Path(path), Path(path).suffix.lower().lstrip('.'),
                              'qcblender.external_results 0.1') for path in paths]
     metadata = {'source': sources[0], 'coordinate_unit': 'angstrom', 'fields': [],
@@ -34,6 +36,7 @@ def check_text_sources(paths):
 
 
 def spatial_check(points, reference, margin_angstrom=10):
+    require_static_geometry(reference)
     coordinates = np.asarray(points, dtype=float)
     atoms = reference.arrays['positions']
     if not len(atoms) or coordinates.ndim != 2 or coordinates.shape[1] != 3:

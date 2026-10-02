@@ -55,15 +55,3 @@ def pair_cubes(geometry_path, color_path, method, geometry_unit, color_unit, iri
     result = Dataset(metadata, arrays)
     result.validate()
     return result
-
-
-def scatter_points(data, maximum=50000):
-    fields = data.metadata['fields']
-    x = data.arrays[fields[0]['array']].ravel()
-    y = data.arrays[fields[1]['array']].ravel()
-    valid = data.arrays[fields[0]['valid_mask']].ravel() & data.arrays[fields[1]['valid_mask']].ravel()
-    indexes = np.flatnonzero(valid)
-    if not len(indexes):
-        raise ValueError('Paired fields have no common valid voxels')
-    indexes = indexes[::max(1, int(np.ceil(len(indexes) / maximum)))][:maximum]
-    return np.stack((x[indexes], y[indexes]), axis=1)
