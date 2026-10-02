@@ -5128,7 +5128,9 @@
       ],
       "gui": {
         "alpha_mo": 9,
-        "beta_homo": 7,
+        "beta_mo": 7,
+        "alpha_homo": 8,
+        "beta_homo": 6,
         "isovalue": 0.045,
         "spin_isovalue": 0.002
       },
