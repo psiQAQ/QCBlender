@@ -136,3 +136,17 @@
 ## 持续维护
 
 每次收尾更新本页当前交付与批次路由、任务状态、清理收据和 [CHANGELOG](CHANGELOG.md)。详细逐文件清单与策略留本批忽略目录；历史路径失效时明确可用性与重建方法，原始报告保持字节不变。未知、权限、占用或未保全对象原位保留，不以安全部分完成代替全部验收。
+
+## 2026-10-03 完成度与参考实现调研
+
+[完整报告](research/qcblender-completion-audit-2026-10-03.md)固定 main `96f9c7e`；报告和任务记录位于 `research/plugin-audit` 工作树，尚未提交或合并。产品源码、依赖和候选保持原身份。
+
+| 对象 | 当前入口与状态 |
+| --- | --- |
+| 研究证据 | 主仓 `outputs/evidence/2026-10-03/plugin-audit/`；82科学测试、30相关单测通过，1项POSIX检查在Windows跳过；安装、XYZ/CSV、来源浏览和冷重开Passed |
+| 缺陷与比较 | 四类产品缺陷未修复；两类P1经原生operator和实际Computer Use复现。报告含六个参考项目/软件的十维比较、已采用项、许可材料及五项改进建议；独立用户/科研签署及发布Not Run |
+| 保全工程 | 主仓 `outputs/projects/plugin-audit/`，按原批次相对目录保留 `.blend + .qcdata`；`xyz-seeded/integration.blend`与`gui/linked-observed.blend`迁移后新进程冷读Passed，GUI工程有意保留缺陷状态 |
+| 原始身份与映射 | `preservation-map.json`保存所有旧路径、目标、大小和SHA-256；`final-verification.json`复核保留副本、候选、当前主检出和链接；原始收据中的runs路径保持不变 |
+| 清理与限制 | `cleanup-receipt.json`记录6,036文件/500,234,681字节删除，含已保全副本和本次独立profile；不是全仓净节省。74文件/207,636字节已复制核对，原件因十个目录权限边界保留；不修改ACL/所有权，清理状态Partial |
+
+复跑先阅读证据目录`README.md`，复制所需脚本到新的runs批次，从保留候选重新安装隔离环境并生成前置fixture；科学输入沿用`tests/data/local-inputs.json`。不要直接运行归档脚本覆盖历史证据。旧路径通过映射解析；本次安装环境已经清理。
