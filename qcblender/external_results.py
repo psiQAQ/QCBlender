@@ -213,8 +213,13 @@ def ets_nocv_pairs(path, energy_unit):
     for row in rows:
         key = row['spin'], row['pair']
         if key in unique:
-            if any(row[name] != unique[key][name] for name in ('pair_energy', 'positive_orbital', 'negative_orbital')):
-                raise ValueError(f'Conflicting ETS-NOCV pair {key}')
+            first = unique[key]
+            conflicts = [name for name in row
+                         if name != 'source_line' and row[name] != first[name]]
+            if conflicts:
+                raise ValueError(
+                    f'Conflicting ETS-NOCV pair {key}: {", ".join(conflicts)} '
+                    f'at source lines {first["source_line"]} and {row["source_line"]}')
         else:
             unique[key] = row
     if not unique:

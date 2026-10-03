@@ -92,6 +92,61 @@ class NocvEnergyStatus(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Conflicting ETS-NOCV pair'):
             self.parse([HEADER, ROW, HEADER, ROW.replace('-2.50', '-2.60')])
 
+    def test_duplicate_scientific_field_conflicts(self):
+        for field, column, replacement in (
+            ('pair_energy', 1, '-2.60'),
+            ('positive_orbital', 2, '8'),
+            ('positive_eigenvalue', 3, '0.12001'),
+            ('negative_eigenvalue', 6, '-0.12001'),
+            ('positive_energy', 4, '-3.11'),
+            ('negative_orbital', 5, '9'),
+            ('negative_energy', 7, '0.61'),
+            ('positive_eigenvalue', 3, '0.120000000001'),
+        ):
+            with self.subTest(field=field):
+                columns = ROW.split()
+                columns[column] = replacement
+                with self.assertRaisesRegex(ValueError, 'Conflicting ETS-NOCV pair') as raised:
+                    self.parse([HEADER, ROW, HEADER, ' '.join(columns)])
+                self.assertIn(field, str(raised.exception))
+                self.assertIn('lines 2 and 4', str(raised.exception))
+
+    def test_duplicate_reports_all_conflicting_fields(self):
+        with self.assertRaisesRegex(ValueError, 'Conflicting ETS-NOCV pair') as raised:
+            self.parse([HEADER, ROW, HEADER,
+                        ROW.replace('0.12000', '0.12001').replace('-3.10', '-3.11')])
+        for field in ('positive_eigenvalue', 'negative_eigenvalue', 'positive_energy'):
+            self.assertIn(field, str(raised.exception))
+        self.assertIn('lines 2 and 4', str(raised.exception))
+
+    def test_identical_normalized_duplicates_keep_first_provenance(self):
+        normalized = '1 -2.5000 6 0.120000 -3.100 7 -0.120000 0.600'
+        for unit in ('kcal/mol', 'hartree'):
+            with self.subTest(unit=unit):
+                first = self.parse([HEADER, ROW], unit)
+                self.assertEqual(self.parse([HEADER, ROW, HEADER, normalized], unit), first)
+
+    def test_real_table_identical_duplicates_keep_first_provenance(self):
+        lines = REAL_TABLE.read_text(encoding='utf-8').splitlines()
+        self.assertEqual(self.parse([*lines, *lines]), ets_nocv_pairs(REAL_TABLE, 'kcal/mol'))
+
+    def test_real_table_duplicate_scientific_conflicts(self):
+        lines = REAL_TABLE.read_text(encoding='utf-8').splitlines()
+        first = ets_nocv_pairs(REAL_TABLE, 'kcal/mol')[0]
+        index = first['source_line'] - 1
+        for field, column in (('positive_eigenvalue', 3), ('negative_eigenvalue', 6),
+                              ('positive_energy', 4), ('negative_energy', 7)):
+            with self.subTest(field=field):
+                changed = list(lines)
+                columns = changed[index].split()
+                columns[column] = f'{float(columns[column]) + 0.01:.5f}'
+                changed[index] = ' '.join(columns)
+                with self.assertRaisesRegex(ValueError, 'Conflicting ETS-NOCV pair') as raised:
+                    self.parse([*lines, *changed])
+                self.assertIn(field, str(raised.exception))
+                self.assertIn(f'lines {index + 1} and {len(lines) + index + 1}',
+                              str(raised.exception))
+
 
 if __name__ == '__main__':
     unittest.main()
