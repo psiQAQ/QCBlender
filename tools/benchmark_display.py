@@ -117,7 +117,7 @@ def build_scene(source, field, count):
     scene.render.use_persistent_data = False
     for obj in surfaces:
         modifier, names = controls(obj)
-        modifier[names['Isovalue']] = .2
+        modifier[names['Isovalue']] = .05
         obj.update_tag()
     bpy.context.view_layer.update()
     return atoms, surfaces, time.perf_counter() - started
@@ -157,13 +157,13 @@ def main():
     report = bench.setup(args, 'display')
     try:
         bench.enable(args, report)
-        report['parameters'].update(views=args.views, grid=bench.grid(31), isovalue=.2,
+        report['parameters'].update(views=args.views, grid=bench.grid(31), isovalue=.05,
             render={'engine': 'CYCLES', 'device': 'CPU', 'samples': 32, 'seed': 17, 'resolution': [640, 448],
                     'adaptive_sampling': False, 'denoising': False, 'view_transform': 'Standard', 'look': 'None'})
         report['timing_definition'].update(display='Threshold/atom selection writes through dependency graph completion',
             mesh='Evaluated mesh extraction after dependency graph completion',
-            render='Canonical .2 threshold/all atoms, CPU render through PNG publication; validation outside timer',
-            threshold='Reset .21, measure .2; all surfaces updated', selection='Reset carbon-only, measure all; all atom layers updated',
+            render='Canonical .05 threshold/all atoms, CPU render through PNG publication; validation outside timer',
+            threshold='Reset .06, measure .05; all surfaces updated', selection='Reset carbon-only, measure all; all atom layers updated',
             ui_timeout='Blocking UI operations are checked after return; launcher must enforce process deadline')
         source, report['import'] = bench.run_job('import', args.timeout, source=str(bench.SOURCE), source_sha256=bench.sha256(bench.SOURCE))
         field, report['evaluate'] = bench.run_job('evaluate', args.timeout, **bench.evaluation(source, 31))
@@ -182,10 +182,10 @@ def main():
                 (report['warmups'] if warmup else report['trials']).append(trial)
                 # Reset to the alternate state before each timed update, ensuring
                 # each trial performs actual changed graph work after rendering.
-                completed(lambda: set_controls(surfaces, 'Isovalue', .21), args.timeout)
+                completed(lambda: set_controls(surfaces, 'Isovalue', .06), args.timeout)
                 completed(lambda: set_controls(atoms, 'Element (0 = all)', 6), args.timeout)
                 _, restricted = extract(atoms, args.timeout)
-                trial['threshold_seconds'] = completed(lambda: set_controls(surfaces, 'Isovalue', .2), args.timeout)
+                trial['threshold_seconds'] = completed(lambda: set_controls(surfaces, 'Isovalue', .05), args.timeout)
                 trial['selection_seconds'] = completed(lambda: set_controls(atoms, 'Element (0 = all)', 0), args.timeout)
                 trial['mesh_seconds'], trial['mesh_counts'] = extract(surfaces + atoms, args.timeout)
                 if expected_counts is not None and trial['mesh_counts'] != expected_counts:
