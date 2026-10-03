@@ -8,7 +8,7 @@
 
 证据位于`outputs/evidence/2026-10-04/audit-p2/`：`evidence-index.json`与`qualification.json`绑定当前候选；`preservation-map.json`保存原始路径及SHA-256，全部成功/失败报告字节保留。六个参考工程在`outputs/projects/audit-p2/visual/<case>/`，实际GUI工程在`outputs/projects/audit-p2/gui/p2-verified.blend + .qcdata/`；迁移后冷重开报告在`delivery-cold/`。基准PNG/JSON在`tests/data/visual-baseline/`，重建与运行见[基准说明](acceptance/visual-performance-baselines.md)。
 
-本批归档、清理及远端交付以[交付收据](acceptance/audit-p2-delivery.json)为准；旧f458/b48c继续保持既有延期状态。
+本批五个注释归档标签、五工作树/分支正常移除及main推送Passed；清理27,111文件/6,425,543,091字节，475项保护文件摘要复核Passed。完整身份见[交付收据](acceptance/audit-p2-delivery.json)和`closing/`；原截图工作树路径由`closing/current-preservation-routes.json`映射到主检出。旧f458/b48c继续保持既有延期状态。
 
 ## 2026-10-02 显示/XYZ/CSV历史交付
 

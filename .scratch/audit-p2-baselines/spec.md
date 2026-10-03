@@ -1,7 +1,7 @@
 # 两项 P2 修复与视觉、性能基准
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Type: task
 
 ## 目标与边界
@@ -37,3 +37,7 @@ Type: task
 ## Comments
 
 - 2026-10-03：用户确认两项P2加基准建设、视觉阻断/性能先记录、推送完整main。Plan Mode只读复现了两个缺陷；本任务开始实施。
+
+## Answer
+
+Passed：main已ff-only整合，固定产品树候选资格通过；五个注释archive标签及五个工作树/分支清理完成。清理27,111文件/6,425,543,091字节，保护对象摘要核对通过；普通HTTPS推送96个领先提交后远端回读57cae3874231f176fe9c375ac2437f7efc148961。交付收据及最终文档推送回读见docs/acceptance/audit-p2-delivery.json；独立人工签署Not Run，两项P1在本次范围外。

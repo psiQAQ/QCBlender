@@ -9,7 +9,7 @@
     "bytes": 50635805
   },
   "evidence": "outputs/evidence/2026-10-04/audit-p2",
-  "qualification": "qualification.json",
+  "qualification": "qualification-main.json",
   "checks": {
     "science": {
       "status": "Passed",
@@ -67,5 +67,6 @@
     "AUDIT-01 current-step geometry association",
     "AUDIT-04 shared mesh step identity"
   ],
-  "artifact_routes": "docs/ARTIFACTS.md"
+  "artifact_routes": "docs/ARTIFACTS.md",
+  "qualified_main_commit": "57cae3874231f176fe9c375ac2437f7efc148961"
 }

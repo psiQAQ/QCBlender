@@ -1,10 +1,59 @@
 {
-  "status": "In Progress",
+  "status": "Passed",
   "date": "2026-10-04",
   "technical_validation": "Passed",
-  "evidence": "outputs/evidence/2026-10-04/audit-p2/",
-  "merge": "Not Run",
-  "archive_and_cleanup": "Not Run",
-  "push": "Not Run",
+  "qualified_main_commit": "57cae3874231f176fe9c375ac2437f7efc148961",
+  "merge": "Passed (ff-only)",
+  "archive_and_cleanup": "Passed",
+  "archives": [
+    {
+      "branch": "fix/gaussian-segments",
+      "commit": "49872b02401227cb17e0bf282f445419c8dfe2b6",
+      "tag": "archive/2026-10-04/fix/gaussian-segments"
+    },
+    {
+      "branch": "fix/nocv-conflicts",
+      "commit": "0c4b72ef3b2b96fe0afa79543d42905d50d9c92f",
+      "tag": "archive/2026-10-04/fix/nocv-conflicts"
+    },
+    {
+      "branch": "test/performance-baseline",
+      "commit": "b59700ce288926586e4375f923838a83d79978ca",
+      "tag": "archive/2026-10-04/test/performance-baseline"
+    },
+    {
+      "branch": "research/plugin-audit",
+      "commit": "26fa9c99bc6011441e9c1981cefb4c79fa742223",
+      "tag": "archive/2026-10-04/research/plugin-audit"
+    },
+    {
+      "branch": "fix/audit-p2-baselines",
+      "commit": "57cae3874231f176fe9c375ac2437f7efc148961",
+      "tag": "archive/2026-10-04/fix/audit-p2-baselines"
+    }
+  ],
+  "deleted_files": 27111,
+  "deleted_bytes": 6425543091,
+  "space_measurement": "Sum of deleted manifest file sizes; excludes git worktree removal and new evidence, not whole-repository net change",
+  "post_cleanup": {
+    "status": "Passed",
+    "preservation_entries_checked": 3824,
+    "worktree_ignored_files_checked": 31,
+    "protected_files_checked": 475,
+    "candidate_checks": 19,
+    "source_matches_candidate": "Passed",
+    "historical_report_bytes": "Unchanged",
+    "remapped_screenshot_destinations": 9
+  },
+  "push": {
+    "status": "Passed",
+    "verified_product_commit": "57cae3874231f176fe9c375ac2437f7efc148961",
+    "included_commits": 96,
+    "force": false,
+    "tags_pushed": false,
+    "final_documentation_push_receipt": "outputs/evidence/2026-10-04/audit-p2/closing/push-main-final.json"
+  },
+  "evidence": "outputs/evidence/2026-10-04/audit-p2/closing/",
+  "retained_unrelated": "Legacy f458/b48c and existing deferred permission objects unchanged",
   "independent_human_acceptance": "Not Run"
 }
