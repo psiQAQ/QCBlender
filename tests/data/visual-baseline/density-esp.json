@@ -1,0 +1,1220 @@
+{
+  "case": "density-esp",
+  "identity": {
+    "environment": {
+      "blender": "5.1.1",
+      "build_hash": "b70da489d7f4",
+      "engine": "CYCLES",
+      "device": "CPU",
+      "samples": 32,
+      "seed": 17,
+      "denoising": false,
+      "adaptive_sampling": false,
+      "threads": 4,
+      "resolution": [
+        640,
+        448
+      ],
+      "display": "sRGB",
+      "view": "Standard",
+      "look": "None",
+      "exposure": 0.0,
+      "gamma": 1.0,
+      "font_files": [
+        "<builtin>"
+      ],
+      "pixel_space": "decoded PNG RGB, Non-Color, [0,1]"
+    },
+    "scene": {
+      "resolution": [
+        640,
+        448
+      ],
+      "samples": 32,
+      "seed": 17,
+      "camera": [
+        0.0,
+        0.0,
+        12.0
+      ],
+      "ortho_scale": 8.0,
+      "field_spacing": 0.2,
+      "mo": {
+        "orbital": 8,
+        "spin": "alpha",
+        "isovalue": 0.05
+      },
+      "color_range": [
+        -0.05,
+        0.05
+      ],
+      "legend_position": [
+        0.0,
+        -2.0,
+        2.0
+      ],
+      "slice_resolution": 81,
+      "contour_levels": "-0.03, 0.0, 0.03",
+      "case": "density-esp",
+      "regions": {
+        "molecule": [
+          80,
+          35,
+          560,
+          350
+        ]
+      }
+    },
+    "input_sha256": "3f93c52df5ef5adda00eff89bc5c9bb0bc10182722193d87e72f3b710d7c2c40",
+    "scientific_arrays": {
+      "atoms": {
+        "atomic_numbers": {
+          "shape": [
+            5
+          ],
+          "dtype": "int32",
+          "sha256": "50cec78c9db02448dbf61fa04182c453995eb0704908b61b7d98054cb8f1f293"
+        },
+        "bonds": {
+          "shape": [
+            4,
+            2
+          ],
+          "dtype": "int32",
+          "sha256": "9419fb49016ac69542d59cd76dcfbaa08e68ae20d53b2e5b17efbbe57247f9ce"
+        },
+        "charge_esp": {
+          "shape": [
+            5
+          ],
+          "dtype": "float64",
+          "sha256": "00cef8c895cc42879690ed428f380b46ac6eb1d7e96f6d3497ee7a16b3bdaa55"
+        },
+        "charge_mulliken": {
+          "shape": [
+            5
+          ],
+          "dtype": "float64",
+          "sha256": "d433a64426963cda9e8256dc214e84b97c9cde429ead1c62189124b974e4b31f"
+        },
+        "charge_npa": {
+          "shape": [
+            5
+          ],
+          "dtype": "float64",
+          "sha256": "9f5fafc9fc610a71a32367f55836c74f360525f2d2a818d3a8e0e3ef8bd12974"
+        },
+        "core_charges": {
+          "shape": [
+            5
+          ],
+          "dtype": "float64",
+          "sha256": "ed97141be7cfba3daad8a62f9e6781ef3629d4b7c179a245b2db06c67761233c"
+        },
+        "dipole": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "4323893310124d5427500ccdb23a73ec3ec9d45f5e8d31d317030bd7d582a67d"
+        },
+        "dm_scf": {
+          "shape": [
+            34,
+            34
+          ],
+          "dtype": "float64",
+          "sha256": "37e9699b7d1d92990eae286b11be6ac96b860024816f65740049650767878474"
+        },
+        "dm_scf_spin": {
+          "shape": [
+            34,
+            34
+          ],
+          "dtype": "float64",
+          "sha256": "8b06cbc1767cee805e9745185c3516747995f76bebe8f64a2949c536e46eac80"
+        },
+        "mo_coeffs": {
+          "shape": [
+            34,
+            68
+          ],
+          "dtype": "float64",
+          "sha256": "e4f2d82af80e69da9cf60b2b34d1c7290dad42a26eb109dc08f320675d26c848"
+        },
+        "mo_energies": {
+          "shape": [
+            68
+          ],
+          "dtype": "float64",
+          "sha256": "4e0e5ebb2ecb6ebbd8a67f142be377e300b7f2f8da9ff50d3a5341c3311c73c6"
+        },
+        "mo_occs": {
+          "shape": [
+            68
+          ],
+          "dtype": "float64",
+          "sha256": "6110261feb81e62aa070f27cac2224030a2016e09f8c076d4e5317e81140cd16"
+        },
+        "positions": {
+          "shape": [
+            5,
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "3e8d30fd3d527caa85dd70be096a43991f628538431c487190b9595cca331541"
+        },
+        "shell_0_coeffs": {
+          "shape": [
+            7,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "472c1c7a5166648c9bc4e382d6184d5b9c6a5240829d9c00caed3c2e2c076dbc"
+        },
+        "shell_0_exponents": {
+          "shape": [
+            7
+          ],
+          "dtype": "float64",
+          "sha256": "25ab3f6dba9d3f80023b98485787ffe92d990d3e62116481936d611b27763ce7"
+        },
+        "shell_10_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_10_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "c1b41df2ef30173af71d72fcdeadedd9ab58024d4e26038b03c23aa006b07385"
+        },
+        "shell_11_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_11_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "51f29dc067f90e02ce6865bd44d54bb18b5dbaac80db705873565aaa2c08de37"
+        },
+        "shell_12_coeffs": {
+          "shape": [
+            3,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "334f37476d5c778732080cf63ea2dd2849d2310a5770126d6db217527a69e649"
+        },
+        "shell_12_exponents": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "52c4dd07def837a26fb9c35891824f36adc73bb7372fa696e305de2dc402b9b0"
+        },
+        "shell_13_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_13_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "c1b41df2ef30173af71d72fcdeadedd9ab58024d4e26038b03c23aa006b07385"
+        },
+        "shell_14_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_14_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "51f29dc067f90e02ce6865bd44d54bb18b5dbaac80db705873565aaa2c08de37"
+        },
+        "shell_15_coeffs": {
+          "shape": [
+            3,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "334f37476d5c778732080cf63ea2dd2849d2310a5770126d6db217527a69e649"
+        },
+        "shell_15_exponents": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "52c4dd07def837a26fb9c35891824f36adc73bb7372fa696e305de2dc402b9b0"
+        },
+        "shell_16_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_16_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "c1b41df2ef30173af71d72fcdeadedd9ab58024d4e26038b03c23aa006b07385"
+        },
+        "shell_17_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_17_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "51f29dc067f90e02ce6865bd44d54bb18b5dbaac80db705873565aaa2c08de37"
+        },
+        "shell_1_coeffs": {
+          "shape": [
+            7,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "99ba8b226a76d430ed1c0578239ad94aad5ea418ed76c288d19dbda7be5c396c"
+        },
+        "shell_1_exponents": {
+          "shape": [
+            7
+          ],
+          "dtype": "float64",
+          "sha256": "abd9f622440a3e3e5dbbeb41a5dc6ebed079143d07627571b6d81bfa1da1764b"
+        },
+        "shell_2_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_2_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "ab0d28f5bba0489b94731876007ee4f22cc01107d9ca05af64cf9035cfb2367c"
+        },
+        "shell_3_coeffs": {
+          "shape": [
+            3,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "3d53166fd8afedaf51ae33e6259023689cee6020b8c712eb32b40861d61ddff5"
+        },
+        "shell_3_exponents": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "f32c3b001fb79da642edd78233908be1fbb1f5b2a4656a0dfa44c99780306048"
+        },
+        "shell_4_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_4_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "acfb2a47c68303508419d3d4ddfc9aa3c240b3e0c17bab1c27bbad6d63838fcb"
+        },
+        "shell_5_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_5_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "65f5f49a3bcd71de0c2adafc3c8a3cf1f2e8003f392360731471aaa187f0044a"
+        },
+        "shell_6_coeffs": {
+          "shape": [
+            3,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "334f37476d5c778732080cf63ea2dd2849d2310a5770126d6db217527a69e649"
+        },
+        "shell_6_exponents": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "52c4dd07def837a26fb9c35891824f36adc73bb7372fa696e305de2dc402b9b0"
+        },
+        "shell_7_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_7_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "c1b41df2ef30173af71d72fcdeadedd9ab58024d4e26038b03c23aa006b07385"
+        },
+        "shell_8_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_8_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "51f29dc067f90e02ce6865bd44d54bb18b5dbaac80db705873565aaa2c08de37"
+        },
+        "shell_9_coeffs": {
+          "shape": [
+            3,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "334f37476d5c778732080cf63ea2dd2849d2310a5770126d6db217527a69e649"
+        },
+        "shell_9_exponents": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "52c4dd07def837a26fb9c35891824f36adc73bb7372fa696e305de2dc402b9b0"
+        }
+      },
+      "electron_number_density": {
+        "atomic_numbers": {
+          "shape": [
+            5
+          ],
+          "dtype": "int32",
+          "sha256": "50cec78c9db02448dbf61fa04182c453995eb0704908b61b7d98054cb8f1f293"
+        },
+        "bonds": {
+          "shape": [
+            4,
+            2
+          ],
+          "dtype": "int32",
+          "sha256": "9419fb49016ac69542d59cd76dcfbaa08e68ae20d53b2e5b17efbbe57247f9ce"
+        },
+        "charge_esp": {
+          "shape": [
+            5
+          ],
+          "dtype": "float64",
+          "sha256": "00cef8c895cc42879690ed428f380b46ac6eb1d7e96f6d3497ee7a16b3bdaa55"
+        },
+        "charge_mulliken": {
+          "shape": [
+            5
+          ],
+          "dtype": "float64",
+          "sha256": "d433a64426963cda9e8256dc214e84b97c9cde429ead1c62189124b974e4b31f"
+        },
+        "charge_npa": {
+          "shape": [
+            5
+          ],
+          "dtype": "float64",
+          "sha256": "9f5fafc9fc610a71a32367f55836c74f360525f2d2a818d3a8e0e3ef8bd12974"
+        },
+        "core_charges": {
+          "shape": [
+            5
+          ],
+          "dtype": "float64",
+          "sha256": "ed97141be7cfba3daad8a62f9e6781ef3629d4b7c179a245b2db06c67761233c"
+        },
+        "dipole": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "4323893310124d5427500ccdb23a73ec3ec9d45f5e8d31d317030bd7d582a67d"
+        },
+        "dm_scf": {
+          "shape": [
+            34,
+            34
+          ],
+          "dtype": "float64",
+          "sha256": "37e9699b7d1d92990eae286b11be6ac96b860024816f65740049650767878474"
+        },
+        "dm_scf_spin": {
+          "shape": [
+            34,
+            34
+          ],
+          "dtype": "float64",
+          "sha256": "8b06cbc1767cee805e9745185c3516747995f76bebe8f64a2949c536e46eac80"
+        },
+        "field_valid": {
+          "shape": [
+            31,
+            31,
+            31
+          ],
+          "dtype": "bool",
+          "sha256": "c410e6860845ac655f518c7ba45226e27d9e86bffc139fa0afac4e89dc9c8cb9"
+        },
+        "field_values": {
+          "shape": [
+            31,
+            31,
+            31
+          ],
+          "dtype": "float64",
+          "sha256": "3004835ed144da5e7d966f1563d9094e0df753c65285d7a2cfc6bf964e1f0650"
+        },
+        "mo_coeffs": {
+          "shape": [
+            34,
+            68
+          ],
+          "dtype": "float64",
+          "sha256": "e4f2d82af80e69da9cf60b2b34d1c7290dad42a26eb109dc08f320675d26c848"
+        },
+        "mo_energies": {
+          "shape": [
+            68
+          ],
+          "dtype": "float64",
+          "sha256": "4e0e5ebb2ecb6ebbd8a67f142be377e300b7f2f8da9ff50d3a5341c3311c73c6"
+        },
+        "mo_occs": {
+          "shape": [
+            68
+          ],
+          "dtype": "float64",
+          "sha256": "6110261feb81e62aa070f27cac2224030a2016e09f8c076d4e5317e81140cd16"
+        },
+        "positions": {
+          "shape": [
+            5,
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "3e8d30fd3d527caa85dd70be096a43991f628538431c487190b9595cca331541"
+        },
+        "shell_0_coeffs": {
+          "shape": [
+            7,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "472c1c7a5166648c9bc4e382d6184d5b9c6a5240829d9c00caed3c2e2c076dbc"
+        },
+        "shell_0_exponents": {
+          "shape": [
+            7
+          ],
+          "dtype": "float64",
+          "sha256": "25ab3f6dba9d3f80023b98485787ffe92d990d3e62116481936d611b27763ce7"
+        },
+        "shell_10_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_10_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "c1b41df2ef30173af71d72fcdeadedd9ab58024d4e26038b03c23aa006b07385"
+        },
+        "shell_11_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_11_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "51f29dc067f90e02ce6865bd44d54bb18b5dbaac80db705873565aaa2c08de37"
+        },
+        "shell_12_coeffs": {
+          "shape": [
+            3,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "334f37476d5c778732080cf63ea2dd2849d2310a5770126d6db217527a69e649"
+        },
+        "shell_12_exponents": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "52c4dd07def837a26fb9c35891824f36adc73bb7372fa696e305de2dc402b9b0"
+        },
+        "shell_13_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_13_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "c1b41df2ef30173af71d72fcdeadedd9ab58024d4e26038b03c23aa006b07385"
+        },
+        "shell_14_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_14_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "51f29dc067f90e02ce6865bd44d54bb18b5dbaac80db705873565aaa2c08de37"
+        },
+        "shell_15_coeffs": {
+          "shape": [
+            3,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "334f37476d5c778732080cf63ea2dd2849d2310a5770126d6db217527a69e649"
+        },
+        "shell_15_exponents": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "52c4dd07def837a26fb9c35891824f36adc73bb7372fa696e305de2dc402b9b0"
+        },
+        "shell_16_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_16_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "c1b41df2ef30173af71d72fcdeadedd9ab58024d4e26038b03c23aa006b07385"
+        },
+        "shell_17_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_17_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "51f29dc067f90e02ce6865bd44d54bb18b5dbaac80db705873565aaa2c08de37"
+        },
+        "shell_1_coeffs": {
+          "shape": [
+            7,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "99ba8b226a76d430ed1c0578239ad94aad5ea418ed76c288d19dbda7be5c396c"
+        },
+        "shell_1_exponents": {
+          "shape": [
+            7
+          ],
+          "dtype": "float64",
+          "sha256": "abd9f622440a3e3e5dbbeb41a5dc6ebed079143d07627571b6d81bfa1da1764b"
+        },
+        "shell_2_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_2_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "ab0d28f5bba0489b94731876007ee4f22cc01107d9ca05af64cf9035cfb2367c"
+        },
+        "shell_3_coeffs": {
+          "shape": [
+            3,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "3d53166fd8afedaf51ae33e6259023689cee6020b8c712eb32b40861d61ddff5"
+        },
+        "shell_3_exponents": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "f32c3b001fb79da642edd78233908be1fbb1f5b2a4656a0dfa44c99780306048"
+        },
+        "shell_4_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_4_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "acfb2a47c68303508419d3d4ddfc9aa3c240b3e0c17bab1c27bbad6d63838fcb"
+        },
+        "shell_5_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_5_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "65f5f49a3bcd71de0c2adafc3c8a3cf1f2e8003f392360731471aaa187f0044a"
+        },
+        "shell_6_coeffs": {
+          "shape": [
+            3,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "334f37476d5c778732080cf63ea2dd2849d2310a5770126d6db217527a69e649"
+        },
+        "shell_6_exponents": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "52c4dd07def837a26fb9c35891824f36adc73bb7372fa696e305de2dc402b9b0"
+        },
+        "shell_7_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_7_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "c1b41df2ef30173af71d72fcdeadedd9ab58024d4e26038b03c23aa006b07385"
+        },
+        "shell_8_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_8_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "51f29dc067f90e02ce6865bd44d54bb18b5dbaac80db705873565aaa2c08de37"
+        },
+        "shell_9_coeffs": {
+          "shape": [
+            3,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "334f37476d5c778732080cf63ea2dd2849d2310a5770126d6db217527a69e649"
+        },
+        "shell_9_exponents": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "52c4dd07def837a26fb9c35891824f36adc73bb7372fa696e305de2dc402b9b0"
+        }
+      },
+      "electrostatic_potential": {
+        "atomic_numbers": {
+          "shape": [
+            5
+          ],
+          "dtype": "int32",
+          "sha256": "50cec78c9db02448dbf61fa04182c453995eb0704908b61b7d98054cb8f1f293"
+        },
+        "bonds": {
+          "shape": [
+            4,
+            2
+          ],
+          "dtype": "int32",
+          "sha256": "9419fb49016ac69542d59cd76dcfbaa08e68ae20d53b2e5b17efbbe57247f9ce"
+        },
+        "charge_esp": {
+          "shape": [
+            5
+          ],
+          "dtype": "float64",
+          "sha256": "00cef8c895cc42879690ed428f380b46ac6eb1d7e96f6d3497ee7a16b3bdaa55"
+        },
+        "charge_mulliken": {
+          "shape": [
+            5
+          ],
+          "dtype": "float64",
+          "sha256": "d433a64426963cda9e8256dc214e84b97c9cde429ead1c62189124b974e4b31f"
+        },
+        "charge_npa": {
+          "shape": [
+            5
+          ],
+          "dtype": "float64",
+          "sha256": "9f5fafc9fc610a71a32367f55836c74f360525f2d2a818d3a8e0e3ef8bd12974"
+        },
+        "core_charges": {
+          "shape": [
+            5
+          ],
+          "dtype": "float64",
+          "sha256": "ed97141be7cfba3daad8a62f9e6781ef3629d4b7c179a245b2db06c67761233c"
+        },
+        "dipole": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "4323893310124d5427500ccdb23a73ec3ec9d45f5e8d31d317030bd7d582a67d"
+        },
+        "dm_scf": {
+          "shape": [
+            34,
+            34
+          ],
+          "dtype": "float64",
+          "sha256": "37e9699b7d1d92990eae286b11be6ac96b860024816f65740049650767878474"
+        },
+        "dm_scf_spin": {
+          "shape": [
+            34,
+            34
+          ],
+          "dtype": "float64",
+          "sha256": "8b06cbc1767cee805e9745185c3516747995f76bebe8f64a2949c536e46eac80"
+        },
+        "field_valid": {
+          "shape": [
+            19,
+            31,
+            31
+          ],
+          "dtype": "bool",
+          "sha256": "03ec111781dd392d426eaee64910111d74588ca155fbac08d6e3aa356ae4ce15"
+        },
+        "field_values": {
+          "shape": [
+            19,
+            31,
+            31
+          ],
+          "dtype": "float64",
+          "sha256": "7f6232d49548c0b579e17ed18dddd7d57c3ebffb957b1af0446fbc84e188ee08"
+        },
+        "mo_coeffs": {
+          "shape": [
+            34,
+            68
+          ],
+          "dtype": "float64",
+          "sha256": "e4f2d82af80e69da9cf60b2b34d1c7290dad42a26eb109dc08f320675d26c848"
+        },
+        "mo_energies": {
+          "shape": [
+            68
+          ],
+          "dtype": "float64",
+          "sha256": "4e0e5ebb2ecb6ebbd8a67f142be377e300b7f2f8da9ff50d3a5341c3311c73c6"
+        },
+        "mo_occs": {
+          "shape": [
+            68
+          ],
+          "dtype": "float64",
+          "sha256": "6110261feb81e62aa070f27cac2224030a2016e09f8c076d4e5317e81140cd16"
+        },
+        "positions": {
+          "shape": [
+            5,
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "3e8d30fd3d527caa85dd70be096a43991f628538431c487190b9595cca331541"
+        },
+        "shell_0_coeffs": {
+          "shape": [
+            7,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "472c1c7a5166648c9bc4e382d6184d5b9c6a5240829d9c00caed3c2e2c076dbc"
+        },
+        "shell_0_exponents": {
+          "shape": [
+            7
+          ],
+          "dtype": "float64",
+          "sha256": "25ab3f6dba9d3f80023b98485787ffe92d990d3e62116481936d611b27763ce7"
+        },
+        "shell_10_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_10_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "c1b41df2ef30173af71d72fcdeadedd9ab58024d4e26038b03c23aa006b07385"
+        },
+        "shell_11_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_11_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "51f29dc067f90e02ce6865bd44d54bb18b5dbaac80db705873565aaa2c08de37"
+        },
+        "shell_12_coeffs": {
+          "shape": [
+            3,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "334f37476d5c778732080cf63ea2dd2849d2310a5770126d6db217527a69e649"
+        },
+        "shell_12_exponents": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "52c4dd07def837a26fb9c35891824f36adc73bb7372fa696e305de2dc402b9b0"
+        },
+        "shell_13_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_13_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "c1b41df2ef30173af71d72fcdeadedd9ab58024d4e26038b03c23aa006b07385"
+        },
+        "shell_14_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_14_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "51f29dc067f90e02ce6865bd44d54bb18b5dbaac80db705873565aaa2c08de37"
+        },
+        "shell_15_coeffs": {
+          "shape": [
+            3,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "334f37476d5c778732080cf63ea2dd2849d2310a5770126d6db217527a69e649"
+        },
+        "shell_15_exponents": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "52c4dd07def837a26fb9c35891824f36adc73bb7372fa696e305de2dc402b9b0"
+        },
+        "shell_16_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_16_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "c1b41df2ef30173af71d72fcdeadedd9ab58024d4e26038b03c23aa006b07385"
+        },
+        "shell_17_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_17_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "51f29dc067f90e02ce6865bd44d54bb18b5dbaac80db705873565aaa2c08de37"
+        },
+        "shell_1_coeffs": {
+          "shape": [
+            7,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "99ba8b226a76d430ed1c0578239ad94aad5ea418ed76c288d19dbda7be5c396c"
+        },
+        "shell_1_exponents": {
+          "shape": [
+            7
+          ],
+          "dtype": "float64",
+          "sha256": "abd9f622440a3e3e5dbbeb41a5dc6ebed079143d07627571b6d81bfa1da1764b"
+        },
+        "shell_2_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_2_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "ab0d28f5bba0489b94731876007ee4f22cc01107d9ca05af64cf9035cfb2367c"
+        },
+        "shell_3_coeffs": {
+          "shape": [
+            3,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "3d53166fd8afedaf51ae33e6259023689cee6020b8c712eb32b40861d61ddff5"
+        },
+        "shell_3_exponents": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "f32c3b001fb79da642edd78233908be1fbb1f5b2a4656a0dfa44c99780306048"
+        },
+        "shell_4_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_4_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "acfb2a47c68303508419d3d4ddfc9aa3c240b3e0c17bab1c27bbad6d63838fcb"
+        },
+        "shell_5_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_5_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "65f5f49a3bcd71de0c2adafc3c8a3cf1f2e8003f392360731471aaa187f0044a"
+        },
+        "shell_6_coeffs": {
+          "shape": [
+            3,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "334f37476d5c778732080cf63ea2dd2849d2310a5770126d6db217527a69e649"
+        },
+        "shell_6_exponents": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "52c4dd07def837a26fb9c35891824f36adc73bb7372fa696e305de2dc402b9b0"
+        },
+        "shell_7_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_7_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "c1b41df2ef30173af71d72fcdeadedd9ab58024d4e26038b03c23aa006b07385"
+        },
+        "shell_8_coeffs": {
+          "shape": [
+            1,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+        },
+        "shell_8_exponents": {
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "51f29dc067f90e02ce6865bd44d54bb18b5dbaac80db705873565aaa2c08de37"
+        },
+        "shell_9_coeffs": {
+          "shape": [
+            3,
+            1
+          ],
+          "dtype": "float64",
+          "sha256": "334f37476d5c778732080cf63ea2dd2849d2310a5770126d6db217527a69e649"
+        },
+        "shell_9_exponents": {
+          "shape": [
+            3
+          ],
+          "dtype": "float64",
+          "sha256": "52c4dd07def837a26fb9c35891824f36adc73bb7372fa696e305de2dc402b9b0"
+        }
+      }
+    }
+  },
+  "image_sha256": "eb7a29ff7cfd9f5bc6c8bd48e6e24f7445e5be1ff6ab4fcbf2f5ce0cbee5b215",
+  "thresholds": {
+    "mean_absolute_error": 0.003,
+    "pixel_channel_delta": 0.03137254901960784,
+    "changed_pixel_fraction": 0.01
+  },
+  "baseline_review": "Passed: Agent visual inspection",
+  "independent_human_review": "Not Run"
+}
