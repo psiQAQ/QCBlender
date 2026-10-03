@@ -33,6 +33,11 @@ def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
 def controls(obj):
     modifier = module('blender.graph').view_modifier(obj)
     return modifier, {item.name: item.identifier for item in modifier.node_group.interface.items_tree
@@ -128,7 +133,7 @@ def prepare_case(case):
     source = ROOT / 'tests/data/chemtools/ch4_uhf_ccpvdz.fchk'
     directory, _ = finish(jobs.Job('import', source=str(source)))
     atoms = views.atom_view(directory)
-    assert len(atoms.data.vertices) == 5 and len(atoms.data.edges) == 4
+    require(len(atoms.data.vertices) == 5 and len(atoms.data.edges) == 4, 'Expected CH4 atoms and bonds')
     datasets = {'atoms': directory}
     objects = {'atoms': atoms}
     quantities = [] if case == 'atoms' else ['orbital_amplitude'] if case in ('signed-mo', 'fog') else [
@@ -154,7 +159,8 @@ def prepare_case(case):
     elif case == 'slice-contours':
         color = objects['electrostatic_potential']
         activate(color)
-        assert bpy.ops.qcblender.create_slice(resolution=81, minimum=-.05, maximum=.05) == {'FINISHED'}
+        require(bpy.ops.qcblender.create_slice(resolution=81, minimum=-.05, maximum=.05) == {'FINISHED'},
+                'Slice creation failed')
         target = bpy.context.object
         set_control(target, 'Center', (0., 0., .4))
         set_control(target, 'Width', 5.)
@@ -169,7 +175,7 @@ def prepare_case(case):
             dataset_sha256=source_view['qc_dataset_sha256'], field=json.loads(source_view['qc_field']),
             plane=plane, levels=target['qc_contour_levels'], mapping_range=plane.get('mapping_range'), identity=identity))
         carrier = charts._draw_contours(target, source_view, plane, report)
-        assert len(carrier.data.splines) > 0, 'Expected real ESP contour paths'
+        require(len(carrier.data.splines) > 0, 'Expected real ESP contour paths')
         target['qc_contour_child'], target['qc_contour_identity'] = carrier.name, identity
         color.hide_render = objects['electron_number_density'].hide_render = True
         atoms.hide_render = True
@@ -177,7 +183,7 @@ def prepare_case(case):
     elif case == 'fog':
         surface = objects['orbital_amplitude']
         activate(surface)
-        assert bpy.ops.qcblender.create_fog() == {'FINISHED'}
+        require(bpy.ops.qcblender.create_fog() == {'FINISHED'}, 'Fog creation failed')
         target = bpy.context.object
         modifier, names = controls(target)
         modifier[names['Material']].node_tree.nodes['Optical Scale'].outputs[0].default_value = 20
@@ -190,9 +196,9 @@ def prepare_case(case):
         set_control(target, 'Legend Length', 3.)
         set_control(target, 'Legend Text Size', .18)
         activate(atoms)
-        assert bpy.ops.qcblender.add_annotation(kind='DISTANCE', atoms='1,2', size=.18,
-            color=(1., .8, .2), offset=(0., 1.7, 2.), decimals=4) == {'FINISHED'}
-        assert any(child.type == 'FONT' for child in atoms.children)
+        require(bpy.ops.qcblender.add_annotation(kind='DISTANCE', atoms='1,2', size=.18,
+            color=(1., .8, .2), offset=(0., 1.7, 2.), decimals=4) == {'FINISHED'}, 'Annotation creation failed')
+        require(any(child.type == 'FONT' for child in atoms.children), 'Annotation label missing')
     for role, obj in objects.items():
         obj['qc_baseline_role'] = role
     bpy.context.view_layer.update()
@@ -211,14 +217,14 @@ def mutate(case, objects, mutation):
             tree = controls(target)[0].node_group
             title = next(node for node in tree.nodes if node.label == 'QC Legend Title')
             original = title.inputs['String'].default_value
-            assert 'hartree/e' in original, original
+            require('hartree/e' in original, 'Unexpected legend title: ' + original)
             title.inputs['String'].default_value = original.replace('hartree/e', 'eV/e')
             target.update_tag()
     elif mutation == 'disable-valid-mask' and case == 'density-esp':
         tree = controls(objects['target'])[0].node_group
         assign = next(node for node in tree.nodes if node.bl_idname == 'GeometryNodeGroup'
                       and node.node_tree and node.node_tree.get('qc_asset_id') == 'qc.color_scalar.v2')
-        assert len(assign.inputs['Valid'].links) == 1
+        require(len(assign.inputs['Valid'].links) == 1, 'Expected one valid-domain link')
         tree.links.remove(assign.inputs['Valid'].links[0])
         assign.inputs['Valid'].default_value = True
         objects['target'].update_tag()
@@ -267,22 +273,22 @@ def main():
               'source_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
               'independent_human_review': 'Not Run'}
     try:
-        assert bpy.app.version[:3] == (5, 1, 1), 'Reference profile requires Blender 5.1.1'
+        require(bpy.app.version[:3] == (5, 1, 1), 'Reference profile requires Blender 5.1.1')
         bpy.ops.preferences.addon_enable(module=MODULE)
         installed = Path(importlib.import_module(MODULE).__file__).resolve().parent
         report['installed_source_sha256'] = {path.relative_to(installed).as_posix(): digest(path)
                                             for path in sorted(installed.rglob('*.py'))}
         expected_source = {path.relative_to(ROOT / 'qcblender').as_posix(): digest(path)
                            for path in sorted((ROOT / 'qcblender').rglob('*.py'))}
-        assert report['installed_source_sha256'] == expected_source, 'Installed Python files differ from checkout'
+        require(report['installed_source_sha256'] == expected_source, 'Installed Python files differ from checkout')
         if args.reopen:
             bpy.ops.wm.open_mainfile(filepath=str(args.reopen.resolve()))
             saved = json.loads(bpy.context.scene['qc_visual_baseline'])
-            assert saved['case'] == args.case
+            require(saved['case'] == args.case, 'Saved scene case differs')
             objects = {obj['qc_baseline_role']: obj for obj in bpy.context.scene.objects if 'qc_baseline_role' in obj}
             datasets = {key: Path(bpy.path.abspath(value)) for key, value in saved['datasets'].items()}
             scientific = {key: array_identity(value) for key, value in datasets.items()}
-            assert scientific == saved['scientific_arrays']
+            require(scientific == saved['scientific_arrays'], 'Saved scientific arrays changed')
             source_sha = saved['input_sha256']
         else:
             objects, datasets, scientific, source_sha = prepare_case(args.case)
@@ -290,7 +296,8 @@ def main():
             mutate(args.case, objects, args.mutation)
         regions = dict(REGIONS)
         if args.case == 'legend-annotations':
-            regions.update(legend=[155, 345, 590, 435], annotation=[330, 35, 600, 145])
+            regions.update(legend=[155, 345, 590, 435], legend_title=[195, 350, 335, 375],
+                           annotation=[330, 35, 600, 145])
         identity = {'environment': environment(), 'scene': dict(SCENE, case=args.case, regions=regions),
                     'input_sha256': source_sha, 'scientific_arrays': scientific}
         image_path = output / (args.case + '.png')
@@ -299,14 +306,15 @@ def main():
         bpy.ops.render.render(write_still=True)
         report['render_seconds'] = time.perf_counter() - started
         actual = read_pixels(image_path)
-        assert np.ptp(actual) > .1, 'Blank visual render'
-        assert {key: array_identity(value) for key, value in datasets.items()} == scientific
+        require(np.ptp(actual) > .1, 'Blank visual render')
+        require({key: array_identity(value) for key, value in datasets.items()} == scientific,
+                'Scientific arrays changed during rendering')
         report.update(identity=identity, image_sha256=digest(image_path), scientific_arrays_unchanged='Passed')
         if args.mode == 'compare':
             expected = json.loads((baseline / (args.case + '.json')).read_text(encoding='utf-8'))
             check_identity(identity, expected['identity'])
             reference_path = baseline / (args.case + '.png')
-            assert digest(reference_path) == expected['image_sha256'], 'Reference PNG checksum changed'
+            require(digest(reference_path) == expected['image_sha256'], 'Reference PNG checksum changed')
             reference = read_pixels(reference_path)
             comparison = compare_pixels(actual, reference, regions)
             report.update(status=comparison['status'], comparison=comparison)
@@ -318,7 +326,7 @@ def main():
             module('blender.project').save_project(project_path)
             relocated = {key: bpy.path.relpath(bpy.path.abspath(obj['qc_dataset']))
                          for key, obj in objects.items() if key in datasets}
-            assert set(relocated) == set(datasets)
+            require(set(relocated) == set(datasets), 'Portable project is missing a Dataset')
             bpy.context.scene['qc_visual_baseline'] = json.dumps(dict(case=args.case, datasets=relocated,
                 scientific_arrays=scientific, input_sha256=source_sha))
             bpy.ops.wm.save_as_mainfile(filepath=str(project_path))
