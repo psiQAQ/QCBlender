@@ -35,6 +35,16 @@ def module(name):
     return importlib.import_module(MODULE + '.' + name)
 
 
+def verify_installed_python(installed, checkout):
+    installed_hashes = {p.relative_to(installed).as_posix(): sha256(p) for p in sorted(installed.rglob('*.py'))}
+    checkout_hashes = {p.relative_to(checkout).as_posix(): sha256(p) for p in sorted(checkout.rglob('*.py'))}
+    if installed_hashes != checkout_hashes:
+        changed = sorted(name for name in installed_hashes.keys() | checkout_hashes.keys()
+                         if installed_hashes.get(name) != checkout_hashes.get(name))
+        raise ValueError('Installed Python differs from current checkout: ' + ', '.join(changed))
+    return installed_hashes
+
+
 def positive(value):
     number = int(value)
     if number < 1:
@@ -115,6 +125,7 @@ def enable(args, report):
     installed = Path(importlib.import_module(MODULE).__file__).resolve().parent
     if not installed.is_relative_to(profile):
         raise ValueError('Installed extension escapes isolated profile')
+    installed_hashes = verify_installed_python(installed, ROOT / 'qcblender')
     from importlib.metadata import version
     cpu = platform.processor()
     if os.name == 'nt':
@@ -126,7 +137,8 @@ def enable(args, report):
         'python': platform.python_version(), 'numpy': version('numpy'), 'qc_gbasis': version('qc-gbasis')},
         provenance={'source_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
                     'installed_root': str(installed),
-                    'installed_python_sha256': {p.relative_to(installed).as_posix(): sha256(p) for p in sorted(installed.rglob('*.py'))},
+                    'installed_python_sha256': installed_hashes,
+                    'checkout_python_match': True,
                     'tool_sha256': {name: sha256(ROOT / 'tools' / name) for name in ('benchmark_fields.py', 'benchmark_display.py')}},
         source={'path': str(SOURCE), 'sha256': sha256(SOURCE)}, isolated_profile=str(profile), jobs_root=str(jobs),
         parameters={'repeats': args.repeats, 'warmups': args.warmups, 'timeout': args.timeout,
@@ -249,6 +261,10 @@ def compare(report, baseline):
         incompatible.append('baseline status')
     if incompatible:
         return {'status': 'Not Comparable', 'mismatches': incompatible}
+    if not report.get('scientific_identity') or not previous.get('scientific_identity'):
+        raise ValueError('Scientific identity is required in candidate and baseline reports')
+    if report['scientific_identity'] != previous['scientific_identity']:
+        raise ValueError('Scientific identity differs from baseline')
     changes = {}
     for group, metrics in report['summary'].items():
         for metric, value in metrics.items():
@@ -273,6 +289,7 @@ def main():
         source, report['initial_import'] = run_job('import', args.timeout, source=str(SOURCE), source_sha256=sha256(SOURCE))
         original = dataset_identity(source)
         report['source_dataset'] = {'path': str(source), 'identity': original}
+        report['scientific_identity'] = {'source': original, 'fields': {}}
         cache = jobs / 'cache'
         report['summary'] = {}
         for size in args.sizes:
@@ -302,6 +319,7 @@ def main():
                         raise ValueError('Source Dataset or input changed during benchmark')
                     save(args.output, report)
             formal = [trial for trial in report['trials'] if trial['size'] == size]
+            report['scientific_identity']['fields'][str(size)] = expected
             for mode in ('cold', 'hot'):
                 for stage in ('import', 'evaluate'):
                     report['summary'][f'{size}/{mode}/{stage}'] = summary([trial[mode][stage] for trial in formal])

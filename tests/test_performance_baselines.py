@@ -85,6 +85,7 @@ class PerformanceBoundaries(unittest.TestCase):
     def test_incompatible_environment_not_compared_and_speed_change_does_not_fail(self):
         report = {'schema': 1, 'benchmark': 'fields', 'environment': {'blender': '5.1.1'},
                   'parameters': {'sizes': [64]}, 'source': {'sha256': 'source'}, 'status': 'Passed',
+                  'scientific_identity': {'source': 'source', 'fields': {'64': 'array'}},
                   'summary': {'64': {'seconds': {'median': 2}}}}
         baseline = self.root / 'baseline.json'
         baseline.write_text(json.dumps(report), encoding='utf-8')
@@ -94,6 +95,51 @@ class PerformanceBoundaries(unittest.TestCase):
         self.assertEqual(result['changes']['64/seconds']['percent_change'], 200)
         report['environment']['blender'] = 'different'
         self.assertEqual(benchmark.compare(report, baseline)['status'], 'Not Comparable')
+
+    def test_fields_and_display_identity_changes_fail_before_speed_comparison(self):
+        array_identity = {'source_sha256': 'source', 'arrays': {'orbital': {'sha256': 'field-array'}}}
+        for kind, identity in (('fields', {'source': 'source', 'fields': {'64': array_identity}}),
+                               ('display', {'source': 'source', 'field': array_identity})):
+            with self.subTest(kind=kind):
+                report = {'schema': 1, 'benchmark': kind, 'environment': {'blender': '5.1.1'},
+                          'parameters': {}, 'source': {'sha256': 'source'}, 'status': 'Passed',
+                          'scientific_identity': identity, 'summary': {}}
+                baseline = self.root / (kind + '.json')
+                baseline.write_text(json.dumps(report), encoding='utf-8')
+                changed = json.loads(json.dumps(identity))
+                field = changed['fields']['64'] if kind == 'fields' else changed['field']
+                field['arrays']['orbital']['sha256'] = 'changed-array'
+                report['scientific_identity'] = changed
+                with self.assertRaisesRegex(ValueError, 'differs from baseline'):
+                    benchmark.compare(report, baseline)
+
+    def test_missing_scientific_identity_in_either_report_fails(self):
+        report = {'schema': 1, 'benchmark': 'fields', 'environment': {}, 'parameters': {},
+                  'source': {'sha256': 'source'}, 'status': 'Passed', 'summary': {}}
+        baseline = self.root / 'missing.json'
+        baseline.write_text(json.dumps(report), encoding='utf-8')
+        report['scientific_identity'] = {'source': 'source'}
+        with self.assertRaisesRegex(ValueError, 'required'):
+            benchmark.compare(report, baseline)
+        baseline.write_text(json.dumps(report), encoding='utf-8')
+        del report['scientific_identity']
+        with self.assertRaisesRegex(ValueError, 'required'):
+            benchmark.compare(report, baseline)
+
+    def test_installed_python_requires_exact_file_set_and_bytes(self):
+        installed, checkout = self.root / 'installed', self.root / 'checkout'
+        installed.mkdir()
+        checkout.mkdir()
+        for directory in (installed, checkout):
+            (directory / 'worker.py').write_bytes(b'science\r\n')
+        self.assertIn('worker.py', benchmark.verify_installed_python(installed, checkout))
+        (installed / 'worker.py').write_bytes(b'changed\r\n')
+        with self.assertRaisesRegex(ValueError, 'worker.py'):
+            benchmark.verify_installed_python(installed, checkout)
+        (installed / 'worker.py').write_bytes(b'science\r\n')
+        (installed / 'extra.py').write_bytes(b'extra')
+        with self.assertRaisesRegex(ValueError, 'extra.py'):
+            benchmark.verify_installed_python(installed, checkout)
 
     def test_nondefault_cli_and_grid_have_explicit_parameters(self):
         args = benchmark.parser('test').parse_args(['--output', str(self.root / 'out'), '--profile-root', str(self.root),
