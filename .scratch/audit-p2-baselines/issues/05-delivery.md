@@ -1,7 +1,7 @@
 # main 合并、归档、清理与推送
 
 Triage: ready-for-agent
-Status: pending
+Status: claimed
 Type: task
 Blocked by: 04
 

@@ -1,8 +1,16 @@
 # 产物查找入口
 
-更新：2026-10-03。本页路由当前文件、归档身份、重建方法与阻塞；各原始报告保留其执行时的状态和候选身份。任务状态在 `.scratch/`，开发顺序见 [DEVELOPMENT](DEVELOPMENT.md)，保留与清理边界见 [维护规则](agents/storage-maintenance.md)。
+更新：2026-10-04。本页路由当前文件、归档身份、重建方法与阻塞；各原始报告保留其执行时的状态和候选身份。任务状态在 `.scratch/`，开发顺序见 [DEVELOPMENT](DEVELOPMENT.md)，保留与清理边界见 [维护规则](agents/storage-maintenance.md)。
 
 ## 当前交付
+
+当前候选为`outputs/candidates/current/audit-p2-49872b0/qcblender-0.0.1.zip`，50,635,805字节，SHA-256 `41cd978f36737236049fc901504c0196f4e6499adc891f1d2f09e2fabf4cebfd`。产品源码树`f3742ab452dd96a357bb7e17c1dfa55934b8897d`；[本批验证](acceptance/audit-p2-baselines-validation.md)、[机器索引](acceptance/audit-p2-baselines-validation.json)。本地资格Passed，独立人工签署Not Run。
+
+证据位于`outputs/evidence/2026-10-04/audit-p2/`：`evidence-index.json`与`qualification.json`绑定当前候选；`preservation-map.json`保存原始路径及SHA-256，全部成功/失败报告字节保留。六个参考工程在`outputs/projects/audit-p2/visual/<case>/`，实际GUI工程在`outputs/projects/audit-p2/gui/p2-verified.blend + .qcdata/`；迁移后冷重开报告在`delivery-cold/`。基准PNG/JSON在`tests/data/visual-baseline/`，重建与运行见[基准说明](acceptance/visual-performance-baselines.md)。
+
+本批归档、清理及远端交付以[交付收据](acceptance/audit-p2-delivery.json)为准；旧f458/b48c继续保持既有延期状态。
+
+## 2026-10-02 显示/XYZ/CSV历史交付
 
 | 对象 | 当前入口与状态 |
 | --- | --- |

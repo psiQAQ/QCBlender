@@ -1,5 +1,7 @@
 # 开发演进
 
+- 2026-10-04：修复Gaussian首段SCF前失败时遗漏后续任务边界，以及ETS-NOCV重复记录遗漏正负本征值/单轨道能量冲突。建立六场景固定视觉基准和64³/128³/256³、1/8/32视图性能采样；91科学测试、17基准单测、28视觉检查、原生GUI与工程冷读Passed。Standards/Spec各1项已修复、0遗留；独立人工签署Not Run，两项P1仍在范围外。[验证](acceptance/audit-p2-baselines-validation.md)与[产物路由](ARTIFACTS.md)记录候选、工程、原始成功失败报告；本批合并、注释标签、工作树清理和推送状态见[交付收据](acceptance/audit-p2-delivery.json)。
+
 - 2026-10-03：完成固定96f9c7e的插件完成度与六参考对象调研。82科学测试、30相关单测通过（1项Windows跳过），候选安装、XYZ/七类CSV、来源浏览及保存/迁移冷读Passed；四类产品缺陷未修复，两类P1实际点击复现。十维比较、五项改进建议和证据见[调研报告](research/qcblender-completion-audit-2026-10-03.md)。保全工程与日志后清理6,036文件/500,234,681字节，74份已核对副本的原件因权限边界保留；独立人工/科研签署Not Run。研究工作树未提交/合并，产品与依赖未改，未push/发布。
 
 - 2026-10-03：展示/XYZ/CSV任务本地ff-only收尾；四个注释archive标签、本轮四工作树及分支正常移除，已归档cleanup-followup旧分支删除。清理11,095文件/1,073,258,330字节，保留最新候选、工程、输入和必要证据；清理后重建与12Dataset/249数组/1VDB原生冷读Passed。旧f458权限及空b48c占用单列延期，独立签署Not Run；收据见[产物路由](ARTIFACTS.md)与[清理索引](acceptance/display-xyz-export-cleanup.json)，不push/发布。

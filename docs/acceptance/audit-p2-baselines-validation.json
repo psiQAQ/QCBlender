@@ -1,0 +1,71 @@
+{
+  "status": "Passed",
+  "date": "2026-10-04",
+  "source_commit": "ad2a936f2d99fa5af6b37ff720d5ccb3abd0845a",
+  "product_tree": "f3742ab452dd96a357bb7e17c1dfa55934b8897d",
+  "candidate": {
+    "path": "outputs/candidates/current/audit-p2-49872b0/qcblender-0.0.1.zip",
+    "sha256": "41cd978f36737236049fc901504c0196f4e6499adc891f1d2f09e2fabf4cebfd",
+    "bytes": 50635805
+  },
+  "evidence": "outputs/evidence/2026-10-04/audit-p2",
+  "qualification": "qualification.json",
+  "checks": {
+    "science": {
+      "status": "Passed",
+      "tests": 91,
+      "skipped": 0
+    },
+    "baseline_unit_tests": {
+      "status": "Passed",
+      "tests": 17
+    },
+    "visual": {
+      "status": "Passed",
+      "repeat_runs": 18,
+      "cold_reopens": 6,
+      "detected_mutations": 4
+    },
+    "performance": {
+      "status": "Passed",
+      "warmups": 1,
+      "repeats": 5,
+      "field_sizes": [
+        64,
+        128,
+        256
+      ],
+      "view_counts": [
+        1,
+        8,
+        32
+      ]
+    },
+    "native_gui_and_saved_project": "Passed",
+    "independent_human_acceptance": "Not Run"
+  },
+  "review": {
+    "status": "Passed",
+    "base": "26fa9c99bc6011441e9c1981cefb4c79fa742223",
+    "standards": {
+      "found": 1,
+      "resolved": 1,
+      "remaining": 0,
+      "fix": "ad2a936",
+      "finding": "Optimization could remove assert-wrapped visual operator calls; replaced with explicit checks."
+    },
+    "spec": {
+      "found": 1,
+      "resolved": 1,
+      "remaining": 0,
+      "fix": "b59700c",
+      "finding": "Performance baseline comparison lacked scientific array identity checks; strict comparison and mutation tests added."
+    },
+    "independent_human_acceptance": "Not Run"
+  },
+  "remaining_out_of_scope": [
+    "AUDIT-01 current-step geometry association",
+    "AUDIT-04 shared mesh step identity"
+  ],
+  "artifact_routes": "docs/ARTIFACTS.md"
+}

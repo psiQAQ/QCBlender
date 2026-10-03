@@ -52,7 +52,7 @@ GUI前置环境的失败记录另行保留：首次沙箱GUI未暴露可操作�
 
 ## 2. 四类产品缺陷及维护缺口
 
-优先级按影响建议：P1为可能使科学身份与显示内容静默不一致，P2为特定输入边界下的解析或说明错误。所有缺陷均对应当前固定源码，尚未修复。复现报告中的`execution_status`或`verification_status=Passed`表示测试达成了预期复现，不能解释为缺陷产品行为通过。
+优先级按影响建议：P1为可能使科学身份与显示内容静默不一致，P2为特定输入边界下的解析或说明错误。以下缺陷均对应审计固定源码96f9c7e；后续AUDIT-02/03已修复并验证，AUDIT-01/04仍未修复，见[当前验证](../acceptance/audit-p2-baselines-validation.md)。复现报告中的`execution_status`或`verification_status=Passed`表示测试达成了预期复现，不能解释为缺陷产品行为通过。
 
 ### 2.1 AUDIT-01 / P1：动态构型关联使用基础Dataset，忽略当前步骤
 
@@ -249,4 +249,4 @@ ORCA、Molden、`.mwfn`、周期体系、Hide Dust、DI/ESM 及新科学分析�
 
 本次独立安装环境和已保全的原副本共6,036文件、500,234,681字节已删除；这是删除文件大小之和，不是全仓净节省。十个权限目录内74文件、207,636字节已由创建用户读取复制并核对摘要，原件继续保留，未修改ACL或所有权；因此[清理状态为Partial](D:/workspace/QCBlender/outputs/evidence/2026-10-03/plugin-audit/cleanup-receipt.json)。所有本批Blender进程已正常退出。
 
-产物统一由[ARTIFACTS](../ARTIFACTS.md)定位。最终报告、产物路由、CHANGELOG和本任务状态保存在`.worktrees/plugin-audit`的`research/plugin-audit`分支，尚未提交或合并；主检出、产品源码和依赖保持不变。最终摘要与链接检查见[final-verification.json](D:/workspace/QCBlender/outputs/evidence/2026-10-03/plugin-audit/final-verification.json)。
+产物统一由[ARTIFACTS](../ARTIFACTS.md)定位。研究报告已提交为`26fa9c9`并合入main。后续两项P2与基准实现、归档身份和当前候选由[ARTIFACTS](../ARTIFACTS.md)及[修复验证](../acceptance/audit-p2-baselines-validation.md)定位；原始审计证据保持原身份。最终摘要与链接检查见[final-verification.json](D:/workspace/QCBlender/outputs/evidence/2026-10-03/plugin-audit/final-verification.json)。

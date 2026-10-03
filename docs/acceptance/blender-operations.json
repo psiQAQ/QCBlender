@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-10-02",
+  "updated": "2026-10-04",
   "rules": "docs/agents/blender-interaction.md",
   "operation_ids_are_stable": true,
   "history_is_not_current_batch_pass": true,
@@ -5658,6 +5658,140 @@
           }
         ]
       }
+    },
+    {
+      "id": "gaussian-pre-scf-failure-and-good-job",
+      "title": "Gaussian SCF前失败段与后续正常任务",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-04",
+        "method": "Agent Computer Use native confirmation; MCP dialog preparation and readback",
+        "source_commit": "ad2a936f2d99fa5af6b37ff720d5ccb3abd0845a",
+        "product_tree": "f3742ab452dd96a357bb7e17c1dfa55934b8897d",
+        "candidate_sha256": "41cd978f36737236049fc901504c0196f4e6499adc891f1d2f09e2fabf4cebfd",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "无活动对象要求；原生导入对话框中拒绝无显式构型的失败段，选择第二正常任务并导入3原子，能量为-75.002282127454 Hartree。",
+        "visible_entry": "3D视图 N侧栏 → QCBlender → 工作流 / 外部分析",
+        "validated_scope": "无活动对象要求；原生导入对话框中拒绝无显式构型的失败段，选择第二正常任务并导入3原子，能量为-75.002282127454 Hartree。",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p2/gui/checks.json",
+            "sha256": "69e3290ffed8a6aadd051c2017ebf203d5dbc8195e798d12c51525927306ad5f",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p2/gui/cold-reopen.json",
+            "sha256": "69baf4f57305a9aa258b6e4b75a510398f80484aa0b7e497c4146b38bce73011",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p2/installed-p2/checks.json",
+            "sha256": "8ff52cdb7c7003ae766adb7cee32b9dfb3f58c0a2cc69bbbe1ce1ef2f229e029",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/audit-p2/gaussian-two-jobs.png",
+            "sha256": "5c9c297625ccba45404699444b62383241c83b9b7cf352bd8b502e9621b8b217"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/audit-p2/gaussian-failed-error.png",
+            "sha256": "cea0b254a325372bff1b1c23039c5928f3679a766162c4ebf237c2e9365c078c"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/audit-p2/gaussian-normal-preview.png",
+            "sha256": "eb14128b2704552f2c797272359486fd34cd987f41b8647bd44d84b1a0f7c689"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/audit-p2/gaussian-imported.png",
+            "sha256": "cb8db7428a9213f9a419e61b8e0fcc967c700cf4dbff5c40bf7b82e5588a7610"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/gaussian_log.py": "c368a323107c2cce0c892667e608a66c3096ead4e5567987eafafdeabd68610d",
+        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642"
+      },
+      "fingerprint_review": "Also inspect registration, shared helpers, public interfaces and dependencies before reuse.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "coverage": "无活动对象要求；原生导入对话框中拒绝无显式构型的失败段，选择第二正常任务并导入3原子，能量为-75.002282127454 Hartree。"
+      },
+      "independent_human_acceptance": "Not Run"
+    },
+    {
+      "id": "ets-nocv-complete-duplicate-conflicts",
+      "title": "ETS-NOCV完整字段重复检查",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-04",
+        "method": "Agent Computer Use native confirmation; MCP dialog preparation and readback",
+        "source_commit": "ad2a936f2d99fa5af6b37ff720d5ccb3abd0845a",
+        "product_tree": "f3742ab452dd96a357bb7e17c1dfa55934b8897d",
+        "candidate_sha256": "41cd978f36737236049fc901504c0196f4e6499adc891f1d2f09e2fabf4cebfd",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "仅选择CO-BH3参考对象；冲突表报告positive_eigenvalue和来源行7/24且场景不变；相同重复表导入9对并保留首次来源。其余三个字段由原生CLI验证。",
+        "visible_entry": "3D视图 N侧栏 → QCBlender → 导入外部结果 → ETS-NOCV 表",
+        "validated_scope": "仅选择CO-BH3参考对象；冲突表报告positive_eigenvalue和来源行7/24且场景不变；相同重复表导入9对并保留首次来源。其余三个字段由原生CLI验证。",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p2/gui/checks.json",
+            "sha256": "69e3290ffed8a6aadd051c2017ebf203d5dbc8195e798d12c51525927306ad5f",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p2/gui/cold-reopen.json",
+            "sha256": "69baf4f57305a9aa258b6e4b75a510398f80484aa0b7e497c4146b38bce73011",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p2/installed-p2/checks.json",
+            "sha256": "8ff52cdb7c7003ae766adb7cee32b9dfb3f58c0a2cc69bbbe1ce1ef2f229e029",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/audit-p2/nocv-conflict-dialog.png",
+            "sha256": "172868841a546bb8d9fca7bb368edd4a39688ef4f0878d08ec197aaf214c48ea"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/audit-p2/nocv-conflict-error.png",
+            "sha256": "89058c399418fa63174561d65ffcbcbd68860a54e4b38c4ee2b9ab42036dd47e"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/audit-p2/nocv-identical-dialog.png",
+            "sha256": "b6718a46ee9187f630c735fc02b5d711f7aab088b03aa95b6d3b0072a71958e6"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/audit-p2/nocv-imported.png",
+            "sha256": "50df0501d32631895410c1b5b7cd5d2c4c64422e64ca7335ba5f2bb09ec51dbb"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/external_results.py": "4edc83e56a0ec9f8744c4917d6de92c76dbe2ee9c99ad90f3e3989ea66b958a7",
+        "qcblender/blender/external_results.py": "c5dd538d0ab99bf24050f60efe1f2ca159e08d6d3a9462206e308393abb43d26"
+      },
+      "fingerprint_review": "Also inspect registration, shared helpers, public interfaces and dependencies before reuse.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "coverage": "仅选择CO-BH3参考对象；冲突表报告positive_eigenvalue和来源行7/24且场景不变；相同重复表导入9对并保留首次来源。其余三个字段由原生CLI验证。"
+      },
+      "independent_human_acceptance": "Not Run"
     }
   ]
 }
