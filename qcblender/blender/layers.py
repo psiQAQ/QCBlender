@@ -127,6 +127,9 @@ def copy_layer(source, collection):
         from .geometry import current_geometry
         prepare_annotations(source, *current_geometry(source))
     obj = source.copy()
+    if 'qc_association' in obj:
+        del obj['qc_association']
+    obj.qc_settings.association_reference = None
     obj.data = source.data.copy()
     collection.objects.link(obj)
     materials = {}

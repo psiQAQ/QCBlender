@@ -18,6 +18,7 @@ def set_step(obj, data, step):
     from ..geometry import scientific_geometry
     from .geometry import current_geometry
     from .annotations import prepare_annotations, apply_annotations
+    from .association import prepare_association_invalidation, apply_association_invalidation
     current_geometry(obj, data)
     if obj.data.users > 1:
         raise ValueError('Optimization step changes require an independent atom mesh; make Object Data single-user first')
@@ -37,6 +38,7 @@ def set_step(obj, data, step):
         raise ValueError('Optimization atom identities or ordering changed')
     serialized = json.dumps(trajectory['steps'][step - 1])
     prepared = prepare_annotations(obj, positions, record)
+    associations = prepare_association_invalidation(obj, record)
     obj.data.vertices.foreach_set('co', positions.ravel())
     obj.data.attributes['qc_equilibrium_position'].data.foreach_set('vector', positions.ravel())
     obj.data.update()
@@ -44,6 +46,7 @@ def set_step(obj, data, step):
     obj['qc_optimization_count'] = len(trajectory['steps'])
     obj['qc_optimization_record'] = serialized
     apply_annotations(prepared)
+    apply_association_invalidation(associations)
     obj.update_tag()
 
 
