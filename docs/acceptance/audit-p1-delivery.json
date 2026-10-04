@@ -1,10 +1,113 @@
 {
-  "status": "In progress",
-  "source_commit": "a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d",
+  "status": "Passed",
+  "date": "2026-10-04",
+  "qualified_main_commit": "747ae8d19f28107bf98f5dc2c240e23d3d1e914b",
+  "product_source_commit": "a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d",
   "product_tree": "c1a5bc48b035434c4a3245909e1e629bec4f0665",
-  "candidate_sha256": "039306fdcbf908bc020b29246f54dc2f8e2459e9413844b1a80a45ec5b036fb9",
   "evidence": "outputs/evidence/2026-10-04/audit-p1",
-  "technical_validation": "Passed",
-  "archive_cleanup_push": "Not Run",
-  "independent_human_acceptance": "Not Run"
+  "candidate_sha256": "039306fdcbf908bc020b29246f54dc2f8e2459e9413844b1a80a45ec5b036fb9",
+  "qualification": "qualification-main.json",
+  "candidate_bound_reports": 50,
+  "tags": [
+    {
+      "branch": "fix/audit-p1",
+      "worktree": "D:\\workspace\\QCBlender\\.worktrees\\audit-p1",
+      "tag": "archive/2026-10-04/fix/audit-p1",
+      "commit": "747ae8d19f28107bf98f5dc2c240e23d3d1e914b",
+      "reachable_from_main": true
+    },
+    {
+      "branch": "fix/current-geometry-association",
+      "worktree": "D:\\workspace\\QCBlender\\.worktrees\\p1-association",
+      "tag": "archive/2026-10-04/fix/current-geometry-association",
+      "commit": "dceec32da8a2278b70241e6b114f8035b60773c8",
+      "reachable_from_main": true
+    },
+    {
+      "branch": "fix/shared-mesh-steps",
+      "worktree": "D:\\workspace\\QCBlender\\.worktrees\\p1-shared-mesh",
+      "tag": "archive/2026-10-04/fix/shared-mesh-steps",
+      "commit": "14037dcc97c2dbe46b05eccacb7970a90b2c7ced",
+      "reachable_from_main": true
+    }
+  ],
+  "worktree_removal": {
+    "status": "Passed",
+    "tasks": [
+      {
+        "branch": "fix/audit-p1",
+        "worktree": "D:\\workspace\\QCBlender\\.worktrees\\audit-p1",
+        "tag": "archive/2026-10-04/fix/audit-p1",
+        "commit": "747ae8d19f28107bf98f5dc2c240e23d3d1e914b",
+        "reachable_from_main": true,
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "",
+        "branch_exit_code": 0,
+        "branch_output": "Deleted branch fix/audit-p1 (was 747ae8d).\n"
+      },
+      {
+        "branch": "fix/current-geometry-association",
+        "worktree": "D:\\workspace\\QCBlender\\.worktrees\\p1-association",
+        "tag": "archive/2026-10-04/fix/current-geometry-association",
+        "commit": "dceec32da8a2278b70241e6b114f8035b60773c8",
+        "reachable_from_main": true,
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "",
+        "branch_exit_code": 0,
+        "branch_output": "Deleted branch fix/current-geometry-association (was dceec32).\n"
+      },
+      {
+        "branch": "fix/shared-mesh-steps",
+        "worktree": "D:\\workspace\\QCBlender\\.worktrees\\p1-shared-mesh",
+        "tag": "archive/2026-10-04/fix/shared-mesh-steps",
+        "commit": "14037dcc97c2dbe46b05eccacb7970a90b2c7ced",
+        "reachable_from_main": true,
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "",
+        "branch_exit_code": 0,
+        "branch_output": "Deleted branch fix/shared-mesh-steps (was 14037dc).\n"
+      }
+    ]
+  },
+  "cleanup": {
+    "status": "Passed",
+    "deleted_files": 16801,
+    "deleted_bytes": 812107170,
+    "retained": [],
+    "protected_hashes": "Passed",
+    "measurement": "Sum of deleted manifest file sizes; excludes git worktree removal and new evidence, not whole-repository net change"
+  },
+  "post_cleanup_verification": {
+    "status": "Passed",
+    "main_commit": "747ae8d19f28107bf98f5dc2c240e23d3d1e914b",
+    "preservation_entries": 2407,
+    "worktree_ignored_files": 47,
+    "protected_files": 600,
+    "candidate_bound_checks": 50,
+    "main_product_files": 72,
+    "operation_reports_and_screenshots": "Passed",
+    "removed_worktrees": 3,
+    "deleted_files": 16801,
+    "deleted_bytes": 812107170
+  },
+  "push": {
+    "status": "Passed",
+    "head": "747ae8d19f28107bf98f5dc2c240e23d3d1e914b",
+    "remote_before": "d76aa4cd1390fa5704e8378c0adcff07bf38d415",
+    "url": "https://github.com/psiQAQ/QCBlender.git",
+    "refspec": "main:main",
+    "force": false,
+    "tags": false,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "To https://github.com/psiQAQ/QCBlender.git\n   d76aa4c..747ae8d  main -> main\n",
+    "remote_after": "747ae8d19f28107bf98f5dc2c240e23d3d1e914b",
+    "tracking_after": "747ae8d19f28107bf98f5dc2c240e23d3d1e914b"
+  },
+  "final_documentation_push_receipt": "outputs/evidence/2026-10-04/audit-p1/closing/push-main-final.json",
+  "independent_human_acceptance": "Not Run",
+  "unrelated_legacy_cleanup": "Deferred objects remain unchanged; see ARTIFACTS.md"
 }

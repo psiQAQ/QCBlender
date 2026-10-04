@@ -9,7 +9,7 @@
     "bytes": 50638451
   },
   "evidence": "outputs/evidence/2026-10-04/audit-p1",
-  "qualification": "qualification-final.json",
+  "qualification": "qualification-main.json",
   "checks": {
     "science": {
       "status": "Passed",
@@ -55,5 +55,6 @@
   },
   "artifact_routes": "docs/ARTIFACTS.md",
   "rebuild": "Use DEVELOPMENT.md with the locked wheels; run tools/run_science_tests.py, verify_audit_p1_association.py, verify_audit_p1_shared_mesh.py and render_visual_baseline.py in a fresh isolated Blender profile; qualify the new ZIP separately.",
-  "candidate_bound_reports": 50
+  "candidate_bound_reports": 50,
+  "qualified_main_commit": "747ae8d19f28107bf98f5dc2c240e23d3d1e914b"
 }

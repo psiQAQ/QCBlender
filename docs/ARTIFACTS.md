@@ -6,7 +6,9 @@
 
 当前候选为`outputs/candidates/current/audit-p1-a4baaaf/qcblender-0.0.1.zip`，50638451字节，SHA-256 `039306fdcbf908bc020b29246f54dc2f8e2459e9413844b1a80a45ec5b036fb9`。产品源码`a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d`，产品树`c1a5bc48b035434c4a3245909e1e629bec4f0665`；[P1验证](acceptance/audit-p1-validation.md)及[机器索引](acceptance/audit-p1-validation.json)记录97科学测试、六视觉场景及其迁移冷读、原生关联/共享mesh、GUI/Undo/Redo和保存冷重开Passed。独立人工签署Not Run。
 
-证据位于`outputs/evidence/2026-10-04/audit-p1/`；`evidence-index.json`及`qualification-final.json`绑定候选，`preservation-map.json`保存旧路径和原字节摘要。工程在`outputs/projects/audit-p1/{native,visual,gui}/`。完整本地归档与推送状态见[交付收据](acceptance/audit-p1-delivery.json)。重建沿用[开发说明](DEVELOPMENT.md)的共用环境与11锁定wheels，在新批次运行本批脚本并重新资格验证。
+证据位于`outputs/evidence/2026-10-04/audit-p1/`；`evidence-index.json`及`qualification-main.json`绑定候选，`preservation-map.json`保存旧路径和原字节摘要。工程在`outputs/projects/audit-p1/{native,visual,gui}/`。完整本地归档与推送状态见[交付收据](acceptance/audit-p1-delivery.json)。重建沿用[开发说明](DEVELOPMENT.md)的共用环境与11锁定wheels，在新批次运行本批脚本并重新资格验证。
+
+本批main已ff-only合并并普通HTTPS推送，远端回读`747ae8d`；三个注释归档标签、三个工作树/分支正常移除Passed。清单删除16,801文件/812,107,170字节，600个保护文件及2,407条保全映射摘要复核Passed。该数值为删除文件大小总和，不是全仓净空间变化。最终文档推送回读及完整身份见上述交付收据；旧权限/占用对象保持原状。
 
 ## 2026-10-04 P2与基准历史交付
 
