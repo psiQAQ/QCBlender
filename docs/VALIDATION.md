@@ -1,10 +1,14 @@
 # 0.0.1 支持范围与验证状态
 
-更新：2026-10-02。当前本地待验收候选使用Windows x64、Blender 5.1.1、CPython 3.13.9、NumPy 2.3.4、OpenVDB 13。独立使用者及科研签署尚未执行，未发布。
+更新：2026-10-04。当前本地待验收候选使用Windows x64、Blender 5.1.1、CPython 3.13.9、NumPy 2.3.4、OpenVDB 13。独立使用者及科研签署尚未执行，未发布。
 
 ## 当前候选与证据
 
-固定源码为`9d3ff61d2e32c47357fe624cf93052bfed6dd041`；产品树、文件/候选/输入摘要、实际命令、42份本批通过报告及GUI身份见[展示精度、XYZ与CSV验证索引](acceptance/display-xyz-export-validation.json)。后续文档和收尾提交不改变该候选身份。产物位置和重建入口见[ARTIFACTS](ARTIFACTS.md)。历史[公共教程资格](acceptance/tutorial-final-qualification.json)与[清理验证](acceptance/cleanup-validation.json)保留原批次身份。
+当前候选固定产品源码为`a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d`，详见[P1技术验证](acceptance/audit-p1-validation.md)及[机器索引](acceptance/audit-p1-validation.json)。97科学测试、当前构型关联/共享mesh原生与GUI、Undo/Redo、原地/中文移动及最终保全冷读Passed，六固定视觉场景比较Passed；独立使用者和科研签署Not Run。
+
+## 历史展示、XYZ与CSV批次
+
+以下表格保持2026-10-02批次范围。固定源码为`9d3ff61d2e32c47357fe624cf93052bfed6dd041`；产品树、文件/候选/输入摘要、实际命令、42份本批通过报告及GUI身份见[展示精度、XYZ与CSV验证索引](acceptance/display-xyz-export-validation.json)。后续文档和收尾提交不改变该候选身份。产物位置和重建入口见[ARTIFACTS](ARTIFACTS.md)。历史[公共教程资格](acceptance/tutorial-final-qualification.json)与[清理验证](acceptance/cleanup-validation.json)保留原批次身份。
 
 | 检查 | 状态 | 本批实际范围 |
 | --- | --- | --- |

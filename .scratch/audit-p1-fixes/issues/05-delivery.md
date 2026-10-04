@@ -1,7 +1,7 @@
 # 评审与完整交付
 
 Triage: ready-for-agent
-Status: pending
+Status: claimed
 Type: task
 Blocked by: 04
 

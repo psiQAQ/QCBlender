@@ -1,0 +1,59 @@
+{
+  "status": "Passed",
+  "date": "2026-10-04",
+  "source_commit": "a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d",
+  "product_tree": "c1a5bc48b035434c4a3245909e1e629bec4f0665",
+  "candidate": {
+    "path": "outputs/candidates/current/audit-p1-a4baaaf/qcblender-0.0.1.zip",
+    "sha256": "039306fdcbf908bc020b29246f54dc2f8e2459e9413844b1a80a45ec5b036fb9",
+    "bytes": 50638451
+  },
+  "evidence": "outputs/evidence/2026-10-04/audit-p1",
+  "qualification": "qualification-final.json",
+  "checks": {
+    "science": {
+      "status": "Passed",
+      "tests": 97,
+      "skipped": 0
+    },
+    "native_association": "Passed",
+    "shared_mesh": "Passed",
+    "visual": {
+      "status": "Passed",
+      "cases": 6,
+      "retained_cold_reopens": 6
+    },
+    "gui_and_undo_redo": "Passed",
+    "native_original_and_chinese_moved_cold": "Passed",
+    "gui_cold_reopens": 2,
+    "independent_human_acceptance": "Not Run"
+  },
+  "review": {
+    "status": "Passed",
+    "base": "d76aa4cd1390fa5704e8378c0adcff07bf38d415",
+    "head": "a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d",
+    "standards": {
+      "found": 1,
+      "resolved": 1,
+      "remaining": 0,
+      "finding": "Validation report reuse could overwrite evidence; fresh output preflight now precedes mutation.",
+      "fix": "a4baaaf",
+      "re_review": "Passed"
+    },
+    "spec": {
+      "found": 1,
+      "resolved": 1,
+      "remaining": 0,
+      "finding": "Damaged incoming association records could be invalidated instead of rejecting the step; full schema and rigid transform validation added before writes.",
+      "fix": "a4baaaf",
+      "re_review": "Passed"
+    },
+    "nonblocking_suggestions": [
+      "Avoid repeated source conversions if profiling shows a benefit."
+    ],
+    "independent_human_acceptance": "Not Run"
+  },
+  "artifact_routes": "docs/ARTIFACTS.md",
+  "rebuild": "Use DEVELOPMENT.md with the locked wheels; run tools/run_science_tests.py, verify_audit_p1_association.py, verify_audit_p1_shared_mesh.py and render_visual_baseline.py in a fresh isolated Blender profile; qualify the new ZIP separately.",
+  "candidate_bound_reports": 50
+}

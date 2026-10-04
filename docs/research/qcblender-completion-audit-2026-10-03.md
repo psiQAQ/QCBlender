@@ -52,7 +52,7 @@ GUI前置环境的失败记录另行保留：首次沙箱GUI未暴露可操作�
 
 ## 2. 四类产品缺陷及维护缺口
 
-优先级按影响建议：P1为可能使科学身份与显示内容静默不一致，P2为特定输入边界下的解析或说明错误。以下缺陷均对应审计固定源码96f9c7e；后续AUDIT-02/03已修复并验证，AUDIT-01/04仍未修复，见[当前验证](../acceptance/audit-p2-baselines-validation.md)。复现报告中的`execution_status`或`verification_status=Passed`表示测试达成了预期复现，不能解释为缺陷产品行为通过。
+优先级按影响建议：P1为可能使科学身份与显示内容静默不一致，P2为特定输入边界下的解析或说明错误。以下缺陷均对应审计固定源码96f9c7e；后续AUDIT-02/03与AUDIT-01/04均已修复并验证，分别见[P2验证](../acceptance/audit-p2-baselines-validation.md)及[P1当前验证](../acceptance/audit-p1-validation.md)。复现报告中的`execution_status`或`verification_status=Passed`表示测试达成了预期复现，不能解释为缺陷产品行为通过。
 
 ### 2.1 AUDIT-01 / P1：动态构型关联使用基础Dataset，忽略当前步骤
 

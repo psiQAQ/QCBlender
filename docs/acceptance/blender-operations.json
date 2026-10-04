@@ -206,39 +206,112 @@
     },
     {
       "id": "optimization-steps",
-      "title": "优化步切换与独立复制",
+      "title": "优化共享mesh拒绝及独立后换步",
       "gui_validation": {
         "status": "Passed",
-        "date": "2026-10-01",
-        "method": "Agent Computer Use native clicks with MCP read-only assertions",
-        "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
-        "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
-        "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+        "date": "2026-10-04",
+        "method": "Agent Computer Use native clicks; MCP fixture/selection preparation, readback and portable save.",
+        "source_commit": "a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d",
+        "product_tree": "c1a5bc48b035434c4a3245909e1e629bec4f0665",
+        "candidate_sha256": "039306fdcbf908bc020b29246f54dc2f8e2459e9413844b1a80a45ec5b036fb9",
         "blender": "5.1.1",
         "locale": "zh_HANS",
-        "objects_and_order": "活动优化轨迹；复制后只改变副本",
-        "visible_entry": "对象属性 → Optimization Trajectory → Previous / Next / Choose Step",
-        "validated_scope": "P02 Job1：1—4步；副本停2，原层停1；独立 mesh 与外层节点树",
+        "objects_and_order": "P02 Job1优化根对象原生共享副本；当前根单用户后Next。",
+        "visible_entry": "Properties → Object → QCBlender → Optimization Trajectory → Next",
+        "validated_scope": "共享时拒绝无变化，单用户后成功；原件不变，标注、Undo/Redo及冷读。单用户操作MCP复用本批IRC点击。",
         "reports": [
           {
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/optimization-copy-independence.json",
-            "sha256": "ca40ec619526565be66c587b6fb9aa2799885a60a970bff7bb0cc58b7ea9b373",
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/cold-original.json",
+            "sha256": "57cede33808ac50cf3aeb6d160286493fe84ae52b8336083397c22ac53543e27",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/irc-next-redo.json",
+            "sha256": "57918d66d0ba0b6c7e365b3b5896e834dacd449d31afa06e546f0bafd475aee6",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/irc-next-undo.json",
+            "sha256": "dcb574d3ab4a1d650c021c71b6e5b0c8a8e3a6b1a9f2d39ce4e42460554c5163",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/irc-next.json",
+            "sha256": "57918d66d0ba0b6c7e365b3b5896e834dacd449d31afa06e546f0bafd475aee6",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/irc-rejected.json",
+            "sha256": "b8afafceee7dcd3ce8b7f4d2350efd6243150b7a40f384eecca9ca7385e6b5f9",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/irc-single-user-redo.json",
+            "sha256": "16b0c04c24c84765e58e8ecf76401ffad56e4f9c6ad9eebc21b49ecc2c5cf796",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/irc-single-user-undo.json",
+            "sha256": "86f9447055c8e8162c3c79c6ed1bfd61d639e9b50e89fa8b5087f9d07c370628",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/irc-single-user.json",
+            "sha256": "dcb574d3ab4a1d650c021c71b6e5b0c8a8e3a6b1a9f2d39ce4e42460554c5163",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/optimization-next-redo.json",
+            "sha256": "98ccde0c83d724eaf2056222dc1f6dbcb2ae57230775d464db6f3845bab7a108",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/optimization-next-undo.json",
+            "sha256": "970a99cc4225da93263c6af7fe8f0f75785f077caecdba31805cd3bebe073225",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/optimization-next.json",
+            "sha256": "98ccde0c83d724eaf2056222dc1f6dbcb2ae57230775d464db6f3845bab7a108",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/optimization-rejected.json",
+            "sha256": "9119566f9c51f55bd402cee32410bbbd6b281610ac5ae0b011d50abdc68fff9b",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/optimization-single-user.json",
+            "sha256": "50c8c0c6ca6acd89476b43500137a95877ed0722fde9bf6d2ce93bfb96911d64",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/saved.json",
+            "sha256": "ac12780aecd4931510dc85e3df77817f9b18ed49bf0bf626ff6aa6372f605549",
             "status": "Passed"
           }
         ],
         "screenshots": [
           {
-            "path": "docs/v1-acceptance/screenshot/C02-06-portable-saved.jpg",
-            "sha256": "5cebe62cf9685de15c984ec9c53ddabfd6a0c421e6cfa6bbe9384bd2a1b71a9c"
+            "path": "docs/v1-acceptance/screenshot/audit-p1/04-optimization-shared-rejected.png",
+            "sha256": "c2061576feea65fc0ba30409f452b20331447d81c7056dea5b646c910e488476"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/audit-p1/05-optimization-independent-next.png",
+            "sha256": "e3cc9e9def5d1f7ce879f0ca1384110d218682fa494f89b84803d043e32bc919"
           }
         ]
       },
       "implementation_fingerprints": {
-        "qcblender/blender/optimization.py": "7fabbdce3791ecea4d26680589bd816a727d20b494801242278d7e705471823b",
-        "qcblender/blender/copy_display.py": "5248dce188947476bbcb44230fe305dafb31772e59e2c78d4f2235a4d26ca614",
-        "qcblender/blender/properties.py": "e1298699b93264877856bb1d6fd2662a4905f3a056c223c40df15b1af4ab0666",
-        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
-        "qcblender/data.py": "58a45c8c03b99508db1dbd74d36b38bff518d64361b561249a0320293a7c1a70"
+        "qcblender/association.py": "820d06854be2cc9d4598f052f2f97514ca6458c9a6f7212ccc3654d5c70c693a",
+        "qcblender/blender/association.py": "bfdb19361697afd9161ada7222be11e535f05a00a7d54013f24420f55bdd114b",
+        "qcblender/blender/properties.py": "af9bfc6c4346d39d0581eae54cf8d06fc56d31e3a15a034b23c9a3eeb8a6272c",
+        "qcblender/blender/irc.py": "ad7c8481d6b4f3dd12f855275749e385256b1e14b54d7fed697da720a4f3be6f",
+        "qcblender/blender/optimization.py": "63b36697508419442b9d1f64cb81ba68b6596a56f75254b9d0a2ad963d36e8cd",
+        "qcblender/blender/scalars.py": "5f87b7ad022a0e661c090bdfc09c8df3a9b6c34c967dc8301108dc0cb03533c1",
+        "qcblender/blender/interaction.py": "6f974352a7d53749706a40ed0c83ebe1c5fd2f1a857b874529c1614f09da7bc9",
+        "qcblender/blender/source_browser.py": "2693877e7f18e92242c375e4e752e29f08dff195a6515feb1e62e21354e47d47",
+        "qcblender/blender/layers.py": "59e52120e862d8ed10a6c244b329e1866dc58f4c9036e14b6dbcb597d75dbbe4"
       },
       "fingerprint_review": "Include transitive helpers, registration, interfaces and dependency changes when reviewing reuse; listed files are an initial operation-specific set, not exhaustive proof of no impact.",
       "reuse": {
@@ -247,10 +320,60 @@
           "CLI",
           "Computer Use"
         ],
-        "coverage": "MCP 可调用 optimization_step 并核对坐标/来源/能量，复制需沿用已有 helper 并核对独立性",
-        "current_batch_replay_status": "Not Run",
-        "requires_current_result_assertions": true
-      }
+        "coverage": "共享时拒绝无变化，单用户后成功；原件不变，标注、Undo/Redo及冷读。单用户操作MCP复用本批IRC点击。",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed"
+      },
+      "history": [
+        {
+          "id": "optimization-steps",
+          "title": "优化步切换与独立复制",
+          "gui_validation": {
+            "status": "Passed",
+            "date": "2026-10-01",
+            "method": "Agent Computer Use native clicks with MCP read-only assertions",
+            "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+            "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
+            "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+            "blender": "5.1.1",
+            "locale": "zh_HANS",
+            "objects_and_order": "活动优化轨迹；复制后只改变副本",
+            "visible_entry": "对象属性 → Optimization Trajectory → Previous / Next / Choose Step",
+            "validated_scope": "P02 Job1：1—4步；副本停2，原层停1；独立 mesh 与外层节点树",
+            "reports": [
+              {
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/optimization-copy-independence.json",
+                "sha256": "ca40ec619526565be66c587b6fb9aa2799885a60a970bff7bb0cc58b7ea9b373",
+                "status": "Passed"
+              }
+            ],
+            "screenshots": [
+              {
+                "path": "docs/v1-acceptance/screenshot/C02-06-portable-saved.jpg",
+                "sha256": "5cebe62cf9685de15c984ec9c53ddabfd6a0c421e6cfa6bbe9384bd2a1b71a9c"
+              }
+            ]
+          },
+          "implementation_fingerprints": {
+            "qcblender/blender/optimization.py": "7fabbdce3791ecea4d26680589bd816a727d20b494801242278d7e705471823b",
+            "qcblender/blender/copy_display.py": "5248dce188947476bbcb44230fe305dafb31772e59e2c78d4f2235a4d26ca614",
+            "qcblender/blender/properties.py": "e1298699b93264877856bb1d6fd2662a4905f3a056c223c40df15b1af4ab0666",
+            "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+            "qcblender/data.py": "58a45c8c03b99508db1dbd74d36b38bff518d64361b561249a0320293a7c1a70"
+          },
+          "fingerprint_review": "Include transitive helpers, registration, interfaces and dependency changes when reviewing reuse; listed files are an initial operation-specific set, not exhaustive proof of no impact.",
+          "reuse": {
+            "preferred_order": [
+              "MCP",
+              "CLI",
+              "Computer Use"
+            ],
+            "coverage": "MCP 可调用 optimization_step 并核对坐标/来源/能量，复制需沿用已有 helper 并核对独立性",
+            "current_batch_replay_status": "Not Run",
+            "requires_current_result_assertions": true
+          }
+        }
+      ]
     },
     {
       "id": "vibration-mode-and-parameters",
@@ -1828,51 +1951,105 @@
     },
     {
       "id": "associate-matching-sources",
-      "title": "同构型原子源关联",
+      "title": "当前科学构型关联与失效",
       "gui_validation": {
         "status": "Passed",
-        "date": "2026-10-01",
-        "method": "Agent Computer Use clicked actual association button and confirmed dialog; MCP selected moving then reference and read-only scientific assertions",
-        "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
-        "product_tree": "4086224b13cdd50fa4495c1e00004e0d8dd15d49",
-        "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+        "date": "2026-10-04",
+        "method": "Agent Computer Use native clicks; MCP fixture/selection preparation, readback and portable save.",
+        "source_commit": "a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d",
+        "product_tree": "c1a5bc48b035434c4a3245909e1e629bec4f0665",
+        "candidate_sha256": "039306fdcbf908bc020b29246f54dc2f8e2459e9413844b1a80a45ec5b036fb9",
         "blender": "5.1.1",
         "locale": "zh_HANS",
-        "objects_and_order": "MCP先选FCH新原子源，再设原FCHK原子源为活动参考；GUI点击与确认",
-        "visible_entry": "Properties → Object → QCBlender · 对象与量子化学 → 关联选中数据源",
-        "validated_scope": "P03逐字节FCH别名；刚体关闭、容差0.001 Å、六原子映射及0偏差、科学数组不变；刚体配准与错序拒绝本GUI批次Not Run",
+        "objects_and_order": "P04 IRC当前第1步与独立FCHK；moving先选、静态reference最后选为活动对象；容差0.001 Å，rigid关闭。",
+        "visible_entry": "Properties → Object → QCBlender → 关联选中数据源；来源详情 → Geometry association",
+        "validated_scope": "同/异步关联、切步失效、返回原步仍stale、重新关联、关联及换步Undo/Redo；两端具体对象指针和完整数组核对。",
         "reports": [
           {
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/import-fch-MCP.json",
-            "sha256": "189e05cfe151fb37428dc23ddbf4c80ddb0c2f2c0b2fee12ea9ff584dc0c93fd",
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/p1-association/associate-redo.json",
+            "sha256": "1eb795fdaec7a5bb646fff48637e814e14c23f5789c6cbe1f2af6f65bd135efb",
             "status": "Passed"
           },
           {
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/association-GUI.json",
-            "sha256": "09379add6d902ef0ec580d00ddb50fb1ceaaba725a14386651e0f6aaf1741702",
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/p1-association/associate-undo.json",
+            "sha256": "e5bf786f16e63b3826b4ec92f36fb4686fa6e0cb6204a2618ac6151bdf3be7af",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/p1-association/associated.json",
+            "sha256": "ef53cd80e1da8a3b6e6e7f4d06c360b97f03b06f5d92450bf49c8588848bde6e",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/p1-association/cold-original.json",
+            "sha256": "a9917812cac8e4441150edba55bf3e13f519cbfec2ff7694afb39e3bbe7a25ee",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/p1-association/different-step-rejected.json",
+            "sha256": "508c8a9494e6aabfcc5e870cf6d3d1c45cacd0462d067814ac62931879077842",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/p1-association/reassociated.json",
+            "sha256": "1eb795fdaec7a5bb646fff48637e814e14c23f5789c6cbe1f2af6f65bd135efb",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/p1-association/returned-still-stale.json",
+            "sha256": "4caec68e6c8a95f6d85c18422f5264eda2ba59a0998b8dd4da0c19e899a1c929",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/p1-association/saved.json",
+            "sha256": "2397919334477eac11de6b3203f0d0260858c95ccea36a0f0c198f6a0ccca4b8",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/p1-association/step-invalidated.json",
+            "sha256": "d8d565696c150a3cddae9c117ee1295a4003c1eefb7342bed35182be53d65f9c",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/p1-association/step-redo.json",
+            "sha256": "d8d565696c150a3cddae9c117ee1295a4003c1eefb7342bed35182be53d65f9c",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/p1-association/step-undo.json",
+            "sha256": "1eb795fdaec7a5bb646fff48637e814e14c23f5789c6cbe1f2af6f65bd135efb",
             "status": "Passed"
           }
         ],
         "screenshots": [
           {
-            "path": "docs/v1-acceptance/screenshot/C04-09-source-selection.jpg",
-            "sha256": "386bc81debe6eb737442d76e75dc00d3a57bb8f668f5e097a158ef0b1364550d"
+            "path": "docs/v1-acceptance/screenshot/audit-p1/06-current-step-associated.png",
+            "sha256": "2688abe7345b7ec8e87a08c3c223d675f053f93aa2ace7fb6f9bc7731ab2e431"
           },
           {
-            "path": "docs/v1-acceptance/screenshot/C04-09-association-tolerance.jpg",
-            "sha256": "d7afad7b70663fd5ab54ce57c346bf43a9d4993632986cb9af2b2a8c0cefc491"
+            "path": "docs/v1-acceptance/screenshot/audit-p1/07-different-step-rejected.png",
+            "sha256": "f62b20f217c53ef7117a8f41a8a9e11f5f3c27d0abd5411172430a80075638fe"
           },
           {
-            "path": "docs/v1-acceptance/screenshot/C04-09-association-success.jpg",
-            "sha256": "fb658b0f4dc822658d74489aa83ce3c22f592105f3304f86421f025f3f09db1a"
+            "path": "docs/v1-acceptance/screenshot/audit-p1/08-stale-association-details.png",
+            "sha256": "1701b6c24a97906c228d14b65ea7f0b033b99e882dfe99abe346bf243ac8a13b"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/audit-p1/09-reassociated-current-step.png",
+            "sha256": "bd11d012810ab67e180bb6fd2c924bb1df5dfb5196ed1e633f929d90b2823011"
           }
         ]
       },
       "implementation_fingerprints": {
-        "qcblender/blender/association.py": "f7a3e17c966e95b5def5fe5f410463435d8a42867769dbb6d476b2d8ee618f19",
-        "qcblender/association.py": "e9b8f0d9e462f3ecf0e5b6c428f3cce2a5378404871c50bd23a58cf825fee000",
-        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
-        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432"
+        "qcblender/association.py": "820d06854be2cc9d4598f052f2f97514ca6458c9a6f7212ccc3654d5c70c693a",
+        "qcblender/blender/association.py": "bfdb19361697afd9161ada7222be11e535f05a00a7d54013f24420f55bdd114b",
+        "qcblender/blender/properties.py": "af9bfc6c4346d39d0581eae54cf8d06fc56d31e3a15a034b23c9a3eeb8a6272c",
+        "qcblender/blender/irc.py": "ad7c8481d6b4f3dd12f855275749e385256b1e14b54d7fed697da720a4f3be6f",
+        "qcblender/blender/optimization.py": "63b36697508419442b9d1f64cb81ba68b6596a56f75254b9d0a2ad963d36e8cd",
+        "qcblender/blender/scalars.py": "5f87b7ad022a0e661c090bdfc09c8df3a9b6c34c967dc8301108dc0cb03533c1",
+        "qcblender/blender/interaction.py": "6f974352a7d53749706a40ed0c83ebe1c5fd2f1a857b874529c1614f09da7bc9",
+        "qcblender/blender/source_browser.py": "2693877e7f18e92242c375e4e752e29f08dff195a6515feb1e62e21354e47d47",
+        "qcblender/blender/layers.py": "59e52120e862d8ed10a6c244b329e1866dc58f4c9036e14b6dbcb597d75dbbe4"
       },
       "fingerprint_review": "Review callbacks and transitive helpers, Blender/dependency/interface changes as well as these files",
       "reuse": {
@@ -1881,10 +2058,72 @@
           "CLI",
           "Computer Use"
         ],
-        "coverage": "MCP设置两源及活动参考，调用associate_sources并核对身份、变换和全部数组；其他源类型/刚体功能须另确认范围",
+        "coverage": "同/异步关联、切步失效、返回原步仍stale、重新关联、关联及换步Undo/Redo；两端具体对象指针和完整数组核对。",
         "requires_current_result_assertions": true,
-        "current_batch_replay_status": "Not Run"
-      }
+        "current_batch_replay_status": "Passed"
+      },
+      "history": [
+        {
+          "id": "associate-matching-sources",
+          "title": "同构型原子源关联",
+          "gui_validation": {
+            "status": "Passed",
+            "date": "2026-10-01",
+            "method": "Agent Computer Use clicked actual association button and confirmed dialog; MCP selected moving then reference and read-only scientific assertions",
+            "source_commit": "e26d22a2d4ec39b6b6562aa8ee48bc71ea948de3",
+            "product_tree": "4086224b13cdd50fa4495c1e00004e0d8dd15d49",
+            "candidate_sha256": "33adedf03ee951de89480784895ff72bac1c810005e1605b28c310ebcacc63a1",
+            "blender": "5.1.1",
+            "locale": "zh_HANS",
+            "objects_and_order": "MCP先选FCH新原子源，再设原FCHK原子源为活动参考；GUI点击与确认",
+            "visible_entry": "Properties → Object → QCBlender · 对象与量子化学 → 关联选中数据源",
+            "validated_scope": "P03逐字节FCH别名；刚体关闭、容差0.001 Å、六原子映射及0偏差、科学数组不变；刚体配准与错序拒绝本GUI批次Not Run",
+            "reports": [
+              {
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/import-fch-MCP.json",
+                "sha256": "189e05cfe151fb37428dc23ddbf4c80ddb0c2f2c0b2fee12ea9ff584dc0c93fd",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C04/completion/association-GUI.json",
+                "sha256": "09379add6d902ef0ec580d00ddb50fb1ceaaba725a14386651e0f6aaf1741702",
+                "status": "Passed"
+              }
+            ],
+            "screenshots": [
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-09-source-selection.jpg",
+                "sha256": "386bc81debe6eb737442d76e75dc00d3a57bb8f668f5e097a158ef0b1364550d"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-09-association-tolerance.jpg",
+                "sha256": "d7afad7b70663fd5ab54ce57c346bf43a9d4993632986cb9af2b2a8c0cefc491"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C04-09-association-success.jpg",
+                "sha256": "fb658b0f4dc822658d74489aa83ce3c22f592105f3304f86421f025f3f09db1a"
+              }
+            ]
+          },
+          "implementation_fingerprints": {
+            "qcblender/blender/association.py": "f7a3e17c966e95b5def5fe5f410463435d8a42867769dbb6d476b2d8ee618f19",
+            "qcblender/association.py": "e9b8f0d9e462f3ecf0e5b6c428f3cce2a5378404871c50bd23a58cf825fee000",
+            "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+            "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432"
+          },
+          "fingerprint_review": "Review callbacks and transitive helpers, Blender/dependency/interface changes as well as these files",
+          "reuse": {
+            "preferred_order": [
+              "MCP",
+              "CLI",
+              "Computer Use"
+            ],
+            "coverage": "MCP设置两源及活动参考，调用associate_sources并核对身份、变换和全部数组；其他源类型/刚体功能须另确认范围",
+            "requires_current_result_assertions": true,
+            "current_batch_replay_status": "Not Run"
+          }
+        }
+      ]
     },
     {
       "id": "atomic-charge-and-dipole",
@@ -4288,67 +4527,116 @@
     },
     {
       "id": "irc-step-navigation",
-      "title": "IRC Previous/Next步序和随步标注",
+      "title": "IRC共享mesh拒绝及独立后换步",
       "gui_validation": {
         "status": "Passed",
-        "date": "2026-10-02",
-        "method": "Agent Computer Use native actions; MCP preparation and independent source oracle separately recorded",
-        "source_commit": "13401c6a42dabd3844d7f1896ebdd6106188f774",
-        "product_tree": "a8db95a942a2bca82fdf147727bce0dc3a57200f",
-        "candidate_sha256": "cc4e7ac23d22a0c6c5f919c72b15615d8e440fe630838e64853512cfaa356ffd",
+        "date": "2026-10-04",
+        "method": "Agent Computer Use native clicks; MCP fixture/selection preparation, readback and portable save.",
+        "source_commit": "a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d",
+        "product_tree": "c1a5bc48b035434c4a3245909e1e629bec4f0665",
+        "candidate_sha256": "039306fdcbf908bc020b29246f54dc2f8e2459e9413844b1a80a45ec5b036fb9",
         "blender": "5.1.1",
         "locale": "zh_HANS",
-        "objects_and_order": "唯一GUI PID52336；仅选择IRC path根原子；源编号标注按1-based顺序，mesh qc_atom_id为0-based",
-        "visible_entry": "只选IRC path根原子；Properties→对象属性→QCBlender·对象与量子化学→IRC Path→Previous/Next",
-        "validated_scope": "Computer Use实际1→2→3→2；每步源坐标/原子身份/能量/能量曲线游标和三种测量、文字、锚点、引线独立核对；三标注由已登记操作MCP建立",
+        "objects_and_order": "P04 IRC根对象与原生Alt+D共享副本；仅选择当前根对象，mesh单用户后继续。",
+        "visible_entry": "Properties → Object → QCBlender → IRC Path → Next / Previous",
+        "validated_scope": "共享时拒绝无变化；Object & Data单用户后独立换步；原件不变，标注、Undo/Redo及冷读。",
         "reports": [
           {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/step-1-oracle.json",
-            "sha256": "f13d9e570e79dd065bdbd66ad310f6dbb508daf810814268143d95d5717d2db7",
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/cold-original.json",
+            "sha256": "57cede33808ac50cf3aeb6d160286493fe84ae52b8336083397c22ac53543e27",
             "status": "Passed"
           },
           {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/step-2-oracle.json",
-            "sha256": "10bd78e7e5b7b94056ea0f039154981a01711d991c1560719e57485d8956ec44",
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/irc-next-redo.json",
+            "sha256": "57918d66d0ba0b6c7e365b3b5896e834dacd449d31afa06e546f0bafd475aee6",
             "status": "Passed"
           },
           {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/step-3-oracle.json",
-            "sha256": "046c83912a3476f2f24a89a54025b56b3d0cddd8c8d7cbb719a0607f6d1e9ac1",
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/irc-next-undo.json",
+            "sha256": "dcb574d3ab4a1d650c021c71b6e5b0c8a8e3a6b1a9f2d39ce4e42460554c5163",
             "status": "Passed"
           },
           {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/previous-step2-oracle.json",
-            "sha256": "10bd78e7e5b7b94056ea0f039154981a01711d991c1560719e57485d8956ec44",
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/irc-next.json",
+            "sha256": "57918d66d0ba0b6c7e365b3b5896e834dacd449d31afa06e546f0bafd475aee6",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/irc-rejected.json",
+            "sha256": "b8afafceee7dcd3ce8b7f4d2350efd6243150b7a40f384eecca9ca7385e6b5f9",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/irc-single-user-redo.json",
+            "sha256": "16b0c04c24c84765e58e8ecf76401ffad56e4f9c6ad9eebc21b49ecc2c5cf796",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/irc-single-user-undo.json",
+            "sha256": "86f9447055c8e8162c3c79c6ed1bfd61d639e9b50e89fa8b5087f9d07c370628",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/irc-single-user.json",
+            "sha256": "dcb574d3ab4a1d650c021c71b6e5b0c8a8e3a6b1a9f2d39ce4e42460554c5163",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/optimization-next-redo.json",
+            "sha256": "98ccde0c83d724eaf2056222dc1f6dbcb2ae57230775d464db6f3845bab7a108",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/optimization-next-undo.json",
+            "sha256": "970a99cc4225da93263c6af7fe8f0f75785f077caecdba31805cd3bebe073225",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/optimization-next.json",
+            "sha256": "98ccde0c83d724eaf2056222dc1f6dbcb2ae57230775d464db6f3845bab7a108",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/optimization-rejected.json",
+            "sha256": "9119566f9c51f55bd402cee32410bbbd6b281610ac5ae0b011d50abdc68fff9b",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/optimization-single-user.json",
+            "sha256": "50c8c0c6ca6acd89476b43500137a95877ed0722fde9bf6d2ce93bfb96911d64",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-04/audit-p1/final/gui/shared-mesh/saved.json",
+            "sha256": "ac12780aecd4931510dc85e3df77817f9b18ed49bf0bf626ff6aa6372f605549",
             "status": "Passed"
           }
         ],
         "screenshots": [
           {
-            "path": "docs/v1-acceptance/screenshot/C10-step1-GUI.jpg",
-            "sha256": "81721472480873997877a90f761f8d15d86c2459020aa41b147e263e68cc2daf"
+            "path": "docs/v1-acceptance/screenshot/audit-p1/01-irc-shared-rejected.png",
+            "sha256": "b04b3a7b6e32bfd47249e215795f9c9a5a240ef29542fa2f3c252c7601505cbe"
           },
           {
-            "path": "docs/v1-acceptance/screenshot/C10-step2-GUI.jpg",
-            "sha256": "ec186cfcab5f4e3196bc3698644f1ff6fa1c12ae01586f98a5f1263975004cbc"
+            "path": "docs/v1-acceptance/screenshot/audit-p1/02-make-single-user-menu.png",
+            "sha256": "9c4659f6b3f685b69c896428021b30f6dec100dc412791d93f57720f0e70bce0"
           },
           {
-            "path": "docs/v1-acceptance/screenshot/C10-step3-GUI.jpg",
-            "sha256": "9890d0d27ece713064e5b7b69faf2905def488f395c88c309ec829557d4ea7a2"
+            "path": "docs/v1-acceptance/screenshot/audit-p1/03-irc-independent-next.png",
+            "sha256": "14701888cf4933d947860b8bf3ef328abd43e065cfee58f92a5430e261b9d4d4"
           }
         ]
       },
       "implementation_fingerprints": {
-        "qcblender/blender/irc.py": "a7da528854039e0e3bb9c030e87d081602448f6adc9ef7777b670106dbd6a23f",
-        "qcblender/irc.py": "80941cc9fb90277031b7512ee48f131b76f50fa7e6055d2949ed63b84b5117a1",
-        "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530",
-        "qcblender/measurements.py": "15d52ae7c9ca8b98cd53ed9d0030f4b848d1387f845c57f7c5892f7717a53fdc",
-        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
-        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
-        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
-        "qcblender/blender/geometry.py": "b3f453dc1943e7488b1bee33c761b874178c9ad9c8a25e855732cb50ddbd82ca",
-        "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
-        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
+        "qcblender/association.py": "820d06854be2cc9d4598f052f2f97514ca6458c9a6f7212ccc3654d5c70c693a",
+        "qcblender/blender/association.py": "bfdb19361697afd9161ada7222be11e535f05a00a7d54013f24420f55bdd114b",
+        "qcblender/blender/properties.py": "af9bfc6c4346d39d0581eae54cf8d06fc56d31e3a15a034b23c9a3eeb8a6272c",
+        "qcblender/blender/irc.py": "ad7c8481d6b4f3dd12f855275749e385256b1e14b54d7fed697da720a4f3be6f",
+        "qcblender/blender/optimization.py": "63b36697508419442b9d1f64cb81ba68b6596a56f75254b9d0a2ad963d36e8cd",
+        "qcblender/blender/scalars.py": "5f87b7ad022a0e661c090bdfc09c8df3a9b6c34c967dc8301108dc0cb03533c1",
+        "qcblender/blender/interaction.py": "6f974352a7d53749706a40ed0c83ebe1c5fd2f1a857b874529c1614f09da7bc9",
+        "qcblender/blender/source_browser.py": "2693877e7f18e92242c375e4e752e29f08dff195a6515feb1e62e21354e47d47",
+        "qcblender/blender/layers.py": "59e52120e862d8ed10a6c244b329e1866dc58f4c9036e14b6dbcb597d75dbbe4"
       },
       "fingerprint_review": "Listed files are the initial scope; review transitive helper, callback, interface and dependency changes before reuse.",
       "reuse": {
@@ -4357,32 +4645,110 @@
           "CLI",
           "Computer Use"
         ],
-        "coverage": "Computer Use实际1→2→3→2；每步源坐标/原子身份/能量/能量曲线游标和三种测量、文字、锚点、引线独立核对；三标注由已登记操作MCP建立",
-        "current_batch_replay_status": "Passed",
+        "coverage": "共享时拒绝无变化；Object & Data单用户后独立换步；原件不变，标注、Undo/Redo及冷读。",
         "requires_current_result_assertions": true,
-        "current_batch_replay_reports": [
-          {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/endpoint-guards.json",
-            "sha256": "5815a2039d2cc8789d444ec7fa4e26334d4a014f065a10d5f3240750f9bfed80",
-            "status": "Passed"
+        "current_batch_replay_status": "Passed"
+      },
+      "history": [
+        {
+          "id": "irc-step-navigation",
+          "title": "IRC Previous/Next步序和随步标注",
+          "gui_validation": {
+            "status": "Passed",
+            "date": "2026-10-02",
+            "method": "Agent Computer Use native actions; MCP preparation and independent source oracle separately recorded",
+            "source_commit": "13401c6a42dabd3844d7f1896ebdd6106188f774",
+            "product_tree": "a8db95a942a2bca82fdf147727bce0dc3a57200f",
+            "candidate_sha256": "cc4e7ac23d22a0c6c5f919c72b15615d8e440fe630838e64853512cfaa356ffd",
+            "blender": "5.1.1",
+            "locale": "zh_HANS",
+            "objects_and_order": "唯一GUI PID52336；仅选择IRC path根原子；源编号标注按1-based顺序，mesh qc_atom_id为0-based",
+            "visible_entry": "只选IRC path根原子；Properties→对象属性→QCBlender·对象与量子化学→IRC Path→Previous/Next",
+            "validated_scope": "Computer Use实际1→2→3→2；每步源坐标/原子身份/能量/能量曲线游标和三种测量、文字、锚点、引线独立核对；三标注由已登记操作MCP建立",
+            "reports": [
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/step-1-oracle.json",
+                "sha256": "f13d9e570e79dd065bdbd66ad310f6dbb508daf810814268143d95d5717d2db7",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/step-2-oracle.json",
+                "sha256": "10bd78e7e5b7b94056ea0f039154981a01711d991c1560719e57485d8956ec44",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/step-3-oracle.json",
+                "sha256": "046c83912a3476f2f24a89a54025b56b3d0cddd8c8d7cbb719a0607f6d1e9ac1",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/previous-step2-oracle.json",
+                "sha256": "10bd78e7e5b7b94056ea0f039154981a01711d991c1560719e57485d8956ec44",
+                "status": "Passed"
+              }
+            ],
+            "screenshots": [
+              {
+                "path": "docs/v1-acceptance/screenshot/C10-step1-GUI.jpg",
+                "sha256": "81721472480873997877a90f761f8d15d86c2459020aa41b147e263e68cc2daf"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C10-step2-GUI.jpg",
+                "sha256": "ec186cfcab5f4e3196bc3698644f1ff6fa1c12ae01586f98a5f1263975004cbc"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C10-step3-GUI.jpg",
+                "sha256": "9890d0d27ece713064e5b7b69faf2905def488f395c88c309ec829557d4ea7a2"
+              }
+            ]
           },
-          {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/cold-original/readback-render.json",
-            "sha256": "b0d7c10a3a19cb4441c3e51559e254e9c477d8dbb3cfc7ca9345b8e79e29f332",
-            "status": "Passed"
+          "implementation_fingerprints": {
+            "qcblender/blender/irc.py": "a7da528854039e0e3bb9c030e87d081602448f6adc9ef7777b670106dbd6a23f",
+            "qcblender/irc.py": "80941cc9fb90277031b7512ee48f131b76f50fa7e6055d2949ed63b84b5117a1",
+            "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530",
+            "qcblender/measurements.py": "15d52ae7c9ca8b98cd53ed9d0030f4b848d1387f845c57f7c5892f7717a53fdc",
+            "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+            "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+            "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+            "qcblender/blender/geometry.py": "b3f453dc1943e7488b1bee33c761b874178c9ad9c8a25e855732cb50ddbd82ca",
+            "qcblender/blender/layers.py": "709ae599b26af0b666914952593851af4e0bca410c2d00c06762a932fd42a2e6",
+            "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b"
           },
-          {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/cold-moved/readback-render.json",
-            "sha256": "98694386964c43295c86fcc9f630b2f59e4b129e86bf0f98faccfb66e5d81522",
-            "status": "Passed"
-          },
-          {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/cold-unpacked/readback-render.json",
-            "sha256": "319346b32bd46dd9cd7bd2a50f59e465b0d5c25730474dab8d51a7a97a4ed8ad",
-            "status": "Passed"
+          "fingerprint_review": "Listed files are the initial scope; review transitive helper, callback, interface and dependency changes before reuse.",
+          "reuse": {
+            "preferred_order": [
+              "MCP",
+              "CLI",
+              "Computer Use"
+            ],
+            "coverage": "Computer Use实际1→2→3→2；每步源坐标/原子身份/能量/能量曲线游标和三种测量、文字、锚点、引线独立核对；三标注由已登记操作MCP建立",
+            "current_batch_replay_status": "Passed",
+            "requires_current_result_assertions": true,
+            "current_batch_replay_reports": [
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/endpoint-guards.json",
+                "sha256": "5815a2039d2cc8789d444ec7fa4e26334d4a014f065a10d5f3240750f9bfed80",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/cold-original/readback-render.json",
+                "sha256": "b0d7c10a3a19cb4441c3e51559e254e9c477d8dbb3cfc7ca9345b8e79e29f332",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/cold-moved/readback-render.json",
+                "sha256": "98694386964c43295c86fcc9f630b2f59e4b129e86bf0f98faccfb66e5d81522",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C10/cold-unpacked/readback-render.json",
+                "sha256": "319346b32bd46dd9cd7bd2a50f59e465b0d5c25730474dab8d51a7a97a4ed8ad",
+                "status": "Passed"
+              }
+            ]
           }
-        ]
-      }
+        }
+      ]
     },
     {
       "id": "irc-current-version-rejection",

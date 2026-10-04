@@ -53,6 +53,12 @@
 
 源文件始终决定科学值和单位，显示操作不改科学数组。源编号从1起，坐标Å；键由距离推断，MO两符号表示相位，振动播放速度属于显示参数。两个来源关联、Cube单位声明、外部分析参数均须核对真实生成记录。保存使用 **N侧栏 → 工程与诊断 → 保存自包含工程**，并将同名 `.blend` 与 `.qcdata/` 一起移动。
 
+## 当前步骤关联与共享对象
+
+IRC和优化关联比较双方当前步骤的源Å坐标。最后选择的对象作为活动参考；在对象属性主面板点击 **关联选中数据源**。任一端换步后，来源详情中的Geometry association显示stale；返回原步仍需重新关联。旧工程关联、复制层和当前版本新视图也需重新建立关联。
+
+原生Alt+D产生的共享原子mesh不能切换IRC/优化步骤。仅选要独立调整的副本，使用 **3D Viewport → Object → Relations → Make Single User → Object & Data**，再点击对应面板的Previous/Next/Choose Step。逐步截图和Undo/Redo验收见[当前构型复做](acceptance/audit-p1-validation.md#原生入口复做)。
+
 ## Gaussian 优化轨迹浏览
 
 操作步骤集中在 [SOP C02](v1-acceptance/SOP.md#c02-logout-能量振动与优化)：导入P02的Job1、创建独立轨迹，选新对象后在对象属性 **Optimization Trajectory** 使用 **Previous / Next / Choose Step**。Job2的模式/能量在 **科学记录与振动模式**。轨迹源值、截图和复做记录统一填写在C02。

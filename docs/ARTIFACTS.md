@@ -4,7 +4,13 @@
 
 ## 当前交付
 
-当前候选为`outputs/candidates/current/audit-p2-49872b0/qcblender-0.0.1.zip`，50,635,805字节，SHA-256 `41cd978f36737236049fc901504c0196f4e6499adc891f1d2f09e2fabf4cebfd`。产品源码树`f3742ab452dd96a357bb7e17c1dfa55934b8897d`；[本批验证](acceptance/audit-p2-baselines-validation.md)、[机器索引](acceptance/audit-p2-baselines-validation.json)。本地资格Passed，独立人工签署Not Run。
+当前候选为`outputs/candidates/current/audit-p1-a4baaaf/qcblender-0.0.1.zip`，50638451字节，SHA-256 `039306fdcbf908bc020b29246f54dc2f8e2459e9413844b1a80a45ec5b036fb9`。产品源码`a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d`，产品树`c1a5bc48b035434c4a3245909e1e629bec4f0665`；[P1验证](acceptance/audit-p1-validation.md)及[机器索引](acceptance/audit-p1-validation.json)记录97科学测试、六视觉场景及其迁移冷读、原生关联/共享mesh、GUI/Undo/Redo和保存冷重开Passed。独立人工签署Not Run。
+
+证据位于`outputs/evidence/2026-10-04/audit-p1/`；`evidence-index.json`及`qualification-final.json`绑定候选，`preservation-map.json`保存旧路径和原字节摘要。工程在`outputs/projects/audit-p1/{native,visual,gui}/`。完整本地归档与推送状态见[交付收据](acceptance/audit-p1-delivery.json)。重建沿用[开发说明](DEVELOPMENT.md)的共用环境与11锁定wheels，在新批次运行本批脚本并重新资格验证。
+
+## 2026-10-04 P2与基准历史交付
+
+该批候选为`outputs/candidates/current/audit-p2-49872b0/qcblender-0.0.1.zip`，50,635,805字节，SHA-256 `41cd978f36737236049fc901504c0196f4e6499adc891f1d2f09e2fabf4cebfd`。产品源码树`f3742ab452dd96a357bb7e17c1dfa55934b8897d`；[本批验证](acceptance/audit-p2-baselines-validation.md)、[机器索引](acceptance/audit-p2-baselines-validation.json)。本地资格Passed，独立人工签署Not Run。
 
 证据位于`outputs/evidence/2026-10-04/audit-p2/`：`evidence-index.json`与`qualification.json`绑定当前候选；`preservation-map.json`保存原始路径及SHA-256，全部成功/失败报告字节保留。六个参考工程在`outputs/projects/audit-p2/visual/<case>/`，实际GUI工程在`outputs/projects/audit-p2/gui/p2-verified.blend + .qcdata/`；迁移后冷重开报告在`delivery-cold/`。基准PNG/JSON在`tests/data/visual-baseline/`，重建与运行见[基准说明](acceptance/visual-performance-baselines.md)。
 

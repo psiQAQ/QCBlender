@@ -10,6 +10,8 @@
 
 2026-10-04新增[Gaussian拼接日志与ETS-NOCV重复记录复做步骤及截图](../acceptance/audit-p2-baselines-validation.md#原生入口复做)，候选与原始证据由[当前产物路由](../ARTIFACTS.md)定位。
 
+2026-10-04当前构型与共享mesh操作见[关联、单用户、Undo/Redo复做步骤及截图](../acceptance/audit-p1-validation.md#原生入口复做)。适用于C02优化、C04关联及C10 IRC；用户复做与科研签署单独填写。
+
 ## 0. 准备、安装与通用操作
 
 ### 0.1 取得材料并建立本次目录

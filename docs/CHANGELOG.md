@@ -1,5 +1,7 @@
 # 开发演进
 
+- 2026-10-04：修复AUDIT-01当前构型关联与AUDIT-04共享mesh切步。关联绑定两端当前科学身份和具体参考对象，换步失效；共享原子mesh在写入前拒绝换步并提示单用户操作。97科学测试、六视觉场景及保全冷读、真实GUI/Undo/Redo和关联/共享对象原生专项Passed；Standards/Spec各1项修复复审、0阻断遗留。独立人工签署Not Run。[验证](acceptance/audit-p1-validation.md)、[产物路由](ARTIFACTS.md)与[交付收据](acceptance/audit-p1-delivery.json)记录确切身份及保留状态。
+
 - 2026-10-04：修复Gaussian首段SCF前失败时遗漏后续任务边界，以及ETS-NOCV重复记录遗漏正负本征值/单轨道能量冲突。建立六场景固定视觉基准和64³/128³/256³、1/8/32视图性能采样；91科学测试、17基准单测、28视觉检查、原生GUI与工程冷读Passed。Standards/Spec各1项已修复、0遗留；独立人工签署Not Run，两项P1仍在范围外。[验证](acceptance/audit-p2-baselines-validation.md)与[产物路由](ARTIFACTS.md)记录候选、工程、原始成功失败报告；本批合并、注释标签、工作树清理和推送状态见[交付收据](acceptance/audit-p2-delivery.json)。
 
 - 2026-10-03：完成固定96f9c7e的插件完成度与六参考对象调研。82科学测试、30相关单测通过（1项Windows跳过），候选安装、XYZ/七类CSV、来源浏览及保存/迁移冷读Passed；四类产品缺陷未修复，两类P1实际点击复现。十维比较、五项改进建议和证据见[调研报告](research/qcblender-completion-audit-2026-10-03.md)。保全工程与日志后清理6,036文件/500,234,681字节，74份已核对副本的原件因权限边界保留；独立人工/科研签署Not Run。研究工作树未提交/合并，产品与依赖未改，未push/发布。

@@ -1,13 +1,15 @@
 # 共享 mesh 切步保护
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Type: task
 Blocked by: 01
 
 共享mesh Agent独占IRC和optimization切步守卫及专用原生回归脚本。不接入关联失效helper、不改其他产品模块、不启动Blender；交接脚本由主Agent串行执行。
 
 ## Comments
+
+- 2026-10-04集成验收：旧候选原生脚本RED；`a4baaaf`候选P04/P02根及IRC子入口、NEXT/PREV/GOTO拒绝、单用户化后的独立导航、标注保护与XYZ对照Passed。原地及中文移动冷读Passed，证据`outputs/runs/audit-p1/1/final/shared/`及`logs/final-shared*`。GUI与Undo/Redo由04继续执行。
 
 - 2026-10-04：在 `fix/shared-mesh-steps` 领取；原生 Blender 验证由主 Agent 串行执行。
 

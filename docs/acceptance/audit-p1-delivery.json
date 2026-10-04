@@ -1,0 +1,10 @@
+{
+  "status": "In progress",
+  "source_commit": "a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d",
+  "product_tree": "c1a5bc48b035434c4a3245909e1e629bec4f0665",
+  "candidate_sha256": "039306fdcbf908bc020b29246f54dc2f8e2459e9413844b1a80a45ec5b036fb9",
+  "evidence": "outputs/evidence/2026-10-04/audit-p1",
+  "technical_validation": "Passed",
+  "archive_cleanup_push": "Not Run",
+  "independent_human_acceptance": "Not Run"
+}
