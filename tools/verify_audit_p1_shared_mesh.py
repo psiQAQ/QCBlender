@@ -232,6 +232,9 @@ def main():
     args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
     out = args.output_dir.resolve()
     out.mkdir(parents=True, exist_ok=bool(args.reopen))
+    report_path = out / ('cold-reopen.json' if args.reopen else 'checks.json')
+    if report_path.exists():
+        raise FileExistsError(report_path)
     report = {'status': 'Running', 'blender': bpy.app.version_string, 'pid': os.getpid(),
               'gui': 'Not Run', 'undo_redo': 'Not Run', 'independent_human_review': 'Not Run', 'checks': {}}
     bpy.ops.preferences.addon_enable(module=MODULE)
@@ -296,8 +299,7 @@ def main():
         report.update(status='Failed', error=repr(error))
         raise
     finally:
-        filename = 'cold-reopen.json' if args.reopen else 'checks.json'
-        (out / filename).write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
         print(json.dumps({key: value for key, value in report.items() if key != 'saved_snapshot'}, ensure_ascii=False))
 
 

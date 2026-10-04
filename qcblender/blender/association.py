@@ -26,7 +26,11 @@ def _association_record(obj):
         tolerance, error = record['tolerance_angstrom'], record['max_error_angstrom']
         valid = (rotation.shape == (3, 3) and translation.shape == (3,)
                  and np.isfinite(rotation).all() and np.isfinite(translation).all()
-                 and isinstance(mapping, list) and all(type(number) is int for number in mapping)
+                 and np.allclose(rotation.T @ rotation, np.eye(3), rtol=0, atol=1e-8)
+                 and np.isclose(np.linalg.det(rotation), 1., rtol=0, atol=1e-8)
+                 and isinstance(mapping, list) and bool(mapping)
+                 and all(type(number) is int for number in mapping)
+                 and mapping == list(range(len(mapping)))
                  and type(tolerance) in (int, float) and np.isfinite(tolerance) and tolerance > 0
                  and type(error) in (int, float) and np.isfinite(error) and error >= 0)
     except (KeyError, TypeError, ValueError):
@@ -40,6 +44,19 @@ def _association_record(obj):
                     ('source_sha256', 'dataset_sha256', 'kind', 'step', 'selected_job', 'coordinate_unit'))
                     or geometry['coordinate_unit'] != 'angstrom'
                     or geometry['kind'] not in ('source', 'optimization', 'irc')):
+                raise ValueError('Geometry association identities are damaged; associate the views again')
+            digests = (geometry['source_sha256'], geometry['dataset_sha256'])
+            valid = (all(isinstance(value, str) and len(value) == 64
+                         and all(character in '0123456789abcdef' for character in value) for value in digests)
+                     and (geometry['selected_job'] is None or
+                          (type(geometry['selected_job']) is int and geometry['selected_job'] >= 0))
+                     and geometry['source_sha256'] == record[key.replace('_geometry', '_source')])
+            if geometry['kind'] == 'source':
+                valid = valid and geometry['step'] is None and 'step_record' not in geometry
+            else:
+                valid = (valid and type(geometry['step']) is int and geometry['step'] > 0
+                         and isinstance(geometry.get('step_record'), dict) and bool(geometry['step_record']))
+            if not valid:
                 raise ValueError('Geometry association identities are damaged; associate the views again')
     return record
 

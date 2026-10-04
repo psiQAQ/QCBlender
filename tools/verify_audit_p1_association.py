@@ -179,6 +179,21 @@ def lifecycle_checks(dynamic, static, report):
     reject(lambda: set_step(dynamic, 2), 'damaged')
     require(before == (state(dynamic), state(static)), 'Malformed incoming association changed step')
     static['qc_association'] = saved
+    damaged_checks = {}
+    for damage in ('non_rigid_transform', 'missing_step_record', 'invalid_dataset_digest'):
+        record = json.loads(saved)
+        if damage == 'non_rigid_transform':
+            record['rotation_rows'] = [[2., 0., 0.], [0., 1., 0.], [0., 0., 1.]]
+        elif damage == 'missing_step_record':
+            del record['reference_geometry']['step_record']
+        else:
+            record['reference_geometry']['dataset_sha256'] = None
+        static['qc_association'] = json.dumps(record)
+        before = state(dynamic), state(static)
+        reject(lambda: set_step(dynamic, 2), 'damaged')
+        require(before == (state(dynamic), state(static)), damage + ' changed geometry or association')
+        damaged_checks[damage] = 'Passed'
+    static['qc_association'] = saved
     unrelated = bpy.data.objects.new('Unrelated damaged record', None)
     bpy.context.collection.objects.link(unrelated)
     unrelated['qc_association'] = '{'
@@ -202,17 +217,18 @@ def lifecycle_checks(dynamic, static, report):
     reject(lambda: association.require_current_association(static, dynamic), 'again')
     require(associate(dynamic, static) == {'FINISHED'}, 'Restore reference after deletion')
     report['lifecycle'] = {'two_phase_preparation': 'Passed', 'damaged_incoming_no_mutation': 'Passed',
+                           'damaged_schema_no_mutation': damaged_checks,
                            'unrelated_damaged_record': 'Passed', 'legacy': 'Passed', 'reference_delete': 'Passed'}
 
 
 def binding_checks(static, directory, report):
     invalid = atoms(directory, 'Binding rejection fixture')
-    atom_id = invalid.data.attributes['qc_atom_id'].data[0]
-    atom_id.value = 99
+    invalid.data.attributes['qc_atom_id'].data[0].value = 99
     before = state(static), state(invalid)
     reject(lambda: associate(static, invalid), 'identities')
     require(before == (state(static), state(invalid)), 'Invalid atom identity changed the scene')
-    atom_id.value = 0
+    invalid.data.attributes['qc_atom_id'].data[0].value = 0
+    module('blender.geometry').current_geometry(invalid)
     digest = invalid['qc_dataset_sha256']
     invalid['qc_dataset_sha256'] = '0' * 64
     before = state(static), state(invalid)
@@ -346,7 +362,10 @@ def main():
     parser.add_argument('--reopen', type=Path)
     args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
     out = args.output_dir.resolve()
-    out.mkdir(parents=True, exist_ok=True)
+    out.mkdir(parents=True, exist_ok=bool(args.reopen))
+    report_path = out / ('cold-reopen.json' if args.reopen else 'checks.json')
+    if report_path.exists():
+        raise FileExistsError(report_path)
     report = {'status': 'Running', 'blender': bpy.app.version_string, 'pid': os.getpid(),
               'independent_human_review': 'Not Run', 'checks': {}}
     bpy.ops.preferences.addon_enable(module=MODULE)
@@ -399,7 +418,7 @@ def main():
         report.update(status='Failed', error=f'{type(error).__name__}: {error}')
         raise
     finally:
-        (out / ('cold-reopen.json' if args.reopen else 'checks.json')).write_text(
+        report_path.write_text(
             json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
 
 
