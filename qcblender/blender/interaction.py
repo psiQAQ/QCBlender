@@ -248,7 +248,12 @@ class QCBLENDER_OT_define_plane(bpy.types.Operator):
                 atom_data = load_dataset(bpy.path.abspath(atom_view['qc_dataset']))
                 atoms, provenance = current_geometry(atom_view, atom_data)
                 field_data = load_dataset(bpy.path.abspath(volume['qc_dataset']))
-                record = json.loads(atom_view.get('qc_association', '{}'))
+                from .association import require_current_association, require_field_atom_view
+                record = None
+                reference = (require_field_atom_view(obj, field_data)
+                             if obj.parent and obj.parent.get('qc_view_kind') == 'atoms' else None)
+                if field_data.metadata['source']['sha256'] != provenance['source_sha256']:
+                    record = require_current_association(atom_view, reference)
                 atom_to_view = obj.matrix_world.inverted() @ atom_view.matrix_world
                 validate_configuration(field_data.arrays['positions'], field_data.arrays['atomic_numbers'],
                                        atoms, atom_data.arrays['atomic_numbers'], np.asarray(source_to_view),

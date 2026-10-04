@@ -47,6 +47,7 @@ class QCViewSettings(bpy.types.PropertyGroup):
     active_energy: IntProperty(default=0, min=0)
     spectrum: PointerProperty(type=bpy.types.Object)
     volume: PointerProperty(type=bpy.types.Object)
+    association_reference: PointerProperty(type=bpy.types.Object)
 
 
 class QCBLENDER_UL_modes(bpy.types.UIList):

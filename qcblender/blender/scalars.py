@@ -293,16 +293,30 @@ def add_mapping(target, source, low, high):
 def compare_color_sources(target, source):
     """Use the same scientific association check for first binding and replacement."""
     from .source_browser import bound_field, read_metadata
+    from .association import require_current_association, require_field_atom_view
+    from .geometry import current_geometry
     bound_field(source)
     read_metadata(target)
     reference = load_dataset(bpy.path.abspath(target['qc_dataset']))
     if target.get('qc_source_sha256') != reference.metadata['source']['sha256']:
         raise ValueError('Target view differs from its saved source identity')
-    associated = json.loads(source.parent.get('qc_association', '{}')) if source.parent else {}
-    explicit_alignment = (associated.get('reference_source') == target['qc_source_sha256']
-                          and associated.get('moving_source') == source['qc_source_sha256'])
-    return compare_sources(reference, load_dataset(bpy.path.abspath(source['qc_dataset'])),
-                           allow_rigid=explicit_alignment)
+    moving = load_dataset(bpy.path.abspath(source['qc_dataset']))
+    reference_geometry = {'kind': 'source', 'step': None}
+    if target.get('qc_view_kind') == 'atoms':
+        _, reference_geometry = current_geometry(target, reference)
+        reference_view = target
+    else:
+        reference_view = (require_field_atom_view(target, reference)
+                          if target.parent and target.parent.get('qc_view_kind') == 'atoms' else None)
+    moving_view = (require_field_atom_view(source, moving)
+                   if source.parent and source.parent.get('qc_view_kind') == 'atoms' else None)
+    explicit_alignment = (reference_view is not None and moving_view is not None
+                          and moving_view != reference_view and 'qc_association' in moving_view
+                          and moving_view.qc_settings.association_reference == reference_view)
+    if explicit_alignment:
+        require_current_association(moving_view, reference_view)
+    return compare_sources(reference, moving, allow_rigid=explicit_alignment,
+                           reference_kind=reference_geometry['kind'], reference_step=reference_geometry['step'])
 
 
 def replace_mapping(target, source):

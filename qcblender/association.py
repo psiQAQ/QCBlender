@@ -1,13 +1,16 @@
 """Explicit atom-order-preserving geometry association, without changing scientific data."""
 import numpy as np
 
+from .geometry import scientific_geometry
+
 
 def require_static_geometry(data):
     if data.metadata.get('trajectory'):
         raise ValueError('Multi-frame XYZ requires a single-frame source for scientific association')
 
 
-def compare_sources(reference, moving, allow_rigid=False, tolerance_angstrom=1e-3):
+def compare_sources(reference, moving, allow_rigid=False, tolerance_angstrom=1e-3, *,
+                    reference_kind='source', reference_step=None, moving_kind='source', moving_step=None):
     reference.validate()
     moving.validate()
     require_static_geometry(reference)
@@ -20,7 +23,8 @@ def compare_sources(reference, moving, allow_rigid=False, tolerance_angstrom=1e-
         first, second = reference.metadata.get(key), moving.metadata.get(key)
         if first is not None and second is not None and first != second:
             raise ValueError(f'Calculation {key} differs')
-    target, source = reference.arrays['positions'], moving.arrays['positions']
+    target, reference_geometry = scientific_geometry(reference, reference_kind, reference_step)
+    source, moving_geometry = scientific_geometry(moving, moving_kind, moving_step)
     if len(source) == 0:
         raise ValueError('Geometry association requires atoms')
     rotation, translation = np.eye(3), np.zeros(3)
@@ -35,7 +39,8 @@ def compare_sources(reference, moving, allow_rigid=False, tolerance_angstrom=1e-
     errors = np.linalg.norm(source @ rotation + translation - target, axis=1)
     if errors.max() > tolerance_angstrom:
         raise ValueError(f'Different geometries: maximum atom displacement {errors.max():.6g} angstrom')
-    return {'reference_source': reference.metadata['source']['sha256'],
+    return {'version': 2, 'reference_geometry': reference_geometry, 'moving_geometry': moving_geometry,
+            'reference_source': reference.metadata['source']['sha256'],
             'moving_source': moving.metadata['source']['sha256'],
             'atom_mapping': list(range(len(source))), 'rotation_rows': rotation.tolist(),
             'translation_angstrom': translation.tolist(), 'max_error_angstrom': float(errors.max()),

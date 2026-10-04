@@ -340,7 +340,8 @@ def source_details(obj):
         entries.append(('Profile sampling', {key: value for key, value in profile.items()
                                             if key not in ('source_record', 'field')}))
     if obj.get('qc_association'):
-        entries.append(('Geometry association', object_record(obj, 'qc_association')))
+        from .association import association_summary
+        entries.append(('Geometry association', association_summary(obj)))
     return entries
 
 
