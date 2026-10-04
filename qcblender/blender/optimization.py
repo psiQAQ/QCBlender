@@ -19,6 +19,8 @@ def set_step(obj, data, step):
     from .geometry import current_geometry
     from .annotations import prepare_annotations, apply_annotations
     current_geometry(obj, data)
+    if obj.data.users > 1:
+        raise ValueError('Optimization step changes require an independent atom mesh; make Object Data single-user first')
     trajectory = data.metadata['optimization']
     if not 1 <= step <= len(trajectory['steps']):
         raise ValueError('Optimization step is outside the imported trajectory')

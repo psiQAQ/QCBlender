@@ -65,6 +65,8 @@ class QCBLENDER_OT_irc_step(bpy.types.Operator):
         try:
             data = load_dataset(bpy.path.abspath(root['qc_dataset']))
             current_geometry(root, data)
+            if root.data.users > 1:
+                raise ValueError('IRC step changes require an independent atom mesh; make Object Data single-user first')
             step = int(root['qc_irc_step']) + (1 if self.direction == 'NEXT' else -1)
             if not 1 <= step <= len(data.arrays['irc_energies']):
                 raise ValueError('IRC step is outside the imported path')
