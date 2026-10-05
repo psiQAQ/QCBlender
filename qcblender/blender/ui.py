@@ -359,7 +359,10 @@ class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
             self._source, self._dataset, self._input_digest, self._fingerprint = science_binding(context)
             self._preview = _qualifications.get((self._input_digest, self._fingerprint))
             if self._preview is None:
-                return bpy.ops.qcblender.qualify_science('EXEC_DEFAULT', memory_mb=self.memory_mb)
+                bpy.ops.qcblender.qualify_science('EXEC_DEFAULT', memory_mb=self.memory_mb)
+                # The qualification owns its modal handler. Finish this dispatcher so
+                # the later generation operator can record its own native undo step.
+                return {'FINISHED'}
         except (ValueError, OSError, KeyError, MemoryError) as error:
             self.report({'ERROR'}, str(error))
             return {'CANCELLED'}

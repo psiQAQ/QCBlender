@@ -40,7 +40,7 @@ class QualificationHandoff(unittest.TestCase):
         generate = ui.QCBLENDER_OT_generate()
         generate.memory_mb = 512
         generate.report = Mock()
-        self.assertEqual(generate.invoke(self.context, None), {'RUNNING_MODAL'})
+        self.assertEqual(generate.invoke(self.context, None), {'FINISHED'})
         self.ops.qualify_science.assert_called_once_with('EXEC_DEFAULT', memory_mb=512)
         self.ops.generate_field.assert_not_called()
 
