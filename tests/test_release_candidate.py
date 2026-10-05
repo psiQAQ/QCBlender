@@ -33,12 +33,14 @@ def zipped(entries):
 
 def fixture():
     backend_bytes = zipped({'gbasis/__init__.py': b'', 'gbasis/QCBLENDER_BUILD.md': b'Build notice'})
-    dependency = {'filename': 'locked-py3-none-any.whl', 'sha256': sha(b'locked dependency')}
-    backend = {'filename': 'qc_gbasis-fixture.whl', 'sha256': sha(backend_bytes),
+    dependency = {'name': 'locked', 'version': '1.0.0', 'filename': 'locked-py3-none-any.whl',
+                  'sha256': sha(b'locked dependency')}
+    backend = {'name': 'qc-gbasis', 'version': '0.1.0', 'filename': 'qc_gbasis-fixture.whl', 'sha256': sha(backend_bytes),
                'source_lock': 'science-sources.lock.json'}
     source_manifest = b'id="qcblender"\nversion="0.1.0"\nplatforms=["windows-x64"]\nwheels=[]\n'
     source = {'qcblender/__init__.py': b'VALUE = 1\n', 'qcblender/blender_manifest.toml': source_manifest,
-              'dependencies.lock.json': json.dumps({'packages': [dependency]}).encode(),
+              'dependencies.lock.json': json.dumps({'packages': [dependency],
+                                                    'host_provided': {'numpy': '2.3.4', 'openvdb': '13.0.0'}}).encode(),
               'science-sources.lock.json': b'[{"commit":"source"}]', 'LICENSE': b'GPL fixture',
               'THIRD_PARTY.md': b'Unresolved upstream statement differences'}
     extension_entries = {name.removeprefix('qcblender/'): value for name, value in source.items()}
@@ -78,6 +80,8 @@ def fixture():
                 'platform': {'os': 'windows', 'architecture': 'x64', 'blender': '5.1.1',
                              'python': '3.13', 'numpy': '2.3.4'},
                 'artifact_name': f'qcblender-candidate-0.1.0-{COMMIT}', 'files': {}, 'reports': {}}
+    manifest['dependencies'] = release.dependency_identity(source['dependencies.lock.json'],
+                                                          source['science-sources.lock.json'], backend)
     for role, name in {'extension': 'qcblender-0.1.0.zip', 'samples': 'samples-v2.zip',
                        'reproduction': 'reproduction.zip'}.items():
         manifest['files'][role] = {'path': name, 'bytes': len(data[name]), 'sha256': sha(data[name])}
@@ -90,6 +94,7 @@ def fixture():
             report['cold_open'] = 'Passed'
         if name == 'qualification':
             report['sha256'] = sha(data['qcblender-0.1.0.zip'])
+            report['backend'] = backend
         if name in ('extension-install', 'node-assets', 'cold-original', 'cold-moved', 'reproduction'):
             report['candidate_sha256'] = sha(data['qcblender-0.1.0.zip'])
         if name == 'reproduction':
@@ -133,7 +138,7 @@ class ReleaseTests(unittest.TestCase):
         result = self.unpack()
         target = self.root / 'candidate' / result['files']['extension']['path']
         self.assertEqual(target.read_bytes(), self.data['qcblender-0.1.0.zip'])
-        release.verify_extension(target, self.source)
+        release.verify_extension(target, self.source, result['dependencies'])
         release.verify_public_materials(result, self.root / 'candidate', self.source)
 
     def test_wrong_candidate_identity_and_incomplete_reports_are_rejected(self):
@@ -204,7 +209,7 @@ class ReleaseTests(unittest.TestCase):
         scene['datasets'] = [new_directory]
         entries['example.qcdata/manifest.json'] = json.dumps(scene).encode()
         path.write_bytes(zipped(entries))
-        with self.assertRaisesRegex(ValueError, 'unverified input'):
+        with self.assertRaisesRegex(ValueError, 'unverified.*input'):
             release.verify_public_materials(manifest, root, self.source)
         path = root / manifest['files']['samples']['path']
         with zipfile.ZipFile(path) as archive:
@@ -232,7 +237,7 @@ class ReleaseTests(unittest.TestCase):
         target = root / 'extra-extension.zip'
         target.write_bytes(zipped(entries))
         with self.assertRaisesRegex(ValueError, 'unexpected members'):
-            release.verify_extension(target, self.source)
+            release.verify_extension(target, self.source, self.manifest['dependencies'])
 
     def test_required_science_skip_and_cold_open_failure_are_rejected(self):
         for key, changes in [('public-science', {'skipped': 1}),
@@ -278,7 +283,21 @@ class ReleaseTests(unittest.TestCase):
                 entries[name] = b'changed'
                 path = self.root / 'changed.zip'
                 path.write_bytes(zipped(entries))
-                release.verify_extension(path, self.source)
+                release.verify_extension(path, self.source, self.manifest['dependencies'])
+
+    def test_changed_dependency_identity_or_qualification_backend_is_rejected(self):
+        self.unpack()
+        path = self.root / 'candidate' / 'qcblender-0.1.0.zip'
+        for key, value in [('lock_sha256', 'c' * 64), ('source_lock_sha256', 'c' * 64),
+                           ('host_provided', {'numpy': 'different'}), ('bundled_wheels', [])]:
+            with self.subTest(key=key), self.assertRaisesRegex(ValueError, 'dependency identity'):
+                changed = copy.deepcopy(self.manifest['dependencies'])
+                changed[key] = value
+                release.verify_extension(path, self.source, changed)
+        manifest = copy.deepcopy(self.manifest)
+        manifest['dependencies']['backend']['version'] = 'different'
+        with self.assertRaisesRegex(ValueError, 'backend identity'):
+            release.verify_reports(manifest, self.root / 'candidate')
 
     def gate_record(self):
         return {'schema': 'qcblender.release-gates.v1', 'candidate_run_id': 42, 'artifact_id': 100,

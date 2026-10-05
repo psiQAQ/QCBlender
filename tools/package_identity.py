@@ -1,5 +1,6 @@
 """Version and file identities shared by local packaging and candidate CI."""
 import hashlib
+import json
 from pathlib import Path
 import re
 import subprocess
@@ -30,6 +31,17 @@ def file_record(path, relative_to=None):
             digest.update(block)
     return {'path': path.relative_to(relative_to).as_posix() if relative_to else path.name,
             'bytes': path.stat().st_size, 'sha256': digest.hexdigest()}
+
+
+def dependency_identity(lock_bytes, source_lock_bytes, backend):
+    lock = json.loads(lock_bytes)
+    wheels = [{key: record[key] for key in ('name', 'version', 'filename', 'sha256')}
+              for record in lock['packages'] + [backend]]
+    return {'lock_sha256': hashlib.sha256(lock_bytes).hexdigest(),
+            'source_lock_sha256': hashlib.sha256(source_lock_bytes).hexdigest(),
+            'host_provided': lock['host_provided'],
+            'backend': backend,
+            'bundled_wheels': sorted(wheels, key=lambda record: record['filename'])}
 
 
 def source_identity(root=ROOT):

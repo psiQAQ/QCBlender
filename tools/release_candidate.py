@@ -9,11 +9,17 @@ from pathlib import Path, PurePosixPath
 import re
 import shutil
 import subprocess
+import sys
 import tomllib
 import urllib.error
 import urllib.parse
 import urllib.request
 import zipfile
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools.public_reproduction import reproduction_members
+from tools.package_identity import dependency_identity
 
 
 REQUIRED_REPORTS = frozenset({
@@ -99,6 +105,7 @@ def verify_manifest(manifest, *, version, commit, product_tree, run_id):
     require(manifest.get('platform') == expected_platform, 'Unsupported candidate platform')
     expected_name = f'qcblender-candidate-{version}-{commit}'
     require(manifest.get('artifact_name') == expected_name, 'Candidate artifact name mismatch')
+    require(isinstance(manifest.get('dependencies'), dict), 'Candidate dependency identity is missing')
     require(set(manifest.get('files', {})) == REQUIRED_FILES, 'Candidate file roles are incomplete')
     require(set(manifest.get('reports', {})) == REQUIRED_REPORTS, 'Candidate reports are incomplete')
     paths = []
@@ -182,11 +189,13 @@ def verify_reports(manifest, root):
             require(report.get('cold_open') == 'Passed', 'Cold-open qualification is incomplete')
         if key == 'qualification':
             require(report.get('sha256') == extension_sha, 'Qualification belongs to another ZIP')
+            require(report.get('backend') == manifest.get('dependencies', {}).get('backend'),
+                    'Qualification backend identity differs from candidate')
         if key in ('extension-install', 'node-assets', 'cold-original', 'cold-moved', 'reproduction'):
             require(report.get('candidate_sha256') == extension_sha, 'Report candidate mismatch: ' + key)
 
 
-def verify_extension(path, source):
+def verify_extension(path, source, dependencies):
     with zipfile.ZipFile(path) as archive:
         members = zip_members(archive)
         expected_python = {name for name in source if name.endswith('.py') and name.startswith('qcblender/')}
@@ -205,6 +214,10 @@ def verify_extension(path, source):
                 'Extension manifest differs from tag')
         backend = json.loads(archive.read('backend-wheel.json'))
         require(backend.get('source_lock') == 'science-sources.lock.json', 'Backend source lock is missing')
+        expected_dependencies = dependency_identity(source['dependencies.lock.json'],
+                                                    source['science-sources.lock.json'], backend)
+        require(dependencies == expected_dependencies,
+                'Candidate dependency identity differs from tag locks or bundled backend')
         wheels = json.loads(source['dependencies.lock.json'])['packages'] + [backend]
         expected_wheels = {'wheels/' + entry['filename'] for entry in wheels}
         expected_members = {name.removeprefix('qcblender/') for name in source if name.startswith('qcblender/')}
@@ -284,44 +297,7 @@ def verify_public_materials(manifest, root, source):
     allowed_sources = {entry['sha256'] for entry in included.values()}
     with zipfile.ZipFile(root / manifest['files']['reproduction']['path']) as archive:
         members = zip_members(archive)
-        expected = {'example.blend', 'example.png', 'README.md', 'example.qcdata/manifest.json'}
-        require(expected <= set(members), 'Public reproduction is incomplete')
-        scene = json.loads(archive.read('example.qcdata/manifest.json'))
-        require(scene.get('format') == 'qcblender.scene' and scene.get('schema') == '0.1',
-                'Unsupported public scene manifest')
-        datasets = scene.get('datasets')
-        require(isinstance(datasets, list) and datasets and len(set(datasets)) == len(datasets),
-                'Public reproduction has no unique scientific Datasets')
-        for relative in datasets:
-            require(re.fullmatch(r'datasets/[0-9a-f]{64}', safe_name(relative)), 'Invalid public Dataset path')
-            prefix = 'example.qcdata/' + relative + '/'
-            name = prefix + 'manifest.json'
-            raw = archive.read(name)
-            require(hashlib.sha256(raw).hexdigest() == relative.split('/')[-1], 'Public Dataset identity mismatch')
-            dataset = json.loads(raw)
-            require(dataset.get('format') == 'qcblender.project' and dataset.get('schema') == '0.1',
-                    'Unsupported public Dataset manifest')
-            require(dataset.get('metadata', {}).get('source', {}).get('sha256') in allowed_sources,
-                    'Public reproduction contains an unverified input')
-            expected.add(name)
-            require(isinstance(dataset.get('arrays'), dict) and dataset['arrays'], 'Public Dataset has no arrays')
-            for entry in dataset['arrays'].values():
-                path = safe_name(entry['path'])
-                require(SHA256.fullmatch(entry['sha256']) and path == 'arrays/' + entry['sha256'] + '.npy',
-                        'Public array identity path mismatch')
-                with archive.open(prefix + path) as stream:
-                    require(hashlib.file_digest(stream, 'sha256').hexdigest() == entry['sha256'],
-                            'Public array content digest mismatch')
-                expected.add(prefix + path)
-            for field in dataset['metadata'].get('fields', []):
-                path = safe_name(field.get('vdb', 'field.vdb'))
-                require(path.endswith('.vdb'), 'Unexpected public field cache path')
-                if field.get('vdb_sha256'):
-                    with archive.open(prefix + path) as stream:
-                        require(hashlib.file_digest(stream, 'sha256').hexdigest() == field['vdb_sha256'],
-                                'Public field cache content digest mismatch')
-                expected.add(prefix + path)
-        require(set(members) == expected, 'Public reproduction contains missing or unlisted material')
+        reproduction_members(archive.open, members, allowed_sources)
 
 
 class GitSource:
@@ -503,7 +479,7 @@ def main():
     unpacked = args.output_dir / 'candidate'
     manifest = unpack_candidate(bundle, unpacked, version=version, commit=commit,
                                 product_tree=product_tree, run_id=args.candidate_run_id)
-    verify_extension(unpacked / manifest['files']['extension']['path'], source)
+    verify_extension(unpacked / manifest['files']['extension']['path'], source, manifest.get('dependencies'))
     verify_public_materials(manifest, unpacked, source)
     gates = {key: manifest[key] for key in GATES}
     if args.gates_record:

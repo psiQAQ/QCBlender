@@ -8,7 +8,8 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from tools.package_identity import extension_filename, extension_manifest, file_record, source_identity
+from tools.package_identity import dependency_identity, extension_filename, extension_manifest, file_record, source_identity
+from tools.public_reproduction import reproduction_members
 from tools.test_profiles import PUBLIC_SCIENCE, STDLIB
 
 REQUIRED_REPORTS = ('stdlib', 'public-science', 'node-helpers', 'extension-install',
@@ -79,13 +80,6 @@ def reproduction_zip(directory, destination, root=ROOT):
     for name in ('example.blend', 'example.png', 'README.md'):
         if not (directory / name).is_file():
             raise FileNotFoundError('Public reproduction material missing: ' + name)
-    datasets = list((directory / 'example.qcdata').glob('datasets/*/manifest.json'))
-    if not datasets:
-        raise ValueError('Public reproduction has no saved scientific datasets')
-    for manifest in datasets:
-        data = json.loads(manifest.read_text(encoding='utf-8'))
-        if data.get('metadata', {}).get('source', {}).get('sha256') not in owned:
-            raise ValueError('Public reproduction contains an unverified scientific input')
     paths = [directory / name for name in ('example.blend', 'example.png', 'README.md')]
     paths.extend(sorted((directory / 'example.qcdata').rglob('*')))
     for path in paths:
@@ -93,10 +87,11 @@ def reproduction_zip(directory, destination, root=ROOT):
             raise ValueError('Reproduction material cannot contain linked paths')
         if not path.resolve().is_relative_to(directory.resolve()):
             raise ValueError('Reproduction material escapes the selected directory')
+    files = {path.relative_to(directory).as_posix(): path for path in paths if path.is_file()}
+    expected = reproduction_members(lambda name: files[name].open('rb'), files, owned)
     with zipfile.ZipFile(destination, 'x', zipfile.ZIP_DEFLATED) as archive:
-        for path in paths:
-            if path.is_file():
-                archive.write(path, path.relative_to(directory).as_posix())
+        for name in sorted(expected):
+            archive.write(files[name], name)
     return file_record(destination)
 
 
@@ -111,6 +106,9 @@ def assemble(candidate, samples, reproduction, reports_dir, output, run_id, chan
     sample_report = verify_samples(samples, root)
     candidate_record = file_record(candidate)
     reports = validate_reports(reports_dir, commit, candidate_record['sha256'])
+    qualification = json.loads((Path(reports_dir) / 'qualification.json').read_text(encoding='utf-8'))
+    dependencies = dependency_identity((root / 'dependencies.lock.json').read_bytes(),
+                                       (root / 'science-sources.lock.json').read_bytes(), qualification['backend'])
     reproduction_report = json.loads((Path(reports_dir) / 'reproduction.json').read_text(encoding='utf-8'))
     public_inputs = json.loads((root / 'docs/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'))['files']
     if reproduction_report.get('source_sha256') not in {p['sha256'] for p in public_inputs.values() if p['distribution'] == 'included' and p['id'].startswith('P01')}:
@@ -133,7 +131,7 @@ def assemble(candidate, samples, reproduction, reports_dir, output, run_id, chan
                   source_commit=commit, product_tree=tree, candidate_run_id=run_id,
                   workflow='extension-package.yml', artifact_name=f"qcblender-candidate-{manifest['version']}-{commit}",
                   platform=dict(os='windows', architecture='x64', blender='5.1.1', python='3.13', numpy='2.3.4'),
-                  files=files, reports=reports,
+                  dependencies=dependencies, files=files, reports=reports,
                   license_review=dict(status='Not Run', blocker='IOData/GBasis GPL metadata and LGPL source-license text remain unresolved'),
                   independent_alpha_installation=dict(status='Not Run'), public_release_approval=dict(status='Not Run'))
     manifest_path = output / 'release-manifest.json'

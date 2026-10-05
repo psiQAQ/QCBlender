@@ -23,6 +23,14 @@ def validate_archive(candidate, installed_dir, root=ROOT):
         names = archive.namelist()
         if len(names) != len(set(names)):
             raise ValueError('Candidate ZIP contains duplicate members')
+        source_members = {path.relative_to(root / 'qcblender').as_posix()
+                          for path in (root / 'qcblender').rglob('*')
+                          if path.is_file() and '__pycache__' not in path.parts and path.suffix != '.pyc'}
+        expected_members = source_members | {'LICENSE', 'THIRD_PARTY.md', 'science-sources.lock.json',
+            'dependencies.lock.json', 'backend-wheel.json', 'assets/nodes.blend', 'assets/blender_assets.cats.txt'}
+        expected_members |= {'wheels/' + package['filename'] for package in packages}
+        if {name for name in names if not name.endswith('/')} != expected_members:
+            raise ValueError('Candidate ZIP contains missing or unexpected members')
         for name in names:
             target = (installed_dir / name).resolve()
             if not target.is_relative_to(installed_dir.resolve()) or name.startswith(('/', '\\')) or '\\' in name:

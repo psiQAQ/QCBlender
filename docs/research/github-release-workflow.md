@@ -32,7 +32,7 @@ QCBlender 使用单个自包含 Blender 扩展，首发 Windows x64 / Blender 5.
 
 ## 候选构建与草稿推广契约
 
-`extension-package.yml` 产生候选 artifact `qcblender-candidate-{version}-{source_commit}`。候选附件包含扩展 ZIP、许可合格 v2 样本 ZIP、精简公开复现材料 ZIP、`release-manifest.json` 与 `SHA256SUMS.txt`；完整技术报告在同 artifact 的 `reports/` 中。manifest 保存 version/channel/source_commit/candidate_run_id/product_tree、支持环境、附件大小与 SHA、报告状态与 SHA。artifact ID 由上传响应和发布记录绑定，不放进自包含 artifact 形成循环身份。
+`extension-package.yml` 产生候选 artifact `qcblender-candidate-{version}-{source_commit}`。候选附件包含扩展 ZIP、许可合格 v2 样本 ZIP、精简公开复现材料 ZIP、`release-manifest.json` 与 `SHA256SUMS.txt`；完整技术报告在同 artifact 的 `reports/` 中。manifest 保存 version/channel/source_commit/candidate_run_id/product_tree、支持环境、附件大小与 SHA、报告状态与 SHA。顶层 `dependencies` 保存两份锁的原字节 SHA、`host_provided` 版本、每份 bundled wheel 的名称/版本/文件名/SHA 及本次 qualification 的 backend 记录；发布端与 tag 锁、ZIP backend/wheels 和 qualification 逐项核对。artifact ID 由上传响应和发布记录绑定，不放进自包含 artifact 形成循环身份。
 
 公开 Release 提供上述五份附件；`SHA256SUMS.txt` 也保留 CI artifact 内技术报告的摘要。安装者核对下载的 ZIP 与清单中的对应条目；完整报告及全清单核验使用确切 run 的 artifact。
 
@@ -55,6 +55,8 @@ Alpha 技术门禁包括核心测试、固定科学环境与真实必要样本�
 所有随包组件都需要可审查的许可材料。当前 [THIRD_PARTY](../../THIRD_PARTY.md) 记录 IOData/GBasis 包元数据与根 LICENSE 的声明差异，以及 SciPy/OpenBLAS/GCC runtime 随包材料；保留真实差异并完成复核，未完成时保持本地候选。Alpha 不提供许可豁免。
 
 公开样本依据 [SOURCES](../v1-acceptance/SOURCES.md) 第 157–183 行与 [样本机器清单](../v1-acceptance/tutorial-samples.json)。仅推广许可合格的 v2 样本及由公开输入生成的复现材料。P02/S08 及未知许可原件和相关 `.blend/.qcdata` 不加入公开附件；SOP 保留原站获取、SHA 核验及剩余限制。
+
+复现 ZIP 的 `.qcdata` 成员严格来自 scene 清单及其 Dataset manifest 引用的数组和 VDB；目录身份和数组/缓存摘要一并核对，任何未引用文件均拒绝。扩展 ZIP 严格包含 tag 的扩展内容、两份明确生成的节点资产、许可/锁记录和锁定 wheels。候选与推广阶段均检查完整成员，避免目录中额外原件进入附件。
 
 人工 Alpha 短 SOP 由实际操作者执行：记录 ZIP/样本 SHA → Windows x64 / Blender 5.1.1 新清洁配置离线安装确切 ZIP → 导入 P01、创建固定 Alpha MO9 并核对原子/轨道/量名 → 调整等值面、保存 PNG 和自包含 `.blend + .qcdata` → 正常关闭 → 中文路径移动工程 → 新进程冷重开并核对科学记录/节点/视图/来源 → 填写结果和针对该 ZIP 的公开批准。修复后重新构建候选，重做受影响步骤。
 

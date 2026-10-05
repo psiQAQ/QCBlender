@@ -30,7 +30,7 @@ class CandidateBoundaries(unittest.TestCase):
         (self.root / 'qcblender').mkdir()
         shutil.copyfile(ROOT / 'qcblender/blender_manifest.toml', self.root / 'qcblender/blender_manifest.toml')
         for relative in ('docs/v1-acceptance/tutorial-samples.json', 'docs/acceptance/tutorial-sample-delivery.json',
-                         'science-sources.lock.json'):
+                         'science-sources.lock.json', 'dependencies.lock.json'):
             path = self.root / relative
             path.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, path)
@@ -45,9 +45,21 @@ class CandidateBoundaries(unittest.TestCase):
         self.reproduction.mkdir()
         for name in ('example.blend', 'example.png', 'README.md'):
             (self.reproduction / name).write_bytes(name.encode('ascii'))
-        dataset = self.reproduction / 'example.qcdata/datasets/wavefunction'
-        dataset.mkdir(parents=True)
-        (dataset / 'manifest.json').write_text(json.dumps({'metadata': {'source': {'sha256': self.public_sha}}}), encoding='utf-8')
+        array = b'Synthetic array for packaging boundary; no numerical qualification claim'
+        digest = hashlib.sha256(array).hexdigest()
+        dataset_raw = json.dumps({'format': 'qcblender.project', 'schema': '0.1',
+                                 'metadata': {'source': {'sha256': self.public_sha}},
+                                 'arrays': {'positions': {'path': 'arrays/' + digest + '.npy',
+                                                         'sha256': digest}}}).encode()
+        relative = 'datasets/' + hashlib.sha256(dataset_raw).hexdigest()
+        self.dataset = self.reproduction / 'example.qcdata' / relative
+        (self.dataset / 'arrays').mkdir(parents=True)
+        (self.dataset / 'arrays' / (digest + '.npy')).write_bytes(array)
+        (self.dataset / 'manifest.json').write_bytes(dataset_raw)
+        (self.reproduction / 'example.qcdata/manifest.json').write_text(json.dumps({
+            'format': 'qcblender.scene', 'schema': '0.1', 'datasets': [relative]}), encoding='utf-8')
+        self.public_members = {p.relative_to(self.reproduction).as_posix()
+                               for p in self.reproduction.rglob('*') if p.is_file()}
         for name in artifacts.REQUIRED_REPORTS:
             report = dict(status='Passed', source_commit=COMMIT, candidate_sha256=self.digest)
             if name in ('stdlib', 'public-science'):
@@ -60,6 +72,9 @@ class CandidateBoundaries(unittest.TestCase):
                 report.update(portable_saved=True, source_sha256=self.public_sha)
             if name == 'qualification':
                 report['sha256'] = self.digest
+                report['backend'] = {'name': 'qc-gbasis', 'version': '0.1.0',
+                                     'filename': 'qc_gbasis-0.1.0-py3-none-any.whl', 'sha256': self.digest,
+                                     'source_lock': 'science-sources.lock.json'}
             if name == 'sample-package':
                 report['package'] = file_record(self.samples)
             self.write_report(name, report)
@@ -133,8 +148,15 @@ class CandidateBoundaries(unittest.TestCase):
             artifacts.validate_reports(self.reports, COMMIT, self.digest)
 
     def test_reproduction_rejects_unknown_input(self):
-        path = self.reproduction / 'example.qcdata/datasets/wavefunction/manifest.json'
-        path.write_text('{"metadata":{"source":{"sha256":"unknown"}}}', encoding='utf-8')
+        path = self.dataset / 'manifest.json'
+        data = json.loads(path.read_bytes())
+        data['metadata']['source']['sha256'] = 'unknown'
+        raw = json.dumps(data).encode()
+        path.write_bytes(raw)
+        relative = 'datasets/' + hashlib.sha256(raw).hexdigest()
+        self.dataset.rename(self.reproduction / 'example.qcdata' / relative)
+        (self.reproduction / 'example.qcdata/manifest.json').write_text(json.dumps({
+            'format': 'qcblender.scene', 'schema': '0.1', 'datasets': [relative]}), encoding='utf-8')
         with self.assertRaisesRegex(ValueError, 'unverified scientific input'):
             artifacts.reproduction_zip(self.reproduction, self.root / 'reproduction.zip', self.root)
 
@@ -144,8 +166,19 @@ class CandidateBoundaries(unittest.TestCase):
         target = self.root / 'reproduction.zip'
         artifacts.reproduction_zip(self.reproduction, target, self.root)
         with zipfile.ZipFile(target) as archive:
-            self.assertEqual(set(archive.namelist()), {'example.blend', 'example.png', 'README.md',
-                                                     'example.qcdata/datasets/wavefunction/manifest.json'})
+            self.assertEqual(set(archive.namelist()), self.public_members)
+
+    def test_reproduction_rejects_unknown_license_sidecar_file(self):
+        (self.reproduction / 'example.qcdata/P02-unknown-license.fchk').write_bytes(b'Unknown license fixture')
+        target = self.root / 'reproduction.zip'
+        with self.assertRaisesRegex(ValueError, 'unlisted material'):
+            artifacts.reproduction_zip(self.reproduction, target, self.root)
+        self.assertFalse(target.exists())
+
+    def test_reproduction_rejects_changed_array_before_packaging(self):
+        next((self.dataset / 'arrays').glob('*.npy')).write_bytes(b'Changed synthetic array')
+        with self.assertRaisesRegex(ValueError, 'content digest mismatch'):
+            artifacts.reproduction_zip(self.reproduction, self.root / 'reproduction.zip', self.root)
 
     def test_assembly_preserves_original_zips_and_has_no_artifact_id_cycle(self):
         output = self.root / 'artifact'
@@ -155,6 +188,12 @@ class CandidateBoundaries(unittest.TestCase):
         self.assertEqual(file_record(output / self.samples.name)['sha256'], file_record(self.samples)['sha256'])
         self.assertEqual(manifest['product_tree'], TREE)
         self.assertEqual(manifest['candidate_run_id'], 123)
+        self.assertEqual(manifest['dependencies']['lock_sha256'],
+                         file_record(self.root / 'dependencies.lock.json')['sha256'])
+        self.assertEqual(manifest['dependencies']['source_lock_sha256'],
+                         file_record(self.root / 'science-sources.lock.json')['sha256'])
+        self.assertEqual(manifest['dependencies']['host_provided'], {'numpy': '2.3.4', 'openvdb': '13.0.0'})
+        self.assertEqual(manifest['dependencies']['backend']['name'], 'qc-gbasis')
         self.assertEqual(manifest['license_review']['status'], 'Not Run')
         self.assertEqual(manifest['independent_alpha_installation']['status'], 'Not Run')
         self.assertNotIn('artifact_id', manifest)
@@ -219,6 +258,7 @@ class CandidateBoundaries(unittest.TestCase):
         manifest = manifest.replace('wheels = []', 'wheels = ["./wheels/' + backend['filename'] + '"]')
         contents = {'__init__.py': (self.root / 'qcblender/__init__.py').read_bytes(),
                     'blender_manifest.toml': manifest.encode('utf-8'), 'assets/nodes.blend': b'synthetic node bytes',
+                    'assets/blender_assets.cats.txt': b'synthetic asset catalog',
                     'backend-wheel.json': json.dumps(backend).encode('utf-8'),
                     'wheels/' + backend['filename']: wheel.getvalue()}
         for name in ('LICENSE', 'THIRD_PARTY.md', 'science-sources.lock.json', 'dependencies.lock.json'):
@@ -243,6 +283,16 @@ class CandidateBoundaries(unittest.TestCase):
         installed = self.qualified_zip_fixture()
         (self.root / 'qcblender/__init__.py').write_text('VALUE = 2\n', encoding='utf-8')
         with self.assertRaisesRegex(ValueError, 'Source differs'):
+            validate_archive(self.candidate, installed, self.root)
+
+    def test_archive_qualification_rejects_extra_unknown_license_file(self):
+        installed = self.qualified_zip_fixture()
+        name = 'P02/unknown-license.fchk'
+        with zipfile.ZipFile(self.candidate, 'a') as archive:
+            archive.writestr(name, b'Unknown license fixture')
+        (installed / 'P02').mkdir()
+        (installed / name).write_bytes(b'Unknown license fixture')
+        with self.assertRaisesRegex(ValueError, 'unexpected members'):
             validate_archive(self.candidate, installed, self.root)
 
 
