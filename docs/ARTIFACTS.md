@@ -22,6 +22,8 @@
 
 任务提交 `9cc9a005` 已 ff-only 合入 main，四个 `archive/2026-10-05/feat/alpha-*` 注释标签可达 main。四个任务工作树的 Git 登记及分支移除 Passed；三个磁盘目录移除 Passed，`.worktrees/alpha-core` 普通移除 Failed（Directory not empty），残留由 `.scratch/alpha-readiness/issues/11-worktree-residue.md` 跟踪。清理后 32,170 条原路径映射、7,419 个内容对象、13 个候选文件/报告及中文工程 59 文件摘要复核 Passed；详细收据为 `closing/post-cleanup-verification.json`。不可枚举缓存目录保留，不计入保全成功范围。
 
+完整 SOP 连续操作见 [SOP](v1-acceptance/SOP.md) 的“完整 SOP 执行顺序与完成标准”及 A00–A09 展开步骤。文档检查和编辑脚本位于 `outputs/evidence/2026-10-05/alpha-readiness/sop-flow/`，含 `sop-flow-verification.json`、`preservation.json` 与本地归档收据；检查覆盖 433 个本地链接、三段 PowerShell 语法、原案例和历史截图保留。本次仅补文档，未重跑 Blender，独立使用者验收 Not Run。
+
 ## 2026-10-05 可靠性历史交付
 
 当前候选为`outputs/candidates/current/reliability-final-a3ed826/qcblender-0.0.1.zip`，50,645,094字节，SHA-256 `8094278edf08a2e6d54640e4f0cd376d8cbb98568c92464720f963dff4bb8c71`。固定产品源码`a3ed8264aad860f25c922dd7c91efce3f6f078d3`，产品树`0cec91ad2ed7804e78a01c39105d49e3d39150d8`。[可靠性验证](acceptance/reliability-validation.md)及[机器索引](acceptance/reliability-validation.json)记录本批范围与限制；独立使用者和科研签署Not Run。

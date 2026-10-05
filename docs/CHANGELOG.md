@@ -1,5 +1,7 @@
 # 开发演进
 
+- 2026-10-05：SOP 补齐完整连续执行流程：干净配置安装与 A00–A09 首次出图，C01–C13/X01 工程依赖，N01–N18、每例导出/渲染/保存/中文移动/归档解包冷重开及最终签署。展开实际对象、按钮、参数、文件和完成判断；433 个本地链接及三段 PowerShell 示例语法检查 Passed。产品与原案例/历史验收结果未变，独立人工/科研复做仍 Not Run。检查记录由[产物路由](ARTIFACTS.md)定位。
+
 - 2026-10-05：完成 1 GiB 科学数据资源契约、全驻留输入求值预算、科学源码/依赖缓存指纹、异步计算前预检及实时资源拒绝；新增中文 Markdown/JSON 当前视图参数摘要，缺字段及自定义图保持 partial/unverified。新增 Windows x64 / Blender 5.1.1 公开核心候选 CI、原始 artifact 身份核验及手动草稿发布工作流；manifest 0.1.0。127 标准库、67 公开科学、123 完整本地科学、六视觉新建/冷读共12次及真实 GUI/取消/Undo/Redo/摘要/中文移动冷重开 Passed；Standards/Spec 0 遗留。SOP、指南、架构与节点契约同步。当前候选固定19e4cf0，本地证据 run ID 0，组件许可和独立人工/科研门禁 Not Run；实际 GitHub CI/草稿/公开尚未执行。任务提交9cc9a005已ff-only合入main，四个注释归档标签可达main；四个Git工作树登记和分支移除Passed，三个磁盘目录移除Passed，alpha-core普通移除Failed并原位保留。清理后证据、候选及中文工程摘要复核Passed；本地归档及保全清理的实际结果见[Alpha 验证](acceptance/alpha-readiness-validation.md)、[交付收据](acceptance/alpha-readiness-delivery.json)和[产物路由](ARTIFACTS.md)。
 
 - 2026-10-05：外部分析增加静态参考及异步身份检查；创建场、保存和重新定位前检查原生VDB网格；取消保留原错误、退出状态与待清理任务。IGMH分量、片段和来源声明按user_assigned持久化及导出。105科学测试、40单测、六视觉与真实GUI/Undo/Redo/原地和中文移动冷读Passed，Standards/Spec各1项修复后0遗留。标准库流式摘要实验保持科学身份，256³收益未达到32 MiB或10%门槛，停止扩大重构。资格提交42a11be已ff-only合入main，五个注释归档标签已创建并保留，五个工作树及分支正常移除；清单删除40,911文件/15,384,029,053字节，996个保护文件和1,316份保全版本摘要复核Passed，16个未分类文件和19个拒绝目录保留。独立人工/科研签署及天然权限拒绝目标Not Run；候选、保全及本地收尾见[验证](acceptance/reliability-validation.md)、[交付收据](acceptance/reliability-delivery.json)与[产物路由](ARTIFACTS.md)，不push/发布。

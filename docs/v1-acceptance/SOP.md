@@ -14,25 +14,186 @@
 
 2026-10-05静态参考、IGMH声明、取消和原生VDB检查见[可靠性验证](../acceptance/reliability-validation.md)。下列新增截图绑定a3ed826最终候选；MCP准备对象和参数，实际确认、Undo/Redo、Esc和保存由Agent Computer Use执行。用户复做与科研签署仍单独填写。
 
+## 完整 SOP 执行顺序与完成标准
+
+首次使用从 **A00 → A01–A09** 连续执行，得到 P01 Alpha MO9 图片、参数摘要及可移动工程。完整 v1 验收继续完成 **0.1–0.5 → C01–C13 与 X01 → N01–N18 → 3.1–3.3**。每个阶段使用同批候选和输入身份；更换候选后记录新摘要并重新验证受影响步骤。以下路线是实际复做顺序，步骤结果由本次操作者填写。
+
+| 阶段 | 连续执行的操作 | 进入下一阶段前的检查 |
+| --- | --- | --- |
+| 1 材料与批次 | 按 0.1 建立本次目录，核对扩展 ZIP、样本包、输入及许可，填写批次身份 | 文件和摘要匹配；C02/C06 的 P02 必须另行取得并核对，缺少时对应案例记 Not Run |
+| 2 干净配置安装 | 按 A00/A01 启动独立配置，安装扩展并检查科学运行库；按 0.2 定位编辑器和解除对象图钉 | 精确 Blender/扩展版本已记录，运行库检查成功，QCBlender 侧栏可见 |
+| 3 首次出图 | 连续执行 A02–A09：导入 P01、自动预检、生成 Alpha 源 MO9、改等值、渲染、导出摘要、自包含保存、中文移动及新进程重开 | A01–A09 各有结果和证据；文件、科学身份及当前显示参数能够核对 |
+| 4 科学案例 | 按下表执行 C01–C13 和 X01；每例先走 0.3 导入/来源核对，再执行该例全部编号步骤 | 科学记录、参数变化前后及错误/取消行为有实际记录；输入依赖未满足则停止该例 |
+| 5 每例完成闭环 | 执行 0.5 所需 CSV 导出及当前视图摘要；再按 0.4 渲染、保存、原地冷重开、中文移动冷重开、归档及解包冷重开 | 图片、导出、工程和配套数据齐全；每次确认旧 PID 退出后才启动下一进程，摘要和源数值一致 |
+| 6 节点与交互 | 在已保存工程的独立副本执行 N01–N18；先解除节点编辑器图钉，选择正确修改器，再改输入或接线 | 实际节点/接线、原值→新值和结果已记录；公共资产新增后打包关联库，再完成保存/冷重开 |
+| 7 缺陷与复做 | Failed 时保留错误、工程与输入，登记缺陷；修复后以新候选重做相关操作、导出及工程闭环 | 未解决必需项仍为 Failed；缺输入或未执行仍为 Not Run，不能从历史通过记录继承 |
+| 8 汇总与签署 | 按 3.1 填写工具、对象、参数及证据；按 3.2 逐行汇总；满足 3.3 条件后由独立使用者签署 | C/X、N、必要技术与许可材料全部符合完成条件，签名及科研适用性由实际独立验收者填写 |
+
+科学案例按以下顺序打开工程；同一个案例内的所有步骤仍以对应章节为准。新工程使用 **File → New → General**；承接案例先 **File → Open** 指定已保存工程，随后通过 **保存自包含工程**另存本例名称。
+
+| 执行顺序 | 工程起点与需要选中的对象 | 本例结束后保留的关键结果 |
+| --- | --- | --- |
+| C01 | 新工程，P01 O2 原子视图 | Alpha MO9、Beta MO7、密度/自旋密度及单位；0.045 MO 等值；可接 N04/N05/N09/N10/N16 |
+| C02 | 新工程，P02 所选计算段的原子视图 | Job2 振动/IR、Job1 优化、真实能量与步骤；IR/optimization CSV；可接 N12 |
+| C03 | 新工程，P03 Cube 场视图 | 原始网格、量名、单位及双符号；同网格采样；可接 N06 |
+| C04 | 新工程，P03 水二聚体原子及密度/ESP 视图 | ESP 映射、电荷、偶极、切片、探针和 profile CSV；可接 N06–N08/N11/N17 |
+| C05 | 新工程，P03 水二聚体原子视图 | 氢显隐、源原子选择、距离/角标注与独立显示副本；可接 N01–N03/N15/N16 |
+| C06 | 新工程，P02 Job2 原子及 NBO/E(2) 记录 | 来源块、真实 NBO 与 E(2) 数值；P02 工程单独保留，不放入公开附件 |
+| C07 | 新工程，P03 参考原子及 IGMH/IRI 成对场记录 | 片段声明、双值、筛选、交换列和 paired 全量/筛选 CSV；可接 N14 |
+| C08 | 打开 C04 工程并另存，选择关联 ESP 场及极值/面积记录 | 极值、面积/百分比、源单位及 ESP_AREA CSV；可接 N13 |
+| C09 | 新工程，P03 参考原子、AIM 临界点/路径记录 | 源点编号、坐标、路径和 CPprop 属性；可接 N13 |
+| C10 | 新工程，P04 IRC 路径根及当前步原子 | CSV 真实 1→2→3 步序、能量、构型/标注与 IRC CSV |
+| C11 | 打开 C10 工程并另存，选择 IRC Mayer 表和当前步 | 原子对1,2及逐步源值、Mayer CSV，切步后的关联与显示一致 |
+| C12 | 新工程，P05 参考原子及 ETS-NOCV 结果表 | pair1/Spin Total、能量单位及真实结果记录 |
+| C13 | 打开 C12 工程并另存，选择 pair1/Total Cube 场 | 两符号密度、0.003 electron/bohr^3、与 NOCV 表的来源关联；可接 N04/N05 |
+| X01 | 新工程，P06 XYZ 当前帧原子视图 | 源原子顺序、Å 坐标、离散帧、显示和数据一致 |
+
+N01–N18 在第 2 节逐项执行；可在对应案例完成时顺序插入，N16 覆盖指定案例中的 Undo/Redo，N18 覆盖每例保存及冷重开。不要因某一案例做过一次就填写其余案例通过。每例交付目录至少包含 `CXX.blend + CXX.qcdata/`、成图或面板证据、参数记录及适用的 CSV/metadata；原始输入、唯一导出目录和归档 ZIP 另外保留。
+
+**Alpha 短 SOP 完成**要求本次 A01–A09 全部实际执行并逐项 Passed，候选/输入摘要、首次图片、摘要导出、自包含工程和中文路径新进程重开证据齐全。**完整 v1 SOP 完成**要求 3.3 所列 C01–C13、X01、N01–N18、必要导出、同批技术检查及许可记录齐全，并由独立使用者完成科研复做和签署。当前独立短 SOP、完整 v1 人工/科研验收仍为 **Not Run**；本次文档展开不改变这些状态。GitHub CI、草稿与公开发布的状态另见 Alpha 门禁表。
+
+
 ## Alpha 首次出图与短验收
 
 本路线适用于 manifest **0.1.0** 的 GitHub Alpha 候选。每次记录扩展 ZIP、源码提交、样本 ZIP 和 P01 SHA-256；候选技术结果、Agent 点击、独立使用者试装与科研签署分别记录。首次 Alpha 的公开门禁见[发布研究与流程](../research/github-release-workflow.md)，正式 v1 仍按全部 C/N 案例验收。
 
 公开样本的仓库入口为 `tests/data/distribution/qcblender-public-tutorial-samples-v2.zip`；取得发布附件时核对 `release-manifest.json` 和 `SHA256SUMS.txt`。本包包含 P01/P03/P04/P05/P06，排除 P02。P01 使用 `P01/o2-uhf.fchk`：UHF/STO-3G，SHA-256 为 `ef562c4b210e7c380219282d7684370cca1f0e8349dffa1d4388af5831472e36`。下载源码后可从 `tests/data/tutorial/P01/` 取得同一文件。
 
-按下表连续完成；每步保存截图或文件，另记 Passed / Failed / Not Run。
+先按 A00 准备本次目录和干净配置，再按下表 A01–A09 连续完成。表后逐步说明填写实际路径、选中对象、输入参数、文件检查及退出/冷重开；每步保存截图或文件，另记 Passed / Failed / Not Run。
 
 | 步骤与操作 | 需要选中的对象 | 编辑器与面板路径 | 按钮文字、参数与可观察结果 |
 | --- | --- | --- | --- |
 | A01 干净配置安装 | 无 | Edit → Preferences → Get Extensions → 菜单 | Install from Disk：安装本批扩展 ZIP，启用 QCBlender；Add-ons → QCBlender → Check Scientific Runtime，应显示成功。使用独立配置，保留实际版本与摘要。 |
 | A02 导入 P01 | 无 | 3D Viewport → N → QCBlender → 工作流 | 导入 Gaussian / Cube / XYZ：选择 o2-uhf.fchk；完成后选新原子视图，在来源详情核对 UHF、STO-3G、2 个 O 原子和源摘要。 |
 | A03 自动预检并生成 MO9 | P01 原子视图 | N 侧栏 → 工作流 | 生成量子化学场：首次先异步检查方法、ECP、基组、占据与密度矩阵，通过才打开 Generate Quantum Field。Quantity=Molecular orbital、Spin=Alpha、Orbital=Source number、Orbital number=9；Grid spacing=0.2 Å、Grid margin=3 Å、Memory budget=512 MiB。核对网格尺寸、体素数、结果大小、求值估算及拒绝原因，再点 OK；完成后出现双符号场视图。 |
-| A04 修改等值 | 新 MO9 场视图 | Properties → Object → QCBlender · 对象与量子化学 → 几何表示 | 将“正值阈值 [bohr^-3/2]”（Isovalue）从原值改为 0.045，保持 Link Thresholds，记录前后几何变化；查看正负相位材质。 |
+| A04 修改等值 | 新 MO9 场视图 | Properties → Modifiers → QC Isosurface | 将“正值阈值 [bohr^-3/2]”（Isovalue）从原值改为 0.045，保持 Link Thresholds，记录前后几何变化；查看正负相位材质。 |
 | A05 渲染 | MO9 场视图 | N 侧栏 → 创建视图与检查工具；Render / Output Properties | 创建取景相机；按 0.4 设置灯光、渲染器与色彩管理，再 Render → Render Image，Image → Save As 保存 example.png。 |
 | A06 导出摘要 | 最终 MO9 场视图 | N 侧栏 → 工程与诊断 | 导出数据与参数摘要：Data=当前视图参数摘要，选择本次绝对目录，确认导出。新结果目录包含 view-summary.md 和 metadata.json；核对实时 Isovalue=0.045、源 MO9/Alpha、网格、单位、有效域和材质。重复导出产生独立目录；取消不产生完整结果。 |
 | A07 自包含保存 | 已打开工程 | N 侧栏 → 工程与诊断 | 保存自包含工程：保存 example.blend，确认同目录生成 example.qcdata/；摘要导出文件另外保留。 |
 | A08 中文路径移动 | 无；先保存并正常退出 Blender | 文件管理器 | 将 example.blend 与 example.qcdata/ 一起复制至“中文路径移动”目录；核对科学 manifest/数组摘要未变。 |
 | A09 新进程重开 | 重开后选 MO9 场视图 | 新 Blender 进程 → File → Open；对象属性与工程与诊断 | 打开移动后的 example.blend；双符号、等值和材质应保留，数据路径指向同目录 qcdata。再次导出摘要，核对来源和参数。重新生成时资格记录需重新检查。 |
+
+### A00 建立本次目录并启动干净配置
+
+先取得本批扩展 ZIP、v2 公开样本 ZIP、`release-manifest.json` 和 `SHA256SUMS.txt`。本地候选由[产物路由](../ARTIFACTS.md)定位；GitHub 附件仅在实际发布后下载。核对包大小、摘要及清单中的源码提交，不把本地 run ID 0 当作 GitHub CI 身份。将 v2 包解压到 `inputs/`，保持 P01 等目录结构。
+
+本例固定使用 P01 `o2-uhf.fchk`（8,880 字节），UHF/STO-3G。新建一个短路径批次，示例为 `D:/QCAlpha/run01`；目录已存在时换新名称。保留 `inputs/`、`images/`、`exports/`、`project/`、`中文路径移动/` 和 `evidence/`。未安装扩展前，从 PowerShell 启动独立 Blender 配置，避免沿用日常配置；以下命令只创建本批目录和配置，不安装开发依赖。
+
+```powershell
+$sopBlender = 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe'
+$sopBatch = 'D:/QCAlpha/run01'
+if (Test-Path -LiteralPath $sopBatch) { throw 'Choose an unused SOP batch directory' }
+$env:BLENDER_USER_RESOURCES = "$sopBatch/profile"
+$env:BLENDER_USER_CONFIG = "$sopBatch/profile/config"
+$env:BLENDER_USER_EXTENSIONS = "$sopBatch/profile/extensions"
+$env:BLENDER_USER_DATAFILES = "$sopBatch/profile/datafiles"
+$env:BLENDER_USER_CACHE = "$sopBatch/cache"
+New-Item -ItemType Directory -Path $env:BLENDER_USER_CONFIG,$env:BLENDER_USER_EXTENSIONS,$env:BLENDER_USER_DATAFILES,$env:BLENDER_USER_CACHE,"$sopBatch/inputs","$sopBatch/images","$sopBatch/exports","$sopBatch/project","$sopBatch/中文路径移动","$sopBatch/evidence" -Force | Out-Null
+$sopProcess = Start-Process -FilePath $sopBlender -ArgumentList '--factory-startup' -PassThru
+$sopProcess.Id
+```
+
+Blender 安装路径按本机修改；批次路径贯穿后续步骤。保持此 PowerShell 会话，以便冷重开继承同一独立扩展配置。解压样本可用文件管理器；在 0.1 身份表记录操作者、精确版本、下载/提供路径和摘要。不要从已生成的复现工程代替本次从原始 P01 导入。
+
+### A01 安装扩展并检查运行库
+
+**选择对象：无。** 打开 **Edit → Preferences → Get Extensions → 右上菜单 → Install from Disk**，选择本批 `qcblender-0.1.0.zip` 并确认安装；在 **Add-ons** 查找并启用 **QCBlender**。展开偏好，点击 **Check Scientific Runtime**，等待结果；失败时保存完整诊断，本次生成步骤停止。关闭 Preferences，在 3D Viewport 选择 **Object Mode**，按 `N`，确认 **QCBlender** 页及“工作流”可见。
+
+**完成判断：**版本与候选记录一致，运行库检查成功，侧栏可见。记录安装与检查截图；当前已有候选安装证据由 CLI 产生，独立使用者须实际执行此步骤后才能填写自己的 Passed。
+
+### A02 从原始 P01 导入并核对来源
+
+**选择对象：无；完成后选择新原子视图。** 点击 **3D Viewport → N → QCBlender → 工作流 → 导入 Gaussian / Cube / XYZ**，选择本批 `inputs/P01/o2-uhf.fchk`，确认并等待导入结束。在 Outliner 或 Display Layers 选中新原子对象，解除 Properties 的旧对象图钉；点击 **数据集与数值摘要 → 查看完整来源**，核对源摘要、UHF、STO-3G、2 个 O 原子和源原子顺序。
+
+**完成判断：**原子视图出现，来源与输入一致，没有导入错误。保留来源面板截图和原件 SHA-256；对象实际名称以本次场景为准。当前已有原始导入证据由 CLI 产生，此处的用户复做结果另记。
+
+### A03 自动预检并生成 Alpha 源 MO9
+
+**选择对象：A02 新原子视图。** 点击 **N → QCBlender → 工作流 → 生成量子化学场**。首次先执行独立异步科学检查，检查通过才打开 **Generate Quantum Field**；等待检查结束，不重复启动。将 **Quantity=Molecular orbital、Spin=Alpha、Orbital=Source number、Orbital number (1-based)=9、Grid spacing (angstrom)=0.2、Grid margin (angstrom)=3、Memory budget (MiB)=512**。
+
+核对资源预览。固定 P01 与本批实现的参考为 **31 × 31 × 37、35,557 体素、Dataset 约 0.31 MiB、求值估算约 0.59 MiB**；若不同，先核对输入摘要、量、自旋、源轨道编号和网格参数，记录实际结果。确认没有拒绝原因后点 **OK**，等待完成；选择本次新 MO9 场视图，不根据名称后缀猜测活动对象。
+
+**完成判断：**新双符号场出现，来源为 Alpha 源 MO9，任务结束且无诊断错误。对话框取消、错误资格和预算拒绝分别记录，拒绝时不应创建场结果；这些检查不改变最终参数。
+
+### A04 修改等值并观察两符号
+
+**选择对象：A03 新 MO9 场视图。** 打开 **Properties → Modifiers → QC Isosurface**，将 **Isovalue** 从实际原值改为 **0.045 bohr^-3/2**，保持 **Link Thresholds** 及正负两符号开启。这是本批实际确认的修改器入口；对象属性中“几何表示”也显示对应参数。切换 **Material Preview** 查看正负相位材质，记录原值→新值及变化后的表面。默认 Solid 灰色不作为材质检查结果。
+
+**完成判断：**等值为 0.045、两符号保留，科学源及数组未改变。若做 Undo/Redo，使用 **Edit → Undo / Redo**，核对恢复的对象和绑定，最终恢复本步骤参数后继续。
+
+### A05 创建取景并保存首次图片
+
+**选择对象：最终 MO9 场视图。** 展开 **N → QCBlender → Display Layers**，对不需出图的旧场关闭视口和渲染可见性；需要保留的原子视图可保持可见。转到需要的观察方向，点击 **创建视图与检查工具 → 创建取景相机**，小键盘 `0` 查看取景，确认两符号未被裁切。按 0.4 在 Render/Output Properties 和 Color Management 设置实际渲染器、分辨率、采样和色彩管理，并按需 **Add → Light**。
+
+点 **Render → Render Image（F12）**，等待完成；在 Render Result 中 **Image → Save As** 保存 `$sopBatch/images/example.png`（在文件选择器中使用展开后的实际绝对路径）。记录渲染器、分辨率、采样、色彩管理、灯光和相机，以及场的单位与等值。
+
+**完成判断：**PNG 可打开，场的两符号、原子与图例按本次选择可见。空图或仅见旧场时先检查相机和 Display Layers，不改变科学数据来补图。首次图片与参数记录一起保留。
+
+### A06 导出当前视图参数摘要
+
+**选择对象：A04/A05 最终 MO9 场视图。** 点击 **N → QCBlender → 工程与诊断 → 导出数据与参数摘要**，在 **Data** 选 **当前视图参数摘要**，**Output directory** 选择本批 `exports/` 的绝对路径，确认并等待完成消息。按消息找到新建的唯一结果子目录，打开其中 `view-summary.md` 与 `metadata.json`。
+
+核对来源摘要、UHF/STO-3G、当前构型、Alpha/源 MO9、bohr^-3/2、0.2 Å 网格、有效域、实时等值 0.045 和可核验材质输入。浮点数可能记录为接近 0.045 的二进制表示；核对精度及单位。检查 coverage/status/reasons：无法核实的内部组、链接输入或自定义图保留 `partial/unverified`，逐项说明，不要求把状态改成完整。
+
+**完成判断：**两个文件同时存在且对应当前视图。再次导出应产生另一唯一目录，第一次不变；取消对话框应不产生新完整结果。摘要只记录参数；科学数组由后续工程配套数据保存。
+
+### A07 保存自包含工程并正常退出
+
+**选择对象：保持最终 MO9 场视图活动。** 点击 **N → QCBlender → 工程与诊断 → 保存自包含工程**，保存到本批 `project/example.blend`。确认同目录有 `example.qcdata/` 和科学 manifest/数组/必要体积文件。若手工加入关联公共节点资产，先执行 **File → External Data → Pack Linked Libraries（打包关联库）**，再自包含保存。
+
+**完成判断：**保存完成、文件名和配套目录匹配，工程没有未保存修改。摘要及 PNG 单独保留，不会自动被纳入 `.qcdata`。使用 **File → Quit** 正常退出，处理本次保存提示；在原 PowerShell 会话中 `Wait-Process -Id $sopProcess.Id -ErrorAction SilentlyContinue` 后确认此 PID 已退出，才移动工程或启动下一进程。
+
+### A08 将工程放到中文目录并核对摘要
+
+**选择对象：无，Blender 已退出。** 在文件管理器将 `project/example.blend` 和整个 `project/example.qcdata/` 一起复制到本批 `中文路径移动/`；保留原件，先验证移动位置的副本。不要只复制 `.blend`，也不要改 `.qcdata` 目录名。
+
+在同一 PowerShell 会话核对原件和中文副本的全部文件，失败时停止重开验收并记录文件路径：
+
+```powershell
+$sopOriginal = "$sopBatch/project"
+$sopMoved = "$sopBatch/中文路径移动"
+$sopFiles = @((Get-Item -LiteralPath "$sopOriginal/example.blend")) + @(Get-ChildItem -LiteralPath "$sopOriginal/example.qcdata" -Recurse -File -ErrorAction Stop)
+$sopHashRows = foreach ($sopFile in $sopFiles) {
+    $sopRelative = $sopFile.FullName.Substring($sopOriginal.Length + 1)
+    $sopDestination = Join-Path $sopMoved $sopRelative
+    $sopBefore = (Get-FileHash -LiteralPath $sopFile.FullName -Algorithm SHA256 -ErrorAction Stop).Hash
+    $sopAfter = (Get-FileHash -LiteralPath $sopDestination -Algorithm SHA256 -ErrorAction Stop).Hash
+    if ($sopBefore -ne $sopAfter) { throw "SHA-256 mismatch: $sopRelative" }
+    [pscustomobject]@{ Path = $sopRelative; SHA256 = $sopBefore; Result = 'Passed' }
+}
+$sopHashRows | Export-Csv -LiteralPath "$sopBatch/evidence/project-move-hashes.csv" -Encoding UTF8 -NoTypeInformation
+```
+
+**完成判断：**全部相对路径都能在副本读到，逐文件 SHA-256 一致；完整清单已保存。访问拒绝、文件缺失和摘要不同均记录为失败，不修改权限绕过。
+
+### A09 新进程重开、再导出并记录完成
+
+**选择对象：重开后的最终 MO9 场视图。** 在 A00 原 PowerShell 会话启动新的 Blender 进程，保留独立配置：
+
+```powershell
+$sopProjectArgument = '"{0}"' -f "$sopBatch/中文路径移动/example.blend"
+$sopProcess = Start-Process -FilePath $sopBlender -ArgumentList $sopProjectArgument -PassThru
+$sopProcess.Id
+```
+
+在新窗口核对标题/工程路径为中文副本，选择 MO9 场视图并解除旧图钉。按 A04 查看 Isovalue=0.045、两符号和材质；按 A02 查看源摘要，科学数据路径应指向当前副本的 `example.qcdata/`。按 A05 重新渲染，按 A06 再导出到同一 `exports/` 下的新唯一目录，对比科学来源、参数、网格、有效域和显示输入。重新生成时科学资格需重新检查，不能沿用前一个进程的资格记录。
+
+**完成判断：**新进程能够读回数据，显示和科学身份一致，再渲染及摘要导出成功。保留重开截图、前后摘要、移动摘要清单、PNG 和工程配套目录；正常退出新进程，确认 PID 退出。将下表复制到本批记录并逐项填写，失败或未执行不能写 Passed。
+
+| 步骤 | 本次结果 | 最少证据 |
+| --- | --- | --- |
+| A01 | Not Run | 安装候选摘要、运行库结果及安装界面 |
+| A02 | Not Run | 输入摘要、活动原子对象与来源面板 |
+| A03 | Not Run | 资格结果、MO9/网格/预算预览及新场 |
+| A04 | Not Run | 实际原值→0.045、两符号与材质 |
+| A05 | Not Run | example.png、渲染与相机/灯光参数 |
+| A06 | Not Run | 两次唯一导出目录、Markdown/JSON 核对及取消结果 |
+| A07 | Not Run | .blend + .qcdata、保存结果及原 PID 退出 |
+| A08 | Not Run | 中文副本及逐文件 SHA-256 清单 |
+| A09 | Not Run | 新 PID/工程路径、显示和来源核对、再渲染/再导出及退出 |
+
+最后填写本批操作者、日期、候选与输入摘要、证据目录和未通过项。独立使用者实际完成后在 Alpha 门禁记录短 SOP 结果；完整 v1 再继续执行前面的 C/X/N 路线及第 3 节签署条件。
+
 
 预检拒绝时保留真实诊断，不启动场计算。切换活动对象、重新绑定来源或修改输入 manifest/科学后端后，资格失效；需要重新点击生成。资格预算不足时，Check Scientific Source 对话框允许显式提高预算；这不会放宽结果大小上限。生成对话框中超过资源边界的请求显示拒绝原因，后台在缓存命中和实际计算前再次检查。
 
@@ -1817,8 +1978,8 @@ X01技术证据进入[本批验证索引](../acceptance/display-xyz-export-valid
 
 - 独立使用者姓名：________
 - 日期：________
-- 历史批次候选 ZIP SHA-256：________
-- 历史批次样本清单身份及输入摘要记录：________
+- 本批候选 ZIP SHA-256：________
+- 本批样本清单身份及输入摘要记录：________
 - 复做工程、截图和数值记录目录：________
 - 科研适用性与剩余限制：________
 - 签署：________
