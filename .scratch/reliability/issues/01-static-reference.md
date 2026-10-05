@@ -21,7 +21,7 @@ Blocked by: none
 - Passed：既有`test_science_current_association`、`test_science_xyz`、`test_science_aim_association`、`test_science_nocv_status`，29 tests全部通过。实际运行通过`python.exe -B -c`显式加载主库`outputs/science`与本工作树`tests`，未安装依赖。
 - Passed：主Agent串行原生基线红复现，动态Dataset的`bpy.ops.qcblender.import_paired_field.poll()`错误返回eligible；证据为主库`outputs/evidence/2026-10-05/reliability/logs/static-red.json`与同名`.log`。
 - Passed：`git diff --check`，既有源码LF换行保持。
-- Passed：主Agent串行运行候选`d0b09ec`的`tools/verify_static_reference.py`，PID 66580、exit 0。脚本覆盖真实Dataset绑定下的operator poll/execute拒绝、begin/accept正文守卫、路径绑定/动态祖先/manifest/删除同名替换与静态重命名。日志为主库`outputs/evidence/2026-10-05/reliability/logs/static-green.log`，报告为`outputs/runs/rel/s-green/report.json`。
-- Not Run：主Agent负责真实atom_view/IRC显示层、P03 paired实际创建与数值检查、worker进程集成、GUI提示、Undo/Redo及新进程冷读；本子任务未启动Blender进程或GUI。
+- Passed：主Agent串行运行候选`d0b09ec`的`tools/verify_static_reference.py`，PID 66580、exit 0。脚本把真实优化Log、IRC manifest与读取的多帧XYZ Dataset绑定至Blender Empty，覆盖operator poll/execute拒绝、begin/accept正文守卫、路径绑定/动态祖先/manifest/删除同名替换与静态重命名；静态正例仅验证poll和参考快照。日志为主库`outputs/evidence/2026-10-05/reliability/logs/static-green.log`，报告为`outputs/runs/rel/s-green/report.json`。这组证据仅为入口及绑定边界验证。
+- Not Run：真实atom_view/优化切步/IRC显示层、静态Log/FCHK/Cube原生正例、P03 paired实际创建与metadata/导出/数值检查在任务04补充；worker进程集成、GUI提示、Undo/Redo及新进程冷读在任务06统一验证。本子任务未启动Blender进程或GUI。
 
 任务01原生及定向科学验证完成；GUI及综合验收统一由任务06维护。
