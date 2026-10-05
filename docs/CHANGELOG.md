@@ -1,6 +1,6 @@
 # 开发演进
 
-- 2026-10-05：外部分析增加静态参考及异步身份检查；创建场、保存和重新定位前检查原生VDB网格；取消保留原错误、退出状态与待清理任务。IGMH分量、片段和来源声明按user_assigned持久化及导出。105科学测试、40单测、六视觉与真实GUI/Undo/Redo/原地和中文移动冷读Passed，Standards/Spec各1项修复后0遗留。标准库流式摘要实验保持科学身份，256³收益未达到32 MiB或10%门槛，停止扩大重构。独立人工/科研签署及天然权限拒绝目标Not Run；候选、保全及本地收尾见[验证](acceptance/reliability-validation.md)、[交付收据](acceptance/reliability-delivery.json)与[产物路由](ARTIFACTS.md)，不push/发布。
+- 2026-10-05：外部分析增加静态参考及异步身份检查；创建场、保存和重新定位前检查原生VDB网格；取消保留原错误、退出状态与待清理任务。IGMH分量、片段和来源声明按user_assigned持久化及导出。105科学测试、40单测、六视觉与真实GUI/Undo/Redo/原地和中文移动冷读Passed，Standards/Spec各1项修复后0遗留。标准库流式摘要实验保持科学身份，256³收益未达到32 MiB或10%门槛，停止扩大重构。资格提交42a11be已ff-only合入main，五个注释归档标签已创建并保留，五个工作树及分支正常移除；清单删除40,911文件/15,384,029,053字节，996个保护文件和1,316份保全版本摘要复核Passed，16个未分类文件和19个拒绝目录保留。独立人工/科研签署及天然权限拒绝目标Not Run；候选、保全及本地收尾见[验证](acceptance/reliability-validation.md)、[交付收据](acceptance/reliability-delivery.json)与[产物路由](ARTIFACTS.md)，不push/发布。
 
 - 2026-10-04：重试遗留清理，f458工作树登记及已合并chore/repository-cleanup分支正常移除，当前仅main；注释归档标签保留，b48c目录已不存在。14,816文件/798,822,391字节完整保全并核对SHA-256，补存科学数据11组Dataset/600数组/8VDB新进程读回Passed；f458磁盘残留普通删除仍访问拒绝，06保持pending。收据与保全映射见[产物路由](ARTIFACTS.md)“遗留清理状态”；未修改ACL/所有权，未force删除。
 

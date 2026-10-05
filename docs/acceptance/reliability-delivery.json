@@ -1,5 +1,5 @@
 {
-  "status": "In Progress",
+  "status": "Passed",
   "date": "2026-10-05",
   "source_commit": "a3ed8264aad860f25c922dd7c91efce3f6f078d3",
   "product_tree": "0cec91ad2ed7804e78a01c39105d49e3d39150d8",
@@ -14,11 +14,117 @@
   },
   "qualification": "Passed",
   "reports": 36,
-  "local_merge": "Not Run",
-  "archive": "Not Run",
-  "cleanup": "Not Run",
+  "local_merge": {
+    "status": "Passed",
+    "method": "git merge --ff-only",
+    "baseline": "10e374e6536d7baa03f2f4b8052bd5a044e3fa50",
+    "qualification_commit": "42a11beda82bf37928a6b82d40c21219aacd9b76",
+    "product_tree_unchanged_after_qualification": true
+  },
+  "archive": {
+    "status": "Passed",
+    "annotated_tags": [
+      {
+        "branch": "fix/static-analysis-reference",
+        "commit": "94ce352912fa05b8e9505f46a2b30aabd586b5dc",
+        "tag": "archive/2026-10-05/fix/static-analysis-reference",
+        "tag_object": "d4a079e282fe428024572b6ff36a8c61591f8177",
+        "product_tree": "363c550a649dd67387fa5a1d039c709da253c809",
+        "reachable_from_main": true
+      },
+      {
+        "branch": "fix/native-volume-readability",
+        "commit": "8a9cb62fb17bc7924ec570583a2a910718ad7bcd",
+        "tag": "archive/2026-10-05/fix/native-volume-readability",
+        "tag_object": "a1ac573188ed8c7642c18802702c9b799508e30d",
+        "product_tree": "a96b84d2bc98aaad7244cf1bdcb690fb4da5e849",
+        "reachable_from_main": true
+      },
+      {
+        "branch": "fix/cancel-finalization",
+        "commit": "982e339d9d8463c91a83b83e917f9e13c7c996de",
+        "tag": "archive/2026-10-05/fix/cancel-finalization",
+        "tag_object": "89105c7b74d9490249ac90086ea18759c0359d23",
+        "product_tree": "363c550a649dd67387fa5a1d039c709da253c809",
+        "reachable_from_main": true
+      },
+      {
+        "branch": "perf/streaming-digests",
+        "commit": "a3ed8264aad860f25c922dd7c91efce3f6f078d3",
+        "tag": "archive/2026-10-05/perf/streaming-digests",
+        "tag_object": "f947eee177ef1e1a61b5da268ad8ba3f2256ebae",
+        "product_tree": "0cec91ad2ed7804e78a01c39105d49e3d39150d8",
+        "reachable_from_main": true
+      },
+      {
+        "branch": "chore/reliability-qualification",
+        "commit": "42a11beda82bf37928a6b82d40c21219aacd9b76",
+        "tag": "archive/2026-10-05/chore/reliability-qualification",
+        "tag_object": "6837eec14a5799cfa7e145aeeb5fbf328e967efe",
+        "product_tree": "0cec91ad2ed7804e78a01c39105d49e3d39150d8",
+        "reachable_from_main": true
+      }
+    ],
+    "reachable_from_main": true
+  },
+  "cleanup": {
+    "status": "Passed",
+    "scope": "Reviewed task manifest and five merged task worktrees",
+    "removed_files": 40911,
+    "removed_bytes": 15384029053,
+    "manifest_keep_files": 16,
+    "manifest_keep_bytes": 3562,
+    "inaccessible_directories_retained": 19,
+    "full_task_directory_removal": "Not Run; unknown and inaccessible objects retained in place",
+    "preservation_versions_verified": 1316,
+    "protected_files_verified": 996,
+    "worktrees_removed": 5,
+    "branches_removed": 5,
+    "remaining_worktrees": [
+      "D:/workspace/QCBlender"
+    ],
+    "remaining_local_branches": [
+      "main"
+    ],
+    "measurement_scope": "Exact inventoried files only; inaccessible directories excluded. Removed bytes exclude Git worktree removal and newly preserved evidence; not repository net space.",
+    "legacy_f458": "Not Run; outside this task"
+  },
   "push": "Not Run",
   "release": "Not Run",
   "independent_human_scientific_signoff": "Not Run",
-  "evidence_root": "outputs/evidence/2026-10-05/reliability"
+  "evidence_root": "outputs/evidence/2026-10-05/reliability",
+  "receipts": [
+    {
+      "path": "outputs/evidence/2026-10-05/reliability/closing/tags.json",
+      "sha256": "b063091a70889ef83a909f349b74ebfc775a1122c6505183862ebb7a13a6c4c9"
+    },
+    {
+      "path": "outputs/evidence/2026-10-05/reliability/closing/worktree-removal.json",
+      "sha256": "3d7ee9fdad29ae653069529897d356f9ff9e3d20b158d2cc99ea2ad16ff4868e"
+    },
+    {
+      "path": "outputs/evidence/2026-10-05/reliability/closing/apply-command.json",
+      "sha256": "9988a1d34db3a8eeb316017b25375e04ffdf17f16feaae259d9240a2265c6c36"
+    },
+    {
+      "path": "outputs/evidence/2026-10-05/reliability/closing/post-cleanup.json",
+      "sha256": "e6f23aac16f0efc7b7c24aba498b169b9887a88419761b9921a4dce784823db3"
+    },
+    {
+      "path": "outputs/evidence/2026-10-05/reliability/closing-preparation/cleanup-ready-02/applied.json",
+      "sha256": "6c05339323323fb6c3ab80383ee6f30339bec1f836a9fa72f179aee9010e4f56"
+    },
+    {
+      "path": "outputs/evidence/2026-10-05/reliability/closing-preparation/cleanup-ready-02/preservation-audit.json",
+      "sha256": "3a76f2721b972bb822a54769d08fd2f9e5522645ca2b44a0531aa7982339540a"
+    },
+    {
+      "path": "outputs/evidence/2026-10-05/reliability/closing-preparation/protection-after.json",
+      "sha256": "c52fcb899579cb70d65712457b0e877a23a14a170924397db116bfd96e40e942"
+    },
+    {
+      "path": "outputs/evidence/2026-10-05/reliability/qualification-main.json",
+      "sha256": "124632d5a826cb1253bd7a5df8af1877db8823d82e6031eb3992100bfaead956"
+    }
+  ]
 }

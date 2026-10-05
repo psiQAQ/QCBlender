@@ -14,6 +14,8 @@
 
 证据入口`outputs/evidence/2026-10-05/reliability/`：`evidence-index.json`与`qualification.json`绑定36份最终候选报告；`gui-final/`保存真实界面操作、原地及中文移动冷读；`closing-preparation/`、`closing-preserved/`保存逐文件旧新路径与摘要，当前收尾状态见[交付收据](acceptance/reliability-delivery.json)。工程在`outputs/projects/reliability/`：`native/`、`visual/`及`reliability-gui.blend + reliability-gui.qcdata/`，中文移动副本保留于`中文移动/`。
 
+本批资格提交`42a11be`已ff-only合入main；五个`archive/2026-10-05/`注释标签已创建并保留，五个工作树及分支普通移除Passed。逐文件清单删除40,911文件/15,384,029,053字节，996个保护文件及1,316份保全版本摘要复核Passed。16个未分类文件和19个拒绝访问目录保留于`outputs/runs/rel/`，完整路径见`closing/post-cleanup.json`；未更改ACL或所有权。原始收据在`closing/`与`closing-preparation/cleanup-ready-02/`；删除字节不计Git工作树移除及新增证据，不是全仓净空间变化。
+
 流式摘要实验的前后候选保留在`outputs/candidates/baseline/reliability-prehash-982e339/`与`reliability-posthash-94b99f5/`；对应报告`benchmark-before-desktop/`、`benchmark-after-desktop/`与`streaming-hash-comparison.json`保留其独立身份。256³收益未达到32 MiB或10%门槛，已停止扩大优化；这组耗时不包含随后增加的导入预检查。
 
 重建沿用[开发说明](DEVELOPMENT.md)及共用环境/11锁定wheels，在新输出目录执行`tools/run_science_tests.py`、`verify_native_volume.py`、`verify_multi_field_accept.py`、`verify_igmh_provenance.py`、`verify_cancel_finalization_blender.py`及`render_visual_baseline.py`，保存完整参数、安装身份和新ZIP摘要后运行`qualify_package.py`。本批完整命令在`logs/*.json`，编排脚本由保全映射定位；重建结果重新资格验证。本轮仅本地提交、合并与归档，不push或发布。

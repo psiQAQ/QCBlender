@@ -1,7 +1,7 @@
 # 可靠性、科学来源与流式摘要
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 
 ## 目标与约束
 
@@ -28,3 +28,7 @@ IGMH新导入明确选择inter/intra/total/unknown，保存可选片段成员及
 ## 任务
 
 01静态参考、02原生体场、03取消收尾可并行。04在01合入后实施。05在第一、二批产品代码稳定后实验。06串行综合验收与本地交付。
+
+## Answer
+
+2026-10-05：01至06技术实施和本地交付完成。产品源码a3ed826，资格文档42a11be已ff-only合入main；五个注释归档标签已创建并保留，五个任务工作树和分支正常移除。清单删除40,911文件/15,384,029,053字节；996个保护文件与1,316份保全版本摘要复核Passed，16个未分类文件及19个拒绝访问目录保留。性能门槛Failed并按规格停止扩大优化，独立人工/科研签署Not Run。最终身份、保留路线与限制见docs/acceptance/reliability-delivery.json和docs/ARTIFACTS.md。
