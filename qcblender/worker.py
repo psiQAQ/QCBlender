@@ -114,7 +114,10 @@ def main():
                     copied.append(target)
                 data = external.pair_cubes(*copied, request['method'],
                                            request['geometry_unit'], request['color_unit'],
-                                           request.get('iri_exponent'))
+                                           request.get('iri_exponent'),
+                                           igmh_component=request.get('igmh_component', 'unknown'),
+                                           igmh_fragments=request.get('igmh_fragments'),
+                                           igmh_declaration_source=request.get('igmh_declaration_source', ''))
                 data.metadata['source']['filename'] = paths[0].name
                 data.metadata['analysis']['geometry_source']['filename'] = paths[0].name
                 data.metadata['analysis']['color_source']['filename'] = paths[1].name

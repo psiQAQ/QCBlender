@@ -315,6 +315,9 @@ def source_details(obj):
             entries.append(('Color source', {'error': str(error)}))
     analysis = meta.get('analysis', {})
     if analysis:
+        if analysis.get('kind') == 'IGMH':
+            from ..external_fields import igmh_declaration_record
+            entries.append(('IGMH declaration', igmh_declaration_record(analysis)))
         entries.append(('External association', {k: analysis.get(k) for k in
             ('kind', 'association', 'reference_source', 'method', 'surface_definition', 'surface_field',
              'extrema_unit', 'distribution_center_unit', 'area_unit', 'coordinate_unit', 'energy_unit')}))
