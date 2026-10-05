@@ -71,7 +71,7 @@ def main():
         elif request['action'] == 'qualify_science':
             preflight = importlib.import_module(args.module + '.science_preflight')
             report = dict(preflight.qualify_dataset(request['dataset'], request['dataset_sha256'],
-                          lambda: (directory / 'cancel').exists()), status='succeeded')
+                          lambda: (directory / 'cancel').exists(), request.get('memory_mb', 512)), status='succeeded')
         elif request['action'] in ('import', 'import_pair', 'import_nbo', 'import_nocv', 'evaluate', 'rebuild_cache', 'declare_field'):
             storage = importlib.import_module(args.module + '.data')
             static_reference = importlib.import_module(args.module + '.static_reference')

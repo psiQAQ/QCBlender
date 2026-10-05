@@ -3,12 +3,12 @@ import hashlib
 import math
 from pathlib import Path
 
-from .data import Dataset, load_dataset, orbital_selection
-from .resources import array_descriptor, field_resources
+from .data import Dataset, inspect_dataset, load_dataset, orbital_selection
+from .resources import array_descriptor, field_resources, qualification_resources
 from .science_identity import scientific_identity
 
 
-def qualify_dataset(directory, expected_digest, cancelled=lambda: False):
+def qualify_dataset(directory, expected_digest, cancelled=lambda: False, memory_mb=512):
     from .evaluate import prepare
     manifest = Path(directory) / 'manifest.json'
 
@@ -19,8 +19,18 @@ def qualify_dataset(directory, expected_digest, cancelled=lambda: False):
             raise ValueError('Dataset changed during scientific qualification')
 
     check()
-    data = load_dataset(directory)
     identity = scientific_identity()
+    if type(memory_mb) is not int or not 32 <= memory_mb <= 16384:
+        raise ValueError('Memory budget must be an integer from 32 to 16384 MiB')
+    manifest_record, _ = inspect_dataset(directory)
+    estimate = qualification_resources(manifest_record['arrays'])
+    if estimate['minimum_working_bytes'] > memory_mb * 1024**2:
+        check()
+        return {'eligible': False, 'refusal_kind': 'resource',
+                'reason': f'Scientific qualification requires at least {estimate["minimum_working_bytes"] / 1024**2:.2f} MiB; budget is {memory_mb} MiB',
+                'minimum_working_bytes': estimate['minimum_working_bytes'],
+                'dataset_sha256': expected_digest, 'science_sha256': identity['sha256']}
+    data = load_dataset(directory)
     try:
         prepare(data)
     except ValueError as error:
@@ -37,7 +47,7 @@ def qualify_dataset(directory, expected_digest, cancelled=lambda: False):
                'orbital_arrays': {name: data.arrays[name].tolist() for name in
                                   ('mo_occs', 'mo_occs_aminusb', 'mo_energies') if name in data.arrays}}
     return {'eligible': True, 'reason': None, 'dataset_sha256': expected_digest,
-            'science_sha256': identity['sha256'], 'preview': preview}
+            'science_sha256': identity['sha256'], 'preview': preview, 'memory_mb': memory_mb}
 
 
 def preview_orbital(preview, spin, choice, number):

@@ -34,14 +34,15 @@ class QualificationHandoff(unittest.TestCase):
 
     def test_uncached_click_starts_only_qualification(self):
         generate = ui.QCBLENDER_OT_generate()
+        generate.memory_mb = 512
         generate.report = Mock()
         self.assertEqual(generate.invoke(self.context, None), {'RUNNING_MODAL'})
-        self.ops.qualify_science.assert_called_once_with('EXEC_DEFAULT')
+        self.ops.qualify_science.assert_called_once_with('EXEC_DEFAULT', memory_mb=512)
         self.ops.generate_field.assert_not_called()
 
     def test_success_opens_separate_dialog_and_reuses_bound_preview(self):
         self.operator().accept(self.context, self.report)
-        self.ops.generate_field.assert_called_once_with('INVOKE_DEFAULT')
+        self.ops.generate_field.assert_called_once_with('INVOKE_DEFAULT', memory_mb=512)
         generate = ui.QCBLENDER_OT_generate()
         self.context.window_manager = types.SimpleNamespace(invoke_props_dialog=Mock(return_value={'RUNNING_MODAL'}))
         generate.invoke(self.context, None)
@@ -72,6 +73,16 @@ class QualificationHandoff(unittest.TestCase):
         self.assertTrue(ui._qualifications)
         ui.clear_qualifications(None)
         self.assertFalse(ui._qualifications)
+
+    def test_resource_refusal_opens_only_budget_retry_and_is_not_cached(self):
+        report = dict(self.report, eligible=False, refusal_kind='resource',
+                      reason='Needs 64 MiB', minimum_working_bytes=64 * 1024**2)
+        self.operator().accept(self.context, report)
+        self.ops.qualify_science.assert_called_once_with('INVOKE_DEFAULT', reason='Needs 64 MiB', memory_mb=64)
+        self.ops.generate_field.assert_not_called()
+        self.assertFalse(ui._qualifications)
+        with self.assertRaisesRegex(ValueError, 'Needs'):
+            self.operator().accept(self.context, dict(report, minimum_working_bytes=17000 * 1024**2))
 
 
 if __name__ == '__main__':

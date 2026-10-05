@@ -291,20 +291,39 @@ class QCBLENDER_OT_choose_log_job(bpy.types.Operator):
 class QCBLENDER_OT_qualify_science(AsyncOperation, bpy.types.Operator):
     bl_idname = 'qcblender.qualify_science'
     bl_label = 'Check Scientific Source'
+    memory_mb: IntProperty(name='Qualification memory budget (MiB)', default=512, min=32, max=16384)
+    reason: StringProperty(options={'HIDDEN'})
+
+    def invoke(self, context, event):
+        self._retry_binding = science_binding(context)
+        return context.window_manager.invoke_props_dialog(self, width=600)
+
+    def draw(self, context):
+        for line in textwrap.wrap(self.reason, width=85):
+            self.layout.label(text=line)
+        self.layout.prop(self, 'memory_mb')
+        self.layout.label(text='Retry source qualification before opening field parameters')
 
     def begin(self, context):
         from .jobs import Job
         self._source, self._dataset, self._digest, self._fingerprint = science_binding(context)
-        return Job('qualify_science', dataset=self._dataset, dataset_sha256=self._digest)
+        if hasattr(self, '_retry_binding'):
+            same_science_source(context, *self._retry_binding)
+        return Job('qualify_science', dataset=self._dataset, dataset_sha256=self._digest, memory_mb=self.memory_mb)
 
     def accept(self, context, report):
         same_science_source(context, self._source, self._dataset, self._digest, self._fingerprint)
         if report['dataset_sha256'] != self._digest or report['science_sha256'] != self._fingerprint:
             raise ValueError('Scientific qualification identity does not match this request')
         if not report['eligible']:
+            if report.get('refusal_kind') == 'resource' and report['minimum_working_bytes'] <= 16384 * 1024**2:
+                import math
+                bpy.ops.qcblender.qualify_science('INVOKE_DEFAULT', reason=report['reason'],
+                    memory_mb=max(32, math.ceil(report['minimum_working_bytes'] / 1024**2)))
+                return
             raise ValueError(report['reason'])
         _qualifications[(self._digest, self._fingerprint)] = report['preview']
-        bpy.ops.qcblender.generate_field('INVOKE_DEFAULT')
+        bpy.ops.qcblender.generate_field('INVOKE_DEFAULT', memory_mb=report.get('memory_mb', 512))
 
 
 class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
@@ -338,7 +357,7 @@ class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
             self._source, self._dataset, self._input_digest, self._fingerprint = science_binding(context)
             self._preview = _qualifications.get((self._input_digest, self._fingerprint))
             if self._preview is None:
-                return bpy.ops.qcblender.qualify_science('EXEC_DEFAULT')
+                return bpy.ops.qcblender.qualify_science('EXEC_DEFAULT', memory_mb=self.memory_mb)
         except (ValueError, OSError, KeyError, MemoryError) as error:
             self.report({'ERROR'}, str(error))
             return {'CANCELLED'}

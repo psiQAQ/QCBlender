@@ -85,6 +85,17 @@ class ResourceContract(unittest.TestCase):
                 with self.assertRaisesRegex(MemoryError, 'dataset arrays'):
                     evaluate_field(self.data, grid, 'orbital_amplitude', memory_mb=4096)
 
+    def test_qualification_rejects_large_ao_matrix_before_loading_arrays(self):
+        self.data.arrays['mo_coeffs'] = np.zeros((20000, 1))
+        manifest = save_dataset(self.data, self.directory / 'dataset')
+        digest = hashlib.sha256(manifest.read_bytes()).hexdigest()
+        with patch('qcblender.data.np.load', side_effect=AssertionError('No array reads')):
+            with patch('qcblender.evaluate.prepare', side_effect=AssertionError('No density matrices')):
+                report = qualify_dataset(manifest.parent, digest, memory_mb=16384)
+        self.assertFalse(report['eligible'])
+        self.assertEqual(report['refusal_kind'], 'resource')
+        self.assertGreater(report['minimum_working_bytes'], 16384 * 1024**2)
+
     def test_each_scientific_member_changes_identity_display_docs_do_not(self):
         for member in SOURCE_MEMBERS:
             shutil.copy2(ROOT / 'qcblender' / member, self.directory / member)

@@ -36,6 +36,18 @@ def enforce_dataset_limit(size, max_bytes=DATASET_MAX_BYTES):
     return size
 
 
+def qualification_resources(records):
+    for record in records.values():
+        npy_bytes(record)
+    coefficients = records['mo_coeffs']['shape']
+    if len(coefficients) != 2 or not all(n > 0 for n in coefficients):
+        raise ValueError('Orbital coefficients require a nonempty matrix')
+    input_bytes = sum(math.prod(record['shape']) * np.dtype(record['dtype']).itemsize
+                      for record in records.values())
+    return {'input_bytes': input_bytes, 'nbasis': coefficients[0],
+            'minimum_working_bytes': input_bytes + coefficients[0]**2 * 8 * 6}
+
+
 def field_resources(records, shape, nbasis, quantity, memory_mb=512,
                     max_bytes=DATASET_MAX_BYTES, validate=True):
     if type(memory_mb) is not int or not 32 <= memory_mb <= 16384:

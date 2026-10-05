@@ -176,7 +176,8 @@ def save_dataset(data, directory, max_bytes=DATASET_MAX_BYTES):
     return unprefixed_path(directory / 'manifest.json')
 
 
-def load_dataset(directory, max_bytes=DATASET_MAX_BYTES):
+def inspect_dataset(directory, max_bytes=DATASET_MAX_BYTES):
+    """Validate manifest identity, contained paths and total bytes without reading arrays."""
     directory = filesystem_path(directory).resolve(strict=True)
     manifest_path = directory / 'manifest.json'
     if manifest_path.stat().st_size > 16 * 1024**2:
@@ -184,7 +185,7 @@ def load_dataset(directory, max_bytes=DATASET_MAX_BYTES):
     manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
     if manifest.get('format') != 'qcblender.project' or manifest.get('schema') != SCHEMA:
         raise ValueError('Unsupported QCBlender project schema')
-    arrays, total, paths = {}, 0, {}
+    total, paths = 0, {}
     for name, record in manifest['arrays'].items():
         relative = Path(record['path'])
         if relative.is_absolute() or relative.drive or '..' in relative.parts:
@@ -195,6 +196,12 @@ def load_dataset(directory, max_bytes=DATASET_MAX_BYTES):
         total += path.stat().st_size
         paths[name] = path
     enforce_dataset_limit(total, max_bytes)
+    return manifest, paths
+
+
+def load_dataset(directory, max_bytes=DATASET_MAX_BYTES):
+    manifest, paths = inspect_dataset(directory, max_bytes)
+    arrays = {}
     for name, record in manifest['arrays'].items():
         path = paths[name]
         if _file_sha256(path) != record['sha256']:
