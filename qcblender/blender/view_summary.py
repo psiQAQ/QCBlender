@@ -117,7 +117,11 @@ def capture_view_summary(obj, frame):
         snapshot['display']['parameters'].append({'name': name,
             'label': socket_label(name, field.get('quantity', ''), unit or ''), 'socket_type': item.socket_type,
             'value': value, 'location': modifier.name + ' / ' + item.identifier})
-    for role, (mat, _) in state['materials'].items():
+    for role, (mat, references) in state['materials'].items():
+        if any(kind == 'socket' and identifier not in target
+               for kind, target, identifier in references):
+            reasons.append('Material ' + role + ': modifier input is not stored; no default is substituted')
+            continue
         try:
             material = _material_snapshot(mat, role)
             snapshot['display']['materials'].append(material)

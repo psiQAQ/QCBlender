@@ -82,6 +82,19 @@ class ViewSummary(unittest.TestCase):
         self.assertIn('Disconnected', result['display']['reasons'][0])
         self.assertEqual(result['fields']['geometry']['field'], obj.field)
 
+    def test_missing_material_input_does_not_export_socket_default(self):
+        obj = self.view()
+        mat = SimpleNamespace(name='Default material', controls={}, node_tree=SimpleNamespace(nodes=[]))
+        modifier = obj.state['modifier']
+        obj.state['sockets']['Material'] = SimpleNamespace(
+            identifier='material', socket_type='NodeSocketMaterial', default_value=mat)
+        obj.state['materials']['Material'] = (mat, [('socket', modifier, 'material')])
+        result = capture.capture_view_summary(obj, 1)['display']
+        self.assertEqual(result['status'], 'partial')
+        self.assertEqual(result['materials'], [])
+        self.assertNotIn('Material', [item['name'] for item in result['parameters']])
+        self.assertTrue(any('Material' in reason and 'no default' in reason for reason in result['reasons']))
+
     def test_live_material_ramp_and_opacity(self):
         obj = self.view()
         element = SimpleNamespace(position=.5, color=[.1, .2, .3, 1.])

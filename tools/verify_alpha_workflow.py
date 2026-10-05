@@ -155,6 +155,16 @@ try:
         value = next(entry['value'] for entry in second['display']['parameters'] if entry['name'] == 'Isovalue')
         assert abs(value - .045) < 1e-7
         summary(atoms)
+        atom_modifier = module('blender.graph').view_modifier(atoms)
+        material_socket = next(item for item in atom_modifier.node_group.interface.items_tree
+                               if item.item_type == 'SOCKET' and item.in_out == 'INPUT' and item.name == 'Material')
+        saved_material = atom_modifier[material_socket.identifier]
+        assert material_socket.default_value is not None
+        del atom_modifier[material_socket.identifier]
+        missing_material = summary(atoms)['display']
+        assert missing_material['status'] == 'partial'
+        assert not any(item['role'] == 'Material' for item in missing_material['materials'])
+        atom_modifier[material_socket.identifier] = saved_material
         fog = module('blender.fog').fog_view(surface)
         fog.hide_render = True
         before = summary(fog)
@@ -213,7 +223,7 @@ try:
             grid=grid, parameters=parameters, isovalue=.045)
         report['checks'] = {name: 'Passed' for name in ('qualification', 'unsupported_science',
             'cache_hit', 'early_dataset_limit', 'live_isovalue', 'live_color_ramp',
-            'standard_view_summaries', 'missing_input', 'custom_graph', 'repeat_export', 'render', 'portable_save')}
+            'standard_view_summaries', 'missing_input', 'missing_material', 'custom_graph', 'repeat_export', 'render', 'portable_save')}
     for name in ('gbasis', 'iodata', 'scipy'):
         assert name not in sys.modules, name + ' leaked into the UI process'
 except Exception as error:
