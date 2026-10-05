@@ -1,0 +1,122 @@
+name: extension-release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing annotated tag matching the candidate manifest
+        required: true
+        type: string
+      candidate_run_id:
+        description: Exact successful extension-package workflow run
+        required: true
+        type: string
+      dry_run:
+        description: Verify without creating or changing a draft Release
+        default: true
+        required: true
+        type: boolean
+      gates_record:
+        description: Optional release-gates JSON path in the default-branch checkout
+        default: ""
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: extension-release-${{ inputs.tag }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+      - name: Verify exact candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          RELEASE_TAG: ${{ inputs.tag }}
+          CANDIDATE_RUN_ID: ${{ inputs.candidate_run_id }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          WORKFLOW_REF: ${{ github.ref }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          GATES_RECORD: ${{ inputs.gates_record }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(--repository "$REPOSITORY" --tag "$RELEASE_TAG"
+                --candidate-run-id "$CANDIDATE_RUN_ID"
+                --default-branch "$DEFAULT_BRANCH" --workflow-ref "$WORKFLOW_REF")
+          if [[ -n "$GATES_RECORD" ]]; then
+            args+=(--gates-record "$GATES_RECORD")
+          fi
+          if [[ "$DRY_RUN" == "false" ]]; then
+            args+=(--require-draft-ready)
+          fi
+          python tools/release_candidate.py "${args[@]}"
+      - name: Save verification record
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-verification-${{ github.run_id }}
+          path: outputs/release-verification/verification.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  draft:
+    if: ${{ !inputs.dry_run }}
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: release
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+      - name: Reverify and copy original assets to a draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          RELEASE_TAG: ${{ inputs.tag }}
+          CANDIDATE_RUN_ID: ${{ inputs.candidate_run_id }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          WORKFLOW_REF: ${{ github.ref }}
+          GATES_RECORD: ${{ inputs.gates_record }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(--repository "$REPOSITORY" --tag "$RELEASE_TAG"
+                --candidate-run-id "$CANDIDATE_RUN_ID"
+                --default-branch "$DEFAULT_BRANCH" --workflow-ref "$WORKFLOW_REF"
+                --create-draft)
+          if [[ -n "$GATES_RECORD" ]]; then
+            args+=(--gates-record "$GATES_RECORD")
+          fi
+          python tools/release_candidate.py "${args[@]}"
+      - name: Save draft promotion record
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-draft-record-${{ github.run_id }}
+          path: outputs/release-verification/verification.json
+          if-no-files-found: warn
+          retention-days: 30

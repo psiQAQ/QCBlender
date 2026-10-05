@@ -28,15 +28,23 @@ QCBlender 使用单个自包含 Blender 扩展，首发 Windows x64 / Blender 5.
 
 参考流程的适用限制：MolecularNodes 的 Blender 5.2、macOS、浮动 actions、未显式 tag 的 Release 下载和自动扩展平台上传不属于本轮设计；QCBlender 下载须固定 tag/asset 并复核摘要。ChemBlender 当前为 wheel-free Viewer，不能套用其空 wheel 清单及体积预算。BlenderKit release action 会重新 ZIP，且使用浮动旧版 actions；本项目继续使用自身构建工具及完整 commit SHA 固定的 GitHub 官方 actions。Sverchok 的 legacy/source ZIP 安装方式不能代替自包含扩展安装包。
 
+官方 Actions 于核查日通过各 Release 页面与其 commit 链接核验，固定为 [checkout v7.0.1](https://github.com/actions/checkout/commit/3d3c42e5aac5ba805825da76410c181273ba90b1)、[setup-python v7.0.0](https://github.com/actions/setup-python/commit/5fda3b95a4ea91299a34e894583c3862153e4b97)、[upload-artifact v7.0.1](https://github.com/actions/upload-artifact/commit/043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)。候选构建与推广使用相同固定身份；远端运行另行验收。
+
 ## 候选构建与草稿推广契约
 
 `extension-package.yml` 产生候选 artifact `qcblender-candidate-{version}-{source_commit}`。候选附件包含扩展 ZIP、许可合格 v2 样本 ZIP、精简公开复现材料 ZIP、`release-manifest.json` 与 `SHA256SUMS.txt`；完整技术报告在同 artifact 的 `reports/` 中。manifest 保存 version/channel/source_commit/candidate_run_id/product_tree、支持环境、附件大小与 SHA、报告状态与 SHA。artifact ID 由上传响应和发布记录绑定，不放进自包含 artifact 形成循环身份。
+
+公开 Release 提供上述五份附件；`SHA256SUMS.txt` 也保留 CI artifact 内技术报告的摘要。安装者核对下载的 ZIP 与清单中的对应条目；完整报告及全清单核验使用确切 run 的 artifact。
 
 `extension-release.yml` 仅从默认分支手动调度，接口为 `tag`、`candidate_run_id`、`dry_run`；默认 `dry_run=true`。候选版本在构建前固定；注释 tag 指向同一 run 的 `head_sha`。先验证 annotated tag、main 可达性、manifest/tag 版本、workflow/run 提交与成功状态、唯一未过期 artifact、源码身份、附件/报告摘要及发布清单。缺失、过期、摘要变化或来源错误直接失败，不根据 latest 运行选择产物。
 
 验证 job 保持 `contents: read`，仅访问 artifact 时增加 `actions: read`。草稿写 job 独立授予 `contents: write`，使用 `GITHUB_TOKEN`，按 tag 串行且 `cancel-in-progress=false`。写 job 声明受保护的发布 environment；仓库管理员需要真实配置规则，YAML 中声明 environment 不证明 reviewer 已配置。依据：[GitHub deployment environments](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments)。
 
 发布报告保存明确的 run ID、artifact ID、tag 提交、每份附件摘要和校验状态。所有可推广附件只复制原始字节；Release notes 取当前版本的已审阅文档，不根据提交列表推导科研功能或支持范围。
+
+许可、人工试装和公开批准使用独立记录，不能改写已构建 artifact 的门禁初态。`qcblender.release-gates.v1` 必须绑定 `candidate_run_id`、`artifact_id`、`source_commit`、`extension_sha256`；三个结果分别为 `license_review`、`independent_alpha_installation`、`public_release_approval`。每项 `Passed` 必須提供实际 `reviewer`、ISO 日期 `reviewed_at`、`notes` 与非空 `evidence` 清单；每份证据的 `path` 是记录目录内相对路径，`sha256` 核对实际字节。Agent 只检查字段、身份和摘要，不生成通过签署。
+
+`tools/verify_release_gates.py --record <记录> --candidate-manifest <候选清单> --artifact-id <ID>` 是本地记录核验入口。发布 workflow 的可选 `gates_record` 指向默认分支检出内的该记录。技术 dry-run 可以 Passed 并显示 `draft_readiness=Failed`；创建草稿要求独立许可复核记录 Passed。人工试装与公开批准保持各自真实状态，后续由实际操作者填写；脚本始终不公开 Release。
 
 由 `GITHUB_TOKEN` 产生的普通事件不会启动新的 workflow，`workflow_dispatch`、`repository_dispatch` 等有指定例外。因此维护者在 GitHub UI 公开草稿，既落实人工批准，也保留未来正式版的 `release.published` 扩展平台链路。依据：[GitHub workflow 触发规则](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow)。
 
