@@ -7,6 +7,7 @@ from pathlib import Path
 import uuid
 
 import numpy as np
+from .resources import DATASET_MAX_BYTES, dataset_bytes, enforce_dataset_limit
 
 # CODATA 2022, bohr radius in angstrom. Scalar field units remain atomic units.
 BOHR_ANGSTROM = 0.529177210544
@@ -138,8 +139,9 @@ class Dataset:
                 raise ValueError('Vibrational displacement shape does not match modes/atoms')
 
 
-def save_dataset(data, directory):
+def save_dataset(data, directory, max_bytes=DATASET_MAX_BYTES):
     """Commit a new manifest only after all content-addressed arrays are written."""
+    enforce_dataset_limit(dataset_bytes(data.arrays), max_bytes)
     data.validate()
     directory = filesystem_path(directory).resolve()
     directory.mkdir(parents=True, exist_ok=True)
@@ -174,7 +176,7 @@ def save_dataset(data, directory):
     return unprefixed_path(directory / 'manifest.json')
 
 
-def load_dataset(directory, max_bytes=1024**3):
+def load_dataset(directory, max_bytes=DATASET_MAX_BYTES):
     directory = filesystem_path(directory).resolve(strict=True)
     manifest_path = directory / 'manifest.json'
     if manifest_path.stat().st_size > 16 * 1024**2:
@@ -182,7 +184,7 @@ def load_dataset(directory, max_bytes=1024**3):
     manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
     if manifest.get('format') != 'qcblender.project' or manifest.get('schema') != SCHEMA:
         raise ValueError('Unsupported QCBlender project schema')
-    arrays, total = {}, 0
+    arrays, total, paths = {}, 0, {}
     for name, record in manifest['arrays'].items():
         relative = Path(record['path'])
         if relative.is_absolute() or relative.drive or '..' in relative.parts:
@@ -191,8 +193,10 @@ def load_dataset(directory, max_bytes=1024**3):
         if not path.is_relative_to(directory):
             raise ValueError(f'Array escapes project: {name}')
         total += path.stat().st_size
-        if total > max_bytes:
-            raise MemoryError('Project arrays exceed memory budget')
+        paths[name] = path
+    enforce_dataset_limit(total, max_bytes)
+    for name, record in manifest['arrays'].items():
+        path = paths[name]
         if _file_sha256(path) != record['sha256']:
             raise ValueError(f'Array checksum mismatch: {name}')
         array = np.load(path, allow_pickle=False, mmap_mode='r')

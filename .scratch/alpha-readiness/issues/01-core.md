@@ -1,7 +1,7 @@
 # 01 资源、缓存与异步科学资格
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 
 ## 工作与验收
 
@@ -10,3 +10,11 @@ Status: claimed
 ## Comments
 
 2026-10-05：主Agent领取。
+
+## Answer
+
+统一1 GiB序列化数组契约；加载两阶段路径/总大小检查，保存/VDB/缓存/归档复用同一限制。求值先估算保留输入、替换后输出及.npy头，驻留旧场另计工作预算；512³在prepare和数组分配前拒绝。科学身份覆盖六个科学实现文件及四个依赖，cache key保留输入/grid/科学参数/Blender，memory_mb继续不改变科学缓存身份。
+
+生成点击先启动独立qualify_science异步作业，再由绑定一致的轻量预览打开参数对话框。已知不支持返回eligible=false，完整性/环境失败保留真实worker失败。对话框显示网格、点数、Dataset大小、求值估算、预算及拒绝原因；冷重开和注销清除资格。后台在cache lookup和求值前重做资格与资源核验，源manifest变化拒绝发布结果。
+
+Passed：18项科学定向回归、5项资格UI边界、18项取消回归，共41项，无skip。报告outputs/core-regressions.json，执行脚本outputs/core_regressions.py；git diff --check通过。首次完整suite因工作树未准备outputs和受限本地输入失败，保留outputs/core-science-initial.json；不作为通过证据。综合最终候选/原生GUI/Undo/Redo由07验收，当前Not Run。

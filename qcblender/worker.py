@@ -68,6 +68,10 @@ def main():
             storage = importlib.import_module(args.module + '.data')
             summarize = importlib.import_module(args.module + '.field_ranges').field_range
             report = field_range_report(request, storage, summarize, lambda: (directory / 'cancel').exists())
+        elif request['action'] == 'qualify_science':
+            preflight = importlib.import_module(args.module + '.science_preflight')
+            report = dict(preflight.qualify_dataset(request['dataset'], request['dataset_sha256'],
+                          lambda: (directory / 'cancel').exists()), status='succeeded')
         elif request['action'] in ('import', 'import_pair', 'import_nbo', 'import_nocv', 'evaluate', 'rebuild_cache', 'declare_field'):
             storage = importlib.import_module(args.module + '.data')
             static_reference = importlib.import_module(args.module + '.static_reference')
@@ -145,6 +149,8 @@ def main():
                 if request.get('dataset_sha256', digest) != digest:
                     raise ValueError('Dataset changed after the request was created')
                 data = storage.load_dataset(request['dataset'])
+                if hashlib.sha256((Path(request['dataset']) / 'manifest.json').read_bytes()).hexdigest() != digest:
+                    raise ValueError('Dataset changed while loading the request')
                 if request['action'] == 'declare_field':
                     units = {'orbital_amplitude': 'bohr^-3/2', 'electron_number_density': 'electron/bohr^3',
                              'spin_density': 'electron/bohr^3', 'electrostatic_potential': 'hartree/e'}
@@ -162,14 +168,21 @@ def main():
                                   interpretation='user_assigned', original_quantity='unknown_scalar',
                                   numeric_conversion='none; user confirmed values use declared units')
                 if request['action'] == 'evaluate':
-                    from importlib.metadata import version
                     evaluator = importlib.import_module(args.module + '.evaluate')
-                    parameters = {k: v for k, v in request['parameters'].items() if k != 'memory_mb'}
-                    identity = {'dataset': digest, 'grid': request['grid'], 'parameters': parameters,
-                                'backend': version('qc-gbasis'),
-                                'evaluator': hashlib.sha256(Path(evaluator.__file__).read_bytes()).hexdigest(),
-                                'numpy': version('numpy'), 'blender': bpy.app.version_string}
-                    cache_key = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
+                    science = importlib.import_module(args.module + '.science_identity')
+                    resources = importlib.import_module(args.module + '.resources')
+                    identity = science.scientific_identity()
+                    if request.get('science_sha256', identity['sha256']) != identity['sha256']:
+                        raise ValueError('Scientific implementation changed after qualification')
+                    grid = evaluator.Grid(**request['grid'])
+                    resources.field_resources({name: resources.array_descriptor(array) for name, array in data.arrays.items()},
+                        grid.shape, data.arrays['mo_coeffs'].shape[0],
+                        request['parameters']['quantity'], request['parameters']['memory_mb'])
+                    evaluator.prepare(data)
+                    if (directory / 'cancel').exists():
+                        raise InterruptedError('Field request cancelled before cache lookup')
+                    cache_key = science.field_cache_key(digest, request['grid'], request['parameters'],
+                                                        bpy.app.version_string, identity)
                     cache_root = directory.parent / 'cache'
                     index = cache_root / (cache_key + '.json')
                     if index.exists():
@@ -179,17 +192,20 @@ def main():
                             for scalar in candidate.metadata['fields']:
                                 storage.volume_cache(cached, scalar)
                             cache_hit = True
-                        except (ValueError, OSError, KeyError) as error:
+                        except (ValueError, OSError, KeyError, MemoryError) as error:
                             cache_rejected = str(error)
                     if cache_hit:
                         shutil.copytree(storage.filesystem_path(cached), storage.filesystem_path(directory / 'dataset'))
-                    grid = evaluator.Grid(**request['grid'])
                     if not cache_hit:
                         data = evaluator.evaluate_field(data, grid, **request['parameters'],
                             cancelled=lambda: (directory / 'cancel').exists(), progress=progress)
             if (directory / 'cancel').exists():
                 raise InterruptedError('Request cancelled before publishing results')
+            if request['action'] == 'evaluate' and hashlib.sha256(
+                    (Path(request['dataset']) / 'manifest.json').read_bytes()).hexdigest() != digest:
+                raise ValueError('Dataset changed during field evaluation')
             if not cache_hit:
+                storage.enforce_dataset_limit(storage.dataset_bytes(data.arrays))
                 progress(1, 'Building display cache')
                 (directory / 'dataset').mkdir()
                 for index, field in enumerate(data.metadata.get('fields', [])):
@@ -241,6 +257,9 @@ def field_range_report(request, storage, summarize, cancelled):
 
 
 def write_volume(data, path, index=0):
+    # File entry points have no package; Dataset retains the installed module identity.
+    storage = sys.modules[type(data).__module__]
+    storage.enforce_dataset_limit(storage.dataset_bytes(data.arrays))
     import numpy as np
     import openvdb
     field = data.metadata['fields'][index]

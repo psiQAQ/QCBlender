@@ -10,6 +10,30 @@ from bpy_extras.io_utils import ImportHelper
 
 ADDON_ID = __package__.rsplit('.', 1)[0]
 _operations = {}
+_qualifications = {}
+
+
+def clear_qualifications(*args):
+    _qualifications.clear()
+
+
+def science_binding(context):
+    from ..science_identity import scientific_identity
+    source = context.object
+    if source is None:
+        raise ValueError('Select the wavefunction source')
+    directory = bpy.path.abspath(source['qc_dataset'])
+    digest = hashlib.sha256((Path(directory) / 'manifest.json').read_bytes()).hexdigest()
+    fingerprint = scientific_identity()['sha256']
+    return source, directory, digest, fingerprint
+
+
+def same_science_source(context, source, directory, digest, fingerprint):
+    if context.object != source or source.name not in bpy.data.objects:
+        raise ValueError('Selected source changed during scientific qualification')
+    current = science_binding(context)
+    if current[1:] != (directory, digest, fingerprint):
+        raise ValueError('Source binding or scientific implementation changed; qualify it again')
 
 
 def _material_section(node):
@@ -102,7 +126,7 @@ class AsyncOperation:
     def execute(self, context):
         try:
             self._job = self.begin(context)
-        except (ValueError, OSError, KeyError) as error:
+        except (ValueError, OSError, KeyError, MemoryError) as error:
             self.report({'ERROR'}, str(error))
             return {'CANCELLED'}
         self._timer = context.window_manager.event_timer_add(0.25, window=context.window)
@@ -127,7 +151,7 @@ class AsyncOperation:
             if report['status'] != 'succeeded':
                 raise RuntimeError(report.get('error', 'Scientific worker failed; inspect runtime report'))
             self.accept(context, report)
-        except (RuntimeError, ValueError, OSError, KeyError, ReferenceError) as error:
+        except (RuntimeError, ValueError, OSError, KeyError, ReferenceError, MemoryError) as error:
             self.report({'ERROR'}, str(error))
             self.cancel(context)
             return {'CANCELLED'}
@@ -264,6 +288,25 @@ class QCBLENDER_OT_choose_log_job(bpy.types.Operator):
             job_number=int(self.job)+1, source_sha256=report['source']['sha256'])
 
 
+class QCBLENDER_OT_qualify_science(AsyncOperation, bpy.types.Operator):
+    bl_idname = 'qcblender.qualify_science'
+    bl_label = 'Check Scientific Source'
+
+    def begin(self, context):
+        from .jobs import Job
+        self._source, self._dataset, self._digest, self._fingerprint = science_binding(context)
+        return Job('qualify_science', dataset=self._dataset, dataset_sha256=self._digest)
+
+    def accept(self, context, report):
+        same_science_source(context, self._source, self._dataset, self._digest, self._fingerprint)
+        if report['dataset_sha256'] != self._digest or report['science_sha256'] != self._fingerprint:
+            raise ValueError('Scientific qualification identity does not match this request')
+        if not report['eligible']:
+            raise ValueError(report['reason'])
+        _qualifications[(self._digest, self._fingerprint)] = report['preview']
+        bpy.ops.qcblender.generate_field('INVOKE_DEFAULT')
+
+
 class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
     bl_idname = 'qcblender.generate_field'
     bl_label = 'Generate Quantum Field'
@@ -291,13 +334,12 @@ class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
         return poll_action(cls, context, 'generate')
 
     def invoke(self, context, event):
-        from ..data import load_dataset
         try:
-            data = load_dataset(bpy.path.abspath(context.object['qc_dataset']))
-            if 'orbitals' not in data.metadata:
-                raise ValueError('This source has no orbital coefficients')
-            self._preview = data
-        except (ValueError, OSError, KeyError) as error:
+            self._source, self._dataset, self._input_digest, self._fingerprint = science_binding(context)
+            self._preview = _qualifications.get((self._input_digest, self._fingerprint))
+            if self._preview is None:
+                return bpy.ops.qcblender.qualify_science('EXEC_DEFAULT')
+        except (ValueError, OSError, KeyError, MemoryError) as error:
             self.report({'ERROR'}, str(error))
             return {'CANCELLED'}
         return context.window_manager.invoke_props_dialog(self)
@@ -311,9 +353,9 @@ class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
             if self.orbital_choice == 'EXPLICIT':
                 layout.prop(self, 'orbital')
             if hasattr(self, '_preview'):
-                from ..data import orbital_selection
+                from ..science_preflight import preview_orbital
                 try:
-                    selected = orbital_selection(self._preview, self.spin, self.orbital_choice, self.orbital)
+                    selected = preview_orbital(self._preview, self.spin, self.orbital_choice, self.orbital)
                     layout.label(text=f"Source MO {selected['source_number']} | occupation {selected['occupation']:.6g}")
                     layout.label(text=f"Energy: {selected['energy_hartree']} Hartree")
                 except ValueError as error:
@@ -321,24 +363,33 @@ class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
         layout.prop(self, 'spacing')
         layout.prop(self, 'padding')
         layout.prop(self, 'memory_mb')
+        if hasattr(self, '_preview'):
+            from ..science_preflight import preview_grid, preview_resources
+            import math
+            try:
+                grid = preview_grid(self._preview, self.spacing, self.padding)
+                layout.label(text='Grid: ' + ' × '.join(map(str, grid['shape'])) + f" | {math.prod(grid['shape']):,} voxels")
+                resources = preview_resources(self._preview, grid, self.quantity, self.memory_mb, validate=False)
+                layout.label(text=f"Dataset: {resources['dataset_bytes'] / 1024**2:.2f} MiB / 1024 MiB")
+                layout.label(text=f"Evaluation estimate: {resources['minimum_working_bytes'] / 1024**2:.2f} MiB / {self.memory_mb} MiB")
+                if resources['refusal_reason']:
+                    layout.label(text=resources['refusal_reason'], icon='ERROR')
+            except (ValueError, MemoryError) as error:
+                layout.label(text=str(error), icon='ERROR')
         layout.label(text='Grid limits require convergence checks for quantitative use')
 
     def begin(self, context):
-        import numpy as np
-        from ..data import load_dataset, orbital_selection
+        from ..science_preflight import preview_grid, preview_resources, preview_orbital
         from .jobs import Job
-        self._source = context.object
-        self._dataset = bpy.path.abspath(self._source['qc_dataset'])
-        self._input_digest = hashlib.sha256((Path(self._dataset) / 'manifest.json').read_bytes()).hexdigest()
-        data = load_dataset(self._dataset)
+        if not getattr(self, '_preview', None):
+            raise ValueError('Invoke Generate Quantum Field to qualify the source first')
+        same_science_source(context, self._source, self._dataset, self._input_digest, self._fingerprint)
         if self.quantity == 'orbital_amplitude':
-            self.orbital = orbital_selection(data, self.spin, self.orbital_choice, self.orbital)['source_number']
-        positions = data.arrays['positions']
-        origin = positions.min(axis=0) - self.padding
-        upper = positions.max(axis=0) + self.padding
-        shape = (np.ceil((upper - origin) / self.spacing).astype(int) + 1).tolist()
+            self.orbital = preview_orbital(self._preview, self.spin, self.orbital_choice, self.orbital)['source_number']
+        grid = preview_grid(self._preview, self.spacing, self.padding)
+        preview_resources(self._preview, grid, self.quantity, self.memory_mb)
         return Job('evaluate', dataset=self._dataset, dataset_sha256=self._input_digest,
-                   grid={'origin': origin.tolist(), 'steps': (np.eye(3) * self.spacing).tolist(), 'shape': shape},
+                   science_sha256=self._fingerprint, grid=grid,
                    parameters={'quantity': self.quantity, 'spin': self.spin, 'orbital': self.orbital,
                                'memory_mb': self.memory_mb})
 

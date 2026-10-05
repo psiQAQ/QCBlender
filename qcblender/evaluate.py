@@ -1,12 +1,12 @@
 """Chunked real HF/DFT fields; input/output positions use angstrom."""
 from dataclasses import dataclass
 from importlib.metadata import version
-import math
 
 import numpy as np
 
 from .data import BOHR_ANGSTROM, Dataset, orbital_selection
 from .readers import wavefunction
+from .resources import array_descriptor, field_resources
 
 
 @dataclass
@@ -118,18 +118,9 @@ def _points(mol, basis, pa, pb, points, quantity, spin, orbital, radius):
 
 def evaluate_field(data, grid, quantity, spin='alpha', orbital=1, memory_mb=512,
                    nuclear_radius_bohr=0.02, cancelled=None, progress=None):
-    if type(memory_mb) is not int or not 32 <= memory_mb <= 16384:
-        raise ValueError('Memory budget must be an integer from 32 to 16384 MiB')
-    count = math.prod(grid.shape)
-    nbasis = data.arrays['mo_coeffs'].shape[0]
-    budget = memory_mb * 1024**2
-    # Include outputs, density matrices, coordinate blocks and conservative integral workspace.
-    fixed = count * 17 + nbasis**2 * 8 * 6
-    per_point = max(256, nbasis * 8 * 12,
-                    nbasis**2 * 8 * 8 if quantity == 'electrostatic_potential' else 0)
-    if fixed + per_point > budget:
-        raise MemoryError(f'Grid/backend exceeds {memory_mb} MiB; reduce resolution or increase budget')
-    chunk = min(4096, max(1, (budget - fixed) // per_point))
+    resources = field_resources({name: array_descriptor(array) for name, array in data.arrays.items()},
+                                grid.shape, data.arrays['mo_coeffs'].shape[0], quantity, memory_mb)
+    count, chunk = resources['voxel_count'], resources['chunk']
     mol, basis, pa, pb = prepare(data)
     values, valid = np.empty(count), np.empty(count, dtype=bool)
     for start in range(0, count, chunk):
