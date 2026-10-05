@@ -24,6 +24,18 @@ def _material_snapshot(mat, role):
     controls = _material_role(mat, role)
     result = {'name': mat.name, 'role': role, 'controls': [], 'reasons': []}
     shaders = [node for node in mat.node_tree.nodes if node.bl_idname == 'ShaderNodeBsdfPrincipled']
+    if not shaders and not mat.get('qc_fog'):
+        result['reasons'].append('Surface shader is not a supported Principled graph; color and shader inputs are unverified')
+    expected_type = 'ShaderNodeVolumePrincipled' if mat.get('qc_fog') else 'ShaderNodeBsdfPrincipled'
+    terminals = [node for node in mat.node_tree.nodes if node.bl_idname == expected_type]
+    outputs = [node for node in mat.node_tree.nodes if node.bl_idname == 'ShaderNodeOutputMaterial'
+               and node.is_active_output]
+    if len(terminals) != 1 or len(outputs) != 1:
+        result['reasons'].append('Material output or shader is missing/ambiguous; custom graph is unverified')
+    else:
+        item = outputs[0].inputs['Volume' if mat.get('qc_fog') else 'Surface']
+        if len(item.links) != 1 or item.links[0].from_node != terminals[0]:
+            result['reasons'].append('Material output uses a custom shader connection; graph is unverified')
     if len(shaders) > 1:
         result['reasons'].append('Several Principled shaders; surface material controls are ambiguous')
     elif shaders:

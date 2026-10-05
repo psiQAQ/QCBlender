@@ -165,6 +165,28 @@ try:
         assert missing_material['status'] == 'partial'
         assert not any(item['role'] == 'Material' for item in missing_material['materials'])
         atom_modifier[material_socket.identifier] = saved_material
+        custom_material = bpy.data.materials.new('Alpha summary custom Emission')
+        custom_material.use_nodes = True
+        custom_material.node_tree.nodes.clear()
+        emission = custom_material.node_tree.nodes.new('ShaderNodeEmission')
+        output = custom_material.node_tree.nodes.new('ShaderNodeOutputMaterial')
+        custom_material.node_tree.links.new(emission.outputs['Emission'], output.inputs['Surface'])
+        atom_modifier[material_socket.identifier] = custom_material
+        custom_material_summary = summary(atoms)['display']
+        assert custom_material_summary['status'] == 'partial'
+        assert any('unverified' in reason for reason in custom_material_summary['reasons'])
+        atom_modifier[material_socket.identifier] = saved_material
+        module('blender.layers').activate(bpy.context, atoms)
+        saved_digest = atoms['qc_dataset_sha256']
+        atoms['qc_dataset_sha256'] = '0' * 64
+        try:
+            module('blender.ui').science_binding(bpy.context)
+        except ValueError as error:
+            assert 'saved source binding' in str(error)
+        else:
+            raise AssertionError('Stale source binding was accepted')
+        finally:
+            atoms['qc_dataset_sha256'] = saved_digest
         fog = module('blender.fog').fog_view(surface)
         fog.hide_render = True
         before = summary(fog)
@@ -223,7 +245,8 @@ try:
             grid=grid, parameters=parameters, isovalue=.045)
         report['checks'] = {name: 'Passed' for name in ('qualification', 'unsupported_science',
             'cache_hit', 'early_dataset_limit', 'live_isovalue', 'live_color_ramp',
-            'standard_view_summaries', 'missing_input', 'missing_material', 'custom_graph', 'repeat_export', 'render', 'portable_save')}
+            'standard_view_summaries', 'missing_input', 'missing_material', 'custom_material', 'stale_source_binding',
+            'custom_graph', 'repeat_export', 'render', 'portable_save')}
     for name in ('gbasis', 'iodata', 'scipy'):
         assert name not in sys.modules, name + ' leaked into the UI process'
 except Exception as error:

@@ -24,6 +24,8 @@ def science_binding(context):
         raise ValueError('Select the wavefunction source')
     directory = bpy.path.abspath(source['qc_dataset'])
     digest = hashlib.sha256((Path(directory) / 'manifest.json').read_bytes()).hexdigest()
+    if source.get('qc_dataset_sha256') != digest:
+        raise ValueError('Dataset manifest differs from the saved source binding; rebind the verified source')
     fingerprint = scientific_identity()['sha256']
     return source, directory, digest, fingerprint
 

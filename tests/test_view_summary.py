@@ -101,8 +101,10 @@ class ViewSummary(unittest.TestCase):
         ramp = SimpleNamespace(color_mode='RGB', interpolation='LINEAR', hue_interpolation='NEAR', elements=[element])
         color = SimpleNamespace(name='Live color', color_ramp=ramp)
         scale = SimpleNamespace(name='Live scale', bl_idname='ShaderNodeValue', outputs=[SimpleNamespace(default_value=20.)])
-        mat = SimpleNamespace(name='Live material', controls={'color_ramp': color, 'Opacity Scale': scale},
-                              node_tree=SimpleNamespace(nodes=[]))
+        mat = View(qc_fog=True)
+        mat.name = 'Live material'
+        mat.controls = {'color_ramp': color, 'Opacity Scale': scale}
+        mat.node_tree = SimpleNamespace(nodes=[])
         obj.state['materials'] = {'Material': (mat, [])}
         before = capture.capture_view_summary(obj, 1)
         element.color[0] = .7
@@ -112,6 +114,18 @@ class ViewSummary(unittest.TestCase):
         self.assertEqual(controls['Opacity Scale'], 40.)
         self.assertEqual(controls['color_ramp']['elements'][0]['color'][0], .7)
         self.assertEqual(before['display']['materials'][0]['controls'][0]['value']['elements'][0]['color'][0], .1)
+
+    def test_custom_emission_material_is_partial_with_explicit_reason(self):
+        obj = self.view()
+        mat = View()
+        mat.name = 'Custom emission'
+        mat.controls = {}
+        mat.node_tree = SimpleNamespace(nodes=[SimpleNamespace(bl_idname='ShaderNodeEmission')])
+        obj.state['materials'] = {'Material': (mat, [])}
+        result = capture.capture_view_summary(obj, 1)['display']
+        self.assertEqual(result['status'], 'partial')
+        self.assertEqual(result['materials'][0]['controls'], [])
+        self.assertTrue(any('Surface shader' in reason and 'unverified' in reason for reason in result['reasons']))
 
     def test_source_identity_mismatch_fails(self):
         obj = self.view()

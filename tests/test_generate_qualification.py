@@ -1,9 +1,13 @@
 """UI qualification handoff and binding boundaries with controlled Blender calls."""
 import types
+import hashlib
+from pathlib import Path
+import tempfile
+import sys
 import unittest
 from unittest.mock import Mock, patch
 
-from test_cancel_finalization import ui
+from test_cancel_finalization import ui, ROOT
 
 
 class QualificationHandoff(unittest.TestCase):
@@ -83,6 +87,32 @@ class QualificationHandoff(unittest.TestCase):
         self.assertFalse(ui._qualifications)
         with self.assertRaisesRegex(ValueError, 'Needs'):
             self.operator().accept(self.context, dict(report, minimum_working_bytes=17000 * 1024**2))
+
+
+class ScienceBinding(unittest.TestCase):
+    def test_missing_or_stale_saved_digest_stops_before_qualification(self):
+        (ROOT / 'outputs').mkdir(exist_ok=True)
+        identity = types.ModuleType('qcblender.science_identity')
+        identity.scientific_identity = Mock(return_value={'sha256': 'science-sha'})
+        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+            manifest = Path(directory) / 'manifest.json'
+            manifest.write_bytes(b'{"identity":"original"}')
+            digest = hashlib.sha256(manifest.read_bytes()).hexdigest()
+            source = {'qc_dataset': directory, 'qc_dataset_sha256': digest}
+            context = types.SimpleNamespace(object=source)
+            qualify = Mock()
+            bpy = types.SimpleNamespace(path=types.SimpleNamespace(abspath=lambda path: path),
+                                        ops=types.SimpleNamespace(qcblender=types.SimpleNamespace(qualify_science=qualify)))
+            with patch.object(ui, 'bpy', bpy), patch.dict(sys.modules, {identity.__name__: identity}):
+                self.assertEqual(ui.science_binding(context)[2:], (digest, 'science-sha'))
+                manifest.write_bytes(b'{"identity":"replacement"}')
+                generate = ui.QCBLENDER_OT_generate()
+                generate.report = Mock()
+                self.assertEqual(generate.invoke(context, None), {'CANCELLED'})
+                qualify.assert_not_called()
+                self.assertIn('saved source binding', generate.report.call_args.args[1])
+                del source['qc_dataset_sha256']
+                self.assertRaisesRegex(ValueError, 'saved source binding', ui.science_binding, context)
 
 
 if __name__ == '__main__':
