@@ -231,8 +231,18 @@ else:
     xyz.write_text('1\nFrame one\nH 0 0 0\n1\nFrame two\nH 0 0 1\n', encoding='utf-8')
     trajectory = module('readers').read_source(xyz)
     xyz_view = views.atom_view(cached_dataset(trajectory, 'dynamic-xyz'))
+    # Match the scientific import operator's atom_view -> initialize_trajectory
+    # sequence before asking current_geometry or a step operator to inspect it.
+    module('blender.trajectory').initialize_trajectory(xyz_view, trajectory)
+    positions, identity = module('blender.geometry').current_geometry(xyz_view, trajectory)
+    assert identity['kind'] == 'trajectory' and identity['step'] == 1
+    np.testing.assert_array_equal(positions, trajectory.arrays['positions'])
     refuse(xyz_view, 'XYZ initial frame 1')
-    module('blender.trajectory').set_frame(xyz_view, trajectory, 2)
+    activate(xyz_view)
+    assert bpy.ops.qcblender.trajectory_frame(direction='GOTO', frame=2) == {'FINISHED'}
+    positions, identity = module('blender.geometry').current_geometry(xyz_view, trajectory)
+    assert identity['kind'] == 'trajectory' and identity['step'] == 2
+    np.testing.assert_array_equal(positions, trajectory.arrays[trajectory.metadata['trajectory']['array']][1])
     refuse(xyz_view, 'XYZ frame 2')
 
     # Finish with the user-facing P03 view selected, then save using the operator.
