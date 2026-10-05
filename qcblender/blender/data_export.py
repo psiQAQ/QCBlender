@@ -24,7 +24,9 @@ def resolve_output_directory(context, override=''):
 
 @lru_cache(maxsize=32)
 def _enum_items(kinds):
-    return [(kind, kind, 'Export original scientific records') for kind in kinds]
+    return [(kind, '当前视图参数摘要' if kind == 'SUMMARY' else kind,
+             'Export view-summary.md and metadata.json' if kind == 'SUMMARY' else 'Export original scientific records')
+            for kind in kinds]
 
 
 def export_choices(self, context):
@@ -47,6 +49,10 @@ def export_choices(self, context):
             kinds.append('paired')
         if analysis == 'ESP':
             kinds.append('ESP_AREA')
+        if context.object is not None:
+            from .source_browser import source_object
+            if source_object(context.object).get('qc_dataset'):
+                kinds.append('SUMMARY')
         return _enum_items(tuple(kinds))
     except (ValueError, OSError, KeyError, TypeError, AttributeError):
         return []
@@ -87,7 +93,10 @@ class QCBLENDER_OT_export_data(AsyncOperation, bpy.types.Operator):
         self.layout.prop(self, 'kind')
         if self.kind in ('paired', 'ESP_AREA'):
             self.layout.prop(self, 'scope')
-        self.layout.label(text='Creates a unique result folder containing CSV and metadata.json')
+        self.layout.label(text='Creates a unique result folder containing ' +
+                               ('view-summary.md and metadata.json' if self.kind == 'SUMMARY' else 'CSV and metadata.json'))
+        if self.kind == 'SUMMARY':
+            self.layout.label(text='Captures stored node/material inputs; unresolved records are partial/unverified')
         if self.kind == 'paired':
             self.layout.label(text='Exports every matching valid voxel; Esc cancels while running')
 
@@ -111,9 +120,13 @@ class QCBLENDER_OT_export_data(AsyncOperation, bpy.types.Operator):
                            'center_max': _bound(state, 'value', 'high'), 'mode': state.area_range_mode}
         self._output_directory = str(resolve_output_directory(context, self.directory))
         self._export_token = uuid.uuid4().hex
+        parameters = {}
+        if self.kind == 'SUMMARY':
+            from .view_summary import capture_view_summary
+            parameters['view_snapshot'] = capture_view_summary(context.object, context.scene.frame_current)
         job = Job('export_data', dataset=str(path), dataset_sha256=obj['qc_dataset_sha256'],
                   output_directory=self._output_directory, kind=self.kind, scope=scope,
-                  filters=filters, export_token=self._export_token)
+                  filters=filters, export_token=self._export_token, **parameters)
         from ..data_export import cleanup_staging
         job.cleanup_after_exit = partial(cleanup_staging, self._output_directory, self._export_token)
         return job

@@ -178,7 +178,7 @@ class QCBLENDER_PT_project(bpy.types.Panel):
             from .source_browser import source_object
             from .data_export import export_choices
             if source_object(obj).get('qc_dataset') and export_choices(None, context):
-                layout.operator('qcblender.export_data', text='导出数据', icon='EXPORT')
+                layout.operator('qcblender.export_data', text='导出数据与参数摘要', icon='EXPORT')
             for diagnostic in json.loads(obj.get('qc_diagnostics', '[]')):
                 for line in textwrap.wrap(diagnostic, width=40):
                     layout.label(text=line)

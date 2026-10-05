@@ -1,4 +1,4 @@
-"""Explicit CSV exports from saved scientific Dataset records."""
+"""Explicit scientific CSV and view-summary exports from saved Dataset records."""
 import csv
 import ctypes
 import hashlib
@@ -71,7 +71,7 @@ def available_exports(data):
         result.append('paired')
     if meta.get('analysis', {}).get('kind') == 'ESP':
         result.append('ESP_AREA')
-    return result
+    return result + ['SUMMARY']
 
 
 def _tables(data, kind, filters, cancelled):
@@ -153,7 +153,7 @@ def cleanup_staging(output_directory, token):
 
 
 def export_dataset(dataset, output_directory, kind, scope='ALL', filters=None,
-                   cancelled=lambda: False, token=None, expected_sha256=None):
+                   cancelled=lambda: False, token=None, expected_sha256=None, view_snapshot=None):
     from .data import load_dataset
     source = Path(dataset).resolve(strict=True)
     manifest_sha = hashlib.sha256((source / 'manifest.json').read_bytes()).hexdigest()
@@ -168,6 +168,12 @@ def export_dataset(dataset, output_directory, kind, scope='ALL', filters=None,
     permitted = {'x_field', 'y_field', 'x_min', 'x_max', 'y_min', 'y_max'} if kind == 'paired' else {'center_min', 'center_max', 'mode'} if kind == 'ESP_AREA' else set()
     if set(filters) - permitted:
         raise ValueError('Unsupported export filter')
+    if kind == 'SUMMARY':
+        from .view_summary import validate_snapshot, scientific_summary, render_summary
+        if _file_sha256(source / 'manifest.json') != manifest_sha:
+            raise ValueError('Export Dataset changed while loading the summary')
+        summary = validate_snapshot(view_snapshot, manifest_sha)
+        summary['scientific'] = scientific_summary(data, summary)
     output = Path(output_directory).resolve()
     output.mkdir(parents=True, exist_ok=True)
     token = token or uuid.uuid4().hex
@@ -181,6 +187,12 @@ def export_dataset(dataset, output_directory, kind, scope='ALL', filters=None,
     staging.mkdir()
     try:
         files = []
+        if kind == 'SUMMARY':
+            if cancelled():
+                raise RuntimeError('Data export cancelled')
+            path = staging / 'view-summary.md'
+            path.write_text(render_summary(summary), encoding='utf-8')
+            files.append({'filename': path.name, 'sha256': _file_sha256(path)})
         for filename, header, rows, units in _tables(data, kind, filters, cancelled):
             count = 0
             path = staging / filename
@@ -197,9 +209,13 @@ def export_dataset(dataset, output_directory, kind, scope='ALL', filters=None,
         metadata = {'schema': 1, 'kind': kind, 'scope': scope, 'filters': filters,
                     'dataset_manifest_sha256': manifest_sha, 'source': data.metadata['source'],
                     'scientific_metadata': data.metadata, 'files': files}
+        if kind == 'SUMMARY':
+            metadata['view_summary'] = summary
         (staging / 'metadata.json').write_text(json.dumps(metadata, ensure_ascii=False, sort_keys=True, indent=2, allow_nan=False) + '\n', encoding='utf-8')
         if cancelled():
             raise RuntimeError('Data export cancelled')
+        if kind == 'SUMMARY' and _file_sha256(source / 'manifest.json') != manifest_sha:
+            raise ValueError('Export Dataset changed before publishing the summary')
         if final.exists():
             raise FileExistsError(final)
         staging.rename(final)
@@ -211,4 +227,4 @@ def export_dataset(dataset, output_directory, kind, scope='ALL', filters=None,
 def export_report(request, directory, cancelled=lambda: False):
     return export_dataset(request['dataset'], request['output_directory'], request['kind'],
                           request.get('scope', 'ALL'), request.get('filters'), cancelled,
-                          request.get('export_token'), request['dataset_sha256'])
+                          request.get('export_token'), request['dataset_sha256'], request.get('view_snapshot'))
