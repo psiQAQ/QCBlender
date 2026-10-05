@@ -124,7 +124,7 @@ IR保留原始频率/强度列表及源模式身份，可显式导出CSV。振�
 
 ### 显式CSV数据导出
 
-工程与诊断的“导出数据”按当前Dataset提供`IR/optimization/IRC/Mayer/profile/paired/ESP_AREA`。UTF-8 CSV逐项保存已有值，metadata.json记录源文件/Dataset摘要、量/单位、原始网格、有效掩码语义、筛选范围和列角色。profile保留端点、距离Å、valid与无效值空白；paired全量/筛选导出逐个有效体素及原索引，筛选后仍保留原数组；ESP_AREA保留完整源bin边界/中心/面积/percent，百分比不归一化。优化/IRC/Mayer按完整源步骤/原子对导出，不用当前面板行替代全表。
+工程与诊断的“导出数据与参数摘要”按当前Dataset提供`IR/optimization/IRC/Mayer/profile/paired/ESP_AREA`。UTF-8 CSV逐项保存已有值，metadata.json记录源文件/Dataset摘要、量/单位、原始网格、有效掩码语义、筛选范围和列角色。profile保留端点、距离Å、valid与无效值空白；paired全量/筛选导出逐个有效体素及原索引，筛选后仍保留原数组；ESP_AREA保留完整源bin边界/中心/面积/percent，百分比不归一化。优化/IRC/Mayer按完整源步骤/原子对导出，不用当前面板行替代全表。
 
 跨工程Addon偏好`数据导出目录`使用绝对路径；留空时取已保存.blend父目录，否则取Windows真实系统Documents（包含系统重定向）。对话框`Output directory`可单次覆盖。每次在目标目录创建唯一结果子目录，先写完整暂存结果，成功后提交；取消/失败清理本次暂存，不覆盖已完成结果。导出目录不替代worker缓存或.qcdata。
 
@@ -132,7 +132,7 @@ IR保留原始频率/强度列表及源模式身份，可显式导出CSV。振�
 
 ## 7. 缓存与状态
 
-`worker.py` 的求值缓存身份包括输入 Dataset manifest 摘要、网格、科学参数、后端及求值器源码摘要、NumPy 和 Blender 版本；内存预算不改变场的科学身份。缓存命中后仍校验 Dataset 与 VDB；损坏缓存按实际错误记录后重算。等值、颜色和视图布局不使科学场失效。
+`worker.py` 的求值缓存身份包括输入 Dataset manifest 摘要、网格、科学参数、Blender 版本，以及 `science_identity.py` 统一科学指纹（求值、波函数重建、数据约定与资源/预检源码及 GBasis、IOData、NumPy、SciPy 版本）；内存预算不改变场的科学身份。缓存命中后仍校验 Dataset 与 VDB；损坏缓存按实际错误记录后重算。等值、颜色和视图布局不使科学场失效。
 
 计算状态、能力诊断和 worker 执行状态各自保留。worker 最终状态为 `succeeded / failed / cancelled`，执行成功不等于科学正确或独立人工验收通过。后台结果不包含 `bpy` 对象，由主线程校验并接入；取消及过期操作不得覆盖新的选择。
 
@@ -150,3 +150,11 @@ IR保留原始频率/强度列表及源模式身份，可显式导出CSV。振�
 | 冷重开/移动/取消 | 有效数据和节点设置保留，失败不损坏上次成功状态 |
 
 数据层已由 `qcblender/data.py`、读取器、求值器和工程模块实现；当前实际覆盖及未验收条件见 [验收记录](../VALIDATION.md)。本契约中的概念实体可由 manifest 字段与数组表达，不要求建立同名 Python 类。
+
+## 资源与导出身份
+
+Dataset 序列化总量上限为 1 GiB，按每个 manifest 数组记录计入 `.npy` 文件头与数据字节；生成时计入保留源数组、新场 float64 值及 bool 有效域掩码。加载先验证所有相对路径、实际文件大小和总量，再哈希并读取数组。保存、缓存复制和工程归档使用同一上限。求值预算另计所有驻留输入、输出和工作数组，是估算而非进程峰值保证。
+
+科学资格绑定源 manifest SHA-256 与科学指纹；方法/ECP/基组/占据/密度矩阵或资源资格失败时不进入场计算。科学缓存还绑定网格、科学参数及 Blender 版本，旧身份自然未命中。
+
+参数摘要输出 `view-summary.md` 和 `metadata.json`，记录来源、方法/基组、当前构型、轨道/自旋、单位、网格、有效域与可核验的实时显示参数。缺失/自定义状态用 partial/unverified 和明确原因表示；现有科学 schema 0.1 与 CSV 记录保持不变。

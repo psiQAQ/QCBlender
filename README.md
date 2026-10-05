@@ -2,7 +2,7 @@
 
 QCBlender 在 Blender 中显示已有量子化学结果，并对支持的 HF/DFT 波函数生成轨道、密度和静电势网格。结构、等值面、材质与振动可通过原生几何节点调整；科学数据保留来源、单位和计算条件。
 
-当前版本为 **0.0.1 本地开发候选**。截至 2026-09-30，[GitHub Releases](https://github.com/psiQAQ/QCBlender/releases) 尚无公开安装包；技术检查已有通过记录，独立用户验收尚未签署。
+当前 manifest 版本为 **0.1.0 Alpha 候选**。公开安装包以 [GitHub Releases](https://github.com/psiQAQ/QCBlender/releases) 实际批准的 prerelease 为准；候选技术检查、组件许可复核和独立试装分别记录，准备状态不代表已公开发布。
 
 ## 可以做什么
 
@@ -26,7 +26,7 @@ QCBlender 在 Blender 中显示已有量子化学结果，并对支持的 HF/DFT
 
 1. 安装并启用合格包，在 Add-ons 的 QCBlender 偏好设置中运行 **Check Scientific Runtime**。
 2. 在 3D Viewport 按 **N**，打开 **QCBlender → 工作流 → 导入 Gaussian / Cube / XYZ**，选择含基组和轨道的 FCHK。
-3. 选中新原子视图，点击 **生成量子化学场**，选择 **Molecular orbital**，核对自旋通道和源轨道编号或 HOMO/LUMO，生成场。
+3. 选中新原子视图，点击 **生成量子化学场**，等待独立科学预检通过并打开参数对话框，再选择 **Molecular orbital**，核对自旋通道和源轨道编号或 HOMO/LUMO，生成场。
 4. 在对象属性中调整等值和正负相位，在材质属性中调整颜色；正负表示轨道相位。生成网格初值为0.2 Å、边缘3 Å、预算512 MiB；新建原子外层Quality=3，新切片每轴201点。九个公共节点资产的原有默认值保留。
 5. 在 **N 侧栏 → 工程与诊断 → 保存自包含工程** 保存 `.blend` 和同名 `.qcdata/`；两者一起移动。设置相机与灯光后可用 Blender 原生渲染出图。
 
@@ -54,3 +54,5 @@ QCBlender 在 Blender 中显示已有量子化学结果，并对支持的 HF/DFT
 | 样本与复现 | [来源与许可目录](docs/v1-acceptance/SOURCES.md)、[跟随教程与独立人工验收 SOP](docs/v1-acceptance/SOP.md)、[复杂案例参数与复建](docs/COMPLEX_EXAMPLES.md) |
 | 开发约定与问题 | [AGENTS](AGENTS.md)、[本地任务规则](docs/agents/issue-tracker.md)、[开发问题记录](docs/DEVELOPMENT_PITFALLS.md) |
 | 许可证与历史 | [LICENSE](LICENSE)、[第三方材料](THIRD_PARTY.md)、[CHANGELOG](docs/CHANGELOG.md) |
+
+首次公开 Alpha 使用 [P01/MO9 短 SOP](docs/v1-acceptance/SOP.md#alpha-首次出图与短验收)，在“工程与诊断 → 导出数据与参数摘要”选择“当前视图参数摘要”，保存中文 Markdown 与 JSON。发布方式及门禁见[GitHub 发布研究](docs/research/github-release-workflow.md)。

@@ -1,4 +1,4 @@
-# QCBlender 0.0.1 跟随教程与独立人工验收 SOP
+# QCBlender 跟随教程与独立人工验收 SOP
 
 适用 **Windows x64、Blender 5.1.1**。取得扩展ZIP和教程样本后，可在Blender完成导入、调整、渲染与保存；安装包包含必要运行库。安装包可用性见[README](../../README.md)，来源与获取说明见[SOURCES](SOURCES.md)。教程绑定[样本清单](tutorial-samples.json)；v2样本包包含P01/P03/P04/P05/P06，C02/C06的P02需原站独立取得，其再分发许可未确认。样本包精确SHA与交付位置以[样本交付索引](../acceptance/tutorial-sample-delivery.json)为准。
 
@@ -14,12 +14,47 @@
 
 2026-10-05静态参考、IGMH声明、取消和原生VDB检查见[可靠性验证](../acceptance/reliability-validation.md)。下列新增截图绑定a3ed826最终候选；MCP准备对象和参数，实际确认、Undo/Redo、Esc和保存由Agent Computer Use执行。用户复做与科研签署仍单独填写。
 
+## Alpha 首次出图与短验收
+
+本路线适用于 manifest **0.1.0** 的 GitHub Alpha 候选。每次记录扩展 ZIP、源码提交、样本 ZIP 和 P01 SHA-256；候选技术结果、Agent 点击、独立使用者试装与科研签署分别记录。首次 Alpha 的公开门禁见[发布研究与流程](../research/github-release-workflow.md)，正式 v1 仍按全部 C/N 案例验收。
+
+公开样本的仓库入口为 `tests/data/distribution/qcblender-public-tutorial-samples-v2.zip`；取得发布附件时核对 `release-manifest.json` 和 `SHA256SUMS.txt`。本包包含 P01/P03/P04/P05/P06，排除 P02。P01 使用 `P01/o2-uhf.fchk`：UHF/STO-3G，SHA-256 为 `ef562c4b210e7c380219282d7684370cca1f0e8349dffa1d4388af5831472e36`。下载源码后可从 `tests/data/tutorial/P01/` 取得同一文件。
+
+按下表连续完成；每步保存截图或文件，另记 Passed / Failed / Not Run。
+
+| 步骤与操作 | 需要选中的对象 | 编辑器与面板路径 | 按钮文字、参数与可观察结果 |
+| --- | --- | --- | --- |
+| A01 干净配置安装 | 无 | Edit → Preferences → Get Extensions → 菜单 | Install from Disk：安装本批扩展 ZIP，启用 QCBlender；Add-ons → QCBlender → Check Scientific Runtime，应显示成功。使用独立配置，保留实际版本与摘要。 |
+| A02 导入 P01 | 无 | 3D Viewport → N → QCBlender → 工作流 | 导入 Gaussian / Cube / XYZ：选择 o2-uhf.fchk；完成后选新原子视图，在来源详情核对 UHF、STO-3G、2 个 O 原子和源摘要。 |
+| A03 自动预检并生成 MO9 | P01 原子视图 | N 侧栏 → 工作流 | 生成量子化学场：首次先异步检查方法、ECP、基组、占据与密度矩阵，通过才打开 Generate Quantum Field。Quantity=Molecular orbital、Spin=Alpha、Orbital=Source number、Orbital number=9；Grid spacing=0.2 Å、Grid margin=3 Å、Memory budget=512 MiB。核对网格尺寸、体素数、结果大小、求值估算及拒绝原因，再点 OK；完成后出现双符号场视图。 |
+| A04 修改等值 | 新 MO9 场视图 | Properties → Object → QCBlender · 对象与量子化学 → 几何表示 | 将“正值阈值 [bohr^-3/2]”（Isovalue）从原值改为 0.045，保持 Link Thresholds，记录前后几何变化；查看正负相位材质。 |
+| A05 渲染 | MO9 场视图 | N 侧栏 → 创建视图与检查工具；Render / Output Properties | 创建取景相机；按 0.4 设置灯光、渲染器与色彩管理，再 Render → Render Image，Image → Save As 保存 example.png。 |
+| A06 导出摘要 | 最终 MO9 场视图 | N 侧栏 → 工程与诊断 | 导出数据与参数摘要：Data=当前视图参数摘要，选择本次绝对目录，确认导出。新结果目录包含 view-summary.md 和 metadata.json；核对实时 Isovalue=0.045、源 MO9/Alpha、网格、单位、有效域和材质。重复导出产生独立目录；取消不产生完整结果。 |
+| A07 自包含保存 | 已打开工程 | N 侧栏 → 工程与诊断 | 保存自包含工程：保存 example.blend，确认同目录生成 example.qcdata/；摘要导出文件另外保留。 |
+| A08 中文路径移动 | 无；先保存并正常退出 Blender | 文件管理器 | 将 example.blend 与 example.qcdata/ 一起复制至“中文路径移动”目录；核对科学 manifest/数组摘要未变。 |
+| A09 新进程重开 | 重开后选 MO9 场视图 | 新 Blender 进程 → File → Open；对象属性与工程与诊断 | 打开移动后的 example.blend；双符号、等值和材质应保留，数据路径指向同目录 qcdata。再次导出摘要，核对来源和参数。重新生成时资格记录需重新检查。 |
+
+预检拒绝时保留真实诊断，不启动场计算。切换活动对象、重新绑定来源或修改输入 manifest/科学后端后，资格失效；需要重新点击生成。资格预算不足时，Check Scientific Source 对话框允许显式提高预算；这不会放宽结果大小上限。生成对话框中超过资源边界的请求显示拒绝原因，后台在缓存命中和实际计算前再次检查。
+
+科学 Dataset 的 **1 GiB** 上限包含保留源数组、新场值、有效域掩码及各 `.npy` 文件头。求值预算是另一个估算，计入全部驻留输入、输出与工作数组，不等于 Dataset 大小，也不是进程峰值保证。512³ 请求必须在大型数组分配和 VDB 写入前拒绝。
+
+摘要从当前节点修改器、材质输入与色标读取显示参数。缺少字段、链接输入或自定义节点图无法确认时，显示 `partial/unverified` 及原因，缺值不补默认值。摘要记录可核验参数，不代替源数组或独立科研判断。现有 IR/优化/IRC 等 CSV 导出继续使用对应 Data 选项。
+
+| 门禁 | 本次状态与证据 |
+| --- | --- |
+| 候选包技术检查 | Not Run；填写本批报告位置 |
+| Agent 界面确认 | Not Run；填写实际点击与截图 |
+| 组件许可复核 | Not Run；记录 IOData/GBasis 声明差异的处理依据 |
+| 独立使用者短 SOP 试装 | Not Run；使用者填写候选摘要、步骤结果与签名 |
+| 维护者公开批准 | Not Run；批准后在 GitHub UI 将草稿公开为 prerelease |
+| 完整 v1 人工与科研验收 | Not Run；继续使用 C01–C13 / N01–N18 及独立签署 |
+
 ## 0. 准备、安装与通用操作
 
 ### 0.1 取得材料并建立本次目录
 
 1. 取得实际扩展安装 ZIP，核对提供者记录的版本、文件大小和 SHA-256；源码仓库 ZIP 不能直接安装为扩展。使用公开包时记录下载地址；维护者提供候选时记录候选身份。
-2. 向提供者取得 **qcblender-public-tutorial-samples-v2.zip**，按[样本交付索引](../acceptance/tutorial-sample-delivery.json)核对实际SHA-256及字节数。解压至本次inputs/，保留P01/P03/P04/P05/P06、LICENSE、NOTICE、tutorial-samples.json；署名QCBlender contributors，许可CC BY 4.0。按[SOURCES](SOURCES.md#公开教程样本与独立获取2026-09-30)取得P02，未知许可日志不加入公开包。缺文件时只将相关案例记Not Run。
+2. 从仓库 `tests/data/distribution/` 或已批准的 GitHub Release 取得 **qcblender-public-tutorial-samples-v2.zip**，按[样本交付索引](../acceptance/tutorial-sample-delivery.json)核对实际SHA-256及字节数。解压至本次inputs/，保留P01/P03/P04/P05/P06、LICENSE、NOTICE、tutorial-samples.json；署名QCBlender contributors，许可CC BY 4.0。按[SOURCES](SOURCES.md#公开教程样本与独立获取2026-09-30)取得P02，未知许可日志不加入公开包。缺文件时只将相关案例记Not Run。
 
    ```powershell
    Get-FileHash -LiteralPath '实际文件的完整路径' -Algorithm SHA256
@@ -175,7 +210,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
    ![Agent点击导出；偏好留空、已保存工程使用blend父目录（9d3ff61）](screenshot/display-xyz-export/D01-export-default-saved-9d3ff61.jpg)
 
 
-2. 选含对应科学记录的QC对象，打开 **3D Viewport → N侧栏 → QCBlender → 工程与诊断 → 导出数据**。在 **数据（Data）** 选择可用种类：IR为含模式的原子；optimization为含优化数组的原子/轨迹；IRC为路径根；Mayer为IRC Mayer表；profile为采样线记录；paired为成对场记录；ESP_AREA为ESP面积表。对话框只列当前Dataset可导出的种类。
+2. 选含对应科学记录的QC对象，打开 **3D Viewport → N侧栏 → QCBlender → 工程与诊断 → 导出数据与参数摘要**。在 **数据（Data）** 选择可用种类：IR为含模式的原子；optimization为含优化数组的原子/轨迹；IRC为路径根；Mayer为IRC Mayer表；profile为采样线记录；paired为成对场记录；ESP_AREA为ESP面积表。对话框只列当前Dataset可导出的种类。
 
    [用户截图待引用：0.5-02，唯一活动对象、入口与可用Data种类；用户复做待填写]
 

@@ -1,4 +1,4 @@
-# QCBlender 0.0.1 操作入口索引
+# QCBlender 0.1.0 操作入口索引
 
 适用 Windows x64、Blender 5.1.1。版本及安装包可用性见 [README](../README.md)，技术范围见 [验证记录](VALIDATION.md)。
 
@@ -20,7 +20,7 @@
 | 绑定或替换着色场 | 要着色的几何视图 | 对象属性 → 颜色映射 | 选择／替换着色场 |
 | 创建切片、等值面或体积雾 | 有关联体场的标量视图 | N 侧栏 → 创建视图与检查工具 | 创建切片、创建等值面层、创建体积雾 |
 | 采样线剖面数据 | 有关联体场的场视图或切片 | N侧栏 → 创建视图与检查工具 | 记录剖面起点、采样线剖面数据 |
-| 导出科学记录 | 含相应数据的原子、场或分析记录 | N侧栏 → 工程与诊断 | 导出数据；数据（Data）选择IR/optimization/IRC/Mayer/profile/paired/ESP_AREA |
+| 导出科学记录或当前视图摘要 | 含相应数据的原子、场或分析记录 | N侧栏 → 工程与诊断 | 导出数据与参数摘要；数据（Data）选择当前视图参数摘要或IR/optimization/IRC/Mayer/profile/paired/ESP_AREA |
 | 查看XYZ多帧 | XYZ多帧原子对象 | Properties → QCBlender → XYZ Frames | Previous、Next、Choose XYZ Frame |
 | 局部选择、氢显隐 | 原子视图 | 对象属性 → 局部选择与标注 | 设置局部选择、隐藏氢等 |
 | 创建标注、优化视图 | 原子视图；优化需有逐步数据 | N 侧栏 → 创建视图与检查工具 | 创建编号／距离／角度／二面角标注、创建优化轨迹视图 |
@@ -64,3 +64,9 @@ IRC和优化关联比较双方当前步骤的源Å坐标。最后选择的对象
 操作步骤集中在 [SOP C02](v1-acceptance/SOP.md#c02-logout-能量振动与优化)：导入P02的Job1、创建独立轨迹，选新对象后在对象属性 **Optimization Trajectory** 使用 **Previous / Next / Choose Step**。Job2的模式/能量在 **科学记录与振动模式**。轨迹源值、截图和复做记录统一填写在C02。
 
 新建原子显示外层Quality=3，新建切片每轴201点；生成网格初值0.2 Å、边缘3 Å、512 MiB。公共QC Style Atoms and Bonds的Quality=2、QC Planar Slice的Resolution=101仍保留。Addon偏好“数据导出目录”留空时使用已保存.blend父目录，否则真实系统Documents；导出对话框Output directory可单次覆盖。导出目录不替代.qcdata工程数据。
+
+## Alpha 首次出图与资源检查
+
+按 [Alpha 短 SOP](v1-acceptance/SOP.md#alpha-首次出图与短验收) 完成 P01、Alpha 源 MO9、0.2 Å / margin 3 Å / 512 MiB、等值 0.045 bohr^-3/2 的路线。首次点击生成先异步科学预检，通过后打开参数对话框；网格、结果大小和求值预算即时更新，超限显示原因。资格绑定源 manifest 与科学指纹，重绑或新进程重开后重新检查。
+
+选最终视图，在“工程与诊断 → 导出数据与参数摘要”选择“当前视图参数摘要”，得到中文 view-summary.md 与 metadata.json。摘要读取当前节点和材质，无法核实的自定义图和缺字段显示 partial/unverified。源科学数组、现有 CSV 数据格式不变。

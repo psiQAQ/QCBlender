@@ -12,13 +12,13 @@ QCBlender 作为单个 Blender 扩展读取已有量子化学结果、对支持�
 | --- | --- |
 | `readers.py`、`gaussian_log.py`、`cube.py` | `read_source(path, job_index=0)` 分派读取；IOData 读取 FCHK，cclib 与能量适配器读取 Gaussian 日志，Cube 保留多数据集及斜轴 |
 | `data.py` | `Dataset(metadata, arrays)`、单位、数组与 manifest 校验、轨道选择；科学层不依赖 `bpy` |
-| `evaluate.py`、`wavefunction.py` | `evaluate_field(data, grid, quantity, ...)`、能力检查、AO/MO/密度及 ESP；不执行 SCF |
+| `evaluate.py`、`readers.py` | `evaluate_field(data, grid, quantity, ...)`、能力检查、AO/MO/密度及 ESP；不执行 SCF |
 | `association.py` | 原子顺序、构型与可选刚体配准；保留独立来源身份 |
 | `worker.py` | 解析、求值和外部结果任务；进度、取消、结果及科学缓存 |
 | `project.py` | 不可变 Dataset 复制、场景索引与工程归档 |
 | `blender/jobs.py` | 启动同一 Blender 的无界面子进程，在主线程接入已校验结果 |
-| `blender/views.py`、`scalars.py`、`assets.py` | 原子/场视图、采样与色标、公共节点构建；对象绑定在各视图外层 |
-| `blender/editor_ui.py`、`operators.py` | N 侧栏工作流、对象与材质属性、Operator 和生命周期 |
+| `blender/views.py`、`blender/scalars.py`、`blender/assets.py` | 原子/场视图、采样与色标、公共节点构建；对象绑定在各视图外层 |
+| `blender/editor_ui.py`、`blender/ui.py` 及各专项 Operator 模块 | N 侧栏工作流、对象与材质属性、Operator 和生命周期 |
 | `blender/project.py` | 保存、冷重开、缓存恢复与来源重定位 |
 
 ```mermaid
@@ -50,3 +50,13 @@ flowchart LR
 配套保存产生 `.blend + <name>.qcdata/`。科学 Dataset 使用 `qcblender.project` schema 0.1；场景索引使用 `qcblender.scene` schema 0.1。数值数组与来源可独立校验，VDB 可重建；节点、材质和布局保存在 `.blend`。打包工程归档最近保存的配套文件，移动时两者必须一起保留。
 
 开发验证、独立人工验收和公开发布分别记录；当前证据见 [VALIDATION](VALIDATION.md)，历史阶段与决定见 [CHANGELOG](CHANGELOG.md)、ADR 和本地任务。
+
+## 资源、资格与科学缓存
+
+`resources.py` 统一 Dataset 序列化上限与求值预算；`data.inspect_dataset` 先核验全部路径和总大小，再读取数组。生成、加载、缓存复制、配套保存及归档沿用 1 GiB Dataset 上限，结果计入源数组、场值、有效域和 `.npy` 文件头。求值内存估算另计全部驻留输入与工作数组。
+
+`science_preflight.py` 在独立 worker 中完成方法、ECP、基组、占据和密度矩阵资格检查；主界面只保留小型预览记录。记录绑定 manifest 摘要与 `science_identity.py` 指纹，源绑定变化或冷重开后失效。求值后台在查缓存前重新检查资源与波函数支持边界。
+
+科学指纹包含求值、波函数重建、数据约定及资源/预检源码和 GBasis、IOData、NumPy、SciPy 版本。缓存外层另含输入摘要、网格、科学参数与 Blender 版本。文档和显示模块变更不改变科学身份。
+
+`blender/view_summary.py` 捕获当前节点修改器和材质状态，`view_summary.py` 组织中文 Markdown 与 JSON，由现有异步导出入口写入独立结果目录。无法核验的图标明 partial/unverified，不合成默认显示参数；科学数据 schema 保持 0.1。

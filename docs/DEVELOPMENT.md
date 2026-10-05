@@ -103,7 +103,6 @@ $sourceLockBytes = [System.IO.File]::ReadAllBytes("$repo/science-sources.lock.js
 Invoke-QCCheck 'backend' $blenderPython @('-I', 'tools/build_science_backend.py')
 $sourceLockText = [System.IO.File]::ReadAllText("$repo/science-sources.lock.json").Replace("`r`n", "`n")
 if ($sourceLockText -ne $utf8.GetString($sourceLockBytes).Replace("`r`n", "`n")) { throw 'Science source lock changed' }
-[System.IO.File]::WriteAllBytes("$repo/science-sources.lock.json", $sourceLockBytes)
 $locked = Get-Content dependencies.lock.json -Raw | ConvertFrom-Json
 $backend = Get-Content outputs/backend-wheel.json -Raw | ConvertFrom-Json
 $scienceWheels = @($locked.packages.filename) + @($backend.filename)
@@ -111,7 +110,7 @@ $scienceWheels = @($scienceWheels | ForEach-Object { Join-Path $wheels $_ })
 Invoke-QCCheck 'science-install' $uv (@('pip', 'install', '--python', $blenderPython, '--target', $scienceSite, '--no-deps') + $scienceWheels)
 ~~~
 
-prepare_build 固定工具版本，fetch_dependencies 核对每个 wheel，build_science_backend 从固定 GBasis 源码生成纯 Python wheel 和 outputs/backend-wheel.json。科学源码锁由工具重写时，仅在文本完全一致后恢复其原字节，保留原有换行；内容变化直接失败。完成后检查两个锁文件没有改动。首次路径接着执行下方共同流程，不提前调用 build_extension。
+prepare_build 固定工具版本，fetch_dependencies 核对每个 wheel，build_science_backend 从固定 GBasis 源码生成纯 Python wheel 和 outputs/backend-wheel.json。后端构建只核验科学源码锁，不改写锁文件；内容变化直接失败。完成后检查两个锁文件没有改动。首次路径接着执行下方共同流程，不提前调用 build_extension。
 
 ## 增量构建准备
 
@@ -170,7 +169,8 @@ Invoke-QCCheck 'tutorial-samples' $blenderPython @('-I', 'tools/verify_tutorial_
 
 ~~~powershell
 Invoke-QCCheck 'build' $blenderPython @('-I', 'tools/build_extension.py', '--blender', $blender, '--wheels-dir', $wheels, '--output-dir', "$batch/dist")
-$candidate = "$batch/dist/qcblender-0.0.1.zip"
+$extensionVersion = (Select-String -Path qcblender/blender_manifest.toml -Pattern '^version = "([^"]+)"').Matches.Groups[1].Value
+$candidate = "$batch/dist/qcblender-$extensionVersion.zip"
 Get-FileHash -LiteralPath $candidate -Algorithm SHA256
 Invoke-QCCheck 'install' $blender @('--background', '--factory-startup', '--offline-mode', '--disable-autoexec', '--python-exit-code', '1', '--python', 'tools/verify_extension.py', '--python', 'tools/verify_node_assets.py', '--', '--candidate', $candidate, '--output-dir', $qa)
 Copy-Item -LiteralPath "$qa/extension.json" -Destination "$batch/extension-install.json"
@@ -217,8 +217,9 @@ Copy-Item -LiteralPath "$legend/checks.json" -Destination "$batch/legend-cold-mo
 
 ~~~powershell
 $makeIndex = @'
-import hashlib, json, sys
+import hashlib, json, subprocess, sys
 from pathlib import Path
+source_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
 batch, candidate = map(lambda value: Path(value).resolve(), sys.argv[1:])
 digest = hashlib.sha256(candidate.read_bytes()).hexdigest()
 reports = ['science.json', 'node-assets.json', 'extension-install.json',
@@ -239,7 +240,7 @@ for name in reports:
     checks[name] = {'path': name, 'sha256': hashlib.sha256(raw).hexdigest(),
                     'candidate_sha256': digest}
 (batch / 'evidence-index.json').write_text(
-    json.dumps({'candidate_sha256': digest, 'checks': checks}, indent=2) + '\n', encoding='utf-8')
+    json.dumps({'candidate_sha256': digest, 'source_commit': source_commit, 'checks': checks}, indent=2) + '\n', encoding='utf-8')
 print('EVIDENCE_INDEX_PASSED:', len(checks), digest)
 '@
 Invoke-QCCheck 'index' $blenderPython @('-I', '-c', $makeIndex, $batch, $candidate)
@@ -251,3 +252,17 @@ Invoke-QCCheck 'qualification' $blenderPython @('-I', 'tools/qualify_package.py'
 安装目录须是本批实际扩展源码目录，可从安装日志核对。资格工具比较源码、ZIP、wheel、安装副本与报告身份，不执行 Blender 检查，也不判断覆盖是否充分。检查 qualification 的 source_commit 与本批提交一致，并保存源码文件清单、工具版本和报告摘要。修改被验证源码后必须重新构建复验。
 
 文件系统受限时保留真实错误，必要时按既有授权在宿主执行；不能吞错、改 ACL 或修改科学行为规避。阶段结束按 [存储维护规则](agents/storage-maintenance.md) 保留工程、必要输入、环境及日志。技术资格与独立人工验收分别维护。
+
+## 公开核心候选与 GitHub Alpha
+
+准备锁定 wheels、本次 backend-wheel.json 和科学测试依赖，确保 Git 检出干净。在 Windows x64 的 Blender 5.1.1 Python 下运行：
+
+```powershell
+& $blenderPython -I -B tools/run_candidate_ci.py --blender $blender --site $scienceSite --output-dir outputs/runs/alpha-1 --run-id 0 --channel alpha
+```
+
+目标目录必须不存在。该入口运行显式标准库集合与公开科学集合、构建、隔离离线安装、注册/注销、原地及中文移动冷重开、P01/MO9 摘要及首次渲染。公开科学集合必须调用真实 IOData/GBasis 并通过独立 cubegen/Fortran 对照；缺必要输入或跳过即失败。完整受限样本集合继续用 `run_science_tests.py` 默认 full 入口。
+
+候选 artifact 包含原扩展 ZIP、冻结 v2 样本 ZIP、精简复现 ZIP、报告、release-manifest.json 和 SHA256SUMS.txt。manifest 保存源码提交、运行 ID、依赖和包/样本摘要；上传返回的 artifact ID 单独用于发布身份核验。资格工具要求本次 evidence-index 和隔离安装路径，没有历史报告兜底。
+
+候选 CI 在 `.github/workflows/extension-package.yml`；发布入口在 `extension-release.yml`，默认分支手动输入 tag、candidate_run_id、dry_run（默认 true）。发布只核验并上传原文件，不重新打包；先核对注释标签、main 可达性、manifest 版本、精确运行提交、artifact 与报告。组件许可通过后可创建草稿，独立试装和公开批准另记绑定候选的 release-gates 记录；维护者最后在 GitHub UI 公开为 prerelease。首次 Alpha 只发 GitHub。详见[发布研究](research/github-release-workflow.md)。
