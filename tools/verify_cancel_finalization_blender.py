@@ -155,6 +155,43 @@ try:
     failed.cleanup_after_exit = None
     failed.cancel()
     report['checks']['real_task_error_with_controlled_cleanup_error'] = failed_result
+
+    # Exercise actual registered RNA operator instances, including the paired import callback.
+    reference_data = module('readers').read_fchk(REF / 'tests/data/tutorial/P03/water-dimer.fchk')
+    reference_directory = OUT / 'static-reference'
+    storage.save_dataset(reference_data, reference_directory)
+    atom_view = module('blender.views').atom_view
+    reference_view = atom_view(reference_directory)
+    export_view = atom_view(seed)
+    registered = []
+    for name in ('import_calculation', 'import_paired_field', 'export_data'):
+        for selected in bpy.context.selected_objects:
+            selected.select_set(False)
+        active = export_view if name == 'export_data' else reference_view
+        active.select_set(True)
+        bpy.context.view_layer.objects.active = active
+        if name == 'import_calculation':
+            result = bpy.ops.qcblender.import_calculation('EXEC_DEFAULT',
+                filepath=str(REF / 'tests/data/tutorial/P03/water-dimer.fchk'), source_sha256='')
+        elif name == 'import_paired_field':
+            result = bpy.ops.qcblender.import_paired_field('EXEC_DEFAULT', method='IGMH',
+                geometry_source=str(pair / 'dg_inter.cub'), color_source=str(pair / 'sl2r.cub'),
+                geometry_unit='electron/bohr^4', color_unit='electron/bohr^3', igmh_component='inter',
+                igmh_fragments='[[1,2,3],[4,5,6]]')
+        else:
+            result = bpy.ops.qcblender.export_data('EXEC_DEFAULT', kind='paired', scope='ALL',
+                                                  directory=str(OUT / 'registered-export'))
+        assert result == {'RUNNING_MODAL'}, (name, result)
+        assert len(ui._operations) == 1, (name, ui._operations)
+        actual_operator = next(iter(ui._operations.values()))[0]
+        owned.append(actual_operator._job)
+        assert actual_operator.cancel(bpy.context) is None, name
+        assert actual_operator._job.cancellation['status'] == 'exited', name
+        assert not actual_operator._job.cancellation['errors'], actual_operator._job.cancellation
+        registered.append({'operator': name, 'callback_return': None,
+                           'job': actual_operator._job.cancellation})
+    report['checks']['registered_operator_cancel_callbacks'] = registered
+    report['rna_shutdown'] = 'Inspect host log after Blender exits for RNA callback errors'
     assert not jobs._active and not ui._operations
     report['status'] = 'Passed'
 finally:

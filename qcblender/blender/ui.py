@@ -73,7 +73,8 @@ def cancel_operations():
     for operator, _ in list(_operations.values()):
         timer_errors = finish_operation(operator)
         try:
-            report = operator.cancel(None)
+            operator.cancel(None)
+            report = operator._job.cancellation
         except Exception as error:
             # A failing operator must not leave other tasks' native timers and children running.
             report = {'status': 'exit_unconfirmed', 'pid': operator._job.process.pid,
@@ -142,7 +143,7 @@ class AsyncOperation:
             details = '; '.join(messages) or 'Worker exit has not been confirmed'
             self.report({'ERROR'}, f'Cancellation {report["status"]}; PID {report["pid"]}; '
                         f'{report["directory"]}: {details}')
-        return report
+        # Blender's Operator.cancel callback must return None.
 
 
 class QCBlenderPreferences(bpy.types.AddonPreferences):

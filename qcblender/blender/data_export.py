@@ -128,5 +128,6 @@ class QCBLENDER_OT_export_data(AsyncOperation, bpy.types.Operator):
 
     def cancel(self, context):
         if hasattr(self, '_job'):
-            return super().cancel(context)
-        self.cleanup_export()
+            super().cancel(context)
+        else:
+            self.cleanup_export()

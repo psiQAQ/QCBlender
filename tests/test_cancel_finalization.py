@@ -15,7 +15,8 @@ ROOT = Path(__file__).resolve().parents[1]
 def load_modules():
     bpy = types.ModuleType('bpy')
     bpy.types = types.SimpleNamespace(Operator=type('Operator', (), {}),
-                                    AddonPreferences=type('AddonPreferences', (), {}))
+                                    AddonPreferences=type('AddonPreferences', (), {}),
+                                    Panel=type('Panel', (), {}))
     props = types.ModuleType('bpy.props')
     for name in ('EnumProperty', 'FloatProperty', 'IntProperty', 'StringProperty'):
         setattr(props, name, lambda **kwargs: None)
@@ -37,6 +38,11 @@ def load_modules():
                     export = importlib.util.module_from_spec(export_spec)
                     export_spec.loader.exec_module(export)
                     modules['data_export'] = export
+                    paired_spec = importlib.util.spec_from_file_location('qcblender.blender.external_fields',
+                                                                       ROOT / 'qcblender/blender/external_fields.py')
+                    paired = importlib.util.module_from_spec(paired_spec)
+                    paired_spec.loader.exec_module(paired)
+                    modules['external_fields'] = paired
                 break
     return modules
 
@@ -295,6 +301,25 @@ class Cancellation(unittest.TestCase):
         job.process.wait_error = None
         jobs.cancel_all()
         self.assertEqual(calls, ['cleanup'])
+
+    def test_blender_import_cancel_callback_returns_none(self):
+        for cls in (ui.QCBLENDER_OT_import, MODULES['external_fields'].QCBLENDER_OT_import_paired_field):
+            with self.subTest(operator=cls.__name__):
+                job = self.job()
+                operation = cls()
+                operation._job = job
+                operation._timer = object()
+                operation.report = lambda levels, text: None
+                manager = Manager()
+                ui._operations[id(operation)] = (operation, manager)
+                self.assertIsNone(operation.cancel(types.SimpleNamespace(window_manager=manager)))
+                self.assertEqual(job.cancellation['status'], 'exited')
+
+    def test_blender_export_cancel_callback_returns_none(self):
+        job = self.job()
+        operation, context = self.operator(job, export=True)
+        self.assertIsNone(operation.cancel(context))
+        self.assertEqual(job.cancellation['status'], 'exited')
 
 
 if __name__ == '__main__':
