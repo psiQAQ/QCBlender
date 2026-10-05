@@ -195,7 +195,7 @@ def main():
                 for index, field in enumerate(data.metadata.get('fields', [])):
                     field['vdb'] = 'field.vdb' if index == 0 else f'field-{index}.vdb'
                     write_volume(data, directory / 'dataset' / field['vdb'], index)
-                    field['vdb_sha256'] = hashlib.sha256((directory / 'dataset' / field['vdb']).read_bytes()).hexdigest()
+                    field['vdb_sha256'] = storage._file_sha256(directory / 'dataset' / field['vdb'])
                     field['display_precision'] = 'float32'
                 storage.save_dataset(data, directory / 'dataset')
                 if cache_key:

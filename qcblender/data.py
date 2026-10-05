@@ -51,9 +51,14 @@ def resolve_asset(directory, relative):
     return unprefixed_path(resolved)
 
 
+def _file_sha256(path):
+    with filesystem_path(path).open('rb') as stream:
+        return hashlib.file_digest(stream, 'sha256').hexdigest()
+
+
 def volume_cache(directory, scalar):
     path = resolve_asset(directory, scalar.get('vdb', 'field.vdb'))
-    if scalar.get('vdb_sha256') and hashlib.sha256(filesystem_path(path).read_bytes()).hexdigest() != scalar['vdb_sha256']:
+    if scalar.get('vdb_sha256') and _file_sha256(path) != scalar['vdb_sha256']:
         raise ValueError('Volume cache checksum mismatch; rebuild it from scientific arrays')
     return path
 
@@ -148,7 +153,7 @@ def save_dataset(data, directory):
         try:
             with temporary.open('xb') as stream:
                 np.save(stream, array, allow_pickle=False)
-            digest = hashlib.sha256(temporary.read_bytes()).hexdigest()
+            digest = _file_sha256(temporary)
             relative = f'arrays/{digest}.npy'
             destination = directory / relative
             if not destination.resolve().is_relative_to(directory):
@@ -188,7 +193,7 @@ def load_dataset(directory, max_bytes=1024**3):
         total += path.stat().st_size
         if total > max_bytes:
             raise MemoryError('Project arrays exceed memory budget')
-        if hashlib.sha256(path.read_bytes()).hexdigest() != record['sha256']:
+        if _file_sha256(path) != record['sha256']:
             raise ValueError(f'Array checksum mismatch: {name}')
         array = np.load(path, allow_pickle=False, mmap_mode='r')
         if array.dtype.str != record['dtype'] or list(array.shape) != record['shape']:
