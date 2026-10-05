@@ -69,12 +69,32 @@ def draw_material_controls(layout, mat, section='材质', unit=''):
 
 
 def cancel_operations():
-    for operator, manager in list(_operations.values()):
-        manager.event_timer_remove(operator._timer)
-        operator._job.cancel()
-        if hasattr(operator, 'cleanup_export'):
-            operator.cleanup_export()
-    _operations.clear()
+    reports = []
+    for operator, _ in list(_operations.values()):
+        timer_errors = finish_operation(operator)
+        try:
+            report = operator.cancel(None)
+        except Exception as error:
+            # A failing operator must not leave other tasks' native timers and children running.
+            report = {'status': 'exit_unconfirmed', 'pid': operator._job.process.pid,
+                      'directory': str(operator._job.directory),
+                      'errors': [f'Operation cancellation: {type(error).__name__}: {error}']}
+            print('QCBlender cancellation: ' + json.dumps(report))
+        if timer_errors:
+            print('QCBlender timer cleanup: ' + '; '.join(timer_errors))
+        reports.append(report)
+    return reports
+
+
+def finish_operation(operator):
+    operation = _operations.pop(id(operator), None)
+    if operation is None:
+        return []
+    try:
+        operation[1].event_timer_remove(operator._timer)
+    except (RuntimeError, ReferenceError) as error:
+        return [f'Operation timer cleanup: {type(error).__name__}: {error}']
+    return []
 
 
 class AsyncOperation:
@@ -107,17 +127,22 @@ class AsyncOperation:
                 raise RuntimeError(report.get('error', 'Scientific worker failed; inspect runtime report'))
             self.accept(context, report)
         except (RuntimeError, ValueError, OSError, KeyError, ReferenceError) as error:
-            self.cancel(context)
             self.report({'ERROR'}, str(error))
+            self.cancel(context)
             return {'CANCELLED'}
-        context.window_manager.event_timer_remove(self._timer)
-        _operations.pop(id(self), None)
+        for error in finish_operation(self):
+            self.report({'ERROR'}, error)
         return {'FINISHED'}
 
     def cancel(self, context):
-        if _operations.pop(id(self), None) is not None:
-            context.window_manager.event_timer_remove(self._timer)
-        self._job.cancel()
+        timer_errors = finish_operation(self)
+        report = self._job.cancel()
+        messages = timer_errors + report['errors']
+        if messages or report['status'] != 'exited':
+            details = '; '.join(messages) or 'Worker exit has not been confirmed'
+            self.report({'ERROR'}, f'Cancellation {report["status"]}; PID {report["pid"]}; '
+                        f'{report["directory"]}: {details}')
+        return report
 
 
 class QCBlenderPreferences(bpy.types.AddonPreferences):

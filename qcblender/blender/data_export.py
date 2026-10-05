@@ -1,7 +1,7 @@
 """User initiated exports of scientific data to an explicit result directory."""
 from pathlib import Path
 import uuid
-from functools import lru_cache
+from functools import lru_cache, partial
 
 import bpy
 from bpy.props import EnumProperty, StringProperty
@@ -111,9 +111,12 @@ class QCBLENDER_OT_export_data(AsyncOperation, bpy.types.Operator):
                            'center_max': _bound(state, 'value', 'high'), 'mode': state.area_range_mode}
         self._output_directory = str(resolve_output_directory(context, self.directory))
         self._export_token = uuid.uuid4().hex
-        return Job('export_data', dataset=str(path), dataset_sha256=obj['qc_dataset_sha256'],
-                   output_directory=self._output_directory, kind=self.kind, scope=scope,
-                   filters=filters, export_token=self._export_token)
+        job = Job('export_data', dataset=str(path), dataset_sha256=obj['qc_dataset_sha256'],
+                  output_directory=self._output_directory, kind=self.kind, scope=scope,
+                  filters=filters, export_token=self._export_token)
+        from ..data_export import cleanup_staging
+        job.cleanup_after_exit = partial(cleanup_staging, self._output_directory, self._export_token)
+        return job
 
     def accept(self, context, report):
         self.report({'INFO'}, 'Data exported: ' + report['directory'])
@@ -125,5 +128,5 @@ class QCBLENDER_OT_export_data(AsyncOperation, bpy.types.Operator):
 
     def cancel(self, context):
         if hasattr(self, '_job'):
-            super().cancel(context)
+            return super().cancel(context)
         self.cleanup_export()
