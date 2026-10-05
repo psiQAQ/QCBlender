@@ -9,16 +9,27 @@ from bpy.props import StringProperty
 from bpy_extras.io_utils import ExportHelper, ImportHelper
 
 from ..project import archive_project, copy_dataset
-from ..data import load_dataset, volume_cache
+from ..data import filesystem_path, load_dataset, unprefixed_path
 from .ui import AsyncOperation
+from .native_volume import check_field_cache, check_volume
 
 
 def rebind_dataset(original, replacement):
-    original, replacement = Path(original).resolve(), Path(replacement).resolve(strict=True)
+    original = unprefixed_path(filesystem_path(original).resolve())
+    replacement = unprefixed_path(filesystem_path(replacement).resolve(strict=True))
     data = load_dataset(replacement)
+    checked = set()
     for scalar in data.metadata.get('fields', []):
-        volume_cache(replacement, scalar)
-    digest = hashlib.sha256((replacement / 'manifest.json').read_bytes()).hexdigest()
+        cache = check_field_cache(replacement, scalar)
+        checked.add(cache.resolve())
+    for volume in bpy.data.volumes:
+        path = Path(bpy.path.abspath(volume.filepath)).resolve()
+        if path.is_relative_to(original):
+            cache = replacement / path.relative_to(original)
+            if cache not in checked:
+                check_volume(cache)
+                checked.add(cache)
+    digest = hashlib.sha256(filesystem_path(replacement / 'manifest.json').read_bytes()).hexdigest()
     for obj in bpy.data.objects:
         if 'qc_dataset' in obj and Path(bpy.path.abspath(obj['qc_dataset'])).resolve() == original:
             obj['qc_dataset'] = str(replacement)
@@ -68,8 +79,8 @@ class QCBLENDER_OT_relocate_dataset(bpy.types.Operator, ImportHelper):
 
     def execute(self, context):
         try:
-            manifest = Path(self.filepath).resolve(strict=True)
-            if manifest.name != 'manifest.json' or hashlib.sha256(manifest.read_bytes()).hexdigest() != context.object['qc_dataset_sha256']:
+            manifest = unprefixed_path(filesystem_path(self.filepath).resolve(strict=True))
+            if manifest.name != 'manifest.json' or hashlib.sha256(filesystem_path(manifest).read_bytes()).hexdigest() != context.object['qc_dataset_sha256']:
                 raise ValueError('Select the manifest of the identical dataset; scientific content must match')
             rebind_dataset(bpy.path.abspath(context.object['qc_dataset']), manifest.parent)
         except (ValueError, OSError, KeyError) as error:
@@ -79,25 +90,37 @@ class QCBLENDER_OT_relocate_dataset(bpy.types.Operator, ImportHelper):
 
 
 def save_project(filepath):
-    target = Path(filepath).resolve()
+    target = unprefixed_path(filesystem_path(filepath).resolve())
     if target.suffix.lower() != '.blend':
         raise ValueError('Project file must have a .blend extension')
     data_root = target.with_suffix('.qcdata')
-    data_root.mkdir(parents=True, exist_ok=True)
+    filesystem_path(data_root).mkdir(parents=True, exist_ok=True)
     mapping = {}
     objects = [o for o in bpy.data.objects if 'qc_dataset' in o]
     for obj in objects:
-        source = Path(bpy.path.abspath(obj['qc_dataset'])).resolve(strict=True)
+        source = unprefixed_path(filesystem_path(bpy.path.abspath(obj['qc_dataset'])).resolve(strict=True))
         if source not in mapping:
-            mapping[source] = copy_dataset(source, data_root)
+            destination = copy_dataset(source, data_root)
+            data = load_dataset(destination)
+            for scalar in data.metadata.get('fields', []):
+                check_field_cache(destination, scalar)
+            mapping[source] = destination
+    # Validate the final paths that live Volume datablocks will use, before publishing
+    # the scene index or changing any live binding.
+    for volume in bpy.data.volumes:
+        original = Path(bpy.path.abspath(volume.filepath)).resolve()
+        for source, destination in mapping.items():
+            if original.is_relative_to(source):
+                check_volume(destination / original.relative_to(source))
+                break
     previous_objects, previous_volumes = {}, {}
     scene_manifest = {'format': 'qcblender.scene', 'schema': '0.1',
                       'datasets': sorted(set(path.relative_to(data_root).as_posix() for path in mapping.values()))}
     pending = data_root / (uuid.uuid4().hex + '.pending.json')
     index = data_root / 'manifest.json'
-    previous_index = index.read_bytes() if index.exists() else None
+    previous_index = filesystem_path(index).read_bytes() if filesystem_path(index).exists() else None
     index_published = False
-    pending.write_text(json.dumps(scene_manifest, indent=2), encoding='utf-8')
+    filesystem_path(pending).write_text(json.dumps(scene_manifest, indent=2), encoding='utf-8')
     try:
         for obj in objects:
             previous_objects[obj] = obj['qc_dataset']
@@ -111,7 +134,7 @@ def save_project(filepath):
                     cache = destination / original.relative_to(source)
                     volume.filepath = bpy.path.relpath(str(cache), start=None if bpy.data.filepath else str(target.parent))
                     break
-        os.replace(pending, index)
+        os.replace(filesystem_path(pending), filesystem_path(index))
         index_published = True
         result = bpy.ops.wm.save_as_mainfile(filepath=str(target), check_existing=False)
         if result != {'FINISHED'}:
@@ -126,13 +149,13 @@ def save_project(filepath):
             volume.filepath = old
         if index_published:
             if previous_index is None:
-                index.unlink()
+                filesystem_path(index).unlink()
             else:
-                pending.write_bytes(previous_index)
-                os.replace(pending, index)
+                filesystem_path(pending).write_bytes(previous_index)
+                os.replace(filesystem_path(pending), filesystem_path(index))
         raise
     finally:
-        pending.unlink(missing_ok=True)
+        filesystem_path(pending).unlink(missing_ok=True)
     return target
 
 

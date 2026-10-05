@@ -6,8 +6,9 @@ from pathlib import Path
 import bpy
 import numpy as np
 
-from ..data import load_dataset, volume_cache
+from ..data import filesystem_path, load_dataset
 from .graph import tag_view, frame_nodes
+from .native_volume import check_field_cache
 
 
 def socket(tree, name, kind, direction='INPUT', default=None, minimum=None):
@@ -56,7 +57,7 @@ def material(name, color, attribute=None):
 
 def bind(obj, directory, data):
     obj['qc_dataset'] = str(Path(directory).resolve())
-    obj['qc_dataset_sha256'] = hashlib.sha256((Path(directory) / 'manifest.json').read_bytes()).hexdigest()
+    obj['qc_dataset_sha256'] = hashlib.sha256(filesystem_path(Path(directory) / 'manifest.json').read_bytes()).hexdigest()
     obj['qc_source_sha256'] = data.metadata['source']['sha256']
     obj['qc_source_filename'] = data.metadata['source'].get('filename', '未记录')
     obj['qc_source_job'] = data.metadata.get('selected_job', -1)
@@ -213,7 +214,7 @@ def atom_selection(tree, inputs):
 def field_view(directory, parent=None, index=0):
     data = load_dataset(directory)
     field = data.metadata['fields'][index]
-    cache = volume_cache(directory, field)
+    cache = check_field_cache(directory, field)
     volume = bpy.data.volumes.new('QC field data')
     volume.filepath = str(cache)
     source = bpy.data.objects.new('QC ' + field['quantity'] + ' source', volume)
