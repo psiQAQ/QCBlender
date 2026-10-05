@@ -42,12 +42,22 @@
 
 | 门禁 | 本次状态与证据 |
 | --- | --- |
-| 候选包技术检查 | Not Run；填写本批报告位置 |
-| Agent 界面确认 | Not Run；填写实际点击与截图 |
+| 候选包技术检查 | Passed；127 标准库、67 公开科学、123 完整本地科学及安装/冷读，见[本批验证](../acceptance/alpha-readiness-validation.md) |
+| Agent 界面确认 | Passed；本批实际生成、取消、Undo/Redo、等值、渲染、摘要、保存及中文移动重开；安装/原始导入使用 CLI，独立试装另记 |
 | 组件许可复核 | Not Run；记录 IOData/GBasis 声明差异的处理依据 |
 | 独立使用者短 SOP 试装 | Not Run；使用者填写候选摘要、步骤结果与签名 |
 | 维护者公开批准 | Not Run；批准后在 GitHub UI 将草稿公开为 prerelease |
 | 完整 v1 人工与科研验收 | Not Run；继续使用 C01–C13 / N01–N18 及独立签署 |
+
+以下截图绑定 `19e4cf0` / `0c2d9add…73a03` 本地 Alpha 候选，由 Agent Computer Use 实际输入；公开复现工程和初始活动对象由 CLI 准备。完整步骤、失败修补及科学/人工边界见[本批验证](../acceptance/alpha-readiness-validation.md)。
+
+![A03：Alpha 源 MO9 与资源预览](screenshot/alpha-readiness/ac6-MO9-parameters.png)
+
+![A04–A05：等值 0.045 与完成的渲染](screenshot/alpha-readiness/ac6-render.png)
+
+![A06：当前视图参数摘要导出](screenshot/alpha-readiness/ac6-summary-dialog.png)
+
+![A09：中文路径新进程重开](screenshot/alpha-readiness/ac6-chinese-cold.png)
 
 ## 0. 准备、安装与通用操作
 

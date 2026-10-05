@@ -1,0 +1,158 @@
+{
+  "schema": 1,
+  "status": "Passed",
+  "date": "2026-10-05",
+  "scope": "Local Alpha technical qualification",
+  "source_commit": "19e4cf0becf5a5173d692d1f4a9c621e6d01512e",
+  "product_tree": "5db4996cbb456f52529c86219d85f0db0541ae49",
+  "candidate": {
+    "path": "outputs/candidates/current/alpha-0.1.0-19e4cf0/qcblender-0.1.0.zip",
+    "sha256": "0c2d9add59b6332f243c5cd87b852a38b94090286f1b7671d7666694a4b73a03",
+    "bytes": 50656085,
+    "candidate_run_id": 0,
+    "remote_artifact_id": null
+  },
+  "evidence_root": "outputs/evidence/2026-10-05/alpha-readiness",
+  "checks": {
+    "stdlib_127": "Passed",
+    "public_science_67_no_skip": "Passed",
+    "full_science_123_no_skip": "Passed",
+    "build_install_register_unregister": "Passed",
+    "original_and_moved_cold": "Passed",
+    "six_visual_fresh_and_cold_12": "Passed",
+    "related_GUI": "Passed",
+    "Standards": "Passed",
+    "Spec": "Passed"
+  },
+  "gui": {
+    "status": "Passed",
+    "source_commit": "19e4cf0becf5a5173d692d1f4a9c621e6d01512e",
+    "candidate_sha256": "0c2d9add59b6332f243c5cd87b852a38b94090286f1b7671d7666694a4b73a03",
+    "method": "Agent Computer Use native clicks; CLI prepares example/selection and reads state",
+    "blender": "5.1.1",
+    "pids": [
+      95032,
+      9808
+    ],
+    "checks": {
+      "async_qualification": "Passed",
+      "pre_job_dialog_cancel": "Passed",
+      "MO9_generation": "Passed",
+      "menu_undo": "Passed",
+      "menu_redo": "Passed",
+      "live_isovalue": "Passed",
+      "render": "Passed",
+      "summary_export": "Passed",
+      "summary_cancel": "Passed",
+      "portable_save": "Passed",
+      "chinese_move_hashes": "Passed",
+      "new_process_cold": "Passed",
+      "cold_summary_parity": "Passed",
+      "normal_exit": "Passed"
+    },
+    "parameters": {
+      "spin": "alpha",
+      "source_MO": 9,
+      "spacing_angstrom": 0.2,
+      "margin_angstrom": 3,
+      "memory_budget_MiB": 512,
+      "isovalue_bohr^-3/2": 0.045
+    },
+    "original_import_and_install": "CLI technical qualification; independent GUI install/import Not Run",
+    "cold_exit": "Discarded only window-layout change; saved project bytes remain unchanged",
+    "warnings": "Blender VFont relation warnings for the existing slice and first-exit 525 tiny memory blocks; no Python exception in ac6 logs",
+    "project": "outputs/projects/alpha-readiness/中文路径移动/alpha-mo9-ac6.blend",
+    "summaries": [
+      "outputs\\gui-alpha\\exports\\o2-uhf-summary-8f8ae3f01223402d82033fc2627f3826\\metadata.json",
+      "outputs\\gui-alpha\\exports\\o2-uhf-summary-91bd2bbeed9b4c7cbacbf628e1066431\\metadata.json"
+    ],
+    "independent_human_acceptance": "Not Run"
+  },
+  "screenshots": [
+    {
+      "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-MO9-parameters.png",
+      "sha256": "f402436553764e7e3c9c5b105c4cdf8685c51247cf3829219b191891a31ec304"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-MO9-generated.png",
+      "sha256": "418338fcf7c297ea55a8a2a1c921b6b1601989b4dd837686423a623f0a7c34f2"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-dialog-cancelled.png",
+      "sha256": "4904e371ed7cd711336a7f199cfd97f46ec293dcd47285b1ae2cdc62ba3888e3"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-undo.png",
+      "sha256": "223b068c6af2ad7dc77efd5750e58196767628a5e6037e72ed90253cfa62f85b"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-redo.png",
+      "sha256": "d86a2b1fa4ab103ecca6ef423c29f3be9427497436af07c4e0c4c3e09a36c604"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-isovalue.png",
+      "sha256": "9fcb64b535615e2ba32d4cfd7597450ce1892c3b3f6cc8dbbb950b87019f6f45"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-render.png",
+      "sha256": "a4a8da1221dad66685d32487667ed6a0b37d504abde1e2d059d042422ad62ee8"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-summary-dialog.png",
+      "sha256": "bb4cbdf51efca78e2915b5248eb972c45e06b3546d4fadb64f20c80a97d108ce"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-portable-saved.png",
+      "sha256": "10122ccb498fcc9bb4447bf59b56dd0b92da2ec20e25056b6cfa1733d44e40dd"
+    },
+    {
+      "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-chinese-cold.png",
+      "sha256": "96d98d9d799e87e6d63e490aa230db51d49856fedec66e723a43097f4b6ac4a0"
+    }
+  ],
+  "historical_failures": [
+    {
+      "batch": "ac4",
+      "source_commit": "78459e1",
+      "status": "Failed",
+      "check": "native qualification handoff",
+      "reason": "RNA membership expected string; fixed a5de54b"
+    },
+    {
+      "batch": "ac5",
+      "source_commit": "a5de54b",
+      "status": "Failed",
+      "check": "pre-job dialog cancellation",
+      "reason": "Generate dialog had no _job; fixed 19e4cf0"
+    },
+    {
+      "batch": "ac6",
+      "source_commit": "19e4cf0becf5a5173d692d1f4a9c621e6d01512e",
+      "status": "Passed",
+      "check": "native handoff, cancellation, generation and menu Undo/Redo"
+    }
+  ],
+  "reports": [
+    "ac6/reports",
+    "ac6/evidence-index.json",
+    "ac6/commands.json",
+    "ac6-full-science.json",
+    "av2/commands.json",
+    "gui-alpha/ac6-validation.json",
+    "gui-alpha/undo-failures.json"
+  ],
+  "gates": {
+    "actual_GitHub_CI": "Not Run",
+    "draft_creation": "Not Run",
+    "component_license_review": "Not Run",
+    "independent_short_SOP_installation": "Not Run",
+    "maintainer_public_approval": "Not Run",
+    "post_release_download_hash": "Not Run",
+    "full_v1_independent_human_and_science_acceptance": "Not Run"
+  },
+  "limitations": [
+    "Local run ID 0 is not eligible remote release evidence.",
+    "IOData/GBasis license declaration differences require review.",
+    "Standards/Spec reviews are separate from independent scientific acceptance."
+  ]
+}

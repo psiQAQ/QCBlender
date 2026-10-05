@@ -10,6 +10,18 @@
 
 ## 当前交付
 
+当前 Alpha 候选为 `outputs/candidates/current/alpha-0.1.0-19e4cf0/qcblender-0.1.0.zip`，50,656,085 字节，SHA-256 `0c2d9add59b6332f243c5cd87b852a38b94090286f1b7671d7666694a4b73a03`。固定产品提交 `19e4cf0becf5a5173d692d1f4a9c621e6d01512e`，产品树 `5db4996cbb456f52529c86219d85f0db0541ae49`；[Alpha 技术验证](acceptance/alpha-readiness-validation.md)及[机器索引](acceptance/alpha-readiness-validation.json)记录 127 标准库、67 公开科学、123 完整本地科学、12 次六视觉、真实 GUI、取消、Undo/Redo 与中文移动冷重开 Passed。
+
+证据入口 `outputs/evidence/2026-10-05/alpha-readiness/`；`ac6/`保存同批报告/命令，`gui-alpha/`保存点击状态/截图/摘要，`av2/`保存六视觉报告与图，`preservation-map.jsonl.gz`将工作树旧路径映射到经过 SHA-256 核对的 `objects/`。全部原始报告保留执行时的状态。当前候选目录保留原始公开 artifact 文件及报告；没有重新打包。
+
+实际 GUI 工程位于 `outputs/projects/alpha-readiness/中文路径移动/alpha-mo9-ac6.blend + .qcdata/`，59 文件、三个 Dataset，移动后原字节及新进程参数核对 Passed。原生和视觉复现工程可从保全映射恢复原始相对路径，当前公开复现 ZIP 也可重新解压。脚本和共用依赖入口沿用[开发说明](DEVELOPMENT.md)，重新构建须重新绑定提交和候选摘要。
+
+本地 run ID 为 0，未运行 GitHub CI、未创建草稿、未推送标签。组件许可复核、独立使用者短 SOP、维护者公开批准及正式 v1 人工/科研验收保持 Not Run；远端任务和公开门禁单独维护。四个任务工作树缓存目录有访问拒绝，保全/清理收据记录实际状态；不改变 ACL 或所有权。
+
+本轮本地合并、注释归档及正常清理结果见[交付收据](acceptance/alpha-readiness-delivery.json)。
+
+## 2026-10-05 可靠性历史交付
+
 当前候选为`outputs/candidates/current/reliability-final-a3ed826/qcblender-0.0.1.zip`，50,645,094字节，SHA-256 `8094278edf08a2e6d54640e4f0cd376d8cbb98568c92464720f963dff4bb8c71`。固定产品源码`a3ed8264aad860f25c922dd7c91efce3f6f078d3`，产品树`0cec91ad2ed7804e78a01c39105d49e3d39150d8`。[可靠性验证](acceptance/reliability-validation.md)及[机器索引](acceptance/reliability-validation.json)记录本批范围与限制；独立使用者和科研签署Not Run。
 
 证据入口`outputs/evidence/2026-10-05/reliability/`：`evidence-index.json`与`qualification.json`绑定36份最终候选报告；`gui-final/`保存真实界面操作、原地及中文移动冷读；`closing-preparation/`、`closing-preserved/`保存逐文件旧新路径与摘要，当前收尾状态见[交付收据](acceptance/reliability-delivery.json)。工程在`outputs/projects/reliability/`：`native/`、`visual/`及`reliability-gui.blend + reliability-gui.qcdata/`，中文移动副本保留于`中文移动/`。

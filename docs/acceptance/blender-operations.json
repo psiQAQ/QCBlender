@@ -6567,6 +6567,95 @@
         "requires_current_result_assertions": true,
         "current_batch_replay_status": "Passed"
       }
+    },
+    {
+      "id": "alpha-preflight-summary-portable",
+      "title": "Alpha 预检、摘要与自包含工程",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-05",
+        "method": "Agent Computer Use native clicks; CLI initial installation/import and read-only observer",
+        "source_commit": "19e4cf0becf5a5173d692d1f4a9c621e6d01512e",
+        "product_tree": "5db4996cbb456f52529c86219d85f0db0541ae49",
+        "candidate_sha256": "0c2d9add59b6332f243c5cd87b852a38b94090286f1b7671d7666694a4b73a03",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "visible_entry": "3D Viewport → N → QCBlender → 工作流 / 工程与诊断",
+        "objects_and_order": "P01 原子视图 → Alpha 源 MO9 → 新场 .001 → portable project → 中文移动冷重开",
+        "validated_scope": "Async qualification, pre-job cancel, MO9, Edit Undo/Redo, 0.045, render, Markdown/JSON, export cancel, portable save and cold parity",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-05/alpha-readiness/gui-alpha/ac6-validation.json",
+            "status": "Passed",
+            "sha256": "630854b41f236f295b0b5c8d878624b78780f0a3fc17b71b3a5b7fcfeb598604"
+          },
+          {
+            "path": "outputs/evidence/2026-10-05/alpha-readiness/gui-alpha/ac6-gui-cold.json",
+            "status": "Passed",
+            "sha256": "5c0a829b3f17b8ed26aade7bc070ea83eb079def66317af09298b8c131899183"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-MO9-parameters.png",
+            "sha256": "f402436553764e7e3c9c5b105c4cdf8685c51247cf3829219b191891a31ec304"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-MO9-generated.png",
+            "sha256": "418338fcf7c297ea55a8a2a1c921b6b1601989b4dd837686423a623f0a7c34f2"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-dialog-cancelled.png",
+            "sha256": "4904e371ed7cd711336a7f199cfd97f46ec293dcd47285b1ae2cdc62ba3888e3"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-undo.png",
+            "sha256": "223b068c6af2ad7dc77efd5750e58196767628a5e6037e72ed90253cfa62f85b"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-redo.png",
+            "sha256": "d86a2b1fa4ab103ecca6ef423c29f3be9427497436af07c4e0c4c3e09a36c604"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-isovalue.png",
+            "sha256": "9fcb64b535615e2ba32d4cfd7597450ce1892c3b3f6cc8dbbb950b87019f6f45"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-render.png",
+            "sha256": "a4a8da1221dad66685d32487667ed6a0b37d504abde1e2d059d042422ad62ee8"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-summary-dialog.png",
+            "sha256": "bb4cbdf51efca78e2915b5248eb972c45e06b3546d4fadb64f20c80a97d108ce"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-portable-saved.png",
+            "sha256": "10122ccb498fcc9bb4447bf59b56dd0b92da2ec20e25056b6cfa1733d44e40dd"
+          },
+          {
+            "path": "docs/v1-acceptance/screenshot/alpha-readiness/ac6-chinese-cold.png",
+            "sha256": "96d98d9d799e87e6d63e490aa230db51d49856fedec66e723a43097f4b6ac4a0"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/ui.py": "a091d630fb011446bab19fde3cc957e81f5a6d24dc9f22b78952a0a754370af4",
+        "qcblender/blender/jobs.py": "4b85c88ffef3272d26a8bbc15e0ee6eb240d9f7d27c2f816f99ee233dd6b7ab9",
+        "qcblender/blender/view_summary.py": "e488679da7be2376ed8e9f6e5c0a2fab6d767508496ca3dcadc131249dfbcb07",
+        "qcblender/science_preflight.py": "bb94fcefa61f62533d3756973a849682d1db1a4647b8ad4bac2e1969195d77c9",
+        "qcblender/data_export.py": "507c83d0ffb567013695ce31e366d324a84187950434bfaff2c29838ce8bbbb8",
+        "qcblender/blender/project.py": "d17994a204a6b0f2743c57545380bec8596730dc10d052c7a75c3badd8d0e8a9"
+      },
+      "reuse": {
+        "preferred": "MCP/CLI after matching implementation fingerprints and actual candidate identity",
+        "require_CU_after_related_change": true
+      },
+      "independent_user_acceptance": {
+        "status": "Not Run"
+      },
+      "independent_scientific_signoff": {
+        "status": "Not Run"
+      }
     }
   ]
 }

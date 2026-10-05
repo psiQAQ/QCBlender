@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "status": "Not Run",
+  "date": "2026-10-05",
+  "scope": "Local main merge, annotated archive tags, preservation and normal worktree removal",
+  "baseline": "9bfa682c60d63f61bf1a186c8fdb3c37571e9308",
+  "product_commit": "19e4cf0becf5a5173d692d1f4a9c621e6d01512e",
+  "product_tree": "5db4996cbb456f52529c86219d85f0db0541ae49",
+  "candidate_sha256": "0c2d9add59b6332f243c5cd87b852a38b94090286f1b7671d7666694a4b73a03",
+  "preservation": {
+    "status": "Passed",
+    "files": 32170,
+    "expanded_files": 877,
+    "all_preserved_object_hashes": "Passed",
+    "candidate_original_bytes": "Passed",
+    "source_bytes": 2277636042,
+    "candidate": "D:\\workspace\\QCBlender\\outputs\\candidates\\current\\alpha-0.1.0-19e4cf0",
+    "unreadable_cache_directories": [
+      {
+        "tree": "alpha-core",
+        "reason": "warning: could not open directory 'outputs/ac2/profile/extensions/.user/user_default/qcblender/jobs/cache/datasets/96d469b5ebee4efb1c1a92538f22ae61546dc3d1e2d91a1196b0d79c2f9271e9/': Permission denied"
+      },
+      {
+        "tree": "alpha-core",
+        "reason": "warning: could not open directory 'outputs/ac3/profile/extensions/.user/user_default/qcblender/jobs/cache/datasets/52fd767f23cdbd23e51ffc62e346fe3995c8ac3e669595720f17a2b0c893c069/': Permission denied"
+      },
+      {
+        "tree": "alpha-core",
+        "reason": "warning: could not open directory 'outputs/ac5/profile/extensions/.user/user_default/qcblender/jobs/cache/datasets/ce544a93d48f9ed4ebfdf1ad6a72e8944c75f08c1c6bd11aa617e241b2734bc1/': Permission denied"
+      },
+      {
+        "tree": "alpha-core",
+        "reason": "warning: could not open directory 'outputs/ac6/profile/extensions/.user/user_default/qcblender/jobs/cache/datasets/e57dae79678884f2bc250c153d404187833e95614800b8ef23033514da2447ed/': Permission denied"
+      }
+    ]
+  },
+  "merge": {
+    "status": "Not Run"
+  },
+  "archive_tags": {
+    "status": "Not Run"
+  },
+  "worktree_cleanup": {
+    "status": "Not Run"
+  },
+  "remote_steps": {
+    "status": "Not Run"
+  },
+  "independent_human_and_science_acceptance": "Not Run"
+}
