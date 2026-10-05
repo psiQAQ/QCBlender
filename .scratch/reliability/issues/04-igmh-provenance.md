@@ -1,7 +1,7 @@
 # 04 IGMH来源声明
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Blocked by: 01
 
 ## 范围与验收
@@ -22,3 +22,5 @@ Blocked by: 01
 - Passed：`git diff --check`与5个相关源码/脚本AST解析。
 - Not Run：候选原生及原地/移动冷读。`tools/verify_igmh_provenance.py`交主Agent串行运行：隔离CONFIG需位于主库outputs；参数`--root <候选树> --sample D:/workspace/QCBlender --out <证据目录> --zip <候选ZIP>`；脚本安装并核对候选源码，以注册operator和真实Job worker导入P03及普通静态Log/FCHK/Cube参考，读取实际atom_view优化/IRC/XYZ步骤并检查动态祖先拒绝。静态Log/FCHK正例使用真实源核坐标生成的8 voxel合成Cube；P03 Cube正例使用校验过的`public-tutorial/P03/igmh/dg_inter.cub`和`sl2r.cub`，inter、`[[1,2,3],[4,5,6]]`、来源`P03 Multiwfn fragment setup`。
 - Not Run：`<out>/P03-IGMH-portable.blend`通过Save Portable QC Project operator保存，加载此工程后同脚本加`--reopen`检查原地或移动冷读。GUI提示、导入对话框和Undo/Redo由任务06统一验证；本子任务未启动Blender。
+
+2026-10-05 主Agent验收：产品982e339原生15项Passed（logs/igmh-native2）：真实P03全数组、声明、CSV metadata及静态Log/FCHK/Cube导入；优化无切步与1/2步、IRC1/2步、XYZ1/2帧和动态绑定祖先拒绝。89文件保存/中文副本SHA-256核对Passed（igmh2-move.json）。工具94ce352按先安装启用、再open_mainfile触发load_post顺序，原地和中文移动新进程冷读Passed（logs/igmh-cold-original2、igmh-cold-moved；runs/rel/igmh2-cold2/reopen-report.json与igmh2-moved-cold/reopen-report.json），刷新前缓存声明及Panel.poll也通过。GUI对话框/实际面板与Undo/Redo仍由06执行；独立人工签署Not Run。

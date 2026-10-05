@@ -193,7 +193,7 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    [用户截图待引用：0.5-04，实际结果目录、CSV首尾/行数和metadata来源/单位；用户复做待填写]
 
-5. 重复一次导出，确认生成另一结果子目录，前一次内容不变。对较大的paired全量导出运行时按Escape取消，确认未留下可误认成功的最终结果；已有导出保留。失败保留实际错误并核对暂存清理。筛选后取消范围再导出ALL，核对完整记录仍可获得。
+5. 重复一次导出，确认生成另一结果子目录，前一次内容不变。对较大的paired全量导出运行时按Escape取消，确认未留下可误认成功的最终结果；已有导出保留。取消收尾区分已发出请求与已确认 worker 退出；退出未确认时，错误信息保留 PID、任务目录及取消原因，导出暂存目录继续保留，供退出确认后清理。原任务错误与取消错误同时保留。正常取消确认退出后，核对暂存已清理及原有导出未变。筛选后取消范围再导出ALL，核对完整记录仍可获得。
 
    [用户截图待引用：0.5-05，重复导出目录、取消/失败消息与已有结果保全；用户复做待填写]
 
@@ -948,9 +948,9 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    ![历史示例（原参数/原候选）：Agent Computer Use：P03参考原子对象与成对场导入入口](screenshot/C07-entry-GUI.jpg)
 
-2. **Analysis** 选 **IGMH**，**Geometry Cube** 填 `P03/igmh/dg_inter.cub`，**sign(lambda2)rho Cube** 填 `P03/igmh/sl2r.cub`；**Geometry value unit=electron/bohr^4、Color value unit=electron/bohr^3、Color minimum=-0.04、Color maximum=0.04**，确认。完成后重新只选择同一参考原子对象，再次打开对话框，选 **IRI**，Geometry填 `P03/iri/func2.cub`，Color填 `P03/iri/func1.cub`，几何单位填 `a.u. (electron^-0.1 bohr^-0.7)`，颜色单位及色域同上，**IRI density exponent a=1.1**，确认。
+2. **Analysis** 选 **IGMH**，**Geometry Cube** 填 `P03/igmh/dg_inter.cub`，**sign(lambda2)rho Cube** 填 `P03/igmh/sl2r.cub`；**Geometry value unit=electron/bohr^4、Color value unit=electron/bohr^3、Color minimum=-0.04、Color maximum=0.04**。本样本将 **IGMH component=inter**，**Fragment atoms (JSON)=[[1,2,3],[4,5,6]]**，**Declaration source (optional)=P03 Multiwfn fragment setup**，确认。完成后重新只选择同一参考原子对象，再次打开对话框，选 **IRI**，Geometry填 `P03/iri/func2.cub`，Color填 `P03/iri/func1.cub`，几何单位填 `a.u. (electron^-0.1 bohr^-0.7)`，颜色单位及色域同上，**IRI density exponent a=1.1**，确认。
 
-   预期出现 **QC delta_g / QC iri_function** 几何场、颜色源及 **QC paired field data** 无可见图形的数据记录对象（`qc_analysis_role=paired`）。两输入各539,448个原始体素，网格/原子匹配；本样本全量有效体素539,448，按CSV核对。三维表面与图例保留。全量导出逐个有效体素写出，不受旧散点50,000显示抽样上限限制。片段、a、方法/版本与单位按源清单核对；导入不执行新的IGMH/IRI计算。
+   预期出现 **QC delta_g / QC iri_function** 几何场、颜色源及 **QC paired field data** 无可见图形的数据记录对象（`qc_analysis_role=paired`）。两输入各539,448个原始体素，网格/原子匹配；本样本全量有效体素539,448，按CSV核对。三维表面与图例保留。全量导出逐个有效体素写出，不受旧散点50,000显示抽样上限限制。选中 IGMH 几何场或 paired 记录，在 **对象属性 → QCBlender · 对象与量子化学 → IGMH 来源声明** 核对 inter、两组片段、声明来源及 user_assigned；CSV metadata 的 scientific_metadata 保留同一记录。片段编号按源 Cube 的1基原子顺序，可只覆盖部分原子；片段内重复、越界或非整数拒绝，跨片段交叠保留并提示。旧工程和未选分量显示 unknown/unverified。片段、a、方法/版本与单位按源清单核对；导入不执行新的IGMH/IRI计算。
 
    [用户截图待引用：C07-02，分别保留IGMH与IRI对话框、活动参考对象和导入结果]
 
@@ -1647,7 +1647,7 @@ X01技术证据进入[本批验证索引](../acceptance/display-xyz-export-valid
 
    ![历史示例（原参数/原候选）：Agent首次Computer Use点击重建显示缓存；MCP随后核对终态与全部科学数组、关联对象和几何](screenshot/N18-recovery-entry-GUI.jpg)
 
-   若同一Dataset目录已移动，保持对应QC场对象活动，点 **工程与诊断 → 重新定位数据**。文件浏览器进入保留的同一Dataset目录，选择`manifest.json`；编辑文件名后按Enter提交文字，再点击确认。核对关联对象和体积路径均更新，科学身份及数组摘要一致。只用原Dataset，其他Dataset的manifest会明确拒绝。
+   若同一Dataset目录已移动，保持对应QC场对象活动，点 **工程与诊断 → 重新定位数据**。文件浏览器进入保留的同一Dataset目录，选择`manifest.json`；编辑文件名后按Enter提交文字，再点击确认。核对关联对象和体积路径均更新，科学身份及数组摘要一致。只用原Dataset，其他Dataset的manifest会明确拒绝。创建场、保存自包含工程与重新定位前，插件会让 Blender 实际读取目标 VDB 的 qc_value、qc_negative、qc_valid 网格；失败信息包含路径和原生原因，原对象及工程绑定保留。Windows 上文件存在而 Blender 无法读取时，可选择较短的工程位置重试。
 
    [用户截图待引用：N18-02，同一Dataset的manifest、实际路径及完成后的场对象]
 

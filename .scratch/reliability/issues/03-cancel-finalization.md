@@ -1,7 +1,7 @@
 # 03 异步取消收尾
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Blocked by: none
 
 ## 范围与验收
@@ -18,7 +18,7 @@ Blocked by: none
 
 ## Answer
 
-退出追踪与既有原生取消验证通过；注册operator的cancel返回值修复已完成，等待新候选原生复验。实际GUI及综合回归由06记录。
+退出追踪、错误保留和注册operator的cancel回调原生复验通过。实际GUI及综合回归由06统一记录。
 
 - Passed：`python -B -m unittest discover -s tests -p test_cancel_finalization.py -v`，16项定向测试通过。覆盖退出已确认/未确认、terminate拒绝、wait超时、poll异常、清理失败可重试、原始科学/进程错误与取消错误同时报告、Job释放后的持续追踪、多任务独立收尾与timer移除。日志为本工作树`outputs/tests/cancel-finalization-green.txt`。
 - Passed：五个本次Python文件的内存compile检查及`git diff --check`；既有Python文件保持LF、UTF-8无BOM。
@@ -29,6 +29,6 @@ Blocked by: none
 - Not Run：实际GUI按ESC、科学/视觉综合回归、独立人工复做及科研签署；GUI与综合技术验收归06。本任务的脚本分派ESC不作为用户按键或独立人工操作证据。
 
 - Passed：新增产品import/paired-import/export回调契约测试先得到3项断言失败，修复后18项定向测试全部通过。`Operator.cancel`返回None；内部批量收尾从`Job.cancellation`取得结构化报告，`Job.cancel`契约保持。原生脚本新增真实`bpy.ops`创建三类注册operator、取消回调返回None及退出确认检查。
-- Not Run：本次修复后注册operator的真实RNA关闭分派及无RNA错误日志。主Agent须用新安装候选执行更新的原生脚本，并检查Blender退出后的host log；脚本内返回None检查不能代替退出日志核查。
+- Passed：修复候选982e339在真实Blender 5.1.1执行更新脚本，宿主PID86740、exit0；三类注册operator的cancel返回None、worker退出、CSV暂存、全部受控故障均通过，退出后host log没有RNA回调错误。证据为主仓outputs/evidence/2026-10-05/reliability/logs/cancel-native2.{json,log}与cancel-native2/b9a198fbf8b840cfbea43bbf0562fb8b/cancel-finalization.json。完整P03导入原生15项也通过且退出日志无同类错误（logs/igmh-native2）。
 
 原生脚本在已安装本批候选、插件没有既有Job/modal任务的隔离Blender中执行：`--python tools/verify_cancel_finalization_blender.py -- --output-dir <项目内证据目录> --reference-root D:/workspace/QCBlender`。每次生成唯一证据子目录；输出`cancel-finalization.json`。控制故障仅注入Popen控制返回，实际worker句柄恢复后再确认退出；不会按进程名终止其他进程。独立人工复做及科研签署Not Run。
