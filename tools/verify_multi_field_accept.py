@@ -111,9 +111,10 @@ added = {name: sorted(after['datablocks'][name] - before['datablocks'][name])
          for name in before['datablocks']}
 report = {'case': args.case, 'native_error': reason, 'error': message, 'new_datablocks': added,
           'scene_unchanged': before == after,
+          'diagnostic_matches': str(bad_cache) in message and reason in message,
           'module_root': str(ROOT), 'source_dataset': str(args.dataset)}
-report['status'] = 'Passed' if before == after else 'Failed'
+report['status'] = 'Passed' if report['scene_unchanged'] and report['diagnostic_matches'] else 'Failed'
 (out / 'report.json').write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding='utf-8')
 print(json.dumps(report, ensure_ascii=False))
-assert str(bad_cache) in message and reason in message, message
+assert report['diagnostic_matches'], message
 assert before == after, 'Accept failure changed scene, bindings, metadata cache or datablocks'
