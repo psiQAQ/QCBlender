@@ -39,6 +39,13 @@ def _handoff_diagnostic(error):
         print('QCBlender qualification diagnostic popup: ' + str(popup_error))
 
 
+def qualification_context_available(override):
+    window, area, region = (override[name] for name in ('window', 'area', 'region'))
+    # RNA collection membership accepts names, so compare its actual members.
+    return (window in tuple(bpy.context.window_manager.windows)
+            and area in tuple(window.screen.areas) and region in tuple(area.regions))
+
+
 def defer_qualification_handoff(parent_id, binding, ui_context, action, parameters, preview=None):
     token = object()
     entry = {'parent_id': parent_id, 'binding': binding, 'ui_context': dict(ui_context),
@@ -53,9 +60,7 @@ def defer_qualification_handoff(parent_id, binding, ui_context, action, paramete
         _qualification_handoffs.pop(token)
         try:
             override = pending['ui_context']
-            window, area, region = (override[name] for name in ('window', 'area', 'region'))
-            if (window not in bpy.context.window_manager.windows or area not in window.screen.areas
-                    or region not in area.regions):
+            if not qualification_context_available(override):
                 raise ValueError('The qualification window or editor changed; invoke Generate again')
             with bpy.context.temp_override(**override):
                 same_science_source(bpy.context, *pending['binding'])

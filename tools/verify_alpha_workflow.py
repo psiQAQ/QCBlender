@@ -85,6 +85,15 @@ try:
     for source in (ROOT / 'qcblender').rglob('*.py'):
         assert (installed / source.relative_to(ROOT / 'qcblender')).read_bytes() == source.read_bytes()
     storage, jobs, views = map(module, ('data', 'blender.jobs', 'blender.views'))
+    window = bpy.context.window
+    area = next(area for area in window.screen.areas if area.type == 'VIEW_3D')
+    region = next(region for region in area.regions if region.type == 'WINDOW')
+    ui_context = {'window': window, 'area': area, 'region': region}
+    assert module('blender.ui').qualification_context_available(ui_context)
+    other_area = next(other for other in window.screen.areas if other != area)
+    wrong_region = next(region for region in other_area.regions if region.type == 'WINDOW')
+    assert not module('blender.ui').qualification_context_available(dict(ui_context, region=wrong_region))
+    report['checks']['native_qualification_context'] = 'Passed'
     if args.reopen:
         report = json.loads(args.report.read_text(encoding='utf-8'))
         assert report['source_commit'] == subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
