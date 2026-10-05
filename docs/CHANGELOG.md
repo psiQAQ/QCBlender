@@ -1,5 +1,7 @@
 # 开发演进
 
+- 2026-10-04：重试遗留清理，f458工作树登记及已合并chore/repository-cleanup分支正常移除，当前仅main；注释归档标签保留，b48c目录已不存在。14,816文件/798,822,391字节完整保全并核对SHA-256，补存科学数据11组Dataset/600数组/8VDB新进程读回Passed；f458磁盘残留普通删除仍访问拒绝，06保持pending。收据与保全映射见[产物路由](ARTIFACTS.md)“遗留清理状态”；未修改ACL/所有权，未force删除。
+
 - 2026-10-04：修复AUDIT-01当前构型关联与AUDIT-04共享mesh切步。关联绑定两端当前科学身份和具体参考对象，换步失效；共享原子mesh在写入前拒绝换步并提示单用户操作。97科学测试、六视觉场景及保全冷读、真实GUI/Undo/Redo和关联/共享对象原生专项Passed；Standards/Spec各1项修复复审、0阻断遗留。独立人工签署Not Run。[验证](acceptance/audit-p1-validation.md)、[产物路由](ARTIFACTS.md)与[交付收据](acceptance/audit-p1-delivery.json)记录确切身份及保留状态。
 
 - 2026-10-04：修复Gaussian首段SCF前失败时遗漏后续任务边界，以及ETS-NOCV重复记录遗漏正负本征值/单轨道能量冲突。建立六场景固定视觉基准和64³/128³/256³、1/8/32视图性能采样；91科学测试、17基准单测、28视觉检查、原生GUI与工程冷读Passed。Standards/Spec各1项已修复、0遗留；独立人工签署Not Run，两项P1仍在范围外。[验证](acceptance/audit-p2-baselines-validation.md)与[产物路由](ARTIFACTS.md)记录候选、工程、原始成功失败报告；本批合并、注释标签、工作树清理和推送状态见[交付收据](acceptance/audit-p2-delivery.json)。

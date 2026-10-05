@@ -6,9 +6,11 @@ Blocked by: 03
 
 ## 目标与边界
 
-仅处理旧f458工作树/已合并chore/repository-cleanup分支，以及旧b48c空目录。用户允许无法处理的分支暂时保留；此任务不阻塞本轮教程归档验收。
+当前仅剩旧f458磁盘残留；其工作树登记与已合并chore/repository-cleanup分支已移除，旧b48c目录已不存在。用户允许无法处理的分支暂时保留；此任务不阻塞本轮教程归档验收。
 
 ## Comments
+
+2026-10-04重试：完成14,816文件/798,822,391字节保全与摘要核对，补存327文件；新Blender进程11组Dataset/600数组/8VDB读取Passed。git worktree remove返回Directory not empty但已移除Git登记，随后git branch -d成功；当前只剩main。f458残留目录普通Remove-Item仍访问拒绝，b48c已不存在，任务保持pending。完整收据、原件映射与错误见outputs/evidence/2026-10-04/legacy-worktree-retry/completion.json；科学恢复数据在outputs/projects/recovery/worktree-f458/datasets/。
 
 2026-10-02 领取前状态：f458的11目录/3ZIP仍WinError 5，已有archive/2026-09-30/chore/repository-cleanup指向47fd82c且提交可达main；原位保留，不宣称完整保全。b48c空根仍WinError 32，占用进程未擅自终止。原始和最新检查见outputs/evidence/2026-10-02/tutorial-cu/deferred-cleanup/legacy-deferred.json。
 

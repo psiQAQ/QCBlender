@@ -2,6 +2,12 @@
 
 更新：2026-10-04。本页路由当前文件、归档身份、重建方法与阻塞；各原始报告保留其执行时的状态和候选身份。任务状态在 `.scratch/`，开发顺序见 [DEVELOPMENT](DEVELOPMENT.md)，保留与清理边界见 [维护规则](agents/storage-maintenance.md)。
 
+## 遗留清理状态
+
+2026-10-04重试：f458工作树Git登记和已合并`chore/repository-cleanup`分支已正常移除；当前仅保留main工作树/分支，原注释归档标签`archive/2026-09-30/chore/repository-cleanup`仍指向`47fd82c`且可达main。b48c目录已不存在。f458磁盘残留因访问拒绝保留，06继续pending。
+
+本次收据为`outputs/evidence/2026-10-04/legacy-worktree-retry/completion.json`：14,816文件/798,822,391字节完整保全及SHA-256核对Passed，完整旧新路径见`complete-preservation-map.jsonl.gz`；补存科学数据同时保留在`outputs/projects/recovery/worktree-f458/datasets/`，新Blender进程11组Dataset/600数组/8VDB读回Passed。目录普通删除Failed，未修改ACL/所有权或使用force；现存残留与不可枚举对象见收据。历史报告维持原状态，当前残留以本节为准。
+
 ## 当前交付
 
 当前候选为`outputs/candidates/current/audit-p1-a4baaaf/qcblender-0.0.1.zip`，50638451字节，SHA-256 `039306fdcbf908bc020b29246f54dc2f8e2459e9413844b1a80a45ec5b036fb9`。产品源码`a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d`，产品树`c1a5bc48b035434c4a3245909e1e629bec4f0665`；[P1验证](acceptance/audit-p1-validation.md)及[机器索引](acceptance/audit-p1-validation.json)记录97科学测试、六视觉场景及其迁移冷读、原生关联/共享mesh、GUI/Undo/Redo和保存冷重开Passed。独立人工签署Not Run。
@@ -16,7 +22,7 @@
 
 证据位于`outputs/evidence/2026-10-04/audit-p2/`：`evidence-index.json`与`qualification.json`绑定当前候选；`preservation-map.json`保存原始路径及SHA-256，全部成功/失败报告字节保留。六个参考工程在`outputs/projects/audit-p2/visual/<case>/`，实际GUI工程在`outputs/projects/audit-p2/gui/p2-verified.blend + .qcdata/`；迁移后冷重开报告在`delivery-cold/`。基准PNG/JSON在`tests/data/visual-baseline/`，重建与运行见[基准说明](acceptance/visual-performance-baselines.md)。
 
-本批五个注释归档标签、五工作树/分支正常移除及main推送Passed；清理27,111文件/6,425,543,091字节，475项保护文件摘要复核Passed。完整身份见[交付收据](acceptance/audit-p2-delivery.json)和`closing/`；原截图工作树路径由`closing/current-preservation-routes.json`映射到主检出。旧f458/b48c继续保持既有延期状态。
+本批五个注释归档标签、五工作树/分支正常移除及main推送Passed；清理27,111文件/6,425,543,091字节，475项保护文件摘要复核Passed。完整身份见[交付收据](acceptance/audit-p2-delivery.json)和`closing/`；原截图工作树路径由`closing/current-preservation-routes.json`映射到主检出。旧对象当前清理状态见本页“遗留清理状态”。
 
 ## 2026-10-02 显示/XYZ/CSV历史交付
 
@@ -29,7 +35,7 @@
 | 保全工程与数据 | `outputs/projects/display-xyz-export/gui/evidence.blend + evidence.qcdata/`，12Dataset/249数组/1VDB，原地及中文移动冷读Passed；`final/data/native-exports/`保存全量/筛选CSV，`final/gui/exports/`保存实际点击导出 |
 | 复用登记 | [Blender规则](agents/blender-interaction.md)、[操作登记](acceptance/blender-operations.json)；历史GUI身份不重写，产品单行目录修复后重新点击；旧图形工程另有兼容导出报告 |
 | 构建与重建 | 共用`outputs/build-site/`、`outputs/science/`、`outputs/wheels/qualified/`及后端记录保持；当前索引列源文件/wheel摘要、实际命令和脚本，按[DEVELOPMENT](DEVELOPMENT.md)在新批次重建并重新验证ZIP身份 |
-| 本轮归档与清理 | [清理收据](acceptance/display-xyz-export-cleanup.json)；四个注释标签及本轮工作树/分支清理Passed，另删一个已归档旧分支；11,095文件/1,073,258,330字节清理，63,383保留摘要核对。`closing/`保存映射和原收据；旧f458及空b48c占用按用户许可延期 |
+| 本轮归档与清理 | [清理收据](acceptance/display-xyz-export-cleanup.json)；四个注释标签及本轮工作树/分支清理Passed，另删一个已归档旧分支；11,095文件/1,073,258,330字节清理，63,383保留摘要核对。`closing/`保存映射和原收据；旧对象当前清理状态见本页“遗留清理状态” |
 
 本批82科学测试、21相关单测、严格XYZ和七类CSV/取消/旧谱图、显示精度、九公共资产、安装及冷重开通过。完整C/N历史范围见[教程历史资格](acceptance/tutorial-final-qualification.json)；本批仅对改动及其受影响范围复验，不将旧报告绑定新ZIP。科学输入的唯一清单仍为`tests/data/local-inputs.json`，来源见[SOURCES](v1-acceptance/SOURCES.md)。
 
@@ -56,11 +62,11 @@
 
 | 未完成对象 | 当前原因与保留位置 |
 | --- | --- |
-| 旧 f458 / `chore/repository-cleanup` | 11目录、3ZIP访问拒绝；原对象/分支保留，未修改ACL或所有权 |
-| 旧 b48c | 空 `outputs` 已正常移除，空根目录仍 WinError 32 占用；保留 |
+| 旧 f458 磁盘残留 | 工作树登记与分支已移除；目录普通删除仍访问拒绝，完整原件已保全；见2026-10-04收据 |
+| 旧 b48c | 2026-10-04核对目录已不存在 |
 | 默认旧后端wheel | `outputs/wheels/<后端wheel>`不可读，原位保留；当前根后端记录与 `outputs/wheels/qualified/` 的可读wheel已配对核对 |
 
-按用户“无法处理的分支可以暂时放着”的最新范围，03已resolved；本轮八工作树归档清理Passed，旧f458/b48c清理单独延期到 `.scratch/tutorial-cu/issues/06-deferred-cleanup.md`（pending / ready-for-human）。旧权限检查仍Failed、延期清理Not Run，不改写旧结果；未知恢复文件及未解除引用的旧配置保留，不按进程名关闭未知窗口。
+按用户“无法处理的分支可以暂时放着”的最新范围，03已resolved；本轮八工作树归档清理Passed，旧f458磁盘残留清理单独延期到 `.scratch/tutorial-cu/issues/06-deferred-cleanup.md`（pending / ready-for-human）。旧权限检查仍Failed、延期清理Not Run，不改写旧结果；未知恢复文件及未解除引用的旧配置保留，不按进程名关闭未知窗口。
 
 归档前逐文件原始清单为上级 `inventory.jsonl.gz`，文本保全、独有二进制及旧新路径为 `working-source-map.json`、`binary-preservation.json` 和 `content/<sha256>`。原报告字节不改写；工作树旧路径通过映射定位。需恢复时另建目录、按映射核对摘要并冷重开，不覆盖现存用户工程。早期 `archive-preparation/` 为只读历史盘点，最终以 `archive-preparation-final/` 和本节收据为准。
 
