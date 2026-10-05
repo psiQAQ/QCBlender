@@ -20,6 +20,8 @@
 
 本轮本地合并、注释归档及正常清理结果见[交付收据](acceptance/alpha-readiness-delivery.json)。
 
+任务提交 `9cc9a005` 已 ff-only 合入 main，四个 `archive/2026-10-05/feat/alpha-*` 注释标签可达 main。四个任务工作树的 Git 登记及分支移除 Passed；三个磁盘目录移除 Passed，`.worktrees/alpha-core` 普通移除 Failed（Directory not empty），残留由 `.scratch/alpha-readiness/issues/11-worktree-residue.md` 跟踪。清理后 32,170 条原路径映射、7,419 个内容对象、13 个候选文件/报告及中文工程 59 文件摘要复核 Passed；详细收据为 `closing/post-cleanup-verification.json`。不可枚举缓存目录保留，不计入保全成功范围。
+
 ## 2026-10-05 可靠性历史交付
 
 当前候选为`outputs/candidates/current/reliability-final-a3ed826/qcblender-0.0.1.zip`，50,645,094字节，SHA-256 `8094278edf08a2e6d54640e4f0cd376d8cbb98568c92464720f963dff4bb8c71`。固定产品源码`a3ed8264aad860f25c922dd7c91efce3f6f078d3`，产品树`0cec91ad2ed7804e78a01c39105d49e3d39150d8`。[可靠性验证](acceptance/reliability-validation.md)及[机器索引](acceptance/reliability-validation.json)记录本批范围与限制；独立使用者和科研签署Not Run。

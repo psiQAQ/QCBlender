@@ -1,9 +1,10 @@
 {
   "schema": 1,
-  "status": "Not Run",
+  "status": "Passed",
   "date": "2026-10-05",
-  "scope": "Local main merge, annotated archive tags, preservation and normal worktree removal",
+  "scope": "Local merge and Git archive complete; physical residue recorded separately",
   "baseline": "9bfa682c60d63f61bf1a186c8fdb3c37571e9308",
+  "merged_task_commit": "9cc9a005d3f8cef2270fadef5374b753c1df9c58",
   "product_commit": "19e4cf0becf5a5173d692d1f4a9c621e6d01512e",
   "product_tree": "5db4996cbb456f52529c86219d85f0db0541ae49",
   "candidate_sha256": "0c2d9add59b6332f243c5cd87b852a38b94090286f1b7671d7666694a4b73a03",
@@ -35,16 +36,90 @@
     ]
   },
   "merge": {
-    "status": "Not Run"
+    "status": "Passed",
+    "method": "ff-only"
   },
-  "archive_tags": {
-    "status": "Not Run"
-  },
-  "worktree_cleanup": {
-    "status": "Not Run"
-  },
+  "archive_tags": [
+    {
+      "tag": "archive/2026-10-05/feat/alpha-summary",
+      "commit": "df0c309415566a51e4023d2cfb403fb1b86dd273",
+      "status": "Passed",
+      "annotated": true
+    },
+    {
+      "tag": "archive/2026-10-05/feat/alpha-ci",
+      "commit": "4c26f2bee1ac0a65fb8c1d39db86c310b374fb47",
+      "status": "Passed",
+      "annotated": true
+    },
+    {
+      "tag": "archive/2026-10-05/feat/alpha-release",
+      "commit": "d60041295bc868aadaf8bfd6ae9a1fcb07e10793",
+      "status": "Passed",
+      "annotated": true
+    },
+    {
+      "tag": "archive/2026-10-05/feat/alpha-core",
+      "commit": "9cc9a005d3f8cef2270fadef5374b753c1df9c58",
+      "status": "Passed",
+      "annotated": true
+    }
+  ],
+  "worktree_cleanup": [
+    {
+      "path": "D:\\workspace\\QCBlender\\.worktrees\\alpha-summary",
+      "branch": "feat/alpha-summary",
+      "normal_remove_status": "Passed",
+      "git_registration_removed": "Passed",
+      "branch_deleted": "Passed",
+      "disk_directory_remaining": false,
+      "remove_stderr": "",
+      "permission_policy": "No ACL/ownership change or forced deletion"
+    },
+    {
+      "path": "D:\\workspace\\QCBlender\\.worktrees\\alpha-ci",
+      "branch": "feat/alpha-ci",
+      "normal_remove_status": "Passed",
+      "git_registration_removed": "Passed",
+      "branch_deleted": "Passed",
+      "disk_directory_remaining": false,
+      "remove_stderr": "",
+      "permission_policy": "No ACL/ownership change or forced deletion"
+    },
+    {
+      "path": "D:\\workspace\\QCBlender\\.worktrees\\alpha-release",
+      "branch": "feat/alpha-release",
+      "normal_remove_status": "Passed",
+      "git_registration_removed": "Passed",
+      "branch_deleted": "Passed",
+      "disk_directory_remaining": false,
+      "remove_stderr": "",
+      "permission_policy": "No ACL/ownership change or forced deletion"
+    },
+    {
+      "path": "D:\\workspace\\QCBlender\\.worktrees\\alpha-core",
+      "branch": "feat/alpha-core",
+      "normal_remove_status": "Failed",
+      "git_registration_removed": "Passed",
+      "branch_deleted": "Passed",
+      "disk_directory_remaining": true,
+      "remove_stderr": "error: failed to delete 'D:/workspace/QCBlender/.worktrees/alpha-core': Directory not empty\n",
+      "permission_policy": "No ACL/ownership change or forced deletion"
+    }
+  ],
   "remote_steps": {
     "status": "Not Run"
   },
-  "independent_human_and_science_acceptance": "Not Run"
+  "independent_human_and_science_acceptance": "Not Run",
+  "post_cleanup_verification": {
+    "status": "Passed",
+    "report": "outputs/evidence/2026-10-05/alpha-readiness/closing/post-cleanup-verification.json",
+    "mapped_files": 32170,
+    "verified_unique_objects": 7419,
+    "candidate_entries": 13,
+    "portable_project_files": 59,
+    "package_source_bytes": "Passed",
+    "execution": "Read-only hash verification retried outside sandbox after array-read PermissionError; no ACL change"
+  },
+  "remaining_local_task": ".scratch/alpha-readiness/issues/11-worktree-residue.md"
 }
