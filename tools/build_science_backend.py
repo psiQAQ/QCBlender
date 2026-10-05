@@ -16,19 +16,28 @@ SOURCE_HASH = '42c80656a3a744ad528d69c6cb5a7c805c1278ce3d560f822f8a3ca3848e43d4'
 VERSION = '0.1.0+qcblender.071969c.pure1'
 
 
+def verify_source_lock(root=ROOT):
+    record = {'name': 'gbasis', 'commit': COMMIT,
+              'url': f'https://codeload.github.com/theochem/gbasis/zip/{COMMIT}',
+              'sha256': SOURCE_HASH,
+              'packaging': 'Python modules only; optional libcint wrapper/native sources excluded'}
+    locked = json.loads((Path(root) / 'science-sources.lock.json').read_text(encoding='utf-8'))
+    if locked != [record]:
+        raise ValueError('Science source lock does not match the qualified GBasis source')
+    return record
+
+
 def main():
+    source_record = verify_source_lock()
     base = OUT / 'build-sources'
     base.mkdir(parents=True, exist_ok=True)
-    url = f'https://codeload.github.com/theochem/gbasis/zip/{COMMIT}'
+    url = source_record['url']
     archive = base / f'gbasis-{COMMIT}.zip'
     if not archive.exists():
         with urlopen(url, timeout=120) as response:
             archive.write_bytes(response.read())
     if hashlib.sha256(archive.read_bytes()).hexdigest() != SOURCE_HASH:
         raise ValueError('Pinned GBasis source checksum mismatch')
-    source_record = {'name': 'gbasis', 'commit': COMMIT, 'url': url, 'sha256': SOURCE_HASH,
-                     'packaging': 'Python modules only; optional libcint wrapper/native sources excluded'}
-    (ROOT / 'science-sources.lock.json').write_text(json.dumps([source_record], indent=2) + '\n', encoding='utf-8')
     with tempfile.TemporaryDirectory(prefix='gbasis-python-', dir=OUT) as temporary:
         stage = Path(temporary)
         with zipfile.ZipFile(archive) as package:

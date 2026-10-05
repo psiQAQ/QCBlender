@@ -6,15 +6,18 @@ import json
 import os
 from pathlib import Path
 import sys
+import subprocess
 import time
 import zipfile
 
 import bpy
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools.package_identity import extension_filename
 parser = argparse.ArgumentParser()
 parser.add_argument('--output-dir', type=Path, default=ROOT / 'outputs/acceptance')
-parser.add_argument('--candidate', type=Path, default=ROOT / 'outputs/dist/qcblender-0.0.1.zip')
+parser.add_argument('--candidate', type=Path, default=ROOT / 'outputs/dist' / extension_filename())
 parser.add_argument('--reopen', action='store_true')
 args = parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 OUT = args.output_dir.resolve()
@@ -166,6 +169,8 @@ else:
     with zipfile.ZipFile(archive_path) as archive:
         archive.extractall(moved)
     report = {'status': 'Passed', 'blender': bpy.app.version_string, 'offline_install': 'Passed',
+              'source_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
+              'candidate_sha256': hashlib.sha256(args.candidate.read_bytes()).hexdigest(),
               'worker_import_evaluate': 'Passed', 'cancel': 'Passed', 'lifecycle': 'Passed',
               'repeated_field_cache': 'Passed',
               'threshold_updates_geometry': 'Passed', 'phase_switches': 'Passed',

@@ -1,6 +1,6 @@
 schema_version = "1.0.0"
 id = "qcblender"
-version = "0.0.1"
+version = "0.1.0"
 name = "QCBlender"
 tagline = "Quantum chemistry fields controlled by geometry nodes"
 maintainer = "QCBlender contributors"

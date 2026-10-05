@@ -8,6 +8,7 @@
 *.txt text eol=lf
 # Preserve fixed upstream scientific fixtures and their checksum identities byte for byte.
 tests/data/** -text -diff
+tests/data/distribution/*.md text eol=lf diff
 tests/data/local-inputs.json text eol=lf diff
 tests/data/visual-baseline/*.json text eol=lf diff
 # Preserve the upstream GNU license text, including its original final blank line.

@@ -1,14 +1,21 @@
 """Run after verify_extension.py in the installed Blender extension profile."""
 import importlib
+import argparse
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 import bpy
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'outputs/node-assets'
+parser = argparse.ArgumentParser()
+parser.add_argument('--report', type=Path, default=ROOT / 'outputs/node-assets/report.json')
+args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
+OUT = args.report.parent
 OUT.mkdir(parents=True, exist_ok=True)
+bpy.ops.preferences.addon_enable(module='bl_ext.user_default.qcblender')
 views = importlib.import_module('bl_ext.user_default.qcblender.blender.views')
 
 
@@ -78,8 +85,9 @@ loaded = target.node_groups[0]
 extra.node_tree = loaded
 assert len(vertices(first)) > len(baseline)
 report = {'status': 'Passed', 'blender': bpy.app.version_string,
+          'source_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
           'shared_unbound_asset': 'Passed', 'independent_parameters': 'Passed',
           'independent_source_transforms': 'Passed', 'preserved_branch': 'Passed',
           'library_roundtrip': 'Passed', 'baseline_vertices': len(baseline)}
-(OUT / 'report.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
+args.report.write_text(json.dumps(report, indent=2), encoding='utf-8')
 print(json.dumps(report))

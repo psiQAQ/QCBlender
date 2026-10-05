@@ -1,5 +1,8 @@
 """Check atom-selection nodes and shared math inputs in native Blender."""
 from pathlib import Path
+import argparse
+import json
+import subprocess
 import sys
 
 import bpy
@@ -7,6 +10,9 @@ import bpy
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from qcblender.blender import assets
+parser = argparse.ArgumentParser()
+parser.add_argument('--report', type=Path, default=ROOT / 'outputs/node-helpers.json')
+args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
 
 group = assets.selection_group()
 assert assets.selection_group() == group
@@ -74,3 +80,9 @@ except TypeError:
 else:
     raise AssertionError('Non-socket input accepted')
 print('NODE_HELPERS_PASSED: atom IDs, v1 interface, identifiers, reuse, numeric/socket inputs, invalid input')
+report = dict(status='Passed', blender=bpy.app.version_string,
+              source_commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
+              checks=['source atom IDs', 'v1 interface', 'stable identifiers', 'math input boundaries'])
+destination = args.report
+destination.parent.mkdir(parents=True, exist_ok=True)
+destination.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
