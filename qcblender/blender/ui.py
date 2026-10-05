@@ -11,9 +11,81 @@ from bpy_extras.io_utils import ImportHelper
 ADDON_ID = __package__.rsplit('.', 1)[0]
 _operations = {}
 _qualifications = {}
+_qualification_handoffs = {}
+
+
+def clear_qualification_handoffs(*args):
+    callbacks = [entry['callback'] for entry in _qualification_handoffs.values()]
+    _qualification_handoffs.clear()
+    for callback in callbacks:
+        try:
+            if bpy.app.timers.is_registered(callback):
+                bpy.app.timers.unregister(callback)
+        except (RuntimeError, ReferenceError) as error:
+            print('QCBlender qualification timer cleanup: ' + str(error))
+
+
+def _handoff_diagnostic(error):
+    message = 'Scientific qualification handoff: ' + str(error)
+    print('QCBlender ' + message)
+
+    def draw(menu, context):
+        for line in textwrap.wrap(message, width=75):
+            menu.layout.label(text=line)
+
+    try:
+        bpy.context.window_manager.popup_menu(draw, title='Scientific qualification', icon='ERROR')
+    except (RuntimeError, ReferenceError, AttributeError) as popup_error:
+        print('QCBlender qualification diagnostic popup: ' + str(popup_error))
+
+
+def defer_qualification_handoff(parent_id, binding, ui_context, action, parameters, preview=None):
+    token = object()
+    entry = {'parent_id': parent_id, 'binding': binding, 'ui_context': dict(ui_context),
+             'action': action, 'parameters': dict(parameters), 'preview': preview}
+
+    def dispatch():
+        pending = _qualification_handoffs.get(token)
+        if pending is None:
+            return None
+        if pending['parent_id'] in _operations:
+            return .05
+        _qualification_handoffs.pop(token)
+        try:
+            override = pending['ui_context']
+            window, area, region = (override[name] for name in ('window', 'area', 'region'))
+            if (window not in bpy.context.window_manager.windows or area not in window.screen.areas
+                    or region not in area.regions):
+                raise ValueError('The qualification window or editor changed; invoke Generate again')
+            with bpy.context.temp_override(**override):
+                same_science_source(bpy.context, *pending['binding'])
+                key = pending['binding'][2:]
+                cached = _qualifications.get(key)
+                if pending['action'] == 'generate':
+                    if cached is None or cached is not pending['preview']:
+                        raise ValueError('Scientific qualification was cleared or replaced; invoke Generate again')
+                    result = bpy.ops.qcblender.generate_field('INVOKE_DEFAULT', True, **pending['parameters'])
+                else:
+                    if cached is not None:
+                        raise ValueError('Scientific qualification changed before its budget retry')
+                    result = bpy.ops.qcblender.qualify_science('INVOKE_DEFAULT', **pending['parameters'])
+                if 'CANCELLED' in result:
+                    raise RuntimeError('The qualification dialog handoff was cancelled')
+        except (RuntimeError, ValueError, OSError, KeyError, ReferenceError, MemoryError, AttributeError, TypeError) as error:
+            _handoff_diagnostic(error)
+        return None
+
+    entry['callback'] = dispatch
+    _qualification_handoffs[token] = entry
+    try:
+        bpy.app.timers.register(dispatch, first_interval=0)
+    except (RuntimeError, ValueError) as error:
+        _qualification_handoffs.pop(token)
+        raise RuntimeError('Cannot defer scientific qualification dialog: ' + str(error)) from error
 
 
 def clear_qualifications(*args):
+    clear_qualification_handoffs()
     _qualifications.clear()
 
 
@@ -95,6 +167,7 @@ def draw_material_controls(layout, mat, section='材质', unit=''):
 
 
 def cancel_operations():
+    clear_qualification_handoffs()
     reports = []
     for operator, _ in list(_operations.values()):
         timer_errors = finish_operation(operator)
@@ -309,6 +382,7 @@ class QCBLENDER_OT_qualify_science(AsyncOperation, bpy.types.Operator):
     def begin(self, context):
         from .jobs import Job
         self._source, self._dataset, self._digest, self._fingerprint = science_binding(context)
+        self._handoff_context = {name: getattr(context, name) for name in ('window', 'area', 'region')}
         if hasattr(self, '_retry_binding'):
             same_science_source(context, *self._retry_binding)
         return Job('qualify_science', dataset=self._dataset, dataset_sha256=self._digest, memory_mb=self.memory_mb)
@@ -320,12 +394,16 @@ class QCBLENDER_OT_qualify_science(AsyncOperation, bpy.types.Operator):
         if not report['eligible']:
             if report.get('refusal_kind') == 'resource' and report['minimum_working_bytes'] <= 16384 * 1024**2:
                 import math
-                bpy.ops.qcblender.qualify_science('INVOKE_DEFAULT', reason=report['reason'],
-                    memory_mb=max(32, math.ceil(report['minimum_working_bytes'] / 1024**2)))
+                defer_qualification_handoff(id(self),
+                    (self._source, self._dataset, self._digest, self._fingerprint), self._handoff_context,
+                    'retry', {'reason': report['reason'],
+                              'memory_mb': max(32, math.ceil(report['minimum_working_bytes'] / 1024**2))})
                 return
             raise ValueError(report['reason'])
         _qualifications[(self._digest, self._fingerprint)] = report['preview']
-        bpy.ops.qcblender.generate_field('INVOKE_DEFAULT', memory_mb=report.get('memory_mb', 512))
+        defer_qualification_handoff(id(self),
+            (self._source, self._dataset, self._digest, self._fingerprint), self._handoff_context,
+            'generate', {'memory_mb': report.get('memory_mb', 512)}, report['preview'])
 
 
 class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
@@ -359,14 +437,16 @@ class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
             self._source, self._dataset, self._input_digest, self._fingerprint = science_binding(context)
             self._preview = _qualifications.get((self._input_digest, self._fingerprint))
             if self._preview is None:
-                bpy.ops.qcblender.qualify_science('EXEC_DEFAULT', memory_mb=self.memory_mb)
-                # The qualification owns its modal handler. Finish this dispatcher so
-                # the later generation operator can record its own native undo step.
-                return {'FINISHED'}
-        except (ValueError, OSError, KeyError, MemoryError) as error:
+                result = bpy.ops.qcblender.qualify_science('EXEC_DEFAULT', memory_mb=self.memory_mb)
+                if 'CANCELLED' in result:
+                    return {'CANCELLED'}
+                # This dispatcher changes no data. The independent qualification job
+                # owns its modal handler and schedules the generation dialog later.
+                return {'CANCELLED'}
+        except (RuntimeError, ValueError, OSError, KeyError, MemoryError) as error:
             self.report({'ERROR'}, str(error))
             return {'CANCELLED'}
-        return context.window_manager.invoke_props_dialog(self)
+        return context.window_manager.invoke_props_dialog(self, width=600)
 
     def draw(self, context):
         layout = self.layout
@@ -397,10 +477,12 @@ class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
                 layout.label(text=f"Dataset: {resources['dataset_bytes'] / 1024**2:.2f} MiB / 1024 MiB")
                 layout.label(text=f"Evaluation estimate: {resources['minimum_working_bytes'] / 1024**2:.2f} MiB / {self.memory_mb} MiB")
                 if resources['refusal_reason']:
-                    layout.label(text=resources['refusal_reason'], icon='ERROR')
+                    for line in textwrap.wrap(resources['refusal_reason'], width=75):
+                        layout.label(text=line, icon='ERROR')
             except (ValueError, MemoryError) as error:
                 layout.label(text=str(error), icon='ERROR')
-        layout.label(text='Grid limits require convergence checks for quantitative use')
+        for line in textwrap.wrap('Grid limits require convergence checks for quantitative use', width=75):
+            layout.label(text=line)
 
     def begin(self, context):
         from ..science_preflight import preview_grid, preview_resources, preview_orbital

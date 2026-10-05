@@ -9,7 +9,7 @@ def register():
     from .blender.properties import QCViewSettings
     bpy.types.Object.qc_settings = bpy.props.PointerProperty(type=QCViewSettings)
     from .blender.source_browser import refresh_loaded_sources
-    from .blender.ui import clear_qualifications
+    from .blender.ui import clear_qualifications, clear_qualification_handoffs
     from bpy.app.handlers import persistent
     from .blender.editor_ui import object_context_menu
     from .blender import asset_library, charts, fog, interaction, result_browser
@@ -21,6 +21,8 @@ def register():
         result_browser.attach_properties()
         bpy.app.handlers.load_post.append(refresh_loaded_sources)
         bpy.app.handlers.load_post.append(persistent(clear_qualifications))
+        bpy.app.handlers.load_pre.append(persistent(clear_qualification_handoffs))
+        bpy.app.handlers.save_pre.append(clear_qualification_handoffs)
         bpy.app.handlers.save_post.append(refresh_loaded_sources)
         bpy.types.VIEW3D_MT_object_context_menu.append(object_context_menu)
         bpy.types.VIEW3D_MT_object.append(object_context_menu)
@@ -35,7 +37,7 @@ def unregister():
     global _hooks_registered
     from . import auto_load
     from .blender.jobs import cancel_all
-    from .blender.ui import cancel_operations, clear_qualifications
+    from .blender.ui import cancel_operations, clear_qualifications, clear_qualification_handoffs
     cancel_operations()
     cancel_all()
     clear_qualifications()
@@ -47,6 +49,9 @@ def unregister():
             handlers.remove(refresh_loaded_sources)
     if clear_qualifications in bpy.app.handlers.load_post:
         bpy.app.handlers.load_post.remove(clear_qualifications)
+    for handlers in (bpy.app.handlers.load_pre, bpy.app.handlers.save_pre):
+        if clear_qualification_handoffs in handlers:
+            handlers.remove(clear_qualification_handoffs)
     if bpy.app.timers.is_registered(refresh_loaded_sources):
         bpy.app.timers.unregister(refresh_loaded_sources)
     if _hooks_registered:
