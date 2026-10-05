@@ -3,8 +3,11 @@
 Run in an isolated Blender profile under <sample>/outputs:
   blender --background --python this_file -- --root ROOT --sample SAMPLES
           --out OUT --zip CANDIDATE.zip
-Cold read (both original and moved directory): load the .blend before the script
-and add --reopen. The script uses real Job workers and registered operators.
+Cold read (both original and moved directory): use --factory-startup, then add
+--reopen --blend PROJECT.blend. The script installs/enables the candidate before
+opening the project through open_mainfile and the real load_post handlers.
+Each run needs a new or empty --out directory. The script uses real Job workers
+and registered operators.
 """
 import argparse
 import hashlib
@@ -24,7 +27,20 @@ parser.add_argument('--sample', type=Path, required=True)
 parser.add_argument('--out', type=Path, required=True)
 parser.add_argument('--zip', type=Path, required=True)
 parser.add_argument('--reopen', action='store_true')
+parser.add_argument('--blend', type=Path)
 args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
+reopen_target = None
+if args.reopen:
+    target = args.blend or (Path(bpy.data.filepath) if bpy.data.filepath else None)
+    if target is None:
+        parser.error('--reopen requires --blend PROJECT.blend or an already loaded project')
+    reopen_target = target.resolve(strict=True)
+    if not reopen_target.is_file() or reopen_target.suffix.lower() != '.blend':
+        parser.error('--blend must identify an existing .blend file')
+elif args.blend is not None:
+    parser.error('--blend is available only with --reopen')
+if args.out.exists() and any(args.out.iterdir()):
+    raise FileExistsError(f'Validation output directory must be new or empty: {args.out}')
 args.out.mkdir(parents=True, exist_ok=True)
 sys.path[:0] = [str(args.root), str(args.sample / 'outputs/science')]
 from tools.local_inputs import input_path
@@ -112,6 +128,7 @@ def verify_p03(record, expected):
     assert declaration['source'] == 'P03 Multiwfn fragment setup'
     for key, values in expected.arrays.items():
         np.testing.assert_array_equal(data.arrays[key], values)
+    assert browser.cached_metadata(record).get('analysis', {}).get('igmh_declaration') == declaration
     assert module('blender.external_fields').QCBLENDER_PT_igmh_declaration.poll(SimpleNamespace(object=record))
     metadata = browser.refresh_source(record)
     assert metadata['analysis']['igmh_declaration'] == declaration
@@ -129,14 +146,16 @@ folder = input_path('public-tutorial/P03/igmh', args.sample)
 geometry, color = folder / 'dg_inter.cub', folder / 'sl2r.cub'
 expected = external.pair_cubes(geometry, color, 'IGMH', 'electron/bohr^4', 'electron/bohr^3')
 if args.reopen:
-    assert bpy.data.filepath, 'Load the original or moved portable .blend before this script'
+    assert bpy.ops.wm.open_mainfile(filepath=str(reopen_target), load_ui=False) == {'FINISHED'}
+    assert Path(bpy.data.filepath).resolve() == reopen_target
     record = next(obj for obj in bpy.data.objects if obj.get('qc_qualification') == 'P03-IGMH')
     assert record['qc_dataset'].startswith('//')
     verify_p03(record, expected)
     for obj in bpy.data.objects:
         if obj.get('qc_dataset'):
             storage.load_dataset(bpy.path.abspath(obj['qc_dataset']))
-    passed('portable original or moved cold read', blend=bpy.data.filepath)
+    passed('portable original or moved cold read after candidate enable and load_post',
+           blend=bpy.data.filepath)
 else:
     # All views below are real atom_view meshes with their source Dataset.
     gaussian = module('gaussian_log')
