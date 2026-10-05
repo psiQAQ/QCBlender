@@ -241,7 +241,12 @@ class AsyncOperation:
 
     def cancel(self, context):
         timer_errors = finish_operation(self)
-        report = self._job.cancel()
+        job = getattr(self, '_job', None)
+        if job is None:
+            for error in timer_errors:
+                self.report({'ERROR'}, error)
+            return None
+        report = job.cancel()
         messages = timer_errors + report['errors']
         if messages or report['status'] != 'exited':
             details = '; '.join(messages) or 'Worker exit has not been confirmed'

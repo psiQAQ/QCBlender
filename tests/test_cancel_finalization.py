@@ -243,6 +243,26 @@ class Cancellation(unittest.TestCase):
         self.assertIn(job, jobs._active)
         self.assertEqual(context.window_manager.removed, [operator._timer])
 
+    def test_unstarted_dialog_cancel_keeps_other_job_running(self):
+        job = self.job()
+        operator = ui.QCBLENDER_OT_generate()
+        messages = []
+        operator.report = lambda levels, message: messages.append(message)
+        self.assertIsNone(operator.cancel(None))
+        self.assertEqual(messages, [])
+        self.assertFalse(job.process.terminated)
+        self.assertIn(job, jobs._active)
+
+    def test_existing_job_cancellation_error_is_not_swallowed(self):
+        job = self.job()
+        operator, context = self.operator(job)
+        with patch.object(job, 'cancel', side_effect=RuntimeError('Controlled job cancellation failure')):
+            with self.assertRaisesRegex(RuntimeError, 'Controlled job cancellation failure'):
+                operator.cancel(context)
+        self.assertEqual(context.window_manager.removed, [operator._timer])
+        self.assertNotIn(id(operator), ui._operations)
+        self.assertIn(job, jobs._active)
+
     def test_cancel_all_attempts_every_owned_job(self):
         bad = self.job(Process(terminate_error=OSError('denied terminate')))
         good = self.job()

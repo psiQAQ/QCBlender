@@ -95,7 +95,9 @@ try:
     assert not module('blender.ui').qualification_context_available(dict(ui_context, region=wrong_region))
     report['checks']['native_qualification_context'] = 'Passed'
     if args.reopen:
+        current_checks = dict(report['checks'])
         report = json.loads(args.report.read_text(encoding='utf-8'))
+        report.setdefault('checks', {}).update(current_checks)
         assert report['source_commit'] == subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
         assert report['candidate_sha256'] == digest(args.candidate)
         surface = bpy.data.objects[report['surface_name']]
@@ -252,10 +254,10 @@ try:
         report.update(status='Passed', portable_saved=True, cold_open='Not Run',
             moved_blend=str(moved / 'example.blend'), surface_name=surface.name, surface_counts=high,
             grid=grid, parameters=parameters, isovalue=.045)
-        report['checks'] = {name: 'Passed' for name in ('qualification', 'unsupported_science',
+        report['checks'].update({name: 'Passed' for name in ('qualification', 'unsupported_science',
             'cache_hit', 'early_dataset_limit', 'live_isovalue', 'live_color_ramp',
             'standard_view_summaries', 'missing_input', 'missing_material', 'custom_material', 'stale_source_binding',
-            'custom_graph', 'repeat_export', 'render', 'portable_save')}
+            'custom_graph', 'repeat_export', 'render', 'portable_save')})
     for name in ('gbasis', 'iodata', 'scipy'):
         assert name not in sys.modules, name + ' leaked into the UI process'
 except Exception as error:

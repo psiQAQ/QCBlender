@@ -97,6 +97,21 @@ class QualificationHandoff(unittest.TestCase):
         self.context.window_manager.invoke_props_dialog.assert_not_called()
         self.assertFalse(ui._qualifications)
 
+    def test_parameter_and_budget_dialog_cancel_before_job_starts(self):
+        ui._qualifications[self.binding[2:]] = self.preview
+        self.context.window_manager.invoke_props_dialog = Mock(return_value={'RUNNING_MODAL'})
+        for cls in (ui.QCBLENDER_OT_generate, ui.QCBLENDER_OT_qualify_science):
+            with self.subTest(operator=cls.bl_idname):
+                operator = cls()
+                operator.report = Mock()
+                self.assertEqual(operator.invoke(self.context, None), {'RUNNING_MODAL'})
+                self.assertFalse(hasattr(operator, '_job'))
+                self.assertIsNone(operator.cancel(self.context))
+                operator.report.assert_not_called()
+        self.ops.generate_field.assert_not_called()
+        self.ops.qualify_science.assert_not_called()
+        self.assertIs(ui._qualifications[self.binding[2:]], self.preview)
+
     def test_success_opens_separate_dialog_and_reuses_bound_preview(self):
         self.operator().accept(self.context, self.report)
         self.ops.generate_field.assert_not_called()
