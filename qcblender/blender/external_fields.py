@@ -100,12 +100,15 @@ class QCBLENDER_OT_import_paired_field(AsyncOperation, bpy.types.Operator):
         from .scalars import add_mapping
         from .views import field_view
         from .static_reference import validate_reference
+        from .native_volume import check_field_cache
 
         self._reference = validate_reference(self._reference_snapshot)
 
         directory = self._job.directory / 'dataset'
         data = load_dataset(directory)
         association = compare_sources(load_dataset(self._reference_path), data)
+        for index in range(2):
+            check_field_cache(directory, data.metadata['fields'][index])
         parent = self._reference
         geometry = field_view(directory, parent, 0)
         color = field_view(directory, parent, 1)

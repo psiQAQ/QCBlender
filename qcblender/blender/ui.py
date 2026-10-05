@@ -201,13 +201,16 @@ class QCBLENDER_OT_import(AsyncOperation, bpy.types.Operator, ImportHelper):
     def accept(self, context, report):
         from .views import atom_view, field_view
         from ..data import load_dataset
+        from .native_volume import check_field_cache
         if self._inspecting:
             bpy.ops.qcblender.choose_log_job('INVOKE_DEFAULT', filepath=self.filepath,
                                            summary=json.dumps(report))
             return
         directory = self._job.directory / 'dataset'
-        obj = atom_view(directory)
         data = load_dataset(directory)
+        for field in data.metadata.get('fields', []):
+            check_field_cache(directory, field)
+        obj = atom_view(directory)
         from .trajectory import initialize_trajectory
         initialize_trajectory(obj, data)
         for index in range(len(data.metadata.get('fields', []))):

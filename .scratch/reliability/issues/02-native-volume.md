@@ -1,7 +1,7 @@
 # 02 原生体场可读性
 
 Triage: ready-for-agent
-Status: resolved
+Status: claimed
 Blocked by: none
 
 ## 范围与验收
@@ -11,6 +11,12 @@ Blocked by: none
 ## Comments
 
 2026-10-05：领取。文件归属为原生VDB检查helper、blender/views.py、blender/project.py及专属脚本，不修改科学data.py、jobs/ui和外部导入文件。
+
+2026-10-05：Spec复审补充修复多场accept的原子性；重新claimed，待主Agent原生复验后恢复resolved。普通科学导入现在于 `atom_view` 前预检全部待消费field；IGMH/IRI paired accept在创建首场前预检两个场。复用 `check_field_cache`。已审查NOCV与Generate accept：仅消费一次 `field_view`，之前只有来源/绑定身份读取与核对，沿用该入口的原生预检；Declare和Rebuild经 `rebind_dataset` 全场及实际Volume目标预检，不额外改变科学语义。
+
+- **Passed**：`python -m unittest discover -s tests -p test_multi_field_accept.py`，3项实际accept函数边界测试；普通导入首场/第二场及paired第二场拒绝时尚未调用任何视图创建。
+- **Passed**：原生Volume helper与工程事务11项单元测试、相关 `py_compile`、`git diff --check`。
+- **Not Run**：新增 `tools/verify_multi_field_accept.py` 的三个真实Blender回归，由主Agent串行运行旧产品red和修复产品green。脚本接受 `--root` 指定产品检出；损坏真实VDB，运行实际operator accept，检查对象/mesh/volume/material/node_group集合、原绑定、metadata cache、active和selection全部不变，先保存report再断言。不以单元边界测试代替原生复验。
 
 ## Answer
 
