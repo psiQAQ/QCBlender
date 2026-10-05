@@ -119,6 +119,8 @@ class QCBLENDER_OT_import_esp(bpy.types.Operator):
         from ..data import load_dataset
         try:
             parent = context.object
+            from .static_reference import capture_reference
+            capture_reference(parent)
             reference = load_dataset(bpy.path.abspath(parent['qc_dataset']))
             data = import_esp(reference, bpy.path.abspath(self.extrema_path), bpy.path.abspath(self.area_path),
                               self.surface_definition, self.extrema_unit, self.center_unit, self.area_unit)
@@ -162,6 +164,8 @@ class QCBLENDER_OT_import_aim(bpy.types.Operator):
         from ..data import load_dataset
         try:
             parent = context.object
+            from .static_reference import capture_reference
+            capture_reference(parent)
             reference = load_dataset(bpy.path.abspath(parent['qc_dataset']))
             props = bpy.path.abspath(self.properties_path) if self.properties_path.strip() else None
             data = import_aim(reference, bpy.path.abspath(self.cps_path), bpy.path.abspath(self.paths_path), props)
@@ -204,6 +208,8 @@ class QCBLENDER_OT_import_ets(bpy.types.Operator):
         from ..data import load_dataset
         try:
             parent = context.object
+            from .static_reference import capture_reference
+            capture_reference(parent)
             reference = load_dataset(bpy.path.abspath(parent['qc_dataset']))
             data = import_ets(reference, bpy.path.abspath(self.output_path), self.energy_unit)
             directory = store_analysis(data)

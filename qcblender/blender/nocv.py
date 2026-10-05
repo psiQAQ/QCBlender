@@ -34,6 +34,8 @@ class QCBLENDER_OT_import_nocv(AsyncOperation, bpy.types.Operator):
     def begin(self, context):
         from .jobs import Job
         from .source_browser import read_metadata
+        from .static_reference import capture_reference
+        self._reference_snapshot = capture_reference(context.object)
         source = Path(bpy.path.abspath(self.cube_path)).resolve(strict=True)
         if source.suffix.lower() not in ('.cube', '.cub'):
             raise ValueError('Choose one Cube field')
@@ -64,6 +66,8 @@ class QCBLENDER_OT_import_nocv(AsyncOperation, bpy.types.Operator):
     def accept(self, context, report):
         from .source_browser import read_metadata
         from .views import field_view
+        from .static_reference import validate_reference
+        validate_reference(self._reference_snapshot)
         table = bpy.data.objects.get(self._table_name)
         if (table is None or table.as_pointer() != self._table_pointer
                 or (table.parent.as_pointer() if table.parent else None) != self._parent_pointer

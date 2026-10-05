@@ -76,8 +76,11 @@ def capability(context, action):
         ready, reason = bool(meta.get('analysis')), '分析记录缺失；请刷新来源'
     else:
         raise ValueError('Unknown QC action: ' + action)
-    if relevant and action in ('aim', 'paired', 'nbo', 'nocv_table') and meta.get('trajectory'):
-        ready, reason = False, '多帧 XYZ 不作为科学关联参考；请使用单帧结构文件'
+    if relevant and action in ('aim', 'paired', 'nbo', 'nocv_table', 'esp', 'nocv_field'):
+        from .static_reference import cached_reference_reason
+        static_reason = cached_reference_reason(obj, cached_metadata)
+        if static_reason:
+            ready, reason = False, static_reason
     if relevant and not bound:
         ready, reason = False, '数据集关联缺失；请恢复数据来源'
     if relevant and bound and 'error' in meta:

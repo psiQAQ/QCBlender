@@ -52,6 +52,8 @@ class QCBLENDER_OT_import_paired_field(AsyncOperation, bpy.types.Operator):
     def begin(self, context):
         import hashlib
         from .jobs import Job
+        from .static_reference import capture_reference
+        self._reference_snapshot = capture_reference(context.object)
         if self.color_minimum >= self.color_maximum:
             raise ValueError('Color minimum must be below maximum')
         if any(not unit.strip() or unit.strip().lower() in ('unknown', 'dimensionless')
@@ -72,16 +74,16 @@ class QCBLENDER_OT_import_paired_field(AsyncOperation, bpy.types.Operator):
                    reference_dataset=str(self._reference_path), reference_sha256=self._reference_digest)
 
     def accept(self, context, report):
-        import hashlib
         from ..association import compare_sources
         from ..data import load_dataset
         from .scalars import add_mapping
         from .views import field_view
+        from .static_reference import validate_reference
+
+        self._reference = validate_reference(self._reference_snapshot)
 
         directory = self._job.directory / 'dataset'
         data = load_dataset(directory)
-        if self._reference.name not in bpy.data.objects or hashlib.sha256((self._reference_path / 'manifest.json').read_bytes()).hexdigest() != self._reference_digest:
-            raise ValueError('Reference calculation changed during import')
         association = compare_sources(load_dataset(self._reference_path), data)
         parent = self._reference
         geometry = field_view(directory, parent, 0)

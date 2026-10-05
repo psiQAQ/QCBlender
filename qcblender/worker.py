@@ -70,6 +70,7 @@ def main():
             report = field_range_report(request, storage, summarize, lambda: (directory / 'cancel').exists())
         elif request['action'] in ('import', 'import_pair', 'import_nbo', 'import_nocv', 'evaluate', 'rebuild_cache', 'declare_field'):
             storage = importlib.import_module(args.module + '.data')
+            static_reference = importlib.import_module(args.module + '.static_reference')
             if request['action'] == 'import_nocv':
                 source = Path(request['source'])
                 if source.stat().st_size > 512 * 1024**2:
@@ -81,8 +82,9 @@ def main():
                 digest = hashlib.sha256((table_dir / 'manifest.json').read_bytes()).hexdigest()
                 if digest != request['table_sha256']:
                     raise ValueError('ETS-NOCV table changed during import')
+                table = static_reference.load_static_reference(table_dir, request['table_sha256'])
                 nocv = importlib.import_module(args.module + '.nocv')
-                data = nocv.import_nocv(snapshot, storage.load_dataset(table_dir),
+                data = nocv.import_nocv(snapshot, table,
                                         request['pair_number'], request['spin'], request['unit'])
             elif request['action'] == 'import_nbo':
                 source = Path(request['source'])
@@ -95,6 +97,7 @@ def main():
                 digest = hashlib.sha256((reference_dir / 'manifest.json').read_bytes()).hexdigest()
                 if digest != request['reference_sha256']:
                     raise ValueError('Reference calculation changed during import')
+                static_reference.load_static_reference(reference_dir, request['reference_sha256'])
                 nbo = importlib.import_module(args.module + '.nbo')
                 data = nbo.associated_nbo(snapshot, request['job_index'], request['block_index'], reference_dir)
             elif request['action'] == 'import_pair':
@@ -121,7 +124,7 @@ def main():
                     raise ValueError('Reference calculation changed during import')
                 association = importlib.import_module(args.module + '.association')
                 data.metadata['analysis']['reference'] = association.compare_sources(
-                    storage.load_dataset(reference_dir), data)
+                    static_reference.load_static_reference(reference_dir, request['reference_sha256']), data)
             elif request['action'] == 'import':
                 readers = importlib.import_module(args.module + '.readers')
                 source = Path(request['source'])

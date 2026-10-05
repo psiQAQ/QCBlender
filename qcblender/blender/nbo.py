@@ -32,6 +32,8 @@ class QCBLENDER_OT_import_nbo(AsyncOperation, bpy.types.Operator):
 
     def begin(self, context):
         from .jobs import Job
+        from .static_reference import capture_reference
+        self._reference_snapshot = capture_reference(context.object)
         source = Path(bpy.path.abspath(self.filepath)).resolve(strict=True)
         if source.suffix.lower() not in ('.log', '.out'):
             raise ValueError('Choose a Gaussian .log or .out file')
@@ -45,9 +47,9 @@ class QCBLENDER_OT_import_nbo(AsyncOperation, bpy.types.Operator):
     def accept(self, context, report):
         from ..data import load_dataset
         from .views import bind
+        from .static_reference import validate_reference
 
-        if self._reference.name not in bpy.data.objects or hashlib.sha256((self._reference_path / 'manifest.json').read_bytes()).hexdigest() != self._reference_digest:
-            raise ValueError('Reference calculation changed during NBO import')
+        self._reference = validate_reference(self._reference_snapshot)
         directory = self._job.directory / 'dataset'
         data = load_dataset(directory)
         mesh = bpy.data.meshes.new('QC NBO records')
