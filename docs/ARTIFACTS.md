@@ -1,16 +1,26 @@
 # 产物查找入口
 
-更新：2026-10-04。本页路由当前文件、归档身份、重建方法与阻塞；各原始报告保留其执行时的状态和候选身份。任务状态在 `.scratch/`，开发顺序见 [DEVELOPMENT](DEVELOPMENT.md)，保留与清理边界见 [维护规则](agents/storage-maintenance.md)。
+更新：2026-10-05。本页路由当前文件、归档身份、重建方法与阻塞；各原始报告保留其执行时的状态和候选身份。任务状态在 `.scratch/`，开发顺序见 [DEVELOPMENT](DEVELOPMENT.md)，保留与清理边界见 [维护规则](agents/storage-maintenance.md)。
 
 ## 遗留清理状态
 
-2026-10-04重试：f458工作树Git登记和已合并`chore/repository-cleanup`分支已正常移除；当前仅保留main工作树/分支，原注释归档标签`archive/2026-09-30/chore/repository-cleanup`仍指向`47fd82c`且可达main。b48c目录已不存在。f458磁盘残留因访问拒绝保留，06继续pending。
+2026-10-04重试：f458工作树Git登记和已合并`chore/repository-cleanup`分支已正常移除；该次收尾仅保留main工作树/分支，原注释归档标签`archive/2026-09-30/chore/repository-cleanup`仍指向`47fd82c`且可达main。b48c目录已不存在。f458磁盘残留因访问拒绝保留，06继续pending。
 
 本次收据为`outputs/evidence/2026-10-04/legacy-worktree-retry/completion.json`：14,816文件/798,822,391字节完整保全及SHA-256核对Passed，完整旧新路径见`complete-preservation-map.jsonl.gz`；补存科学数据同时保留在`outputs/projects/recovery/worktree-f458/datasets/`，新Blender进程11组Dataset/600数组/8VDB读回Passed。目录普通删除Failed，未修改ACL/所有权或使用force；现存残留与不可枚举对象见收据。历史报告维持原状态，当前残留以本节为准。
 
 ## 当前交付
 
-当前候选为`outputs/candidates/current/audit-p1-a4baaaf/qcblender-0.0.1.zip`，50638451字节，SHA-256 `039306fdcbf908bc020b29246f54dc2f8e2459e9413844b1a80a45ec5b036fb9`。产品源码`a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d`，产品树`c1a5bc48b035434c4a3245909e1e629bec4f0665`；[P1验证](acceptance/audit-p1-validation.md)及[机器索引](acceptance/audit-p1-validation.json)记录97科学测试、六视觉场景及其迁移冷读、原生关联/共享mesh、GUI/Undo/Redo和保存冷重开Passed。独立人工签署Not Run。
+当前候选为`outputs/candidates/current/reliability-final-a3ed826/qcblender-0.0.1.zip`，50,645,094字节，SHA-256 `8094278edf08a2e6d54640e4f0cd376d8cbb98568c92464720f963dff4bb8c71`。固定产品源码`a3ed8264aad860f25c922dd7c91efce3f6f078d3`，产品树`0cec91ad2ed7804e78a01c39105d49e3d39150d8`。[可靠性验证](acceptance/reliability-validation.md)及[机器索引](acceptance/reliability-validation.json)记录本批范围与限制；独立使用者和科研签署Not Run。
+
+证据入口`outputs/evidence/2026-10-05/reliability/`：`evidence-index.json`与`qualification.json`绑定36份最终候选报告；`gui-final/`保存真实界面操作、原地及中文移动冷读；`closing-preparation/`、`closing-preserved/`保存逐文件旧新路径与摘要，当前收尾状态见[交付收据](acceptance/reliability-delivery.json)。工程在`outputs/projects/reliability/`：`native/`、`visual/`及`reliability-gui.blend + reliability-gui.qcdata/`，中文移动副本保留于`中文移动/`。
+
+流式摘要实验的前后候选保留在`outputs/candidates/baseline/reliability-prehash-982e339/`与`reliability-posthash-94b99f5/`；对应报告`benchmark-before-desktop/`、`benchmark-after-desktop/`与`streaming-hash-comparison.json`保留其独立身份。256³收益未达到32 MiB或10%门槛，已停止扩大优化；这组耗时不包含随后增加的导入预检查。
+
+重建沿用[开发说明](DEVELOPMENT.md)及共用环境/11锁定wheels，在新输出目录执行`tools/run_science_tests.py`、`verify_native_volume.py`、`verify_multi_field_accept.py`、`verify_igmh_provenance.py`、`verify_cancel_finalization_blender.py`及`render_visual_baseline.py`，保存完整参数、安装身份和新ZIP摘要后运行`qualify_package.py`。本批完整命令在`logs/*.json`，编排脚本由保全映射定位；重建结果重新资格验证。本轮仅本地提交、合并与归档，不push或发布。
+
+## 2026-10-04 P1历史交付
+
+该批候选为`outputs/candidates/current/audit-p1-a4baaaf/qcblender-0.0.1.zip`，50638451字节，SHA-256 `039306fdcbf908bc020b29246f54dc2f8e2459e9413844b1a80a45ec5b036fb9`。产品源码`a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d`，产品树`c1a5bc48b035434c4a3245909e1e629bec4f0665`；[P1验证](acceptance/audit-p1-validation.md)及[机器索引](acceptance/audit-p1-validation.json)记录97科学测试、六视觉场景及其迁移冷读、原生关联/共享mesh、GUI/Undo/Redo和保存冷重开Passed。独立人工签署Not Run。
 
 证据位于`outputs/evidence/2026-10-04/audit-p1/`；`evidence-index.json`及`qualification-main.json`绑定候选，`preservation-map.json`保存旧路径和原字节摘要。工程在`outputs/projects/audit-p1/{native,visual,gui}/`。完整本地归档与推送状态见[交付收据](acceptance/audit-p1-delivery.json)。重建沿用[开发说明](DEVELOPMENT.md)的共用环境与11锁定wheels，在新批次运行本批脚本并重新资格验证。
 

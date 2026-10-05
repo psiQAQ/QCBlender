@@ -1,0 +1,24 @@
+{
+  "status": "In Progress",
+  "date": "2026-10-05",
+  "source_commit": "a3ed8264aad860f25c922dd7c91efce3f6f078d3",
+  "product_tree": "0cec91ad2ed7804e78a01c39105d49e3d39150d8",
+  "candidate": {
+    "status": "Passed",
+    "kind": "final",
+    "source_commit": "a3ed8264aad860f25c922dd7c91efce3f6f078d3",
+    "product_tree": "0cec91ad2ed7804e78a01c39105d49e3d39150d8",
+    "path": "outputs/candidates/current/reliability-final-a3ed826/qcblender-0.0.1.zip",
+    "sha256": "8094278edf08a2e6d54640e4f0cd376d8cbb98568c92464720f963dff4bb8c71",
+    "bytes": 50645094
+  },
+  "qualification": "Passed",
+  "reports": 36,
+  "local_merge": "Not Run",
+  "archive": "Not Run",
+  "cleanup": "Not Run",
+  "push": "Not Run",
+  "release": "Not Run",
+  "independent_human_scientific_signoff": "Not Run",
+  "evidence_root": "outputs/evidence/2026-10-05/reliability"
+}

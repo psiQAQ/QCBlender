@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-10-04",
+  "updated": "2026-10-05",
   "rules": "docs/agents/blender-interaction.md",
   "operation_ids_are_stable": true,
   "history_is_not_current_batch_pass": true,
@@ -442,63 +442,134 @@
       "title": "保存自包含工程与归档",
       "gui_validation": {
         "status": "Passed",
-        "date": "2026-10-01",
-        "method": "Agent Computer Use native clicks with MCP read-only assertions",
-        "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
-        "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
-        "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+        "date": "2026-10-05",
+        "method": "MCP fixture, selection and parameter preparation; Agent Computer Use native actions; MCP result assertions",
+        "source_commit": "a3ed8264aad860f25c922dd7c91efce3f6f078d3",
+        "product_tree": "0cec91ad2ed7804e78a01c39105d49e3d39150d8",
+        "candidate_sha256": "8094278edf08a2e6d54640e4f0cd376d8cbb98568c92464720f963dff4bb8c71",
         "blender": "5.1.1",
-        "locale": "zh_HANS",
-        "objects_and_order": "当前工程已完成；归档前保存",
-        "visible_entry": "N 侧栏 → QCBlender → 工程与诊断 → 保存自包含工程 / 归档工程",
-        "validated_scope": "C02：4 Dataset、69数组、5引用、45配套文件；ZIP46条目；其他工程逐项核对自身数据",
+        "locale": "en_US with QCBlender Chinese labels",
+        "objects_and_order": "Completed qualification scene with no active jobs; save to a new project path",
+        "visible_entry": "N > QCBlender > 工程与诊断 > 保存自包含工程",
+        "validated_scope": "Save Portable QC Project; 13 Dataset, 10 native VDB, 38 bound objects; original and Chinese moved cold reads Passed. Archive action current GUI Not Run.",
         "reports": [
           {
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/portable-render-archive.json",
-            "sha256": "2e44aa85ac6b1a4c7d0c33e54d6d89809b55e0f2287711a9c4e6254c1ee77f45",
+            "path": "outputs/evidence/2026-10-05/reliability/gui-final/saved.json",
+            "sha256": "f082164004f1045a9c6523f403a21298c85481fca836f49290871849ceb70d4a",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-05/reliability/gui-final/cold-original.json",
+            "sha256": "a3afb8243df1ae70d8dab4bf135169b504acb0384bb560318ed25b856af7ae44",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-05/reliability/gui-final/cold-moved.json",
+            "sha256": "f0c3fc3af1ad1d2abf18e33e65d702a8b4fa05f9f291bd49b9d5e07bfcec2540",
             "status": "Passed"
           }
         ],
         "screenshots": [
           {
-            "path": "docs/v1-acceptance/screenshot/C02-06-portable-saved.jpg",
-            "sha256": "5cebe62cf9685de15c984ec9c53ddabfd6a0c421e6cfa6bbe9384bd2a1b71a9c"
-          },
-          {
-            "path": "docs/v1-acceptance/screenshot/C02-06-archive-saved.jpg",
-            "sha256": "cc2965fdbe2b9e8b7494d74d88b6662cb23670a9e9bf52c761682dff8413480a"
+            "path": "docs/v1-acceptance/screenshot/reliability/08-portable-saved.png",
+            "sha256": "672d58eb13f31b44ca3272a2bd5f17699393b59321f68a7c89d0d70bc4b4cfdb"
           }
-        ]
+        ],
+        "limitations": "Independent user/scientific acceptance Not Run"
       },
       "implementation_fingerprints": {
-        "qcblender/blender/project.py": "30181040074a4ec38ce7f06e1d55e2dabc16e80a47ec4a1c95b5e1f75d543df4",
-        "qcblender/data.py": "58a45c8c03b99508db1dbd74d36b38bff518d64361b561249a0320293a7c1a70"
+        "qcblender/blender/static_reference.py": "ca8f73ce141205f4be5bdd1573300377543946830a5d985e3a31c95235b1c599",
+        "qcblender/blender/native_volume.py": "aeaa63f28e0f5c4ad28af6761e9ca3ff621b3a3e876755544f2d0f5d8d2f3c6e",
+        "qcblender/blender/jobs.py": "4b85c88ffef3272d26a8bbc15e0ee6eb240d9f7d27c2f816f99ee233dd6b7ab9",
+        "qcblender/blender/ui.py": "6a959c91238ce6e86a799e62ed98dffcdd2becc8ca76ed631a28627e7acad80f",
+        "qcblender/blender/data_export.py": "3cfcffd28ae0b82113c38f3c66c45ac814eab61e669445a6e401ca5df5ca4c0d",
+        "qcblender/blender/project.py": "d17994a204a6b0f2743c57545380bec8596730dc10d052c7a75c3badd8d0e8a9",
+        "qcblender/blender/views.py": "6cbcc6ef1883178ebb429f0965e95243447581306e4645586fb5c6560e3acabd",
+        "qcblender/blender/external_fields.py": "24b436f3e7b1ba2743c8a7064ba3332a7d3a579ca508933bac78d8a5a6a71369",
+        "qcblender/blender/source_browser.py": "75c9200666e3b9eb92391cf69781895f36c116590b8ce9cadb24a6bb477c12ba",
+        "qcblender/blender/capabilities.py": "c8cb64d3295f54861d3b8019371fdc114898fe8c9b04e22d6f12738597ab25fa",
+        "qcblender/blender/editor_ui.py": "a1a34a6ee156af3cf0297b178e2aeaaf4588f41b4ef1768682011ad0a385ac68",
+        "qcblender/data.py": "cbd6ad27a7a5d3b8b0e2bf85721fa0b6cb26d08f015a7e105af25e7d344e0643",
+        "qcblender/worker.py": "8766d91c0229dd742f83b1fe60833a13f4a0ac4885c59ecc0c9cbde17c201c61",
+        "qcblender/external_fields.py": "62df9da7ef1bdcb196eb0a5513d665e8dbb0c4d74110e9877261c010db54bb5e",
+        "qcblender/project.py": "7c14461d7adf243bbd1c4005c542cc9fad87549f88a56ff183889644d0102ea3",
+        "dependencies.lock.json": "661ac6d6ad41071591b3dda24edb9148363c535e70f6f648128bfd99e8d96e67",
+        "science-sources.lock.json": "05d330d49e4cc9cbe110ecff7fd714a3ef05667b915b14e8abb8c9ef2d5a9165"
       },
-      "fingerprint_review": "Include transitive helpers, registration, interfaces and dependency changes when reviewing reuse; listed files are an initial operation-specific set, not exhaustive proof of no impact.",
+      "fingerprint_review": "Current candidate reverified after relevant changes; preserve history identities and review relevant fingerprints before reuse.",
       "reuse": {
         "preferred_order": [
           "MCP",
           "CLI",
           "Computer Use"
         ],
-        "coverage": "MCP 可调用 save_project(filepath=...)、archive_project(filepath=...)；保存后核对引用、数组和完整ZIP条目",
-        "current_batch_replay_status": "Passed",
+        "coverage": "Save Portable QC Project; 13 Dataset, 10 native VDB, 38 bound objects; original and Chinese moved cold reads Passed. Archive action current GUI Not Run.",
         "requires_current_result_assertions": true,
-        "current_batch_replay_reports": [
-          {
+        "current_batch_replay_status": "Passed"
+      },
+      "history": [
+        {
+          "gui_validation": {
             "status": "Passed",
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/phase-checkpoint-preservation.json",
-            "sha256": "2f5bf22c8d655f01b3bc89d1b98ac70bd32d2e8d34b12dba1f3e55027baae21d",
-            "scope": "C03 phase checkpoint Dataset/arrays/portable archive; main mapping and cold chain Not Run"
+            "date": "2026-10-01",
+            "method": "Agent Computer Use native clicks with MCP read-only assertions",
+            "source_commit": "92d498c2e7c378bece4ae38c6a9df640eb8f0bcf",
+            "product_tree": "eb97f79ecf35ff90bd080317099092962510a9ca",
+            "candidate_sha256": "a4a3f4046a4f9be5c2cc05a3c3272cf8ce962f0e7ca02072612a880dbfe9dc6f",
+            "blender": "5.1.1",
+            "locale": "zh_HANS",
+            "objects_and_order": "当前工程已完成；归档前保存",
+            "visible_entry": "N 侧栏 → QCBlender → 工程与诊断 → 保存自包含工程 / 归档工程",
+            "validated_scope": "C02：4 Dataset、69数组、5引用、45配套文件；ZIP46条目；其他工程逐项核对自身数据",
+            "reports": [
+              {
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C02/portable-render-archive.json",
+                "sha256": "2e44aa85ac6b1a4c7d0c33e54d6d89809b55e0f2287711a9c4e6254c1ee77f45",
+                "status": "Passed"
+              }
+            ],
+            "screenshots": [
+              {
+                "path": "docs/v1-acceptance/screenshot/C02-06-portable-saved.jpg",
+                "sha256": "5cebe62cf9685de15c984ec9c53ddabfd6a0c421e6cfa6bbe9384bd2a1b71a9c"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C02-06-archive-saved.jpg",
+                "sha256": "cc2965fdbe2b9e8b7494d74d88b6662cb23670a9e9bf52c761682dff8413480a"
+              }
+            ]
           },
-          {
-            "status": "Passed",
-            "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/portable-archive-MCP.json",
-            "sha256": "6d7f014a4115e8aae3a2b8ec87b49af01db4c6a531cb08b1834c834f38c5a912",
-            "scope": "C03 complete phases/mapping portable save and archive; new-process cold chain Not Run"
+          "implementation_fingerprints": {
+            "qcblender/blender/project.py": "30181040074a4ec38ce7f06e1d55e2dabc16e80a47ec4a1c95b5e1f75d543df4",
+            "qcblender/data.py": "58a45c8c03b99508db1dbd74d36b38bff518d64361b561249a0320293a7c1a70"
+          },
+          "fingerprint_review": "Include transitive helpers, registration, interfaces and dependency changes when reviewing reuse; listed files are an initial operation-specific set, not exhaustive proof of no impact.",
+          "reuse": {
+            "preferred_order": [
+              "MCP",
+              "CLI",
+              "Computer Use"
+            ],
+            "coverage": "MCP 可调用 save_project(filepath=...)、archive_project(filepath=...)；保存后核对引用、数组和完整ZIP条目",
+            "current_batch_replay_status": "Passed",
+            "requires_current_result_assertions": true,
+            "current_batch_replay_reports": [
+              {
+                "status": "Passed",
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/phase-checkpoint-preservation.json",
+                "sha256": "2f5bf22c8d655f01b3bc89d1b98ac70bd32d2e8d34b12dba1f3e55027baae21d",
+                "scope": "C03 phase checkpoint Dataset/arrays/portable archive; main mapping and cold chain Not Run"
+              },
+              {
+                "status": "Passed",
+                "path": "outputs/evidence/2026-10-01/tutorial-cu/full/C03/portable-archive-MCP.json",
+                "sha256": "6d7f014a4115e8aae3a2b8ec87b49af01db4c6a531cb08b1834c834f38c5a912",
+                "scope": "C03 complete phases/mapping portable save and archive; new-process cold chain Not Run"
+              }
+            ]
           }
-        ]
-      }
+        }
+      ]
     },
     {
       "id": "cold-open-and-render",
@@ -3590,74 +3661,154 @@
       "title": "IGMH和IRI成对场导入",
       "gui_validation": {
         "status": "Passed",
-        "date": "2026-10-02",
-        "method": "Agent Computer Use actions and separately identified MCP preparation/assertions",
-        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
-        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
-        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "date": "2026-10-05",
+        "method": "MCP fixture, selection and parameter preparation; Agent Computer Use native actions; MCP result assertions",
+        "source_commit": "a3ed8264aad860f25c922dd7c91efce3f6f078d3",
+        "product_tree": "0cec91ad2ed7804e78a01c39105d49e3d39150d8",
+        "candidate_sha256": "8094278edf08a2e6d54640e4f0cd376d8cbb98568c92464720f963dff4bb8c71",
         "blender": "5.1.1",
-        "locale": "zh_HANS",
-        "objects_and_order": "仅选操作对应原子或散点对象；本批唯一GUI PID26312",
-        "visible_entry": "仅选择P03水二聚体参考原子对象，N侧栏→QCBlender→导入外部结果→IGMH / IRI 成对场",
-        "validated_scope": "IGMH真实路径/单位/色域用Computer Use输入；IRI参数用MCP准备、Analysis选择与确认用Computer Use；6原子、539448体素全数组、单位、关联、50000抽样经MCP独立核对",
+        "locale": "en_US with QCBlender Chinese labels",
+        "objects_and_order": "P03 static Cube atom object active; then select newly created paired record",
+        "visible_entry": "N > QCBlender > 导入外部结果 > IGMH / IRI 成对场; Object Properties > QCBlender > IGMH 来源声明",
+        "validated_scope": "P03 IGMH actual worker import, inter and fragments [[1,2,3],[4,5,6]], user_assigned provenance; scientific arrays unchanged. IRI current GUI Not Run.",
         "reports": [
           {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/igmh-native-import.json",
-            "sha256": "94006994dc0d2c9f86ac99ae8d60d2a553fea462c9bd55c68ed497127ef69c91",
+            "path": "outputs/evidence/2026-10-05/reliability/gui-final/import-after.json",
+            "sha256": "453f1f89f361f3ac192f5819b55d3ee27dbb1771c8d96b5b65cf9cbca0298b66",
             "status": "Passed"
           },
           {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/iri-native-import.json",
-            "sha256": "7dcfc46c17772046cf5a455958d0d4f52832832e73903ee1ca58209d16bd8609",
+            "path": "outputs/evidence/2026-10-05/reliability/gui-final/declaration-panel.json",
+            "sha256": "6e241b526f258f2f8ee63af0943c80eb8388e671c67f6b39670c7534eeda4eab",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-05/reliability/gui-final/cold-original.json",
+            "sha256": "a3afb8243df1ae70d8dab4bf135169b504acb0384bb560318ed25b856af7ae44",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-05/reliability/gui-final/cold-moved.json",
+            "sha256": "f0c3fc3af1ad1d2abf18e33e65d702a8b4fa05f9f291bd49b9d5e07bfcec2540",
             "status": "Passed"
           }
         ],
         "screenshots": [
           {
-            "path": "docs/v1-acceptance/screenshot/C07-entry-GUI.jpg",
-            "sha256": "55a7688d8a18de98fba83f9d9e2067f5c77660e7ecd10300769a54e98e603cb2"
+            "path": "docs/v1-acceptance/screenshot/reliability/01-igmh-declaration-dialog.png",
+            "sha256": "8f89f59a65342df569b62999f96d8d8c5eef100334bd011a709eedc0bc1713bc"
           },
           {
-            "path": "docs/v1-acceptance/screenshot/C07-IGMH-dialog-GUI.jpg",
-            "sha256": "6c49939a583af374f7d31c24af9fd571bdce2c81b710399a9e3a2167a9ae703d"
-          },
-          {
-            "path": "docs/v1-acceptance/screenshot/C07-IGMH-imported-GUI.jpg",
-            "sha256": "d5eb135d64e58bb41439050fdeb4cdaa7f77bf3a2469918e5f5e214dc420d8a4"
-          },
-          {
-            "path": "docs/v1-acceptance/screenshot/C07-IRI-dialog-GUI.jpg",
-            "sha256": "0f9cb245e1b6846c3b28af7e16f96c965504c86b93467b91e3b1084f32666f77"
+            "path": "docs/v1-acceptance/screenshot/reliability/04-igmh-declaration-panel.png",
+            "sha256": "4aa131909bac8538799e5f2e0f35b4001a0a3ba4fab3d11ee9ae14ac452c7ee0"
           }
-        ]
+        ],
+        "limitations": "Independent user/scientific acceptance Not Run"
       },
       "implementation_fingerprints": {
-        "qcblender/blender/external_fields.py": "1c83fd33cb8a561caa312450e74a52bd8bfc09dc6d654eb03c2468cb7869c8cb",
-        "qcblender/external_fields.py": "87458b8656ca5fa157b6872ffe725de36e080662b5b623102600cd0f25dec508",
-        "qcblender/association.py": "e9b8f0d9e462f3ecf0e5b6c428f3cce2a5378404871c50bd23a58cf825fee000",
-        "qcblender/cube.py": "9af0ad7091af18b5d526e368ff1ccacc129f2544df3e19573a76e926a57cfe14",
-        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
-        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
-        "qcblender/blender/scalars.py": "1e17b26bf258a6a10963410d597a248b31cb60998b9a030d3fa03b6e7df7ac89",
-        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
-        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
-        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
-        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
-        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
-        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432"
+        "qcblender/blender/static_reference.py": "ca8f73ce141205f4be5bdd1573300377543946830a5d985e3a31c95235b1c599",
+        "qcblender/blender/native_volume.py": "aeaa63f28e0f5c4ad28af6761e9ca3ff621b3a3e876755544f2d0f5d8d2f3c6e",
+        "qcblender/blender/jobs.py": "4b85c88ffef3272d26a8bbc15e0ee6eb240d9f7d27c2f816f99ee233dd6b7ab9",
+        "qcblender/blender/ui.py": "6a959c91238ce6e86a799e62ed98dffcdd2becc8ca76ed631a28627e7acad80f",
+        "qcblender/blender/data_export.py": "3cfcffd28ae0b82113c38f3c66c45ac814eab61e669445a6e401ca5df5ca4c0d",
+        "qcblender/blender/project.py": "d17994a204a6b0f2743c57545380bec8596730dc10d052c7a75c3badd8d0e8a9",
+        "qcblender/blender/views.py": "6cbcc6ef1883178ebb429f0965e95243447581306e4645586fb5c6560e3acabd",
+        "qcblender/blender/external_fields.py": "24b436f3e7b1ba2743c8a7064ba3332a7d3a579ca508933bac78d8a5a6a71369",
+        "qcblender/blender/source_browser.py": "75c9200666e3b9eb92391cf69781895f36c116590b8ce9cadb24a6bb477c12ba",
+        "qcblender/blender/capabilities.py": "c8cb64d3295f54861d3b8019371fdc114898fe8c9b04e22d6f12738597ab25fa",
+        "qcblender/blender/editor_ui.py": "a1a34a6ee156af3cf0297b178e2aeaaf4588f41b4ef1768682011ad0a385ac68",
+        "qcblender/data.py": "cbd6ad27a7a5d3b8b0e2bf85721fa0b6cb26d08f015a7e105af25e7d344e0643",
+        "qcblender/worker.py": "8766d91c0229dd742f83b1fe60833a13f4a0ac4885c59ecc0c9cbde17c201c61",
+        "qcblender/external_fields.py": "62df9da7ef1bdcb196eb0a5513d665e8dbb0c4d74110e9877261c010db54bb5e",
+        "qcblender/project.py": "7c14461d7adf243bbd1c4005c542cc9fad87549f88a56ff183889644d0102ea3",
+        "dependencies.lock.json": "661ac6d6ad41071591b3dda24edb9148363c535e70f6f648128bfd99e8d96e67",
+        "science-sources.lock.json": "05d330d49e4cc9cbe110ecff7fd714a3ef05667b915b14e8abb8c9ef2d5a9165"
       },
-      "fingerprint_review": "核对相关实现、公共资产、接口、回调、依赖和Blender版本；此初始文件集合不是影响范围的全部证明。",
+      "fingerprint_review": "Current candidate reverified after relevant changes; preserve history identities and review relevant fingerprints before reuse.",
       "reuse": {
         "preferred_order": [
           "MCP",
           "CLI",
           "Computer Use"
         ],
-        "coverage": "IGMH真实路径/单位/色域用Computer Use输入；IRI参数用MCP准备、Analysis选择与确认用Computer Use；6原子、539448体素全数组、单位、关联、50000抽样经MCP独立核对",
+        "coverage": "P03 IGMH actual worker import, inter and fragments [[1,2,3],[4,5,6]], user_assigned provenance; scientific arrays unchanged. IRI current GUI Not Run.",
         "requires_current_result_assertions": true,
-        "current_batch_replay_status": "Not Run",
-        "current_batch_replay_reports": []
-      }
+        "current_batch_replay_status": "Passed"
+      },
+      "history": [
+        {
+          "gui_validation": {
+            "status": "Passed",
+            "date": "2026-10-02",
+            "method": "Agent Computer Use actions and separately identified MCP preparation/assertions",
+            "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+            "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+            "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+            "blender": "5.1.1",
+            "locale": "zh_HANS",
+            "objects_and_order": "仅选操作对应原子或散点对象；本批唯一GUI PID26312",
+            "visible_entry": "仅选择P03水二聚体参考原子对象，N侧栏→QCBlender→导入外部结果→IGMH / IRI 成对场",
+            "validated_scope": "IGMH真实路径/单位/色域用Computer Use输入；IRI参数用MCP准备、Analysis选择与确认用Computer Use；6原子、539448体素全数组、单位、关联、50000抽样经MCP独立核对",
+            "reports": [
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/igmh-native-import.json",
+                "sha256": "94006994dc0d2c9f86ac99ae8d60d2a553fea462c9bd55c68ed497127ef69c91",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/iri-native-import.json",
+                "sha256": "7dcfc46c17772046cf5a455958d0d4f52832832e73903ee1ca58209d16bd8609",
+                "status": "Passed"
+              }
+            ],
+            "screenshots": [
+              {
+                "path": "docs/v1-acceptance/screenshot/C07-entry-GUI.jpg",
+                "sha256": "55a7688d8a18de98fba83f9d9e2067f5c77660e7ecd10300769a54e98e603cb2"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C07-IGMH-dialog-GUI.jpg",
+                "sha256": "6c49939a583af374f7d31c24af9fd571bdce2c81b710399a9e3a2167a9ae703d"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C07-IGMH-imported-GUI.jpg",
+                "sha256": "d5eb135d64e58bb41439050fdeb4cdaa7f77bf3a2469918e5f5e214dc420d8a4"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C07-IRI-dialog-GUI.jpg",
+                "sha256": "0f9cb245e1b6846c3b28af7e16f96c965504c86b93467b91e3b1084f32666f77"
+              }
+            ]
+          },
+          "implementation_fingerprints": {
+            "qcblender/blender/external_fields.py": "1c83fd33cb8a561caa312450e74a52bd8bfc09dc6d654eb03c2468cb7869c8cb",
+            "qcblender/external_fields.py": "87458b8656ca5fa157b6872ffe725de36e080662b5b623102600cd0f25dec508",
+            "qcblender/association.py": "e9b8f0d9e462f3ecf0e5b6c428f3cce2a5378404871c50bd23a58cf825fee000",
+            "qcblender/cube.py": "9af0ad7091af18b5d526e368ff1ccacc129f2544df3e19573a76e926a57cfe14",
+            "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+            "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+            "qcblender/blender/scalars.py": "1e17b26bf258a6a10963410d597a248b31cb60998b9a030d3fa03b6e7df7ac89",
+            "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+            "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+            "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+            "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+            "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+            "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432"
+          },
+          "fingerprint_review": "核对相关实现、公共资产、接口、回调、依赖和Blender版本；此初始文件集合不是影响范围的全部证明。",
+          "reuse": {
+            "preferred_order": [
+              "MCP",
+              "CLI",
+              "Computer Use"
+            ],
+            "coverage": "IGMH真实路径/单位/色域用Computer Use输入；IRI参数用MCP准备、Analysis选择与确认用Computer Use；6原子、539448体素全数组、单位、关联、50000抽样经MCP独立核对",
+            "requires_current_result_assertions": true,
+            "current_batch_replay_status": "Not Run",
+            "current_batch_replay_reports": []
+          }
+        }
+      ]
     },
     {
       "id": "paired-field-scatter-ranges-swap",
@@ -3860,61 +4011,131 @@
       "title": "成对场导入的原生菜单撤销与重做",
       "gui_validation": {
         "status": "Passed",
-        "date": "2026-10-02",
-        "method": "Agent Computer Use Edit menu actions; separately scoped MCP assertions",
-        "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
-        "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
-        "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+        "date": "2026-10-05",
+        "method": "MCP fixture, selection and parameter preparation; Agent Computer Use native actions; MCP result assertions",
+        "source_commit": "a3ed8264aad860f25c922dd7c91efce3f6f078d3",
+        "product_tree": "0cec91ad2ed7804e78a01c39105d49e3d39150d8",
+        "candidate_sha256": "8094278edf08a2e6d54640e4f0cd376d8cbb98568c92464720f963dff4bb8c71",
         "blender": "5.1.1",
-        "locale": "zh_HANS",
-        "objects_and_order": "唯一GUI PID26312；正确IGMH配对新增五个对象后，Edit菜单撤销、重做",
-        "visible_entry": "3D视图 → Edit（编辑）→ 撤销 / 重做",
-        "validated_scope": "撤销移除新增五对象；重做恢复完整新增绑定和保存的同一manifest、数组与VDB；不包含MCP非撤销编辑的跨历史全场景保留保证",
+        "locale": "en_US with QCBlender Chinese labels",
+        "objects_and_order": "P03 paired import immediately completed, pointer in 3D viewport",
+        "visible_entry": "Ctrl+Z; Edit > Redo",
+        "validated_scope": "Computer Use Ctrl+Z and Edit > Redo; full scene/binding snapshots equal before/after expected states",
         "reports": [
           {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/native-menu-undo-redo.json",
-            "sha256": "bdf5b5d454d791708db26c25b6b9901a5ef74eea4797baeb62d3527a0fa62a99",
+            "path": "outputs/evidence/2026-10-05/reliability/gui-final/import-undo.json",
+            "sha256": "66966eefcdb9971cd35effdf5bb9eca541f455e32beeae067710cfbc9504519e",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-05/reliability/gui-final/import-redo.json",
+            "sha256": "b4c16770f449d686bb18fbdf2cf5284d00c15a9774e019035cce532f5fdc1d7c",
             "status": "Passed"
           }
         ],
         "screenshots": [
           {
-            "path": "docs/v1-acceptance/screenshot/C07-native-undo-GUI.jpg",
-            "sha256": "06f216eb122dba51aae3e3a7d28580b08de042d1b88bbbb3c50288961767eef0"
+            "path": "docs/v1-acceptance/screenshot/reliability/02-igmh-undo.png",
+            "sha256": "5c5529330fe14230e308b6436b85c36314d784f3d72ad2953d5bc77eb0cb9fe6"
           },
           {
-            "path": "docs/v1-acceptance/screenshot/C07-native-redo-GUI.jpg",
-            "sha256": "557ffcc2bbdee0eadf4bc934b3c9229dc6b22510864ed8c2d10fbb6eed402a32"
+            "path": "docs/v1-acceptance/screenshot/reliability/03-igmh-redo.png",
+            "sha256": "5a265d4be86323711f7bb0e6dcfa9a79c08322047715639ce967b2c5a61021be"
           }
-        ]
+        ],
+        "limitations": "Independent user/scientific acceptance Not Run"
       },
       "implementation_fingerprints": {
-        "qcblender/blender/external_fields.py": "1c83fd33cb8a561caa312450e74a52bd8bfc09dc6d654eb03c2468cb7869c8cb",
-        "qcblender/external_fields.py": "87458b8656ca5fa157b6872ffe725de36e080662b5b623102600cd0f25dec508",
-        "qcblender/association.py": "e9b8f0d9e462f3ecf0e5b6c428f3cce2a5378404871c50bd23a58cf825fee000",
-        "qcblender/cube.py": "9af0ad7091af18b5d526e368ff1ccacc129f2544df3e19573a76e926a57cfe14",
-        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
-        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
-        "qcblender/blender/scalars.py": "1e17b26bf258a6a10963410d597a248b31cb60998b9a030d3fa03b6e7df7ac89",
-        "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
-        "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
-        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
-        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
-        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
-        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432"
+        "qcblender/blender/static_reference.py": "ca8f73ce141205f4be5bdd1573300377543946830a5d985e3a31c95235b1c599",
+        "qcblender/blender/native_volume.py": "aeaa63f28e0f5c4ad28af6761e9ca3ff621b3a3e876755544f2d0f5d8d2f3c6e",
+        "qcblender/blender/jobs.py": "4b85c88ffef3272d26a8bbc15e0ee6eb240d9f7d27c2f816f99ee233dd6b7ab9",
+        "qcblender/blender/ui.py": "6a959c91238ce6e86a799e62ed98dffcdd2becc8ca76ed631a28627e7acad80f",
+        "qcblender/blender/data_export.py": "3cfcffd28ae0b82113c38f3c66c45ac814eab61e669445a6e401ca5df5ca4c0d",
+        "qcblender/blender/project.py": "d17994a204a6b0f2743c57545380bec8596730dc10d052c7a75c3badd8d0e8a9",
+        "qcblender/blender/views.py": "6cbcc6ef1883178ebb429f0965e95243447581306e4645586fb5c6560e3acabd",
+        "qcblender/blender/external_fields.py": "24b436f3e7b1ba2743c8a7064ba3332a7d3a579ca508933bac78d8a5a6a71369",
+        "qcblender/blender/source_browser.py": "75c9200666e3b9eb92391cf69781895f36c116590b8ce9cadb24a6bb477c12ba",
+        "qcblender/blender/capabilities.py": "c8cb64d3295f54861d3b8019371fdc114898fe8c9b04e22d6f12738597ab25fa",
+        "qcblender/blender/editor_ui.py": "a1a34a6ee156af3cf0297b178e2aeaaf4588f41b4ef1768682011ad0a385ac68",
+        "qcblender/data.py": "cbd6ad27a7a5d3b8b0e2bf85721fa0b6cb26d08f015a7e105af25e7d344e0643",
+        "qcblender/worker.py": "8766d91c0229dd742f83b1fe60833a13f4a0ac4885c59ecc0c9cbde17c201c61",
+        "qcblender/external_fields.py": "62df9da7ef1bdcb196eb0a5513d665e8dbb0c4d74110e9877261c010db54bb5e",
+        "qcblender/project.py": "7c14461d7adf243bbd1c4005c542cc9fad87549f88a56ff183889644d0102ea3",
+        "dependencies.lock.json": "661ac6d6ad41071591b3dda24edb9148363c535e70f6f648128bfd99e8d96e67",
+        "science-sources.lock.json": "05d330d49e4cc9cbe110ecff7fd714a3ef05667b915b14e8abb8c9ef2d5a9165"
       },
-      "fingerprint_review": "核对相关实现、公共资产、接口、回调、依赖和Blender版本；此初始文件集合不是影响范围的全部证明。",
+      "fingerprint_review": "Current candidate reverified after relevant changes; preserve history identities and review relevant fingerprints before reuse.",
       "reuse": {
         "preferred_order": [
           "MCP",
           "CLI",
           "Computer Use"
         ],
-        "coverage": "原生undo上下文须由已有工具保留；MCP无法提供同一上下文时回到Computer Use，不用重建对象伪装撤销",
+        "coverage": "Computer Use Ctrl+Z and Edit > Redo; full scene/binding snapshots equal before/after expected states",
         "requires_current_result_assertions": true,
-        "current_batch_replay_status": "Not Run",
-        "current_batch_replay_reports": []
-      }
+        "current_batch_replay_status": "Passed"
+      },
+      "history": [
+        {
+          "gui_validation": {
+            "status": "Passed",
+            "date": "2026-10-02",
+            "method": "Agent Computer Use Edit menu actions; separately scoped MCP assertions",
+            "source_commit": "2eddb6a011909e8237a394b5cb519e36fefae8f8",
+            "product_tree": "4e11e7a07454ccd66009245b28972fc900bf1653",
+            "candidate_sha256": "059555c29a0b9475bb259a5773c279417d9e39c1f2bb88c0daf389f360abb4fc",
+            "blender": "5.1.1",
+            "locale": "zh_HANS",
+            "objects_and_order": "唯一GUI PID26312；正确IGMH配对新增五个对象后，Edit菜单撤销、重做",
+            "visible_entry": "3D视图 → Edit（编辑）→ 撤销 / 重做",
+            "validated_scope": "撤销移除新增五对象；重做恢复完整新增绑定和保存的同一manifest、数组与VDB；不包含MCP非撤销编辑的跨历史全场景保留保证",
+            "reports": [
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/C07/native-menu-undo-redo.json",
+                "sha256": "bdf5b5d454d791708db26c25b6b9901a5ef74eea4797baeb62d3527a0fa62a99",
+                "status": "Passed"
+              }
+            ],
+            "screenshots": [
+              {
+                "path": "docs/v1-acceptance/screenshot/C07-native-undo-GUI.jpg",
+                "sha256": "06f216eb122dba51aae3e3a7d28580b08de042d1b88bbbb3c50288961767eef0"
+              },
+              {
+                "path": "docs/v1-acceptance/screenshot/C07-native-redo-GUI.jpg",
+                "sha256": "557ffcc2bbdee0eadf4bc934b3c9229dc6b22510864ed8c2d10fbb6eed402a32"
+              }
+            ]
+          },
+          "implementation_fingerprints": {
+            "qcblender/blender/external_fields.py": "1c83fd33cb8a561caa312450e74a52bd8bfc09dc6d654eb03c2468cb7869c8cb",
+            "qcblender/external_fields.py": "87458b8656ca5fa157b6872ffe725de36e080662b5b623102600cd0f25dec508",
+            "qcblender/association.py": "e9b8f0d9e462f3ecf0e5b6c428f3cce2a5378404871c50bd23a58cf825fee000",
+            "qcblender/cube.py": "9af0ad7091af18b5d526e368ff1ccacc129f2544df3e19573a76e926a57cfe14",
+            "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+            "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+            "qcblender/blender/scalars.py": "1e17b26bf258a6a10963410d597a248b31cb60998b9a030d3fa03b6e7df7ac89",
+            "qcblender/blender/result_browser.py": "014ce4291ad6895e2cdb9ef0a4acd500bce003b0b9aa019f722a7ce2a894485a",
+            "qcblender/result_filters.py": "3393e92534ebeb16b58c2ba5f5427ed76627a8dedf36910c1cf2a50694522d0f",
+            "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+            "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+            "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+            "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432"
+          },
+          "fingerprint_review": "核对相关实现、公共资产、接口、回调、依赖和Blender版本；此初始文件集合不是影响范围的全部证明。",
+          "reuse": {
+            "preferred_order": [
+              "MCP",
+              "CLI",
+              "Computer Use"
+            ],
+            "coverage": "原生undo上下文须由已有工具保留；MCP无法提供同一上下文时回到Computer Use，不用重建对象伪装撤销",
+            "requires_current_result_assertions": true,
+            "current_batch_replay_status": "Not Run",
+            "current_batch_replay_reports": []
+          }
+        }
+      ]
     },
     {
       "id": "esp-surface-analysis-import",
@@ -5386,68 +5607,129 @@
       "title": "重新定位同一科学 Dataset",
       "gui_validation": {
         "status": "Passed",
-        "date": "2026-10-02",
-        "method": "Agent Computer Use actual native clicks, independently recorded MCP binding/array/geometry assertions",
-        "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
-        "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
-        "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+        "date": "2026-10-05",
+        "method": "MCP fixture, selection and parameter preparation; Agent Computer Use native actions; MCP result assertions",
+        "source_commit": "a3ed8264aad860f25c922dd7c91efce3f6f078d3",
+        "product_tree": "0cec91ad2ed7804e78a01c39105d49e3d39150d8",
+        "candidate_sha256": "8094278edf08a2e6d54640e4f0cd376d8cbb98568c92464720f963dff4bb8c71",
         "blender": "5.1.1",
-        "locale": "zh_HANS",
-        "objects_and_order": "仅活动对象 QC internal-mask ESP；关联体积与同 Dataset 对象由原生操作同步更新",
-        "visible_entry": "3D Viewport → N → QCBlender → 工程与诊断 → 重新定位数据 → 同一Dataset的manifest.json",
-        "validated_scope": "同一真实ESP Dataset显式移动并逐文件核对；CU文件对话框选择manifest.json并确认，全部对象/VDB绑定迁移，52数组及56顶点/54面一致；不匹配manifest经MCP拒绝且绑定不变",
+        "locale": "en_US with QCBlender Chinese labels",
+        "objects_and_order": "QC orbital_amplitude.001, real 31^3 field; corrupt fixture keeps original manifest",
+        "visible_entry": "N > QCBlender > 工程与诊断 > 重新定位数据 > manifest.json",
+        "validated_scope": "Same-manifest corrupted VDB rejected with native path/reason; all original scene bindings and datablocks unchanged. Successful relocate separately covered by native tests.",
         "reports": [
           {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/relocate-GUI.json",
-            "sha256": "174225ff24b9135d4fe6bf6639a64439b74ad6da33a031beca430eed24058297",
-            "status": "Passed"
-          },
-          {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/cold-completion.json",
-            "sha256": "c8270459fcff47e1585f72b2fe43a21c6c6dd145ed8f7fb7b81001d2a2b0a967",
+            "path": "outputs/evidence/2026-10-05/reliability/gui-final/volume-native-rejected.json",
+            "sha256": "0dd185cc110c133ef4fce13ba9cf0e2169cc17e3d49ba2e16617fef58a1cd9e1",
             "status": "Passed"
           }
         ],
         "screenshots": [
           {
-            "path": "docs/v1-acceptance/screenshot/N18-relocate-dialog-GUI.jpg",
-            "sha256": "f11258807396d0f3a9aedf565a1acce2d859a2df4884c15c99c4ad68bf2827ad"
+            "path": "docs/v1-acceptance/screenshot/reliability/07-native-volume-error.png",
+            "sha256": "d783fa891670bef492400443b8a9e057d4dcefcd4f7a513eb70c2a3f4d00fb05"
           }
-        ]
+        ],
+        "limitations": "Independent user/scientific acceptance Not Run"
       },
       "implementation_fingerprints": {
-        "qcblender/blender/project.py": "30181040074a4ec38ce7f06e1d55e2dabc16e80a47ec4a1c95b5e1f75d543df4",
+        "qcblender/blender/static_reference.py": "ca8f73ce141205f4be5bdd1573300377543946830a5d985e3a31c95235b1c599",
+        "qcblender/blender/native_volume.py": "aeaa63f28e0f5c4ad28af6761e9ca3ff621b3a3e876755544f2d0f5d8d2f3c6e",
+        "qcblender/blender/jobs.py": "4b85c88ffef3272d26a8bbc15e0ee6eb240d9f7d27c2f816f99ee233dd6b7ab9",
+        "qcblender/blender/ui.py": "6a959c91238ce6e86a799e62ed98dffcdd2becc8ca76ed631a28627e7acad80f",
+        "qcblender/blender/data_export.py": "3cfcffd28ae0b82113c38f3c66c45ac814eab61e669445a6e401ca5df5ca4c0d",
+        "qcblender/blender/project.py": "d17994a204a6b0f2743c57545380bec8596730dc10d052c7a75c3badd8d0e8a9",
+        "qcblender/blender/views.py": "6cbcc6ef1883178ebb429f0965e95243447581306e4645586fb5c6560e3acabd",
+        "qcblender/blender/external_fields.py": "24b436f3e7b1ba2743c8a7064ba3332a7d3a579ca508933bac78d8a5a6a71369",
+        "qcblender/blender/source_browser.py": "75c9200666e3b9eb92391cf69781895f36c116590b8ce9cadb24a6bb477c12ba",
+        "qcblender/blender/capabilities.py": "c8cb64d3295f54861d3b8019371fdc114898fe8c9b04e22d6f12738597ab25fa",
+        "qcblender/blender/editor_ui.py": "a1a34a6ee156af3cf0297b178e2aeaaf4588f41b4ef1768682011ad0a385ac68",
+        "qcblender/data.py": "cbd6ad27a7a5d3b8b0e2bf85721fa0b6cb26d08f015a7e105af25e7d344e0643",
+        "qcblender/worker.py": "8766d91c0229dd742f83b1fe60833a13f4a0ac4885c59ecc0c9cbde17c201c61",
+        "qcblender/external_fields.py": "62df9da7ef1bdcb196eb0a5513d665e8dbb0c4d74110e9877261c010db54bb5e",
         "qcblender/project.py": "7c14461d7adf243bbd1c4005c542cc9fad87549f88a56ff183889644d0102ea3",
-        "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
-        "qcblender/worker.py": "f96a838a18427611c085f531339cf8ed5c3be11f15fa815732a708f8092f0a37",
-        "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
-        "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
-        "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
-        "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
-        "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
-        "qcblender/blender/graph.py": "887b365c7fd1c849fcf55bbdb4a5e37f01f146b674994198703d76dc951dc325",
         "dependencies.lock.json": "661ac6d6ad41071591b3dda24edb9148363c535e70f6f648128bfd99e8d96e67",
         "science-sources.lock.json": "05d330d49e4cc9cbe110ecff7fd714a3ef05667b915b14e8abb8c9ef2d5a9165"
       },
-      "fingerprint_review": "Review the listed recovery implementation, helpers, job lifecycle, registration, interfaces and locks before reuse; current candidate is the recorded exact identity. Scope is this real saved diagnostic field, not every malformed Dataset.",
+      "fingerprint_review": "Current candidate reverified after relevant changes; preserve history identities and review relevant fingerprints before reuse.",
       "reuse": {
         "preferred_order": [
           "MCP",
           "CLI",
           "Computer Use"
         ],
-        "coverage": "Native registered recovery operator can be replayed by MCP; existing CLI cold readback verifies saved engineering; first/changed dialog interaction remains CU",
-        "current_batch_replay_status": "Passed",
+        "coverage": "Same-manifest corrupted VDB rejected with native path/reason; all original scene bindings and datablocks unchanged. Successful relocate separately covered by native tests.",
         "requires_current_result_assertions": true,
-        "current_batch_replay_reports": [
-          {
-            "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/relocate-mismatch-MCP.json",
-            "sha256": "bcccfe85686eff780eab2ac65e80f26ae11c961475a1d6f7324a333fa3f60284",
-            "status": "Passed"
+        "current_batch_replay_status": "Passed"
+      },
+      "history": [
+        {
+          "gui_validation": {
+            "status": "Passed",
+            "date": "2026-10-02",
+            "method": "Agent Computer Use actual native clicks, independently recorded MCP binding/array/geometry assertions",
+            "source_commit": "deb9416d8362dc42460e79b1a5b37bfcd8a1df63",
+            "product_tree": "3dd1305eda2ebdf03599f83d60f278ccd06eab1a",
+            "candidate_sha256": "c736bb906599b868f8a11f964355b4139b2b09efd55e126f67792e6fac095ae2",
+            "blender": "5.1.1",
+            "locale": "zh_HANS",
+            "objects_and_order": "仅活动对象 QC internal-mask ESP；关联体积与同 Dataset 对象由原生操作同步更新",
+            "visible_entry": "3D Viewport → N → QCBlender → 工程与诊断 → 重新定位数据 → 同一Dataset的manifest.json",
+            "validated_scope": "同一真实ESP Dataset显式移动并逐文件核对；CU文件对话框选择manifest.json并确认，全部对象/VDB绑定迁移，52数组及56顶点/54面一致；不匹配manifest经MCP拒绝且绑定不变",
+            "reports": [
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/relocate-GUI.json",
+                "sha256": "174225ff24b9135d4fe6bf6639a64439b74ad6da33a031beca430eed24058297",
+                "status": "Passed"
+              },
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/cold-completion.json",
+                "sha256": "c8270459fcff47e1585f72b2fe43a21c6c6dd145ed8f7fb7b81001d2a2b0a967",
+                "status": "Passed"
+              }
+            ],
+            "screenshots": [
+              {
+                "path": "docs/v1-acceptance/screenshot/N18-relocate-dialog-GUI.jpg",
+                "sha256": "f11258807396d0f3a9aedf565a1acce2d859a2df4884c15c99c4ad68bf2827ad"
+              }
+            ]
+          },
+          "implementation_fingerprints": {
+            "qcblender/blender/project.py": "30181040074a4ec38ce7f06e1d55e2dabc16e80a47ec4a1c95b5e1f75d543df4",
+            "qcblender/project.py": "7c14461d7adf243bbd1c4005c542cc9fad87549f88a56ff183889644d0102ea3",
+            "qcblender/data.py": "3e9227f2bf8f9c2af40ac410f95e020e994079053a91f1e9627e406bc755988b",
+            "qcblender/worker.py": "f96a838a18427611c085f531339cf8ed5c3be11f15fa815732a708f8092f0a37",
+            "qcblender/blender/jobs.py": "327c7c91a2e1434872fa682f9c64ce216124b1591c08a6bc7ecce0d80830e642",
+            "qcblender/blender/ui.py": "a28acd52c8cb2b3a01a9cb4cc3fbe09c83ce4c8b9ecc2e5196b27e59061d4cd7",
+            "qcblender/blender/views.py": "751ed6591cc91c8bd3231e972eb0fa29e35dc42cd79e2105af0dcd43042a9ecc",
+            "qcblender/blender/source_browser.py": "9d1ebe053259ee486df6dbacb754d508f5203fa6db1991e876a6e2be2121faac",
+            "qcblender/blender/editor_ui.py": "86d7826a3b35d62d7834721204c8214e43da804855e870b285c6a25bdff40432",
+            "qcblender/blender/graph.py": "887b365c7fd1c849fcf55bbdb4a5e37f01f146b674994198703d76dc951dc325",
+            "dependencies.lock.json": "661ac6d6ad41071591b3dda24edb9148363c535e70f6f648128bfd99e8d96e67",
+            "science-sources.lock.json": "05d330d49e4cc9cbe110ecff7fd714a3ef05667b915b14e8abb8c9ef2d5a9165"
+          },
+          "fingerprint_review": "Review the listed recovery implementation, helpers, job lifecycle, registration, interfaces and locks before reuse; current candidate is the recorded exact identity. Scope is this real saved diagnostic field, not every malformed Dataset.",
+          "reuse": {
+            "preferred_order": [
+              "MCP",
+              "CLI",
+              "Computer Use"
+            ],
+            "coverage": "Native registered recovery operator can be replayed by MCP; existing CLI cold readback verifies saved engineering; first/changed dialog interaction remains CU",
+            "current_batch_replay_status": "Passed",
+            "requires_current_result_assertions": true,
+            "current_batch_replay_reports": [
+              {
+                "path": "outputs/evidence/2026-10-02/tutorial-cu/full/remaining-boundaries/field-guards/relocate-mismatch-MCP.json",
+                "sha256": "bcccfe85686eff780eab2ac65e80f26ae11c961475a1d6f7324a333fa3f60284",
+                "status": "Passed"
+              }
+            ],
+            "limitations": "用户复做及独立科研签署 Not Run；异步开始不是恢复成功，必须等待终态并核对绑定和数组"
           }
-        ],
-        "limitations": "用户复做及独立科研签署 Not Run；异步开始不是恢复成功，必须等待终态并核对绑定和数组"
-      }
+        }
+      ]
     },
     {
       "id": "public-isosurface-add-connect",
@@ -6158,6 +6440,133 @@
         "coverage": "仅选择CO-BH3参考对象；冲突表报告positive_eigenvalue和来源行7/24且场景不变；相同重复表导入9对并保留首次来源。其余三个字段由原生CLI验证。"
       },
       "independent_human_acceptance": "Not Run"
+    },
+    {
+      "id": "external-analysis-static-reference-guard",
+      "title": "外部分析静态参考限制",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-05",
+        "method": "MCP fixture, selection and parameter preparation; Agent Computer Use native actions; MCP result assertions",
+        "source_commit": "a3ed8264aad860f25c922dd7c91efce3f6f078d3",
+        "product_tree": "0cec91ad2ed7804e78a01c39105d49e3d39150d8",
+        "candidate_sha256": "8094278edf08a2e6d54640e4f0cd376d8cbb98568c92464720f963dff4bb8c71",
+        "blender": "5.1.1",
+        "locale": "en_US with QCBlender Chinese labels",
+        "objects_and_order": "water_neutral_nbo_opt_freq.out / Job 1 active",
+        "visible_entry": "N > QCBlender > 导入外部结果",
+        "validated_scope": "Actual optimization Dataset initial source selected; IGMH/IRI, NBO, AIM and ETS-NOCV buttons disabled. IRC/XYZ and dynamic ancestor checks covered by native scripts.",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-05/reliability/gui-final/dynamic-reference-disabled.json",
+            "sha256": "52b1b9b52892dbec0ea970b4ff2537840abdf5e1023c9659b916075ee242b3d0",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/reliability/05-dynamic-reference-disabled.png",
+            "sha256": "fc1c63637ebbd3dabb7421ba4c7734dd8e3fc98da0ff93fde3514b9d3ad60342"
+          }
+        ],
+        "limitations": "Independent user/scientific acceptance Not Run"
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/static_reference.py": "ca8f73ce141205f4be5bdd1573300377543946830a5d985e3a31c95235b1c599",
+        "qcblender/blender/native_volume.py": "aeaa63f28e0f5c4ad28af6761e9ca3ff621b3a3e876755544f2d0f5d8d2f3c6e",
+        "qcblender/blender/jobs.py": "4b85c88ffef3272d26a8bbc15e0ee6eb240d9f7d27c2f816f99ee233dd6b7ab9",
+        "qcblender/blender/ui.py": "6a959c91238ce6e86a799e62ed98dffcdd2becc8ca76ed631a28627e7acad80f",
+        "qcblender/blender/data_export.py": "3cfcffd28ae0b82113c38f3c66c45ac814eab61e669445a6e401ca5df5ca4c0d",
+        "qcblender/blender/project.py": "d17994a204a6b0f2743c57545380bec8596730dc10d052c7a75c3badd8d0e8a9",
+        "qcblender/blender/views.py": "6cbcc6ef1883178ebb429f0965e95243447581306e4645586fb5c6560e3acabd",
+        "qcblender/blender/external_fields.py": "24b436f3e7b1ba2743c8a7064ba3332a7d3a579ca508933bac78d8a5a6a71369",
+        "qcblender/blender/source_browser.py": "75c9200666e3b9eb92391cf69781895f36c116590b8ce9cadb24a6bb477c12ba",
+        "qcblender/blender/capabilities.py": "c8cb64d3295f54861d3b8019371fdc114898fe8c9b04e22d6f12738597ab25fa",
+        "qcblender/blender/editor_ui.py": "a1a34a6ee156af3cf0297b178e2aeaaf4588f41b4ef1768682011ad0a385ac68",
+        "qcblender/data.py": "cbd6ad27a7a5d3b8b0e2bf85721fa0b6cb26d08f015a7e105af25e7d344e0643",
+        "qcblender/worker.py": "8766d91c0229dd742f83b1fe60833a13f4a0ac4885c59ecc0c9cbde17c201c61",
+        "qcblender/external_fields.py": "62df9da7ef1bdcb196eb0a5513d665e8dbb0c4d74110e9877261c010db54bb5e",
+        "qcblender/project.py": "7c14461d7adf243bbd1c4005c542cc9fad87549f88a56ff183889644d0102ea3",
+        "dependencies.lock.json": "661ac6d6ad41071591b3dda24edb9148363c535e70f6f648128bfd99e8d96e67",
+        "science-sources.lock.json": "05d330d49e4cc9cbe110ecff7fd714a3ef05667b915b14e8abb8c9ef2d5a9165"
+      },
+      "fingerprint_review": "Current candidate reverified after relevant changes; preserve history identities and review relevant fingerprints before reuse.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Actual optimization Dataset initial source selected; IGMH/IRI, NBO, AIM and ETS-NOCV buttons disabled. IRC/XYZ and dynamic ancestor checks covered by native scripts.",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed"
+      }
+    },
+    {
+      "id": "scientific-worker-escape-finalization",
+      "title": "科学计算 Esc 取消收尾",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-05",
+        "method": "MCP fixture, selection and parameter preparation; Agent Computer Use native actions; MCP result assertions",
+        "source_commit": "a3ed8264aad860f25c922dd7c91efce3f6f078d3",
+        "product_tree": "0cec91ad2ed7804e78a01c39105d49e3d39150d8",
+        "candidate_sha256": "8094278edf08a2e6d54640e4f0cd376d8cbb98568c92464720f963dff4bb8c71",
+        "blender": "5.1.1",
+        "locale": "en_US with QCBlender Chinese labels",
+        "objects_and_order": "Static FCHK atom object active; confirm generate dialog, Escape while worker alive",
+        "visible_entry": "N > QCBlender > 工作流 > 生成量子化学场 > Escape",
+        "validated_scope": "Real running ESP worker, 0.05 angstrom, margin 3, 1024 MiB; exit confirmed, no errors, no jobs/timers, scene unchanged",
+        "reports": [
+          {
+            "path": "outputs/evidence/2026-10-05/reliability/gui-final/compute-esp-running.json",
+            "sha256": "802e18fb7c0ec80f8f08ee5afe70f66569b1ba18771c06a287e73b7f98bd4d3e",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/evidence/2026-10-05/reliability/gui-final/compute-esc.json",
+            "sha256": "d8b0abec4f0699ce2d5f0e8aded6e55b7a3840e268580dd77587f8be57d551fd",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "docs/v1-acceptance/screenshot/reliability/06-compute-cancelled.png",
+            "sha256": "6b7bfc68fb898ab707affe67a1d57d79ffee91a62305d5bbee9a659166007b0e"
+          }
+        ],
+        "limitations": "CSV running GUI cancellation Not Run because export completed before Escape; native worker export cancellation recorded separately; independent acceptance Not Run"
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/static_reference.py": "ca8f73ce141205f4be5bdd1573300377543946830a5d985e3a31c95235b1c599",
+        "qcblender/blender/native_volume.py": "aeaa63f28e0f5c4ad28af6761e9ca3ff621b3a3e876755544f2d0f5d8d2f3c6e",
+        "qcblender/blender/jobs.py": "4b85c88ffef3272d26a8bbc15e0ee6eb240d9f7d27c2f816f99ee233dd6b7ab9",
+        "qcblender/blender/ui.py": "6a959c91238ce6e86a799e62ed98dffcdd2becc8ca76ed631a28627e7acad80f",
+        "qcblender/blender/data_export.py": "3cfcffd28ae0b82113c38f3c66c45ac814eab61e669445a6e401ca5df5ca4c0d",
+        "qcblender/blender/project.py": "d17994a204a6b0f2743c57545380bec8596730dc10d052c7a75c3badd8d0e8a9",
+        "qcblender/blender/views.py": "6cbcc6ef1883178ebb429f0965e95243447581306e4645586fb5c6560e3acabd",
+        "qcblender/blender/external_fields.py": "24b436f3e7b1ba2743c8a7064ba3332a7d3a579ca508933bac78d8a5a6a71369",
+        "qcblender/blender/source_browser.py": "75c9200666e3b9eb92391cf69781895f36c116590b8ce9cadb24a6bb477c12ba",
+        "qcblender/blender/capabilities.py": "c8cb64d3295f54861d3b8019371fdc114898fe8c9b04e22d6f12738597ab25fa",
+        "qcblender/blender/editor_ui.py": "a1a34a6ee156af3cf0297b178e2aeaaf4588f41b4ef1768682011ad0a385ac68",
+        "qcblender/data.py": "cbd6ad27a7a5d3b8b0e2bf85721fa0b6cb26d08f015a7e105af25e7d344e0643",
+        "qcblender/worker.py": "8766d91c0229dd742f83b1fe60833a13f4a0ac4885c59ecc0c9cbde17c201c61",
+        "qcblender/external_fields.py": "62df9da7ef1bdcb196eb0a5513d665e8dbb0c4d74110e9877261c010db54bb5e",
+        "qcblender/project.py": "7c14461d7adf243bbd1c4005c542cc9fad87549f88a56ff183889644d0102ea3",
+        "dependencies.lock.json": "661ac6d6ad41071591b3dda24edb9148363c535e70f6f648128bfd99e8d96e67",
+        "science-sources.lock.json": "05d330d49e4cc9cbe110ecff7fd714a3ef05667b915b14e8abb8c9ef2d5a9165"
+      },
+      "fingerprint_review": "Current candidate reverified after relevant changes; preserve history identities and review relevant fingerprints before reuse.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Real running ESP worker, 0.05 angstrom, margin 3, 1024 MiB; exit confirmed, no errors, no jobs/timers, scene unchanged",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed"
+      }
     }
   ]
 }

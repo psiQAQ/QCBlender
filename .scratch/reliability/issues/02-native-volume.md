@@ -1,7 +1,7 @@
 # 02 原生体场可读性
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Blocked by: none
 
 ## 范围与验收
@@ -31,3 +31,5 @@ Blocked by: none
 - **Not Run**：自然无权限目标，未改变 ACL；界面提示、Undo/Redo、最终候选原地及移动后新进程冷读由 06 统一验证；独立人工及科学签署保持独立。
 
 诊断历史：主 Agent 的原始产品 red 在原生 `grids.load() == False`、`field.vdb not found` 后，`field_view` 仍创建 source 对象并在更长 manifest 读取失败；见 `volume-red-prepared.*`。第一次 red 缺少生成 node assets，为验证前置失败，见 `volume-red.*`；完整原生初次复验发现重新绑定 strict resolve 尚未使用 extended path，见 `volume-native.*`。最终 `volume-native2` 覆盖修正后的文件系统边界。上述日志同在主仓库 `outputs/evidence/2026-10-05/reliability/logs/`，不将前置失败或部分复验计为通过。
+
+2026-10-05补充验收：同一真实VDB脚本在旧20dfad7上复现paired第二场、普通导入第二场、普通导入首场失败后的部分场景写入；在a3ed826上三项全部Passed，场景/datablock/绑定/metadata cache/active/selection完全不变，诊断保留路径和原生原因。汇总见本批multi-red.json、multi-green.json，原始Failed及Passed日志均保留。Standards指出的报告状态问题已以a3ed826修复并复审通过。

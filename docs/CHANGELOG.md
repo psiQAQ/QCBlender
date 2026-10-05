@@ -1,5 +1,7 @@
 # 开发演进
 
+- 2026-10-05：外部分析增加静态参考及异步身份检查；创建场、保存和重新定位前检查原生VDB网格；取消保留原错误、退出状态与待清理任务。IGMH分量、片段和来源声明按user_assigned持久化及导出。105科学测试、40单测、六视觉与真实GUI/Undo/Redo/原地和中文移动冷读Passed，Standards/Spec各1项修复后0遗留。标准库流式摘要实验保持科学身份，256³收益未达到32 MiB或10%门槛，停止扩大重构。独立人工/科研签署及天然权限拒绝目标Not Run；候选、保全及本地收尾见[验证](acceptance/reliability-validation.md)、[交付收据](acceptance/reliability-delivery.json)与[产物路由](ARTIFACTS.md)，不push/发布。
+
 - 2026-10-04：重试遗留清理，f458工作树登记及已合并chore/repository-cleanup分支正常移除，当前仅main；注释归档标签保留，b48c目录已不存在。14,816文件/798,822,391字节完整保全并核对SHA-256，补存科学数据11组Dataset/600数组/8VDB新进程读回Passed；f458磁盘残留普通删除仍访问拒绝，06保持pending。收据与保全映射见[产物路由](ARTIFACTS.md)“遗留清理状态”；未修改ACL/所有权，未force删除。
 
 - 2026-10-04：修复AUDIT-01当前构型关联与AUDIT-04共享mesh切步。关联绑定两端当前科学身份和具体参考对象，换步失效；共享原子mesh在写入前拒绝换步并提示单用户操作。97科学测试、六视觉场景及保全冷读、真实GUI/Undo/Redo和关联/共享对象原生专项Passed；Standards/Spec各1项修复复审、0阻断遗留。独立人工签署Not Run。[验证](acceptance/audit-p1-validation.md)、[产物路由](ARTIFACTS.md)与[交付收据](acceptance/audit-p1-delivery.json)记录确切身份及保留状态。

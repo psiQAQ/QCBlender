@@ -1,10 +1,14 @@
 # 0.0.1 支持范围与验证状态
 
-更新：2026-10-04。当前本地待验收候选使用Windows x64、Blender 5.1.1、CPython 3.13.9、NumPy 2.3.4、OpenVDB 13。独立使用者及科研签署尚未执行，未发布。
+更新：2026-10-05。当前本地待验收候选使用Windows x64、Blender 5.1.1、CPython 3.13.9、NumPy 2.3.4、OpenVDB 13。独立使用者及科研签署尚未执行，未发布。
 
 ## 当前候选与证据
 
-当前候选固定产品源码为`a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d`，详见[P1技术验证](acceptance/audit-p1-validation.md)及[机器索引](acceptance/audit-p1-validation.json)。97科学测试、当前构型关联/共享mesh原生与GUI、Undo/Redo、原地/中文移动及最终保全冷读Passed，六固定视觉场景比较Passed；独立使用者和科研签署Not Run。
+当前候选固定产品源码为`a3ed8264aad860f25c922dd7c91efce3f6f078d3`，详见[可靠性技术验证](acceptance/reliability-validation.md)及[机器索引](acceptance/reliability-validation.json)。105科学测试、40相关单测、15项原生体积检查、15项IGMH/静态参考检查、六视觉场景及保全冷读Passed；真实界面声明导入、Undo/Redo、动态参考禁用、运行中ESP取消、损坏VDB拒绝和工程保存/原地与中文移动冷读Passed。GUI CSV在按Esc前已完成，运行中GUI取消Not Run；真实worker取消另有原生脚本证据。天然权限拒绝目标与独立使用者/科研签署Not Run。
+
+流式摘要实验的科学身份与摘要一致；256³冷/热峰值分别下降约15.2/16.0 MiB、端到端中位耗时改善约1.7%/1.5%，未达到扩大优化门槛。前后候选与本轮最终候选分开绑定，详见实验报告。
+
+历史P1的97项科学测试、当前构型关联与共享mesh记录继续由[P1验证](acceptance/audit-p1-validation.md)保留原候选身份。
 
 ## 历史展示、XYZ与CSV批次
 

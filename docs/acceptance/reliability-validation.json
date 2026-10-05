@@ -1,0 +1,1073 @@
+{
+  "schema": 1,
+  "status": "Passed",
+  "date": "2026-10-05",
+  "source_commit": "a3ed8264aad860f25c922dd7c91efce3f6f078d3",
+  "product_tree": "0cec91ad2ed7804e78a01c39105d49e3d39150d8",
+  "candidate": {
+    "status": "Passed",
+    "kind": "final",
+    "source_commit": "a3ed8264aad860f25c922dd7c91efce3f6f078d3",
+    "product_tree": "0cec91ad2ed7804e78a01c39105d49e3d39150d8",
+    "path": "outputs/candidates/current/reliability-final-a3ed826/qcblender-0.0.1.zip",
+    "sha256": "8094278edf08a2e6d54640e4f0cd376d8cbb98568c92464720f963dff4bb8c71",
+    "bytes": 50645094
+  },
+  "scope": "Local technical qualification of reliability, IGMH declarations and streaming SHA-256; unrun boundaries and independent signoff remain separate",
+  "audit": {
+    "status": "Passed",
+    "candidate_sha256_verified": true,
+    "installed_python_matches_zip": true,
+    "command_log_hashes_verified": true,
+    "gui_undo_redo_full_snapshot_parity": true,
+    "gui_cold_snapshot_parity": true,
+    "independent_gui_preservation_byte_check": {
+      "status": "Not Run",
+      "verified_files": 2,
+      "unreadable_files": 147,
+      "report": "document-drafts/preservation-byte-audit.json",
+      "reason": "Subagent file access denied; original preservation receipt and cold snapshot parity remain separate evidence"
+    },
+    "gui_preservation_byte_recheck": {
+      "status": "Passed",
+      "files": 149,
+      "source_and_destination_sha256_verified": true,
+      "mapping": "gui-final/moved-preservation.json",
+      "mapping_sha256": "69ff532a3f5b401748ed5f842f0502e664bdc2bbfd921ffa3fe9847db2994657"
+    }
+  },
+  "checks": {
+    "science": {
+      "status": "Passed",
+      "tests": 105,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "metrics": {
+        "density_max_abs_error": 8.440006539212064e-07,
+        "esp_max_abs_error": 4.60872461194306e-06,
+        "electron_count": 9.999999997365176,
+        "alpha_mo8_max_abs_error": 4.848206773544472e-09,
+        "alpha_mo9_max_abs_error": 4.846595683810628e-09,
+        "beta_mo8_max_abs_error": 4.848206773544472e-09,
+        "beta_mo9_max_abs_error": 4.846595683810628e-09
+      }
+    },
+    "units": {
+      "status": "Passed",
+      "tests": 40,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "modules": [
+        "test_cancel_finalization",
+        "test_native_volume",
+        "test_native_volume_project",
+        "test_static_reference_capabilities",
+        "test_streaming_digests",
+        "test_multi_field_accept"
+      ]
+    },
+    "native_volume": {
+      "status": "Passed",
+      "counts": {
+        "Passed": 15,
+        "Failed": 0,
+        "Not Run": 2
+      },
+      "report": "final/native-volume.json"
+    },
+    "igmh": {
+      "status": "Passed",
+      "checks": 15,
+      "report": "final/igmh-and-static-reference.json",
+      "scope": "Static log/fchk/cube; optimization/IRC/XYZ and ancestors; P03 arrays/declarations/CSV; portable save",
+      "synthetic_boundary": "Log/FCHK paired cases use synthetic grids with real nuclei; P03 uses real external Cubes"
+    },
+    "scripted_cancellation": {
+      "status": "Passed",
+      "report": "final/cancel/d92f50f6d08f40c48c2dc47092fc88f8/cancel-finalization.json",
+      "scope": "Real workers and native timers; scripted ESC and controlled process fault injection",
+      "gui": "Not Run"
+    },
+    "multi_field_regression": {
+      "status": "Passed",
+      "red": "multi-red.json",
+      "green": "multi-green.json",
+      "scope": "Three native completed-result accept failures preserve scene after repair; old product reproduces writes"
+    },
+    "portable_cold_reads": {
+      "status": "Passed",
+      "reports": [
+        "final/cold/volume-original.json",
+        "final/cold/volume-preserved.json",
+        "final/cold/igmh-original/reopen-report.json",
+        "final/cold/igmh-preserved/reopen-report.json"
+      ],
+      "scope": "Final native IGMH/volume projects; original and preserved locations; separate processes"
+    },
+    "visual": {
+      "status": "Passed",
+      "cases": [
+        "atoms",
+        "signed-mo",
+        "density-esp",
+        "slice-contours",
+        "fog",
+        "legend-annotations"
+      ],
+      "reports": [
+        {
+          "case": "atoms",
+          "phase": "initial",
+          "status": "Passed",
+          "report": "closing-preserved/outputs/runs/rel/visualf/atoms/atoms.json",
+          "scientific_arrays_unchanged": "Passed",
+          "comparison": {
+            "status": "Passed",
+            "regions": {
+              "full": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              },
+              "molecule": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              }
+            },
+            "thresholds": {
+              "mean_absolute_error": 0.003,
+              "pixel_channel_delta": 0.03137254901960784,
+              "changed_pixel_fraction": 0.01
+            }
+          }
+        },
+        {
+          "case": "atoms",
+          "phase": "cold",
+          "status": "Passed",
+          "report": "final/cold/atoms/atoms.json",
+          "scientific_arrays_unchanged": "Passed",
+          "comparison": {
+            "status": "Passed",
+            "regions": {
+              "full": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              },
+              "molecule": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              }
+            },
+            "thresholds": {
+              "mean_absolute_error": 0.003,
+              "pixel_channel_delta": 0.03137254901960784,
+              "changed_pixel_fraction": 0.01
+            }
+          }
+        },
+        {
+          "case": "signed-mo",
+          "phase": "initial",
+          "status": "Passed",
+          "report": "closing-preserved/outputs/runs/rel/visualf/signed-mo/signed-mo.json",
+          "scientific_arrays_unchanged": "Passed",
+          "comparison": {
+            "status": "Passed",
+            "regions": {
+              "full": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              },
+              "molecule": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              }
+            },
+            "thresholds": {
+              "mean_absolute_error": 0.003,
+              "pixel_channel_delta": 0.03137254901960784,
+              "changed_pixel_fraction": 0.01
+            }
+          }
+        },
+        {
+          "case": "signed-mo",
+          "phase": "cold",
+          "status": "Passed",
+          "report": "final/cold/signed-mo/signed-mo.json",
+          "scientific_arrays_unchanged": "Passed",
+          "comparison": {
+            "status": "Passed",
+            "regions": {
+              "full": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              },
+              "molecule": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              }
+            },
+            "thresholds": {
+              "mean_absolute_error": 0.003,
+              "pixel_channel_delta": 0.03137254901960784,
+              "changed_pixel_fraction": 0.01
+            }
+          }
+        },
+        {
+          "case": "density-esp",
+          "phase": "initial",
+          "status": "Passed",
+          "report": "closing-preserved/outputs/runs/rel/visualf/density-esp/density-esp.json",
+          "scientific_arrays_unchanged": "Passed",
+          "comparison": {
+            "status": "Passed",
+            "regions": {
+              "full": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              },
+              "molecule": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              }
+            },
+            "thresholds": {
+              "mean_absolute_error": 0.003,
+              "pixel_channel_delta": 0.03137254901960784,
+              "changed_pixel_fraction": 0.01
+            }
+          }
+        },
+        {
+          "case": "density-esp",
+          "phase": "cold",
+          "status": "Passed",
+          "report": "final/cold/density-esp/density-esp.json",
+          "scientific_arrays_unchanged": "Passed",
+          "comparison": {
+            "status": "Passed",
+            "regions": {
+              "full": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              },
+              "molecule": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              }
+            },
+            "thresholds": {
+              "mean_absolute_error": 0.003,
+              "pixel_channel_delta": 0.03137254901960784,
+              "changed_pixel_fraction": 0.01
+            }
+          }
+        },
+        {
+          "case": "slice-contours",
+          "phase": "initial",
+          "status": "Passed",
+          "report": "closing-preserved/outputs/runs/rel/visualf/slice-contours/slice-contours.json",
+          "scientific_arrays_unchanged": "Passed",
+          "comparison": {
+            "status": "Passed",
+            "regions": {
+              "full": {
+                "mean_absolute_error": 4.695888492278755e-07,
+                "changed_pixel_fraction": 6.975446428571428e-06,
+                "status": "Passed"
+              },
+              "molecule": {
+                "mean_absolute_error": 8.904795955728601e-07,
+                "changed_pixel_fraction": 1.3227513227513228e-05,
+                "status": "Passed"
+              }
+            },
+            "thresholds": {
+              "mean_absolute_error": 0.003,
+              "pixel_channel_delta": 0.03137254901960784,
+              "changed_pixel_fraction": 0.01
+            }
+          }
+        },
+        {
+          "case": "slice-contours",
+          "phase": "cold",
+          "status": "Passed",
+          "report": "final/cold/slice-contours/slice-contours.json",
+          "scientific_arrays_unchanged": "Passed",
+          "comparison": {
+            "status": "Passed",
+            "regions": {
+              "full": {
+                "mean_absolute_error": 4.695888492278755e-07,
+                "changed_pixel_fraction": 6.975446428571428e-06,
+                "status": "Passed"
+              },
+              "molecule": {
+                "mean_absolute_error": 8.904795955728601e-07,
+                "changed_pixel_fraction": 1.3227513227513228e-05,
+                "status": "Passed"
+              }
+            },
+            "thresholds": {
+              "mean_absolute_error": 0.003,
+              "pixel_channel_delta": 0.03137254901960784,
+              "changed_pixel_fraction": 0.01
+            }
+          }
+        },
+        {
+          "case": "fog",
+          "phase": "initial",
+          "status": "Passed",
+          "report": "closing-preserved/outputs/runs/rel/visualf/fog/fog.json",
+          "scientific_arrays_unchanged": "Passed",
+          "comparison": {
+            "status": "Passed",
+            "regions": {
+              "full": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              },
+              "molecule": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              }
+            },
+            "thresholds": {
+              "mean_absolute_error": 0.003,
+              "pixel_channel_delta": 0.03137254901960784,
+              "changed_pixel_fraction": 0.01
+            }
+          }
+        },
+        {
+          "case": "fog",
+          "phase": "cold",
+          "status": "Passed",
+          "report": "final/cold/fog/fog.json",
+          "scientific_arrays_unchanged": "Passed",
+          "comparison": {
+            "status": "Passed",
+            "regions": {
+              "full": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              },
+              "molecule": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              }
+            },
+            "thresholds": {
+              "mean_absolute_error": 0.003,
+              "pixel_channel_delta": 0.03137254901960784,
+              "changed_pixel_fraction": 0.01
+            }
+          }
+        },
+        {
+          "case": "legend-annotations",
+          "phase": "initial",
+          "status": "Passed",
+          "report": "closing-preserved/outputs/runs/rel/visualf/legend-annotations/legend-annotations.json",
+          "scientific_arrays_unchanged": "Passed",
+          "comparison": {
+            "status": "Passed",
+            "regions": {
+              "full": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              },
+              "molecule": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              },
+              "legend": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              },
+              "legend_title": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              },
+              "annotation": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              }
+            },
+            "thresholds": {
+              "mean_absolute_error": 0.003,
+              "pixel_channel_delta": 0.03137254901960784,
+              "changed_pixel_fraction": 0.01
+            }
+          }
+        },
+        {
+          "case": "legend-annotations",
+          "phase": "cold",
+          "status": "Passed",
+          "report": "final/cold/legend-annotations/legend-annotations.json",
+          "scientific_arrays_unchanged": "Passed",
+          "comparison": {
+            "status": "Passed",
+            "regions": {
+              "full": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              },
+              "molecule": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              },
+              "legend": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              },
+              "legend_title": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              },
+              "annotation": {
+                "mean_absolute_error": 0.0,
+                "changed_pixel_fraction": 0.0,
+                "status": "Passed"
+              }
+            },
+            "thresholds": {
+              "mean_absolute_error": 0.003,
+              "pixel_channel_delta": 0.03137254901960784,
+              "changed_pixel_fraction": 0.01
+            }
+          }
+        }
+      ],
+      "scope": "Six fixed image/array comparisons and six cold reopens; independent review Not Run"
+    },
+    "gui": {
+      "import-before": {
+        "status": "Passed",
+        "scope": "MCP preparation and installed-source verification"
+      },
+      "import-after": {
+        "status": "Passed",
+        "scope": "Computer Use selected component, entered fragments/source and confirmed; MCP asserted real result",
+        "scientific_arrays_equal_to_native_P03": true
+      },
+      "import-undo": {
+        "status": "Passed",
+        "scope": "Computer Use Ctrl+Z; MCP full scene/binding/datablock comparison"
+      },
+      "import-redo": {
+        "status": "Passed",
+        "scope": "Computer Use Edit > Redo; MCP full scene/binding/datablock comparison"
+      },
+      "declaration-panel": {
+        "status": "Passed",
+        "method": "MCP selection; Computer Use collapsed Transform and observed Object Properties > QCBlender > IGMH declaration",
+        "screenshot": "docs/v1-acceptance/screenshot/reliability/04-igmh-declaration-panel.png",
+        "screenshot_audited_path": "D:\\workspace\\QCBlender\\.worktrees\\reliability\\docs\\v1-acceptance\\screenshot\\reliability\\04-igmh-declaration-panel.png",
+        "screenshot_sha256": "4aa131909bac8538799e5f2e0f35b4001a0a3ba4fab3d11ee9ae14ac452c7ee0"
+      },
+      "dynamic-reference-disabled": {
+        "status": "Passed",
+        "method": "MCP selected actual optimization Dataset; Computer Use opened external-import panel and observed disabled buttons",
+        "screenshot": "docs/v1-acceptance/screenshot/reliability/05-dynamic-reference-disabled.png",
+        "screenshot_audited_path": "D:\\workspace\\QCBlender\\.worktrees\\reliability\\docs\\v1-acceptance\\screenshot\\reliability\\05-dynamic-reference-disabled.png",
+        "screenshot_sha256": "fc1c63637ebbd3dabb7421ba4c7734dd8e3fc98da0ff93fde3514b9d3ad60342"
+      },
+      "compute-esc": {
+        "status": "Passed",
+        "method": "Computer Use Escape during real running ESP worker",
+        "scene_unchanged": true,
+        "active_jobs": 0,
+        "active_operations": 0
+      },
+      "volume-native-rejected": {
+        "status": "Passed",
+        "method": "Computer Use confirmed same-manifest corrupted VDB target",
+        "scene_unchanged": true,
+        "observed_error": "Blender cannot read volume cache D:/workspace/QCBlender/outputs/runs/rel/gf-corrupt/field.vdb: IoError: not a VDB file",
+        "screenshot": "docs/v1-acceptance/screenshot/reliability/07-native-volume-error.png",
+        "screenshot_audited_path": "D:\\workspace\\QCBlender\\.worktrees\\reliability\\docs\\v1-acceptance\\screenshot\\reliability\\07-native-volume-error.png",
+        "screenshot_sha256": "d783fa891670bef492400443b8a9e057d4dcefcd4f7a513eb70c2a3f4d00fb05"
+      },
+      "csv-finished-before-escape": {
+        "status": "Not Run",
+        "scope": "Computer Use running CSV cancellation",
+        "reason": "Native 539448-voxel export completed before Escape; completed export is retained",
+        "scene_unchanged": true
+      },
+      "volume-relocate-rejected": {
+        "status": "Passed",
+        "scope": "Manifest identity rejection; native VDB rejection not exercised in this attempt",
+        "method": "MCP prepared field; Computer Use selected existing corrupt fixture whose manifest differs",
+        "scene_unchanged": true
+      },
+      "saved": {
+        "status": "Passed",
+        "method": "Computer Use Save Portable QC Project confirmed; MCP validates arrays, identities, native grids and geometry"
+      },
+      "cold-original": {
+        "status": "Passed"
+      },
+      "cold-moved": {
+        "status": "Passed"
+      }
+    },
+    "gui_portable_save": {
+      "status": "Passed",
+      "report": "gui-final/saved.json",
+      "scope": "Computer Use portable save; source PID62104 dirty false, normal exit0"
+    },
+    "gui_project_cold_read": {
+      "status": "Passed",
+      "reports": [
+        "gui-final/cold-original.json",
+        "gui-final/cold-moved.json",
+        "gui-final/moved-preservation.json"
+      ],
+      "scope": "13 Datasets, 10 VDBs, 38 bound objects; original and Chinese moved copies in separate new processes"
+    },
+    "naturally_denied_permissions": {
+      "status": "Not Run",
+      "reason": "Requires supplied naturally denied target; no ACL changes"
+    },
+    "independent_human_review": {
+      "status": "Not Run"
+    },
+    "full_sop": {
+      "status": "Not Run",
+      "reason": "Scoped reliability and six visual cases only"
+    }
+  },
+  "performance": {
+    "measurement_status": "Passed",
+    "scientific_identity": "Passed",
+    "gate_status": "Failed",
+    "threshold": "256^3 peak reduction >=32 MiB OR median end-to-end time reduction >=10%; no material regression",
+    "protocol": "64^3/128^3/256^3; one warmup and five formal repeats; same machine",
+    "rows": [
+      {
+        "size": 64,
+        "mode": "cold",
+        "before": {
+          "seconds": {
+            "median": 2.7359036998823285,
+            "min": 2.6859792000614107,
+            "max": 2.8879511998966336
+          },
+          "peak_working_set_mib": {
+            "median": 244.62109375,
+            "min": 243.8515625,
+            "max": 245.0078125
+          }
+        },
+        "after": {
+          "seconds": {
+            "median": 2.635628300020471,
+            "min": 2.6351473999675363,
+            "max": 2.6846771999262273
+          },
+          "peak_working_set_mib": {
+            "median": 238.50390625,
+            "min": 236.3515625,
+            "max": 242.703125
+          }
+        },
+        "seconds_improvement_percent": 3.665165548998317,
+        "peak_reduction_mib": 6.1171875
+      },
+      {
+        "size": 64,
+        "mode": "hot",
+        "before": {
+          "seconds": {
+            "median": 1.5714936000294983,
+            "min": 1.4708357998169959,
+            "max": 1.5730385999195278
+          },
+          "peak_working_set_mib": {
+            "median": 182.8046875,
+            "min": 181.46875,
+            "max": 182.96875
+          }
+        },
+        "after": {
+          "seconds": {
+            "median": 1.521389100002125,
+            "min": 1.520090299891308,
+            "max": 1.5239482999313623
+          },
+          "peak_working_set_mib": {
+            "median": 182.34375,
+            "min": 182.1875,
+            "max": 182.83984375
+          }
+        },
+        "seconds_improvement_percent": 3.18833624434951,
+        "peak_reduction_mib": 0.4609375
+      },
+      {
+        "size": 128,
+        "mode": "cold",
+        "before": {
+          "seconds": {
+            "median": 6.882542199920863,
+            "min": 6.782992500113323,
+            "max": 6.98231520014815
+          },
+          "peak_working_set_mib": {
+            "median": 301.46484375,
+            "min": 301.2109375,
+            "max": 307.30859375
+          }
+        },
+        "after": {
+          "seconds": {
+            "median": 6.680124500067905,
+            "min": 6.67751369997859,
+            "max": 6.883310900069773
+          },
+          "peak_working_set_mib": {
+            "median": 305.53125,
+            "min": 301.39453125,
+            "max": 306.6796875
+          }
+        },
+        "seconds_improvement_percent": 2.9410310024003294,
+        "peak_reduction_mib": -4.06640625
+      },
+      {
+        "size": 128,
+        "mode": "hot",
+        "before": {
+          "seconds": {
+            "median": 1.7743271999061108,
+            "min": 1.6717322999611497,
+            "max": 1.8261637000832707
+          },
+          "peak_working_set_mib": {
+            "median": 212.13671875,
+            "min": 212.01953125,
+            "max": 212.27734375
+          }
+        },
+        "after": {
+          "seconds": {
+            "median": 1.7240726000163704,
+            "min": 1.7218706998974085,
+            "max": 1.8257361000869423
+          },
+          "peak_working_set_mib": {
+            "median": 211.83203125,
+            "min": 210.92578125,
+            "max": 211.90625
+          }
+        },
+        "seconds_improvement_percent": 2.8323186327978034,
+        "peak_reduction_mib": 0.3046875
+      },
+      {
+        "size": 256,
+        "mode": "cold",
+        "before": {
+          "seconds": {
+            "median": 40.21913439990021,
+            "min": 40.04110259981826,
+            "max": 40.32201180001721
+          },
+          "peak_working_set_mib": {
+            "median": 820.6171875,
+            "min": 817.37109375,
+            "max": 821.3828125
+          }
+        },
+        "after": {
+          "seconds": {
+            "median": 39.51586669986136,
+            "min": 38.90380090009421,
+            "max": 39.820913600036874
+          },
+          "peak_working_set_mib": {
+            "median": 805.4375,
+            "min": 801.55078125,
+            "max": 808.65234375
+          }
+        },
+        "seconds_improvement_percent": 1.748589845435844,
+        "peak_reduction_mib": 15.1796875
+      },
+      {
+        "size": 256,
+        "mode": "hot",
+        "before": {
+          "seconds": {
+            "median": 3.2917424999177456,
+            "min": 3.2415060999337584,
+            "max": 3.2961287999060005
+          },
+          "peak_working_set_mib": {
+            "median": 451.9296875,
+            "min": 451.06640625,
+            "max": 452.0234375
+          }
+        },
+        "after": {
+          "seconds": {
+            "median": 3.241826199926436,
+            "min": 3.142303599976003,
+            "max": 3.3441226000431925
+          },
+          "peak_working_set_mib": {
+            "median": 435.953125,
+            "min": 435.796875,
+            "max": 436.03125
+          }
+        },
+        "seconds_improvement_percent": 1.516409621729431,
+        "peak_reduction_mib": 15.9765625
+      }
+    ],
+    "timing_scope": {
+      "worker": "Job creation through successful process completion, including startup and VDB publication",
+      "import": "Fresh worker every trial; no application import cache",
+      "cold": "Evaluation index absent; OS caches not flushed",
+      "hot": "Validated evaluation index present; fresh worker, same source Dataset",
+      "memory": "Windows process lifetime PeakWorkingSetSize, worker/UI separately"
+    },
+    "qualification_limit": "These measurements isolate streaming digests. Final multi-field import preflight, UI latency and viewport FPS were not timed.",
+    "decision": "Retain narrow streaming digest change; stop expanding loading/evaluation refactoring",
+    "report": "streaming-hash-comparison.json"
+  },
+  "evidence_root": "outputs/evidence/2026-10-05/reliability",
+  "source_reports": {
+    "final-candidate.json": {
+      "sha256": "22c306990261663e7e5566cc9661ef4e96000a5439bb7740eb9d41b699f38642",
+      "reported_status": "Passed"
+    },
+    "final/install.json": {
+      "sha256": "540792fccfee6ae351575defb60552cd26c8f968e9ece15d4e14d7143e446359",
+      "reported_status": "Passed"
+    },
+    "final/science.json": {
+      "sha256": "166faf5f1b3f3a447a44fe58467171660563f0f767869d33626b88ac38419f2b",
+      "reported_status": "Passed"
+    },
+    "final/units.json": {
+      "sha256": "421c05a5d078780f2aa24771e408fbd3531cd060d5a5149a16ef60f63e057d3f",
+      "reported_status": "Passed"
+    },
+    "closing-preserved/outputs/runs/rel/vf/report.json": {
+      "sha256": "f247ff3ed0d92cbff4180eb1b03087326b0e366d1f715e0151836b0f7788fa9a",
+      "reported_status": "Passed"
+    },
+    "closing-preserved/outputs/runs/rel/igmhf/report.json": {
+      "sha256": "bd6881a3baea8392a63f49918f48e1092815800ce9fbd18ac5913b61bcd96490",
+      "reported_status": "Passed"
+    },
+    "final/cancel/d92f50f6d08f40c48c2dc47092fc88f8/cancel-finalization.json": {
+      "sha256": "3583eefccb44fe298b0ee69f819ed439b92a08a7f7279e64ad441a15dd5548b1",
+      "reported_status": "Passed"
+    },
+    "logs/final-install.json": {
+      "sha256": "a2da697ab4a0a3b176de1af3c4ca67c41c267b350f1fa6b1348aa8cea94719c2",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "logs/final-science.json": {
+      "sha256": "e27cba0535152f6e564a721163a28733d1bcf4beae82f889f6cdec3325c6c181",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "logs/final-units.json": {
+      "sha256": "8976a438bbbe6aa4baf2fad759105f7737999ffdd475f45cfe001c433cef9bce",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "logs/final-volume.json": {
+      "sha256": "48203e47bbcd04bb045f63d4cd9e812eee5100f8c1fc5f0d87d8372b7a5c423e",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "logs/final-igmh.json": {
+      "sha256": "31aed71250a2a294e089cd248f11beeefaf279e9b18b77a1d8672af5d6f9de78",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "logs/final-cancel.json": {
+      "sha256": "0e01917984cebfe9ae78dd0336c861f75ef01f30c1c9a8c314fe232e6665582d",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "logs/final-volume-cold-original.json": {
+      "sha256": "a3e0edc91a8860da89ff7b8324073b4b0e2d5ff2668e8bd7534b0489e80a5007",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "logs/final-volume-cold-preserved.json": {
+      "sha256": "ed1d5eb5866f36ed845fe47f962c10a84e9e01bd06ab4d0bfeff7c9ea4a868d0",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "logs/final-igmh-cold-original.json": {
+      "sha256": "ae5ee409b6211d2a7b7324fdaccf4d42a3cce8ad00542d66b767a4f4524b89a7",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "logs/final-igmh-cold-preserved.json": {
+      "sha256": "5768ef81fb202a05866ed4a7a8b590dfb1fcf9ef49745ce71612b0f2adb2782e",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "closing-preserved/outputs/runs/rel/visualf/atoms/atoms.json": {
+      "sha256": "6f0a9100ad36f21444a6389d4caea9e782b78ebbc993036d60eb20e31a7cb107",
+      "reported_status": "Passed"
+    },
+    "logs/final-visual-atoms.json": {
+      "sha256": "9ea81b150cbb74ce9a7d35be8ebd3cd7c27a764bac7d637653659a67e3d810f2",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "final/cold/atoms/atoms.json": {
+      "sha256": "9daac1b10cae629f7340de864e791f522129a65ed30f711fabdd85eb7751f68d",
+      "reported_status": "Passed"
+    },
+    "logs/final-visual-cold-atoms.json": {
+      "sha256": "dbab7c3c7893599c93a376c1b8f1859fd70deeb673cfe2de06fa2a74480f13fd",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "closing-preserved/outputs/runs/rel/visualf/signed-mo/signed-mo.json": {
+      "sha256": "af5f52cf17a2bbdd9872696d40e7b9d138fca07ac6e04c922551e8a4d8bd3f69",
+      "reported_status": "Passed"
+    },
+    "logs/final-visual-signed-mo.json": {
+      "sha256": "9db13e6f1e2fe08cba10ee59b9bec3d5e6dfccd7db0c572497b987b61ac7142c",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "final/cold/signed-mo/signed-mo.json": {
+      "sha256": "875d24480419a05323e5e9d409d4ad23a0af9671a733beaf72413fa41996e00d",
+      "reported_status": "Passed"
+    },
+    "logs/final-visual-cold-signed-mo.json": {
+      "sha256": "0b89d880e1de8d34824b50dc2db0c7548bc6fcc48b9fdb4310404e32d3172761",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "closing-preserved/outputs/runs/rel/visualf/density-esp/density-esp.json": {
+      "sha256": "1512cfdad3a19b83f4438dd0a6d7ffeb4821ecd90fc35580c5888cf3c34d7a50",
+      "reported_status": "Passed"
+    },
+    "logs/final-visual-density-esp.json": {
+      "sha256": "f2362bda3d3be5c097af4c2a65aa3816ccbd7a5ce76802681385fa22fdacdd58",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "final/cold/density-esp/density-esp.json": {
+      "sha256": "7f3bf63a0fbdeda1907b4f793675ebd924ad3dd82b711cf1ed9e59b69a300d91",
+      "reported_status": "Passed"
+    },
+    "logs/final-visual-cold-density-esp.json": {
+      "sha256": "bdb26b8f9c062df0150b54a6f17c46461b64bd10c27f188071d445b1fb250f9e",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "closing-preserved/outputs/runs/rel/visualf/slice-contours/slice-contours.json": {
+      "sha256": "09383184fecf785ced8f2d051a0b99047618cd52cfc1d95d5b43569dd4ab7794",
+      "reported_status": "Passed"
+    },
+    "logs/final-visual-slice-contours.json": {
+      "sha256": "8835e2ac22a0798b6c9369710fe153e5790be50986cc75c0344fd56e0dea98b1",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "final/cold/slice-contours/slice-contours.json": {
+      "sha256": "586d4f5f65975cc28e02e421d897f216e2476bdd7664e657057d7cfcaa591c24",
+      "reported_status": "Passed"
+    },
+    "logs/final-visual-cold-slice-contours.json": {
+      "sha256": "62574273fb3bc02c160ad1a4103d43cb1e37d2dd151a1185af19cc355325e553",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "closing-preserved/outputs/runs/rel/visualf/fog/fog.json": {
+      "sha256": "6a47d43683c9ebb5932f018ed15ce1c145d4bf1a5de12e3e86ce604c8aa70fbd",
+      "reported_status": "Passed"
+    },
+    "logs/final-visual-fog.json": {
+      "sha256": "592d66b3c814f12ec850837357a2004bf587d531d39cb0e8f3736343f40ad5d6",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "final/cold/fog/fog.json": {
+      "sha256": "c4476b9b65194dc1f527baa823f85a39279cf6b792842c4531baf317da7d8a32",
+      "reported_status": "Passed"
+    },
+    "logs/final-visual-cold-fog.json": {
+      "sha256": "ae8c6dea7033b8b9ca22758a67073f07f7507cf50471116dce5c97dbb3b6e630",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "closing-preserved/outputs/runs/rel/visualf/legend-annotations/legend-annotations.json": {
+      "sha256": "f19fb1765b9f8d226f82e5b9e18ee9cd141438d38b97417cc393599cd211ce5b",
+      "reported_status": "Passed"
+    },
+    "logs/final-visual-legend-annotations.json": {
+      "sha256": "91355fe8ba74d332ddec297c688feeaa3b016345b53a14b40b09ba88228cc6c6",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "final/cold/legend-annotations/legend-annotations.json": {
+      "sha256": "a34a79efc99155b55d76e36e4b0f594e348c2c64cb2641a84d40f417fb060d2a",
+      "reported_status": "Passed"
+    },
+    "logs/final-visual-cold-legend-annotations.json": {
+      "sha256": "18fe2c69f3822ffc7f0787885fcf5fbadb46c564d3f2dc3b4d8c5cc8397721cf",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "final/cold/volume-original.json": {
+      "sha256": "5662da667591c013d8e90e967ec6d33e878f3d6838e196b77f1f91a00b70d561",
+      "reported_status": "Passed"
+    },
+    "final/cold/volume-preserved.json": {
+      "sha256": "be0807c380ce70bdcfa529b3e3c24aba17b5403b018397a587783b54b7c0951a",
+      "reported_status": "Passed"
+    },
+    "final/cold/igmh-original/reopen-report.json": {
+      "sha256": "9a638435128fa78a1ebd0dbddca0e049d221cb5c4025c37b3f56b91e0f6c0db7",
+      "reported_status": "Passed"
+    },
+    "final/cold/igmh-preserved/reopen-report.json": {
+      "sha256": "dc5b65feb29aac2c3b6dbfafa7a4dd0f2bb0ec535e24bd5867f05f5289ae1dc8",
+      "reported_status": "Passed"
+    },
+    "gui-final/import-before.json": {
+      "sha256": "5a54648ff9321379a408fbb3a6410a6a3baa34e5a8f3fb300201ed0cb6718f12",
+      "reported_status": "Passed"
+    },
+    "gui-final/import-after.json": {
+      "sha256": "453f1f89f361f3ac192f5819b55d3ee27dbb1771c8d96b5b65cf9cbca0298b66",
+      "reported_status": "Passed"
+    },
+    "gui-final/import-undo.json": {
+      "sha256": "66966eefcdb9971cd35effdf5bb9eca541f455e32beeae067710cfbc9504519e",
+      "reported_status": "Passed"
+    },
+    "gui-final/import-redo.json": {
+      "sha256": "b4c16770f449d686bb18fbdf2cf5284d00c15a9774e019035cce532f5fdc1d7c",
+      "reported_status": "Passed"
+    },
+    "gui-final/declaration-panel.json": {
+      "sha256": "6e241b526f258f2f8ee63af0943c80eb8388e671c67f6b39670c7534eeda4eab",
+      "reported_status": "Passed"
+    },
+    "gui-final/dynamic-reference-disabled.json": {
+      "sha256": "52b1b9b52892dbec0ea970b4ff2537840abdf5e1023c9659b916075ee242b3d0",
+      "reported_status": "Passed"
+    },
+    "gui-final/compute-esc.json": {
+      "sha256": "d8b0abec4f0699ce2d5f0e8aded6e55b7a3840e268580dd77587f8be57d551fd",
+      "reported_status": "Passed"
+    },
+    "gui-final/volume-native-rejected.json": {
+      "sha256": "0dd185cc110c133ef4fce13ba9cf0e2169cc17e3d49ba2e16617fef58a1cd9e1",
+      "reported_status": "Passed"
+    },
+    "gui-final/csv-finished-before-escape.json": {
+      "sha256": "6878927e92410aa8d4c1a4d4ce61d0406c362245a6da2592db3d01d9adba64b3",
+      "reported_status": "Not Run"
+    },
+    "gui-final/volume-relocate-rejected.json": {
+      "sha256": "1e821b96cd6ed14c89c547e25b51eff6399fb28f75cdacad6cd4bc6eda7c9dfd",
+      "reported_status": "Passed"
+    },
+    "gui-final/saved.json": {
+      "sha256": "f082164004f1045a9c6523f403a21298c85481fca836f49290871849ceb70d4a",
+      "reported_status": "Passed"
+    },
+    "gui-final/cold-original.json": {
+      "sha256": "a3afb8243df1ae70d8dab4bf135169b504acb0384bb560318ed25b856af7ae44",
+      "reported_status": "Passed"
+    },
+    "gui-final/cold-moved.json": {
+      "sha256": "f0c3fc3af1ad1d2abf18e33e65d702a8b4fa05f9f291bd49b9d5e07bfcec2540",
+      "reported_status": "Passed"
+    },
+    "gui-final/moved-preservation.json": {
+      "sha256": "69ff532a3f5b401748ed5f842f0502e664bdc2bbfd921ffa3fe9847db2994657",
+      "reported_status": "Passed"
+    },
+    "logs/gui-final.json": {
+      "sha256": "12f7015672ac9cfaa5cc9f7a259cd76d2abdd351879b1a09edcdbc17aed666db",
+      "reported_status": "Passed",
+      "log_sha256_verified": true
+    },
+    "streaming-hash-comparison.json": {
+      "sha256": "bada537f0ef5491080da18dbf1212e882d3c2cc0146ff8267d3725212ed6182b",
+      "reported_status": "Passed"
+    },
+    "benchmark-before-desktop/report.json": {
+      "sha256": "6c6b2ce8b548a2790b5d533ce25b93e7d59a316c916952fee904349f085f6b5a",
+      "reported_status": "Passed"
+    },
+    "benchmark-after-desktop/report.json": {
+      "sha256": "abb0e6a449c19f1dc85c476fcc4fd93170946f2ffbfc9984124c081a7a3e6ec8",
+      "reported_status": "Passed"
+    },
+    "multi-red.json": {
+      "sha256": "2c518b3aac4819ce67e6d88c81202d80e36ed668fed677fe240c6ffc664a6bb5",
+      "reported_status": "Passed"
+    },
+    "multi-green.json": {
+      "sha256": "ea5da89a5a7da76cf03d8761f821807f2b784a53039c4288b1c3bc5d3a95c0e3",
+      "reported_status": "Passed"
+    },
+    "reviews.json": {
+      "sha256": "8f6f66168f2eb341eed4800de7608e309d25ece6e77f9d0116e4455119decbdb",
+      "reported_status": "Passed"
+    }
+  },
+  "qualification": {
+    "status": "Passed",
+    "path": "qualification.json",
+    "sha256": "3c811ec3be8294db0f6622390fec2837fe5273e8d48506d2ce4f806f8e6259ab",
+    "evidence_index": "evidence-index.json",
+    "evidence_index_sha256": "50971386a9136975b6e5d664458342d19e69cb6f51f5a0e28dd6a248f19129a7",
+    "candidate_bound_reports": 36
+  },
+  "artifact_routes": "docs/ARTIFACTS.md",
+  "delivery_receipt": "docs/acceptance/reliability-delivery.json"
+}

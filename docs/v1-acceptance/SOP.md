@@ -12,6 +12,8 @@
 
 2026-10-04当前构型与共享mesh操作见[关联、单用户、Undo/Redo复做步骤及截图](../acceptance/audit-p1-validation.md#原生入口复做)。适用于C02优化、C04关联及C10 IRC；用户复做与科研签署单独填写。
 
+2026-10-05静态参考、IGMH声明、取消和原生VDB检查见[可靠性验证](../acceptance/reliability-validation.md)。下列新增截图绑定a3ed826最终候选；MCP准备对象和参数，实际确认、Undo/Redo、Esc和保存由Agent Computer Use执行。用户复做与科研签署仍单独填写。
+
 ## 0. 准备、安装与通用操作
 
 ### 0.1 取得材料并建立本次目录
@@ -196,6 +198,11 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 5. 重复一次导出，确认生成另一结果子目录，前一次内容不变。对较大的paired全量导出运行时按Escape取消，确认未留下可误认成功的最终结果；已有导出保留。取消收尾区分已发出请求与已确认 worker 退出；退出未确认时，错误信息保留 PID、任务目录及取消原因，导出暂存目录继续保留，供退出确认后清理。原任务错误与取消错误同时保留。正常取消确认退出后，核对暂存已清理及原有导出未变。筛选后取消范围再导出ALL，核对完整记录仍可获得。
 
    [用户截图待引用：0.5-05，重复导出目录、取消/失败消息与已有结果保全；用户复做待填写]
+
+   计算取消可另行复做：选择可求值FCHK原子对象，经 **N侧栏 → QCBlender → 工作流 → 生成量子化学场** 启动计算，在运行中按 **Esc**，核对没有新增结果。a3ed826批次使用ESP、0.05 Å、margin 3 Å、1024 MiB；MCP确认worker正在运行，Agent按Esc后退出、任务登记清空且场景不变。下图为计算取消，CSV运行中GUI取消仍为Not Run；CSV worker取消由原生脚本覆盖。
+
+   ![Agent Computer Use取消正在运行的ESP计算；MCP核对进程与场景不变（a3ed826）](screenshot/reliability/06-compute-cancelled.png)
+
 
    ![Agent再次打开对话框，恢复偏好目录；两次101行CSV逐值相同（9d3ff61）](screenshot/display-xyz-export/D01-export-reset-9d3ff61.jpg)
 
@@ -876,6 +883,10 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    历史批次另存 **C05-final.blend + .qcdata** 和同条目ZIP；关闭可见进程后，原路径、中文移动、解包分别在新原生后台进程冷重开，核对24文件、1 Dataset/50数组、6视图、52标注对象，并各重新渲染三图，像素一致。记录见[历史验证索引](../acceptance/tutorial-cu-validation.json)的 `C05_native_annotations_and_renders`；历史失败报告保留，隐藏对象的保存变换通过完整父级链核对。退化、随优化/IRC步更新、移除与当前版本视图另行验收，不能据此将整个C05或全教程写为Passed。
 
+选择含可用优化轨迹、IRC或多帧XYZ的对象时，外部分析入口禁用并提示使用对应步骤的独立静态文件；初始步也适用。先导入需要的独立静态Log/FCHK/Cube，再将其设为活动参考。面板较窄时提示文字可能截断。
+
+![MCP选中真实优化Dataset；Computer Use展开外部结果面板，四个适用入口禁用（a3ed826）](screenshot/reliability/05-dynamic-reference-disabled.png)
+
 ### C06 NBO 与 E(2)
 
 **真实输入预期：** P02 **Job2/block1**，7条NBO、2条E(2)。NBO1为 O1–H2 的 BD，occupancy **1.99933**、energy **−0.77653 Eh**、原文行 **1444**；E(2)记录1 donor **1**→acceptor **7**、**0.59 kcal/mol**、原文行 **1434**。源SHA同0.1.1，不能把NBO编号当MO编号。
@@ -954,6 +965,13 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    [用户截图待引用：C07-02，分别保留IGMH与IRI对话框、活动参考对象和导入结果]
 
+   ![Agent Computer Use填写inter、片段与来源并确认；输入路径由MCP准备（a3ed826）](screenshot/reliability/01-igmh-declaration-dialog.png)
+
+   ![MCP选择paired记录；Computer Use展开并核对IGMH来源声明（a3ed826）](screenshot/reliability/04-igmh-declaration-panel.png)
+
+   本批来源填写`P03 GUI declaration`，表示本次用户声明文字；不是软件对片段物理意义的独立确认。
+
+
 
 
    ![历史示例（原参数/原候选）：Agent Computer Use输入并确认：IGMH两文件、单位和色域](screenshot/C07-IGMH-dialog-GUI.jpg)
@@ -990,6 +1008,11 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 
    [用户截图待引用：C07-05，错误输入/拒绝信息，以及正确导入的撤销与重做结果]
 
+   ![Agent Computer Use按Ctrl+Z撤销导入；MCP核对完整对象和绑定快照（a3ed826）](screenshot/reliability/02-igmh-undo.png)
+
+   ![Agent Computer Use经Edit → Redo恢复；MCP核对完整快照与原科学数组（a3ed826）](screenshot/reliability/03-igmh-redo.png)
+
+
    ![历史示例（原参数/原候选）：MCP准备错误配对、Agent Computer Use确认：P03几何与P05颜色](screenshot/C07-wrong-pair-dialog-GUI.jpg)
 
    ![历史示例（原参数/原候选）：Agent Computer Use观察拒绝；MCP核对原有对象与绑定不变](screenshot/C07-wrong-pair-refused-GUI.jpg)
@@ -1001,6 +1024,9 @@ Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
 6. 对应N06/N07/N14/N16，按0.4渲染IGMH/IRI三维表面和可读图例，按0.5保留paired全量及筛选CSV+metadata，再保存 **C07.blend + C07.qcdata**。保存、移动、解包冷重开后复核表面绑定与导出集合；新建过程不生成散点PNG。
 
    [用户截图待引用：C07-06，保存路径、活动对象、图例和保存后的工程；冷重开另留截图]
+
+   ![Agent Computer Use确认保存自包含工程；原地和中文移动新进程冷读另经脚本核对（a3ed826）](screenshot/reliability/08-portable-saved.png)
+
 
    ![历史示例（原参数/原候选）：Computer Use观察与截图：MCP保存后的IGMH总览；保存和控件设置由MCP执行](screenshot/C07-saved-overview-MCP.jpg)
 
@@ -1652,6 +1678,9 @@ X01技术证据进入[本批验证索引](../acceptance/display-xyz-export-valid
    [用户截图待引用：N18-02，同一Dataset的manifest、实际路径及完成后的场对象]
 
    ![历史示例（原参数/原候选）：Agent首次Computer Use在原生文件对话框选择同一Dataset的manifest.json并确认；MCP核对路径迁移与科学身份](screenshot/N18-relocate-dialog-GUI.jpg)
+
+   ![Agent Computer Use确认同一manifest的损坏VDB测试副本；显示原生原因及路径，MCP核对原绑定不变（a3ed826）](screenshot/reliability/07-native-volume-error.png)
+
 
    恢复失败时记录原错误和日志，保留工程及输入。缺科学数组、不匹配manifest均须明确失败，不把它们当作物理零或新数据。历史维护者只在独立诊断副本暂存一份数组后执行拒绝检查，随后按SHA恢复；用户教程不要求删除配套数据。
 
