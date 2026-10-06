@@ -2,7 +2,32 @@
 
 更新：2026-10-06。本页路由当前文件、归档身份、重建方法与阻塞；各原始报告保留其执行时的状态和候选身份。任务状态在 `.scratch/`，开发顺序见 [DEVELOPMENT](DEVELOPMENT.md)，保留与清理边界见 [维护规则](agents/storage-maintenance.md)。
 
-## 用户验证 SOP（2026-10-06）
+## 当前交付
+
+从根目录 [validation](../validation/README.md) 查找当前教程、输入和校验材料。人工入口为 [SOP](../validation/human/SOP.md)：15 步主线与 9 个按需专题；公开部分共 73 步，29 个截图位置由维护者按名称补图，本机 P02 页另有 3 个截图位置。
+
+| 内容 | 当前路径与用途 |
+| --- | --- |
+| 人工操作与打包 | `validation/human/`；按 [打包步骤](../validation/README.md#人工完成后的打包)连同公开输入和安装包复制 |
+| 公开、本地与回归输入 | [shared/data](../validation/shared/data/README.md)；逐文件当前位置、来源和旧路径由 `migration-map.json` 定位 |
+| 最新安装文件 | `validation/shared/install/qcblender-0.1.0.zip`，50,656,021 字节；确切身份及原候选位置见 [current-install.json](../validation/agent/current-install.json) |
+| 当前完整候选与原报告 | `outputs/candidates/current/alpha-ci-0.1.0-190e11e/`；候选 run `37415371574`、源码 `190e11e`，十份原报告和复现包保留 |
+| 冻结公开样本包 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单仍在 `docs/v1-acceptance/tutorial-samples.json` |
+| Agent 检查及本批结果 | [检查流程](../validation/agent/README.md)、[整合验证](../validation/agent/VALIDATION.md)；完整日志、命令与报告在 `validation/agent/reports/2026-10-06/integration/` |
+| 历史文件删除审批 | [CLEANUP](../validation/agent/CLEANUP.md)及两份逐文件表；257 个文件共 1,387,868,294 字节，尚未删除 |
+
+134 项基础、67 项公开科学、123 项完整科学测试通过；当前 ZIP 的真实安装、MO9/摘要、XYZ/CSV、保存和中文路径冷重开通过。公开材料独立复制检查通过。产品源码与依赖锁未变；本轮 GUI 点击、维护者操作/截图、原始 checkpoint 复算及独立科研判断为 Not Run。受限 P02 与本机计算原件不进入公开教程包。
+
+## 教程整合与本地归档（2026-10-06）
+
+计划与任务状态在 [.scratch/validation-layout](../.scratch/validation-layout/spec.md)。子任务依次合入 main：Agent 流程 `d6a61d6`、数据迁移 `6e03549`、人工教程 `fb860a6`；主 Agent 在 main 运行综合检查。校验工具为剖面检查显式创建场对象，原失败报告保留，复跑和新进程读回通过。
+
+子任务报告与生成脚本保全在 `validation/agent/reports/2026-10-06/subagents/`，归档收据在 `validation/agent/reports/2026-10-06/delivery/`。本批注释标签使用 `archive/2026-10-06/` 下的 `chore/validation-agent`、`chore/validation-data-paths`、`docs/validation-tutorial`、`chore/validation-layout`。标签、工作树和分支的实际处理状态以收据为准；没有 push。
+
+本批代表工程与导出保留位置、已移除的任务临时副本及重建命令由归档收据列明。重建时按 [Agent 流程](../validation/agent/README.md)使用新的批次目录、集中输入和当前安装文件；历史报告的原路径保持执行时身份。
+
+<a id="用户验证-sop2026-10-06"></a>
+## 2026-10-06 旧 SOP 整理记录
 
 [SOP](v1-acceptance/SOP.md) 为用户连续操作入口，包含材料核对、独立配置、XYZ 入门、P1 关联/共享对象、Alpha 出图、C01–C13/X01、N01–N18、导出与保存重开。安装包与输入身份在 [MATERIALS](v1-acceptance/MATERIALS.md)，可复制填写的表格在 [RECORD-TEMPLATE](v1-acceptance/RECORD-TEMPLATE.md)，393 张原截图、图注和历史技术说明移至 [HISTORY](v1-acceptance/HISTORY.md)。原截图文件与验证报告保留。
 
@@ -14,9 +39,9 @@
 
 本次收据为`outputs/evidence/2026-10-04/legacy-worktree-retry/completion.json`：14,816文件/798,822,391字节完整保全及SHA-256核对Passed，完整旧新路径见`complete-preservation-map.jsonl.gz`；补存科学数据同时保留在`outputs/projects/recovery/worktree-f458/datasets/`，新Blender进程11组Dataset/600数组/8VDB读回Passed。目录普通删除Failed，未修改ACL/所有权或使用force；现存残留与不可枚举对象见收据。历史报告维持原状态，当前残留以本节为准。
 
-## 当前交付
+## 2026-10-05 Alpha 历史交付
 
-本地 Alpha 技术候选为 `outputs/candidates/current/alpha-0.1.0-19e4cf0/qcblender-0.1.0.zip`，50,656,085 字节，SHA-256 `0c2d9add59b6332f243c5cd87b852a38b94090286f1b7671d7666694a4b73a03`。固定产品提交 `19e4cf0becf5a5173d692d1f4a9c621e6d01512e`，产品树 `5db4996cbb456f52529c86219d85f0db0541ae49`；[Alpha 技术验证](acceptance/alpha-readiness-validation.md)及[机器索引](acceptance/alpha-readiness-validation.json)记录 127 标准库、67 公开科学、123 完整本地科学、12 次六视觉、真实 GUI、取消、Undo/Redo 与中文移动冷重开 Passed。
+该批本地 Alpha 技术候选为 `outputs/candidates/current/alpha-0.1.0-19e4cf0/qcblender-0.1.0.zip`，50,656,085 字节，SHA-256 `0c2d9add59b6332f243c5cd87b852a38b94090286f1b7671d7666694a4b73a03`。固定产品提交 `19e4cf0becf5a5173d692d1f4a9c621e6d01512e`，产品树 `5db4996cbb456f52529c86219d85f0db0541ae49`；[Alpha 技术验证](acceptance/alpha-readiness-validation.md)及[机器索引](acceptance/alpha-readiness-validation.json)记录 127 标准库、67 公开科学、123 完整本地科学、12 次六视觉、真实 GUI、取消、Undo/Redo 与中文移动冷重开 Passed。
 
 证据入口 `outputs/evidence/2026-10-05/alpha-readiness/`；`ac6/`保存同批报告/命令，`gui-alpha/`保存点击状态/截图/摘要，`av2/`保存六视觉报告与图，`preservation-map.jsonl.gz`将工作树旧路径映射到经过 SHA-256 核对的 `objects/`。全部原始报告保留执行时的状态。当前候选目录保留原始公开 artifact 文件及报告；没有重新打包。
 
