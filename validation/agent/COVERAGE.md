@@ -13,11 +13,11 @@
 | A02 | [轨道](../human/SOP.md#orbital) | P01 原始文件、O₂ 电子数/自旋和来源；`tools/verify_tutorial_samples.py` |
 | A03 | [轨道](../human/SOP.md#orbital) | 预检、Alpha 源 MO9、资源上限和缓存；`tools/verify_alpha_workflow.py` |
 | A04 | [轨道](../human/SOP.md#orbital) | 等值变化、正负相位、网格原值保持；`tools/verify_alpha_workflow.py` |
-| A05 | [出图与保存](../human/SOP.md#output) | 实际 PNG、对象和材料绑定；`tools/verify_alpha_workflow.py`、`tools/render_visual_baseline.py` |
-| A06 | [出图与保存](../human/SOP.md#output) | 当前视图摘要、重复导出、失效绑定和自定义节点状态；`tools/verify_alpha_workflow.py`、`tests/test_view_summary.py` |
-| A07 | [出图与保存](../human/SOP.md#output) | `.blend + .qcdata` 保存与数据完整性；`tools/verify_alpha_workflow.py`、`tests/test_science_project.py` |
+| A05 | [渲染图片](../human/SOP.md#render) | 实际 PNG、对象和材料绑定；`tools/verify_alpha_workflow.py`、`tools/render_visual_baseline.py` |
+| A06 | [导出参数](../human/SOP.md#export) | 当前视图摘要、重复导出、失效绑定和自定义节点状态；`tools/verify_alpha_workflow.py`、`tests/test_view_summary.py` |
+| A07 | [保存工程](../human/SOP.md#save) | `.blend + .qcdata` 保存与数据完整性；`tools/verify_alpha_workflow.py`、`tests/test_science_project.py` |
 | A08 | 由 Agent 执行中文路径迁移核对 | 科学数组、VDB 与文件身份不变；`tools/verify_alpha_workflow.py --reopen` |
-| A09 | [出图与保存](../human/SOP.md#output) | 新 PID 重开、摘要复导出和显示参数；`tools/verify_alpha_workflow.py --reopen` |
+| A09 | [保存重开](../human/SOP.md#save) | 新 PID 重开、摘要复导出和显示参数；`tools/verify_alpha_workflow.py --reopen` |
 
 ## 文件与物理量
 
@@ -59,7 +59,7 @@
 | N15 | [分子与 XYZ](../human/topics/01-molecule-xyz.md) | 图层复制/排序/隐藏/删除、参数兼容拒绝、材质与节点独立；`tests/test_copy_display.py`、`tools/verify_vmd_parameters.py --check copy`、`tools/verify_audit_p1_shared_mesh.py` |
 | N16 | 由 Agent 完成完整撤销矩阵 | 原生 GUI 的撤销/重做及科学数据不变；`tools/verify_nbo_gui_undo.py` 为局部入口，其余对象按下表补充实际 GUI 证据 |
 | N17 | [空间工具](../human/topics/04-spatial-tools.md) | 游标/探针/采样线、域外和核内无效、旧读数清除、源坐标一致；`tools/verify_line_profile.py`、`tools/verify_vmd_scalar_edges.py`、`tests/test_science_profile.py` |
-| N18 | [一次保存重开](../human/SOP.md#output)，其余由 Agent 执行 | 原位置、中文移动位置和归档解包后的新进程读回、丢文件/恢复/保存失败；`tools/verify_extension.py`、`tools/verify_project_recovery.py`、`tools/verify_failed_save.py`、`tests/test_science_project.py` |
+| N18 | [一次保存重开](../human/SOP.md#save)，其余由 Agent 执行 | 原位置、中文移动位置和归档解包后的新进程读回、丢文件/恢复/保存失败；`tools/verify_extension.py`、`tools/verify_project_recovery.py`、`tools/verify_failed_save.py`、`tests/test_science_project.py` |
 | P1-A | 由 Agent 检查，正常 IRC 操作见 [IRC 与 Mayer](../human/topics/07-irc-mayer.md) | 当前构型关联、换步失效、重新关联、旧绑定拒绝；`tools/verify_audit_p1_association.py`、`tests/test_science_current_association.py` |
 | P1-B | 由 Agent 检查，独立副本见 [分子与 XYZ](../human/topics/01-molecule-xyz.md) | 共享 mesh 拒绝换步、单用户恢复、IRC/优化/XYZ 控制；`tools/verify_audit_p1_shared_mesh.py` |
 
