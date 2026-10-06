@@ -86,7 +86,7 @@ else:
     assert diagnose['ok']
     for name in ('gbasis', 'iodata', 'scipy'):
         assert name not in sys.modules, f'{name} leaked into the UI process'
-    importer = jobs.Job('import', source=str(ROOT / 'tests/data/chemtools/ch4_uhf_ccpvdz.fchk'))
+    importer = jobs.Job('import', source=str(ROOT / 'validation/shared/data/regression/chemtools/ch4_uhf_ccpvdz.fchk'))
     run_job(importer)
     for obj in bpy.data.objects:
         obj.hide_render = True

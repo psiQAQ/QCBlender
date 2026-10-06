@@ -175,7 +175,7 @@ def classify(path, migrated):
 
 def plan():
     REPORTS.mkdir(exist_ok=True)
-    index = json.loads((ROOT / 'tests/data/local-inputs.json').read_text(encoding='utf-8'))['files']
+    index = json.loads((ROOT / 'validation/shared/data/local-inputs.json').read_text(encoding='utf-8'))['files']
     migrated = {record['original_path']: record for record in index.values() if record.get('original_path')}
     for record in index.values():
         target = ROOT / record['path']

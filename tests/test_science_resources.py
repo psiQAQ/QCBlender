@@ -124,7 +124,7 @@ class ScientificQualification(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory(dir=ROOT / 'outputs')
         self.addCleanup(self.temp.cleanup)
         self.directory = Path(self.temp.name)
-        self.data = read_source(ROOT / 'tests/data/iodata/o2_cc_pvtz_pure.fchk')
+        self.data = read_source(ROOT / 'validation/shared/data/regression/iodata/o2_cc_pvtz_pure.fchk')
 
     def qualify(self, data=None, cancelled=lambda: False):
         manifest = save_dataset(self.data if data is None else data, self.directory)
@@ -152,7 +152,7 @@ class ScientificQualification(unittest.TestCase):
             elif defect == 'density':
                 data.arrays['dm_scf'] = np.zeros((data.arrays['mo_coeffs'].shape[0],) * 2)
             else:
-                data = read_source(ROOT / 'tests/data/iodata/water_sto3g_hf_g03.fchk')
+                data = read_source(ROOT / 'validation/shared/data/regression/iodata/water_sto3g_hf_g03.fchk')
                 data.arrays['mo_occs'][0] = 1.5
             with self.subTest(defect=defect):
                 result = self.qualify(data)

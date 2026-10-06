@@ -13,3 +13,18 @@ submodules/MolecularNodes/reference-docs/
 
 # Local scientific inputs retain separate source and license records.
 /tests/data/local/
+
+# Current validation work and local scientific originals.
+/validation/work/
+/validation/agent/reports/
+/validation/shared/install/*.zip
+/validation/shared/data/local/
+
+# Restored byte-for-byte from the tracked frozen public sample package.
+/validation/shared/data/public/tutorial-samples.json
+/validation/shared/data/public/P03/color.cube
+/validation/shared/data/public/P03/igmh/dg_inter.cub
+/validation/shared/data/public/P03/igmh/sl2r.cub
+/validation/shared/data/public/P03/iri/func1.cub
+/validation/shared/data/public/P03/iri/func2.cub
+/validation/shared/data/public/P05/nocv/nocv-pair1.cub

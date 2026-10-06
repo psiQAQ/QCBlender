@@ -20,11 +20,11 @@ sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 write=lambda p,x:p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 files={};sources={};checks={};records=json.loads((RUN/'generation-report.json').read_text());ir=json.loads((IRC/'report.json').read_text())
 def include(sid,source,rel,role,expected=None,quantity=None,unit=None):
- base=ROOT/'tests/data/tutorial' if source.stat().st_size<512*1024 else REF/'tests/data/local/public-tutorial'
+ base=ROOT/'validation/shared/data/public'
  target=base/rel;target.parent.mkdir(parents=True,exist_ok=True)
  if target.exists():raise FileExistsError(target)
  shutil.copy2(source,target);path=target.relative_to(ROOT if base.is_relative_to(ROOT) else REF).as_posix()
- files[sid]=dict(id=sid,path=path,archive_path=rel,local_key=path.removeprefix('tests/data/local/') if 'tests/data/local/' in path else None,bytes=target.stat().st_size,sha256=sha(target),distribution='included',license='CC-BY-4.0',license_evidence='https://creativecommons.org/licenses/by/4.0/',source_url=None,acquire='Extract public tutorial ZIP retaining archive_path layout.',role=role,producer='PySCF 2.13.1 / Multiwfn 2026.9.20 / geomeTRIC 1.1.1; see evidence',calculation_group=rel.split('/')[0],quantity=quantity,unit=unit,expected=expected or {})
+ files[sid]=dict(id=sid,path=path,archive_path=rel,local_key=path.removeprefix('validation/shared/data/local/') if 'validation/shared/data/local/' in path else None,bytes=target.stat().st_size,sha256=sha(target),distribution='included',license='CC-BY-4.0',license_evidence='https://creativecommons.org/licenses/by/4.0/',source_url=None,acquire='Extract public tutorial ZIP retaining archive_path layout.',role=role,producer='PySCF 2.13.1 / Multiwfn 2026.9.20 / geomeTRIC 1.1.1; see evidence',calculation_group=rel.split('/')[0],quantity=quantity,unit=unit,expected=expected or {})
  sources[sid]=target
 for key,r in records.items():
  g,n=key.split('/');include(g+'-'+n,RUN/g/(n+'.fchk'),key+'.fchk','reference wavefunction',r)
@@ -39,7 +39,7 @@ for kind,names in {'esp':['surfanalysis.pdb','stdout.log'],'aim':['CPs.pdb','pat
  for n in names:include('P03-'+kind+'-'+n,RUN/'P03'/kind/n,'P03/'+kind+'/'+n,'external '+kind+' records')
 for n in ['steps.csv','mayer-pyscf.csv']+[f'step-{i:03d}{s}' for i in range(1,4) for s in ['.fchk','-mayer-pyscf.txt']]:include('P04-'+n,IRC/n,'P04/'+n,'genuine bidirectional IRC/Mayer')
 for n in ('ets-nocv.txt','nocv-pair1.cub'):include('P05-'+n,RUN/'P05/nocv'/n,'P05/nocv/'+n,'external ETS-NOCV')
-index=json.loads((ROOT/'tests/data/local-inputs.json').read_text(encoding='utf-8'));key='log-examples/water_neutral_nbo_opt_freq.out';item=index['files'][key];source=REF/item['path'];assert sha(source)==item['sha256']
+index=json.loads((ROOT/'validation/shared/data/local-inputs.json').read_text(encoding='utf-8'));key='log-examples/water_neutral_nbo_opt_freq.out';item=index['files'][key];source=REF/item['path'];assert sha(source)==item['sha256']
 url='https://raw.githubusercontent.com/cclib/cclib-data/a16cc80ea29e8baec60abd0df346ce6862f52531/Gaussian/Gaussian16/water_neutral_nbo_opt_freq.out'
 files['P02-water_neutral_nbo_opt_freq.out']=dict(id='P02-water_neutral_nbo_opt_freq.out',path=item['path'],archive_path=None,local_key=key,bytes=item['bytes'],sha256=item['sha256'],distribution='external-acquisition',license='unverified data permission',license_evidence='https://cclib.readthedocs.io/en/stable/how_to_install.html',source_url=url,acquire='Obtain fixed original URL separately and verify SHA; this grants no redistribution permission. Copy identical .log alias to test the other extension.',role='Gaussian multijob opt/freq/NBO',producer='Gaussian 16 A.03 / NBO 3.1',calculation_group='P02',expected={});sources['P02-water_neutral_nbo_opt_freq.out']=source
 try:
@@ -93,13 +93,13 @@ files['P05-ets-nocv.txt']['unit']='kcal/mol';files['P04-mayer-pyscf.csv']['unit'
 files['P03-esp-surfanalysis.pdb']['unit']='kcal/mol; coordinates angstrom'
 files['P03-esp-stdout.log']['unit']='center kcal/mol; area angstrom^2; percentage %'
 write(ROOT/'docs/v1-acceptance/tutorial-samples.json',manifest)
-public=ROOT/'tests/data/tutorial';(public/'LICENSE').write_text('Generated sample data: CC BY 4.0\nAttribution: QCBlender contributors\nhttps://creativecommons.org/licenses/by/4.0/\nOnly distribution=included files are covered.\n',encoding='utf-8')
+public=ROOT/'validation/shared/data/public';(public/'LICENSE').write_text('Generated sample data: CC BY 4.0\nAttribution: QCBlender contributors\nhttps://creativecommons.org/licenses/by/4.0/\nOnly distribution=included files are covered.\n',encoding='utf-8')
 (public/'NOTICE.md').write_text('# Public tutorial samples\n\nOwned PySCF/geomeTRIC/Multiwfn data: CC BY 4.0, attribution QCBlender contributors. P01/P03/P05 are unoptimized illustrative geometries; P04 is a genuine optimized first-order saddle and converged bidirectional IRC. P02 is excluded; see manifest acquisition/licensing limitations.\n\nCite Multiwfn: Tian Lu, Feiwu Chen, J. Comput. Chem. 33, 580 (2012), DOI:10.1002/jcc.22885; Tian Lu, J. Chem. Phys. 161, 082503 (2024), DOI:10.1063/5.0216272. ETS-NOCV energies use actual complex KS reconstruction, an approximation rather than F_TS. No scientific grid-convergence claim. Identify Cube annotates values and performs no scaling.\n',encoding='utf-8')
 for sid,item in files.items():
  if item['distribution']=='included' and item['local_key']:index['files'][item['local_key']]=dict(id=sid,path=item['path'],bytes=item['bytes'],sha256=item['sha256'],role=item['role'],license='CC-BY-4.0',source_url=None,provenance='Owned tutorial calculation; tutorial-samples.json',used_by=[c for c,v in cases.items() if sid in v['files']])
 for key in index['files']:
  if key.startswith('complex-examples/') and index['files'][key].get('license')=='BSD-3-Clause':index['files'][key]['data_license_status']='unverified; code license does not establish data permission'
-write(ROOT/'tests/data/local-inputs.json',index);shutil.copytree(RUN,E/'owned');shutil.copytree(IRC,E/'irc')
+write(ROOT/'validation/shared/data/local-inputs.json',index);shutil.copytree(RUN,E/'owned');shutil.copytree(IRC,E/'irc')
 for n in ('generate_tutorial_samples.py','generate_tutorial_irc.py','finalize_tutorial_samples.py'):shutil.copy2(ROOT/'tools'/n,E/n)
 write(E/'tutorial-samples.json',manifest);package=RUN.parent/'qcblender-public-tutorial-samples-v1.zip'
 if package.exists():raise FileExistsError(package)

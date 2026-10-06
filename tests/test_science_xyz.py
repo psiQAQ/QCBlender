@@ -109,7 +109,7 @@ class XYZTests(unittest.TestCase):
                 damaged.validate()
 
     def test_public_fixtures(self):
-        folder = ROOT / 'tests/data/xyz'
+        folder = ROOT / 'validation/shared/data/public/P06'
         for filename, count in [('water-dimer.xyz', 1), ('p04-three-frames.xyz', 3)]:
             data = read_source(folder / filename)
             self.assertEqual(len(data.metadata['xyz_frames']), count)

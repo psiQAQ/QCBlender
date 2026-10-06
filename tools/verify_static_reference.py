@@ -1,6 +1,6 @@
 """Run with Blender --background --python this_file -- --root ... --sample ... --out ...
 
-sample is the catalog root containing tests/data/local-inputs.json. No workers run.
+sample is the catalog root containing validation/shared/data/local-inputs.json. No workers run.
 """
 import argparse
 import importlib

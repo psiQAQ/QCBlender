@@ -15,7 +15,7 @@ from qcblender.data import BOHR_ANGSTROM
 from qcblender.evaluate import Grid, evaluate_field, evaluate_points
 from qcblender.readers import read_source
 
-data = read_source(ROOT / 'tests/data/iodata/li_h_3-21G_hf_g09.fchk')
+data = read_source(ROOT / 'validation/shared/data/regression/iodata/li_h_3-21G_hf_g09.fchk')
 center = data.arrays['positions'].mean(axis=0) / BOHR_ANGSTROM
 records = []
 for radius, spacing in [(8, .4), (8, .2), (8, .1), (12, .2), (16, .2)]:

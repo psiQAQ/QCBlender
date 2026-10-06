@@ -49,7 +49,7 @@ def mesh(obj):
 
 for old in bpy.data.objects:
     old.hide_render = True
-directory = finish(jobs.Job('import', source=str(ROOT / 'tests/data/chemtools/ch4_uhf_ccpvdz.fchk')))
+directory = finish(jobs.Job('import', source=str(ROOT / 'validation/shared/data/regression/chemtools/ch4_uhf_ccpvdz.fchk')))
 atoms = views.atom_view(directory)
 modifier, tree = atoms.modifiers[0], atoms.modifiers[0].node_group
 inputs = sockets(atoms)

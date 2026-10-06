@@ -111,7 +111,7 @@ class CandidateBoundaries(unittest.TestCase):
             path = self.root / relative
             path.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, path)
-        self.samples = ROOT / 'tests/data/distribution' / artifacts.SAMPLE_NAME
+        self.samples = ROOT / 'validation/agent/packages' / artifacts.SAMPLE_NAME
         self.candidate = self.root / extension_filename(self.root)
         self.candidate.write_bytes(b'exact original candidate bytes')
         self.digest = file_record(self.candidate)['sha256']

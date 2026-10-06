@@ -2,8 +2,10 @@
 import argparse,hashlib,json,sys,zipfile
 from pathlib import Path
 p=argparse.ArgumentParser();p.add_argument('--reference-root',type=Path,required=True);p.add_argument('--package',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
+p.add_argument('--site',type=Path,help='Existing science environment; defaults to reference-root/outputs/science')
 p.add_argument('--checkpoints',action='store_true',help='Also compare original PySCF checkpoints; requires the existing calculation environment')
-a=p.parse_args();ROOT=Path(__file__).resolve().parents[1];REF=a.reference_root.resolve();sys.path[:0]=[str(REF/'outputs/science'),str(ROOT)]
+a=p.parse_args();ROOT=Path(__file__).resolve().parents[1];REF=a.reference_root.resolve();sys.path[:0]=[str(a.site.resolve() if a.site else REF/'outputs/science'),str(ROOT)]
+from tools.local_inputs import input_path,public_input_path
 import numpy as np
 from qcblender.readers import read_fchk,read_source
 from qcblender.evaluate import evaluate_points
@@ -16,7 +18,7 @@ from qcblender.cube import read_cube
 from qcblender.data import orbital_selection
 manifest=json.loads((ROOT/'docs/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'));paths={};sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 for sid,f in manifest['files'].items():
- path=(REF if f['local_key'] else ROOT)/f['path'];assert path.stat().st_size==f['bytes'] and sha(path)==f['sha256'],sid;paths[sid]=path
+ path=public_input_path(f,ROOT) if f['distribution']=='included' else input_path(f['local_key'],REF);assert path.stat().st_size==f['bytes'] and sha(path)==f['sha256'],sid;paths[sid]=path
 for sid in ('P01-o2-uhf','P03-water-dimer','P05-complex','P04-step-001.fchk','P04-step-002.fchk','P04-step-003.fchk'):
  d=read_fchk(paths[sid]);e=manifest['files'][sid]['expected'];assert d.arrays['atomic_numbers'].tolist()==e['atomic_numbers'];np.testing.assert_allclose(d.arrays['positions'],e.get('coordinates_angstrom',e.get('positions_angstrom')),atol=3e-6,rtol=0)
 for sid in ('P01-o2-uhf','P03-water-dimer','P05-complex'):
@@ -45,7 +47,7 @@ if a.checkpoints:
  from gbasis.wrappers import from_iodata
  from gbasis.evals.density import evaluate_density
  for i in range(1,4):
-  fchk=paths[f'P04-step-{i:03d}.fchk'];mol,state=load_scf(str(REF/f'outputs/evidence/2026-09-30/public-tutorial/samples/irc/step-{i:03d}.chk'));data=load_one(str(fchk));np.testing.assert_array_equal(data.atnums,mol.atom_charges());np.testing.assert_allclose(data.atcoords,mol.atom_coords(),atol=1e-7,rtol=0)
+  fchk=paths[f'P04-step-{i:03d}.fchk'];mol,state=load_scf(str(REF/f'validation/shared/data/local/calculations/public-tutorial/irc/step-{i:03d}.chk'));data=load_one(str(fchk));np.testing.assert_array_equal(data.atnums,mol.atom_charges());np.testing.assert_allclose(data.atcoords,mol.atom_coords(),atol=1e-7,rtol=0)
   dm=(state['mo_coeff']*state['mo_occ'])@state['mo_coeff'].T;ao=mol.eval_gto('GTOval_sph',pts);reference=np.einsum('pi,ij,pj->p',ao,dm,ao);observed=evaluate_density(data.one_rdms['scf'],from_iodata(data),pts);np.testing.assert_allclose(observed,reference,atol=2e-7,rtol=2e-6)
  checkpoint_density='Passed'
 ets=import_ets(read_fchk(paths['P05-complex']),paths['P05-ets-nocv.txt'],'kcal/mol');import_nocv(paths['P05-nocv-pair1.cub'],ets,1,'Total','electron/bohr^3')

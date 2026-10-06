@@ -13,7 +13,7 @@ from qcblender.readers import read_source
 from qcblender.association import compare_sources
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = Path(__file__).parent / 'data/chemtools'
+DATA = ROOT / 'validation/shared/data/regression/chemtools'
 
 
 class ScientificAdapter(unittest.TestCase):
@@ -56,13 +56,13 @@ class ScientificAdapter(unittest.TestCase):
 
     def test_open_shell_and_spherical_cartesian_basis_invariants(self):
         from gbasis.integrals.overlap import overlap_integral
-        fixture_dir = Path(__file__).parent / 'data/iodata'
+        fixture_dir = ROOT / 'validation/shared/data/regression/iodata'
         for item in json.loads((fixture_dir / 'sources.json').read_text(encoding='utf-8')):
             self.assertEqual(hashlib.sha256((fixture_dir / item['file']).read_bytes()).hexdigest(), item['sha256'])
         for name in ('water_sto3g_hf_g03.fchk', 'ch3_hf_sto3g.fchk', 'ch3_rohf_sto3g_g03.fchk',
                      'o2_cc_pvtz_pure.fchk', 'o2_cc_pvtz_cart.fchk'):
             with self.subTest(source=name):
-                data = read_source(Path(__file__).parent / 'data/iodata' / name)
+                data = read_source(ROOT / 'validation/shared/data/regression/iodata' / name)
                 mol, basis, pa, pb = prepare(data)
                 overlap = overlap_integral(basis)
                 np.testing.assert_allclose(np.trace((pa + pb) @ overlap), data.metadata['electron_count'], atol=2e-5)
@@ -98,7 +98,7 @@ class ScientificAdapter(unittest.TestCase):
     def test_real_dft_rectangular_orbitals_and_explicit_high_l_limit(self):
         from gbasis.integrals.overlap import overlap_integral
         for relative in ('gbasis/ch2o_q_0.fchk', 'iodata/li_h_3-21G_hf_g09.fchk', 'iodata/li2_g09_nbasis_indep.fchk'):
-            data = read_source(ROOT / 'tests/data' / relative)
+            data = read_source(ROOT / 'validation/shared/data/regression' / relative)
             mol, basis, pa, pb = prepare(data)
             overlap = overlap_integral(basis)
             for coefficients in (mol.mo.coeffsa, mol.mo.coeffsb):
@@ -113,7 +113,7 @@ class ScientificAdapter(unittest.TestCase):
             if 'ch2o' in relative:
                 self.assertEqual(data.metadata['method'].upper(), 'UB3LYP')
         for kind in ('sph', 'cart'):
-            data = read_source(ROOT / f'tests/data/gbasis/h2o_hf_ccpv5z_{kind}.fchk')
+            data = read_source(ROOT / f'validation/shared/data/regression/gbasis/h2o_hf_ccpv5z_{kind}.fchk')
             with self.assertRaisesRegex(ValueError, 'above g'):
                 prepare(data)
 
@@ -131,7 +131,7 @@ class ScientificAdapter(unittest.TestCase):
 
     def test_orbital_selection_uses_spin_occupations_and_available_columns(self):
         from copy import deepcopy
-        data = read_source(ROOT / 'tests/data/iodata/ch3_rohf_sto3g_g03.fchk')
+        data = read_source(ROOT / 'validation/shared/data/regression/iodata/ch3_rohf_sto3g_g03.fchk')
         self.assertEqual(orbital_selection(data, 'alpha', 'HOMO')['source_number'], 5)
         self.assertEqual(orbital_selection(data, 'beta', 'HOMO')['source_number'], 4)
         self.assertEqual(orbital_selection(data, 'alpha', 'LUMO')['source_number'], 6)
@@ -141,7 +141,7 @@ class ScientificAdapter(unittest.TestCase):
         ambiguous.arrays['mo_occs'][0] = 1.5
         with self.assertRaisesRegex(ValueError, 'Fractional'):
             orbital_selection(ambiguous, 'alpha', 'HOMO')
-        rectangular = read_source(ROOT / 'tests/data/iodata/li2_g09_nbasis_indep.fchk')
+        rectangular = read_source(ROOT / 'validation/shared/data/regression/iodata/li2_g09_nbasis_indep.fchk')
         self.assertEqual(orbital_selection(rectangular, 'alpha', number=37)['source_number'], 37)
         with self.assertRaisesRegex(ValueError, 'available range'):
             orbital_selection(rectangular, 'alpha', number=38)

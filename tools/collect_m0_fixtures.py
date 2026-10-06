@@ -5,7 +5,7 @@ from pathlib import Path
 import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
-TARGET = ROOT / 'tests/data/chemtools'
+TARGET = ROOT / 'validation/shared/data/regression/chemtools'
 SOURCE = ROOT / 'outputs/m0-research/chemtools-references'
 FILES = {
     'ch4_uhf_ccpvdz.fchk': '3f93c52df5ef5adda00eff89bc5c9bb0bc10182722193d87e72f3b710d7c2c40',
@@ -25,7 +25,7 @@ shutil.copy2(SOURCE / 'LICENSE', TARGET / 'LICENSE')
 (TARGET / 'sources.json').write_text(json.dumps(records, indent=2) + '\n', encoding='utf-8')
 
 iodata_source = ROOT / 'outputs/m0-research/iodata-1.0.1'
-iodata_target = ROOT / 'tests/data/iodata'
+iodata_target = ROOT / 'validation/shared/data/regression/iodata'
 iodata_target.mkdir(parents=True, exist_ok=True)
 records = []
 for name in ('water_sto3g_hf_g03.fchk', 'ch3_hf_sto3g.fchk', 'ch3_rohf_sto3g_g03.fchk',
@@ -42,7 +42,7 @@ shutil.copy2(iodata_source / 'LICENSE.txt', iodata_target / 'LICENSE.txt')
 
 gbasis_commit = '071969c900d6d7a9fbbdfe193c65ba3be177fbdf'
 gbasis_source = ROOT / 'outputs/m0-research' / ('gbasis-' + gbasis_commit)
-gbasis_target = ROOT / 'tests/data/gbasis'
+gbasis_target = ROOT / 'validation/shared/data/regression/gbasis'
 gbasis_target.mkdir(parents=True, exist_ok=True)
 records = []
 for relative, expected in [

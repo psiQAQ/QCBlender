@@ -9,4 +9,4 @@ STDLIB = tuple('test_' + name for name in (
     'cancel_finalization', 'copy_display', 'fog_materials', 'legend_layout',
     'local_inputs', 'multi_field_accept', 'native_volume', 'native_volume_project',
     'static_reference_capabilities', 'storage_cleanup', 'candidate_artifacts',
-    'generate_qualification', 'view_summary', 'release_candidate'))
+    'generate_qualification', 'view_summary', 'release_candidate', 'validation_data'))

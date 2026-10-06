@@ -1,12 +1,12 @@
-"""Fetch pinned public examples into ignored outputs; verify every byte on reuse."""
+"""Fetch pinned examples into local validation inputs; verify every byte on reuse."""
 import hashlib
 import json
 from pathlib import Path
 from urllib.request import urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'tests/data/local/complex-examples'
-MANIFEST = ROOT / 'tests/data/complex-example-sources.json'
+OUT = ROOT / 'validation/shared/data/local/complex-examples'
+MANIFEST = ROOT / 'validation/shared/data/complex-example-sources.json'
 
 
 def main():

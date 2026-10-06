@@ -19,7 +19,7 @@ from qcblender.blender.project import save_project
 OUT = ROOT / 'outputs/irc-acceptance'
 OUT.mkdir(parents=True, exist_ok=True)
 qcblender.register()
-SOURCE = ROOT / 'tests/data/tutorial/P04'
+SOURCE = ROOT / 'validation/shared/data/public/P04'
 
 
 def activate(obj):

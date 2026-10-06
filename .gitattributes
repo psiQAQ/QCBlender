@@ -11,5 +11,12 @@ tests/data/** -text -diff
 tests/data/distribution/*.md text eol=lf diff
 tests/data/local-inputs.json text eol=lf diff
 tests/data/visual-baseline/*.json text eol=lf diff
+# Keep relocated scientific inputs byte-identical on every checkout.
+validation/shared/data/public/** -text -diff
+validation/shared/data/public/README.md text eol=lf diff
+validation/shared/data/regression/** -text -diff
+validation/shared/data/regression/visual-baseline/*.json text eol=lf diff
+validation/shared/data/complex-example-sources.json -text -diff
+validation/shared/data/local-log-downloads.json -text -diff
 # Preserve the upstream GNU license text, including its original final blank line.
 LICENSE -text whitespace=-blank-at-eof

@@ -40,7 +40,7 @@ class Optimization(unittest.TestCase):
         self.assertEqual(steps[0]['convergence'][0]['value'], .029587)
         np.testing.assert_array_equal(data.arrays['positions'], data.arrays['optimization_positions'][-1])
         self.assertNotIn('optimization', read_log(SOURCE, 1).metadata)
-        self.assertNotIn('optimization', read_log(ROOT / 'tests/data/cclib/water_mp2.log').metadata)
+        self.assertNotIn('optimization', read_log(ROOT / 'validation/shared/data/regression/cclib/water_mp2.log').metadata)
         with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
             save_dataset(data, directory)
             reopened = load_dataset(directory)

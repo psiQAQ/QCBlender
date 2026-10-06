@@ -12,7 +12,7 @@ from gbasis.evals.eval import evaluate_basis
 from gbasis.evals.density import evaluate_density
 from gbasis.evals.electrostatic_potential import electrostatic_potential
 
-DATA = Path(__file__).parent / 'data/chemtools'
+DATA = Path(__file__).resolve().parents[1] / 'validation/shared/data/regression/chemtools'
 METRICS = {}
 
 

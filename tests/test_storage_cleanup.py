@@ -80,12 +80,12 @@ class PolicySafety(unittest.TestCase):
             self.assertEqual(cleanup.classify(self.root / 'old/library.whl', {})[0], 'keep')
 
     def test_generated_canonical_input_is_verified_without_a_migration_origin(self):
-        input_file = self.root / 'tests/data/local/generated.cub'
+        input_file = self.root / 'validation/shared/data/local/generated.cub'
         input_file.parent.mkdir(parents=True)
         input_file.write_bytes(b'owned generated field')
-        index = self.root / 'tests/data/local-inputs.json'
+        index = self.root / 'validation/shared/data/local-inputs.json'
         index.write_text(json.dumps({'files': {'generated.cub': {
-            'path': 'tests/data/local/generated.cub', 'sha256': cleanup.digest(input_file)}}}), encoding='utf-8')
+            'path': 'validation/shared/data/local/generated.cub', 'sha256': cleanup.digest(input_file)}}}), encoding='utf-8')
         output = self.root / 'outputs'
         output.mkdir()
         with patch.object(cleanup, 'ROOT', self.root), patch.object(cleanup, 'OUTPUTS', output), \

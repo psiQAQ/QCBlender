@@ -258,7 +258,7 @@ def main():
             report['installed'] = {'path': str(installed), 'guards': {name: hashlib.sha256(
                 (installed / 'blender' / (name + '.py')).read_bytes()).hexdigest() for name in ('irc', 'optimization')}}
             require(bpy.ops.qcblender.import_irc_path(manifest_path=str(
-                REFERENCE / 'tests/data/tutorial/P04/steps.csv')) == {'FINISHED'}, 'Import real P04 failed')
+                REFERENCE / 'validation/shared/data/public/P04/steps.csv')) == {'FINISHED'}, 'Import real P04 failed')
             irc = bpy.context.object
             irc.name = 'IRC original'
             roots, report['checks']['irc'] = verify_path(irc, 'irc')
@@ -279,7 +279,7 @@ def main():
             require(snapshot(opt_roots) == unchanged, 'Display-layer copy changed original pair')
             roots.append(copied)
             report['checks']['optimization_layer_copy'] = 'Passed'
-            xyz = import_atoms(REFERENCE / 'tests/data/xyz/p04-three-frames.xyz', 'XYZ original')
+            xyz = import_atoms(REFERENCE / 'validation/shared/data/public/P06/p04-three-frames.xyz', 'XYZ original')
             module('blender.trajectory').initialize_trajectory(xyz, module('data').load_dataset(bpy.path.abspath(xyz['qc_dataset'])))
             add_distance(xyz)
             xyz_copy = linked(xyz, 'XYZ linked copy')

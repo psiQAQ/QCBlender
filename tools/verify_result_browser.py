@@ -94,7 +94,7 @@ else:
     assert browser.source_group(from_source[0])[0] != browser.source_group(from_source[1])[0]
     report['selected_jobs'] = 'Passed'
     ui = importlib.import_module(MODULE + '.blender.ui')
-    fchk = ROOT / 'tests/data/chemtools/ch4_uhf_ccpvdz.fchk'
+    fchk = ROOT / 'validation/shared/data/regression/chemtools/ch4_uhf_ccpvdz.fchk'
     state = SimpleNamespace(filepath=str(fchk), job_number=2,
                             source_sha256=preview['source']['sha256'])
     with patch.object(ImportHelper, 'invoke', return_value={'RUNNING_MODAL'}) as picker:

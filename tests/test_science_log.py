@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 import sys
 sys.path.insert(0, str(ROOT))
 from tools.local_inputs import input_path
-DATA = Path(__file__).parent / 'data/cclib'
+DATA = ROOT / 'validation/shared/data/regression/cclib'
 
 
 class GaussianLog(unittest.TestCase):
@@ -226,7 +226,7 @@ class GaussianLog(unittest.TestCase):
     def test_link1_and_real_double_hybrid_local_examples(self):
         local = input_path('log-examples')
         self.assertTrue((local / 'water_neutral_nbo_opt_freq.out').is_file(), 'Run tools/fetch_log_examples.py')
-        for record in json.loads((ROOT / 'tests/data/local-log-downloads.json').read_text(encoding='utf-8')):
+        for record in json.loads((ROOT / 'validation/shared/data/local-log-downloads.json').read_text(encoding='utf-8')):
             assert hashlib.sha256((local / record['file']).read_bytes()).hexdigest() == record['sha256']
         path = local / 'water_neutral_nbo_opt_freq.out'
         opt, freq = read_log(path, 0), read_log(path, 1)

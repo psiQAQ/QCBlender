@@ -157,7 +157,7 @@ try:
     report['checks']['real_task_error_with_controlled_cleanup_error'] = failed_result
 
     # Exercise actual registered RNA operator instances, including the paired import callback.
-    reference_data = module('readers').read_fchk(REF / 'tests/data/tutorial/P03/water-dimer.fchk')
+    reference_data = module('readers').read_fchk(REF / 'validation/shared/data/public/P03/water-dimer.fchk')
     reference_directory = OUT / 'static-reference'
     storage.save_dataset(reference_data, reference_directory)
     atom_view = module('blender.views').atom_view
@@ -172,7 +172,7 @@ try:
         bpy.context.view_layer.objects.active = active
         if name == 'import_calculation':
             result = bpy.ops.qcblender.import_calculation('EXEC_DEFAULT',
-                filepath=str(REF / 'tests/data/tutorial/P03/water-dimer.fchk'), source_sha256='')
+                filepath=str(REF / 'validation/shared/data/public/P03/water-dimer.fchk'), source_sha256='')
         elif name == 'import_paired_field':
             result = bpy.ops.qcblender.import_paired_field('EXEC_DEFAULT', method='IGMH',
                 geometry_source=str(pair / 'dg_inter.cub'), color_source=str(pair / 'sl2r.cub'),

@@ -62,10 +62,10 @@ class DataExport(unittest.TestCase):
         self.assertTrue(all(row['unit'] == '' and 'Hartrees-Bohrs-Radians' in row['source_unit_system'] for row in tables['optimization_convergence.csv']))
 
     def test_real_irc_mayer_all_steps_and_all_pairs(self):
-        path = import_irc(ROOT / 'tests/data/tutorial/P04/steps.csv')
+        path = import_irc(ROOT / 'validation/shared/data/public/P04/steps.csv')
         tables, _, _ = self.export(path, 'IRC')
         self.assertEqual([float(row['energy_hartree']) for row in tables['irc_steps.csv']], path.arrays['irc_energies'].tolist())
-        mayer = import_irc_mayer(path, ROOT / 'tests/data/tutorial/P04/mayer-pyscf.csv')
+        mayer = import_irc_mayer(path, ROOT / 'validation/shared/data/public/P04/mayer-pyscf.csv')
         tables, _, _ = self.export(mayer, 'Mayer')
         rows = tables['mayer.csv']
         self.assertEqual(len(rows), mayer.arrays['mayer_orders'].size)
@@ -115,8 +115,8 @@ class DataExport(unittest.TestCase):
 
     def test_real_esp_original_percentage_and_source_intervals(self):
         from qcblender.analysis_data import import_esp
-        reference = read_fchk(ROOT / 'tests/data/tutorial/P03/water-dimer.fchk')
-        base = ROOT / 'tests/data/tutorial/P03/esp'
+        reference = read_fchk(ROOT / 'validation/shared/data/public/P03/water-dimer.fchk')
+        base = ROOT / 'validation/shared/data/public/P03/esp'
         data = import_esp(reference, base / 'surfanalysis.pdb', base / 'stdout.log', 'electron density 0.001 e/bohr^3', '', 'kcal/mol', '')
         bins = data.metadata['analysis']['area_bins']
         chosen = bins[len(bins) // 2]

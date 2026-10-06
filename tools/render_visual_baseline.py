@@ -130,7 +130,7 @@ def environment():
 def prepare_case(case):
     configure_scene()
     jobs, views = module('blender.jobs'), module('blender.views')
-    source = ROOT / 'tests/data/chemtools/ch4_uhf_ccpvdz.fchk'
+    source = ROOT / 'validation/shared/data/regression/chemtools/ch4_uhf_ccpvdz.fchk'
     directory, _ = finish(jobs.Job('import', source=str(source)))
     atoms = views.atom_view(directory)
     require(len(atoms.data.vertices) == 5 and len(atoms.data.edges) == 4, 'Expected CH4 atoms and bonds')
@@ -260,7 +260,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--case', choices=CASES, required=True)
     parser.add_argument('--output', type=Path, required=True)
-    parser.add_argument('--baseline', type=Path, default=ROOT / 'tests/data/visual-baseline')
+    parser.add_argument('--baseline', type=Path, default=ROOT / 'validation/shared/data/regression/visual-baseline')
     parser.add_argument('--mode', choices=('compare', 'record'), default='compare')
     parser.add_argument('--mutation', choices=('hide-negative', 'legend-unit', 'legend-position', 'disable-valid-mask'))
     parser.add_argument('--reopen', type=Path, help='Cold-open a self-contained scene produced by this tool')

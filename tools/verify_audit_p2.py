@@ -68,7 +68,7 @@ def main():
         else:
             sources = out / 'sources'
             sources.mkdir()
-            healthy = ROOT / 'tests/data/cclib/water_mp2.log'
+            healthy = ROOT / 'validation/shared/data/regression/cclib/water_mp2.log'
             combined = sources / 'failed-then-water.log'
             combined.write_bytes(b' Entering Gaussian System, Link 0=g16\n # B3LYP/6-31G\n\n'
                                  b' Error termination via Lnk1e\n' + healthy.read_bytes())

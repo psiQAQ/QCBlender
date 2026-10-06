@@ -95,9 +95,9 @@ try:
                 assert sha(directory / file['filename']) == file['sha256']
         report = dict(original, cold_open='Passed', cold_path=bpy.data.filepath)
     else:
-        single, _ = import_atoms(REF / 'tests/data/xyz/water-dimer.xyz')
+        single, _ = import_atoms(REF / 'validation/shared/data/public/P06/water-dimer.xyz')
         assert 'qc_trajectory_frame' not in single
-        multi, data = import_atoms(REF / 'tests/data/xyz/p04-three-frames.xyz')
+        multi, data = import_atoms(REF / 'validation/shared/data/public/P06/p04-three-frames.xyz')
         assert multi['qc_trajectory_count'] == 3
         layers.activate(bpy.context, multi)
         assert bpy.ops.qcblender.add_annotation(kind='DISTANCE', atoms='1,2', decimals=9) == {'FINISHED'}
@@ -134,24 +134,24 @@ try:
         trajectory.set_frame(bond_obj, bonds, 1)
         assert len(bond_obj.data.edges) == 1
         report['checks']['xyz_per_frame_inferred_bonds'] = 'Passed'
-        ir, ir_data = import_atoms(REF / 'tests/data/local/log-examples/water_neutral_nbo_opt_freq.out', 1)
-        opt, opt_data = import_atoms(REF / 'tests/data/local/log-examples/water_neutral_nbo_opt_freq.out', 0)
+        ir, ir_data = import_atoms(REF / 'validation/shared/data/local/log-examples/water_neutral_nbo_opt_freq.out', 1)
+        opt, opt_data = import_atoms(REF / 'validation/shared/data/local/log-examples/water_neutral_nbo_opt_freq.out', 0)
         assert len(ir.qc_settings.modes) == 3 and ir.qc_settings.spectrum is None
         for index in range(3):
             ir.qc_settings.active_mode = index
         export(ir, 'IR')
         export(opt, 'optimization')
         layers.activate(bpy.context, multi)
-        assert bpy.ops.qcblender.import_irc_path(manifest_path=str(REF / 'tests/data/tutorial/P04/steps.csv')) == {'FINISHED'}
+        assert bpy.ops.qcblender.import_irc_path(manifest_path=str(REF / 'validation/shared/data/public/P04/steps.csv')) == {'FINISHED'}
         irc = bpy.context.object
         export(irc, 'IRC')
-        assert bpy.ops.qcblender.import_irc_mayer(manifest_path=str(REF / 'tests/data/tutorial/P04/mayer-pyscf.csv')) == {'FINISHED'}
+        assert bpy.ops.qcblender.import_irc_mayer(manifest_path=str(REF / 'validation/shared/data/public/P04/mayer-pyscf.csv')) == {'FINISHED'}
         mayer = bpy.context.object
         assert bpy.ops.qcblender.select_irc_mayer_pair() == {'FINISHED'}
         export(mayer, 'Mayer')
         assert bpy.ops.qcblender.irc_step(direction='NEXT') == {'FINISHED'}
-        reference, ref_data = import_atoms(REF / 'tests/data/tutorial/P03/water-dimer.fchk')
-        base = REF / 'tests/data/local/public-tutorial/P03'
+        reference, ref_data = import_atoms(REF / 'validation/shared/data/public/P03/water-dimer.fchk')
+        base = REF / 'validation/shared/data/public/P03'
         pair_job = jobs.Job('import_pair', geometry_source=str(base / 'igmh/dg_inter.cub'),
             color_source=str(base / 'igmh/sl2r.cub'), method='IGMH', geometry_unit='electron/bohr^4',
             color_unit='electron/bohr^3', iri_exponent=None,
@@ -165,8 +165,8 @@ try:
         selected = {'x_field': 1, 'y_field': 0, 'x_min': -.04, 'x_max': .04, 'y_min': .001, 'y_max': .02}
         result, _ = export(record, 'paired', 'FILTERED', selected)
         assert result['files'][0]['row_count'] == 36391
-        esp = module('analysis_data').import_esp(ref_data, REF / 'tests/data/tutorial/P03/esp/surfanalysis.pdb',
-            REF / 'tests/data/tutorial/P03/esp/stdout.log', 'rho=0.001 electron/bohr^3', '', 'kcal/mol', '')
+        esp = module('analysis_data').import_esp(ref_data, REF / 'validation/shared/data/public/P03/esp/surfanalysis.pdb',
+            REF / 'validation/shared/data/public/P03/esp/stdout.log', 'rho=0.001 electron/bohr^3', '', 'kcal/mol', '')
         location = module('blender.external_results').store_analysis(esp)
         area = module('blender.external_results').area_view(location, esp, reference)
         export(area, 'ESP_AREA')

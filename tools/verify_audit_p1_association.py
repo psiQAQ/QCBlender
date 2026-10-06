@@ -102,7 +102,7 @@ def snapshot():
 
 def new_irc(name):
     require(bpy.ops.qcblender.import_irc_path(
-        manifest_path=str(REFERENCE_ROOT / 'tests/data/tutorial/P04/steps.csv')) == {'FINISHED'}, 'IRC import')
+        manifest_path=str(REFERENCE_ROOT / 'validation/shared/data/public/P04/steps.csv')) == {'FINISHED'}, 'IRC import')
     obj = bpy.context.object
     obj.name = name
     return obj
@@ -392,7 +392,7 @@ def main():
         else:
             for obj in list(bpy.data.objects):
                 bpy.data.objects.remove(obj, do_unlink=True)
-            static_directory = run_job('import', source=str(REFERENCE_ROOT / 'tests/data/tutorial/P04/step-001.fchk'))
+            static_directory = run_job('import', source=str(REFERENCE_ROOT / 'validation/shared/data/public/P04/step-001.fchk'))
             static = atoms(static_directory, 'P04 static source')
             binding_checks(static, static_directory, report['checks'])
             dynamic = new_irc('P04 dynamic path')
@@ -411,7 +411,7 @@ def main():
             module('blender.project').save_project(out / 'p1-association.blend')
             report['saved_snapshot'] = snapshot()
             report['source_inputs'] = {str(path): hashlib.sha256(path.read_bytes()).hexdigest() for path in
-                (REFERENCE_ROOT / 'tests/data/tutorial/P04/step-001.fchk',
+                (REFERENCE_ROOT / 'validation/shared/data/public/P04/step-001.fchk',
                  input_path('log-examples/water_neutral_nbo_opt_freq.out', REFERENCE_ROOT))}
         report['status'] = 'Passed'
     except Exception as error:

@@ -20,7 +20,7 @@ import time
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULE = 'bl_ext.user_default.qcblender'
-SOURCE = ROOT / 'tests/data/chemtools/ch4_uhf_ccpvdz.fchk'
+SOURCE = ROOT / 'validation/shared/data/regression/chemtools/ch4_uhf_ccpvdz.fchk'
 
 
 def sha256(path):

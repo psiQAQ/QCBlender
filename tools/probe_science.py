@@ -17,7 +17,7 @@ from gbasis.evals.density import evaluate_density
 from gbasis.evals.electrostatic_potential import electrostatic_potential
 import gbasis
 
-source = ROOT / 'tests/data/iodata/water_sto3g_hf_g03.fchk'
+source = ROOT / 'validation/shared/data/regression/iodata/water_sto3g_hf_g03.fchk'
 mol = load_one(str(source))
 basis = from_iodata(mol)
 s = overlap_integral(basis)
