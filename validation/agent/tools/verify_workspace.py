@@ -36,7 +36,7 @@ def safe_files(directory):
     """List files without following an unexpected link in the packaged tree."""
     if directory.is_symlink() or directory.is_junction():
         raise ValueError(f'Linked directory is not a portable resource: {directory}')
-    for path in sorted(directory.iterdir()):
+    for path in sorted(directory.iterdir(), key=lambda item: item.name):
         if path.is_symlink() or path.is_junction():
             raise ValueError(f'Linked resource is not portable: {path}')
         if path.is_dir():
