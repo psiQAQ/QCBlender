@@ -3,12 +3,18 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 import zipfile
 
 VERSION = '5.1.1'
 FILENAME = f'blender-{VERSION}-windows-x64.zip'
 BASE_URL = 'https://download.blender.org/release/Blender5.1/'
+USER_AGENT = 'QCBlender-CI (+https://github.com/psiQAQ/QCBlender)'
+
+
+def open_download(url):
+    request = Request(url, headers={'User-Agent': USER_AGENT})
+    return urlopen(request, timeout=120)
 
 
 def published_digest(text, filename=FILENAME):
@@ -26,12 +32,12 @@ def main():
     output = args.output_dir.resolve()
     output.mkdir(parents=True, exist_ok=False)
     checksum = output / f'blender-{VERSION}.sha256'
-    with urlopen(BASE_URL + checksum.name, timeout=120) as response:
+    with open_download(BASE_URL + checksum.name) as response:
         checksum.write_bytes(response.read())
     expected = published_digest(checksum.read_text(encoding='ascii'))
     archive_path = output / FILENAME
     digest = hashlib.sha256()
-    with urlopen(BASE_URL + FILENAME, timeout=120) as response, archive_path.open('xb') as stream:
+    with open_download(BASE_URL + FILENAME) as response, archive_path.open('xb') as stream:
         while block := response.read(1024 * 1024):
             digest.update(block)
             stream.write(block)

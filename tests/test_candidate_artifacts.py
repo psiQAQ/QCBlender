@@ -1,15 +1,18 @@
 """Packaging boundaries use synthetic reports; numerical acceptance runs separately."""
 import hashlib
+from http.server import BaseHTTPRequestHandler, HTTPServer
 import io
 import json
 from pathlib import Path
 import shutil
 import tempfile
+import threading
 import unittest
 from unittest.mock import patch
 import zipfile
 
 from tools import candidate_artifacts as artifacts
+from tools import fetch_ci_blender
 from tools.build_science_backend import verify_source_lock
 from tools.fetch_ci_blender import published_digest
 from tools.package_identity import extension_filename, file_record, source_identity
@@ -19,6 +22,80 @@ from tools.test_profiles import PUBLIC_SCIENCE, STDLIB
 ROOT = Path(__file__).resolve().parents[1]
 COMMIT = '1' * 40
 TREE = '2' * 40
+
+
+class PortableRuntimeDownload(unittest.TestCase):
+    """Exercise real HTTP requests against a local download-policy boundary."""
+
+    def setUp(self):
+        (ROOT / 'outputs').mkdir(exist_ok=True)
+        self.temporary = tempfile.TemporaryDirectory(prefix='portable-tests-', dir=ROOT / 'outputs')
+        self.addCleanup(self.temporary.cleanup)
+        self.output = Path(self.temporary.name) / 'runtime'
+        buffer = io.BytesIO()
+        runtime = fetch_ci_blender.FILENAME.removesuffix('.zip')
+        with zipfile.ZipFile(buffer, 'w') as archive:
+            archive.writestr(runtime + '/blender.exe', b'layout fixture; never executed')
+            archive.writestr(runtime + '/5.1/python/bin/python.exe', b'layout fixture; never executed')
+        self.archive = buffer.getvalue()
+        self.expected = hashlib.sha256(self.archive).hexdigest()
+        self.served_archive = self.archive
+        self.requests = []
+        owner = self
+
+        class DownloadPolicy(BaseHTTPRequestHandler):
+            def do_GET(self):
+                owner.requests.append((self.path, self.headers.get('User-Agent', '')))
+                if not self.headers.get('User-Agent', '').startswith('QCBlender-CI'):
+                    self.send_error(403, 'Client request policy')
+                    return
+                if self.path == '/blender-5.1.1.sha256':
+                    body = (owner.expected + '  ' + fetch_ci_blender.FILENAME + '\n').encode('ascii')
+                elif self.path == '/' + fetch_ci_blender.FILENAME:
+                    body = owner.served_archive
+                else:
+                    self.send_error(404)
+                    return
+                self.send_response(200)
+                self.send_header('Content-Length', str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+
+            def log_message(self, *args):
+                pass
+
+        self.server = HTTPServer(('127.0.0.1', 0), DownloadPolicy)
+        self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
+        self.thread.start()
+        self.addCleanup(self.stop_server)
+
+    def stop_server(self):
+        self.server.shutdown()
+        self.server.server_close()
+        self.thread.join()
+
+    def download(self):
+        base = f'http://127.0.0.1:{self.server.server_port}/'
+        with patch.object(fetch_ci_blender, 'BASE_URL', base), patch('sys.argv', [
+                'fetch_ci_blender.py', '--output-dir', str(self.output)]):
+            fetch_ci_blender.main()
+
+    def test_checksum_and_archive_requests_satisfy_download_policy(self):
+        self.download()
+        report = json.loads((self.output / 'runtime.json').read_text(encoding='utf-8'))
+        self.assertEqual(report['sha256'], self.expected)
+        self.assertEqual(report['version'], '5.1.1')
+        self.assertTrue(Path(report['binary']).is_file())
+        self.assertTrue(Path(report['python']).is_file())
+        self.assertEqual([path for path, _ in self.requests], [
+            '/blender-5.1.1.sha256', '/' + fetch_ci_blender.FILENAME])
+
+    def test_archive_tampering_is_rejected_before_extraction(self):
+        self.served_archive += b'changed download bytes'
+        with self.assertRaisesRegex(ValueError, 'ZIP checksum mismatch'):
+            self.download()
+        self.assertFalse((self.output / 'runtime.json').exists())
+        self.assertFalse((self.output / fetch_ci_blender.FILENAME.removesuffix('.zip')).exists())
 
 
 class CandidateBoundaries(unittest.TestCase):
