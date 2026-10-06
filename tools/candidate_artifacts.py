@@ -20,8 +20,8 @@ SAMPLE_NAME = 'qcblender-public-tutorial-samples-v2.zip'
 
 def verify_samples(package, root=ROOT):
     root = Path(root)
-    manifest = json.loads((root / 'docs/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'))
-    delivery = json.loads((root / 'docs/acceptance/tutorial-sample-delivery.json').read_text(encoding='utf-8'))
+    manifest = json.loads((root / 'validation/agent/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'))
+    delivery = json.loads((root / 'validation/agent/acceptance/tutorial-sample-delivery.json').read_text(encoding='utf-8'))
     actual = file_record(package)
     if any(actual[key] != delivery['package'][key] for key in ('bytes', 'sha256')):
         raise ValueError('Frozen v2 sample ZIP identity differs from delivery record')
@@ -75,7 +75,7 @@ def validate_reports(directory, commit, candidate_sha256):
 
 def reproduction_zip(directory, destination, root=ROOT):
     directory, destination, root = Path(directory), Path(destination), Path(root)
-    inputs = json.loads((root / 'docs/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'))['files']
+    inputs = json.loads((root / 'validation/agent/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'))['files']
     owned = {item['sha256'] for item in inputs.values() if item['distribution'] == 'included'}
     for name in ('example.blend', 'example.png', 'README.md'):
         if not (directory / name).is_file():
@@ -110,7 +110,7 @@ def assemble(candidate, samples, reproduction, reports_dir, output, run_id, chan
     dependencies = dependency_identity((root / 'dependencies.lock.json').read_bytes(),
                                        (root / 'science-sources.lock.json').read_bytes(), qualification['backend'])
     reproduction_report = json.loads((Path(reports_dir) / 'reproduction.json').read_text(encoding='utf-8'))
-    public_inputs = json.loads((root / 'docs/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'))['files']
+    public_inputs = json.loads((root / 'validation/agent/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'))['files']
     if reproduction_report.get('source_sha256') not in {p['sha256'] for p in public_inputs.values() if p['distribution'] == 'included' and p['id'].startswith('P01')}:
         raise ValueError('Reproduction report does not use a verified public P01 input')
     if json.loads((Path(reports_dir) / 'sample-package.json').read_text())['package']['sha256'] != sample_report['package']['sha256']:

@@ -18,7 +18,7 @@ class ValidationDataPreparation(unittest.TestCase):
         self.root = Path(self.temporary.name) / 'checkout'
         migration = json.loads((ROOT / MIGRATION).read_text(encoding='utf-8'))
         paths = {FROZEN_MANIFEST, MIGRATION, CATALOG,
-                 'docs/acceptance/tutorial-sample-delivery.json'}
+                 'validation/agent/acceptance/tutorial-sample-delivery.json'}
         paths.update(row['path'] for row in migration['files']
                      if row['group'] in ('package', 'regression', 'catalog'))
         for relative in paths:

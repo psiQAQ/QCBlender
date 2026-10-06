@@ -71,8 +71,8 @@ def fixture():
                                  'example.qcdata/' + dataset_dir + '/arrays/' + sha(array) + '.npy': array})
     data = {'qcblender-0.1.0.zip': zipped(extension_entries),
             'samples-v2.zip': samples_bytes, 'reproduction.zip': reproduction_bytes}
-    source['docs/v1-acceptance/tutorial-samples.json'] = json.dumps(samples).encode()
-    source['docs/acceptance/tutorial-sample-delivery.json'] = json.dumps({
+    source['validation/agent/v1-acceptance/tutorial-samples.json'] = json.dumps(samples).encode()
+    source['validation/agent/acceptance/tutorial-sample-delivery.json'] = json.dumps({
         'package': {'bytes': len(samples_bytes), 'sha256': sha(samples_bytes)}}).encode()
     manifest = {'schema': 'qcblender.release-candidate.v1', 'version': '0.1.0', 'channel': 'alpha',
                 'source_commit': COMMIT, 'product_tree': TREE, 'candidate_run_id': 42,
@@ -454,6 +454,41 @@ class ReleaseTests(unittest.TestCase):
 
 
 class GitTagTests(unittest.TestCase):
+    def test_real_git_tag_reads_historical_layout_and_rejects_missing_records(self):
+        TEMP_ROOT.mkdir(parents=True, exist_ok=True)
+        for layout in ('historical', 'missing'):
+            with self.subTest(layout=layout), tempfile.TemporaryDirectory(dir=TEMP_ROOT) as directory:
+                root = Path(directory)
+                def git(*args):
+                    return subprocess.check_output(['git', *args], cwd=root, stderr=subprocess.STDOUT)
+                git('init', '-b', 'main')
+                _, _, expected_source = fixture()
+                source = dict(expected_source)
+                for current, original in (
+                        ('validation/agent/v1-acceptance/tutorial-samples.json',
+                         'docs/v1-acceptance/tutorial-samples.json'),
+                        ('validation/agent/acceptance/tutorial-sample-delivery.json',
+                         'docs/acceptance/tutorial-sample-delivery.json')):
+                    raw = source.pop(current)
+                    if layout == 'historical':
+                        source[original] = raw
+                for name, data in source.items():
+                    target = root / name
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_bytes(data)
+                git('add', '.')
+                identity = ('-c', 'user.name=Release fixture', '-c', 'user.email=fixture@example.invalid')
+                git(*identity, 'commit', '--no-gpg-sign', '-m', 'Fixture source records')
+                git('update-ref', 'refs/remotes/origin/main', 'HEAD')
+                git(*identity, 'tag', '-a', 'v0.1.0', '-m', 'Fixture annotated tag')
+                if layout == 'missing':
+                    with self.assertRaisesRegex(ValueError, 'missing source record'):
+                        release.GitSource(root).snapshot('v0.1.0', 'main')
+                else:
+                    version, commit, tree, actual_source = release.GitSource(root).snapshot('v0.1.0', 'main')
+                    self.assertEqual(version, '0.1.0')
+                    self.assertEqual(actual_source, expected_source)
+
     def test_real_git_annotated_tag_and_main_ancestry(self):
         TEMP_ROOT.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(dir=TEMP_ROOT) as directory:

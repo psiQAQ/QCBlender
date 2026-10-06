@@ -92,7 +92,7 @@ files['P05-nocv-pair1.cub'].update(quantity='nocv_deformation_density',unit='ele
 files['P05-ets-nocv.txt']['unit']='kcal/mol';files['P04-mayer-pyscf.csv']['unit']='dimensionless'
 files['P03-esp-surfanalysis.pdb']['unit']='kcal/mol; coordinates angstrom'
 files['P03-esp-stdout.log']['unit']='center kcal/mol; area angstrom^2; percentage %'
-write(ROOT/'docs/v1-acceptance/tutorial-samples.json',manifest)
+write(ROOT/'validation/agent/v1-acceptance/tutorial-samples.json',manifest)
 public=ROOT/'validation/shared/data/public';(public/'LICENSE').write_text('Generated sample data: CC BY 4.0\nAttribution: QCBlender contributors\nhttps://creativecommons.org/licenses/by/4.0/\nOnly distribution=included files are covered.\n',encoding='utf-8')
 (public/'NOTICE.md').write_text('# Public tutorial samples\n\nOwned PySCF/geomeTRIC/Multiwfn data: CC BY 4.0, attribution QCBlender contributors. P01/P03/P05 are unoptimized illustrative geometries; P04 is a genuine optimized first-order saddle and converged bidirectional IRC. P02 is excluded; see manifest acquisition/licensing limitations.\n\nCite Multiwfn: Tian Lu, Feiwu Chen, J. Comput. Chem. 33, 580 (2012), DOI:10.1002/jcc.22885; Tian Lu, J. Chem. Phys. 161, 082503 (2024), DOI:10.1063/5.0216272. ETS-NOCV energies use actual complex KS reconstruction, an approximation rather than F_TS. No scientific grid-convergence claim. Identify Cube annotates values and performs no scaling.\n',encoding='utf-8')
 for sid,item in files.items():
@@ -104,7 +104,7 @@ for n in ('generate_tutorial_samples.py','generate_tutorial_irc.py','finalize_tu
 write(E/'tutorial-samples.json',manifest);package=RUN.parent/'qcblender-public-tutorial-samples-v1.zip'
 if package.exists():raise FileExistsError(package)
 with zipfile.ZipFile(package,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
- z.write(ROOT/'docs/v1-acceptance/tutorial-samples.json','tutorial-samples.json')
+ z.write(ROOT/'validation/agent/v1-acceptance/tutorial-samples.json','tutorial-samples.json')
  for sid,item in files.items():
   if item['distribution']=='included':assert sha(sources[sid])==item['sha256'];z.write(sources[sid],item['archive_path'])
  for n in ('LICENSE','NOTICE.md'):z.write(public/n,n)

@@ -16,7 +16,7 @@ from qcblender.nbo import parse_nbo
 from qcblender.irc import import_irc,import_irc_mayer
 from qcblender.cube import read_cube
 from qcblender.data import orbital_selection
-manifest=json.loads((ROOT/'docs/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'));paths={};sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+manifest=json.loads((ROOT/'validation/agent/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'));paths={};sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 for sid,f in manifest['files'].items():
  path=public_input_path(f,ROOT) if f['distribution']=='included' else input_path(f['local_key'],REF);assert path.stat().st_size==f['bytes'] and sha(path)==f['sha256'],sid;paths[sid]=path
 for sid in ('P01-o2-uhf','P03-water-dimer','P05-complex','P04-step-001.fchk','P04-step-002.fchk','P04-step-003.fchk'):

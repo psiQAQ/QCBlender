@@ -15,7 +15,7 @@ from tools.local_inputs import DATA, checked_path, input_path, verify_file
 
 PACKAGE = 'validation/agent/packages/' + SAMPLE_NAME
 MIGRATION = DATA + '/migration-map.json'
-FROZEN_MANIFEST = 'docs/v1-acceptance/tutorial-samples.json'
+FROZEN_MANIFEST = 'validation/agent/v1-acceptance/tutorial-samples.json'
 
 
 def write_public(path, raw):

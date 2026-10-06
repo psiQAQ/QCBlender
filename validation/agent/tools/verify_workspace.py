@@ -169,7 +169,7 @@ def main():
     try:
         report['resources'] = check_materials(materials, install)
         report['documents'] = check_documents(materials)
-        frozen = root / 'docs/v1-acceptance/tutorial-samples.json'
+        frozen = root / 'validation/agent/v1-acceptance/tutorial-samples.json'
         if (materials / 'shared/data/public/tutorial-samples.json').read_bytes() != frozen.read_bytes():
             raise ValueError('Public source manifest differs from the frozen original')
         if args.portable_dir is not None:

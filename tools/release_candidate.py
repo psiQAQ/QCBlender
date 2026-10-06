@@ -272,8 +272,8 @@ def verify_release_gates(record, manifest, artifact_id, evidence_root):
 
 
 def verify_public_materials(manifest, root, source):
-    samples = json.loads(source['docs/v1-acceptance/tutorial-samples.json'])
-    delivery = json.loads(source['docs/acceptance/tutorial-sample-delivery.json'])['package']
+    samples = json.loads(source['validation/agent/v1-acceptance/tutorial-samples.json'])
+    delivery = json.loads(source['validation/agent/acceptance/tutorial-sample-delivery.json'])['package']
     sample_entry = manifest['files']['samples']
     require(all(sample_entry[key] == delivery[key] for key in ('bytes', 'sha256')),
             'Public sample package differs from tag delivery record')
@@ -324,9 +324,25 @@ class GitSource:
         names = self.git('ls-tree', '-r', '--name-only', '-z', commit, '--', 'qcblender').split(b'\0')
         paths = [name.decode('utf-8') for name in names if name]
         paths += ['qcblender/blender_manifest.toml', 'dependencies.lock.json', 'science-sources.lock.json',
-                  'LICENSE', 'THIRD_PARTY.md', 'docs/v1-acceptance/tutorial-samples.json',
-                  'docs/acceptance/tutorial-sample-delivery.json']
-        source = {path: self.read(commit, path) for path in paths}
+                  'LICENSE', 'THIRD_PARTY.md', 'validation/agent/v1-acceptance/tutorial-samples.json',
+                  'validation/agent/acceptance/tutorial-sample-delivery.json']
+        migrated = {
+            'validation/agent/v1-acceptance/tutorial-samples.json': 'docs/v1-acceptance/tutorial-samples.json',
+            'validation/agent/acceptance/tutorial-sample-delivery.json': 'docs/acceptance/tutorial-sample-delivery.json',
+        }
+        # Historical tags retain their original tree; callers use the current keys.
+        recorded = self.git('ls-tree', '-r', '--name-only', '-z', commit, '--',
+                            *migrated, *migrated.values()).split(b'\0')
+        recorded = {name.decode('utf-8') for name in recorded if name}
+        source = {}
+        for path in paths:
+            original = path
+            if path in migrated:
+                require(path in recorded or migrated[path] in recorded,
+                        'Release tag is missing source record: ' + path)
+                if path not in recorded:
+                    original = migrated[path]
+            source[path] = self.read(commit, original)
         version = tomllib.loads(source['qcblender/blender_manifest.toml'].decode('utf-8'))['version']
         require(tag == 'v' + version, 'Release tag does not match manifest version')
         return version, commit, product_tree, source

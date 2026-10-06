@@ -106,7 +106,7 @@ class CandidateBoundaries(unittest.TestCase):
         self.root = Path(self.temporary.name)
         (self.root / 'qcblender').mkdir()
         shutil.copyfile(ROOT / 'qcblender/blender_manifest.toml', self.root / 'qcblender/blender_manifest.toml')
-        for relative in ('docs/v1-acceptance/tutorial-samples.json', 'docs/acceptance/tutorial-sample-delivery.json',
+        for relative in ('validation/agent/v1-acceptance/tutorial-samples.json', 'validation/agent/acceptance/tutorial-sample-delivery.json',
                          'science-sources.lock.json', 'dependencies.lock.json'):
             path = self.root / relative
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -117,7 +117,7 @@ class CandidateBoundaries(unittest.TestCase):
         self.digest = file_record(self.candidate)['sha256']
         self.reports = self.root / 'reports'
         self.reports.mkdir()
-        self.public_sha = json.loads((self.root / 'docs/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'))['files']['P01-o2-uhf']['sha256']
+        self.public_sha = json.loads((self.root / 'validation/agent/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'))['files']['P01-o2-uhf']['sha256']
         self.reproduction = self.root / 'example'
         self.reproduction.mkdir()
         for name in ('example.blend', 'example.png', 'README.md'):

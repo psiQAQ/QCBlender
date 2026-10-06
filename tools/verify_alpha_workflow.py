@@ -116,7 +116,7 @@ try:
         report.update(status='Passed', cold_open='Passed')
     else:
         source = ROOT / 'validation/shared/data/public/P01/o2-uhf.fchk'
-        source_record = json.loads((ROOT / 'docs/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'))['files']['P01-o2-uhf']
+        source_record = json.loads((ROOT / 'validation/agent/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'))['files']['P01-o2-uhf']
         assert digest(source) == source_record['sha256']
         report['source_sha256'] = digest(source)
         importer = jobs.Job('import', source=str(source))
