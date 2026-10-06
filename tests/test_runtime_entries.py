@@ -7,7 +7,7 @@ import unittest
 import zipfile
 
 from tools.collect_m0_fixtures import archive_member, install_bytes, restore
-from tools.runtime_cleanup_plan import build_file_sets
+from tools.runtime_cleanup_plan import build_file_sets, plan, verify_canonical_wheels
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -57,6 +57,31 @@ class RuntimeEntries(unittest.TestCase):
             package.writestr('second/LICENSE', raw)
         with self.assertRaisesRegex(ValueError, 'exactly one'):
             archive_member(archive, 'LICENSE')
+
+    def test_canonical_wheels_missing_mismatched_and_verified(self):
+        directory = self.root / 'outputs/wheels'
+        directory.mkdir(parents=True)
+        records = [{'name': name, 'version': '1.0', 'filename': name + '-1.0-py3-none-any.whl',
+                    'sha256': hashlib.sha256(name.encode()).hexdigest()}
+                   for name in ('dependency', 'backend')]
+        (self.root / 'dependencies.lock.json').write_text(json.dumps({'packages': records[:1]}), encoding='utf-8')
+        (self.root / 'outputs/backend-wheel.json').write_text(json.dumps(records[1]), encoding='utf-8')
+        with self.assertRaisesRegex(FileNotFoundError, 'canonical wheel missing'):
+            plan(self.root)
+        for record in records:
+            (directory / record['filename']).write_bytes(record['name'].encode())
+        source = directory / 'qualified' / records[1]['filename']
+        source.parent.mkdir()
+        source.write_bytes(b'backend')
+        (directory / records[1]['filename']).write_bytes(b'wrong same-version copy')
+        with self.assertRaisesRegex(ValueError, 'Canonical wheel checksum mismatch'):
+            plan(self.root)
+        (directory / records[1]['filename']).write_bytes(source.read_bytes())
+        actual = verify_canonical_wheels(self.root)
+        self.assertEqual(len(actual), 2)
+        for row in actual:
+            self.assertEqual(row['status'], 'Passed')
+            self.assertEqual(row['expected_sha256'], row['actual_sha256'])
 
     def test_restore_missing_inputs_from_one_archive_without_extracted_tree(self):
         reference, target = self.root / 'reference', self.root / 'target'

@@ -57,8 +57,34 @@ def build_file_sets(root):
     return requirements, sorted(retained), sorted(existing - retained), errors
 
 
+def verify_canonical_wheels(root):
+    root = Path(root).resolve()
+    lock = json.loads((root / 'dependencies.lock.json').read_text(encoding='utf-8'))
+    backend = json.loads((root / 'outputs/backend-wheel.json').read_text(encoding='utf-8'))
+    records = []
+    for package in lock['packages'] + [backend]:
+        filename = package['filename']
+        if Path(filename).name != filename or ':' in filename or '\\' in filename:
+            raise ValueError('Expected a wheel filename: ' + filename)
+        path = root / 'outputs/wheels' / filename
+        if any(component.is_symlink() or component.is_junction() for component in (path, *path.parents) if component != root and component.is_relative_to(root)):
+            raise ValueError('Linked canonical wheel path: ' + str(path))
+        if not path.is_file():
+            raise FileNotFoundError('Required canonical wheel missing: ' + str(path))
+        with path.open('rb') as stream:
+            actual = hashlib.file_digest(stream, 'sha256').hexdigest()
+        if actual != package['sha256']:
+            raise ValueError(f'Canonical wheel checksum mismatch: {path}; expected {package["sha256"]}, actual {actual}. '
+                             'Verify and migrate the qualified same-version content before retiring its source copy.')
+        records.append({'path': path.relative_to(root).as_posix(), 'name': package['name'],
+                        'version': package['version'], 'bytes': path.stat().st_size,
+                        'expected_sha256': package['sha256'], 'actual_sha256': actual, 'status': 'Passed'})
+    return records
+
+
 def plan(root):
     root = Path(root).resolve()
+    wheels = verify_canonical_wheels(root)
     requirements, keep, retired, errors = build_file_sets(root)
     source_paths = ['outputs/build-sources/gbasis-071969c900d6d7a9fbbdfe193c65ba3be177fbdf.zip',
                     'outputs/m0-research/iodata.zip',
@@ -78,12 +104,10 @@ def plan(root):
                         'source_url': source_urls.get(relative),
                         'role': 'upstream source archive' if path.suffix == '.zip' else 'original license text',
                         'keep_reason': 'One complete original for offline reconstruction or historical source/license verification'})
-    lock = json.loads((root / 'dependencies.lock.json').read_text(encoding='utf-8'))
-    backend = json.loads((root / 'outputs/backend-wheel.json').read_text(encoding='utf-8'))
-    wheels = ['outputs/wheels/' + row['filename'] for row in lock['packages'] + [backend]]
     return {'schema': 'qcblender.outputs-runtime-plan.v1', 'root': str(root),
+            'canonical_wheels_status': 'Passed', 'canonical_wheels': wheels,
             'build_requirements': requirements, 'build_keep_files': keep, 'build_retire_files': retired,
-            'protected_paths': ['outputs/science', 'outputs/backend-wheel.json', 'outputs/blender-runtime.json'] + wheels + source_paths,
+            'protected_paths': ['outputs/science', 'outputs/backend-wheel.json', 'outputs/blender-runtime.json'] + [row['path'] for row in wheels] + source_paths,
             'source_originals': sources,
             'retired_task_roots': ['build-python', 'wheels/qualified', 'repaired-wheels', 'unrepaired-wheels',
                                    'gbasis-build', 'build-sources/gbasis-071969c900d6d7a9fbbdfe193c65ba3be177fbdf',
@@ -91,6 +115,7 @@ def plan(root):
             'conditions': ['build_keep_files/build_retire_files are relative to outputs/build-site',
                            'Keep science in full; do not change package versions',
                            'Retirement requires a separate identity-checked deletion manifest',
+                           'All root wheels must match the dependency lock and backend record before retiring qualified copies',
                            'Linked and inaccessible paths remain excluded',
                            'Blender Python is supplied by the installed Blender 5.1.1'],
             'scan_errors': errors}

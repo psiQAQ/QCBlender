@@ -101,6 +101,8 @@ prepare_build 固定工具版本，fetch_dependencies 核对每个 wheel，build
 
 已有环境先运行输入检查，再核对已有工具、科学依赖和 wheels；缺少准备产物时回到首次路径，不隐式使用其他检出的 backend-wheel.json。首次与增量构建统一使用 `outputs/wheels/`，随后逐文件校验后端记录与 wheel。不要以文件名相同替代摘要核对。
 
+整理已有缓存时，先按依赖锁及 backend record 核对全部根 wheel。缺失或摘要不同则停止缓存退役；只有同版本的合格内容完成迁移、根目录重新核对通过后，才能删除来源副本。保留路径的登记不代表该路径当前内容已合格。
+
 ~~~powershell
 $wheels = "$repo/outputs/wheels"
 $env:QCBLENDER_WHEELS_DIR = $wheels

@@ -118,7 +118,7 @@ Invoke-Validation 'numeric-nocv-cold' $blender @('--background', '--offline-mode
 
 worker 检查读取集中保存的 C07 IGMH 和 Gaussian NBO 原件，另从 CH4 波函数重建数值 Cube 与测试 ETS 表；数值 NOCV 关联检查不代表真实 NOCV 科研验收。`prepare_vesta_comparison.py` 使用 `--reference-root` 和必需的 `--output-dir` 重建同一 MO Cube；`prepare_complex_examples.py` 需要明确 `--candidate`、`--reference-root` 和新的 `--output-dir`。`verify_node_layout.py` 的 baseline/check/reopen 三阶段共享本批 `--out`，每阶段明确 `--candidate` 和 `--reference-root`，资产直接从指定 ZIP 提取。
 
-构建和科学环境只维护 `outputs/build-site/`、`outputs/science/` 及根 `outputs/wheels/`；重建方式见[开发说明](../../docs/DEVELOPMENT.md#增量构建准备)。环境精简清单可用 `tools/runtime_cleanup_plan.py --root <参考检出> --report-dir <新目录>` 生成，工具只输出建议，不删除文件。五个构建包文件按 distribution RECORD 归属保留，完整科学环境及原始源码/许可另列保护路径。
+构建和科学环境只维护 `outputs/build-site/`、`outputs/science/` 及根 `outputs/wheels/`；重建方式见[开发说明](../../docs/DEVELOPMENT.md#增量构建准备)。环境精简清单可用 `tools/runtime_cleanup_plan.py --root <参考检出> --report-dir <新目录>` 生成，工具只输出建议，不删除文件。生成前按依赖锁及 backend record 核对每份根 wheel 的实际 SHA-256，缺失或不匹配直接失败；成功报告的 `canonical_wheels` 保存期望摘要、实际摘要与 Passed。只有根 wheel 全部通过，来源副本才能进入退役建议。五个构建包文件按 distribution RECORD 归属保留，完整科学环境及原始源码/许可另列保护路径。
 
 Alpha 主流程和 XYZ/CSV 的明确入口如下。它们使用上一步的本批安装配置；运行前保证前一个 Blender 已退出。
 
