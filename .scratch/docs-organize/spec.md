@@ -1,7 +1,7 @@
 # docs 文档整理
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Baseline: main@4313666
 Date: 2026-10-06
 

@@ -82,7 +82,7 @@ Passed：151 项基础测试、124 项完整科学测试、5 项重建入口测�
 
 [文档总索引](README.md)集中当前使用、开发和研究入口。技术验收与 v1 材料共454个文件归入 `validation/agent/acceptance/` 和 `validation/agent/v1-acceptance/`；四份原根目录专项报告见[验收历史](../validation/agent/acceptance/README.md#早期专项验收全文)。419张截图、冻结清单和历史机器记录共436份文件保持迁移前原始字节，历史路径按[对应关系](../validation/agent/acceptance/README.md#历史路径与当前位置)定位。
 
-逐文件基线、引用审查、摘要与链接检查保存在 `validation/agent/reports/2026-10-06/docs-organize/`，最终迁移证据在 `migration/`；48项候选/发布/数据准备测试、实际冻结包和文档检查 Passed。主检出的材料复核、本地提交、两个注释归档标签及工作树处置由 `delivery.json` 定位。Blender、科研复算及独立人工验收 Not Run。
+逐文件基线、引用审查、摘要与链接检查保存在 `validation/agent/reports/2026-10-06/docs-organize/`，最终迁移证据在 `migration/`；48项候选/发布/数据准备测试、138份文档的1,286个本地链接/锚点及主检出的实际冻结包、数据准备和教程材料检查 Passed。本地提交、两个注释归档标签及工作树处置由 `delivery.json` 定位。Blender、科研复算及独立人工验收 Not Run。
 
 ## 持续维护
 

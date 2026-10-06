@@ -1,7 +1,7 @@
 # 04 迁移至 Agent 校验目录
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Blocked by: 02
 Owner: main agent; tool paths: docs_v1_audit
 
@@ -17,4 +17,4 @@ Owner: main agent; tool paths: docs_v1_audit
 
 454个文件迁至新目录；436份非 Markdown 材料字节核对 Passed，16份历史正文仅重写链接。操作登记表的263条截图引用按公开路径映射定位，240张独有截图与原摘要一致。48项候选/发布/数据准备测试和实际冻结包检查 Passed，包括真实新旧布局 Git 标签及缺失记录拒绝。
 
-数据准备会校验样本包目录 README：路径更新后的当前大小/摘要已同步迁移表，原来源身份保存在 source_identity。冻结 ZIP、科学输入及来源字段未改。主检出材料复核及本地归档待执行，证据目录为 validation/agent/reports/2026-10-06/docs-organize/migration/。
+数据准备会校验样本包目录 README：路径更新后的当前大小/摘要已同步迁移表，原来源身份保存在 source_identity。冻结 ZIP、科学输入及来源字段未改。main@10576e7 的实际冻结样本、数据准备及当前教程材料复核 Passed；138份文档、1,286个本地链接/锚点零错误。证据目录为 validation/agent/reports/2026-10-06/docs-organize/migration/；最终本地归档由上一级 delivery.json 记录。Blender、远端 CI、独立人工和科研复验 Not Run。
