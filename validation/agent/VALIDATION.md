@@ -17,6 +17,7 @@
 | 旧输入及压缩包元数据保全 | Passed | [preservation.json](reports/2026-10-06/cleanup-prepared/preservation.json)：224 个旧输入与集中副本相符，保全 232 条 ZIP 成员记录 |
 | 已确认的历史文件清理 | Passed | [receipt.json](reports/2026-10-06/cleanup-apply/receipt.json)：逐文件删除 257 项，合计 1,387,868,294 字节；集中输入、当前候选和保全元数据复核通过 |
 | 清理后读取与测试 | Passed | [stdlib-after-cleanup.json](reports/2026-10-06/cleanup-apply/stdlib-after-cleanup.json)：134 项；[science-after-cleanup.json](reports/2026-10-06/cleanup-apply/science-after-cleanup.json)：123 项完整科学测试；失败、错误、跳过均为 0 |
+| 历史教程去重与保护 | Passed | [verification.json](reports/2026-10-06/legacy-docs/verification.json)：三个重复转发页移除，423 个保护对象原字节不变，包括 419 张截图；合并前后用户原有修改相同 |
 | 本轮 GUI 点击、维护者教程操作与截图 | Not Run | 29 个公开截图和 3 个本机截图由维护者按教程补充 |
 | 原始 checkpoint 密度比较 | Not Run | 9 个原件已保留；未在本轮运行 PySCF 复算 |
 | 独立科研判断与发布批准 | Not Run | 不由自动检查推导 |

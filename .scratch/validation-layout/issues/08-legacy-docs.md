@@ -23,7 +23,7 @@ Baseline: main@8f686c2
 删除已由统一入口取代的 `SOP.md`、`MATERIALS.md`、`RECORD-TEMPLATE.md` 三个转发页，增加历史目录 README，明确人工教程、技术检查和历史资料的入口。SOURCES 的历史结果链接改为 HISTORY/AGENT-REPLAY 和独立人工任务；发布研究的完整验收链接改为现行 v1 规格和任务 02。历史任务中的旧文件路径继续作为当时的记录保留。
 
 - Passed：423 个保护对象逐文件大小及 SHA-256 不变，覆盖全部 419 张截图（393 张早期截图及 26 张后续专项截图）、HISTORY、AGENT-REPLAY、冻结样本清单和操作登记表。
-- Passed：三个重复页面已删除；README 的 10 个本地链接存在；扫描全部受跟踪 Markdown，除主 Agent 负责的 ARTIFACTS 五处待更新链接外，无有效链接指向删除页面；`git diff --check` 通过。
+- Passed：三个重复页面已删除；README 的 10 个本地链接存在；子 Agent 扫描其负责的受跟踪 Markdown 未见指向删除页面的有效链接，`git diff --check` 通过。主 Agent 已在 main 的 `cabef24` 更新 ARTIFACTS 五处链接。
 - Not Run：Blender、GUI、独立人工及科研验收。本任务仅清理文档，不转写历史验证状态。
 
-本批摘要清单和检查脚本位于 `validation/agent/reports/2026-10-06/legacy-docs/`。主 Agent 串行整合 ARTIFACTS/CHANGELOG 并复核 main 后记录最终归档身份。
+子任务提交 `61acdb2` 已快进合入 main，主检出三处原有修改在合并前后保持原字节。本批摘要清单和检查脚本位于 `validation/agent/reports/2026-10-06/legacy-docs/`。主分支链接复核由 `closing/verification.json` 记录，归档身份由 `delivery/followup-worktrees.json` 记录。
