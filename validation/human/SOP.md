@@ -68,7 +68,7 @@
 
 8. 在文件管理器中，在材料根目录创建 `work/human/P01/` 和 `work/human/exports/`。回到 Blender，选中 **QC orbital_amplitude**，转到能看清两种相位的角度，点击 **N 侧栏 → 创建视图与检查工具 → 创建取景相机**。按小键盘 `0` 查看相机范围，整个轨道应在画面内。
 
-9. 在 **Render Properties** 选择 **EEVEE**，在 **Output Properties** 设分辨率 **1280 × 720、100%**。按 `F12` 渲染，在结果窗口选择 **Image → Save As**，保存到 `work/human/P01/P01-mo.png`。图片应包含两个氧原子及两种相位表面。截图保存为 `human/screenshots/03-render.png`。
+9. 在 **Render Properties** 选择 **EEVEE**，在 **Output Properties** 设分辨率 **1280 × 720、100%**。按 `F12` 渲染，在结果窗口选择 **Image → Save As**，保存到 `work/human/P01/P01-mo.png`。应看到完整的两种相位表面，构图与相机视图一致。截图保存为 `human/screenshots/03-render.png`。
 
 ![第一张轨道渲染图](screenshots/03-render.png)
 

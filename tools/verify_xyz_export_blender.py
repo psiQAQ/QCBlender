@@ -172,7 +172,7 @@ try:
         export(area, 'ESP_AREA')
         result, _ = export(area, 'ESP_AREA', 'FILTERED', dict(center_min=0, center_max=20, mode='center'))
         assert result['files'][0]['row_count'] == 4
-        field = next(obj for obj in bpy.context.scene.objects if obj.get('qc_view_kind') == 'field')
+        field = views.field_view(pair_job.directory / 'dataset', reference, 0)
         value = json.loads(field['qc_field'])
         origin, axes = np.array(value['origin']), np.array(value['steps'])
         layers.activate(bpy.context, field)
