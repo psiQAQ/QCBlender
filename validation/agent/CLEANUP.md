@@ -2,7 +2,7 @@
 
 更新：2026-10-06。**尚未删除任何历史文件。** 本页供维护者确认保留和清理范围；实际逐文件身份见 [JSON 清单](reports/2026-10-06/cleanup/inventory.json)，便于阅读的完整表见 [Markdown 清单](reports/2026-10-06/cleanup/inventory.md)。报告位于主检出，技术报告目录不进入 Git 或公开教程包。
 
-本次快照针对主仓库 `outputs/` 中的既有资源。复制到 `validation/` 的新资源及旧输入迁移副本需要在整合后追加旧新路径核对；本页不授权删除这些额外路径。下文路径均相对仓库根目录，大小为文件逻辑字节数，不是磁盘净释放量。
+待确认范围分为本页的 33 个压缩包或安装对象，以及[旧输入副本逐文件表](reports/2026-10-06/cleanup-prepared/old-input-copies.md)中的 224 个文件，合计 **257 个文件、1,387,868,294 字节（约 1.29 GiB）**。下文路径均相对仓库根目录，大小为文件逻辑字节数，不是磁盘净释放量；不包含父目录或表外文件。
 
 ## 保留对象
 
@@ -18,7 +18,7 @@
 | 其他插件 | `outputs/mcp-1.0.0.zip`，16,842 字节，属于 Blender Lab MCP 插件，保留 |
 | 报告和历史身份 | 原始报告、失败日志、来源记录、保全映射、Git 提交及归档标签保留。需要清理二进制时新增其可用性记录，不把原报告改成新候选结果 |
 
-最新候选来自 CI run `37415371574`，本地记录显示北京时间 2026-10-06 12:49:48 成功完成。此次工具已实际核对三个 ZIP 的内容身份、CRC 及十份原报告的文件身份与 `Passed` 字段；当前 Blender 复跑和独立人工验收均为 `Not Run`。这项文件检查不产生新的产品测试通过结论。
+最新候选来自 CI run `37415371574`，本地记录显示北京时间 2026-10-06 12:49:48 成功完成。盘点工具已实际核对三个 ZIP 的内容身份、CRC 及十份原报告的文件身份与 `Passed` 字段；本轮在主分支上的安装、导出和冷重开结果另见[整合检查](VALIDATION.md)。独立人工验收为 `Not Run`。
 
 ## 待确认清理的分组
 
@@ -84,7 +84,17 @@
 | `outputs/evidence/2026-10-06/actions-fix/run-37414740265/candidate-artifact.zip` | 63,810,897 | 旧 CI 容器 |
 | `outputs/reference-tools/VESTA-3.5.8-win64.zip` | 1,029,378 | 缺少可读取的 ZIP 中央目录 |
 
-旧 v1 包没有 P06，其 `NOTICE.md` 与 `tutorial-samples.json` 和当前版本不同；早期 v2 也有清单差异。清理时先保存这些独有的小文件及原包身份，不能仅因数据主体重复而丢失历史署名与来源。
+旧 v1 包没有 P06，其 `NOTICE.md` 与 `tutorial-samples.json` 和当前版本不同；早期 v2 也有清单差异。现已保存旧 ZIP 中的来源、许可、清单和报告等 232 条成员记录，保全位置与逐文件身份见[保全收据](reports/2026-10-06/cleanup-prepared/preservation.json)。
+
+## 已集中保存的旧输入副本
+
+| 分组 | 文件数 | 字节 | 保留位置 |
+| --- | ---: | ---: | --- |
+| 旧 `tests/data/local/` 输入 | 111 | 117,260,970 | `validation/shared/data/local/` 或同字节 `public/` 原件 |
+| 旧 public-tutorial 计算批次非 ZIP 文件 | 113 | 54,131,924 | `validation/shared/data/local/calculations/public-tutorial/` 或同字节 `public/` 原件 |
+| **合计** | **224** | **171,392,894** | 旧路径、保留路径、大小及摘要全部逐文件核对 |
+
+[准确文件表](reports/2026-10-06/cleanup-prepared/old-input-copies.md)与[机器收据](reports/2026-10-06/cleanup-prepared/preservation.json)记录本次主检出实测结果。9 个原始 checkpoint、生成脚本和计算日志均有集中副本。来源日志中的历史路径保持原文，以 [migration-map.json](../shared/data/migration-map.json) 查找当前位置；不对已更新的索引文件作同字节删除推断。
 
 ## 扫描边界与执行前复核
 

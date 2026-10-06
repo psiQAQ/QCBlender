@@ -1,6 +1,6 @@
 # Agent 校验入口
 
-这里维护可重复执行的技术检查、文件身份和清理清单。人工学习从 [人工 SOP](../human/SOP.md) 开始；本地限定的优化、频率和 NBO 案例见 [LOCAL-CASES](LOCAL-CASES.md)。[COVERAGE](COVERAGE.md) 保留旧 A/C/N/X/P1 编号与当前入口的对应关系。
+这里维护可重复执行的技术检查、文件身份和清理清单。[本轮整合检查](VALIDATION.md)记录主分支上的实际结果。人工学习从 [人工 SOP](../human/SOP.md) 开始；本地限定的优化、频率和 NBO 案例见 [LOCAL-CASES](LOCAL-CASES.md)。[COVERAGE](COVERAGE.md) 保留旧 A/C/N/X/P1 编号与当前入口的对应关系。
 
 当前安装包定位在 [current-install.json](current-install.json)，实际安装文件为 `validation/shared/install/qcblender-0.1.0.zip`。公开输入在 `validation/shared/data/public/`，本机资料在 `validation/shared/data/local/`，回归输入在 `validation/shared/data/regression/`。冻结样本 ZIP 位于 `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；其原始清单仍为 `docs/v1-acceptance/tutorial-samples.json`。
 
@@ -112,8 +112,11 @@ Alpha 主流程和 XYZ/CSV 的明确入口如下。它们使用上一步的本�
 
 ```powershell
 Invoke-Validation 'alpha' $blender @('--background', '--factory-startup', '--offline-mode', '--disable-autoexec', '--python-exit-code', '1', '--python', 'tools/verify_alpha_workflow.py', '--', '--candidate', $candidate, '--output-dir', "$batch/alpha", '--report', "$reports/alpha.json")
-Invoke-Validation 'alpha-cold' $blender @('--background', '--offline-mode', '--disable-autoexec', "$batch/alpha/中文路径移动/example.blend", '--python-exit-code', '1', '--python', 'tools/verify_alpha_workflow.py', '--', '--reopen', '--candidate', $candidate, '--output-dir', "$batch/alpha", '--report', "$reports/alpha-cold.json")
+Copy-Item -LiteralPath "$reports/alpha.json" -Destination "$reports/alpha-before-reopen.json"
+Invoke-Validation 'alpha-cold' $blender @('--background', '--offline-mode', '--disable-autoexec', "$batch/alpha/中文路径移动/example.blend", '--python-exit-code', '1', '--python', 'tools/verify_alpha_workflow.py', '--', '--reopen', '--candidate', $candidate, '--output-dir', "$batch/alpha", '--report', "$reports/alpha.json")
 Invoke-Validation 'xyz-export' $blender @('--background', '--factory-startup', '--offline-mode', '--disable-autoexec', '--python-exit-code', '1', '--python', 'tools/verify_xyz_export_blender.py', '--', '--reference-root', $repo, '--output-dir', "$batch/xyz", '--report', "$reports/xyz-export.json")
+Copy-Item -LiteralPath "$reports/xyz-export.json" -Destination "$reports/xyz-before-reopen.json"
+Invoke-Validation 'xyz-cold' $blender @('--background', '--offline-mode', '--disable-autoexec', "$batch/xyz/integration.blend", '--python-exit-code', '1', '--python', 'tools/verify_xyz_export_blender.py', '--', '--reference-root', $repo, '--output-dir', "$batch/xyz", '--report', "$reports/xyz-export.json", '--reopen')
 ```
 
 P1 关联与共享对象检查需要 P04 和 P02 本地资料：

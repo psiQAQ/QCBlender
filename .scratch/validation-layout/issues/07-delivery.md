@@ -1,7 +1,7 @@
 # 07 本地交付与归档
 
 Triage: ready-for-agent
-Status: pending
+Status: claimed
 Blocked by: 05
 Owner: main agent
 
@@ -14,3 +14,5 @@ Owner: main agent
 main 含所有验收完成提交；主 Agent 的检查报告可定位；已有用户修改保留；分支/工作树清理或保留原因准确；无 push。
 
 ## Comments
+
+2026-10-06：主分支整合检查已通过，开始保存子任务报告、核对工作树忽略文件和创建本地归档。历史清理审批 06 仍独立 pending。
