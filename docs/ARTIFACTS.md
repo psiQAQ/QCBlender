@@ -1,243 +1,81 @@
 # 产物查找入口
 
-更新：2026-10-06。本页路由当前文件、归档身份、重建方法与阻塞；各原始报告保留其执行时的状态和候选身份。任务状态在 `.scratch/`，开发顺序见 [DEVELOPMENT](DEVELOPMENT.md)，保留与清理边界见 [维护规则](agents/storage-maintenance.md)。
+更新：2026-10-06。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
 
 ## 当前交付
 
-从根目录 [validation](../validation/README.md) 查找当前教程、输入和校验材料。人工入口为 [SOP](../validation/human/SOP.md)：15 步主线与 9 个按需专题；公开部分共 73 步，29 个截图位置由维护者按名称补图，本机 P02 页另有 3 个截图位置。
+从 [validation](../validation/README.md) 查找当前教程、输入和校验材料；人工入口为 [SOP](../validation/human/SOP.md)。主线 15 步、9 个按需专题，截图由实际操作者按名称补入。
 
-| 内容 | 当前路径与用途 |
+| 内容 | 当前入口 |
 | --- | --- |
-| 人工操作与打包 | `validation/human/`；按 [打包步骤](../validation/README.md#人工完成后的打包)连同公开输入和安装包复制 |
-| 公开、本地与回归输入 | [shared/data](../validation/shared/data/README.md)；逐文件当前位置、来源和旧路径由 `migration-map.json` 定位 |
-| 最新安装文件 | `validation/shared/install/qcblender-0.1.0.zip`，50,656,021 字节；确切身份及原候选位置见 [current-install.json](../validation/agent/current-install.json) |
-| 当前完整候选与原报告 | `outputs/candidates/current/alpha-ci-0.1.0-190e11e/`；候选 run `37415371574`、源码 `190e11e`，十份原报告和复现包保留 |
-| 冻结公开样本包 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单仍在 `docs/v1-acceptance/tutorial-samples.json` |
-| Agent 检查及本批结果 | [检查流程](../validation/agent/README.md)、[整合验证](../validation/agent/VALIDATION.md)；完整日志、命令与报告在 `validation/agent/reports/2026-10-06/integration/` |
-| 历史文件清理结果 | [CLEANUP](../validation/agent/CLEANUP.md)及删除收据；维护者确认的 257 个文件已逐文件删除，合计 1,387,868,294 字节，保留对象核对通过 |
+| 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
+| 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
+| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,656,021 字节，SHA-256 `56dd541da291173f35758df3146832b51eeaa8547796cfd3b5578e37ddf95ad2` |
+| 完整候选及原报告 | `outputs/candidates/current/alpha-ci-0.1.0-190e11e/`；源码 `190e11e`、run `37415371574`；[身份记录](../validation/agent/current-install.json) |
+| 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `docs/v1-acceptance/tutorial-samples.json` |
+| 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[教程整合验证](../validation/agent/VALIDATION.md)；本次精简结果见下节 |
 
-134 项基础、67 项公开科学、123 项完整科学测试通过；当前 ZIP 的真实安装、MO9/摘要、XYZ/CSV、保存和中文路径冷重开通过。公开材料独立复制检查通过。历史文件删除后再运行 134 项基础与 123 项完整科学测试，均通过。产品源码与依赖锁未变；本轮 GUI 点击、维护者操作/截图、原始 checkpoint 复算及独立科研判断为 Not Run。受限 P02 与本机计算原件不进入公开教程包。
+独立用户操作、截图补齐、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
 
-## 教程整合与本地归档（2026-10-06）
+## outputs 精简结果（2026-10-06）
 
-计划与任务状态在 [.scratch/validation-layout](../.scratch/validation-layout/spec.md)。子任务依次合入 main：Agent 流程 `d6a61d6`、数据迁移 `6e03549`、人工教程 `fb860a6`；主 Agent 在 main 运行综合检查。校验工具为剖面检查显式创建场对象，原失败报告保留，复跑和新进程读回通过。
+已按批准清单删除 89,895 个文件、8,545,515,461 字节。逐文件路径、大小和 SHA-256 收据位于 `validation/agent/reports/2026-10-06/outputs-prune/apply/removed.jsonl.gz`；完整审查在 `review/decisions.jsonl.gz`，状态和空间口径在 `final-summary.json`。逻辑文件大小与磁盘可用空间变化分别统计。
 
-子任务报告与生成脚本保全在 `validation/agent/reports/2026-10-06/subagents/`，归档收据在 `validation/agent/reports/2026-10-06/delivery/`。本批注释标签使用 `archive/2026-10-06/` 下的 `chore/validation-agent`、`chore/validation-data-paths`、`docs/validation-tutorial`、`chore/validation-layout`、`chore/validation-cleanup`、`docs/validation-legacy-docs`。前四项见 `worktrees.json`，后两项见 `followup-worktrees.json`；标签、工作树和分支的实际处理状态以收据为准，没有 push。
+5,039 个已审查文件、739,869,148 字节保留原位。准确路径、原错误和逐文件 PowerShell 命令见同批 `retry/commands.md`；`retry/retry-reviewed-files.ps1` 默认只核对，添加 `-Apply` 才处理身份未变的清单文件。未知、恢复、保护对象和链接不进入重试清单，未修改 ACL 或所有权。
 
-旧验收目录移除三个重复转发页，现由 [历史材料索引](v1-acceptance/README.md) 组织来源和证据；419 张历史截图、原技术结果、冻结清单及操作登记表的内容保持不变。保护对象复核见 `validation/agent/reports/2026-10-06/legacy-docs/`，主分支收尾检查见 `validation/agent/reports/2026-10-06/closing/`。
+Passed：151 项基础测试、124 项完整科学测试、5 项重建入口测试、根目录 11 个 wheel 身份、离线打包/安装、MO/摘要/保存及中文路径冷重开、受影响的场景工具和用户工程 11 个原数组读回。检查记录在同批 `after-v2/`、`layout/`、`nocv/` 与 `user-after.json`；基础测试复用同源码的 `after/stdlib.json`。本轮 GUI 点击、真实 NOCV 科研样本和独立人工/科研验收为 Not Run；失败尝试保留原日志与后续修正记录。
 
-历史批次中的旧安装包、样本包和复现包路径保留为当时身份；已删除的对象以 [清理记录](../validation/agent/CLEANUP.md) 为准，原报告和保全元数据仍可追溯。当前可用安装与输入统一从本页“当前交付”进入。
+两个互补只读权限上下文的逐文件对账 Passed：outputs 从 100,536 个文件、9,776,224,968 字节减至 10,641 个文件、1,230,709,507 字节，其中包含上述待重试文件。junction 目标不纳入统计；未知恢复内容保持原位。
 
-本批代表工程与导出保留位置、已移除的任务临时副本及重建命令由归档收据列明。重建时按 [Agent 流程](../validation/agent/README.md)使用新的批次目录、集中输入和当前安装文件；历史报告的原路径保持执行时身份。
+本轮工具改为显式候选、集中输入及新目录重建；保留一套构建/科学环境。GBasis 两份同版本 wheel 的解压成员相同，但 ZIP 摘要不同；根目录已统一为后端记录要求的合格字节，依赖版本与锁文件不变。具体记录为 `wheel-normalization.json`。
 
-<a id="用户验证-sop2026-10-06"></a>
-## 2026-10-06 旧 SOP 整理记录
+## 共用环境与保全项目
 
-当前连续操作统一进入 [人工 SOP](../validation/human/SOP.md)，安装包、输入与打包方法见 [校验入口](../validation/README.md)，技术身份和验证由 [Agent 流程](../validation/agent/README.md) 维护。该历史批次的 393 张原截图、图注和技术说明保留于 [HISTORY](v1-acceptance/HISTORY.md)；旧操作包装页的整理结果见 [历史材料索引](v1-acceptance/README.md)。
+| 位置 | 用途与保留范围 |
+| --- | --- |
+| `outputs/build-site/` | 五个锁定构建包所需的 429 个文件；离线构建验证通过 |
+| `outputs/science/` | 现用科学环境，版本不变 |
+| `outputs/wheels/`、`outputs/backend-wheel.json` | 11 个锁定且逐份核验的 wheel；统一当前打包入口 |
+| `outputs/build-sources/`、`outputs/m0-research/iodata.zip` | GBasis、IOData、历史 qcint 源码 ZIP 各保留一份；来源、版本与 SHA 见同批 `runtime/final-v2/runtime-plan.json` |
+| `outputs/native-backend-licenses/` | 六份完整历史许可文本 |
+| `outputs/projects/user-session-20260930/` | 用户 `.blend + .qcdata`；新进程冷读 11 数组与原记录一致，未改写工程 |
+| `outputs/projects/human-acceptance/` | 本日人工验收工作目录 |
+| `outputs/projects/cleanup-followup-original/`、`outputs/projects/recovery/`、`outputs/recovery/` | 未知或需保留恢复对象；按原位保护，不推断可删除 |
+| `validation/work/2026-10-06-validation-layout/` | 前批教程整合的代表工程；按该批交付收据定位 |
 
-正文由 2,042 行整理为 827 行，44 个 A/C/X/N/P1 条目、原 C/X 锚点、历史图片、材料身份、本地链接和五段 PowerShell 语法核对 Passed。编辑片段、检查脚本与报告在 `outputs/evidence/2026-10-06/sop-user-guide/`，本地提交、归档和工作树清理结果见该目录的 `delivery.json`。归档标签为 `archive/2026-10-06/docs/sop-user-guide`。本次为文档整理，Blender 复做及独立人工/科研签署 Not Run；既有产品和验收结论未改。
+独有科学原件、Cube、旧计算文件及下载归档按同批 `history/source-review-v2.json` 保留；匿名科学/许可对象由 `objects/review-v2/objects.jsonl.gz` 反查原始路径。早期失败或未完成的计算修订由 `extra-science-review.json` 对应到集中保留的完整版本、条件和原始日志。原始科学文件及完整许可没有被 Markdown 摘要替代。
+
+## 历史任务路由
+
+[历史批次索引](archive/outputs-history/README.md) 保存 67 份 Markdown，覆盖原日期、源码/标签、候选身份、参数、Passed / Failed / Not Run、限制和重建入口。原始日志、历史 Agent 工程、数组、渲染、重复环境及保全 ZIP 以精确退役清单为准；不再承诺这些旧路径可读。压缩逐文件记录和对象 aliases 在本批报告目录，不整批搬移历史二进制。
+
+| 历史主题 | 摘要入口 |
+| --- | --- |
+| 2026-09-30 整理与迁移 | [output-maintenance](archive/outputs-history/evidence--2026-09-30--output-maintenance.md) |
+| 2026-10-01 公开教程 | [public-tutorial-mcp](archive/outputs-history/evidence--2026-10-01--public-tutorial-mcp.md) |
+| 2026-10-02 教程与显示/导出 | [tutorial-cu](archive/outputs-history/evidence--2026-10-02--tutorial-cu.md)、[display-xyz-export](archive/outputs-history/evidence--2026-10-02--display-xyz-export.md) |
+| 2026-10-03 完成度调研 | [plugin-audit](archive/outputs-history/evidence--2026-10-03--plugin-audit.md) |
+| 2026-10-04 P1/P2 与旧工作树 | [audit-p1](archive/outputs-history/evidence--2026-10-04--audit-p1.md)、[audit-p2](archive/outputs-history/evidence--2026-10-04--audit-p2.md)、[legacy-worktree-retry](archive/outputs-history/evidence--2026-10-04--legacy-worktree-retry.md) |
+| 2026-10-05 Alpha 与可靠性 | [alpha-readiness](archive/outputs-history/evidence--2026-10-05--alpha-readiness.md)、[reliability](archive/outputs-history/evidence--2026-10-05--reliability.md) |
+| 2026-10-06 CI 与 alpha-core 残余 | [actions-fix](archive/outputs-history/evidence--2026-10-06--actions-fix.md)、[alpha-core-cleanup](archive/outputs-history/evidence--2026-10-06--alpha-core-cleanup.md) |
 
 ## 遗留清理状态
 
 2026-10-04重试：f458工作树Git登记和已合并`chore/repository-cleanup`分支已正常移除；该次收尾仅保留main工作树/分支，原注释归档标签`archive/2026-09-30/chore/repository-cleanup`仍指向`47fd82c`且可达main。b48c目录已不存在。f458磁盘残留因访问拒绝保留，06继续pending。
 
-本次收据为`outputs/evidence/2026-10-04/legacy-worktree-retry/completion.json`：14,816文件/798,822,391字节完整保全及SHA-256核对Passed，完整旧新路径见`complete-preservation-map.jsonl.gz`；补存科学数据同时保留在`outputs/projects/recovery/worktree-f458/datasets/`，新Blender进程11组Dataset/600数组/8VDB读回Passed。目录普通删除Failed，未修改ACL/所有权或使用force；现存残留与不可枚举对象见收据。历史报告维持原状态，当前残留以本节为准。
+以上旧批次的路径与结论按当时身份保留；历史原件可用性改由[摘要索引](archive/outputs-history/README.md)及本次精确删除收据定位。仓库 outputs 之外的旧 f458、alpha-core 磁盘残余不在本次清理范围内，未更新其权限或未完成状态。
 
-## 2026-10-05 Alpha 历史交付
+## 教程整合与本地归档（2026-10-06）
 
-该批本地 Alpha 技术候选为 `outputs/candidates/current/alpha-0.1.0-19e4cf0/qcblender-0.1.0.zip`，50,656,085 字节，SHA-256 `0c2d9add59b6332f243c5cd87b852a38b94090286f1b7671d7666694a4b73a03`。固定产品提交 `19e4cf0becf5a5173d692d1f4a9c621e6d01512e`，产品树 `5db4996cbb456f52529c86219d85f0db0541ae49`；[Alpha 技术验证](acceptance/alpha-readiness-validation.md)及[机器索引](acceptance/alpha-readiness-validation.json)记录 127 标准库、67 公开科学、123 完整本地科学、12 次六视觉、真实 GUI、取消、Undo/Redo 与中文移动冷重开 Passed。
+前批教程整合的报告和保全记录位于 `validation/agent/reports/2026-10-06/integration/`、`subagents/`、`delivery/` 与 `closing/`。原 257 文件清理见 [CLEANUP](../validation/agent/CLEANUP.md)。当前教程、集中输入、冻结材料及 419 张历史截图继续保留。
 
-证据入口 `outputs/evidence/2026-10-05/alpha-readiness/`；`ac6/`保存同批报告/命令，`gui-alpha/`保存点击状态/截图/摘要，`av2/`保存六视觉报告与图，`preservation-map.jsonl.gz`将工作树旧路径映射到经过 SHA-256 核对的 `objects/`。全部原始报告保留执行时的状态。当前候选目录保留原始公开 artifact 文件及报告；没有重新打包。
+本轮任务见 [.scratch/outputs-prune](../.scratch/outputs-prune/spec.md)。子任务及整合工作使用本地快进合并和注释标签 `archive/2026-10-06/`；分支为 `docs/outputs-history`、`chore/outputs-runtime`、`chore/outputs-prune-tool`、`chore/outputs-prune`。实际提交、工作树与分支移除状态见本批 `delivery.json`；没有 push。
 
-实际 GUI 工程位于 `outputs/projects/alpha-readiness/中文路径移动/alpha-mo9-ac6.blend + .qcdata/`，59 文件、三个 Dataset，移动后原字节及新进程参数核对 Passed。原生和视觉复现工程可从保全映射恢复原始相对路径，当前公开复现 ZIP 也可重新解压。脚本和共用依赖入口沿用[开发说明](DEVELOPMENT.md)，重新构建须重新绑定提交和候选摘要。
+<a id="用户验证-sop2026-10-06"></a>
+## 2026-10-06 旧 SOP 整理记录
 
-该本地批次 run ID 为 0，不作为远端候选证据；2026-10-06 的实际 GitHub CI 见下方记录，发布标签与草稿仍 Not Run。组件许可复核、独立使用者短 SOP、维护者公开批准及正式 v1 人工/科研验收保持 Not Run；远端任务和公开门禁单独维护。四个任务工作树缓存目录有访问拒绝，保全/清理收据记录实际状态；不改变 ACL 或所有权。
-
-本轮本地合并、注释归档及正常清理结果见[交付收据](acceptance/alpha-readiness-delivery.json)。
-
-任务提交 `9cc9a005` 已 ff-only 合入 main，四个 `archive/2026-10-05/feat/alpha-*` 注释标签可达 main。四个任务工作树的 Git 登记及分支移除 Passed；三个磁盘目录移除 Passed，`.worktrees/alpha-core` 普通移除 Failed（Directory not empty），残留由 `.scratch/alpha-readiness/issues/11-worktree-residue.md` 跟踪。清理后 32,170 条原路径映射、7,419 个内容对象、13 个候选文件/报告及中文工程 59 文件摘要复核 Passed；详细收据为 `closing/post-cleanup-verification.json`。不可枚举缓存目录保留，不计入保全成功范围。
-
-当前连续操作见 [人工 SOP](../validation/human/SOP.md)；该批 A00–A09 历史展开步骤与说明由 [历史材料索引](v1-acceptance/README.md) 定位。文档检查和编辑脚本位于 `outputs/evidence/2026-10-05/alpha-readiness/sop-flow/`，含 `sop-flow-verification.json`、`preservation.json` 与本地归档收据；检查覆盖 433 个本地链接、三段 PowerShell 语法、原案例和历史截图保留。本次仅补文档，未重跑 Blender，独立使用者验收 Not Run。
-
-### GitHub 候选 CI（2026-10-06）
-
-HTTP 403 下载失败已修复，实际 [run 37414740265](https://github.com/psiQAQ/QCBlender/actions/runs/37414740265) / artifact `11390153636` 全步骤 Passed；129 标准库、67 公开科学及10份资格报告均通过。CI 原始候选在 `outputs/candidates/current/alpha-ci-0.1.0-f8b1115/`，扩展 ZIP 50,656,040字节，SHA-256 `6f25cbaf2df9a41137bfef74abbb7c3b365905370bd70bc77327a9cabeb0dfd8`，候选提交 `f8b111549e34b7ad995139d09042ca912661d352`。下载后的原 artifact、报告、源码/wheels及公开材料摘要复核 Passed；文件未重新打包。
-
-详细原因与范围见[Actions 下载修复](acceptance/actions-download-fix.md)。证据在 `outputs/evidence/2026-10-06/actions-fix/`，成功运行及下载验证在 `run-37414740265/`；候选清单含依赖和各文件摘要。原始失败日志与本地请求探测保留，组件许可及独立人工门禁 Not Run，09 的剩余发布标签/草稿尚未执行。
-
-## 2026-10-05 可靠性历史交付
-
-当前候选为`outputs/candidates/current/reliability-final-a3ed826/qcblender-0.0.1.zip`，50,645,094字节，SHA-256 `8094278edf08a2e6d54640e4f0cd376d8cbb98568c92464720f963dff4bb8c71`。固定产品源码`a3ed8264aad860f25c922dd7c91efce3f6f078d3`，产品树`0cec91ad2ed7804e78a01c39105d49e3d39150d8`。[可靠性验证](acceptance/reliability-validation.md)及[机器索引](acceptance/reliability-validation.json)记录本批范围与限制；独立使用者和科研签署Not Run。
-
-证据入口`outputs/evidence/2026-10-05/reliability/`：`evidence-index.json`与`qualification.json`绑定36份最终候选报告；`gui-final/`保存真实界面操作、原地及中文移动冷读；`closing-preparation/`、`closing-preserved/`保存逐文件旧新路径与摘要，当前收尾状态见[交付收据](acceptance/reliability-delivery.json)。工程在`outputs/projects/reliability/`：`native/`、`visual/`及`reliability-gui.blend + reliability-gui.qcdata/`，中文移动副本保留于`中文移动/`。
-
-本批资格提交`42a11be`已ff-only合入main；五个`archive/2026-10-05/`注释标签已创建并保留，五个工作树及分支普通移除Passed。逐文件清单删除40,911文件/15,384,029,053字节，996个保护文件及1,316份保全版本摘要复核Passed。16个未分类文件和19个拒绝访问目录保留于`outputs/runs/rel/`，完整路径见`closing/post-cleanup.json`；未更改ACL或所有权。原始收据在`closing/`与`closing-preparation/cleanup-ready-02/`；删除字节不计Git工作树移除及新增证据，不是全仓净空间变化。
-
-流式摘要实验的前后候选保留在`outputs/candidates/baseline/reliability-prehash-982e339/`与`reliability-posthash-94b99f5/`；对应报告`benchmark-before-desktop/`、`benchmark-after-desktop/`与`streaming-hash-comparison.json`保留其独立身份。256³收益未达到32 MiB或10%门槛，已停止扩大优化；这组耗时不包含随后增加的导入预检查。
-
-重建沿用[开发说明](DEVELOPMENT.md)及共用环境/11锁定wheels，在新输出目录执行`tools/run_science_tests.py`、`verify_native_volume.py`、`verify_multi_field_accept.py`、`verify_igmh_provenance.py`、`verify_cancel_finalization_blender.py`及`render_visual_baseline.py`，保存完整参数、安装身份和新ZIP摘要后运行`qualify_package.py`。本批完整命令在`logs/*.json`，编排脚本由保全映射定位；重建结果重新资格验证。本轮仅本地提交、合并与归档，不push或发布。
-
-## 2026-10-04 P1历史交付
-
-该批候选为`outputs/candidates/current/audit-p1-a4baaaf/qcblender-0.0.1.zip`，50638451字节，SHA-256 `039306fdcbf908bc020b29246f54dc2f8e2459e9413844b1a80a45ec5b036fb9`。产品源码`a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d`，产品树`c1a5bc48b035434c4a3245909e1e629bec4f0665`；[P1验证](acceptance/audit-p1-validation.md)及[机器索引](acceptance/audit-p1-validation.json)记录97科学测试、六视觉场景及其迁移冷读、原生关联/共享mesh、GUI/Undo/Redo和保存冷重开Passed。独立人工签署Not Run。
-
-证据位于`outputs/evidence/2026-10-04/audit-p1/`；`evidence-index.json`及`qualification-main.json`绑定候选，`preservation-map.json`保存旧路径和原字节摘要。工程在`outputs/projects/audit-p1/{native,visual,gui}/`。完整本地归档与推送状态见[交付收据](acceptance/audit-p1-delivery.json)。重建沿用[开发说明](DEVELOPMENT.md)的共用环境与11锁定wheels，在新批次运行本批脚本并重新资格验证。
-
-本批main已ff-only合并并普通HTTPS推送，远端回读`747ae8d`；三个注释归档标签、三个工作树/分支正常移除Passed。清单删除16,801文件/812,107,170字节，600个保护文件及2,407条保全映射摘要复核Passed。该数值为删除文件大小总和，不是全仓净空间变化。最终文档推送回读及完整身份见上述交付收据；旧权限/占用对象保持原状。
-
-## 2026-10-04 P2与基准历史交付
-
-该批候选为`outputs/candidates/current/audit-p2-49872b0/qcblender-0.0.1.zip`，50,635,805字节，SHA-256 `41cd978f36737236049fc901504c0196f4e6499adc891f1d2f09e2fabf4cebfd`。产品源码树`f3742ab452dd96a357bb7e17c1dfa55934b8897d`；[本批验证](acceptance/audit-p2-baselines-validation.md)、[机器索引](acceptance/audit-p2-baselines-validation.json)。本地资格Passed，独立人工签署Not Run。
-
-证据位于`outputs/evidence/2026-10-04/audit-p2/`：`evidence-index.json`与`qualification.json`绑定当前候选；`preservation-map.json`保存原始路径及SHA-256，全部成功/失败报告字节保留。六个参考工程在`outputs/projects/audit-p2/visual/<case>/`，实际GUI工程在`outputs/projects/audit-p2/gui/p2-verified.blend + .qcdata/`；迁移后冷重开报告在`delivery-cold/`。基准PNG/JSON在`tests/data/visual-baseline/`，重建与运行见[基准说明](acceptance/visual-performance-baselines.md)。
-
-本批五个注释归档标签、五工作树/分支正常移除及main推送Passed；清理27,111文件/6,425,543,091字节，475项保护文件摘要复核Passed。完整身份见[交付收据](acceptance/audit-p2-delivery.json)和`closing/`；原截图工作树路径由`closing/current-preservation-routes.json`映射到主检出。旧对象当前清理状态见本页“遗留清理状态”。
-
-## 2026-10-02 显示/XYZ/CSV历史交付
-
-| 对象 | 当前入口与状态 |
-| --- | --- |
-| 插件候选 | `outputs/candidates/current/display-xyz-export-9d3ff61/qcblender-0.0.1.zip`；源码`9d3ff61d2e32c47357fe624cf93052bfed6dd041`，SHA-256`362b87d3d1f41ec949da8597a47b248e7ef74ca574d96454d1dda31100556ce9`，50,635,717字节；本地资格Passed，未发布 |
-| 当前验证 | [显示/XYZ/CSV索引](acceptance/display-xyz-export-validation.json)；`outputs/evidence/2026-10-02/display-xyz-export/final/`的42份通过报告、qualification.json、证据索引与完整命令/日志；早期目录缺陷Failed保持在同任务gui/ |
-| 教程与截图 | 用户操作见 [人工 SOP](../validation/human/SOP.md)；本批图位于`screenshot/display-xyz-export/`，原图注在[历史证据](v1-acceptance/HISTORY.md)，保留e317/9d及MCP准备身份；用户复做/独立签署Not Run |
-| 公开样本 | [样本交付](acceptance/tutorial-sample-delivery.json)；`outputs/evidence/2026-10-02/display-xyz-export/final/samples/qcblender-public-tutorial-samples-v2.zip`；SHA-256`b4bc3e0ebbdf29ccb3905b16eeb898c94b9f16f209baae3c3ae1a8646b0348dd`，12,175,753字节；P06两份XYZ，自有数据CC BY 4.0；P02独立获取 |
-| 保全工程与数据 | `outputs/projects/display-xyz-export/gui/evidence.blend + evidence.qcdata/`，12Dataset/249数组/1VDB，原地及中文移动冷读Passed；`final/data/native-exports/`保存全量/筛选CSV，`final/gui/exports/`保存实际点击导出 |
-| 复用登记 | [Blender规则](agents/blender-interaction.md)、[操作登记](acceptance/blender-operations.json)；历史GUI身份不重写，产品单行目录修复后重新点击；旧图形工程另有兼容导出报告 |
-| 构建与重建 | 共用`outputs/build-site/`、`outputs/science/`、`outputs/wheels/qualified/`及后端记录保持；当前索引列源文件/wheel摘要、实际命令和脚本，按[DEVELOPMENT](DEVELOPMENT.md)在新批次重建并重新验证ZIP身份 |
-| 本轮归档与清理 | [清理收据](acceptance/display-xyz-export-cleanup.json)；四个注释标签及本轮工作树/分支清理Passed，另删一个已归档旧分支；11,095文件/1,073,258,330字节清理，63,383保留摘要核对。`closing/`保存映射和原收据；旧对象当前清理状态见本页“遗留清理状态” |
-
-本批82科学测试、21相关单测、严格XYZ和七类CSV/取消/旧谱图、显示精度、九公共资产、安装及冷重开通过。完整C/N历史范围见[教程历史资格](acceptance/tutorial-final-qualification.json)；本批仅对改动及其受影响范围复验，不将旧报告绑定新ZIP。科学输入的唯一清单仍为`tests/data/local-inputs.json`，来源见[SOURCES](v1-acceptance/SOURCES.md)。
-
-本轮四个标签为`archive/2026-10-02/feat/display-precision`、`feat/xyz-import`、`feat/data-export`和`chore/display-xyz-export`（后三者沿用同一日期前缀），固定各分支最终提交；精确身份见清理收据。只保留9d3ff61候选，e317及b8a旧ZIP已删除，原科学/GUI报告、成功失败日志与摘要不改写。清理后离线重建Passed，临时ZIP已清理；新原生进程再次冷读保全工程Passed。原批命令中的runs/旧工作树路径通过`closing/preservation-map.json`、`workspace-preservation-final.json`定位保留字节，新验证使用新的批次。删除字节不计正常Git工作树移除及新增中央证据，不能当作全仓净空间变化。
-
-## 历史教程归档、清理和阻塞
-
-主分支已本地 ff-only 合并到固定源码提交；八个带注释标签 `archive/2026-10-02/<完整分支名>` 的身份和提交可达性 Passed，详细分支名见 `outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/tags.json`。八个本轮工作树及已合并分支均正常移除；没有 push。
-
-本次继续处理收据位于 `outputs/evidence/2026-10-02/tutorial-cu/deferred-cleanup/`：`preflight.json`和`ignored-preservation.jsonl.gz`逐文件复核111份剩余材料，两份旧工作副本与main及原文件/基线/补丁完全一致；`worktree-removal.json`记录最后两个工作树及分支正常移除。31份恢复数据完整迁入 `outputs/projects/recovery/worktree-tutorial-irc-mayer-context/`，原文件没有删除，`recovery-move.json`保存全旧新路径与摘要，`recovery-cold.json`记录新Blender进程Dataset/科学数组/VDB读取Passed。`completion.json`及`legacy-deferred.json`记录本轮完成和用户允许延期的旧阻塞。
-
-上一批清理收据保留在 `outputs/evidence/2026-10-02/tutorial-cu/archive-preparation-final/closing/`：
-
-| 入口 | 内容 |
-| --- | --- |
-| `post-cleanup.json` | 清理后70项源码/JSON、110输入、11锁定wheels、188工程文件、38报告与1,934保留文件摘要核对；同口径目标清单前后空间 |
-| `cleanup.json` 与上级 `cleanup/<任务>/applied.json` | 七工作树的36,895文件 / 2,164,204,797字节已删除；31恢复数据当时由既有保护拒绝；本次已完整迁入受保护projects/recovery，见新收据 |
-| `retired-candidates-applied.json` | 11旧ZIP / 556,975,546字节已删除，最新候选保留；旧报告/摘要/源码标签保留，新重建需重新资格 |
-| `main-test-cleanup/` | 本批隔离测试环境与重复生成物4,987文件 / 338,705,325字节已删除；原worker请求、成功失败日志、结果与路径映射保留 |
-| `worktree-removal.json`、`legacy-blockers.json` | 真实移除/保留状态；权限及占用对象未强制处理 |
-| `retired-preservation-routes.json` | 历史保全映射中指向已删除旧候选的可用性覆盖；优先于原直接路径 |
-
-清单实际删除41,893文件 / 3,059,885,668字节（约3.06GB），这是已删除文件大小总和，排除正常Git工作树移除与新增中央证据，不作为整个仓库的净空间变化。前后目标清单统计见 `post-cleanup.json.measurements`。
-
-| 未完成对象 | 当前原因与保留位置 |
-| --- | --- |
-| 旧 f458 磁盘残留 | 工作树登记与分支已移除；目录普通删除仍访问拒绝，完整原件已保全；见2026-10-04收据 |
-| 旧 b48c | 2026-10-04核对目录已不存在 |
-| 默认旧后端wheel | `outputs/wheels/<后端wheel>`不可读，原位保留；当前根后端记录与 `outputs/wheels/qualified/` 的可读wheel已配对核对 |
-
-按用户“无法处理的分支可以暂时放着”的最新范围，03已resolved；本轮八工作树归档清理Passed，旧f458磁盘残留清理单独延期到 `.scratch/tutorial-cu/issues/06-deferred-cleanup.md`（pending / ready-for-human）。旧权限检查仍Failed、延期清理Not Run，不改写旧结果；未知恢复文件及未解除引用的旧配置保留，不按进程名关闭未知窗口。
-
-归档前逐文件原始清单为上级 `inventory.jsonl.gz`，文本保全、独有二进制及旧新路径为 `working-source-map.json`、`binary-preservation.json` 和 `content/<sha256>`。原报告字节不改写；工作树旧路径通过映射定位。需恢复时另建目录、按映射核对摘要并冷重开，不覆盖现存用户工程。早期 `archive-preparation/` 为只读历史盘点，最终以 `archive-preparation-final/` 和本节收据为准。
-
-## 共用环境与保全项目
-
-| 位置 | 保留用途 |
-| --- | --- |
-| `outputs/build-site/`、`outputs/science/` | 共用锁定构建/科学环境；本批预检与69科学测试 Passed |
-| `outputs/wheels/qualified/`、`outputs/backend-wheel.json` | 显式配对的11锁定wheels与当前后端记录；打包传入 `--wheels-dir`，不凭同名旧wheel复用 |
-| `outputs/projects/recovery/worktree-tutorial-irc-mayer-context/` | 31份完整迁入的回归恢复数据，原数组/体积/manifest摘要不变；新原生Blender读取Passed，旧新路径见本次recovery-move.json |
-| `outputs/projects/tutorial-cu-full/` | 各案例原工程、中文移动和解包副本、撤销恢复/内部掩码/独立资产/最后Remove工程；按下表批次的 `project-path-map.json` 查摘要 |
-| `outputs/projects/public-tutorial-mcp-20261001/`、`public-tutorial-90ff9bf/` | 前批教程项目和科学配套保全；历史状态见各原报告 |
-| `outputs/projects/user-session-20260930/`、`cleanup-followup-original/`、`recovery/`、`outputs/recovery/` | 用户与恢复工程，含尚未完整保全的权限对象；保护 |
-| `outputs/cleanup-followup-20260930/b48c/outputs/qcf3/profile/`、`outputs/blender-dev/` | 用户/运行时配置引用，保留待逐项解除引用 |
-| `outputs/runs/{cu/3/p,cu/4/p,pt/3/p,pm/final-view/p}` | 历史安装配置，工程引用及可读取性需单独核对；本次未清理 |
-| `tests/data/local/`、`submodules/` 与既有资料目录 | 必要科学输入、参考源码和原件；不重复复制进证据 |
-| 既有构建源码、许可证、参考工具及未分类环境 | 沿用现有位置，未知归属默认保留 |
-
-重建：取回索引中的固定源码，按 [DEVELOPMENT](DEVELOPMENT.md) 核对输入和环境，显式使用 qualified wheels 与当前后端记录，在新的短输出批次依次检查、构建、安装、保全工程及冷读、生成证据索引和资格。保存新ZIP摘要；不宣称逐字节复现已删除旧候选。已归档脚本含旧路径，复跑必须选择新目录，避免覆盖历史收据。
-
-## 教程与维护批次路由
-
-| 批次 | 原始证据、工程与状态入口 |
-| --- | --- |
-| 2026-10-02后续工作树收尾 | `outputs/evidence/2026-10-02/tutorial-cu/deferred-cleanup/`；本轮八工作树/分支移除完毕，旧权限/占用按用户允许延期；31恢复文件完整迁移与原生读回 |
-| 2026-10-02 当前main技术资格 | `outputs/evidence/2026-10-02/tutorial-cu/main-qualification/`；[最终索引](acceptance/tutorial-final-qualification.json) |
-| 2026-10-02 GUI/MCP边界与完整案例 | `outputs/evidence/2026-10-02/tutorial-cu/full/`：C05各子批、C06–C13、`remaining-boundaries/{C01-density,field-guards,undo,public-surfaces,layer-removal}`；[补验索引](acceptance/tutorial-cu-validation.json) |
-| 2026-10-01 GUI/MCP与修复 | `outputs/evidence/2026-10-01/tutorial-cu/`：`full/C01-*.json`平铺报告、`full/C02`至`C05`、fog/mapping/slice；缺陷和修复证据保留原身份 |
-| 2026-10-02旧固定候选资格 | `outputs/evidence/2026-10-02/tutorial-cu/final-qualification/`；原a67d4b3/bd3a78e报告和工程仍保留，旧ZIP已删除 |
-| 2026-10-01公共教程MCP资格 | `outputs/evidence/2026-10-01/public-tutorial-mcp/`；[历史索引](acceptance/tutorial-validation.json)，四工作树已归档；旧ZIP已删除 |
-| 2026-09-30样本、节点与布局 | `outputs/evidence/2026-09-30/public-tutorial/`；原公开样本包及来源/许可保留 |
-| 2026-09-30outputs维护 | `outputs/evidence/2026-09-30/output-maintenance/`；逐文件映射/策略/空间统计/阻塞/收据，`archive/2026-09-30/chore/output-maintenance` |
-| 2026-09-30清理复查qcf3与f458 | `outputs/evidence/2026-09-30/cleanup-followup/`；[历史索引](acceptance/cleanup-validation.json)，qcf3旧ZIP已删除，f458权限对象仍保留 |
-
-## 历史任务路由
-
-以下为 2026-09-30 的迁移日期；各任务的原执行日期、源码身份和 Passed/Failed 保持在原报告与 [CHANGELOG](CHANGELOG.md) 中。历史相对层级和字节不变。旧候选、可重建测试工程及孤立配置不再承诺可用；权限拒绝对象可能仍原位存在，不作为已保留的可用交付。需要复跑时，从对应任务工具、保留输入及当前锁定环境重建并重新资格检查。
-
-| 历史任务 | 保留证据目录（相对 outputs） | 查找入口 |
-| --- | --- | --- |
-| acceptance | `evidence/2026-09-30/history/acceptance/` | `density-esp-cold-view.json`、`extension.json` |
-| analysis-gui | `evidence/2026-09-30/history/analysis-gui/` | `esp.json`、`irc.json` |
-| animation-acceptance | `evidence/2026-09-30/history/animation-acceptance/` | `result.json` |
-| animation-acceptance-v2 | `evidence/2026-09-30/history/animation-acceptance-v2/` | `result.json` |
-| atom-visibility | `evidence/2026-09-30/history/atom-visibility/` | `gui.json`、`reopened.json` |
-| blender-acceptance | `evidence/2026-09-30/history/blender-acceptance/` | 批次内原相对层级；完整路径见 routes.json |
-| blender-analysis-gui | `evidence/2026-09-30/history/blender-analysis-gui/` | 批次内原相对层级；完整路径见 routes.json |
-| blender-external-worker | `evidence/2026-09-30/history/blender-external-worker/` | 批次内原相对层级；完整路径见 routes.json |
-| blender-final-acceptance | `evidence/2026-09-30/history/blender-final-acceptance/` | 批次内原相对层级；完整路径见 routes.json |
-| blender-localized-install | `evidence/2026-09-30/history/blender-localized-install/` | 批次内原相对层级；完整路径见 routes.json |
-| blender-m7 | `evidence/2026-09-30/history/blender-m7/` | 批次内原相对层级；完整路径见 routes.json |
-| blender-m8 | `evidence/2026-09-30/history/blender-m8/` | 批次内原相对层级；完整路径见 routes.json |
-| blender-pure-acceptance | `evidence/2026-09-30/history/blender-pure-acceptance/` | 批次内原相对层级；完整路径见 routes.json |
-| branch-archive | `evidence/2026-09-30/history/branch-archive/` | 批次内原相对层级；完整路径见 routes.json |
-| committed-build-d1abfe8 | `evidence/2026-09-30/history/committed-build-d1abfe8/` | `result.json` |
-| complex-examples | `evidence/2026-09-30/history/complex-examples/` | `source-inspection.json`、`summary.json` |
-| composable | `evidence/2026-09-30/history/composable/` | `report.json` |
-| diagnostics | `evidence/2026-09-30/history/diagnostics/` | 批次内原相对层级；完整路径见 routes.json |
-| extension-cleanup | `evidence/2026-09-30/history/extension-cleanup/` | `applied.json`、`cold-reopen.json` |
-| external-results | `evidence/2026-09-30/history/external-results/` | `gui.json` |
-| external-worker | `evidence/2026-09-30/history/external-worker/` | 批次内原相对层级；完整路径见 routes.json |
-| fog-acceptance | `evidence/2026-09-30/history/fog-acceptance/` | `report.json` |
-| handoffs | `evidence/2026-09-30/history/handoffs/` | 批次内原相对层级；完整路径见 routes.json |
-| irc-acceptance | `evidence/2026-09-30/history/irc-acceptance/` | 批次内原相对层级；完整路径见 routes.json |
-| layer-acceptance | `evidence/2026-09-30/history/layer-acceptance/` | `report.json` |
-| log-fixtures | `evidence/2026-09-30/history/log-fixtures/` | `cclib-data-tree.json`、`cclib-tree.json` |
-| molecularnodes-parameters | `evidence/2026-09-30/history/molecularnodes-parameters/` | `a-precheck-science.json` |
-| multiwfn-parameters | `evidence/2026-09-30/history/multiwfn-parameters/` | `worktree-retirement.json` |
-| nbo-acceptance | `evidence/2026-09-30/history/nbo-acceptance/` | `gui-undo.json` |
-| nocv-acceptance | `evidence/2026-09-30/history/nocv-acceptance/` | 批次内原相对层级；完整路径见 routes.json |
-| node-assets | `evidence/2026-09-30/history/node-assets/` | `report.json` |
-| optimization-trajectory | `evidence/2026-09-30/history/optimization-trajectory/` | `candidate.json`、`document-checks.json` |
-| repository-cleanup-merge | `evidence/2026-09-30/history/repository-cleanup-merge/` | `merge-receipt.json` |
-| result-browser | `evidence/2026-09-30/history/result-browser/` | `final-receipt.json`、`gui-checks.json` |
-| scalar-probe | `evidence/2026-09-30/history/scalar-probe/` | `manifest.json`、`result.json` |
-| source-adoption | `evidence/2026-09-30/history/source-adoption/` | `final-audit.json`、`wheel-recovery.json` |
-| storage-cleanup | `evidence/2026-09-30/history/storage-cleanup/` | `applied.json`、`branch-archive.json` |
-| v1-acceptance | `evidence/2026-09-30/history/v1-acceptance/` | 批次内原相对层级；完整路径见 routes.json |
-| vesta-comparison | `evidence/2026-09-30/history/vesta-comparison/` | `input.json` |
-| visual-acceptance | `evidence/2026-09-30/history/visual-acceptance/` | `result.json` |
-| visual-acceptance-v2 | `evidence/2026-09-30/history/visual-acceptance-v2/` | `result.json` |
-| vmd-parameters | `evidence/2026-09-30/history/vmd-parameters/` | 批次内原相对层级；完整路径见 routes.json |
-| volume-probe | `evidence/2026-09-30/history/volume-probe/` | `result.json` |
-| workflow-migration | `evidence/2026-09-30/history/workflow-migration/` | 批次内原相对层级；完整路径见 routes.json |
-
-根目录零散历史报告、脚本和日志集中在 `outputs/evidence/2026-09-30/history/root/`。全部任务原路径到现位置的 SHA-256 映射见维护批次 `path-map.jsonl.gz`；主检出源码引用同时记录固定 source_commit/source_path，main 后续改动时按该 Git 身份取回并核对摘要。本轮已改动文件的少量字节副本位于 `fixed-source-reference/`，修正收据为 `source-reference-fix.json`；`routes.json` 按原任务名称定位。原报告中的旧路径是历史信息，不能直接视为仍存在；未迁移且保留的科学原件另列 unknown_inputs。
-
+当前操作进入[人工 SOP](../validation/human/SOP.md)，历史材料见[v1 索引](v1-acceptance/README.md)。原 SOP 文档整理的范围和验证由[历史摘要](archive/outputs-history/evidence--2026-10-06--sop-user-guide.md)保存。
 
 ## 持续维护
 
-每次收尾更新本页当前交付与批次路由、任务状态、清理收据和 [CHANGELOG](CHANGELOG.md)。详细逐文件清单与策略留本批忽略目录；历史路径失效时明确可用性与重建方法，原始报告保持字节不变。未知、权限、占用或未保全对象原位保留，不以安全部分完成代替全部验收。
-
-## 2026-10-03 完成度与参考实现调研
-
-[完整报告](research/qcblender-completion-audit-2026-10-03.md)固定 main `96f9c7e`；报告和任务记录位于 `research/plugin-audit` 工作树，尚未提交或合并。产品源码、依赖和候选保持原身份。
-
-| 对象 | 当前入口与状态 |
-| --- | --- |
-| 研究证据 | 主仓 `outputs/evidence/2026-10-03/plugin-audit/`；82科学测试、30相关单测通过，1项POSIX检查在Windows跳过；安装、XYZ/CSV、来源浏览和冷重开Passed |
-| 缺陷与比较 | 四类产品缺陷未修复；两类P1经原生operator和实际Computer Use复现。报告含六个参考项目/软件的十维比较、已采用项、许可材料及五项改进建议；独立用户/科研签署及发布Not Run |
-| 保全工程 | 主仓 `outputs/projects/plugin-audit/`，按原批次相对目录保留 `.blend + .qcdata`；`xyz-seeded/integration.blend`与`gui/linked-observed.blend`迁移后新进程冷读Passed，GUI工程有意保留缺陷状态 |
-| 原始身份与映射 | `preservation-map.json`保存所有旧路径、目标、大小和SHA-256；`final-verification.json`复核保留副本、候选、当前主检出和链接；原始收据中的runs路径保持不变 |
-| 清理与限制 | `cleanup-receipt.json`记录6,036文件/500,234,681字节删除，含已保全副本和本次独立profile；不是全仓净节省。74文件/207,636字节已复制核对，原件因十个目录权限边界保留；不修改ACL/所有权，清理状态Partial |
-
-复跑先阅读证据目录`README.md`，复制所需脚本到新的runs批次，从保留候选重新安装隔离环境并生成前置fixture；科学输入沿用`tests/data/local-inputs.json`。不要直接运行归档脚本覆盖历史证据。旧路径通过映射解析；本次安装环境已经清理。
+按[维护规则](agents/storage-maintenance.md)先保全工程与来源、完成摘要和重建检查，再使用新的精确清单。需要旧候选功能时，从当前源码与集中输入重建并记录新身份；历史 Passed 不代表新对象通过，也不表示旧二进制仍存在。
