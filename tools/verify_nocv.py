@@ -6,14 +6,16 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
+parser.add_argument('--candidate', type=Path, required=True)
 parser.add_argument('--output-dir', type=Path, required=True)
 parser.add_argument('--reference-root', type=Path, default=ROOT)
 parser.add_argument('--reopen', action='store_true')
 args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
 import bpy
 sys.path[:0] = [str(ROOT), str(args.reference_root / 'outputs' / 'science')]
-from tools.comparison_fixture import prepare_comparison_cube
+from tools.comparison_fixture import candidate_node_library, prepare_comparison_cube
 import qcblender
+from qcblender.blender import asset_library
 from qcblender.analysis_data import import_ets
 from qcblender.cube import read_cube
 from qcblender.data import load_dataset, save_dataset
@@ -25,6 +27,9 @@ from qcblender.blender.views import atom_view, field_view
 OUT = args.output_dir.resolve()
 if not args.reopen:
     OUT.mkdir(parents=True, exist_ok=False)
+library = candidate_node_library(args.candidate.resolve(), OUT / 'library')
+asset_library.LIBRARY_DIR = library.parent
+asset_library.LIBRARY_FILE = library
 qcblender.register()
 
 if args.reopen:

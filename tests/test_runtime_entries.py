@@ -7,6 +7,7 @@ import unittest
 import zipfile
 
 from tools.collect_m0_fixtures import archive_member, install_bytes, restore
+from tools.comparison_fixture import candidate_node_library
 from tools.runtime_cleanup_plan import build_file_sets, plan, verify_canonical_wheels
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -82,6 +83,28 @@ class RuntimeEntries(unittest.TestCase):
         for row in actual:
             self.assertEqual(row['status'], 'Passed')
             self.assertEqual(row['expected_sha256'], row['actual_sha256'])
+
+    def test_candidate_node_library_extract_and_reopen_identity(self):
+        candidate = self.root / 'candidate.zip'
+        output = self.root / 'batch/library'
+        with zipfile.ZipFile(candidate, 'w') as archive:
+            archive.writestr('qcblender/assets/nodes.blend', b'node library fixture')
+        target = candidate_node_library(candidate, output)
+        self.assertEqual(target.read_bytes(), b'node library fixture')
+        before = target.stat().st_mtime_ns
+        self.assertEqual(candidate_node_library(candidate, output), target)
+        self.assertEqual(target.stat().st_mtime_ns, before)
+        with zipfile.ZipFile(candidate, 'w') as archive:
+            archive.writestr('assets/nodes.blend', b'different library')
+        with self.assertRaisesRegex(ValueError, 'differs from the existing batch'):
+            candidate_node_library(candidate, output)
+        self.assertEqual(target.read_bytes(), b'node library fixture')
+        for members in ([], ['assets/nodes.blend', 'qcblender/assets/nodes.blend']):
+            with zipfile.ZipFile(candidate, 'w') as archive:
+                for name in members:
+                    archive.writestr(name, b'node library fixture')
+            with self.subTest(members=members), self.assertRaisesRegex(ValueError, 'exactly one'):
+                candidate_node_library(candidate, self.root / 'invalid')
 
     def test_restore_missing_inputs_from_one_archive_without_extracted_tree(self):
         reference, target = self.root / 'reference', self.root / 'target'

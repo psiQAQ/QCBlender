@@ -2,6 +2,26 @@
 import hashlib
 import json
 from pathlib import Path
+import zipfile
+
+
+def candidate_node_library(candidate, directory):
+    directory = Path(directory)
+    with zipfile.ZipFile(candidate) as archive:
+        entries = [name for name in archive.namelist()
+                   if name == 'assets/nodes.blend' or name.endswith('/assets/nodes.blend')]
+        if len(entries) != 1:
+            raise ValueError('Candidate must contain exactly one node asset library: ' + str(candidate))
+        raw = archive.read(entries[0])
+    target = directory / 'nodes.blend'
+    if target.exists():
+        if target.read_bytes() != raw:
+            raise ValueError('Candidate node library differs from the existing batch: ' + str(target))
+    else:
+        directory.mkdir(parents=True, exist_ok=True)
+        with target.open('xb') as stream:
+            stream.write(raw)
+    return target
 
 
 def comparison_source(root):
