@@ -2,7 +2,7 @@
 
 适用 Windows x64、Blender 5.1.1。版本及安装包可用性见 [README](../README.md)，技术范围见 [验证记录](VALIDATION.md)。
 
-安装、样本获取、参数核对、渲染、保存和独立复做统一按 [跟随教程与独立人工验收 SOP](v1-acceptance/SOP.md) 执行。下面只保留入口索引；详细步骤和结果填写均在同一份 SOP。
+安装、样本获取、参数核对、渲染、保存和独立复做按 [用户验证 SOP](v1-acceptance/SOP.md) 执行。材料身份见[安装包与样本](v1-acceptance/MATERIALS.md)，结果填写使用[记录模板](v1-acceptance/RECORD-TEMPLATE.md)。下面提供操作入口索引。
 
 ## 操作入口与对象选择
 
@@ -49,7 +49,7 @@
 | 节点、材质与交互覆盖 | [N01–N18](v1-acceptance/SOP.md#2-n01n18-节点与交互检查) |
 | 标准XYZ、离散帧、测量与独立副本 | [X01](v1-acceptance/SOP.md#x01-标准xyz与离散帧) |
 | CSV/metadata、默认目录、筛选与取消 | [通用数据导出](v1-acceptance/SOP.md#05-显式数据导出) |
-| 用户截图、Agent点击/数据核对和独立科研签署 | [结果记录](v1-acceptance/SOP.md#3-结果记录与独立科研签署) |
+| 用户操作记录、数值核对和科研签署 | [结果记录](v1-acceptance/SOP.md#3-结果记录与独立科研签署) |
 
 源文件始终决定科学值和单位，显示操作不改科学数组。源编号从1起，坐标Å；键由距离推断，MO两符号表示相位，振动播放速度属于显示参数。两个来源关联、Cube单位声明、外部分析参数均须核对真实生成记录。保存使用 **N侧栏 → 工程与诊断 → 保存自包含工程**，并将同名 `.blend` 与 `.qcdata/` 一起移动。
 
@@ -57,11 +57,11 @@
 
 IRC和优化关联比较双方当前步骤的源Å坐标。最后选择的对象作为活动参考；在对象属性主面板点击 **关联选中数据源**。任一端换步后，来源详情中的Geometry association显示stale；返回原步仍需重新关联。旧工程关联、复制层和当前版本新视图也需重新建立关联。
 
-原生Alt+D产生的共享原子mesh不能切换IRC/优化步骤。仅选要独立调整的副本，使用 **3D Viewport → Object → Relations → Make Single User → Object & Data**，再点击对应面板的Previous/Next/Choose Step。逐步截图和Undo/Redo验收见[当前构型复做](acceptance/audit-p1-validation.md#原生入口复做)。
+原生Alt+D产生的共享原子mesh不能切换IRC/优化步骤。仅选要独立调整的副本，使用 **3D Viewport → Object → Relations → Make Single User → Object & Data**，再点击对应面板的Previous/Next/Choose Step。选择顺序、关联失效、单用户恢复和Undo/Redo操作见[SOP P1-A/P1-B](v1-acceptance/SOP.md#当前构型关联与共享对象检查)。
 
 ## Gaussian 优化轨迹浏览
 
-操作步骤集中在 [SOP C02](v1-acceptance/SOP.md#c02-logout-能量振动与优化)：导入P02的Job1、创建独立轨迹，选新对象后在对象属性 **Optimization Trajectory** 使用 **Previous / Next / Choose Step**。Job2的模式/能量在 **科学记录与振动模式**。轨迹源值、截图和复做记录统一填写在C02。
+操作步骤集中在 [SOP C02](v1-acceptance/SOP.md#c02-logout-能量振动与优化)：导入P02的Job1、创建独立轨迹，选新对象后在对象属性 **Optimization Trajectory** 使用 **Previous / Next / Choose Step**。Job2的模式/能量在 **科学记录与振动模式**。轨迹源值、截图和复做结果填写到本批记录模板的C02条目。
 
 新建原子显示外层Quality=3，新建切片每轴201点；生成网格初值0.2 Å、边缘3 Å、512 MiB。公共QC Style Atoms and Bonds的Quality=2、QC Planar Slice的Resolution=101仍保留。Addon偏好“数据导出目录”留空时使用已保存.blend父目录，否则真实系统Documents；导出对话框Output directory可单次覆盖。导出目录不替代.qcdata工程数据。
 

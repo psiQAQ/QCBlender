@@ -1,6 +1,12 @@
 # 产物查找入口
 
-更新：2026-10-05。本页路由当前文件、归档身份、重建方法与阻塞；各原始报告保留其执行时的状态和候选身份。任务状态在 `.scratch/`，开发顺序见 [DEVELOPMENT](DEVELOPMENT.md)，保留与清理边界见 [维护规则](agents/storage-maintenance.md)。
+更新：2026-10-06。本页路由当前文件、归档身份、重建方法与阻塞；各原始报告保留其执行时的状态和候选身份。任务状态在 `.scratch/`，开发顺序见 [DEVELOPMENT](DEVELOPMENT.md)，保留与清理边界见 [维护规则](agents/storage-maintenance.md)。
+
+## 用户验证 SOP（2026-10-06）
+
+[SOP](v1-acceptance/SOP.md) 为用户连续操作入口，包含材料核对、独立配置、XYZ 入门、P1 关联/共享对象、Alpha 出图、C01–C13/X01、N01–N18、导出与保存重开。安装包与输入身份在 [MATERIALS](v1-acceptance/MATERIALS.md)，可复制填写的表格在 [RECORD-TEMPLATE](v1-acceptance/RECORD-TEMPLATE.md)，393 张原截图、图注和历史技术说明移至 [HISTORY](v1-acceptance/HISTORY.md)。原截图文件与验证报告保留。
+
+正文由 2,042 行整理为 827 行，44 个 A/C/X/N/P1 条目、原 C/X 锚点、历史图片、材料身份、本地链接和五段 PowerShell 语法核对 Passed。编辑片段、检查脚本与报告在 `outputs/evidence/2026-10-06/sop-user-guide/`，本地提交、归档和工作树清理结果见该目录的 `delivery.json`。归档标签为 `archive/2026-10-06/docs/sop-user-guide`。本次为文档整理，Blender 复做及独立人工/科研签署 Not Run；既有产品和验收结论未改。
 
 ## 遗留清理状态
 
@@ -64,7 +70,7 @@ HTTP 403 下载失败已修复，实际 [run 37414740265](https://github.com/psi
 | --- | --- |
 | 插件候选 | `outputs/candidates/current/display-xyz-export-9d3ff61/qcblender-0.0.1.zip`；源码`9d3ff61d2e32c47357fe624cf93052bfed6dd041`，SHA-256`362b87d3d1f41ec949da8597a47b248e7ef74ca574d96454d1dda31100556ce9`，50,635,717字节；本地资格Passed，未发布 |
 | 当前验证 | [显示/XYZ/CSV索引](acceptance/display-xyz-export-validation.json)；`outputs/evidence/2026-10-02/display-xyz-export/final/`的42份通过报告、qualification.json、证据索引与完整命令/日志；早期目录缺陷Failed保持在同任务gui/ |
-| 教程与截图 | [SOP](v1-acceptance/SOP.md)，C01–C13/N01–N18和新增X01；当前图位于`screenshot/display-xyz-export/`且紧接步骤，图注区分e317/9d及MCP准备；用户复做/独立签署Not Run |
+| 教程与截图 | 用户操作见 [SOP](v1-acceptance/SOP.md)；本批图位于`screenshot/display-xyz-export/`，原图注在[历史证据](v1-acceptance/HISTORY.md)，保留e317/9d及MCP准备身份；用户复做/独立签署Not Run |
 | 公开样本 | [样本交付](acceptance/tutorial-sample-delivery.json)；`outputs/evidence/2026-10-02/display-xyz-export/final/samples/qcblender-public-tutorial-samples-v2.zip`；SHA-256`b4bc3e0ebbdf29ccb3905b16eeb898c94b9f16f209baae3c3ae1a8646b0348dd`，12,175,753字节；P06两份XYZ，自有数据CC BY 4.0；P02独立获取 |
 | 保全工程与数据 | `outputs/projects/display-xyz-export/gui/evidence.blend + evidence.qcdata/`，12Dataset/249数组/1VDB，原地及中文移动冷读Passed；`final/data/native-exports/`保存全量/筛选CSV，`final/gui/exports/`保存实际点击导出 |
 | 复用登记 | [Blender规则](agents/blender-interaction.md)、[操作登记](acceptance/blender-operations.json)；历史GUI身份不重写，产品单行目录修复后重新点击；旧图形工程另有兼容导出报告 |

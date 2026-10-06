@@ -23,7 +23,7 @@
 | GUI工程保存及双冷读 | Passed | `gui-final/saved.json`、`cold-original.json`、`cold-moved.json`、`moved-preservation.json`；13 Dataset、10 VDB、38绑定对象，新进程原地/中文移动快照与保存快照精确一致。源PID62104保存后dirty false并正常exit0；见`logs/gui-final.json`。 |
 | Standards / Spec 复审 | Passed | `reviews.json`：已关闭多场原子性及报告状态P2；最终剩余发现0。评审者未代替运行资格。 |
 
-GUI工程为 `outputs/projects/reliability/reliability-gui.blend` 及同名 `.qcdata`；中文移动副本保留在 `outputs/projects/reliability/中文移动/`。八张当前候选截图位于`docs/v1-acceptance/screenshot/reliability/`并紧接[SOP](../v1-acceptance/SOP.md)对应步骤。
+GUI工程为 `outputs/projects/reliability/reliability-gui.blend` 及同名 `.qcdata`；中文移动副本保留在 `outputs/projects/reliability/中文移动/`。八张本批候选截图位于`docs/v1-acceptance/screenshot/reliability/`，原图注与操作上下文见[SOP 历史证据](../v1-acceptance/HISTORY.md)。
 
 ## 性能实验边界
 

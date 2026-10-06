@@ -1,2042 +1,827 @@
-# QCBlender 跟随教程与独立人工验收 SOP
+# QCBlender 用户验证 SOP
 
-适用 **Windows x64、Blender 5.1.1**。取得扩展ZIP和教程样本后，可在Blender完成导入、调整、渲染与保存；安装包包含必要运行库。安装包可用性见[README](../../README.md)，来源与获取说明见[SOURCES](SOURCES.md)。教程绑定[样本清单](tutorial-samples.json)；v2样本包包含P01/P03/P04/P05/P06，C02/C06的P02需原站独立取得，其再分发许可未确认。样本包精确SHA与交付位置以[样本交付索引](../acceptance/tutorial-sample-delivery.json)为准。
+适用 **Windows x64、Blender 5.1.1、QCBlender 0.1.0**。按本文导入样本、调整显示、核对科学记录、导出数据，并验证工程保存和重新打开后的结果。
 
-本教程保留 **C01–C13** 科学案例和 **N01–N18** 节点/交互检查编号。按钮位置与当前插件界面一致；对话框及部分控件仍使用英文。操作结果只记 **Passed / Failed / Not Run**。用户实际点击、Agent Computer Use 点击、MCP操作与数据核对、独立科研签署分别记录；Agent 不填写使用者签名。维护者按 [交互规则](../agents/blender-interaction.md) 和 [操作登记表](../acceptance/blender-operations.json) 复用已确认且功能未变的操作，MCP/命令行复验单独记录，完整案例结果仍逐项验收。
+先完成准备和 XYZ 入门流程，再检查关联与共享对象；需要验证出图时完成 A01–A09，需要完整验收时继续 C01–C13、X01 和 N01–N18。每步记录实际结果：**Passed** 表示已执行且符合预期，**Failed** 表示已执行但不符合预期，**Not Run** 表示未执行或尚无法判断。正确拒绝无效操作、且场景保持不变的测试可以记 Passed。
 
-本文保留未变操作的历史Agent截图及所有用户截图占位；已有图的候选、输入和参数仅绑定[历史点击索引](../acceptance/tutorial-cu-validation.json)。旧二维图截图集中于文末历史证据定位，不能作为当前CSV导出或0.2 Å网格的验收。当前批次引用[展示精度、XYZ与数据导出验证索引](../acceptance/display-xyz-export-validation.json)；本轮新增入口已由Agent实际点击确认，MCP/原生检查与原地、中文移动冷重开通过；每张图保留其候选身份，e317→9d3ff61的单行目录修复按索引复核并重新点击验证。用户复做和独立科研签署仍为 **Not Run**。实际操作者在每步占位下追加独立文件名的截图，不覆盖历史证据。
-
-用户复做截图引用示例：`![用户复做：C02-01](screenshot/C02-01-user.png)`。仅在实际保存该截图后添加可见引用。
-
-2026-10-04新增[Gaussian拼接日志与ETS-NOCV重复记录复做步骤及截图](../acceptance/audit-p2-baselines-validation.md#原生入口复做)，候选与原始证据由[当前产物路由](../ARTIFACTS.md)定位。
-
-2026-10-04当前构型与共享mesh操作见[关联、单用户、Undo/Redo复做步骤及截图](../acceptance/audit-p1-validation.md#原生入口复做)。适用于C02优化、C04关联及C10 IRC；用户复做与科研签署单独填写。
-
-2026-10-05静态参考、IGMH声明、取消和原生VDB检查见[可靠性验证](../acceptance/reliability-validation.md)。下列新增截图绑定a3ed826最终候选；MCP准备对象和参数，实际确认、Undo/Redo、Esc和保存由Agent Computer Use执行。用户复做与科研签署仍单独填写。
-
-## 完整 SOP 执行顺序与完成标准
-
-首次使用从 **A00 → A01–A09** 连续执行，得到 P01 Alpha MO9 图片、参数摘要及可移动工程。完整 v1 验收继续完成 **0.1–0.5 → C01–C13 与 X01 → N01–N18 → 3.1–3.3**。每个阶段使用同批候选和输入身份；更换候选后记录新摘要并重新验证受影响步骤。以下路线是实际复做顺序，步骤结果由本次操作者填写。
-
-| 阶段 | 连续执行的操作 | 进入下一阶段前的检查 |
-| --- | --- | --- |
-| 1 材料与批次 | 按 0.1 建立本次目录，核对扩展 ZIP、样本包、输入及许可，填写批次身份 | 文件和摘要匹配；C02/C06 的 P02 必须另行取得并核对，缺少时对应案例记 Not Run |
-| 2 干净配置安装 | 按 A00/A01 启动独立配置，安装扩展并检查科学运行库；按 0.2 定位编辑器和解除对象图钉 | 精确 Blender/扩展版本已记录，运行库检查成功，QCBlender 侧栏可见 |
-| 3 首次出图 | 连续执行 A02–A09：导入 P01、自动预检、生成 Alpha 源 MO9、改等值、渲染、导出摘要、自包含保存、中文移动及新进程重开 | A01–A09 各有结果和证据；文件、科学身份及当前显示参数能够核对 |
-| 4 科学案例 | 按下表执行 C01–C13 和 X01；每例先走 0.3 导入/来源核对，再执行该例全部编号步骤 | 科学记录、参数变化前后及错误/取消行为有实际记录；输入依赖未满足则停止该例 |
-| 5 每例完成闭环 | 执行 0.5 所需 CSV 导出及当前视图摘要；再按 0.4 渲染、保存、原地冷重开、中文移动冷重开、归档及解包冷重开 | 图片、导出、工程和配套数据齐全；每次确认旧 PID 退出后才启动下一进程，摘要和源数值一致 |
-| 6 节点与交互 | 在已保存工程的独立副本执行 N01–N18；先解除节点编辑器图钉，选择正确修改器，再改输入或接线 | 实际节点/接线、原值→新值和结果已记录；公共资产新增后打包关联库，再完成保存/冷重开 |
-| 7 缺陷与复做 | Failed 时保留错误、工程与输入，登记缺陷；修复后以新候选重做相关操作、导出及工程闭环 | 未解决必需项仍为 Failed；缺输入或未执行仍为 Not Run，不能从历史通过记录继承 |
-| 8 汇总与签署 | 按 3.1 填写工具、对象、参数及证据；按 3.2 逐行汇总；满足 3.3 条件后由独立使用者签署 | C/X、N、必要技术与许可材料全部符合完成条件，签名及科研适用性由实际独立验收者填写 |
-
-科学案例按以下顺序打开工程；同一个案例内的所有步骤仍以对应章节为准。新工程使用 **File → New → General**；承接案例先 **File → Open** 指定已保存工程，随后通过 **保存自包含工程**另存本例名称。
-
-| 执行顺序 | 工程起点与需要选中的对象 | 本例结束后保留的关键结果 |
-| --- | --- | --- |
-| C01 | 新工程，P01 O2 原子视图 | Alpha MO9、Beta MO7、密度/自旋密度及单位；0.045 MO 等值；可接 N04/N05/N09/N10/N16 |
-| C02 | 新工程，P02 所选计算段的原子视图 | Job2 振动/IR、Job1 优化、真实能量与步骤；IR/optimization CSV；可接 N12 |
-| C03 | 新工程，P03 Cube 场视图 | 原始网格、量名、单位及双符号；同网格采样；可接 N06 |
-| C04 | 新工程，P03 水二聚体原子及密度/ESP 视图 | ESP 映射、电荷、偶极、切片、探针和 profile CSV；可接 N06–N08/N11/N17 |
-| C05 | 新工程，P03 水二聚体原子视图 | 氢显隐、源原子选择、距离/角标注与独立显示副本；可接 N01–N03/N15/N16 |
-| C06 | 新工程，P02 Job2 原子及 NBO/E(2) 记录 | 来源块、真实 NBO 与 E(2) 数值；P02 工程单独保留，不放入公开附件 |
-| C07 | 新工程，P03 参考原子及 IGMH/IRI 成对场记录 | 片段声明、双值、筛选、交换列和 paired 全量/筛选 CSV；可接 N14 |
-| C08 | 打开 C04 工程并另存，选择关联 ESP 场及极值/面积记录 | 极值、面积/百分比、源单位及 ESP_AREA CSV；可接 N13 |
-| C09 | 新工程，P03 参考原子、AIM 临界点/路径记录 | 源点编号、坐标、路径和 CPprop 属性；可接 N13 |
-| C10 | 新工程，P04 IRC 路径根及当前步原子 | CSV 真实 1→2→3 步序、能量、构型/标注与 IRC CSV |
-| C11 | 打开 C10 工程并另存，选择 IRC Mayer 表和当前步 | 原子对1,2及逐步源值、Mayer CSV，切步后的关联与显示一致 |
-| C12 | 新工程，P05 参考原子及 ETS-NOCV 结果表 | pair1/Spin Total、能量单位及真实结果记录 |
-| C13 | 打开 C12 工程并另存，选择 pair1/Total Cube 场 | 两符号密度、0.003 electron/bohr^3、与 NOCV 表的来源关联；可接 N04/N05 |
-| X01 | 新工程，P06 XYZ 当前帧原子视图 | 源原子顺序、Å 坐标、离散帧、显示和数据一致 |
-
-N01–N18 在第 2 节逐项执行；可在对应案例完成时顺序插入，N16 覆盖指定案例中的 Undo/Redo，N18 覆盖每例保存及冷重开。不要因某一案例做过一次就填写其余案例通过。每例交付目录至少包含 `CXX.blend + CXX.qcdata/`、成图或面板证据、参数记录及适用的 CSV/metadata；原始输入、唯一导出目录和归档 ZIP 另外保留。
-
-**Alpha 短 SOP 完成**要求本次 A01–A09 全部实际执行并逐项 Passed，候选/输入摘要、首次图片、摘要导出、自包含工程和中文路径新进程重开证据齐全。**完整 v1 SOP 完成**要求 3.3 所列 C01–C13、X01、N01–N18、必要导出、同批技术检查及许可记录齐全，并由独立使用者完成科研复做和签署。当前独立短 SOP、完整 v1 人工/科研验收仍为 **Not Run**；本次文档展开不改变这些状态。GitHub CI、草稿与公开发布的状态另见 Alpha 门禁表。
-
-
-## Alpha 首次出图与短验收
-
-本路线适用于 manifest **0.1.0** 的 GitHub Alpha 候选。每次记录扩展 ZIP、源码提交、样本 ZIP 和 P01 SHA-256；候选技术结果、Agent 点击、独立使用者试装与科研签署分别记录。首次 Alpha 的公开门禁见[发布研究与流程](../research/github-release-workflow.md)，正式 v1 仍按全部 C/N 案例验收。
-
-公开样本的仓库入口为 `tests/data/distribution/qcblender-public-tutorial-samples-v2.zip`；取得发布附件时核对 `release-manifest.json` 和 `SHA256SUMS.txt`。本包包含 P01/P03/P04/P05/P06，排除 P02。P01 使用 `P01/o2-uhf.fchk`：UHF/STO-3G，SHA-256 为 `ef562c4b210e7c380219282d7684370cca1f0e8349dffa1d4388af5831472e36`。下载源码后可从 `tests/data/tutorial/P01/` 取得同一文件。
-
-先按 A00 准备本次目录和干净配置，再按下表 A01–A09 连续完成。表后逐步说明填写实际路径、选中对象、输入参数、文件检查及退出/冷重开；每步保存截图或文件，另记 Passed / Failed / Not Run。
-
-| 步骤与操作 | 需要选中的对象 | 编辑器与面板路径 | 按钮文字、参数与可观察结果 |
-| --- | --- | --- | --- |
-| A01 干净配置安装 | 无 | Edit → Preferences → Get Extensions → 菜单 | Install from Disk：安装本批扩展 ZIP，启用 QCBlender；Add-ons → QCBlender → Check Scientific Runtime，应显示成功。使用独立配置，保留实际版本与摘要。 |
-| A02 导入 P01 | 无 | 3D Viewport → N → QCBlender → 工作流 | 导入 Gaussian / Cube / XYZ：选择 o2-uhf.fchk；完成后选新原子视图，在来源详情核对 UHF、STO-3G、2 个 O 原子和源摘要。 |
-| A03 自动预检并生成 MO9 | P01 原子视图 | N 侧栏 → 工作流 | 生成量子化学场：首次先异步检查方法、ECP、基组、占据与密度矩阵，通过才打开 Generate Quantum Field。Quantity=Molecular orbital、Spin=Alpha、Orbital=Source number、Orbital number=9；Grid spacing=0.2 Å、Grid margin=3 Å、Memory budget=512 MiB。核对网格尺寸、体素数、结果大小、求值估算及拒绝原因，再点 OK；完成后出现双符号场视图。 |
-| A04 修改等值 | 新 MO9 场视图 | Properties → Modifiers → QC Isosurface | 将“正值阈值 [bohr^-3/2]”（Isovalue）从原值改为 0.045，保持 Link Thresholds，记录前后几何变化；查看正负相位材质。 |
-| A05 渲染 | MO9 场视图 | N 侧栏 → 创建视图与检查工具；Render / Output Properties | 创建取景相机；按 0.4 设置灯光、渲染器与色彩管理，再 Render → Render Image，Image → Save As 保存 example.png。 |
-| A06 导出摘要 | 最终 MO9 场视图 | N 侧栏 → 工程与诊断 | 导出数据与参数摘要：Data=当前视图参数摘要，选择本次绝对目录，确认导出。新结果目录包含 view-summary.md 和 metadata.json；核对实时 Isovalue=0.045、源 MO9/Alpha、网格、单位、有效域和材质。重复导出产生独立目录；取消不产生完整结果。 |
-| A07 自包含保存 | 已打开工程 | N 侧栏 → 工程与诊断 | 保存自包含工程：保存 example.blend，确认同目录生成 example.qcdata/；摘要导出文件另外保留。 |
-| A08 中文路径移动 | 无；先保存并正常退出 Blender | 文件管理器 | 将 example.blend 与 example.qcdata/ 一起复制至“中文路径移动”目录；核对科学 manifest/数组摘要未变。 |
-| A09 新进程重开 | 重开后选 MO9 场视图 | 新 Blender 进程 → File → Open；对象属性与工程与诊断 | 打开移动后的 example.blend；双符号、等值和材质应保留，数据路径指向同目录 qcdata。再次导出摘要，核对来源和参数。重新生成时资格记录需重新检查。 |
-
-### A00 建立本次目录并启动干净配置
-
-先取得本批扩展 ZIP、v2 公开样本 ZIP、`release-manifest.json` 和 `SHA256SUMS.txt`。本地候选由[产物路由](../ARTIFACTS.md)定位；GitHub 附件仅在实际发布后下载。核对包大小、摘要及清单中的源码提交，不把本地 run ID 0 当作 GitHub CI 身份。将 v2 包解压到 `inputs/`，保持 P01 等目录结构。
-
-本例固定使用 P01 `o2-uhf.fchk`（8,880 字节），UHF/STO-3G。新建一个短路径批次，示例为 `D:/QCAlpha/run01`；目录已存在时换新名称。保留 `inputs/`、`images/`、`exports/`、`project/`、`中文路径移动/` 和 `evidence/`。未安装扩展前，从 PowerShell 启动独立 Blender 配置，避免沿用日常配置；以下命令只创建本批目录和配置，不安装开发依赖。
-
-```powershell
-$sopBlender = 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe'
-$sopBatch = 'D:/QCAlpha/run01'
-if (Test-Path -LiteralPath $sopBatch) { throw 'Choose an unused SOP batch directory' }
-$env:BLENDER_USER_RESOURCES = "$sopBatch/profile"
-$env:BLENDER_USER_CONFIG = "$sopBatch/profile/config"
-$env:BLENDER_USER_EXTENSIONS = "$sopBatch/profile/extensions"
-$env:BLENDER_USER_DATAFILES = "$sopBatch/profile/datafiles"
-$env:BLENDER_USER_CACHE = "$sopBatch/cache"
-New-Item -ItemType Directory -Path $env:BLENDER_USER_CONFIG,$env:BLENDER_USER_EXTENSIONS,$env:BLENDER_USER_DATAFILES,$env:BLENDER_USER_CACHE,"$sopBatch/inputs","$sopBatch/images","$sopBatch/exports","$sopBatch/project","$sopBatch/中文路径移动","$sopBatch/evidence" -Force | Out-Null
-$sopProcess = Start-Process -FilePath $sopBlender -ArgumentList '--factory-startup' -PassThru
-$sopProcess.Id
-```
-
-Blender 安装路径按本机修改；批次路径贯穿后续步骤。保持此 PowerShell 会话，以便冷重开继承同一独立扩展配置。解压样本可用文件管理器；在 0.1 身份表记录操作者、精确版本、下载/提供路径和摘要。不要从已生成的复现工程代替本次从原始 P01 导入。
-
-### A01 安装扩展并检查运行库
-
-**选择对象：无。** 打开 **Edit → Preferences → Get Extensions → 右上菜单 → Install from Disk**，选择本批 `qcblender-0.1.0.zip` 并确认安装；在 **Add-ons** 查找并启用 **QCBlender**。展开偏好，点击 **Check Scientific Runtime**，等待结果；失败时保存完整诊断，本次生成步骤停止。关闭 Preferences，在 3D Viewport 选择 **Object Mode**，按 `N`，确认 **QCBlender** 页及“工作流”可见。
-
-**完成判断：**版本与候选记录一致，运行库检查成功，侧栏可见。记录安装与检查截图；当前已有候选安装证据由 CLI 产生，独立使用者须实际执行此步骤后才能填写自己的 Passed。
-
-### A02 从原始 P01 导入并核对来源
-
-**选择对象：无；完成后选择新原子视图。** 点击 **3D Viewport → N → QCBlender → 工作流 → 导入 Gaussian / Cube / XYZ**，选择本批 `inputs/P01/o2-uhf.fchk`，确认并等待导入结束。在 Outliner 或 Display Layers 选中新原子对象，解除 Properties 的旧对象图钉；点击 **数据集与数值摘要 → 查看完整来源**，核对源摘要、UHF、STO-3G、2 个 O 原子和源原子顺序。
-
-**完成判断：**原子视图出现，来源与输入一致，没有导入错误。保留来源面板截图和原件 SHA-256；对象实际名称以本次场景为准。当前已有原始导入证据由 CLI 产生，此处的用户复做结果另记。
-
-### A03 自动预检并生成 Alpha 源 MO9
-
-**选择对象：A02 新原子视图。** 点击 **N → QCBlender → 工作流 → 生成量子化学场**。首次先执行独立异步科学检查，检查通过才打开 **Generate Quantum Field**；等待检查结束，不重复启动。将 **Quantity=Molecular orbital、Spin=Alpha、Orbital=Source number、Orbital number (1-based)=9、Grid spacing (angstrom)=0.2、Grid margin (angstrom)=3、Memory budget (MiB)=512**。
-
-核对资源预览。固定 P01 与本批实现的参考为 **31 × 31 × 37、35,557 体素、Dataset 约 0.31 MiB、求值估算约 0.59 MiB**；若不同，先核对输入摘要、量、自旋、源轨道编号和网格参数，记录实际结果。确认没有拒绝原因后点 **OK**，等待完成；选择本次新 MO9 场视图，不根据名称后缀猜测活动对象。
-
-**完成判断：**新双符号场出现，来源为 Alpha 源 MO9，任务结束且无诊断错误。对话框取消、错误资格和预算拒绝分别记录，拒绝时不应创建场结果；这些检查不改变最终参数。
-
-### A04 修改等值并观察两符号
-
-**选择对象：A03 新 MO9 场视图。** 打开 **Properties → Modifiers → QC Isosurface**，将 **Isovalue** 从实际原值改为 **0.045 bohr^-3/2**，保持 **Link Thresholds** 及正负两符号开启。这是本批实际确认的修改器入口；对象属性中“几何表示”也显示对应参数。切换 **Material Preview** 查看正负相位材质，记录原值→新值及变化后的表面。默认 Solid 灰色不作为材质检查结果。
-
-**完成判断：**等值为 0.045、两符号保留，科学源及数组未改变。若做 Undo/Redo，使用 **Edit → Undo / Redo**，核对恢复的对象和绑定，最终恢复本步骤参数后继续。
-
-### A05 创建取景并保存首次图片
-
-**选择对象：最终 MO9 场视图。** 展开 **N → QCBlender → Display Layers**，对不需出图的旧场关闭视口和渲染可见性；需要保留的原子视图可保持可见。转到需要的观察方向，点击 **创建视图与检查工具 → 创建取景相机**，小键盘 `0` 查看取景，确认两符号未被裁切。按 0.4 在 Render/Output Properties 和 Color Management 设置实际渲染器、分辨率、采样和色彩管理，并按需 **Add → Light**。
-
-点 **Render → Render Image（F12）**，等待完成；在 Render Result 中 **Image → Save As** 保存 `$sopBatch/images/example.png`（在文件选择器中使用展开后的实际绝对路径）。记录渲染器、分辨率、采样、色彩管理、灯光和相机，以及场的单位与等值。
-
-**完成判断：**PNG 可打开，场的两符号、原子与图例按本次选择可见。空图或仅见旧场时先检查相机和 Display Layers，不改变科学数据来补图。首次图片与参数记录一起保留。
-
-### A06 导出当前视图参数摘要
-
-**选择对象：A04/A05 最终 MO9 场视图。** 点击 **N → QCBlender → 工程与诊断 → 导出数据与参数摘要**，在 **Data** 选 **当前视图参数摘要**，**Output directory** 选择本批 `exports/` 的绝对路径，确认并等待完成消息。按消息找到新建的唯一结果子目录，打开其中 `view-summary.md` 与 `metadata.json`。
-
-核对来源摘要、UHF/STO-3G、当前构型、Alpha/源 MO9、bohr^-3/2、0.2 Å 网格、有效域、实时等值 0.045 和可核验材质输入。浮点数可能记录为接近 0.045 的二进制表示；核对精度及单位。检查 coverage/status/reasons：无法核实的内部组、链接输入或自定义图保留 `partial/unverified`，逐项说明，不要求把状态改成完整。
-
-**完成判断：**两个文件同时存在且对应当前视图。再次导出应产生另一唯一目录，第一次不变；取消对话框应不产生新完整结果。摘要只记录参数；科学数组由后续工程配套数据保存。
-
-### A07 保存自包含工程并正常退出
-
-**选择对象：保持最终 MO9 场视图活动。** 点击 **N → QCBlender → 工程与诊断 → 保存自包含工程**，保存到本批 `project/example.blend`。确认同目录有 `example.qcdata/` 和科学 manifest/数组/必要体积文件。若手工加入关联公共节点资产，先执行 **File → External Data → Pack Linked Libraries（打包关联库）**，再自包含保存。
-
-**完成判断：**保存完成、文件名和配套目录匹配，工程没有未保存修改。摘要及 PNG 单独保留，不会自动被纳入 `.qcdata`。使用 **File → Quit** 正常退出，处理本次保存提示；在原 PowerShell 会话中 `Wait-Process -Id $sopProcess.Id -ErrorAction SilentlyContinue` 后确认此 PID 已退出，才移动工程或启动下一进程。
-
-### A08 将工程放到中文目录并核对摘要
-
-**选择对象：无，Blender 已退出。** 在文件管理器将 `project/example.blend` 和整个 `project/example.qcdata/` 一起复制到本批 `中文路径移动/`；保留原件，先验证移动位置的副本。不要只复制 `.blend`，也不要改 `.qcdata` 目录名。
-
-在同一 PowerShell 会话核对原件和中文副本的全部文件，失败时停止重开验收并记录文件路径：
-
-```powershell
-$sopOriginal = "$sopBatch/project"
-$sopMoved = "$sopBatch/中文路径移动"
-$sopFiles = @((Get-Item -LiteralPath "$sopOriginal/example.blend")) + @(Get-ChildItem -LiteralPath "$sopOriginal/example.qcdata" -Recurse -File -ErrorAction Stop)
-$sopHashRows = foreach ($sopFile in $sopFiles) {
-    $sopRelative = $sopFile.FullName.Substring($sopOriginal.Length + 1)
-    $sopDestination = Join-Path $sopMoved $sopRelative
-    $sopBefore = (Get-FileHash -LiteralPath $sopFile.FullName -Algorithm SHA256 -ErrorAction Stop).Hash
-    $sopAfter = (Get-FileHash -LiteralPath $sopDestination -Algorithm SHA256 -ErrorAction Stop).Hash
-    if ($sopBefore -ne $sopAfter) { throw "SHA-256 mismatch: $sopRelative" }
-    [pscustomobject]@{ Path = $sopRelative; SHA256 = $sopBefore; Result = 'Passed' }
-}
-$sopHashRows | Export-Csv -LiteralPath "$sopBatch/evidence/project-move-hashes.csv" -Encoding UTF8 -NoTypeInformation
-```
-
-**完成判断：**全部相对路径都能在副本读到，逐文件 SHA-256 一致；完整清单已保存。访问拒绝、文件缺失和摘要不同均记录为失败，不修改权限绕过。
-
-### A09 新进程重开、再导出并记录完成
-
-**选择对象：重开后的最终 MO9 场视图。** 在 A00 原 PowerShell 会话启动新的 Blender 进程，保留独立配置：
-
-```powershell
-$sopProjectArgument = '"{0}"' -f "$sopBatch/中文路径移动/example.blend"
-$sopProcess = Start-Process -FilePath $sopBlender -ArgumentList $sopProjectArgument -PassThru
-$sopProcess.Id
-```
-
-在新窗口核对标题/工程路径为中文副本，选择 MO9 场视图并解除旧图钉。按 A04 查看 Isovalue=0.045、两符号和材质；按 A02 查看源摘要，科学数据路径应指向当前副本的 `example.qcdata/`。按 A05 重新渲染，按 A06 再导出到同一 `exports/` 下的新唯一目录，对比科学来源、参数、网格、有效域和显示输入。重新生成时科学资格需重新检查，不能沿用前一个进程的资格记录。
-
-**完成判断：**新进程能够读回数据，显示和科学身份一致，再渲染及摘要导出成功。保留重开截图、前后摘要、移动摘要清单、PNG 和工程配套目录；正常退出新进程，确认 PID 退出。将下表复制到本批记录并逐项填写，失败或未执行不能写 Passed。
-
-| 步骤 | 本次结果 | 最少证据 |
-| --- | --- | --- |
-| A01 | Not Run | 安装候选摘要、运行库结果及安装界面 |
-| A02 | Not Run | 输入摘要、活动原子对象与来源面板 |
-| A03 | Not Run | 资格结果、MO9/网格/预算预览及新场 |
-| A04 | Not Run | 实际原值→0.045、两符号与材质 |
-| A05 | Not Run | example.png、渲染与相机/灯光参数 |
-| A06 | Not Run | 两次唯一导出目录、Markdown/JSON 核对及取消结果 |
-| A07 | Not Run | .blend + .qcdata、保存结果及原 PID 退出 |
-| A08 | Not Run | 中文副本及逐文件 SHA-256 清单 |
-| A09 | Not Run | 新 PID/工程路径、显示和来源核对、再渲染/再导出及退出 |
-
-最后填写本批操作者、日期、候选与输入摘要、证据目录和未通过项。独立使用者实际完成后在 Alpha 门禁记录短 SOP 结果；完整 v1 再继续执行前面的 C/X/N 路线及第 3 节签署条件。
-
-
-预检拒绝时保留真实诊断，不启动场计算。切换活动对象、重新绑定来源或修改输入 manifest/科学后端后，资格失效；需要重新点击生成。资格预算不足时，Check Scientific Source 对话框允许显式提高预算；这不会放宽结果大小上限。生成对话框中超过资源边界的请求显示拒绝原因，后台在缓存命中和实际计算前再次检查。
-
-科学 Dataset 的 **1 GiB** 上限包含保留源数组、新场值、有效域掩码及各 `.npy` 文件头。求值预算是另一个估算，计入全部驻留输入、输出与工作数组，不等于 Dataset 大小，也不是进程峰值保证。512³ 请求必须在大型数组分配和 VDB 写入前拒绝。
-
-摘要从当前节点修改器、材质输入与色标读取显示参数。缺少字段、链接输入或自定义节点图无法确认时，显示 `partial/unverified` 及原因，缺值不补默认值。摘要记录可核验参数，不代替源数组或独立科研判断。现有 IR/优化/IRC 等 CSV 导出继续使用对应 Data 选项。
-
-| 门禁 | 本次状态与证据 |
+| 要做的事 | 入口 |
 | --- | --- |
-| 候选包技术检查 | Passed；127 标准库、67 公开科学、123 完整本地科学及安装/冷读，见[本批验证](../acceptance/alpha-readiness-validation.md) |
-| Agent 界面确认 | Passed；本批实际生成、取消、Undo/Redo、等值、渲染、摘要、保存及中文移动重开；安装/原始导入使用 CLI，独立试装另记 |
-| 组件许可复核 | Not Run；记录 IOData/GBasis 声明差异的处理依据 |
-| 独立使用者短 SOP 试装 | Not Run；使用者填写候选摘要、步骤结果与签名 |
-| 维护者公开批准 | Not Run；批准后在 GitHub UI 将草稿公开为 prerelease |
-| 完整 v1 人工与科研验收 | Not Run；继续使用 C01–C13 / N01–N18 及独立签署 |
-
-以下截图绑定 `19e4cf0` / `0c2d9add…73a03` 本地 Alpha 候选，由 Agent Computer Use 实际输入；公开复现工程和初始活动对象由 CLI 准备。完整步骤、失败修补及科学/人工边界见[本批验证](../acceptance/alpha-readiness-validation.md)。
-
-![A03：Alpha 源 MO9 与资源预览](screenshot/alpha-readiness/ac6-MO9-parameters.png)
-
-![A04–A05：等值 0.045 与完成的渲染](screenshot/alpha-readiness/ac6-render.png)
-
-![A06：当前视图参数摘要导出](screenshot/alpha-readiness/ac6-summary-dialog.png)
-
-![A09：中文路径新进程重开](screenshot/alpha-readiness/ac6-chinese-cold.png)
+| 核对安装包、准备样本并安装 | [0.1–0.3](#0-准备安装与通用操作)，材料身份见[安装包与样本](MATERIALS.md) |
+| 第一次导入、查看来源和保存重开 | [XYZ 入门流程](#第一次操作xyz-小流程) |
+| 检查关联失效、共享对象及 Undo/Redo | [P1-A/P1-B](#当前构型关联与共享对象检查) |
+| 生成轨道并完成首次出图 | [A00–A09](#alpha-首次出图与短验收) |
+| 完整功能验证 | [C01–C13/X01](#1-c01c13-输入与物理量教程)、[N01–N18](#2-n01n18-节点与交互检查) |
+| 每例出图、保存、迁移和导出 | [0.4](#04-相机渲染保存与移动冷重开每例执行)、[0.5](#05-显式数据导出) |
+| 填写结果及科研适用性 | [第 3 节](#3-结果记录与独立科研签署)，复制[记录模板](RECORD-TEMPLATE.md)到本次目录填写 |
 
 ## 0. 准备、安装与通用操作
 
 ### 0.1 取得材料并建立本次目录
 
-1. 取得实际扩展安装 ZIP，核对提供者记录的版本、文件大小和 SHA-256；源码仓库 ZIP 不能直接安装为扩展。使用公开包时记录下载地址；维护者提供候选时记录候选身份。
-2. 从仓库 `tests/data/distribution/` 或已批准的 GitHub Release 取得 **qcblender-public-tutorial-samples-v2.zip**，按[样本交付索引](../acceptance/tutorial-sample-delivery.json)核对实际SHA-256及字节数。解压至本次inputs/，保留P01/P03/P04/P05/P06、LICENSE、NOTICE、tutorial-samples.json；署名QCBlender contributors，许可CC BY 4.0。按[SOURCES](SOURCES.md#公开教程样本与独立获取2026-09-30)取得P02，未知许可日志不加入公开包。缺文件时只将相关案例记Not Run。
+1. 取得扩展 ZIP、v2 教程样本包及身份清单，按[安装包与样本](MATERIALS.md)核对大小与 SHA-256。把实际版本、文件路径、摘要、操作者和日期填入记录模板。不同安装包即使版本号相同也分别记录。
+2. 新建自己的验证目录，保存本次输入、截图、导出和工程。下面使用仓库所在位置；在其他电脑上可修改路径为实际材料与保存位置。
+3. 在 PowerShell 中执行以下准备命令。后续命令沿用同一个窗口中的变量。
 
-   ```powershell
-   Get-FileHash -LiteralPath '实际文件的完整路径' -Algorithm SHA256
-   ```
+```powershell
+$sopRepository = 'D:\workspace\QCBlender'
+$sopCandidateRoot = Join-Path $sopRepository `
+    'outputs\candidates\current\alpha-ci-0.1.0-f8b1115'
+$sopCandidate = Join-Path $sopCandidateRoot 'qcblender-0.1.0.zip'
+$sopSamples = Join-Path $sopRepository `
+    'tests\data\distribution\qcblender-public-tutorial-samples-v2.zip'
 
-   与清单不符时停止该文件相关案例，重新取得原件；不编辑原文件以迎合预期。本文后续的 `cases/CXX/` 均指本次目录，无需源码仓库。开发者在仓库内执行时可将本批放在被忽略的 `outputs/runs/<批次>/`。
+Get-Item -LiteralPath $sopCandidate, $sopSamples |
+    Select-Object FullName, Length
+Get-FileHash -LiteralPath $sopCandidate, $sopSamples -Algorithm SHA256
+```
 
-填写批次身份，不沿用历史候选的通过状态：
+核对成功后创建批次并解压样本；摘要不符时先重新取得正确文件。
 
-| 字段 | 本次填写 |
-| --- | --- |
-| 批次目录、操作者和日期 | 待填写 |
-| Windows 与 Blender 精确版本 | 待填写 |
-| 扩展 ZIP 下载/提供路径、字节数、SHA-256 | 待填写 |
-| 扩展版本、源码身份或提供者资格报告 | 待填写 |
-| 样本清单版本/摘要、所用文件 SHA-256 | 待填写 |
-| 科学运行库检查结果 | Not Run；证据见 0.2 步骤2 |
+```powershell
+$sopBatchName = Get-Date -Format 'yyyy-MM-dd-HHmmss'
+$sopBatch = Join-Path $sopRepository `
+    "outputs\projects\human-acceptance\$sopBatchName"
+if (Test-Path -LiteralPath $sopBatch) { throw '请使用未占用的批次目录' }
+$sopFolders = @(
+    'inputs', 'cases', 'screenshots', 'records', 'exports', 'moved', 'unpacked',
+    'profile\config', 'profile\extensions', 'profile\datafiles', 'profile\cache'
+)
+foreach ($sopFolder in $sopFolders) {
+    New-Item -ItemType Directory -Path (Join-Path $sopBatch $sopFolder) |
+        Out-Null
+}
+Expand-Archive -LiteralPath $sopSamples `
+    -DestinationPath (Join-Path $sopBatch 'inputs')
+$sopBatch
+```
+
+保持 P01/P03/P04/P05/P06 目录结构和许可证文件；P04 的 CSV 通过相对路径引用 FCHK 和分析表，不要单独搬走其中一个文件。本文 `inputs/`、`cases/` 等路径均相对本次批次目录。
 
 ### 0.1.1 单独取得 P02（C02/C06 前置条件）
 
-在 **本批 inputs/ 目录**打开 PowerShell。P02 使用 Gaussian 16 A.03 / NBO 3.1 的真实水优化/频率日志；下载定位与本地读取说明不授予再分发权限。先自行确认原站使用条件；不具备使用权或下载失败时，C02/C06 保持 Not Run 并记录原因，不需要安装计算软件补造结果。
+已有本机原件时，在上述 PowerShell 窗口执行：
 
 ```powershell
-New-Item -ItemType Directory -Force P02 | Out-Null
-Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/cclib/cclib-data/a16cc80ea29e8baec60abd0df346ce6862f52531/Gaussian/Gaussian16/water_neutral_nbo_opt_freq.out' -OutFile P02/water_neutral_nbo_opt_freq.out
-Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.out -Algorithm SHA256
+$sopP02Source = Join-Path $sopRepository `
+    'tests\data\local\log-examples\water_neutral_nbo_opt_freq.out'
+$sopP02Directory = Join-Path $sopBatch 'inputs\P02'
+New-Item -ItemType Directory -Path $sopP02Directory | Out-Null
+Copy-Item -LiteralPath $sopP02Source -Destination $sopP02Directory
+$sopP02Out = Join-Path $sopP02Directory 'water_neutral_nbo_opt_freq.out'
+$sopP02Log = Join-Path $sopP02Directory 'water_neutral_nbo_opt_freq.log'
+Copy-Item -LiteralPath $sopP02Out -Destination $sopP02Log
+Get-FileHash -LiteralPath $sopP02Out, $sopP02Log -Algorithm SHA256
 ```
 
-SHA 必须为 `9493d24655fb261a2c945d292ad517567f3024996594a25f678199df74017519`，字节数 **92,872**。核对成功后创建另一扩展名入口的逐字节副本：
-
-```powershell
-Copy-Item -LiteralPath P02/water_neutral_nbo_opt_freq.out -Destination P02/water_neutral_nbo_opt_freq.log
-Get-FileHash -LiteralPath P02/water_neutral_nbo_opt_freq.log -Algorithm SHA256
-```
-
-两者摘要相同。历史原站取得与摘要核对Passed，仅证明提供者检查时可取得；每位使用者仍需核对实际下载。不把 P02 文件放进公开附件或归档分发。
+两份摘要应与[材料清单中的 P02](MATERIALS.md#p02-优化与频率日志)一致。没有本机原件时，先按该页的来源入口取得文件，再填写实际路径。缺少 P02 时将 C02、C06 和 P1-B 的优化部分记为 Not Run，其他案例可继续。
 
 ### 0.2 安装与编辑器定位
 
-1. 打开 Blender 5.1.1，在 **Edit → Preferences → Get Extensions → 菜单 → Install from Disk** 选择扩展 ZIP，确认安装并启用 QCBlender。
+先保存并正常关闭原有 Blender 工程。使用本批独立配置启动 Blender，之后的冷重开也从这个 PowerShell 窗口启动。
 
-   [用户截图待引用：0.2-01，活动对象、参数与结果同屏；参数变化保留前后画面]
+```powershell
+$sopBlender = 'C:\Program Files\Blender Foundation\Blender 5.1\blender.exe'
+$env:BLENDER_USER_RESOURCES = Join-Path $sopBatch 'profile'
+$env:BLENDER_USER_CONFIG = Join-Path $sopBatch 'profile\config'
+$env:BLENDER_USER_EXTENSIONS = Join-Path $sopBatch 'profile\extensions'
+$env:BLENDER_USER_DATAFILES = Join-Path $sopBatch 'profile\datafiles'
+$env:BLENDER_USER_CACHE = Join-Path $sopBatch 'profile\cache'
+& $sopBlender --offline-mode --disable-autoexec
+```
 
-2. 在 **Preferences → Add-ons** 展开 **QCBlender**，点击 **Check Scientific Runtime**。等待检查完成，记录真实结果；失败时保留错误，不继续场求值。
-
-   [用户截图待引用：0.2-02，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-3. 回到 **3D Viewport**，选择 **Object Mode（物体模式）**，按 `N` 打开侧栏，选择 **QCBlender** 页。本文简称为“N 侧栏”。
-
-   [用户截图待引用：0.2-03，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent操作示例：QCBlender N 侧栏与工作流入口](screenshot/00-qcblender-sidebar.jpg)
-
-4. **对象属性**指 **Properties 编辑器 → Object → QCBlender · 对象与量子化学**。多数子面板默认折叠，需点击标题展开。可选 QC 对象后点击 **N 侧栏 → 工作流 → 对象属性与显示参数** 打开该位置；此快捷按钮会固定当前对象，换对象后须再次点击按钮或解除图钉。若没有 Properties 编辑器，先将一个编辑器切换为 Properties。
-
-   [用户截图待引用：0.2-04，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-5. Properties 顶部若固定了旧对象，先解除图钉固定再选新对象。每次新建场、优化轨迹、剖面或分析层后，在 Outliner 或 **N 侧栏 → Display Layers** 重新选中步骤指定对象。多选时最后选中的是活动对象，不能只凭画面可见确定活动对象。
-
-   [用户截图待引用：0.2-05，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-6. N 侧栏负责导入、创建、显示层和工程操作；对象属性调整科学记录、几何、颜色、空间和局部选择；**Properties → Material → QCBlender · 节点材质** 调整材质。按钮灰显时读取界面原因，检查活动对象、物体模式和来源是否齐全。观察材质颜色时切换 3D Viewport 为 **Material Preview**；Solid 默认显示灰色，不能据此判断材质丢失。
-
-   [用户截图待引用：0.2-06，活动对象、参数与结果同屏；参数变化保留前后画面]
-
+1. 打开 **Edit → Preferences → Get Extensions → 菜单 → Install from Disk**，选择本次扩展 ZIP，安装并启用 QCBlender。
+2. 在 **Preferences → Add-ons → QCBlender** 点击 **Check Scientific Runtime**，等待结果。也可从 **N 侧栏 → QCBlender → 工程与诊断 → 检查科学运行环境** 进入。记录版本与检查截图；失败时保留完整错误，相关场生成步骤暂不继续。
+3. 回到 **3D Viewport**，切换 **Object Mode**，按 `N` 打开 **QCBlender** 页。本文简称“N 侧栏”。
+4. **对象属性**指 **Properties → Object → QCBlender · 对象与量子化学**。子面板默认折叠时先展开。可选中 QC 对象，再点 **N 侧栏 → 工作流 → 对象属性与显示参数**；该快捷入口会固定对象，换对象后再次点击或解除 Properties 顶部图钉。
+5. 每次创建场、轨迹或分析记录后，在 Outliner 或 **Display Layers** 选中新对象。多选时，最后选中的是活动对象。按钮灰显时检查活动对象、Object Mode 及界面给出的原因。
+6. 查看材质时切换 **Material Preview**；材质参数位于 **Properties → Material → QCBlender · 节点材质**。Solid 模式下的灰色显示不用于判断材质效果。
 
 ### 0.3 导入、数值与参数核对
 
-1. 每个独立案例使用新工程；需要承接前例的 C08、C11、C13，分别从 C04、C10、C12 已保存工程继续，并另存新文件。
+1. 独立案例用 **File → New → General** 新建工程；在 Outliner 选中新工程自带的 **Cube**，按 **Delete** 删除，避免遮挡分子和渲染。C08 从 C04、C11 从 C10、C13 从 C12 的已保存工程继续；先另存本例工程。
+2. 普通输入使用 **N 侧栏 → 工作流 → 导入 Gaussian / Cube / XYZ**。Log/Out 导入后等待 **Choose Gaussian Calculation**，在 **Calculation** 选择指定计算段，核对 route、终止状态、原文行范围、能量及 Explicit geometry。段号从 1 开始；无显式几何的段不借用其他段构型。取消预览后应没有该次新数据对象。
+3. 选中新对象，打开 **数据集与数值摘要 → 查看完整来源**，或对象属性中的 **来源详情**；必要时点 **刷新来源**。核对源摘要、生成程序、方法/基组、电荷/多重度、选中段、原子顺序及单位。能量和振动模式还需在 **科学记录与振动模式** 中核对。
+4. 原子源编号从 1 起，显示坐标为 Å，1 Blender 单位 = 1 Å。常用单位：能量 Eh、电荷 e、偶极 Debye、频率 cm^-1、IR 强度 km/mol、MO 振幅 bohr^-3/2、密度 electron/bohr^3、ESP hartree/e。外部分析按源输出的实际单位填写。
+5. 每次改变参数，记录“原值 → 新值”、前后画面和预期。检查当前步骤/帧、构型及标注是否一致；MO 正负代表相位，振动振幅与速度是显示设置，XYZ 帧序不自动代表物理时间。
+6. 核对数值时同时查看原始记录及界面/CSV；显示位数不足时以导出数据比较。教程的比较容差见第 1 节，仅适用于指定量和参考。网格、等值和配色是展示参数，科研定量用途另记收敛依据。
 
-   [用户截图待引用：0.3-01，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-2. 在 **N 侧栏 → 工作流 → 导入 Gaussian / Cube / XYZ** 选择指定 `.fchk/.fch`、`.log/.out`、`.cube/.cub` 或标准 `.xyz`。Log/Out 会异步打开 **Choose Gaussian Calculation**；在 **Calculation** 中选指定计算段，核对 route、终止状态、原文行范围、能量和 Explicit geometry，再确认。计算段从 1 开始；无显式几何时不自动借用其他段构型。取消预览后应无该次新数据对象。
-
-   [用户截图待引用：0.3-02，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-3. 等待任务结束后选择新原子/场视图。在 **N 侧栏 → 数据集与数值摘要 → 查看完整来源** 或对象属性 **来源详情** 核对完整摘要、计算段、原子顺序、量名/单位；必要时点击 **刷新来源**。不是所有信息都显示在侧栏，能量和模式见对象属性。
-
-   [用户截图待引用：0.3-03，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-4. 原子源编号从 1 起，坐标为 Å，1 Blender 单位 = 1 Å。能量为 Hartree/Eh，电荷为 e，偶极为 Debye，振动频率为 cm^-1，IR 强度为 km/mol。MO 振幅为 bohr^-3/2，密度为 electron/bohr^3，ESP 为 hartree/e。外部分析按其实际输出单位核对，不能自行补单位或换算依据。
-
-   [用户截图待引用：0.3-04，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-5. 每个参数变化先记录原值，再改为本例指定值，观察实际显示并记录新值；完成对比后恢复用于最终成图的值。阈值、色标和网格使用清单中的展示参数及实际字段单位；定量结论另需收敛检查。
-
-   [用户截图待引用：0.3-05，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-6. `.chk` 须由持有 Gaussian 的提供者事先用 `formchk` 导出 FCHK。本教程接收已转换的样本，运行教程无需安装 Gaussian、Multiwfn、PySCF 或开发环境。
-
-   [用户截图待引用：0.3-06，活动对象、参数与结果同屏；参数变化保留前后画面]
-
+读取现成样本无需安装计算软件；自己的 Gaussian `.chk` 需由提供者用 `formchk` 转成 FCHK 后再导入。
 
 ### 0.4 相机、渲染、保存与移动冷重开（每例执行）
 
-1. 选中具有实际空间几何的QC视图；C06 NBO、C11 Mayer、C12 ETS-NOCV与新剖面/成对场/ESP面积记录使用属性面板或CSV核对，取景时选关联分子、表面或空间路径。在3D Viewport转到观察方向，点 **N侧栏 → 创建视图与检查工具 → 创建取景相机**，用小键盘0查看取景，F9调整Margin per side（默认5%）。关闭不需渲染的显示层，保持修改器视口/渲染开关一致。
+1. 选中需要成图的分子、表面或路径，转到合适观察方向，点 **N 侧栏 → 创建视图与检查工具 → 创建取景相机**。按小键盘 `0` 查看取景，`F9` 可调整 **Margin per side**（默认 5%）。通过 Display Layers 关闭不需要的视口和渲染层。
+2. 在 **Render/Output Properties** 设置渲染器、分辨率、采样和色彩管理，按需 **Add → Light**。点 **Render → Render Image（F12）**，在结果窗口 **Image → Save As** 保存到 `cases/CXX/CXX-render.png`。科学记录、NBO/Mayer/ETS-NOCV 表和采样记录另留属性面板截图或 CSV。
+3. 记录样本摘要、方法/基组、量与单位、轨道/自旋、网格、等值和颜色范围；振动另记模式频率、振幅与播放速度。灯光、相机和渲染参数与图片一起保留。
+4. 手动加入公共节点资产后，先执行 **File → External Data → Pack Linked Libraries（打包关联库）**。仅用自动创建的本地节点组可直接继续。
+5. 点 **N 侧栏 → 工程与诊断 → 保存自包含工程**，保存为 `cases/CXX/CXX.blend`，确认同目录生成 `CXX.qcdata/`。PNG、原始输入、CSV 和参数摘要分别保留。
+6. 用 **File → Quit** 正常关闭 Blender；确认进程退出后，用 0.2 的命令重新启动，从 **File → Open** 打开原位置工程。重新选对象，核对来源、步骤、单位、参数、材质和图例，重新渲染并再次导出适用的 CSV/摘要。
+7. 再次正常退出，将 `.blend` 与整个同名 `.qcdata/` 一起复制到本批 `moved/CXX 中文路径/`。打开副本前核对文件完整性，再启动新进程打开副本，重复上一步核对。科学数据路径应指向副本的 `.qcdata/`。
+8. 在重开的工程中保存最新状态，点 **工程与诊断 → 归档工程** 输出 ZIP。关闭 Blender，将 ZIP 解压到本批 `unpacked/CXX/`，启动新进程打开解包工程，再核对一次。
 
-   [用户截图待引用：0.4-01，活动对象、参数与结果同屏；参数变化保留前后画面]
+分别填写“保存、原地冷重开、移动冷重开、归档解包冷重开”的结果。冷重开需要实际退出并启动新进程。异常时保留原件和错误信息；恢复操作见 N18。
 
+复制后可用下面的 PowerShell 核对全部文件摘要。把 `CXX` 改成实际案例编号；在打开或保存副本之前执行。
 
-2. 在 Blender 原生 **Render/Output Properties** 设置渲染器、分辨率和色彩管理，按需通过 **Add → Light** 添加灯光。使用 **Render → Render Image**（F12）；在 Render Result 中 **Image → Save As** 保存 `cases/CXX/CXX.png`。记录渲染器、分辨率、色彩管理、光源及参数；需要面板证据时另保存屏幕截图。渲染无法显示来源记录或列表时，`CXX.png` 使用面板总览截图，并另存 `CXX-render.png`。
-
-   [用户截图待引用：0.4-02，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-
-   历史剖面相机与渲染截图见文末历史证据定位，仅对应旧二维实现。当前剖面使用采样记录及0.5的数据导出；分子/场/切片渲染仍按本节执行。
-
-3. 每张图旁记录样本摘要、方法/基组、场量/单位、MO 编号/自旋、网格和等值、颜色范围；振动另记模式频率、显示振幅和播放速度。PNG 是可见结果，数值依据仍为源文件和保存的科学数组。
-
-   [用户截图待引用：0.4-03，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-4. 若本例在几何节点编辑器中通过“添加”菜单加入公共资产，先点 **文件 → 外部数据 → 打包关联库**，再保存。该步骤把关联的节点库嵌入 `.blend`；普通“打包资源”是另一项菜单，不能据此判断节点库已打包。仅使用插件自动创建的本地节点组时可直接保存。
-
-   [用户截图待引用：0.4-04a，打包关联库菜单；移动后新进程的节点和结果]
-
-   ![历史示例（原参数/原候选）：Agent原生菜单操作：文件、外部数据、打包关联库；随后MCP核对内嵌库摘要](screenshot/N18-pack-linked-libraries-menu-GUI.jpg)
-
-   在 **N 侧栏 → 工程与诊断 → 保存自包含工程** 选择 `cases/CXX/CXX.blend`，确认同名 `CXX.qcdata/` 已生成。工程包含节点、材质、选择、动画设置和科学数组；原始外部文件、导出的 CSV 另行保留。
-
-   [用户截图待引用：0.4-04，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent操作示例：保存自包含工程的文件对话框](screenshot/00-04-portable-save.jpg)
-
-5. 正常关闭本次Blender，再启动新进程打开CXX.blend，重选本例对象并核对来源、参数、数值/单位和图例，重新渲染。有导出数据的案例重新执行0.5，比对CSV逐值、单位、掩码、筛选条件及来源；新的唯一目录不会覆盖原结果。
-
-   [用户截图待引用：0.4-05，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-
-6. 将 `CXX.blend` 和 `CXX.qcdata/` 一起复制到本批 `moved/CXX/`。关闭本次进程，在另一个新进程打开移动副本，再核对与渲染。记录原进程退出、新进程身份及数组摘要核对方式；未实际关闭重开时保存检查仍为 Not Run。
-
-   [用户截图待引用：0.4-06，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-7. 再次保存最新修改后点击 **工程与诊断 → 归档工程**，选择输出 ZIP。解压到新的目录，保持整体结构，再从解压位置打开工程核对。
-
-   [用户截图待引用：0.4-07，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-8. 恢复操作仅在独立副本进行：缺失 VDB 且科学数组完整时，选受影响视图，点击 **重建显示缓存**；数据目录确实移动时，点击 **重新定位数据**，选择同一数据集的 `manifest.json`，其内容摘要必须匹配。保存和新进程重开复核恢复结果。科学数组缺失时记录失败，表面不能重建波函数。
-
-   [用户截图待引用：0.4-08，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-
+```powershell
+$sopCase = 'CXX'
+$sopOriginal = Join-Path $sopBatch "cases\$sopCase"
+$sopMoved = Join-Path $sopBatch "moved\$sopCase 中文路径"
+$sopFiles = @((Get-Item -LiteralPath "$sopOriginal\$sopCase.blend")) +
+    @(Get-ChildItem -LiteralPath "$sopOriginal\$sopCase.qcdata" -Recurse -File -ErrorAction Stop)
+$sopHashRows = foreach ($sopFile in $sopFiles) {
+    $sopRelative = $sopFile.FullName.Substring($sopOriginal.Length + 1)
+    $sopDestination = Join-Path $sopMoved $sopRelative
+    $sopBefore = (Get-FileHash -LiteralPath $sopFile.FullName -Algorithm SHA256).Hash
+    $sopAfter = (Get-FileHash -LiteralPath $sopDestination -Algorithm SHA256 -ErrorAction Stop).Hash
+    if ($sopBefore -ne $sopAfter) { throw "SHA-256 不一致：$sopRelative" }
+    [pscustomobject]@{ Path = $sopRelative; SHA256 = $sopBefore; Result = 'Passed' }
+}
+$sopHashRows | Export-Csv -LiteralPath "$sopBatch\records\$sopCase-move-hashes.csv" `
+    -Encoding UTF8 -NoTypeInformation
+```
 
 ### 0.5 显式数据导出
 
-1. 在 **Edit → Preferences → Add-ons → QCBlender** 查看 **数据导出目录**。可设置跨工程绝对目录；留空时，已保存工程使用.blend父目录，未保存工程使用真实系统Documents（包括系统重定向）。返回本次工程，记录本次实际默认目录。
+1. 在 **Preferences → Add-ons → QCBlender → 数据导出目录** 检查默认位置。可填跨工程绝对目录；留空时，已保存工程使用 `.blend` 父目录，未保存工程使用系统 Documents。分别查看这两种情况下的导出对话框，记录实际默认路径。
+2. 选择含所需科学记录的对象，点 **N 侧栏 → 工程与诊断 → 导出数据与参数摘要**，在 **Data** 选择种类：
 
-   [用户截图待引用：0.5-01，Addon偏好、留空/绝对目录与本次默认目录；用户复做待填写]
+   | 数据 | 选择对象 | 导出后核对 |
+   | --- | --- | --- |
+   | 当前视图参数摘要 | 当前 QC 视图 | view-summary.md、metadata.json；来源、单位、实时参数、网格、有效域与材质 |
+   | IR | 含模式的原子对象 | 模式编号、频率、IR 强度 |
+   | optimization | 优化原子或轨迹 | 步骤、能量、收敛记录 |
+   | IRC | 路径根对象 | 步序、能量、源 FCHK 身份 |
+   | Mayer | IRC Mayer 表 | 步骤、源原子对、键级 |
+   | profile | 采样线记录 | 距离、场值、valid |
+   | paired | 成对场记录 | 原体素索引、双值、有效域 |
+   | ESP_AREA | ESP 面积表 | 原 bin、面积、percent |
 
-   ![Agent点击偏好中的数据导出目录（e317候选）](screenshot/display-xyz-export/D01-export-preference-e317.jpg)
+3. 将 **Output directory** 改为本批 `exports/` 的实际绝对路径。paired 与 ESP_AREA 分别导出 **Rows=All source records** 和 **Current filter**；筛选条件须先在 **External Result Browser** 中设置并应用。
+4. 确认并等待完成消息，打开新建的唯一结果目录。科学数据应有 UTF-8 CSV 和 `metadata.json`；摘要应有 `view-summary.md` 和 `metadata.json`。核对表中内容及来源、单位、筛选和缺值。摘要的 `partial/unverified` 项应列出原因，按实际可核验范围记录。
+5. 重复导出一次，应产生另一目录，原结果不变。重开对话框时应恢复偏好中的目录，单次覆盖不改变偏好。在确认前取消对话框，不应产生新完整结果。
+6. 对较大的 paired 全量导出，在任务仍运行时按 **Esc**。等待取消完成，确认原有结果保留、本次没有可误认成功的最终目录。若按键前已经完成，取消检查记 Not Run；若报错，保存完整错误和任务路径。清除筛选，再导出 All source records，确认完整记录仍可取得。
+7. 按 0.4 保存并重开后，重新选相同记录和筛选条件导出，逐值比较 CSV、原索引、单位与来源。导出目录单独保留。
 
-   ![偏好留空、未保存工程使用系统Documents（e317候选）](screenshot/display-xyz-export/D01-export-default-unsaved-e317.jpg)
+## 第一次操作：XYZ 小流程
 
-   ![Agent点击导出；偏好留空、已保存工程使用blend父目录（9d3ff61）](screenshot/display-xyz-export/D01-export-default-saved-9d3ff61.jpg)
+使用 `inputs/P06/water-dimer.xyz`，先完成一组不需要生成场的操作。
 
+1. 按 0.3 新建工程并移除默认 Cube，点 **N 侧栏 → 工作流 → 导入 Gaussian / Cube / XYZ**，选择该文件。
+2. 等待完成，在 Outliner 选中新原子对象。打开 **对象属性 → 来源详情**，核对源文件、摘要、原子顺序与坐标单位。
+3. 预期为 **6 个原子，O/H/H/O/H/H，坐标单位 Å**。切换 Material Preview 查看分子，保存活动对象、分子及来源信息截图。
+4. 点 **工程与诊断 → 保存自包含工程**，保存 `cases/X01-start/X01-start.blend`，确认旁边有 `X01-start.qcdata/`。
+5. 正常退出 Blender，按 0.2 重新启动并打开工程，核对分子、来源和显示。
 
-2. 选含对应科学记录的QC对象，打开 **3D Viewport → N侧栏 → QCBlender → 工程与诊断 → 导出数据与参数摘要**。在 **数据（Data）** 选择可用种类：IR为含模式的原子；optimization为含优化数组的原子/轨迹；IRC为路径根；Mayer为IRC Mayer表；profile为采样线记录；paired为成对场记录；ESP_AREA为ESP面积表。对话框只列当前Dataset可导出的种类。
+记录本次已做步骤；完整 XYZ 多帧、标注、独立副本和错误边界继续见 X01。
 
-   [用户截图待引用：0.5-02，唯一活动对象、入口与可用Data种类；用户复做待填写]
+## 当前构型关联与共享对象检查
 
-   ![Agent点击IR导出；三模式的频率和强度另经MCP逐值核对（9d3ff61）](screenshot/display-xyz-export/D01-IR-export-9d3ff61.jpg)
+两个检查各使用独立新工程。P04 的 `steps.csv` 与三份 FCHK 保持相对位置。每次保存按 0.4 完成原地、移动和归档解包冷重开。
 
+### P1-A 当前步骤关联、失效与重新关联
 
-3. 核对 **Output directory**；可为本次填写另一绝对目录。paired与ESP_AREA另选 **Rows=All source records / Current filter**，其他种类导出完整源记录。Current filter使用活动记录已保存的筛选条件；先在External Result Browser设置并应用，再打开导出。点击确定，等待实际完成消息。
+1. 点 **N 侧栏 → 工作流 → 导入 IRC 路径**，选择 `inputs/P04/steps.csv`。选中 IRC 根原子对象，确认 **对象属性 → IRC Path** 显示 **Step 1/3**。
+2. 使用普通导入入口单独导入 `inputs/P04/step-001.fchk`。可将两对象命名为 `IRC-current`、`FCHK-step1`。
+3. 先选 IRC，再按住 Shift 选 FCHK，使 **FCHK 最后选中并成为活动参考对象**。点 **对象属性 → 关联选中数据源**，保持容差 **0.001 Å**，不启用刚体对齐，确认。预期第 1 步与静态第 1 步关联成功。
+4. 仅选 IRC 根对象，点 **IRC Path → Next** 到第 2 步。打开 **来源详情 → Source record → Geometry association**，预期 `status: stale` 并提示重新关联。
+5. 按步骤 3 的顺序再次关联当前第 2 步和静态第 1 步。预期拒绝，最大原子偏差约 **0.0354167 Å**，超过容差。记录完整错误；拒绝前后步号、构型、对象位置与现有记录应保持一致。
+6. 仅选 IRC，点 **Previous** 回第 1 步，再看关联记录，预期仍为 `stale`。明确重新执行步骤 3，才恢复有效关联。
+7. 从刚关联成功的第 1 步开始，点 **Next**，确认第 2 步且关联失效；再用 **Edit → Undo**，预期恢复第 1 步及有效关联；用 **Edit → Redo**，预期恢复第 2 步及失效状态。
 
-   [用户截图待引用：0.5-03，Data、Rows、筛选条件与单次目录覆盖；用户复做待填写]
+保留成功、换步失效、不同步拒绝、返回原步仍失效、重新关联及 Undo/Redo 的截图和记录。保存为 `cases/P1-A/P1-A.blend`，重开时核对当前步骤、参考对象和关联状态。
 
-   ![Agent输入本次覆盖目录；偏好不改变（9d3ff61）](screenshot/display-xyz-export/D01-export-override-9d3ff61.jpg)
+### P1-B 共享 mesh 拒绝换步与单用户恢复
 
-   ![Agent选择Current filter；四个原始bin和源百分比另经MCP核对（9d3ff61）](screenshot/display-xyz-export/D01-ESP-filtered-export-9d3ff61.jpg)
+1. 在新工程导入 P04 IRC，选中根原子对象。鼠标放在 3D Viewport，按 **Alt+D**，再按 **Esc** 取消位移；副本已经创建，通常与原件重叠。
+2. 在 Outliner 区分原件与副本，只选副本，点 **IRC Path → Next**。预期拒绝，并提示先使 **Object Data** 单用户。分别选中两者检查步号、构型和标注均未变化。
+3. 保持只选副本，使用 **3D Viewport → Object → Relations → Make Single User → Object & Data**。
+4. 再点 **IRC Path → Next**。预期副本正常换步、原件保持原步。分别选择并核对，不能仅凭重叠画面判断。
+5. 用 **Edit → Undo / Redo** 检查副本换步恢复和重做，原件始终不受影响。再 Undo 换步和单用户操作，回到共享状态时换步仍应拒绝；Redo 单用户操作后可再次换步。
+6. 在另一工程导入 P02 并选择 **Job 1**，选原子对象，点 **N 侧栏 → 创建视图与检查工具 → 创建优化轨迹视图**。
+7. 选中新轨迹对象，在 **Optimization Trajectory** 中完整重复步骤 1–5：Alt+D、取消位移、Next 拒绝、Object & Data 单用户、Next 成功、Undo/Redo。
 
+IRC 与优化分别保存为 `cases/P1-B-IRC/`、`cases/P1-B-opt/` 下的同名自包含工程。两种入口分别记录结果；保留拒绝提示、单用户操作、独立换步及 Undo/Redo 的前后状态。
 
-4. 按完成消息找到新建的 **唯一结果子目录**，核对CSV和metadata.json同时存在。CSV为UTF-8；metadata保存来源摘要、Dataset身份、单位、源网格/有效性与筛选。IR核对模式/频率/强度，优化核对步骤/能量/收敛，IRC核对步骤/能量/源FCHK身份，Mayer核对步骤/源原子对，profile核对距离/值/valid，paired核对原体素索引/双值，ESP_AREA核对原bin与percent。缺字段或缺单位如实记录，不据图形填值。
+## Alpha 首次出图与短验收
 
-   [用户截图待引用：0.5-04，实际结果目录、CSV首尾/行数和metadata来源/单位；用户复做待填写]
+本流程用 P01 的 O₂ 波函数生成一张轨道图，导出参数并保存可移动工程。每一步均记录结果；完成 A01–A09 后可填写短验收记录。
 
-5. 重复一次导出，确认生成另一结果子目录，前一次内容不变。对较大的paired全量导出运行时按Escape取消，确认未留下可误认成功的最终结果；已有导出保留。取消收尾区分已发出请求与已确认 worker 退出；退出未确认时，错误信息保留 PID、任务目录及取消原因，导出暂存目录继续保留，供退出确认后清理。原任务错误与取消错误同时保留。正常取消确认退出后，核对暂存已清理及原有导出未变。筛选后取消范围再导出ALL，核对完整记录仍可获得。
+### A00 建立本次目录并启动干净配置
 
-   [用户截图待引用：0.5-05，重复导出目录、取消/失败消息与已有结果保全；用户复做待填写]
+先完成 0.1、0.2。本例输入为 `inputs/P01/o2-uhf.fchk`，UHF/STO-3G，8,880 字节，SHA-256 为 `ef562c4b210e7c380219282d7684370cca1f0e8349dffa1d4388af5831472e36`。在本批 `cases/A/` 保存图片、工程，在 `exports/` 保存摘要。
 
-   计算取消可另行复做：选择可求值FCHK原子对象，经 **N侧栏 → QCBlender → 工作流 → 生成量子化学场** 启动计算，在运行中按 **Esc**，核对没有新增结果。a3ed826批次使用ESP、0.05 Å、margin 3 Å、1024 MiB；MCP确认worker正在运行，Agent按Esc后退出、任务登记清空且场景不变。下图为计算取消，CSV运行中GUI取消仍为Not Run；CSV worker取消由原生脚本覆盖。
+### A01 安装扩展并检查运行库
 
-   ![Agent Computer Use取消正在运行的ESP计算；MCP核对进程与场景不变（a3ed826）](screenshot/reliability/06-compute-cancelled.png)
+按 0.2 安装本次 ZIP、启用扩展并点击 **Check Scientific Runtime**。预期检查成功且 N 侧栏可见；保存安装版本与结果截图。若已在本批完成，引用该次记录。
 
+### A02 从原始 P01 导入并核对来源
 
-   ![Agent再次打开对话框，恢复偏好目录；两次101行CSV逐值相同（9d3ff61）](screenshot/display-xyz-export/D01-export-reset-9d3ff61.jpg)
+按 0.3 新建工程并移除默认 Cube，点 **N 侧栏 → 工作流 → 导入 Gaussian / Cube / XYZ** 选择 P01。选中新原子对象，解除旧图钉，在 **数据集与数值摘要 → 查看完整来源** 核对 **UHF、STO-3G、两个 O 原子**及源摘要。
 
+### A03 自动预检并生成 Alpha 源 MO9
 
-6. 按0.4保存/移动/解包冷重开，选择相同Dataset及筛选重新导出，核对逐值、原索引、单位和来源。CSV目录单独保留，工程持久化仍是.blend+.qcdata；本轮技术证据与独立使用者签署分别记录。
+选 P01 原子对象，点 **工作流 → 生成量子化学场**。等待首次科学预检完成；通过后在 **Generate Quantum Field** 填写：
 
-   [用户截图待引用：0.5-06，冷重开后的对象、再次导出和逐值/来源核对；用户复做待填写]
+| 控件 | 值 |
+| --- | --- |
+| Quantity | Molecular orbital |
+| Spin | Alpha |
+| Orbital | Source number |
+| Orbital number (1-based) | 9 |
+| Grid spacing (angstrom) | 0.2 |
+| Grid margin (angstrom) | 3 |
+| Memory budget (MiB) | 512 |
+
+资源预览参考：**31 × 31 × 37、35,557 体素、Dataset 约 0.31 MiB、求值估算约 0.59 MiB**。有差异时先核对输入、量、自旋、编号和网格，记录实际值。无拒绝原因后点 **OK**；预期生成双符号场，来源为 Alpha 源 MO9。
+
+预检失败时保留诊断；取消对话框不应创建结果。内存预算和 Dataset 大小分别核对；Dataset 上限为 1 GiB，预算预览不代表进程峰值。重新绑定来源或新进程重开后，生成前需重新预检。
+
+### A04 修改等值并观察两符号
+
+选中新 MO9 场视图，在 **Properties → Modifiers → QC Isosurface** 将 **Isovalue** 从实际原值改为 **0.045 bohr^-3/2**，保持 **Link Thresholds** 和正负两符号开启。切换 Material Preview，记录表面形状与两种相位材质的前后变化。用 **Edit → Undo / Redo** 检查恢复，最终回到 0.045。
+
+### A05 创建取景并保存首次图片
+
+选最终 MO9 场视图，按 0.4 创建取景相机、设置灯光与渲染参数。确认两符号未被裁切，保存 `cases/A/A-render.png`，同时记录网格、等值、材质和渲染参数。
+
+### A06 导出当前视图参数摘要
+
+保持 MO9 活动，点 **工程与诊断 → 导出数据与参数摘要**，**Data=当前视图参数摘要**，**Output directory** 选择本批 `exports/` 的实际绝对路径。
+
+打开生成的 `view-summary.md` 与 `metadata.json`，核对 Alpha/源 MO9、bohr^-3/2、0.2 Å 网格、有效域、实时等值 0.045 和材质。按实际精度比较浮点数。`partial/unverified` 项按其原因记录。重复导出应创建另一目录；取消对话框应不生成新完整结果。
+
+### A07 保存自包含工程并正常退出
+
+按 0.4 保存为 `cases/A/A.blend`，确认 `A.qcdata/`，再正常关闭 Blender。PNG 与参数摘要分别保留。
+
+### A08 将工程放到中文目录并核对摘要
+
+将 `A.blend` 与整个 `A.qcdata/` 复制到 `moved/A 中文路径/`。按 0.4 的摘要命令核对，把 `$sopCase` 改为 `A`，保留逐文件比较记录。
+
+### A09 新进程重开、再导出并记录完成
+
+在原 PowerShell 窗口按 0.2 启动新 Blender，打开中文目录副本。选择 MO9，确认两符号、等值 0.045、材质和来源；数据应指向副本的 `A.qcdata/`。重新渲染并导出摘要，比较来源、参数、网格和有效域。将 A01–A09 结果填入记录模板；完整验收继续执行以下案例。
+
+## 完整 SOP 执行顺序与完成标准
+
+按 C01–C13、X01 逐例操作；C08 从 C04、C11 从 C10、C13 从 C12 的保存工程另存后继续，其余新建工程。每例完成数据核对及 0.4/0.5，再在独立副本执行适用的 N 项。
+
+| 范围 | 需要完成的检查 |
+| --- | --- |
+| C01–C05 | 波函数、能量、振动、Cube、ESP、标注与显示 |
+| C06–C09 | NBO、IGMH/IRI、ESP 分析、AIM 的来源、数值、单位与显示 |
+| C10–C13 | IRC/Mayer、ETS-NOCV 及 pair Cube；当前步和记录对应 |
+| X01 | XYZ 单帧、多帧、标注、独立副本与错误边界 |
+| N01–N18 | 节点、材质、筛选、交互、撤销、拒绝与恢复 |
+| 每例留存 | 图片/面板、参数、适用 CSV/摘要、`.blend + .qcdata/`、三种冷重开结果 |
+
+遇到问题，保存出错前工程、输入摘要、选择顺序、参数、完整错误与最短复现步骤。更换修复包后记录新摘要，并重做受影响步骤与保存重开检查。第 3 节汇总实际完成范围。
 
 ## 1. C01–C13 输入与物理量教程
 
-以下输入均相对本批 `inputs/`。清单的 `archive_path` 是样本包路径；`path` 是开发仓库路径，用户无需将文件放到 `tests/data/`。外部原件为 `P02/water_neutral_nbo_opt_freq.out/.log`。
+以下文件路径均相对本批 `inputs/`。[样本清单](tutorial-samples.json) 的 `archive_path` 对应包内路径，`path` 是仓库路径。每例先核对输入，完成编号步骤后执行 0.4/0.5，并在记录模板填写结果。
 
-所有待生成的MO/密度/ESP使用 **Grid spacing=0.2 Å、Grid margin=3 Å、Memory budget=512 MiB**，并记录实际网格。新建原子视图外层 **Quality=3**，新切片 **201点/轴**；这些是显示初值，不证明科学收敛。九个公共资产实现/签名/接口与自身默认值保留，QC Style Atoms and Bonds的Quality=2、QC Planar Slice的Resolution=101仍用于N02/N08公共资产独立测试。已有工程参数不自动修改，P03/P05原始Cube保留原网格。旧0.7 Å生成数组、插值值与截图仅作历史记录；0.2 Å预期须在当前候选重新核对。
+生成 MO、密度和 ESP 默认使用 **Grid spacing=0.2 Å、Grid margin=3 Å、Memory budget=512 MiB**，记录实际网格。新建原子视图外层 **Quality=3**，新切片 **201 点/轴**；公共资产在 N02/N08 分别检查自身的 Quality=2、Resolution=101。输入 Cube 保留其源网格。显示参数不代表科学收敛。
 
-| 案例 | 文件/源身份 | 本例展示设置 |
-| --- | --- | --- |
-| C01 | P01/o2-uhf.fchk、o2-uhf.fch；UHF/STO-3G O2 | Alpha MO9、Beta MO7（均按源编号选择）；MO阈值0.045 bohr^-3/2；自旋±0.002 electron/bohr^3 |
-| C02 | P02/water_neutral_nbo_opt_freq.out/.log；Job2频率、Job1优化 | 模式3；Amplitude 0.35 Å；Cycles per second 1 |
-| C03 | P03/igmh/sl2r.cub、P03/color.cube | sign_lambda2_rho，electron/bohr^3，倍率1；正负阈值0.02 |
-| C04 | P03/water-dimer.fchk | 密度等值0.004 electron/bohr^3；ESP色域−0.05/0/+0.05 hartree/e；Mulliken；偶极1.5 Å/D |
-| C05 | P03/water-dimer.fchk/.fch | 保留氢源编号2；氧编号1、4；距离1,4；角2,1,3 |
-| C06 | P02同C02 | Job2/block1；NBO1、E(2)记录1 |
-| C07 | P03参考FCHK；igmh/dg_inter.cub、sl2r.cub；iri/func2.cub、func1.cub | 片段1–3/4–6；IGMH0.005 electron/bohr^4；IRI1，a=1.1；颜色−0.04/0/+0.04 electron/bohr^3 |
-| C08 | P03参考/ESP场；esp/surfanalysis.pdb、esp/stdout.log | rho=0.001 electron/bohr^3；极值/分布中心kcal/mol；面积angstrom^2 |
-| C09 | P03参考；aim/CPs.pdb、paths.pdb、CPprop.txt | 坐标Å；选源点1 |
-| C10 | P04/steps.csv、step-001/002/003.fchk | 三步连续跨TS，按CSV顺序1→2→3 |
-| C11 | P04/mayer-pyscf.csv、step-001/002/003-mayer-pyscf.txt | Mayer原子对1,2，无量纲 |
-| C12 | P05/complex.fchk、nocv/ets-nocv.txt | kcal/mol，pair1，Spin Total |
-| C13 | C12表与P05/nocv/nocv-pair1.cub | pair1/Total；electron/bohr^3；两符号阈值0.003 |
-
-数值核对按源打印精度：坐标容差 **3e-6 Å**，FCHK 标量能量 **6e-7 Eh**，Log打印能量 **1e-9 Eh**，Cube公式核对 **3e-6**（原字段单位）。保存或改显示时数组应保留，不能用这些数值容差代替数组 SHA 一致性检查。
+本教程的源值比较容差：坐标 **3×10^-6 Å**、FCHK 标量能量 **6×10^-7 Eh**、Log 打印能量 **10^-9 Eh**、Cube 公式值 **3×10^-6**（源字段单位）。这些容差仅用于相应样本与比较对象；保存和改变显示时仍需保持科学数组摘要一致。
 
 ### C01 FCHK、开壳层轨道与密度
 
-**真实输入预期：** O2 2原子，源顺序 O1/O2，坐标 (0,0,−0.6)/(0,0,+0.6) Å；中性三重态16电子，Alpha9/Beta7，源能量 **−147.633453 Eh**，每通道10个MO。选 Alpha/Source number/9 与 Beta/Source number/7。本样本 Alpha8/9、Beta6/7 各自能量相同；当前自动 HOMO 预览分别选择 Alpha8、Beta6。固定本例轨道须使用 Source number；预览占据/轨道能量以源记录为准，不另填未知值。两FCHK入口 SHA 同为 `ef562c4b210e7c380219282d7684370cca1f0e8349dffa1d4388af5831472e36`。
+**输入与目标：** 使用 `P01/o2-uhf.fchk` 及其逐字节 `.fch` 别名，验证波函数导入、开壳层轨道选择、密度、体积雾与裁剪。两份文件的 SHA-256 均为 `ef562c4b210e7c380219282d7684370cca1f0e8349dffa1d4388af5831472e36`。
 
-1. 按 0.3 导入 P01 FCHK，再逐字节别名 `.fch`；选择各自原子对象，核对原子身份/顺序、坐标、方法、基组、电荷、多重度、电子数和电子总能量，两入口记录一致。
+| 核对项 | 本例预期 |
+| --- | --- |
+| 原子与坐标 | O1/O2，坐标 `(0,0,−0.6)` / `(0,0,+0.6) Å` |
+| 计算条件 | UHF/STO-3G，中性三重态，16 电子，Alpha 9 / Beta 7 |
+| 电子总能量 | `−147.633453 Eh` |
+| 轨道 | 每个自旋通道 10 个 MO；本例固定选择 Alpha 9、Beta 7 |
+| 场生成参数 | Grid spacing `0.2 Å`，Grid margin `3 Å`，Memory budget `512 MiB` |
 
-   [用户截图待引用：C01-01，活动对象、参数与结果同屏；参数变化保留前后画面]
+1. **导入并核对来源。** 按 0.3 分别导入 FCHK 和 FCH，选择各自原子对象，查看来源与科学记录。核对原子源编号、顺序、坐标、方法、基组、电荷、多重度、电子数和能量；两入口应一致。
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：FCHK 源记录与原子身份](screenshot/C01-01-source-fchk.jpg)
+2. **生成 Alpha 与 Beta 轨道。** 选 FCHK 原子对象，点击 **N 侧栏 → QCBlender → 工作流 → 生成量子化学场**。Quantity 选 **Molecular orbital**，Spin 选 **Alpha**，Orbital 选 **Source number**，Orbital number (1-based) 填 **9**。记录预览中的 Source MO、occupation、Energy，输入上表网格参数后确认。重新选择原子对象，以 **Beta / Source number / 7** 再生成一次。
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：逐字节 FCH 别名导入](screenshot/C01-01-fch-import.jpg)
+   本样本 Alpha 8/9、Beta 6/7 分别能量简并；选择自动 **HOMO** 时，预览分别为 Alpha 8、Beta 6。另试 HOMO/LUMO 时按预览源编号记录；固定本例成图仍使用 Alpha 9、Beta 7。
 
-2. 保持 FCHK 原子视图活动，点击 **工作流 → 生成量子化学场**；Quantity 选 **Molecular orbital**，分别选 **Alpha/Beta**，按清单选 **Orbital → Source number** 并填 **Orbital number (1-based)**，本例成图固定选 Alpha9/Beta7；另行选择 HOMO/LUMO 时，以预览返回的源编号为准，简并轨道不凭占据最高编号推断。记录预览 Source MO、occupation、Energy；输入清单网格 **Grid spacing (angstrom)**、**Grid margin (angstrom)** 与 **Memory budget (MiB)**，确认等待生成。
+3. **检查轨道正负相与显示参数。** 选 MO 场，在 **对象属性 → 科学记录与振动模式** 核对量、单位、自旋通道和源轨道编号。在 **几何表示** 将阈值设为 **0.045 bohr^-3/2**，逐一关闭、恢复正相和负相；取消 **Link Thresholds** 后单独改变负阈值，确认两相能独立调整，再恢复联动。依次切换实面、线框和点表示。到 **材质属性** 修改两相颜色和透明度，在 **材质预览** 中观察。正负相表示轨道相位。
 
-   [用户截图待引用：C01-02，活动对象、参数与结果同屏；参数变化保留前后画面]
+4. **生成四种密度。** 每次重新选择原始 FCHK 原子对象，依次生成 **Electron density、Alpha density、Beta density、Spin density**，均使用上表相同网格。选择各场，核对量名、`electron/bohr^3` 单位和网格；自旋密度阈值可设 **0.002**。数值核对采用同网格源数组：总密度 = Alpha + Beta，自旋密度 = Alpha − Beta。图形只能用于检查显示，不能代替这两项数值比较。
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：Alpha 按源编号选择 MO9](screenshot/C01-02-alpha-mo9-settings.jpg)
+5. **检查体积雾的可见性。** 选自旋场，点击 **创建视图与检查工具 → 创建体积雾**，再选新雾视图。逐项改变颜色、**Opacity Range、Opacity Scale、Display Threshold** 和材质不透明度曲线。将 **Opacity Scale** 设为 **0**，雾应消失；恢复 **40**，雾应重新出现。把不透明度渐变设为全黑，雾应消失；恢复黑白渐变，雾应出现。在 **Display Layers** 复制雾层，把副本 Opacity Scale 设为 0，原层保持 40，确认二者独立。
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：Beta 按源编号选择 MO7](screenshot/C01-02-beta-mo7-settings.jpg)
+6. **检查裁剪。** 选择场或原子视图，点击 **添加裁剪控件**，在 **空间观察** 分别开启、调整和关闭平面裁剪、盒裁剪。预期只改变可见区域；关闭后恢复完整显示，科学源数组不变。
 
-3. 选择新 MO 场，在 **对象属性 → 科学记录与振动模式** 查量名/单位与轨道身份；在 **几何表示** 改正相/负相显隐、阈值、**Link Thresholds**、独立负阈值及实体/线框/点表示。材质属性改变两相颜色、透明度，验证相位与物理电荷不混淆。
+7. **保存并重新打开。** 按 0.4 分别渲染轨道及四种密度，保存自包含工程，完成原位置、移动位置和归档解包后的冷重开。重新检查轨道身份、单位、阈值、雾层和裁剪状态。节点参数复核对应 N01/N02/N04/N05/N09/N10。
 
-   [用户截图待引用：C01-03，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：独立正负阈值](screenshot/C01-03-independent-thresholds.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：两相颜色与独立透明度](screenshot/C01-03-independent-opacity.jpg)
-
-4. 重新选择源原子对象，依次生成 **Electron density、Alpha density、Beta density、Spin density**，各次使用完全相同网格。分别选择生成场核对单位及自旋约定；数值核对总=Alpha+Beta、自旋=Alpha−Beta需源数组或数据核对证据，不能根据图形断言成立。
-
-   [用户截图待引用：C01-04，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：总电子密度](screenshot/C01-04-total-result.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：自旋密度阈值 0.002](screenshot/C01-04-spin-002.jpg)
-
-5. 选自旋场，点击 **创建视图与检查工具 → 创建体积雾**；选新雾视图，调整颜色、Opacity Range/Scale、Display Threshold 和材质曲线，记录全透明时实际结果。选场/原子视图点击 **添加裁剪控件**，在 **空间观察** 分别开关平面与盒裁剪，原始数组不变。
-
-   [用户截图待引用：C01-05，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：体积雾的颜色及透明度控件](screenshot/C01-05-fog-restored.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：盒裁剪开启；数组摘要另行核对](screenshot/C01-05-box-on-x0.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：Opacity Scale 为 0 时体积雾消失](screenshot/C01-05-fixed-scale0.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：Opacity Scale 恢复 40 后体积雾即时出现](screenshot/C01-05-fixed-scale40-restored.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：不透明度渐变全黑时体积雾消失](screenshot/C01-05-fixed-ramp-black.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：恢复黑白渐变后体积雾即时出现](screenshot/C01-05-fixed-ramp-white.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：复制层为 0，原层保持 40 且仍可见](screenshot/C01-05-fixed-copy-independent.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：修复候选新建雾层及其材质](screenshot/C01-05-fixed-new-material.jpg)
-
-6. 对应 N01/N02/N04/N05/N09/N10；按 0.4 完成渲染保存。固定证据：`C01.png`、`C01-mo.png`、`C01-total.png`、`C01-alpha.png`、`C01-beta.png`、`C01-spin.png`、`C01.blend` 和配套目录。逐个改参数时另留前后截图。
-
-   [用户截图待引用：C01-06，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：轨道渲染及图像另存](screenshot/C01-06-mo-saved.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：总电子密度原生渲染及保存](screenshot/C01-06-total-saved.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：Alpha 密度原生渲染及保存](screenshot/C01-06-alpha-saved.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：Beta 密度原生渲染及保存](screenshot/C01-06-beta-saved.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：自旋密度原生渲染及保存](screenshot/C01-06-spin-saved.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：密度展示另存自包含工程](screenshot/C01-06-density-portable-saved.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：自包含工程保存完成](screenshot/C01-06-portable-saved.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：新进程通过文件菜单冷重开](screenshot/C01-06-cold-restored.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：冷重开后重新渲染](screenshot/C01-06-cold-render.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：归档工程文件对话框](screenshot/C01-06-archive-dialog.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：工程归档完成](screenshot/C01-06-archive-saved.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：中文移动路径的文件打开对话框](screenshot/C01-06-moved-open-dialog.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：中文移动副本冷重开](screenshot/C01-06-moved-restored.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：移动副本重新渲染](screenshot/C01-06-moved-render.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：归档解包后的新进程冷重开](screenshot/C01-06-unpacked-restored.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：解包工程重新渲染](screenshot/C01-06-unpacked-render.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：修复复验另存自包含工程](screenshot/C01-06-fog-fixed-portable.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：新建雾层原生 F12 渲染](screenshot/C01-06-fog-fixed-render.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：修复工程原路径冷重开（92d498c候选）](screenshot/C01-06-fog-fixed-cold-restored.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：修复工程原路径冷重开后渲染（92d498c候选）](screenshot/C01-06-fog-fixed-cold-render.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：修复工程中文移动副本冷重开（92d498c候选）](screenshot/C01-06-fog-fixed-moved-restored.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：修复工程中文移动副本重新渲染（92d498c候选）](screenshot/C01-06-fog-fixed-moved-render.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：修复工程归档解包副本冷重开（92d498c候选）](screenshot/C01-06-fog-fixed-unpacked-restored.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：修复工程归档解包副本重新渲染（92d498c候选）](screenshot/C01-06-fog-fixed-unpacked-render.jpg)
-
-
-
-   密度检查点复核：保存于步骤6的 `C01-density.blend + .qcdata` 已在2eddb6a候选的新原生后台进程冷重开，175配套文件、9 Dataset/221数组、17对象引用及7体积源一致；四密度重新渲染并检查，总密度=Alpha+Beta、自旋密度=Alpha−Beta关系通过。详见[点击补验索引](../acceptance/tutorial-cu-validation.json)的 `C01_density_checkpoint_cold`，原候选/保存身份与历史批次冷读身份分别记录。安装候选deb9416的后续原位置、中文移动及归档解包冷重开均通过；175配套文件、全部引用及四密度关系一致，12次重渲染像素与上述四张原图一致。此补验通过串行原生命令行执行，索引 `C01_density_checkpoint_current_three_paths` 记录报告、摘要、保留工程和重复图清理收据。最终统一候选资格另行维护，原 GUI 与雾工程证据保持原批次。
+**需留存结果：** 来源与生成参数截图；两相、透明度、雾层及裁剪的操作前后截图；四密度数值比较记录；`C01.png`、`C01-mo.png`、`C01-total.png`、`C01-alpha.png`、`C01-beta.png`、`C01-spin.png`；`C01.blend + C01.qcdata/` 及冷重开记录。密度单独保存时使用 `C01-density.blend + C01-density.qcdata/`。
 
 ### C02 Log/Out 能量、振动与优化
 
-**真实输入预期：** Job2 是中性单重态水，3原子 O/H/H，RHF/STO-3G，10电子；目标电子能量 **−74.9659011806 Eh**（与Job1最终优化步一致）。模式1/2/3频率 **2169.7613/4141.3837/4392.5759 cm^-1**，IR **7.2483/44.2724/29.9428 km/mol**；先选模式3。Job1有4优化步，能量依次 **−74.9643287914、−74.9649723283、−74.9659003010、−74.9659011806 Eh**。两扩展名都要完成导入。导入回归的下一文件固定 **P03/water-dimer.fchk**，预期6原子及其SHA；无P02 FCHK。
+**输入与目标：** 使用 `P02/water_neutral_nbo_opt_freq.out` 及逐字节 `.log` 别名，验证计算段选择、能量记录、振动播放、优化步进和再次导入。两扩展名都需完成导入；后续 FCHK 导入使用 `P03/water-dimer.fchk`。
 
-1. 按 0.3 导入 P02 Log/Out，选清单含频率的计算段。选择导入的**原子对象**，展开 **对象属性 → 科学记录与振动模式**，选择能量记录，核对 Hartree 值、方法、kind/role 和原文位置。参考 SCF、目标方法、ZPE/热校正分别记录，不能把最后一条 SCF 当成唯一目标值。
+| 核对项 | 本例预期 |
+| --- | --- |
+| Job 2 | 中性单重态水，O/H/H，RHF/STO-3G，10 电子 |
+| 目标电子能量 | `−74.9659011806 Eh` |
+| 模式 1 / 2 / 3 频率 | `2169.7613 / 4141.3837 / 4392.5759 cm^-1` |
+| 模式 1 / 2 / 3 IR 强度 | `7.2483 / 44.2724 / 29.9428 km/mol` |
+| Job 1 优化能量，步 1 → 4 | `−74.9643287914`、`−74.9649723283`、`−74.9659003010`、`−74.9659011806 Eh` |
 
-   [用户截图待引用：C02-01，活动对象、参数与结果同屏；参数变化保留前后画面]
+1. **选择频率计算段。** 按 0.3 导入 Out，选择 **Job 2**。选中新原子对象，展开 **对象属性 → 科学记录与振动模式**，逐项查看能量记录。核对 Hartree 值、方法、kind/role 和原文位置；分别记录参考 SCF、目标方法能量、ZPE 与热校正。再导入 Log 别名的 Job 2，核对记录一致。
 
-   ![Agent点击导入真实Log Job2，能量与三模式保留；没有新谱图（e317候选）](screenshot/display-xyz-export/C02-job2-e317.jpg)
+2. **播放振动。** 选择 **模式 3**，核对源编号、频率和 IR 强度。在 **高级参数** 勾选 **Animate**，设 **Amplitude = 0.35 Å、Cycles per second = 1**，在 Timeline 播放，确认帧号实际推进后暂停。改变 Phase，切到模式 1、模式 2 重复观察；在 **几何表示 → Show Displacement Vectors** 开启位移箭头。平衡坐标应保持不变，振幅与播放速度属于展示参数。
 
+3. **导出 IR 数据。** 保持含振动模式的原子对象活动，按 0.5 选择 **Data = IR**，导出 CSV 和 metadata。逐行核对三组频率、强度和源编号。IR 数据通过科学记录和导出表检查。
 
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-01-log-alias-job2-preview](screenshot/C02-01-log-alias-job2-preview.jpg)
+4. **创建优化轨迹。** 再次点击 **导入 Gaussian / Cube / XYZ**，在新文件对话框中选同一日志的 **Job 1**。导入后选原子对象，点击 **创建视图与检查工具 → 创建优化轨迹视图**。选择新轨迹对象，展开 **对象属性 → Optimization Trajectory**，使用 **Previous、Next、Choose Step** 遍历 4 步，核对每步构型、能量、步号、终止状态、收敛值与阈值、原文行范围。能量缺失或歧义按界面状态记录；优化步不代表物理时间。
 
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-01-log-source](screenshot/C02-01-log-source.jpg)
+5. **验证独立轨迹。** 在 **Display Layers** 复制优化轨迹，把原层和副本切到不同步。分别选中两层核对步号与构型，原层不应随副本改变。轨迹应使用对应步骤的性质，不借用最终电荷、偶极或振动模式。按 C05 的随步标注练习检查距离与角度同步；共享 mesh 的拒绝与恢复按 P1-B 操作。
 
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-01-calculation-source](screenshot/C02-01-calculation-source.jpg)
+6. **验证动态数据的外部分析限制。** 选择含优化轨迹的对象，包括初始步，展开 **导入外部结果**，检查适用入口提示使用独立静态文件。外部分析需要的参考构型应从该步对应的独立 Log/FCHK/Cube 导入。
 
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-01-zpe-record](screenshot/C02-01-zpe-record.jpg)
+7. **检查再次导入的计算段。** 在当前工程中再次导入 Log，明确选择 **Job 2** 并完成。然后重新点击 **导入 Gaussian / Cube / XYZ** 打开新文件对话框，选 **P03/water-dimer.fchk**。预期计算段参数从 1 开始；导入成功后为 6 原子，SHA-256 为 `02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a`，来源属于该 FCHK。
 
-   ![历史示例（原参数/原候选）：Agent操作示例：选择真实 Log 文件](screenshot/C02-01-log-file.jpg)
+8. **导出、保存并重开。** 按 0.5 导出 **Data = optimization** 的 CSV 和 metadata；按 0.4 对实际振动与优化原子视图创建相机、渲染并保存工程，完成三种位置的冷重开。重开后复核能量、模式、轨迹步号与导出数据。节点参数复核对应 N12/N15/N16。
 
-   ![历史示例（原参数/原候选）：Agent操作示例：选择 Job 2 频率计算段](screenshot/C02-01-job2.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例：能量记录与振动模式](screenshot/C02-01-energy-modes.jpg)
-
-2. 同一面板选模式，核对源编号、频率和IR强度。在 **高级参数** 勾Animate，设Amplitude=0.35 Å、Cycles per second=1，到Timeline播放、观察实际帧推进并暂停；改变Phase和模式复做。在 **几何表示 → Show Displacement Vectors** 开箭头。平衡坐标不变，播放速度属于展示参数。保持含模式的原子对象活动，按0.5选数据（Data）=IR导出，逐行核对三频率/强度；新建视图不生成IR棒图。
-
-   [用户截图待引用：C02-02，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-02-mode3-playback](screenshot/C02-02-mode3-playback.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-02-mode3-phase-vectors](screenshot/C02-02-mode3-phase-vectors.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-02-mode1-playback](screenshot/C02-02-mode1-playback.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-02-mode2-playback](screenshot/C02-02-mode2-playback.jpg)
-
-
-
-
-   ![历史示例（原参数/原候选）：Agent操作示例：模式3与振动显示参数](screenshot/C02-02-mode3-parameters.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例：模式1播放画面](screenshot/C02-02-mode1-playing.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例：模式2播放画面](screenshot/C02-02-mode2-playing.jpg)
-
-3. 再点 **导入 Gaussian / Cube / XYZ** 打开新的文件对话框，选同一 Log 的优化计算段。选其原子对象，点 **创建视图与检查工具 → 创建优化轨迹视图**；必须选中新轨迹对象，再展开 **对象属性 → Optimization Trajectory**，逐次点击 **Previous、Next、Choose Step**。核对步号、构型、能量、终止状态、收敛值/阈值及原文行范围。缺失/歧义能量按界面状态记录；优化步不是物理时间。
-
-   [用户截图待引用：C02-03，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-03-job1-preview](screenshot/C02-03-job1-preview.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-04-optimization-step1](screenshot/C02-04-optimization-step1.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-04-optimization-step2](screenshot/C02-04-optimization-step2.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-04-optimization-step3](screenshot/C02-04-optimization-step3.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-04-optimization-step4](screenshot/C02-04-optimization-step4.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-04-choose-step-dialog](screenshot/C02-04-choose-step-dialog.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-04-ballstick-converged](screenshot/C02-04-ballstick-converged.jpg)
-
-4. 在 Display Layers 复制优化轨迹，分别切到不同步，核对互不影响；原视图仍保留其已核实性质，轨迹不借用最终电荷、偶极或模式。C05 的标注也在 P02/P04 可操作的步序上核对随步更新。
-
-   [用户截图待引用：C02-04，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-04-copy-step2](screenshot/C02-04-copy-step2.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-04-original-still-step1](screenshot/C02-04-original-still-step1.jpg)
-
-5. **导入状态回归：** 本工程再次导入 Log，明确选 **Job 2** 并完成；随后点击 **导入 Gaussian / Cube / XYZ** 打开**新文件对话框**导入 **P03/water-dimer.fchk**。核对新的计算段参数从 1 开始，导入成功、来源 SHA 为该 FCHK，未继承 Log 的摘要/job；不得以脚本执行 Operator 代替此项真实点击。
-
-   [用户截图待引用：C02-05，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![Agent在Log Job2之后打开新FCHK对话框，计算段重置（e317候选）](screenshot/display-xyz-export/C02-new-dialog-reset-e317.jpg)
-
-   ![Agent确认P03 FCHK导入成功，六原子与源摘要另经MCP核对（e317候选）](screenshot/display-xyz-export/C02-fchk-success-e317.jpg)
-
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-05-new-dialog-reset](screenshot/C02-05-new-dialog-reset.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-05-fchk-file-selected](screenshot/C02-05-fchk-file-selected.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-05-fchk-six-atoms](screenshot/C02-05-fchk-six-atoms.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例：Log Job 2 后打开新的 FCHK 文件对话框](screenshot/C02-05-fchk-new-dialog.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例：新 FCHK 导入结果](screenshot/C02-05-fchk-success.jpg)
-
-6. 按0.4对实际振动/优化原子视图创建相机并渲染，用面板截图记录模式/频率/强度与能量；按0.5分别导出IR和optimization的CSV+metadata。对应N12/N15/N16保存工程，保留C02-energy、vibration、optimization、reimport截图与数据文件；历史IR图仅见旧索引。世界/文字颜色属于展示设置，不改变源值。
-
-   [用户截图待引用：C02-06，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c，独立进程冷重开）：C02-06-cold-original-restored](screenshot/C02-06-cold-original-restored.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c，独立进程冷重开）：C02-06-cold-original-render](screenshot/C02-06-cold-original-render.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c，独立进程冷重开）：C02-06-cold-moved-restored](screenshot/C02-06-cold-moved-restored.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c，独立进程冷重开）：C02-06-cold-moved-render](screenshot/C02-06-cold-moved-render.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c，独立进程冷重开）：C02-06-cold-unpacked-restored](screenshot/C02-06-cold-unpacked-restored.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c，独立进程冷重开）：C02-06-cold-unpacked-render](screenshot/C02-06-cold-unpacked-render.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-06-camera](screenshot/C02-06-camera.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-06-white-background](screenshot/C02-06-white-background.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-06-black-label-material](screenshot/C02-06-black-label-material.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-06-render](screenshot/C02-06-render.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-06-png-save-dialog](screenshot/C02-06-png-save-dialog.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-06-portable-saved](screenshot/C02-06-portable-saved.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-06-archive-saved](screenshot/C02-06-archive-saved.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-04-portable-saved](screenshot/C02-04-portable-saved.jpg)
-
-
+**需留存结果：** `C02-energy`、`C02-vibration`、`C02-optimization`、`C02-reimport` 截图；振动播放与不同优化步记录；IR 和 optimization 的 CSV/metadata；`C02.png`、`C02.blend + C02.qcdata/` 及冷重开记录。
 
 ### C03 Cube/cub 物理量、网格与双符号
 
-**真实输入预期：** `P03/igmh/sl2r.cub` 与 `P03/color.cube` 字节一致，SHA为 `18a33c308c868c9f7747128f1a23c04fc69df37fd5b9681aa5dd35ef20997958`；6原子，**91×38×156**，origin **(−1.2877770840,−0.5291772105,−0.5291772105) Å**，三轴步长 **0.02874808114 Å**。值域 **−194.599..+0.295371 electron/bohr^3**，量 `sign_lambda2_rho`，倍率 **1**。声明时选 **Other externally computed scalar field**，Physical quantity填 `sign_lambda2_rho`，Unit填 `electron/bohr^3`，该场数值不做额外倍率换算。
+**输入与目标：** 使用 `P03/color.cube` 与逐字节别名 `P03/igmh/sl2r.cub` 验证导入、物理量声明和双符号显示；再用 `P03/igmh/dg_inter.cub` 验证独立几何场着色。
 
-1. 分别导入 P03 Cube 和逐字节 `.cub` 别名，选各自场对象核对原子、网格和数值数组；普通 Cube 初始物理量可能为 **unknown_scalar / unknown**。
+| 核对项 | 本例预期 |
+| --- | --- |
+| color.cube / sl2r.cub SHA-256 | `18a33c308c868c9f7747128f1a23c04fc69df37fd5b9681aa5dd35ef20997958` |
+| 原子和网格 | 6 原子，`91×38×156` |
+| 网格原点 | `(−1.2877770840,−0.5291772105,−0.5291772105) Å` |
+| 三轴步长 | `0.02874808114 Å` |
+| 着色场量与值域 | `sign_lambda2_rho`，`−194.599..+0.295371 electron/bohr^3`，倍率 1 |
+| dg_inter.cub SHA-256 | `daf5a7e79c7dcc67b244f3dc1d2d314795c9f318c931e4f25d36e72ea168a28e` |
+| 几何场量与值域 | `delta_g_inter`，`1.01735e-10..0.0185476 electron/bohr^4` |
 
-   [用户截图待引用：C03-01，活动对象、参数与结果同屏；参数变化保留前后画面]
+1. **导入两个扩展名。** 按 0.3 分别导入 color.cube、sl2r.cub，选择各自场对象，核对原子、网格原点、轴步长、形状和数值范围。普通 Cube 初始量名/单位可能为 **unknown_scalar / unknown**。
 
-   ![历史示例（原参数/原候选）：Agent 实际点击：C03-01-cube-selected](screenshot/C03-01-cube-selected.jpg)
+2. **声明物理量。** 选待声明场，点击 **对象属性主面板 → 声明 Cube 物理量与单位**。选择 **Other externally computed scalar field**，Physical quantity 填 **sign_lambda2_rho**，Unit 填 **electron/bohr^3**。对另一扩展名重复。声明应保留源数值，倍率为 1；来源无法确定的其他输入保留 unknown，并记录原始定义。
 
-   ![历史示例（原参数/原候选）：Agent 实际点击：C03-01-cube-imported](screenshot/C03-01-cube-imported.jpg)
+3. **调整双符号表面。** 在 **对象属性 → QCBlender · 对象与量子化学 → 几何表示** 将正值阈值设 **0.03 electron/bohr^3**；取消 **Link Thresholds**，把出现的负值阈值设 **0.01**。分别关闭、恢复 **显示正值** 和 **显示负值**，确认蓝色正值与红色负值可以单独显示。依次选择 **实面、线框、点**，最后恢复实面。
 
-   ![历史示例（原参数/原候选）：Agent 实际点击：C03-01-cub-selected](screenshot/C03-01-cub-selected.jpg)
+4. **检查两相透明度。** 到 **材质属性 → QCBlender · 节点材质**，将 **Positive Opacity / Negative Opacity** 分别设 **0.6 / 0.3**。切换 **材质预览** 观察两相透明度，再对别名场重复相同设置，核对结果一致。
 
-   ![历史示例（原参数/原候选）：Agent 实际点击：C03-01-cub-imported](screenshot/C03-01-cub-imported.jpg)
+5. **导入独立几何场。** 导入 dg_inter.cub，声明 **delta_g_inter / electron/bohr^4**，正值阈值设 **0.005**，只显示正值。核对其网格、原子身份与着色场相匹配。
 
-2. 选待声明场，点 **对象属性主面板 → 声明 Cube 物理量与单位**，只选择样本中数值实际已有的物理量/单位；声明不会换算数值。外部标量选择 **Other externally computed scalar field**，填真实量名与单位；来源无法确定时保留 unknown 并记录原始定义。
+6. **绑定与替换着色场。** 保持新几何场活动，打开 **颜色映射 → 选择／替换着色场**，选 color.cube。确认来源摘要、`sign_lambda2_rho / electron/bohr^3`，Color minimum/maximum 填 **−0.05 / 0.05**。预期表面位置由 delta_g_inter 决定，颜色来自 sign_lambda2_rho。在 **N 侧栏 → Display Layers** 隐藏独立着色表面的视口与渲染，保留内部体场，只显示一份原子。再次选择／替换着色场，改选 sl2r.cub 别名，范围和图例位置应保留。
 
-   [用户截图待引用：C03-02，活动对象、参数与结果同屏；参数变化保留前后画面]
+7. **核对输入定义并保存。** 本例使用上表物理量和倍率。若另验 NCIPLOT 样本，按其真实记录核对倍率与 RDG 过滤哨兵；普通 RDG 不解释为 IGMH 或 IRI。按 0.4 保存双符号与映射后的图像、自包含工程，并完成三种位置的冷重开。节点参数复核对应 N04–N07。
 
-   ![历史示例（原参数/原候选）：Agent 实际点击：C03-02-cub-declaration-parameters](screenshot/C03-02-cub-declaration-parameters.jpg)
-
-   ![历史示例（原参数/原候选）：Agent 实际点击：C03-02-cub-declared](screenshot/C03-02-cub-declared.jpg)
-
-   ![历史示例（原参数/原候选）：Agent MCP声明；Computer Use仅观察结果：C03-02-cube-declared-MCP](screenshot/C03-02-cube-declared-MCP.jpg)
-
-3. 选已声明场，在 **对象属性 → QCBlender · 对象与量子化学 → 几何表示** 将 **正值阈值** 设为 **0.03 electron/bohr^3**；取消 **Link Thresholds** 后，将出现的 **负值阈值** 设为 **0.01**。分别关闭/恢复 **显示正值** 与 **显示负值**，核对蓝色正值与红色负值单独显示；在 **样式** 依次选择 **实面、线框、点**，最后恢复实面。到 **材质属性 → QCBlender · 节点材质** 将 **Positive Opacity / Negative Opacity** 分别设为 **0.6 / 0.3**，通过 3D Viewport **材质预览** 观察，不能用实面着色判断透明度。核对别名入口一致。
-
-   独立几何场着色：随后导入 **P03/igmh/dg_inter.cub**，声明 `delta_g_inter / electron/bohr^4`，正值阈值设 **0.005**，仅显示正值。保持新几何场活动，在 **对象属性 → QCBlender · 对象与量子化学 → 颜色映射 → 选择／替换着色场** 选择原 `color.cube` 场，确认其源 SHA、`sign_lambda2_rho / electron/bohr^3`，Color minimum/maximum 填 **−0.05 / 0.05**。位置由几何场决定，颜色来自第二场；两个输入须同为 **91×38×156**，origin/steps 及原子身份匹配。在 **N 侧栏 → Display Layers** 隐藏独立着色表面的视口和渲染（眼睛/相机），保留内部体场；只显示一份原子。再次 **选择／替换着色场** 选 `sl2r.cub` 别名，范围和图例位置应保留。本例 Geometry SHA 为 `daf5a7e79c7dcc67b244f3dc1d2d314795c9f318c931e4f25d36e72ea168a28e`；几何原值范围 **1.01735e-10..0.0185476**。
-
-   [用户截图待引用：C03-03，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent 实际点击：C03-03-unlinked-003-001](screenshot/C03-03-unlinked-003-001.jpg)
-
-   ![历史示例（原参数/原候选）：Agent 实际点击：C03-03-both-phases](screenshot/C03-03-both-phases.jpg)
-
-   ![历史示例（原参数/原候选）：Agent 实际点击：C03-03-negative-only](screenshot/C03-03-negative-only.jpg)
-
-   ![历史示例（原参数/原候选）：Agent 实际点击：C03-03-positive-only](screenshot/C03-03-positive-only.jpg)
-
-   ![历史示例（原参数/原候选）：Agent 实际点击：C03-03-wire](screenshot/C03-03-wire.jpg)
-
-   ![历史示例（原参数/原候选）：Agent 实际点击：C03-03-points](screenshot/C03-03-points.jpg)
-
-   ![历史示例（原参数/原候选）：Agent 实际点击：C03-03-opacity-06-03](screenshot/C03-03-opacity-06-03.jpg)
-
-   ![历史示例（原参数/原候选）：Agent示例：MCP复验别名阈值/透明度；Computer Use观察](screenshot/C03-03-alias-controls-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：Agent示例：MCP导入及声明真实几何场，GUI隐藏重复层](screenshot/C03-03-geometry-unmapped-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：Agent示例：GUI活动几何场与颜色映射入口](screenshot/C03-03-mapping-entry.jpg)
-
-   ![历史示例（原参数/原候选）：Agent示例：GUI独立着色场来源与范围](screenshot/C03-03-mapping-dialog.jpg)
-
-   ![历史示例（原参数/原候选）：Agent示例：GUI关联着色结果；MCP取样核对](screenshot/C03-03-mapped-result.jpg)
-
-   ![历史示例（原参数/原候选）：Agent示例：GUI替换为cub别名](screenshot/C03-03-replace-dialog.jpg)
-
-   ![历史示例（原参数/原候选）：Agent示例：GUI替换结果，范围和取样属性保留](screenshot/C03-03-replaced-result.jpg)
-
-4. NCIPLOT 的倍率、RDG 过滤哨兵若出现在所选样本中按真实记录解释；普通 RDG 不能称 IGMH/IRI。没有该类样本时不套用旧 NCIPLOT 数值。
-
-   [用户截图待引用：C03-04，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-5. 对应 N04–N07，按 0.4 保存 `C03.png/.blend/.qcdata/`。
-
-   [用户截图待引用：C03-05，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent示例：GUI双符号阶段取景；Computer Use观察截图](screenshot/C03-05-phase-camera.jpg)
-
-   ![历史示例（原参数/原候选）：Agent示例：MCP双符号阶段渲染；Computer Use观察截图](screenshot/C03-05-phase-render-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：Agent示例：MCP双符号阶段保存自包含工程；Computer Use观察截图](screenshot/C03-05-phase-portable-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：Agent示例：MCP阶段工程冷重开数据核对；Computer Use观察截图](screenshot/C03-05-phase-cold-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：Agent示例：MCP阶段工程冷重开渲染，像素一致；Computer Use观察截图](screenshot/C03-05-phase-cold-render-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：Agent示例：MCP保存完整C03工程，3 Dataset/18数组/9引用；Computer Use观察截图](screenshot/C03-05-portable-mapping-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：Agent示例：MCP完整映射工程渲染；Computer Use观察截图](screenshot/C03-05-mapped-render-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：Agent示例：新可见进程原路径MCP冷重开及渲染；Computer Use观察截图](screenshot/C03-05-original-cold-render-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：Agent示例：新可见进程中文移动路径MCP冷重开及渲染；Computer Use观察截图](screenshot/C03-05-moved-cold-render-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：Agent示例：新可见进程归档解包MCP冷重开及渲染；Computer Use观察截图](screenshot/C03-05-unpacked-cold-render-MCP.jpg)
-
-
+**需留存结果：** 两扩展名导入与量/单位声明截图；双符号、阈值、样式和透明度前后截图；两个场的来源与映射参数；`C03.png`、`C03.blend + C03.qcdata/` 及冷重开记录。
 
 ### C04 ESP、电荷、偶极、切片、探针与剖面
 
-**真实输入预期：** 水二聚体6原子 **[O,H,H,O,H,H]**，中性单重态20电子，RHF/6-31G(d)，能量 **−152.013820 Eh**。源SHA为 `02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a`。Mulliken原子1/2/4为 **−0.928340742/+0.461442520/−0.920221916 e**；偶极源向量为约 **(0,0,1.67243888) e·bohr**，界面以Debye展示，核对保留的单位换算记录。切片中心 **(0,0,1.45) Å**；游标剖面起点 **(0,−2,1.45)**、终点 **(0,+2,1.45) Å**，Geometry、101点、距离0..4 Å。源关联使用逐字节别名 **P03/water-dimer.fch**，不能用P02单水Log与水二聚体关联。
+**输入与目标：** 使用 `P03/water-dimer.fchk`，验证密度表面按 ESP 着色、原子电荷、偶极、切片、取点、剖面和源关联。SHA-256 为 `02ffc555ac7bda6e263e8461481914db3a2576582f71b6b9ea97fa05df610d6a`；源关联使用逐字节别名 `P03/water-dimer.fch`。
 
-1. 导入P03 FCHK，选原子对象分别 **N侧栏 → QCBlender → 工作流 → 生成量子化学场**，Quantity选Electron density/Electrostatic potential，两次 **Grid spacing=0.2 Å、Grid margin=3 Å、Memory budget=512 MiB**。记录当前实际网格与有效掩码，核对密度electron/bohr^3、ESP hartree/e；核附近无效点不算物理零。历史0.7 Å截图保留原身份，当前0.2 Å生成参数/结果须另截图，不继承历史插值值。
+| 核对项 | 本例预期 |
+| --- | --- |
+| 构型与计算条件 | 6 原子 `[O,H,H,O,H,H]`，中性单重态，20 电子，RHF/6-31G(d) |
+| 电子能量 | `−152.013820 Eh` |
+| Mulliken 电荷，原子 1 / 2 / 4 | `−0.928340742 / +0.461442520 / −0.920221916 e` |
+| 源偶极向量 | 约 `(0,0,1.67243888) e·bohr`；界面以 Debye 显示 |
+| 两场生成参数 | Grid spacing `0.2 Å`，Grid margin `3 Å`，Memory budget `512 MiB` |
+| 密度等值面 / ESP 色域 | `0.004 electron/bohr^3` / `−0.05, 0, +0.05 hartree/e` |
 
-   [用户截图待引用：C04-01，当前0.2 Å生成参数/新网格、活动对象、参数与结果同屏；参数变化保留前后画面]
+1. **生成密度和 ESP。** 导入 FCHK，选原子对象，点击 **N 侧栏 → QCBlender → 工作流 → 生成量子化学场**，Quantity 选 **Electron density**，按表填网格参数并生成。重新选择原子对象，以同样参数生成 **Electrostatic potential**。核对实际网格、密度 `electron/bohr^3`、ESP `hartree/e` 和有效掩码；无效点不能作为物理零。
 
-   ![Agent输入0.2Å、margin3Å、512MiB生成密度（e317候选）](screenshot/display-xyz-export/C04-density-fine-dialog-e317.jpg)
+2. **将 ESP 映射到密度表面。** 选择密度表面，在 **几何表示** 设置等值 **0.004 electron/bohr^3**。打开 **对象属性 → 颜色映射 → 选择／替换着色场**，选择 ESP，核对所选场的来源摘要、计算段、量与单位后确认。预期密度决定几何、ESP 决定颜色。隐藏独立 ESP 表面的视口与渲染，保留其内部体场。
 
-   ![新密度网格39×31×49；等值0.004electron/bohr³，MCP核对2188个求值顶点（e317候选）](screenshot/display-xyz-export/C04-density-fine-surface-e317.jpg)
+3. **设置色域与图例。** 将 **Color Minimum、Color Center、Color Maximum** 分别设 **−0.05、0、+0.05**，三值须严格递增。在 **图例排版** 开启 **显示图例（Show Legend）**，依次调整长宽、字号、小数、方向、旋转和位置。可用长度 **2.6**、宽度 **0.25**、字号 **0.2**（本地布局单位）、小数 **3**、竖向排列、旋转 **(0,0,0.3) rad**、位置 **(3.5,0,0)**。点击 **零中心对称**，输入 **R=0.05**；再点 **读取有效范围**，记录读数后恢复本例色域。
 
+4. **检查色带与撤销。** 在 **材质属性 → QCBlender · 节点材质**，把 Color map 中间停靠点从 **0.5** 改为 **0.4**，将 **Reverse (0 or 1)** 从 **0** 改为 **1**。表面与图例颜色方向应同时反转。使用 **编辑 → 撤销 / 重做** 检查恢复，最终把中点恢复为 0.5、Reverse 恢复为 0。范围外使用端点颜色，无效采样显示洋红；根据本次实际掩码核对。
 
-   ![历史示例（原参数/原候选）：Agent点击：密度/ESP生成参数与密度结果；网格0.7 Å](screenshot/C04-01-density-generation-parameters.jpg)
+5. **检查多选映射入口。** 选择密度表面，点击 **创建视图与检查工具 → 创建当前版本视图**，使用新建、尚未绑定色场的标准密度层。临时显示独立 ESP 表面，取消其他选择，在 Outliner 先选 ESP，再按 Shift 选新密度表面，使密度表面活动，确认只选两个对象。在 **3D Viewport → Object → QCBlender → Map Selected Field to Active Surface** 打开映射，也可在视口按 F3 搜索同名操作。填色域 **−0.05 / +0.05** 并确认。已有着色的视图应拒绝重复添加；改用 **选择／替换着色场**，检查替换后范围与图例位置保留。恢复独立 ESP 表面隐藏。
 
-   ![历史示例（原参数/原候选）：Agent点击：密度/ESP生成参数与密度结果；网格0.7 Å](screenshot/C04-01-density-generated.jpg)
+6. **显示原子电荷与偶极。** 选原始原子对象，在 **科学记录与振动模式 → 设置原子电荷着色** 选择 **Mulliken**，核对表中电荷。已绑定网格着色时使用独立原子层。改变 **Charge Maximum** 至 **0.5 e**，源电荷应保持不变。点击 **创建视图与检查工具 → 创建偶极矢量**，核对源三分量及 Debye 换算记录；将 **Angstrom per Debye** 从 **0.5** 改为 **1.5**，预期只改箭头长度，方向与源向量不变。
 
-   ![历史示例（原参数/原候选）：Agent点击：密度/ESP生成参数与密度结果；网格0.7 Å](screenshot/C04-01-ESP-generation-parameters.jpg)
+7. **创建与调整切片。** 选 ESP 场，点击 **创建切片**，再选新切片。在 **空间观察** 设置中心 **(0,0,1.45) Å**，调整 Rotation、Width、Height，可用 **6×6 Å**。在 **几何表示** 检查 **显示采样数/轴（Resolution）**：新切片初值为 **201/轴**，即 **40,401** 个显示采样点；源场网格间距仍为 0.2 Å。已有工程按其保存值核对。
 
-   ![历史示例（原参数/原候选）：Agent操作示例：密度生成示例；ESP 须另行操作](screenshot/C04-01-density-dialog.jpg)
+8. **检查定平面与等值线。** 点击 **按源网格或三个原子定平面**，依次试 **Grid ij、Grid jk、Grid ki**；再选 **Three source atoms**，Associated atom view 选水二聚体原子对象，First/Second/Third source atom 填 **2/1/4**。这三个源原子非共线。使用视口工具栏 **QC Slice Gizmo** 平移、旋转并调整宽度，核对平面记录。在 **切片等值线** 开启等值线，ESP 切片选 **几何场**；先把阈值列表留空，检查自动 9 条，再填 **−0.02,0,0.02 hartree/e** 并点 **更新等值线**，等待曲线与标签更新。无效单元不应连线。
 
-2. 选**密度表面**，打开 **对象属性 → 颜色映射 → 选择／替换着色场**，选择 ESP；核对候选源 SHA、job、量名/单位再确认。密度决定几何，ESP 决定颜色。隐藏独立 ESP 表面的显示和渲染，不删除其内部体场。
+9. **读取游标处场值。** 选 ESP 场，在 **3D Viewport → N → View → 3D Cursor** 依次输入 **(0,0,1.45)**、**(0,0,0)**、**(20,20,20) Å**，每次点击 **创建视图与检查工具 → 读取游标处场值**。最后一点应在域外；核附近 `(0,0,0)` 是否无效取决于实际网格掩码。若它仍有效，记录实际读数；未找到真实无效点时，“无效域读数”记 Not Run。无效与域外均不能记作物理零。
 
-   [用户截图待引用：C04-02，活动对象、参数与结果同屏；参数变化保留前后画面]
+10. **检查交互探针。** 在 ESP 视图点击 **点击探针 · 几何场**，在表面点击预览，按 **Enter** 保存取点结果；再次取点后按 **Escape**，应恢复进入探针前的记录。选已绑定 ESP 的密度表面，使用 **点击探针 · 绑定色场**，点击后按 Enter 保存。分别核对采样位置、场身份、量/单位和数值。
 
-   ![历史示例（原参数/原候选）：MCP复用映射操作：密度0.004表面按ESP着色，21点数值核对](screenshot/C04-02-density-ESP-mapped-MCP.jpg)
+11. **采样线剖面。** 选 ESP 场或切片，把游标设为 **(0,−2,1.45) Å**，点击 **记录剖面起点**。保持同一活动视图与绑定，把游标设为 **(0,+2,1.45) Å**，点击 **采样线剖面数据**，Sample field 选 **Geometry**，Samples 设 **101**。绑定色场的视图可再选择 **Color** 采样。选择新建的 **QC line profile data** 记录，按 0.5 以 **Data = profile** 导出 CSV/metadata，核对 **101 行、距离 0..4 Å、端点坐标、量/单位、valid 和无效值空白**，以及 metadata 中的源网格和绑定。每次结果为数据快照，记录对象在视口中没有可见图形，通过记录面板与 CSV 查看。
 
-3. 填 **Color Minimum=−0.05、Color Center=0、Color Maximum=+0.05**，须严格递增；在 **图例排版** 开 **显示图例**（Show Legend），改 长宽/字号/小数/方向/旋转/位置。点击 **零中心对称** 输入 **R=0.05**，再 **读取有效范围** 对照一次读取结果；记录并恢复成图色域。示例排版填长度 **2.6**、宽度 **0.25**、字号 **0.2**（均为本地布局单位），小数位数 **3**，开启竖向排列，旋转 **(0,0,0.3)**（rad），位置 **(3.5,0,0)**。在 **材质属性 → QCBlender · 节点材质** 修改 Color map 中间停靠点 **0.5→0.4**，将 **Reverse (0 or 1)** 从 **0→1**，确认表面和图例颜色方向同时反转；成图前恢复中点 **0.5** 与 Reverse **0**。原生撤销用 **编辑 → 撤销**，重做用 **编辑 → 重做**。范围外用端点颜色，无效采样为洋红；历史0.7 Å批次1800点均有效；当前批次核对实际掩码与无效域颜色。
+12. **关联同构型数据源。** 导入 water-dimer.fch。在视口或 Outliner 先选新 FCH 原子对象，再 Shift 选原 FCHK 原子对象，使 FCHK 成为活动参考。点击 **Properties → Object → QCBlender · 对象与量子化学 → 关联选中数据源**。不勾 **Align rigid rotation/translation**，保持 **Maximum atom deviation (angstrom) = 0.001 Å**；数值框若显示 `0.00`，双击查看完整精度。确认后应提示 **Atom order and geometry matched; each source retains its own properties**。两源数据集、理论层次和能量记录分别保留。其他输入如需刚体配准须另行核对；线性或单中心构型不能自动得到唯一配准。
 
-   [用户截图待引用：C04-03，活动对象、参数与结果同屏；参数变化保留前后画面]
+13. **成图、保存并复导出。** 密度/ESP 表面与分子可从正面取景，将图例旋转设为 **X=90°、Y=0°、Z≈17.19°**，使量与单位朝向相机。自由切片从顶面取景，更新等值线后渲染；相机 Margin 可用切片 **0.15**、其他空间视图 **0.05**。按 0.4 保存并完成三种位置的冷重开，再次导出 CSV 比较。节点参数复核对应 N06–N11/N17。
 
-   ![历史示例（原参数/原候选）：Agent点击：零中心对称与读取有效范围；图例排版和色带操作见下列补验图](screenshot/C04-03-zero-centered-dialog.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：零中心对称与读取有效范围；图例排版和色带操作见下列补验图](screenshot/C04-03-valid-range.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：色域对称、读取范围和图例显隐；排版与色带见下列补验图](screenshot/C04-03-legend-visible-restored-range.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：图例默认排版](screenshot/C04-03-legend-default.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：长度2.6、宽度0.25、字号0.2、小数3](screenshot/C04-03-legend-dimensions.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：切换竖向排列](screenshot/C04-03-legend-vertical.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：图例Z旋转0.3 rad](screenshot/C04-03-legend-rotated.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：图例X位置3.5](screenshot/C04-03-legend-positioned.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：材质属性中的Color map与Reverse入口](screenshot/C04-03-material-before.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：Reverse=1，表面与图例方向同时反转](screenshot/C04-03-material-reversed.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：色带中间停靠点改为0.4](screenshot/C04-03-ramp-middle-changed.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：编辑菜单重做Reverse修改](screenshot/C04-03-material-menu-redo.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：恢复中点0.5与Reverse=0](screenshot/C04-03-material-restored.jpg)
-
-4. 旧多选映射使用新的未映射层独立复核：先选步骤2的密度表面，点 **N 侧栏 → 创建视图与检查工具 → 创建当前版本视图**，保留原层，新标准密度层尚未绑定色场。临时开启 ESP 表面的视口可见性，取消其他选择，在 Outliner 先选 ESP 表面，再 Shift 选新密度表面使其活动，确认恰好选中两个对象；在 **3D Viewport → Object（物体）→ QCBlender → Map Selected Field to Active Surface** 打开映射；也可将鼠标放在3D视口后 F3 搜索同名操作。填 **Color minimum=−0.05、Color maximum=+0.05**，确认后核对与步骤2相同的来源。已有着色的视图会拒绝重复添加，应使用选择／替换着色场。再用 **选择／替换着色场** 替换一次，范围和图例位置保留；恢复独立 ESP 表面隐藏。
-
-   [用户截图待引用：C04-04，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent观察：Object顶部QCBlender菜单中的旧映射入口](screenshot/C04-04-top-object-menu-entry.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击新建视图，MCP核对无着色绑定并设置两对象选择](screenshot/C04-04-new-view-before-F3.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：默认配置F3检索旧映射操作](screenshot/C04-04-F3-fresh-map-entry.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：新未映射视图映射参数−0.05至+0.05](screenshot/C04-04-F3-fresh-map-dialog.jpg)
-
-5. 重新选原始原子对象，在 **科学记录与振动模式 → 设置原子电荷着色** 选真实存在的布居方法，核对指定原子电荷 e；已绑定网格着色的原子层需换独立层。点 **创建视图与检查工具 → 创建偶极矢量**，核对源三分量/Debye，改变 **Angstrom per Debye** 只改显示长度。
-
-   [用户截图待引用：C04-05，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent GUI选择Mulliken电荷；此图为b709096批次](screenshot/C04-05-charge-mulliken-dialog.jpg)
-
-   ![历史示例（原参数/原候选）：Agent GUI将Charge Maximum设为0.5 e；保留原科学电荷](screenshot/C04-05-charge-range-half.jpg)
-
-   ![历史示例（原参数/原候选）：Agent GUI创建偶极；默认0.5 Å/Debye](screenshot/C04-05-dipole-created-default.jpg)
-
-   ![历史示例（原参数/原候选）：Agent GUI将偶极设为1.5 Å/Debye；方向及源向量不变](screenshot/C04-05-dipole-scale-1_5.jpg)
-
-6. 选 ESP 场，点 **创建切片**；选新切片，在 **空间观察** 改 Center/Rotation/Width/Height，在 **几何表示** 改 **显示采样数/轴**（Resolution），新切片初值201/轴；核对当前40,401采样点，已有工程按保存值。点 **按源网格或三个原子定平面**，选 **Grid ij / Grid jk / Grid ki / Three source atoms**，Associated atom view选水二聚体原子对象，First/Second/Third source atom分别填 **2/1/4**（三点非共线）；使用 3D Viewport 工具栏 **QC Slice Gizmo** 平移/旋转，核对平面记录。在对象属性 **切片等值线 → 开启等值线**，本例ESP切片选 **几何场**；先留 **阈值列表（空白：自动 9 条）** 为空，再填 **−0.02,0,0.02**（hartree/e）并点 **更新等值线**，等待异步曲线/标签更新，变更后无效单元不连线。
-
-   [用户截图待引用：C04-06，新切片201/轴与当前源网格、活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![Agent确认新切片201点/轴（e317候选）](screenshot/display-xyz-export/C04-slice201-dialog-e317.jpg)
-
-   ![独立密度示例：201²显示点；MCP设色域0/0.0005/0.001electron/bohr³，ESP主案例按正文另操作（e317候选）](screenshot/display-xyz-export/C04-slice201-e317.jpg)
-
-
-   ![历史示例（原参数/原候选）：Agent点击：创建新的ESP切片；候选e26d22a](screenshot/C04-06-fixed-new-slice-dialog.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：Grid ij，101×101采样](screenshot/C04-06-fixed-grid-ij.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：Grid jk；混合绝对与相对绑定路径已通过复验](screenshot/C04-06-fixed-grid-jk.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：Grid ki](screenshot/C04-06-fixed-grid-ki.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：首次三原子平面1/2/3；教程2/1/4另经MCP复验](screenshot/C04-06-fixed-three-atoms-dialog.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：三原子平面；5072个域外采样点以洋红显示](screenshot/C04-06-fixed-three-atoms.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：自由平面Center/Rotation/Width/Height；6×6 Å](screenshot/C04-06-fixed-free-parameters.jpg)
-
-   ![历史示例（原参数/原候选）：Agent拖动：QC Slice Gizmo平移](screenshot/C04-06-fixed-gizmo-move.jpg)
-
-   ![历史示例（原参数/原候选）：Agent拖动：QC Slice Gizmo旋转](screenshot/C04-06-fixed-gizmo-rotation.jpg)
-
-   ![历史示例（原参数/原候选）：Agent拖动：QC Slice Gizmo改变宽度](screenshot/C04-06-fixed-gizmo-width.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击显式阈值与标签；MCP取景后观察，−0.02/0/0.02 hartree/e](screenshot/C04-06-fixed-explicit-contours-framed.jpg)
-
-   历史内部无效域示例：真实水二聚体核附近5³ ESP，124点有效、1核点无效；21×21、0.18×0.18 Å切片有121点无效、渲染洋红；20/25/30 hartree/e阈值生成84段有效单元等值线。这是掩码传播诊断，不能推定当前0.2 Å全分子场命中同一核排除区。参数/工程仅绑定历史索引field_guards_and_recovery。
-
-   [用户截图待引用：C04-06-内部无效域，若本批真实命中无效区域，记录场来源、平面、单位、阈值与结果]
-
-   ![历史示例（原参数/原候选）：MCP创建诊断切片，原生Blender渲染：内部核区无效采样为洋红；显示范围10至70 hartree/e](screenshot/C04-internal-mask-magenta.png)
-
-   ![历史示例（原参数/原候选）：MCP原生异步等值线，20/25/30 hartree/e；84段线全部位于有效单元，核区无效范围不连线](screenshot/C04-internal-mask-contours.png)
-
-7. 选 ESP 场，在 **3D Viewport → N → View → 3D Cursor** 输入清单坐标，点击 **创建视图与检查工具 → 读取游标处场值**。分别在 **(0,0,1.45)**、核邻近 **(0,0,0)** 和域外 **(20,20,20) Å** 读取。核附近是否无效由当前0.2 Å实际网格掩码决定；若核邻近仍有效，如实记录值，并将“无效域读数”保留 Not Run，另由同批数据核对验证真实无效格点，不能凭坐标宣称无效。无效/域外不能记物理0。点 **点击探针 · 几何场** 后在表面点击预览，按 **Enter** 保存取点结果；按 **Escape** 恢复进入探针前的状态。绑定色场的密度表面再用 **点击探针 · 绑定色场**，同样点击后按 Enter 保存，记录采样位置/单位和实际结果。
-
-   [用户截图待引用：C04-07，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent点击：读取游标ESP，0.0085721002 hartree/e](screenshot/C04-07-esp-cursor-valid.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：ESP切片几何场取点预览，Enter保存](screenshot/C04-07-esp-geometry-probe-preview.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：第二取点预览后Escape恢复原记录](screenshot/C04-07-esp-geometry-probe-Escape-preview.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击：密度表面绑定色场取点，实际采样ESP](screenshot/C04-07-bound-color-probe-preview.jpg)
-
-   ![历史示例（原参数/原候选）：Agent点击Enter：保存0.072094069 hartree/e绑定色场读数](screenshot/C04-07-bound-color-probe-saved.jpg)
-
-   ![历史示例（原参数/原候选）：Agent操作示例：独立密度几何场取点预览，单位 electron/bohr^3；该示例不是 ESP 取点](screenshot/C04-07-click-probe-preview.jpg)
-
-8. 选ESP场或切片，将游标设起点 **(0,−2,1.45) Å**，点 **记录剖面起点**；保持 **同一个活动视图及绑定**，将游标设终点 **(0,+2,1.45) Å**，点 **采样线剖面数据**。Sample field先选Geometry、Samples=101；绑定色场视图可再明确选Color。新建 **QC line profile data** 是无可见图形的数据记录对象，`qc_analysis_role=profile`。选此记录按0.5导出数据（Data）=profile，核对101行、距离0..4 Å、端点坐标、量/单位、valid及无效值空白；metadata保留源网格/绑定。每次采样是数据快照，不创建二维曲线、坐标轴或排版。
-
-   [用户截图待引用：C04-08，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![Agent点击采样线剖面数据；独立密度示例，MCP设起终点(-2,0,1.8)/(2,0,1.8)Å、101点（e317候选）](screenshot/display-xyz-export/C04-profile-dialog-e317.jpg)
-
-   ![Agent确认采样记录，MCP核对101个源值；无新二维曲线（e317候选）](screenshot/display-xyz-export/C04-profile-record-e317.jpg)
-
-
-
-
-
-
-
-
-   历史密度示例使用0.7 Å、margin3 Å，起终点(0,−2,1.45)/(0,+2,1.45)、Samples101；保留其源值身份。当前0.2 Å的ESP/密度采样各自执行并核对，不能继承历史插值值或有效点数。
-
-   历史内部掩码补验：核点线段−0.1至+0.1 Å取9样本，valid为True/True/True/False/False/False/True/True/True，无效CSV值留空。(.075,.075,.075) Å独立插值一致；核点邻近拒绝无效角点，(.11,0,0) Å拒绝域外。该诊断仅绑定历史索引及旧源数组，当前导出需重新核对valid与空白值。
-
-   [用户截图待引用：C04-08-内部无效域，实际场来源、起终点、单位与CSV valid/空白值]
-
-   ![历史示例（原参数/原候选）：MCP创建真实内部掩码剖面并导出CSV，Computer Use仅观察截图：核区三样本留空且曲线断开](screenshot/C04-internal-mask-profile-MCP.jpg)
-
-9. 源关联复核：导入 **P03/water-dimer.fch** 别名。在 **3D Viewport / Outliner** 先选新导入的原子对象，再按 `Shift` 选原有 FCHK 原子对象，使原对象成为活动参考。转到 **Properties → Object → QCBlender · 对象与量子化学 → 关联选中数据源**。本例逐字节别名保持相同原子顺序和构型，**Align rigid rotation/translation** 不勾选，**Maximum atom deviation (angstrom)** 保持 **0.001 Å**；双击数值框可查看完整精度，未编辑时可能显示为 `0.00`。点击 **确定**，预期提示 **Atom order and geometry matched; each source retains its own properties**，两源 Dataset、理论层次和能量记录分别保留。需要刚体配准的其他输入另行核对；线性/单中心几何不自动唯一配准。
-
-   [用户截图待引用：C04-09，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：MCP设置新源与活动参考；GUI关联按钮可用](screenshot/C04-09-source-selection.jpg)
-
-   ![历史示例（原参数/原候选）：Agent首次GUI关联：刚体配准关闭，完整容差0.001 Å](screenshot/C04-09-association-tolerance.jpg)
-
-   ![历史示例（原参数/原候选）：Agent GUI确认成功；MCP核对六原子映射和源数组不变](screenshot/C04-09-association-success.jpg)
-
-10. 对应 N06–N11/N17，按 0.4 保存；冷重开与移动后再次导出 CSV，核对保存数组/摘要。证据：`C04.png`、`C04-esp.png`、`C04-charge.png`、`C04-dipole.png`、`C04-slice.png`、剖面记录面板截图、CSV/metadata和工程。
-
-   [用户截图待引用：C04-10，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   本例成图：密度/ESP表面与分子从正面观察，图例Legend Rotation设X=90°、Y=0°、Z≈17.19°（0.3 rad），使量/单位朝向相机。自由切片从顶面观察，更新当前等值线后取景；切片Margin可用0.15，其他空间视图0.05。历史二维剖面相机Margin0.20只绑定旧索引；当前剖面以采样记录和CSV+metadata核对。
-
-   ![历史示例（原参数/原候选）：MCP导出并另存工程：7 Dataset、222数组、117配套文件；三路径冷重开报告见验证索引](screenshot/C04-10-association-exports-saved-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：MCP在新可见进程核对中文移动工程、CSV和渲染；Computer Use观察截图](screenshot/C04-10-completion-cold-moved-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：MCP在新可见进程核对ZIP解包工程、CSV和渲染；Computer Use观察截图](screenshot/C04-10-completion-cold-unpacked-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：MCP另存检查点：6 Dataset、172数组；此图尚非最终C04成图](screenshot/C04-10-slice-fixed-checkpoint-saved-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：新进程MCP冷重开与CSV复导出；单独显示ESP剖面，完整C04成图待验收](screenshot/C04-10-slice-fixed-cold-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：MCP保存阶段工程；完整C04渲染与冷重开待补验](screenshot/C04-10-mapping-checkpoint-saved-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：MCP保存图例阶段工程；154数组保持原摘要，完整C04及本工程冷重开待补验](screenshot/C04-10-legend-checkpoint-saved.jpg)
-
-   ![历史示例（原参数/原候选）：MCP保存F3映射阶段工程；3 Dataset和154数组核对，完整C04与冷重开待补验](screenshot/C04-10-F3-checkpoint-saved-MCP.jpg)
-
-
+**需留存结果：** 当前网格与场生成参数、色域/图例/色带、电荷与偶极、切片/等值线、探针和关联操作截图；`C04.png`、`C04-esp.png`、`C04-charge.png`、`C04-dipole.png`、`C04-slice.png`；剖面记录与 CSV/metadata；`C04.blend + C04.qcdata/` 及冷重开、复导出比较记录。
 
 ### C05 氢显隐、局部选择、标注与显示层
 
-**真实输入预期：** 同C04水二聚体，氢源编号 **2/3/5/6**，保留 **2**；氧集合 **1,4**。编号标注 **1**；距离 **1,4 = 2.9 Å**；角 **2,1,3 = 112.7698904°**；二面角 **2,1,4,5 = 0.000°**（项目B→C约定）。这些标注预期由已核对FCHK源坐标经项目measure实算，显示可取三位小数。优化/IRC随步更新另用C02/C10，不影响本例静态样本可运行。
+**输入与目标：** 静态操作使用 `P03/water-dimer.fchk`，验证氢筛选、局部集合、源原子标注和显示层独立性；随优化步更新使用 C02 的 P02 Job 1，IRC 随步检查在 C10 完成。
 
-本例静态氢、局部选择和全部标注统一使用 **P03水二聚体**；P01 O2不含氢。随步更新另在C02/P02和C10/P04复做。
+| 核对项 | 本例预期 |
+| --- | --- |
+| 氢源编号 / 保留的氢 | `2,3,5,6` / `2` |
+| 氧源编号 | `1,4` |
+| 编号标注 | 原子 1 |
+| 距离 `1,4` | `2.900 Å` |
+| 角度 `2,1,3` | `112.7698904°`，三位小数显示 `112.770°` |
+| 二面角 `2,1,4,5` | `0.000°`，采用 B→C 约定 |
 
-1. 导入 **P03/water-dimer.fchk**，选原子对象，在 **对象属性 → 局部选择与标注** 依次点击 **隐藏氢 → 保留指定氢 → 显示全部氢**，按清单填一个真实氢的源编号，核对只保留指定氢及全恢复。每步记录前后；撤销/重做核对状态。
+1. **验证氢筛选。** 导入 FCHK，选原子对象，在 **对象属性 → 局部选择与标注** 点击 **隐藏氢**，预期只剩氧 1、4。点击 **保留指定氢**，填源编号 **2**，预期显示 1、2、4；点击 **显示全部氢** 恢复 6 原子。使用 **编辑 → 撤销 / 重做** 核对对应状态。
 
-   [用户截图待引用：C05-01，活动对象、参数与结果同屏；参数变化保留前后画面]
+2. **验证局部集合运算。** 点击 **设置局部选择**，在 **Source atom numbers (1-based)** 填 **1,4**、Mode 选 **替换（Replace）**。然后依次输入 **2 + 并集（Union）**，预期集合为 1,2,4；**1,2 + 交集（Intersect）**，预期为 1,2；**2 + 差值（Difference）**，预期为 1；最后选 **反转（Invert）**，预期为 2–6。
 
-   ![历史示例（原参数/原候选）：Agent操作示例：水二聚体全部6个源原子](screenshot/C05-01-all-hydrogens.jpg)
+3. **验证距离邻域。** 再次设置局部选择：**Replace、编号 1**，勾选 **Include distance neighborhood**，Radius 设 **1.0 Å**，勾选 **Include seed atoms**。预期为 1、2、3。局部集合与元素、连续编号、氢筛选共同作用。点击 **清除局部限制**，应恢复到其他筛选控制的范围。
 
-   ![历史示例（原参数/原候选）：Agent操作示例：隐藏氢后保留氧，源编号1与4](screenshot/C05-01-hidden-hydrogens.jpg)
+4. **创建独立局部层。** 保持原子对象活动，点击 **创建视图与检查工具 → 创建局部显示层**，输入 **1,4**，在新层独立调整样式与材质，核对原层不变。优化或 IRC 的局部集合按源编号保留，切步后如需重新按距离筛选，点击 **按当前步重新计算**。IRC 在原层做选择，不创建局部副本。
 
-   ![历史示例（原参数/原候选）：Agent操作示例：保留指定氢，源编号2；氧仍保留](screenshot/C05-01-keep-hydrogen-2.jpg)
+5. **创建四种标注。** 恢复完整 6 原子，选择 P03 原子层，在 **N 侧栏 → QCBlender → 创建视图与检查工具** 依次点击 **创建编号标注、创建距离标注、创建角度标注、创建二面角标注**。也可在 **对象属性 → 局部选择与标注 → Source Atom Annotations** 使用 **Atoms、Distance、Angle、Dihedral**。按表中顺序填源编号，设 **Decimal places=3**，核对值与单位。二面角范围为 **(−180°,180°]**；退化构型应显示 **undefined** 及原因，使用真实样本时无需改动输入来制造退化。
 
-   ![历史示例（原参数/原候选）：Agent操作示例：撤销恢复6个原子，再用Edit菜单的Redo重做隐藏氢；返回氧1与4](screenshot/C05-01-redo-menu.jpg)
+6. **调整标注排版。** 在 **Source Atom Annotations** 使用设置图标改变文字大小、颜色、偏移、小数和引线。可使用球棍 **Atom Radius=0.35 Å、Bond Radius=0.12 Å、Quality=2**，文字 **Size=0.16、Color RGB=(0.03,0.03,0.03)、Decimal places=3、Leader width=0.008**，勾选 **Show leader** 与可见。下表为不遮挡主要构型的一组 Offset（局部 Å）；创建相机后点击 **Face All to Camera**。
 
-2. 点 **设置局部选择**，在 **Source atom numbers (1-based)** 先填 **1,4**、**Mode=替换（Replace）**；再填 **2**、**并集（Union）**（得1,2,4），填 **1,2**、**交集（Intersect）**（得1,2），填 **2**、**差值（Difference）**（得1），最后选 **反转（Invert）**（得2–6）。再次点 **设置局部选择**，选 **Replace**、编号 **1**，勾 **Include distance neighborhood**，以源 **1** 为种子、填 **Radius (Å)=1.0** 并勾 Include seed atoms，预期包括1/2/3。局部集合和元素、连续编号、氢筛选共同作用。点 **清除局部限制** 恢复其他筛选控制的范围。
-
-   [用户截图待引用：C05-02，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：并集后源编号1、2、4](screenshot/C05-02-union-result-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：源编号1及1.0 Å邻域参数](screenshot/C05-02-radius-dialog-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：邻域返回源编号1、2、3](screenshot/C05-02-radius-result-GUI.jpg)
-
-3. 保持原子对象，点击 **创建视图与检查工具 → 创建局部显示层**，输入对应编号/半径，新副本独立调整样式/材质。优化/IRC 上局部集合固定源编号，换步不会自动换集合，必要时点 **按当前步重新计算**；IRC 仅在原层选择，不创建局部副本。
-
-   [用户截图待引用：C05-03，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：编号1、4的独立局部显示层](screenshot/C05-03-local-layer-result-GUI.jpg)
-
-4. 选择 **P03水二聚体原子对象**，在 **3D视图 → N侧栏 → QCBlender → 创建视图与检查工具** 分别点 **创建编号标注／创建距离标注／创建角度标注／创建二面角标注**；也可在 **Properties → Object → QCBlender → 局部选择与标注 → Source Atom Annotations** 点对应 **Atoms／Distance／Angle／Dihedral**，按测量顺序填实际源编号；编号填 **1**，距离填 **1,4**，角度填 **2,1,3**，二面角填 **2,1,4,5**。核对距离 Å、角度度数、带符号二面角范围 (-180°,180°]；退化构型显示 undefined 与原因。
-
-   [用户截图待引用：C05-04，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：按测量顺序输入距离编号1、4](screenshot/C05-04-distance-dialog-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use观察：N侧栏中文按钮与对象属性英文按钮入口](screenshot/C05-04-two-entry-paths-GUI.jpg)
-
-   原生操作示例使用独立显示层 **C05 final annotations**，先恢复全部6个原子，仅选该层。角度输入 **2,1,3**、二面角输入 **2,1,4,5**，**Decimal places=3**；确认后分别为 **112.770°**、**0.000°**。历史示例中 Agent Computer Use 实际创建；独立 NumPy 参考和 MCP 同时核对源编号顺序、单位、锚点、引线及50个科学数组。
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：当前活动原子层与标注入口](screenshot/C05-final-entrances-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：角度编号2,1,3及三位小数](screenshot/C05-final-angle-dialog-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：二面角编号2,1,4,5；B→C约定](screenshot/C05-final-dihedral-dialog-GUI.jpg)
-
-5. 在 **局部选择与标注 → Source Atom Annotations** 用设置图标调整文字大小/颜色/偏移/小数和引线；原子源构型或当前优化/IRC 步决定值，对象缩放与振动位移不改变测量。切步核对文字、锚点、步号同步；相机建好后点 **Face All to Camera**。
-
-   [用户截图待引用：C05-05，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：距离文字大小调整为0.22](screenshot/C05-05-edit-size-dialog-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use观察：MCP调整颜色、偏移和小数后，科学距离仍为2.900 Å](screenshot/C05-05-edited-result-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：点击Face All to Camera；MCP核对实际旋转](screenshot/C05-final-face-camera-GUI.jpg)
-
-   可复现排版：保持原子对象位置/旋转为0、缩放为1，球棍 **Atom Radius=0.35 Å、Bond Radius=0.12 Å、Quality=2**。四项文字设 **Size=0.16、Color RGB=(0.03,0.03,0.03)、Decimal places=3、Leader width=0.008、Show leader与可见勾选**；隐藏重复的旧标注及对应引线。分别设置下表 Offset，然后再点 **Face All to Camera**。这些设置只影响显示；历史示例另用MCP核对父对象缩放(2,0.5,1.5)后科学测量和源数组不变，再恢复缩放。
-
-   | 标注 | 源编号 | Offset X/Y/Z（局部 Å） |
+   | 标注 | 源编号 | Offset X / Y / Z |
    | --- | --- | --- |
    | 编号 | 1 | −1.2 / −0.5 / −0.6 |
    | 距离 | 1,4 | 1.2 / −0.5 / 0.9 |
    | 角度 | 2,1,3 | 1.2 / −0.5 / −0.35 |
    | 二面角 | 2,1,4,5 | 0.8207 / −0.5 / −0.25215 |
 
-   随优化步更新练习另用 **C02/P02 Job 1** 的四步优化轨迹，保持该轨迹副本为活动对象；添加距离 **1,2** 和角度 **2,1,3**，小数3。在 **对象属性 → Optimization Trajectory → Choose Step** 依次选1、2、3、4；距离/角度由各步源坐标决定，文字中的 **Optimization Step**、锚点和引线同步变化。第1步为 **0.990 Å、106.000°**，第4步为 **0.989 Å、100.037°**。原层保留原步号；不要把P03静态水二聚体的预期数值代入P02优化。
+   测量取自原子源构型或当前轨迹步。临时将父对象缩放改为 **(2,0.5,1.5)**，核对科学距离、角度及源数组不变后恢复 **(1,1,1)**；振动显示位移也不改变测量值。
 
-   图中排版使用Size=0.14，距离Offset=(0.3,−0.6,0.95)、角度Offset=(0.3,−0.6,−0.65)，从 **+X** 观察水的 **YZ** 源平面；文字朝向同方向相机。你可用右视图和视图缩放复现画幅。以下为MCP切步、调整排版后由Computer Use观察截图；本批逐步坐标与距离/角度经独立NumPy计算核对。
+7. **检查标注随优化步更新。** 选 C02/P02 Job 1 的优化轨迹副本，创建距离 **1,2**、角度 **2,1,3** 标注，小数设 3。在 **Optimization Trajectory → Choose Step** 依次选 1、2、3、4，核对文字中的 **Optimization Step**、测量值、锚点与引线同步。第 1 步预期 **0.990 Å、106.000°**，第 4 步预期 **0.989 Å、100.037°**；原层保持原步号。取景可从 **+X** 观察 YZ 平面，文字 Size 用 **0.14**，距离 Offset 用 **(0.3,−0.6,0.95)**，角度用 **(0.3,−0.6,−0.65)**。
 
-   ![历史示例（原参数/原候选）：MCP优化第1步；Computer Use观察：0.990 Å、106.000°及未完成收敛状态](screenshot/C05-followup-optimization-step1-framed-MCP.jpg)
+8. **验证显示层副本与显隐。** 在 **N 侧栏 → Display Layers** 选择层，用复制图标创建独立副本，改变副本参数和材质，确认原层不变。上移、下移副本，核对排序。分别切换视口与渲染显隐；隐藏原子层时，所属标注与引线应一同隐藏，恢复后应重新出现。
 
-   ![历史示例（原参数/原候选）：MCP优化第4步；Computer Use观察：0.989 Å、100.037°及收敛状态](screenshot/C05-followup-optimization-step4-framed-MCP.jpg)
+9. **检查当前版本视图。** 仅选 P02 第 4 步优化标注层，点击 **创建视图与检查工具 → 创建当前版本视图**。新层应保留第 4 步及两项标注，原层仍在。遍历新层四步并调整标注、材质，核对原层不变。
 
-   退化角的 **undefined** 与原因另用明确的合成重合原子测试核对，测试后恢复真实源坐标；该测试不代表真实优化步退化，也不要求用户修改输入原件。IRC随步练习仍在C10单独执行。
+10. **复制显示参数。** 多选同类层，最后选参数源，使其成为活动对象。在 **3D Viewport → Object 顶部菜单或对象右键菜单 → QCBlender → 复制显示参数到选中视图** 选择类别。数值设置要求量、单位和电荷方法兼容；不兼容时取消数值类别。检查几何表示与外观复制结果，以及目标位置、选择、裁剪、图例布局仍保留。
 
-6. 在 **N 侧栏 → Display Layers** 选择层，用复制图标建立副本，改副本参数/材质确认原层不变；排序、视口/渲染显隐和删除只在副本测试。点击 **创建视图与检查工具 → 创建当前版本视图**，保留原层并核对新层。多选同类层，最后选参数源，在 **3D Viewport → 对象顶部菜单或对象右键菜单 → QCBlender → 复制显示参数到选中视图** 选类别；数值复制需同量/单位/电荷方法，不兼容时取消数值类别。目标位置、选择、裁剪和图例布局保留。
+11. **移除临时副本。** 仅选刚创建的临时独立副本，点击 **Display Layers → 移除**。预期副本及所属标注消失，原层和科学源数据保留。列表中下一层会自动激活并显示；如该层之前隐藏，使用其视口显隐图标恢复原状态。
 
-   [用户截图待引用：C05-06，活动对象、参数与结果同屏；参数变化保留前后画面]
+12. **分别成图并保存。** 依次显示完整 6 原子、氧 1/4 局部层、完整 6 原子加四项标注，保存三张图。可使用 **Eevee、1920×1080、Standard**，白色世界背景，Strength=0.7；正交相机位置 **(1.4,−12,1.45) Å**，Euler 旋转 **(90°,0°,0°)**，Orthographic Scale=8.7。两盏 Area 灯可设 Disk、Size=5，位置 **(4,−5,7)** 与 **(−4,−5,5)**，Power=800/600 W，朝向 **(0,0,1.45)**。按 0.4 保存自包含工程并完成三种位置冷重开，复核筛选、标注、步号、显示层和渲染。节点参数复核对应 N01–N03/N15/N16。
 
-   移除练习：仅活动刚创建的独立临时副本，点击 **Display Layers → 移除**，确认副本及其所属标注消失，原层仍保留、科学源数组不变。当前插件会自动选中并显示列表中的下一层；若其先前隐藏，在该层行点击视口显隐图标恢复。只在副本操作，不移除原始源数据。
-
-   ![历史示例（原参数/原候选）：Agent Computer Use移除前：独立临时显示层处于活动状态，移除按钮与对象同屏](screenshot/C05-Remove-confirmed-before.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use点击移除后：临时层及12个复制标注消失，下一层自动激活；MCP独立核对原对象及50数组，随后恢复先前显隐](screenshot/C05-Remove-confirmed-after.jpg)
-
-   [用户截图待引用：C05-06-Remove，独立副本移除前后；记录自动激活的下一层及显隐恢复]
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：复制原子显示层；MCP核对Mesh、外层树和8个标注数据独立](screenshot/C05-display-layer-copy-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：上移副本；随后下移恢复原顺序，MCP核对次序](screenshot/C05-layer-order-up-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：对象顶部菜单 → QCBlender → 复制显示参数到选中视图；源最后选中并保持活动](screenshot/C05-copy-parameters-menu-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：确认几何表示、外观、数值设置三类别](screenshot/C05-copy-parameters-dialog-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Computer Use观察MCP选中的目标：球棍/0.35/0.12已复制，氧集合1、4和编号控件保留](screenshot/C05-copy-parameters-result-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：修复候选隐藏原子层，所属标注与引线同步隐藏](screenshot/C05-06-atom-layer-hidden-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：恢复原子层及所属标注](screenshot/C05-06-atom-layer-restored-GUI.jpg)
-
-
-   当前版本视图示例：仅选上述 **P02第4步优化标注层**，点击 **创建当前版本视图**。新层应保留第4步和两项标注，Mesh、外层节点树、文字、曲线和材质独立；原层仍保留。历史批次真实点击后MCP核对通过，并在新层遍历四步，不改变原层；临时副本的单项标注和显示层移除另由MCP执行与核对，不记录为GUI删除点击。
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：创建当前版本优化视图；MCP核对第4步、独立图及标注](screenshot/C05-followup-current-view-after-GUI.jpg)
-
-7. 对应 N01–N03/N15/N16，按 0.4 保存 `C05.png/.blend/.qcdata/`，加 `C05-selection.png`、`C05-annotations.png` 与显示层前后截图。
-
-   [用户截图待引用：C05-07，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   ![历史示例（原参数/原候选）：Computer Use观察：MCP另存自包含参数工程；原生新进程冷重开核对另记](screenshot/C05-controls-portable-saved-MCP.jpg)
-
-
-
-   成图示例使用 **Eevee、1920×1080、Standard**，世界背景白色、Strength=0.7。正交相机位于 **(1.4,−12,1.45) Å**，Euler旋转 **(90°,0°,0°)**、Orthographic Scale=8.7。仅显示目标层：完整6原子、氧1/4局部层、完整6原子加四项标注依次导出三图。两盏Area灯为Disk、Size=5，分别位于 **(4,−5,7)** 与 **(−4,−5,5)**，Power=800/600 W，朝向 **(0,0,1.45)**；其他灯关闭渲染。相机和灯属于显示排版，不改变科学单位。
-
-   ![历史示例（原参数/原候选）：MCP复用渲染操作：水二聚体全部6原子](screenshot/C05-final-render.png)
-
-   ![历史示例（原参数/原候选）：MCP复用渲染操作：局部层只显示源氧1、4](screenshot/C05-selection-final-render.png)
-
-   ![历史示例（原参数/原候选）：MCP实际渲染：O1、2.900 Å、112.770°、0.000°；四项标注与引线](screenshot/C05-annotations-final-render.png)
-
-   历史批次另存 **C05-final.blend + .qcdata** 和同条目ZIP；关闭可见进程后，原路径、中文移动、解包分别在新原生后台进程冷重开，核对24文件、1 Dataset/50数组、6视图、52标注对象，并各重新渲染三图，像素一致。记录见[历史验证索引](../acceptance/tutorial-cu-validation.json)的 `C05_native_annotations_and_renders`；历史失败报告保留，隐藏对象的保存变换通过完整父级链核对。退化、随优化/IRC步更新、移除与当前版本视图另行验收，不能据此将整个C05或全教程写为Passed。
-
-选择含可用优化轨迹、IRC或多帧XYZ的对象时，外部分析入口禁用并提示使用对应步骤的独立静态文件；初始步也适用。先导入需要的独立静态Log/FCHK/Cube，再将其设为活动参考。面板较窄时提示文字可能截断。
-
-![MCP选中真实优化Dataset；Computer Use展开外部结果面板，四个适用入口禁用（a3ed826）](screenshot/reliability/05-dynamic-reference-disabled.png)
+**需留存结果：** 氢筛选、集合运算、距离邻域、四种标注、优化随步更新与显示层操作前后截图；`C05.png`、`C05-selection.png`、`C05-annotations.png`；`C05.blend + C05.qcdata/` 及冷重开记录。
 
 ### C06 NBO 与 E(2)
 
-**真实输入预期：** P02 **Job2/block1**，7条NBO、2条E(2)。NBO1为 O1–H2 的 BD，occupancy **1.99933**、energy **−0.77653 Eh**、原文行 **1444**；E(2)记录1 donor **1**→acceptor **7**、**0.59 kcal/mol**、原文行 **1434**。源SHA同0.1.1，不能把NBO编号当MO编号。
+**输入与目标：** 使用 P02 的 `water_neutral_nbo_opt_freq.out`，选择 **Job2 / block1**，查看 7 条 NBO 和 2 条 E(2) 记录。P02 原件需按 0.1.1 合法取得并核对 SHA-256；公开样本包不含该原件。NBO 编号与 MO 编号分别核对。
 
-1. 确认已合法取得 P02 的真实 Log/Out 并核对 SHA；公开包不含许可未知原件。按 0.3 选清单指定 job 导入，选其原子对象，点 **3D视图 → N 侧栏 → QCBlender → 导入外部结果 → NBO 记录**。
+1. 按 0.3 导入 P02 的 **Job2**，只选择该段的原子对象。在 **3D 视图 → N 侧栏 → QCBlender → 导入外部结果 → NBO 记录** 打开对话框。
+2. **Gaussian Log / Out** 选择同一 `.out` 文件，填 **Gaussian job (1-based)=2、NBO block within job (1-based)=1**，点击确定。预期生成关联到 Job2 原子对象的 NBO 记录对象；本例不用 Job1 优化轨迹作为关联构型。
+3. 选择生成的记录对象，打开 **Properties → 对象属性 → QCBlender · 对象与量子化学 → NBO Records**。分别把 **NBO row (1-based)**、**E(2) row (1-based)** 从 1 改为 2，核对下表及原文行。行号以完整原文件为准，显示时可省略行末空白。
 
-   [用户截图待引用：C06-01，活动对象、参数与结果同屏；参数变化保留前后画面]
+   | 记录 | 应看到的源数据 |
+   | --- | --- |
+   | NBO 1 | O1–H2 的 BD；occupancy **1.99933**；energy **−0.77653 Eh**；原文行 **1444** |
+   | NBO 2 | O1–H3 的 BD |
+   | E(2) 1 | donor **1** → acceptor **7**；**0.59 kcal/mol**；原文行 **1434** |
+   | E(2) 2 | donor **2** → acceptor **6**；**0.59 kcal/mol** |
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：仅选P02 Job2原子对象，在导入外部结果中点击NBO记录](screenshot/C06-entry-GUI.jpg)
-
-2. 对话框 **Gaussian Log / Out** 选同文件，**Gaussian job (1-based)** 与 **NBO block within job (1-based)** 按清单填，确认等待。NBO 几何关联要同段同构型，不能借优化多构型段作最终关联。
-
-   [用户截图待引用：C06-02，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   本例填 **Gaussian job (1-based)=2、NBO block within job (1-based)=1**。文件为 `water_neutral_nbo_opt_freq.out`；对象保持P02 Job2，不用Job1优化轨迹关联。
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：Gaussian Log/Out、Job2、block1原生导入对话框](screenshot/C06-dialog-GUI.jpg)
-
-3. 选生成 NBO 记录对象，在 **Properties → 对象属性 → QCBlender · 对象与量子化学 → NBO Records** 选择一条 NBO 和 E(2)，核对条数、占据、能量单位、原子编号、供受体、E(2) kcal/mol 与原文行；NBO 不自动等同 canonical MO。
-
-   [用户截图待引用：C06-03，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   分别把 **NBO row (1-based)**、**E(2) row (1-based)** 从1改成2，确认选中的是不同源记录。第2条NBO为O1–H3 BD，第2条E(2)为2→6、0.59 kcal/mol。源行按原始文件整行核对，显示末尾空白可省略。
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：第1条NBO与E(2)，7轨道、2相互作用及原文行](screenshot/C06-record1-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：分别选择第2条NBO与E(2)，核对源编号与数值](screenshot/C06-record2-GUI.jpg)
-
-4. 在 **External Result Browser** 按编号/类型/占据、供受体/E(2) 筛选排序，点击 **应用筛选**，核对筛选不改源记录。恢复全部，撤销/重做导入核对关联。
-
-   [用户截图待引用：C06-04，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   本例在 **对象属性 → QCBlender · 对象与量子化学 → External Result Browser** 将 **Orbital type=BD、Orbital order=Occupancy, high to low、E(2) order=E(2), high to low**，点击 **应用筛选**；应显示2条轨道、2条E(2)。复原全部类型与默认范围后再点应用。Agent实际点击了上述组合；编号、范围、空结果和全部排序组合另由MCP用独立预期核对，不冒称逐项点击。
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：BD筛选和降序，应用后显示2轨道、2条E(2)](screenshot/C06-filter-BD-GUI.jpg)
-
-5. 对同文件逐字节 `.log` 别名重复入口检查，摘要必须一致。别名在自己的 inputs 建立，不改原文件。
-
-   [用户截图待引用：C06-05，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   用相同字节的 `water_neutral_nbo_opt_freq.log` 再导入Job2/block1，新增记录对象而原记录保持。随后在3D视图执行 **Edit（编辑）→ 撤销**，确认别名对象消失；执行 **Edit（编辑）→ 重做**，确认别名对象及其原子父对象关联恢复。菜单复验Passed；历史批次快捷键尝试未恢复，失败截图单独留在证据目录，教程使用实际确认的菜单路径。
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：相同SHA的log别名，Job2/block1](screenshot/C06-cold-native-dialog-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：撤销后别名对象消失，原out记录保持](screenshot/C06-cold-native-undo-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：Edit重做菜单恢复log对象；MCP核对完整分析和父对象](screenshot/C06-cold-native-menu-redo-GUI.jpg)
-
-6. 按 0.4 保存 `C06.png/.blend/.qcdata/`；总览必须同时拍到可读 NBO/E(2) 面板和关联分子。
-
-   [用户截图待引用：C06-06，活动对象、参数与结果同屏；参数变化保留前后画面]
-
-   可复现总览：选 `.log` NBO对象，在对象属性展开 **NBO Records** 并将两行索引设为1；把3D视图和属性编辑器分宽，使关联水分子与全部记录同屏。渲染单独选参考原子层，点击 **创建视图与检查工具 → 创建取景相机**，Margin=0.05，Eevee、1920×1080；NBO表本身是属性数据，用界面截图记录。
-
-   ![历史示例（原参数/原候选）：Agent Computer Use观察：log别名、7条NBO/2条E(2)、单位、源行和关联水分子](screenshot/C06-cold-records-overview-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：MCP复用相机构图及渲染：P02 Job2水分子，表格数据另见界面图](screenshot/C06-render.png)
-
-   历史批次保存 **C06-final.blend + .qcdata** 与同条目ZIP；关闭GUI进程后，原地、中文移动、解包三个新原生后台进程分别读取38文件、3 Dataset/33数组、NBO关联和全部元数据，并重渲染核对像素一致。证据见[历史验证索引](../acceptance/tutorial-cu-validation.json)的 `C06_NBO_records_browser_alias_and_cold_chain`。独立人工/科研签署仍为Not Run。
-
-
+4. 打开同一对象的 **External Result Browser**，设 **Orbital type=BD、Orbital order=Occupancy, high to low、E(2) order=E(2), high to low**，点击 **应用筛选**。预期显示 **2 条轨道、2 条 E(2)**。再按源编号、占据范围、供受体编号和 E(2) 范围检查筛选；每次修改后都点击应用，并与源表核对。筛选只影响显示，最后恢复全部类型、默认范围和源顺序。
+5. 在自己的 `inputs` 中建立同字节的 `water_neutral_nbo_opt_freq.log` 副本，核对两文件 SHA-256 相同，再按步骤 1–2 导入 Job2 / block1。预期新增记录对象，原 `.out` 记录保留，两者摘要及记录一致。在 3D 视图执行 **Edit（编辑）→ 撤销**，新增对象应消失；执行 **Edit（编辑）→ 重做**，对象及原子父对象关联应恢复。
+6. 按 0.4 保存 **C06.blend + C06.qcdata**。将两行索引恢复为 1，调整 3D 视图与属性编辑器宽度，截图同时记录关联水分子、7 条 NBO / 2 条 E(2)、单位和源行。需要分子效果图时只选参考原子，使用 **创建视图与检查工具 → 创建取景相机**，可设 **Margin=0.05、EEVEE、1920×1080**；表记录以面板截图留存。按 0.4 完成原路径、移动副本和解包副本的重新打开检查，复核记录与关联。
 
 ### C07 IGMH、IRI 成对场与数据导出
 
-**真实输入预期：** P03参考与成对场6原子、片段 **1–3 / 4–6**，各Cube同为 **91×38×156**；Multiwfn **2026.9.20**。IGMH Geometry=`igmh/dg_inter.cub`，electron/bohr^4；Color=`igmh/sl2r.cub`，electron/bohr^3。IRI Geometry=`iri/func2.cub`，`a.u. (electron^-0.1 bohr^-0.7)`；Color=`iri/func1.cub`，electron/bohr^3；**a=1.1**。IGMH几何值域1.01735e-10..0.0185476，IRI几何0.0593502..11.432；颜色−194.599..+0.295371，原值不除100。色域截断只是显示。
+**输入与目标：** P03 水二聚体，6 原子，片段 **1–3 / 4–6**。使用 Multiwfn **2026.9.20** 生成的成对场，网格均为 **91×38×156**，每场 **539,448** 个原始体素。导入时声明量、单位与参数，检查三维表面、颜色来源及完整 CSV 数据。
 
-1. 按C01的导入入口导入 **P03/water-dimer.fchk**；只选择生成的参考原子对象（本例名为 **QCBlender tutorial; PySCF 2.13.1; water-dimer; CC BY 4.0**），使其为活动对象。在 **3D视图 → N侧栏 → QCBlender → 导入外部结果** 点击 **IGMH / IRI 成对场**。
+| 分析 | Geometry Cube / 单位 | sign(lambda2)rho Cube / 单位 | 样本参数与原始值域 |
+| --- | --- | --- | --- |
+| IGMH | `P03/igmh/dg_inter.cub`；**electron/bohr^4** | `P03/igmh/sl2r.cub`；**electron/bohr^3** | component **inter**；几何值域 **1.01735e-10..0.0185476** |
+| IRI | `P03/iri/func2.cub`；**a.u. (electron^-0.1 bohr^-0.7)** | `P03/iri/func1.cub`；**electron/bohr^3** | **a=1.1**；几何值域 **0.0593502..11.432** |
 
-   [用户截图待引用：C07-01，活动原子对象与实际导入入口同屏]
+两组颜色场的原始值域均为 **−194.599..+0.295371 electron/bohr^3**。原值不除以 100；显示色域截断不改变数据。
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：P03参考原子对象与成对场导入入口](screenshot/C07-entry-GUI.jpg)
+1. 按 0.3 导入 `P03/water-dimer.fchk`。只选择生成的参考原子对象，在 **N 侧栏 → QCBlender → 导入外部结果 → IGMH / IRI 成对场** 打开对话框。
+2. 先选 **Analysis=IGMH**，按上表填写两个文件与单位，填 **Color minimum=−0.04、Color maximum=0.04、IGMH component=inter、Fragment atoms (JSON)=[[1,2,3],[4,5,6]]、Declaration source (optional)=P03 Multiwfn fragment setup**，点击确定。预期生成 **QC delta_g** 几何场、颜色源与 **QC paired field data** 数据记录对象。
 
-2. **Analysis** 选 **IGMH**，**Geometry Cube** 填 `P03/igmh/dg_inter.cub`，**sign(lambda2)rho Cube** 填 `P03/igmh/sl2r.cub`；**Geometry value unit=electron/bohr^4、Color value unit=electron/bohr^3、Color minimum=-0.04、Color maximum=0.04**。本样本将 **IGMH component=inter**，**Fragment atoms (JSON)=[[1,2,3],[4,5,6]]**，**Declaration source (optional)=P03 Multiwfn fragment setup**，确认。完成后重新只选择同一参考原子对象，再次打开对话框，选 **IRI**，Geometry填 `P03/iri/func2.cub`，Color填 `P03/iri/func1.cub`，几何单位填 `a.u. (electron^-0.1 bohr^-0.7)`，颜色单位及色域同上，**IRI density exponent a=1.1**，确认。
+   选几何场或 paired 记录，在 **对象属性 → QCBlender · 对象与量子化学 → IGMH 来源声明** 核对 inter、两组片段、声明来源及 **user_assigned**。这些是使用者依据源计算作出的声明，导入不会重新计算 IGMH。片段按源 Cube 的 1 基原子顺序填写：可覆盖部分原子；片段内重复、越界或非整数应拒绝；跨片段交叠应保留并提示。未声明分量显示 **unknown/unverified**。
+3. 重新只选择同一参考原子，打开相同入口，选 **Analysis=IRI**，按上表填写两文件与单位，填 **IRI density exponent a=1.1**，色域仍用 **−0.04..0.04**，确认。预期生成 **QC iri_function**、颜色源及对应 paired 数据记录。核对两输入的原子、网格、来源摘要和单位；本样本每组全量有效体素均为 **539,448**。
+4. 选择 **QC delta_g**，在 **对象属性 → QCBlender · 对象与量子化学 → 几何表示** 设 **Isovalue=0.005**；选择 **QC iri_function** 设 **Isovalue=1.0**。在各对象的 **颜色映射** 设 **Color Minimum=−0.04、Color Center=0、Color Maximum=0.04**。按 N14 核对位置来自 Geometry 场、颜色来自独立 sign(lambda2)rho 场。
 
-   预期出现 **QC delta_g / QC iri_function** 几何场、颜色源及 **QC paired field data** 无可见图形的数据记录对象（`qc_analysis_role=paired`）。两输入各539,448个原始体素，网格/原子匹配；本样本全量有效体素539,448，按CSV核对。三维表面与图例保留。全量导出逐个有效体素写出，不受旧散点50,000显示抽样上限限制。选中 IGMH 几何场或 paired 记录，在 **对象属性 → QCBlender · 对象与量子化学 → IGMH 来源声明** 核对 inter、两组片段、声明来源及 user_assigned；CSV metadata 的 scientific_metadata 保留同一记录。片段编号按源 Cube 的1基原子顺序，可只覆盖部分原子；片段内重复、越界或非整数拒绝，跨片段交叠保留并提示。旧工程和未选分量显示 unknown/unverified。片段、a、方法/版本与单位按源清单核对；导入不执行新的IGMH/IRI计算。
+   分别只显示参考原子与当前几何场，按 0.4 创建取景相机，可用 **Margin=0.05、EEVEE、1920×1080**。在 **图例排版** 勾选 **Show Legend**，让量名、单位和 **−0.04 / 0 / +0.04** 可读。若视角绕 X 轴 **0.9 rad**，将 **Legend Rotation** 的 X 角也设为 **0.9 rad（约 51.566°）**；输入前确认角度字段单位。
+5. 选择 IGMH 的 **QC paired field data**，在 **对象属性 → QCBlender → External Result Browser** 核对 **X=sign_lambda2_rho [electron/bohr^3]、Y=delta_g [electron/bohr^4]**。启用四个范围开关，填 **X from=−0.04、X to=0.04、Y from=0.001、Y to=0.02**，点击 **Apply Filter**。按 0.5 选择 **Data=paired、Rows=Current filter** 导出 CSV 与 metadata，核对源索引、范围、单位与实际行数；本样本参考行数为 **36,391**。
 
-   [用户截图待引用：C07-02，分别保留IGMH与IRI对话框、活动参考对象和导入结果]
+   勾选 **Swap value columns**，先保持四个数值不变，再应用、另行导出。范围现在作用于交换后的量列，需记录实际行数（参考 **28,630**）。随后同步交换 X / Y 的范围再导出，应与最初筛选保留同一体素集合。IRI 可用颜色范围 **−0.04..0.04**、IRI 范围 **0.1..2** 检查同样流程，参考行数为 **12,736**；这些行数均需以本轮 CSV 核实。
 
-   ![Agent Computer Use填写inter、片段与来源并确认；输入路径由MCP准备（a3ed826）](screenshot/reliability/01-igmh-declaration-dialog.png)
+   再分别导出 **Rows=All source records**，核对每组 **539,448** 个有效体素及原索引。全量导出逐个写出有效体素。metadata 中的 **scientific_metadata** 应保留 IGMH 分量与片段声明。
+6. 重新只选择 P03 参考原子，打开成对场导入，选 **IGMH**，Geometry 填 `P03/igmh/dg_inter.cub`，Color 故意选 `P05/nocv/nocv-pair1.cub`，单位照 IGMH 填写。预期拒绝并提示 **Atom identities/order differ; an explicit atom mapping is required**，既有对象与绑定保留。此输入检查的是原子身份不匹配。
 
-   ![MCP选择paired记录；Computer Use展开并核对IGMH来源声明（a3ed826）](screenshot/reliability/04-igmh-declaration-panel.png)
-
-   本批来源填写`P03 GUI declaration`，表示本次用户声明文字；不是软件对片段物理意义的独立确认。
-
-
-
-
-   ![历史示例（原参数/原候选）：Agent Computer Use输入并确认：IGMH两文件、单位和色域](screenshot/C07-IGMH-dialog-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use观察：IGMH导入结果；全部数组及关联另由MCP核对](screenshot/C07-IGMH-imported-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use选择IRI并确认：路径和数值由MCP准备，a为1.1](screenshot/C07-IRI-dialog-GUI.jpg)
-
-3. 只选择 **QC delta_g**，在 **Properties → 对象属性 → QCBlender · 对象与量子化学 → 几何表示** 把 **Isovalue** 设为 **0.005**；**QC iri_function** 设为 **1.0**。在各对象的 **颜色映射** 设置 **Color Minimum=-0.04、Color Center=0、Color Maximum=0.04**。位置取自几何场、颜色取自第二场；按N14查看来源，核对两输入摘要与网格，原值不除100。
-
-   本例该阈值下IGMH为4,992顶点/4,906面、IRI为3,150顶点/3,140面（不含图例文字）。成图先只显示参考原子与当前几何场，按0.4步骤1创建取景相机，**Margin=0.05、Eevee、1920×1080**。本示例视角绕X轴0.9 rad；在 **图例排版** 启用 **Show Legend**，把 **Legend Rotation** 的X角也设为 **0.9 rad（约51.566°）**，使量名、单位和−0.04/0/+0.04可读。初次构图前确认角度字段所用单位。
-
-   [用户截图待引用：C07-03，分别保留两几何场参数、颜色源和可读图例]
-
-   ![历史示例（原参数/原候选）：MCP复用显示控件与相机构图，真实EEVEE渲染：IGMH 0.005，颜色取自独立sign(lambda2)rho场](screenshot/C07-igmh-v2.png)
-
-   ![历史示例（原参数/原候选）：MCP复用显示控件与相机构图，真实EEVEE渲染：IRI 1.0、a=1.1](screenshot/C07-iri-v2.png)
-
-4. 只选 **QC paired field data**，打开 **对象属性 → QCBlender → External Result Browser**，核对X为sign_lambda2_rho [electron/bohr^3]、Y为delta_g [electron/bohr^4]。启用四范围，填 **X from=−0.04、X to=0.04、Y from=0.001、Y to=0.02**，点 **Apply Filter**，再按0.5导出数据（Data）=paired、Rows=Current filter。历史36,391匹配数仅作本轮CSV行数待核实预期；结果及metadata记录实际筛选。
-
-   勾 **Swap value columns**，保持四数值并重新应用/导出；范围作用于交换后的量列，历史28,630行待本轮CSV核实。保持同一物理筛选区须同步交换X/Y范围。IRI颜色−0.04..0.04、IRI0.1..2历史12,736行也待本轮CSV核实，同步交换范围时应保留同一体素集合。再导出Rows=All source records，核对539,448个有效体素及原索引，不使用50,000显示抽样。
-
-   [用户截图待引用：C07-04，范围开关、值列/单位与CSV行数；交换前后CSV/metadata分别保存]
-
-   ![Agent交换值列并应用筛选；MCP准备真实配对Dataset与参考构型，没有新散点图（e317候选）](screenshot/display-xyz-export/C07-voxel-browser-e317.jpg)
-
-
-
-
-
-5. 重新只选择 **P03参考原子对象**，打开成对场导入，选 **IGMH** 并重填对应单位。Geometry用 **P03/igmh/dg_inter.cub**，Color误选 **P05/nocv/nocv-pair1.cub**；预期拒绝并报告 **Atom identities/order differ; an explicit atom mapping is required**，原有对象及数据绑定不变。此例验证原子身份拒绝，网格拒绝需要另一组明确输入。
-
-   恢复正确配对再导入，在3D视图执行 **Edit（编辑）→ 撤销**，新生成五个配对对象消失；执行 **Edit（编辑）→ 重做**，这些对象及科学绑定恢复。保留一个正确显示组，避免重复图层叠加。
-
-   [用户截图待引用：C07-05，错误输入/拒绝信息，以及正确导入的撤销与重做结果]
-
-   ![Agent Computer Use按Ctrl+Z撤销导入；MCP核对完整对象和绑定快照（a3ed826）](screenshot/reliability/02-igmh-undo.png)
-
-   ![Agent Computer Use经Edit → Redo恢复；MCP核对完整快照与原科学数组（a3ed826）](screenshot/reliability/03-igmh-redo.png)
-
-
-   ![历史示例（原参数/原候选）：MCP准备错误配对、Agent Computer Use确认：P03几何与P05颜色](screenshot/C07-wrong-pair-dialog-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use观察拒绝；MCP核对原有对象与绑定不变](screenshot/C07-wrong-pair-refused-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use执行Edit菜单撤销：新增配对对象移除](screenshot/C07-native-undo-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use执行Edit菜单重做：对象与同一科学记录恢复](screenshot/C07-native-redo-GUI.jpg)
-
-6. 对应N06/N07/N14/N16，按0.4渲染IGMH/IRI三维表面和可读图例，按0.5保留paired全量及筛选CSV+metadata，再保存 **C07.blend + C07.qcdata**。保存、移动、解包冷重开后复核表面绑定与导出集合；新建过程不生成散点PNG。
-
-   [用户截图待引用：C07-06，保存路径、活动对象、图例和保存后的工程；冷重开另留截图]
-
-   ![Agent Computer Use确认保存自包含工程；原地和中文移动新进程冷读另经脚本核对（a3ed826）](screenshot/reliability/08-portable-saved.png)
-
-
-   ![历史示例（原参数/原候选）：Computer Use观察与截图：MCP保存后的IGMH总览；保存和控件设置由MCP执行](screenshot/C07-saved-overview-MCP.jpg)
-
-   历史批次保全44文件、3 Dataset/66数组和4体积文件，关闭GUI后依次在三个新原生后台进程读取原路径、中文移动和ZIP解包工程；九次真实重渲染像素一致。报告、输入/候选摘要及工具身份见[历史验证索引](../acceptance/tutorial-cu-validation.json)的 `C07_paired_fields_scatter_and_cold_chain`。该冷读为命令行技术证据，用户复做及独立科研签署仍为Not Run。
-
+   恢复正确文件再导入一次，执行 **Edit → 撤销**，新增的五个配对对象应消失；执行 **Edit → 重做**，对象与科学绑定应恢复。只保留需要显示的一组，避免重叠。
+7. 按 0.4 分别保留 IGMH、IRI 三维表面和可读图例，按 0.5 保留全量、筛选及交换列后的 CSV + metadata，保存 **C07.blend + C07.qcdata**。在原路径、移动副本及解包副本重新打开后，复核表面绑定、来源声明与再次导出的体素集合。paired 记录通过表面和 CSV 检查，paired 数据的筛选结果在 CSV 中核对。
 
 ### C08 ESP 极值与面积分布
 
-**真实输入预期：** P03 **rho=0.001 electron/bohr^3** 表面；4最大值/3最小值，PDB B-factor是ESP，**kcal/mol**，坐标Å。例如最大值源1：**36.69 kcal/mol** @ **(−1.740,−0.051,1.026) Å**；最小值源1：**−25.50** @ **(−0.036,−1.400,1.768) Å**。面积各bin见原stdout，合计 **73.1833 Å²**。C04初始0.004密度表面若作为视觉参照，先改成0.001并单独记录；分析导入活动对象仍是ESP场。
+**输入与目标：** 使用 P03 在 **rho=0.001 electron/bohr^3** 表面上的外部 ESP 分析。应有 **4 个最大值、3 个最小值**；PDB 的 B-factor 表示 **ESP [kcal/mol]**，坐标为 **Å**，C/O 分别编码 maximum/minimum。源面积分布有 **40 个 bin**，合计 **73.1833 Å²**。
 
-1. 打开C04工程，按0.4另存为C08。先只选 **QC electron_number_density** 密度表面，在 **Properties → 对象属性 → QCBlender · 对象与量子化学 → 几何表示** 把 **Isovalue** 从 **0.004** 改为 **0.001 electron/bohr^3**，记录前后画面。然后只选实际ESP场 **QC electrostatic_potential**；在 **3D视图 → N侧栏 → QCBlender → 导入外部结果** 点击 **ESP 表面分析**。密度着色层不能替代实际ESP场参考。
+1. 打开 C04 工程，按 0.4 另存为 C08。只选 **QC electron_number_density** 密度表面，在 **对象属性 → QCBlender · 对象与量子化学 → 几何表示** 将 **Isovalue** 从 **0.004** 改为 **0.001 electron/bohr^3**，保留前后画面。然后只选实际 ESP 场 **QC electrostatic_potential**，打开 **N 侧栏 → QCBlender → 导入外部结果 → ESP 表面分析**；导入参考应为实际 ESP 场。
+2. 填 **Extrema PDB=P03/esp/surfanalysis.pdb、Area distribution text=P03/esp/stdout.log、Surface definition=rho=0.001 electron/bohr^3、Extrema value unit=kcal/mol、Distribution center unit=kcal/mol、Area unit=angstrom^2**，确认。预期生成 **QC ESP maximum、QC ESP minimum、QC ESP area distribution**，均关联到所选 ESP 场。单位与 PDB REMARK、原表声明逐项核对。
 
-   [用户截图待引用：C08-01，阈值调整前后、活动ESP对象和导入入口]
+   原 `stdout.log` 含非 UTF-8 的进度或横幅字节，核对时保留原始字节与 SHA-256，按其中的 ASCII 科学表行读取。面积直接来自源表；当前 **0.2 Å** 生成网格只作为三维显示参照。
+3. 选择 **QC ESP maximum**，打开 **对象属性 → QCBlender · 对象与量子化学 → External Analysis Records**，将 **Record (1-based)** 从 1 改为 2。再选择 **QC ESP minimum** 查看两条记录，按下表核对。
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：实际ESP场与ESP表面分析入口；密度阈值另由MCP准备](screenshot/C08-entry-GUI.jpg)
+   | 类型 / 源编号 | ESP [kcal/mol] | 位置 [Å] |
+   | --- | --- | --- |
+   | maximum 1 | **36.69** | **(−1.740,−0.051,1.026)** |
+   | maximum 2 | **57.80** | **(−1.682,−0.042,4.031)** |
+   | minimum 1 | **−25.50** | **(−0.036,−1.400,1.768)** |
+   | minimum 2 | **−50.68** | **(−0.005,−0.058,−1.769)** |
 
-2. **Extrema PDB** 填 `P03/esp/surfanalysis.pdb`，**Area distribution text** 填 `P03/esp/stdout.log`，**Surface definition=rho=0.001 electron/bohr^3**；**Extrema value unit=kcal/mol、Distribution center unit=kcal/mol、Area unit=angstrom^2**，确认。极值和面积单位须与PDB REMARK和原表声明一致；中心单位由使用者明确指定。预期生成 **QC ESP maximum、QC ESP minimum、QC ESP area distribution**，均关联到所选ESP场。
+4. 在 maximum 对象的 **External Result Browser** 设 **Source number=0**（全部），启用 **ESP value [kcal/mol]** 的两个范围开关，填 **从=40、到=60**，勾选 **Show source label、Show matching points**，设 **Match (1-based)=1**，点击 **应用筛选**。预期匹配 **2 条最大值（源 2 / 3）**，突出源 2，显示 **maximum 2 | 57.8 kcal/mol**。再设 **Source number=2**，应只保留该源点。查看最小值时切换到 minimum 对象。
+5. 选择 **QC ESP area distribution**，打开 **External Result Browser**，依次检查下表，每次改动后点击 **应用筛选**，按 0.5 以 **Data=ESP_AREA、Rows=Current filter** 单独导出 CSV + metadata。
 
-   外部分析表来自清单中的Multiwfn源表面。原log含非UTF-8进度/横幅字节，保留完整原始字节和SHA，按ASCII科学表行核对。当前0.2 Å生成网格仅作三维显示参照；面积直接读取源表，不在显示网格重算。
+   | Area bin selection | 范围 [kcal/mol] | 预期结果 |
+   | --- | --- | --- |
+   | **Center in range** | **0..20** | 4 个 bin，中心 **2.5 / 7.5 / 12.5 / 17.5**；**displayed=14.4784 Å²、Source percentages shown=19.7838%** |
+   | **Recorded interval overlaps range** | **0..20** | 6 个完整源 bin，含与 0、20 相接的边界区间；**displayed=21.2676 Å²、Source percentages shown=29.0608%** |
 
-   [用户截图待引用：C08-02，完整路径、表面定义、三单位和确认后的三对象]
+   区间模式保留完整 bin，不按相交长度拆分；总面积保持 **73.1833 Å²**，源百分比不重新归一化。取消范围恢复 **40 个 bin**，以 **Rows=All source records** 再导出，核对中心、边界、面积与 percent；原表打印百分比之和为 **100.0002%**（舍入）。面积记录以属性与 CSV 查看，不生成柱图。
+6. 按 0.4 保存三维极值图 **C08-extrema.png**、面积属性截图与所有 CSV + metadata。极值层恢复 **Source number=0、Match=2** 并应用，面积恢复全部 40 个 bin。取景包含真实极值点和关联分子，可用 **Margin=0.05、EEVEE、1920×1080**；标签绕 X **90°**。重叠点可旋转视角检查，源坐标应保持不变。
 
-   ![历史示例（原参数/原候选）：MCP准备参数、Agent Computer Use确认：ESP极值与面积导入](screenshot/C08-dialog-GUI.jpg)
-
-3. 只选 **QC ESP maximum**，打开 **Properties → 对象属性 → QCBlender · 对象与量子化学 → External Analysis Records**。**Record (1-based)** 从1改为2；最大值1为 **36.69** @ **(−1.740,−0.051,1.026) Å**，最大值2为 **57.80** @ **(−1.682,−0.042,4.031) Å**，单位均为kcal/mol。选择 **QC ESP minimum** 同样逐条查看；最小值2为 **−50.68** @ **(−0.005,−0.058,−1.769) Å**。PDB的B-factor列明确记录ESP，C/O分别编码maximum/minimum。
-
-   在 **External Result Browser** 保持 **Source number=0**（全部），启用两个 **ESP value [kcal/mol]** 范围开关，填 **从=40、到=60**，保持 **Show source label、Show matching points**，**Match (1-based)=1**，点击 **应用筛选**。预期2条最大值（源2/3），突出源2并显示 **maximum 2 | 57.8 kcal/mol**。**Source number=2**可只查看该源点。换层查看minimum，不能将maximum层误作minimum。
-
-   [用户截图待引用：C08-03，记录1/2、源坐标、范围开关和筛选突出位置]
-
-
-
-   ![历史示例（原参数/原候选）：Agent Computer Use观察：最大值记录1，36.69 kcal/mol](screenshot/C08-maximum-record1-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use选择：最大值记录2，57.80 kcal/mol及源坐标](screenshot/C08-maximum-record2-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use启用范围并应用：2条最大值；40/60由MCP准备](screenshot/C08-maximum-filter-GUI.jpg)
-
-4. 只选 **QC ESP area distribution**，打开同一 **External Result Browser**。**Area bin selection=Center in range**，启用范围 **从=0、到=20 kcal/mol**，点击 **应用筛选**：预期4个中心2.5/7.5/12.5/17.5区间，**displayed=14.4784 Å²、Source percentages shown=19.7838%**。
-
-   改 **Recorded interval overlaps range**，保留0..20并应用：预期6个完整源bin，包括与0、20相接的边界区间，**displayed=21.2676 Å²、Source percentages shown=29.0608%**。保留完整bin，不按交集长度拆分。总面积始终 **73.1833 Å²**，源百分比不归一化。取消范围恢复40bin；原打印percent合计 **100.0002%**（舍入），按源表逐项核对。选面积记录按0.5导出数据（Data）=ESP_AREA，分别Rows=Current filter/All source records，核对中心、边界、面积与percent。新建面积记录使用无可见图形的数据记录对象，不生成柱图。
-
-   [用户截图待引用：C08-04，两模式分别保留范围、总面积、小计及源百分比]
-
-   ![Agent补充示例：中心范围-10至10kcal/mol；四bin、14.0429Å²、原百分比19.1886%；与正文0至20范围分别记录，MCP准备来源（e317候选）](screenshot/display-xyz-export/C09-esp-area-data-e317.jpg)
-
-
-
-
-5. 对应N13/N16，按0.4保留 **C08-extrema.png** 三维极值图和面积属性面板截图，按0.5保留全量及两个范围模式的ESP_AREA CSV+metadata。极值层恢复Source number=0、Match=2并应用；面积恢复40bin。取景选真实极值点/关联分子，Margin=0.05、Eevee、1920×1080。标签绕X90°，必要时旋转视角查看重叠minimum；源坐标不随观察方向改变。面积数据由源表核对。
-
-   为取得下图照明，添加Sun灯，**Energy=2、Angle=0.35 rad（约20.054°）**，灯旋转约 **X=40.107°、Y=−17.189°、Z=−22.918°**；两个原生标签的材质设白色 **Base Color、Emission Color**，**Emission Strength=1**。这些是工程显示设置。恢复极值层后再次点 **应用筛选**，确认标签可见，避免把面积图中临时隐藏的标签状态带入保存工程。
-
-   点击 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程**，保存 `.blend + .qcdata`；按0.4的归档工程步骤（N18）打包配套ZIP。完成后正常关闭，原路径、中文移动和ZIP解包路径分别在一个新Blender进程打开核对，每次关闭后再开下一处。本批文件名为 **C08-final.blend**，效果图带 `-v2` 后缀。
-
-   [用户截图待引用：C08-05，极值图、面积表/CSV/metadata、保存路径与三处冷重开]
-
-   ![历史示例（原参数/原候选）：MCP配置灯光、标签和相机，原生EEVEE渲染：ESP源极值；观察方向会产生投影重叠](screenshot/C08-extrema-v2.png)
-
-
-   ![历史示例（原参数/原候选）：Computer Use观察与截图：MCP保存的最终工程、源标签和对象属性](screenshot/C08-saved-GUI.jpg)
-
-   历史批次35组MCP筛选核对、5项错误输入检查及120文件/8Dataset/224数组/4体积/20引用保全Passed；三个串行原生后台进程冷读和6次重渲染像素一致Passed。报告、输入/候选摘要、失败诊断与工具身份见[历史验证索引](../acceptance/tutorial-cu-validation.json)的 `C08_ESP_records_filters_and_cold_chain`。用户复做和独立科研签署仍为Not Run。
-
+   需要增强可读性时可添加 Sun，设 **Energy=2、Angle=0.35 rad（约 20.054°）**，旋转 **X=40.107°、Y=−17.189°、Z=−22.918°**；标签材质使用白色 **Base Color / Emission Color、Emission Strength=1**。保存前再次应用极值筛选并确认标签可见。
+7. 使用 **N 侧栏 → QCBlender → 工程与诊断 → 保存自包含工程** 保存 **C08.blend + C08.qcdata**，按 0.4 归档与重新打开检查。在原路径、移动副本和解包副本分别核对极值坐标、单位、面积源表、筛选状态及再次导出的 CSV。
 
 ### C09 AIM 临界点、路径与属性
 
-**真实输入预期：** P03水二聚体6原子。临界点源编号1–6为 **C/(3,−3)**、7–11为 **N/(3,−1)**，共11条；没有O/F层。10条路径共408点。核点C接近参考原子，显示标记可能被原子球遮挡；临时隐藏参考原子可查看全部点，源坐标不变。精确单位以CPprop原文为准，不从标记颜色推断物理量。
+**输入与目标：** P03 水二聚体，6 原子。临界点源编号 **1–6 为 C/(3,−3)**，**7–11 为 N/(3,−1)**，共 **11 条**；本样本没有 O/F 层。路径共 **10 条、408 点**。属性单位以 `CPprop.txt` 原文为准。
 
-1. 按C04导入 **P03/water-dimer.fchk**，只选它的**原子对象**，保持Object Mode。打开 **3D视图 → N侧栏 → QCBlender → 导入外部结果 → AIM 拓扑**。分别填 **CPs PDB=P03/aim/CPs.pdb、Paths PDB=P03/aim/paths.pdb、CP properties text (optional)=P03/aim/CPprop.txt**，点击 **确定**。预期生成 **QC AIM CP C、QC AIM CP N、QC AIM bond paths**，父级关联该参考原子，科学摘要保留三份输入来源。属性可选，但本教程使用真实CPprop文件。
+1. 导入 `P03/water-dimer.fchk`，只选择原子对象，保持 **Object Mode**。打开 **N 侧栏 → QCBlender → 导入外部结果 → AIM 拓扑**，填 **CPs PDB=P03/aim/CPs.pdb、Paths PDB=P03/aim/paths.pdb、CP properties text (optional)=P03/aim/CPprop.txt**，点击确定。预期生成 **QC AIM CP C、QC AIM CP N、QC AIM bond paths**，父级关联参考原子，来源保留三份输入摘要。属性文件虽为可选，本例应填写。
+2. 选择 **QC AIM CP C**，打开 **对象属性 → QCBlender · 对象与量子化学 → External Analysis Records**。首次导入即可查看 **Record (1-based)=1**：源点 **1**、**C/(3,−3)**、对应核 **6(H)**、PDB 位置 **(−0.724,0,3.384) Å**、**Density of all electrons=0.4316646446**。改为记录 **2**：对应核 **5(H)**、位置 **(0.724,0,3.384) Å**、密度相同。属性文本中更高精度的 Bohr / Å 坐标与 PDB 的打印精度分别核对；源编号不随排序改变。
+3. 选择 **QC AIM bond paths**，在对象属性的 **External Result Browser** 核对 **10 recorded AIM paths**。设 **Path (1-based)=1** 应显示 **Source residue 1 | 9 points**；设为 **2** 应显示 **Source residue 2 | 47 points**。使用原生对象与曲线控件调整路径显隐、线宽。路径组编号与临界点源编号分别核对。
+4. 选择 **QC AIM CP C**，打开 **External Result Browser**，设 **Source number=0、Numeric CP property=Density of all electrons**。启用 **Selected CP property value** 的两个范围开关，填 **从=0.432、到=0.433**，勾选 **Show source label、Show matching points**，保留首条匹配并点击 **应用筛选**。预期匹配源 **4、5**，位置分别为 **(−0.724,0,0.484)、(0.724,0,0.484) Å**；突出源 4，标签值 **0.432922**。若失焦后只显示两位小数，重新激活输入框核对完整数值。
 
-   [用户截图待引用：C09-01，原子活动对象、三个路径与成功结果]
+   切换到 **QC AIM CP N**，同一属性键设范围 **0..0.02** 并应用。预期只匹配源 **9**，位置 **(0,0,1.451) Å**、密度 **0.01088848625**，标签以六位有效数字显示 **0.0108885**。分别开关 **Show matching points / Show source label**，点与标签应独立显隐。**Source number** 指源编号，**Record / Match (1-based)** 指相应列表位置；取消范围、恢复 Source number=0 并应用，应恢复全部点，原属性不变。
+5. 按 0.4 保存点图、路径图与总览：点图只显示参考原子、筛选出的 C4/5 与 N9 及标签；路径图只显示参考原子和完整路径；总览显示二者。核点可能被原子球遮挡，O–H 路径也可能与显示键投影重叠；旋转观察或临时隐藏参考原子检查，之后恢复。
 
-   ![历史示例（原参数/原候选）：Computer Use打开AIM拓扑入口；活动对象与参数条件由MCP准备](screenshot/C09-fixed-entry-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：MCP填写三个路径，Computer Use点击确定导入真实AIM数据](screenshot/C09-fixed-dialog-GUI.jpg)
-
-2. 只选 **QC AIM CP C**，打开 **Properties → 对象属性 → QCBlender · 对象与量子化学 → External Analysis Records**。首次导入即可查看 **Record (1-based)=1**，不用刷新或重开：源点1为 **C/(3,−3)**、核 **6(H)**、PDB位置 **(−0.724,0,3.384) Å**、**Density of all electrons=0.4316646446**。将记录改为2：核 **5(H)**、PDB位置 **(0.724,0,3.384) Å**，密度相同。属性文本另有更高打印精度的Bohr/Å位置，与PDB精度分别核对；对应核编号采用源记录，不按当前排序重编号。
-
-   在Outliner选择 **QC AIM bond paths**，仍用**对象属性**，展开 **External Result Browser**：**10 recorded AIM paths**。**Path (1-based)=1** 显示 **Source residue 1 | 9 points**；改为2显示 **Source residue 2 | 47 points**。路径显隐和线宽使用原生对象/曲线控件；路径组不等于临界点源编号。
-
-   [用户截图待引用：C09-02，首次属性记录1/2，以及路径组1/2及点数]
-
-   ![历史示例（原参数/原候选）：首次导入即显示CP类型、对应核、位置和真实电子密度](screenshot/C09-fixed-record1-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Computer Use切换记录2：对应核5H，源坐标与电子密度](screenshot/C09-fixed-record2-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Computer Use选择路径层：10组中的源组1，9点](screenshot/C09-path1-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Computer Use切换路径2：源组2，47点](screenshot/C09-path2-GUI.jpg)
-
-3. 只选 **QC AIM CP C**，展开 **对象属性 → QCBlender → External Result Browser**。保持 **Source number=0**（全部源编号），**Numeric CP property** 精确填 **Density of all electrons**。启用 **Selected CP property value** 两个范围开关，填 **从=0.432、到=0.433**，勾选 **Show source label、Show matching points**，保持首条匹配并点 **应用筛选**：预期2条，原始源编号 **4、5**，坐标 **(−0.724,0,0.484)、(0.724,0,0.484) Å**；突出源4，标签值 **0.432922**。范围输入失焦时可能只显示两位小数，激活输入确认完整0.432/0.433。**Source number** 是原始源编号；**Record/Match (1-based)** 是当前对应列表的位置。
-
-   换选 **QC AIM CP N**，同一属性键设范围 **0..0.02** 并应用：预期只保留源 **9**，位置 **(0,0,1.451) Å**、密度 **0.01088848625**，标签按六位有效数字显示 **0.0108885**。开关 **Show matching points/Show source label** 验证点与标签独立显示；类型须换对应对象。取消范围开关、Source number=0并应用可恢复全部源点。原始属性不随筛选改变。
-
-   [用户截图待引用：C09-03，精确属性键、完整范围、匹配源编号、坐标和显隐]
-
-   ![历史示例（原参数/原候选）：MCP准备精确参数，Computer Use启用范围并应用：C源4/5保留](screenshot/C09-fixed-filter-GUI.jpg)
-
-4. 对应N13/N16，按0.4分别导出点图、路径图、总览。本示例点图保留上面的C4/5与N9范围，只显示参考原子、两点层及标签；路径图只显示参考原子和完整路径；总览显示二者。核点与原子球、O-H路径与键在Y方向投影重叠，旋转观察或隐藏参考原子可逐项检查。
-
-   下图使用 **EEVEE、1920×1080、正交相机Scale=9、位置(X,Y,Z)=(1,−12,1.65)、绕X轴90°**。源标签字号 **0.11**、绕X轴90°、局部Y偏移 **−0.6**；C标签局部Z偏移 **−1.05**，N标签 **0.15**。灯光和白色标签发光材质沿用C08显示参数，第二Sun能量0.35。这些参数只影响排版与照明，不改变科学坐标/属性。
-
-   点击 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程**，保存 **C09-final.blend + C09-final.qcdata**，按0.4的归档工程步骤（N18）打包配套ZIP。完成后正常关闭并确认退出；原路径、中文移动路径和解包路径依次在一个新Blender进程打开，每次读取科学数据、标签、筛选和路径后关闭，再开下一处。示例效果图带 `-v3` 后缀。
-
-   [用户截图待引用：C09-04，三张效果图、保存路径和三处冷重开]
-
-   ![历史示例（原参数/原候选）：MCP配置相机和显示，原生EEVEE渲染：源核点与N9，C核点嵌在原子球内](screenshot/C09-points-v3.png)
-
-   ![历史示例（原参数/原候选）：原生EEVEE渲染：完整源路径，O-H路径与参考键可能投影重叠](screenshot/C09-paths-v3.png)
-
-   ![历史示例（原参数/原候选）：原生EEVEE渲染：参考分子、源C/N标记和路径总览](screenshot/C09-overview-v3.png)
-
-   ![历史示例（原参数/原候选）：Computer Use观察截图：MCP保存的最终工程与属性范围](screenshot/C09-saved-GUI.jpg)
-
-   历史批次28组MCP筛选和7项错误边界、120文件/8Dataset/224数组/4体积/20引用保全Passed；三处串行原生冷读与九次重新渲染像素一致Passed。首次原生导入、立即属性显示及路径选择证据和MCP准备分别记录。报告/输入/候选身份见[历史验证索引](../acceptance/tutorial-cu-validation.json)的 `C09_AIM_properties_paths_filters_and_cold_chain`；历史清理证据仍引用[cleanup-validation.json](../acceptance/cleanup-validation.json)。用户复做及独立科研签署仍Not Run。
-
+   可用 **EEVEE、1920×1080、正交相机 Scale=9、位置 (1,−12,1.65)、绕 X 轴 90°**。标签字号 **0.11**、绕 X **90°**、局部 Y 偏移 **−0.6**；C 标签局部 Z 偏移 **−1.05**，N 标签 **0.15**。照明与白色发光标签可沿用 C08，另加能量 **0.35** 的 Sun。这些参数只改变显示。
+6. 保存 **C09.blend + C09.qcdata**，按 0.4 归档并在原路径、移动副本及解包副本重新打开，核对源属性、标签、筛选和全部路径；每次正常关闭后再打开下一份。
 
 ### C10 真实 IRC 步序、能量与随步标注
 
-**真实输入预期：** H2O2四原子 **[O,O,H,H]**，RHF/STO-3G，中性单重态18电子；原生geomeTRIC **1.1.1** 双向IRC，61接受帧，截取0-based **29/30(TS)/31**。CSV中的1/2/3依次对应它们，FCHK打印能量 **−148.764884 / −148.764883 / −148.764884 Eh**；TS唯一虚频 **−48.1434547807 cm^-1**、最大梯度 **1.893862e-8 Eh/bohr**。三点邻近TS，构型变化小，核对坐标/游标；本例展示这一短段，不作为完整61步路径。
+**输入与目标：** P04 的 H2O2，原子顺序 **[O,O,H,H]**，RHF/STO-3G，中性单重态，18 电子。源为 geomeTRIC **1.1.1** 的双向 IRC，共 61 个接受帧；本例只使用 0 基编号 **29 / 30(TS) / 31**，对应 CSV 步号 **1 / 2 / 3**。TS 唯一虚频 **−48.1434547807 cm^-1**、最大梯度 **1.893862e-8 Eh/bohr**。三步接近 TS，需通过坐标与数值检查微小变化。
 
-1. 新建独立工程，按清单保持 **P04/steps.csv** 和 **step-001/002/003.fchk** 的相对目录。CSV是UTF-8，首行为 `step,fchk`，步号从1连续。先在 **inputs/P04/** 复制CSV为 **checks-duplicate.csv**，将第二条数据的step改为1，保留FCHK相对路径。点击 **3D视图 → N侧栏 → QCBlender → 工作流 → 导入 IRC 路径**，在 **CSV manifest: step,fchk** 输入这个副本并点 **确定**。预期拒绝并报告 **Step numbers must be explicit, unique and contiguous from 1**，场景没有新IRC对象。记录副本摘要和错误，保留原件；本批该错误输入由MCP执行并核对未变，GUI错误对话框未执行。
+1. 新建工程，保留 `P04/steps.csv` 与 `step-001.fchk`、`step-002.fchk`、`step-003.fchk` 的相对位置。CSV 为 UTF-8，表头 **step,fchk**，步号从 1 连续。在自己的 `inputs/P04/` 中复制为 `checks-duplicate.csv`，将第二条数据的步号改成 **1**，其余路径保持不变。
 
-   [用户截图待引用：C10-01，错误CSV副本、实际错误与未新增对象]
+   打开 **N 侧栏 → QCBlender → 工作流 → 导入 IRC 路径**，在 **CSV manifest: step,fchk** 选择此副本并确认。预期提示 **Step numbers must be explicit, unique and contiguous from 1**，场景不新增 IRC 对象。记录错误，保留原 `steps.csv`。
+2. 同一入口选择完整 `P04/steps.csv` 并确认。选择生成的 **IRC path** 根原子，在 **对象属性 → QCBlender → IRC Path** 核对 **Step 1/3、Energy: −148.7648840000 hartree**。源原子 **1/2/3/4** 对应固定 `qc_atom_id` **0/1/2/3**。按 0.5 以 **Data=IRC** 导出三步记录，核对步号、能量与来源；新建结果通过面板和 CSV 查看能量。
+3. 保持根原子活动，在 **对象属性 → 几何表示** 设球棍 **Style=0、Atom Radius=0.25、Bond Radius=0.07**。按 C05 的 **N 侧栏 → QCBlender → 创建视图与检查工具**，依次创建距离、角度、二面角标注；源编号分别填 **1,2**、**3,1,2**、**3,1,2,4**，小数位 **6**、字号 **0.14**，保留引线。
 
-2. 同一入口选择完整 **P04/steps.csv**，确认生成 **IRC path** 根原子。选根，在 **Properties → 对象属性 → QCBlender → IRC Path** 查看 **Step1/3、Energy: −148.7648840000 hartree**。源编号1/2/3/4对应内部qc_atom_id0/1/2/3。新建路径保留构型/逐步能量记录；按0.5选数据（Data）=IRC导出全部三步，不创建能量曲线或游标。
+   可将三标签偏移分别设为 **(1.7,−0.4,−0.9)、(1.7,−0.4,−0.2)、(1.7,−0.4,0.8)**，颜色 **(1,0.8,0.2,1)**，绕 X **90°**；也可通过 C05 的设置图标与 **Face All to Camera** 调整可读位置。
+4. 选择 **IRC path**，在 **IRC Path** 面板点击 **Next → Next → Previous**，走 **1→2→3→2**。逐步核对原子身份、坐标、面板能量与标签中的 **IRC Step**，数值与下表一致。测量值由源坐标计算。
 
-   [用户截图待引用：C10-02，完整清单、导入结果与对象属性中的步号/能量]
+   | 步号 | FCHK 打印能量 [Eh] | 距离 1,2 [Å] | 角 3,1,2 [°] | 二面角 3,1,2,4 [°] |
+   | --- | --- | --- | --- | --- |
+   | 1 | **−148.764884** | **1.401927844** | **99.818649** | **171.760508** |
+   | 2（TS） | **−148.764883** | **1.401928051** | **99.818565** | **−179.999999984** |
+   | 3 | **−148.764884** | **1.401927844** | **99.818650** | **−171.760508** |
 
-   ![历史示例（原参数/原候选）：Computer Use打开导入IRC路径，唯一活动窗口与空白工程](screenshot/C10-entry-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Computer Use填写P04清单并确认；MCP独立核对源坐标和能量](screenshot/C10-dialog-GUI.jpg)
-
-3. 保持根原子，按C05在 **对象属性 → 几何表示** 将 **Style=0** 设为球棍，**Atom Radius=0.25、Bond Radius=0.07**。在 **3D视图 → N侧栏 → QCBlender → 创建视图与检查工具** 依次点击 **创建距离标注、创建角度标注、创建二面角标注**：源原子顺序分别为 **1,2**、**3,1,2**、**3,1,2,4**，小数位 **6**、字号 **0.14**，保持引线显示。源编号指FCHK行顺序。
-
-   本示例三标签偏移分别为 **(1.7,−0.4,−0.9)、(1.7,−0.4,−0.2)、(1.7,−0.4,0.8)**，黄色 **(1,0.8,0.2,1)**，绕X轴 **90°**，正对后文Y方向相机。三种标注历史批次复用已确认GUI入口，通过MCP建立；用户可按C05的设置图标与 **Face All to Camera** 调整。
-
-   [用户截图待引用：C10-03，源编号顺序、三种标注、偏移和引线]
-
-4. 只选 **IRC path**，打开前述 **对象属性 → IRC Path**，点击 **Next** 从1到2，再到3；点击 **Previous** 返回2。逐步核对四原子身份、坐标、面板能量和标签中的 **IRC Step**。距离1,2三步约 **1.401927844 / 1.401928051 / 1.401927844 Å**；角3,1,2约 **99.818649 / 99.818565 / 99.818650°**；二面角3,1,2,4约 **171.760508 / −179.999999984 / −171.760508°**。第二步六位小数显示 **−180.000000°**。这些数值由对应源坐标计算，不由画面长度判断。
-
-   [用户截图待引用：C10-04，每步面板能量、三种标注和返回第二步]
-
-   ![历史示例（原参数/原候选）：Computer Use步1：源坐标、FCHK能量与三种随步标注](screenshot/C10-step1-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Computer Use点击Next至TS步2，能量峰值与标注同步](screenshot/C10-step2-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Computer Use点击Next至步3；另已检查Previous返回步2](screenshot/C10-step3-GUI.jpg)
-
-5. 在步3再次点 **Next**，或步1再点 **Previous**，预期报告 **IRC step is outside the imported path** 且步号、几何与标注不变。历史批次这两项端点检查通过MCP执行。
-
-   回到步2，只选根原子，在 **3D视图 → N侧栏 → QCBlender → 创建视图与检查工具 → 创建当前版本视图** 点击。当前IRC路径预期拒绝，提示 **Creating a current-version IRC view cannot preserve the full path; keep the current view**，保留完整原路径；不得将这项通过理解为已创建IRC副本。局部选择按固定源编号在原层操作；IRC不创建局部显示副本，选择变化后需要时按当前步重新计算集合。
-
-   [用户截图待引用：C10-05，端点和当前版本视图拒绝、原路径未变]
-
-   ![历史示例（原参数/原候选）：Computer Use点击当前版本视图后的预期拒绝；MCP核对原步2和全部对象未变](screenshot/C10-current-view-rejection-GUI.jpg)
-
-6. 按0.4用 **EEVEE、1920×1080、正交相机绕X90°** 输出根原子/三种标注，示例相机 **(2.8,−20,0)、Scale11**。逐步能量按面板和数据（Data）=IRC CSV核对，保留源单位hartree。按0.5完成导出，另记录保存/移动/解包后的再次导出逐值核查。
-
-   标签使用上面的黄色发光材质，Strength **1**；世界Background灰色 **(0.12,0.12,0.12)**、Strength **0.8**、Standard视图变换；两Sun能量 **2/0.35**、角宽 **0.35 rad**，Euler XYZ旋转 **(0.7,−0.3,−0.4)/(−0.4,0.4,2.5) rad**。相机/照明与排版通过MCP复用，只影响显示。
-
-   点击 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程**，保存 **C10-final.blend + C10-final.qcdata**，按0.4的归档工程步骤（N18）打包ZIP。完成后关闭并确认进程退出；原路径、中文移动路径和解包路径依次在新进程打开，核对三步数据、标注与渲染，每次关闭后再打开下一处。C11从这份尚未导入Mayer的工程继续并另存。
-
-   [用户截图待引用：C10-06，分子标注图、IRC CSV/metadata、保存位置与三处冷重开]
-
-
-   ![历史示例（原参数/原候选）：原生EEVEE渲染：四原子及步2的距离、角度、二面角](screenshot/C10-steps.png)
-
-
-   ![历史示例（原参数/原候选）：Computer Use观察截图：MCP保存的工程路径、步2能量及对象](screenshot/C10-saved-GUI.jpg)
-
-   历史批次真实导入与Previous/Next、当前版本拒绝原生操作Passed；独立坐标/能量/三种测量及错误输入由MCP核对Passed。8文件、1 Dataset/5数组/3对象引用保全，三处串行冷重开各重放1→2→3→2和三图，九次渲染像素一致Passed，全部进程退出。证据见[历史验证索引](../acceptance/tutorial-cu-validation.json)的 `C10_IRC_annotations_and_cold_chain`；用户复做及独立科研签署仍Not Run。历史[cleanup-validation.json](../acceptance/cleanup-validation.json)按原批次维护。
-
+   第二步的二面角以六位小数显示 **−180.000000°**。
+5. 步 3 再点 **Next**，步 1 再点 **Previous**，均应提示 **IRC step is outside the imported path**，步号、几何与标注保留。回到步 2，只选根原子，点击 **N 侧栏 → QCBlender → 创建视图与检查工具 → 创建当前版本视图**。预期拒绝并提示 **Creating a current-version IRC view cannot preserve the full path; keep the current view**，完整原路径保留。IRC 局部选择使用原层固定源编号；切步后如需按当前几何重新选择，应重新计算集合。
+6. 按 0.4 为三步保存分子与三种标注的效果图，并按 0.5 保存 **IRC CSV + metadata**，源能量单位为 hartree。可用 **EEVEE、1920×1080、Standard、正交相机 (2.8,−20,0)、绕 X 90°、Scale=11**。标签黄色材质 **Emission Strength=1**；世界背景 **(0.12,0.12,0.12)、Strength=0.8**；两盏 Sun 的能量 **2 / 0.35**、角宽 **0.35 rad**、Euler XYZ 旋转分别 **(0.7,−0.3,−0.4) / (−0.4,0.4,2.5) rad**。
+7. 保存 **C10.blend + C10.qcdata**，按 0.4 归档和重新打开检查。原路径、移动副本和解包副本分别重放 **1→2→3→2**，核对三步数据、标注和再次导出的 CSV。C11 从这份尚未导入 Mayer 表的工程继续，另存结果。
 
 ### C11 IRC 逐步 Mayer 键级
 
-**真实输入预期：** 承接C10的三步H2O2，每步六对Mayer。原子对 **1,2** 的三个源值为 **0.987331413844 / 0.987349305673 / 0.987331413844**；原子对 **1,3** 为 **0.950875651565 / 0.950844120525 / 0.950875651565**，单位 **dimensionless**。它们由同构型 **PySCF 2.13.1** 的实际收敛RHF/STO-3G AO密度/重叠矩阵计算。文本采用Multiwfn兼容语法，producer为PySCF；距离推断显示键不等于Mayer键级。
+**输入与目标：** 承接 C10 的三步 H2O2，每步有六对 Mayer 键级，单位 **dimensionless**。源结果由同构型 **PySCF 2.13.1** 的收敛 RHF/STO-3G AO 密度与重叠矩阵计算；文本使用 Multiwfn 兼容语法，producer 为 PySCF。距离推断的显示键与 Mayer 键级分别核对。
 
-1. 关闭其他Blender，打开已保存、**尚无Mayer表**的C10工程，保留原件，最后另存C11。保持CSV及三个 `step-001-mayer-pyscf.txt`, `step-002-mayer-pyscf.txt`, `step-003-mayer-pyscf.txt` 的相对位置。缺步检查先在 **inputs/P04/** 复制 `mayer-pyscf.csv` 为 **checks-missing-mayer.csv**，删除step3数据行并保存UTF-8。只选 **IRC path根原子**，打开 **Properties → 对象属性 → QCBlender · 对象与量子化学 → IRC Path → Import Mayer Results**，在 **CSV manifest: step,mayer_output** 指定副本并点 **确定**。预期 **Mayer step count differs from the IRC path**，没有新Mayer表/数组/曲线，原步号不变。已有表的重复导入拒绝不能代替缺步检查；本批缺步由MCP执行，错误对话框GUI未执行。
+| 原子对 | 步 1 | 步 2 | 步 3 |
+| --- | --- | --- | --- |
+| **1,2** | **0.987331413844** | **0.987349305673** | **0.987331413844** |
+| **1,3** | **0.950875651565** | **0.950844120525** | **0.950875651565** |
 
-   [用户截图待引用：C11-01，未导入的根对象、缺步CSV、实际错误及原工程未变]
+1. 打开已保存且 **尚无 Mayer 表** 的 C10 工程。保持 `P04/mayer-pyscf.csv` 与 `step-001-mayer-pyscf.txt`、`step-002-mayer-pyscf.txt`、`step-003-mayer-pyscf.txt` 的相对位置。在自己的 `inputs/P04/` 中复制清单为 `checks-missing-mayer.csv`，删除 step3 数据行，保存为 UTF-8。
 
-2. 同一入口填写完整 **P04/mayer-pyscf.csv** 并确认。预期新增 **QC IRC Mayer orders** 子表并选中，在 **对象属性 → IRC Path** 设 **Atom A=1、Atom B=2**，点 **Read Pair**；C10停步2时面板 **Step2/3、Mayer order:0.987349**。完整值见源表，单位dimensionless；新建结果不生成Mayer曲线/游标。
-
-   [用户截图待引用：C11-02，完整CSV对话框、子表、Read Pair与当前步键级]
-
-   ![Agent点击Read Pair 1,2；MCP准备真实Mayer源表并逐值核对，无新曲线（e317候选）](screenshot/display-xyz-export/C11-mayer-read-pair-e317.jpg)
-
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：从IRC path根的对象属性打开Import Mayer Results](screenshot/C11-fixed-entry-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：完整P04 Mayer CSV对话框并确认；源值由MCP独立核对](screenshot/C11-fixed-dialog-GUI.jpg)
-
-
-3. 保持 **QC IRC Mayer orders** 唯一活动，将B从2改3，A=1，点 **Read Pair**。预期步2 **Mayer order:0.950844**；源编号为FCHK顺序。按0.5选数据（Data）=Mayer导出三步全部原子对，核对1,2及1,3各三源值与来源摘要；Read Pair只读取面板选定对，不裁减导出源数组。
-
-   [用户截图待引用：C11-03，Atom A/B、Read Pair、1,3第二步键级与Mayer CSV/metadata]
-
-
-4. 保持表活动，用 **Previous/Next** 走 **2→1→2→3→2**，逐步核对根构型、能量、当前对Mayer值及C10三种标注。B=2点Read Pair重放，再恢复B=3、Read Pair、步2。值由当前步源数组决定；Mayer CSV保留全部三步和六对。
-
-   [用户截图待引用：C11-04，两原子对的步1/2/3、面板键级、构型及标注]
-
-5. 选表将B临时设 **999** 并点Read Pair，预期 **Selected atom pair is absent from Mayer results**，原数组/步号不变；恢复B=3并读取。选根IRC path再次导入同一完整CSV，预期 **This IRC path already has a Mayer import** 且无重复子表。错误与取消导出须保留完整已有结果。
-
-   [用户截图待引用：C11-05，非法原子对、重复导入实际错误和源数组保留]
-
-6. 按0.4和C10的照明/标注样式渲染实际分子、标注，并截图记录Read Pair面板；按0.5导出Mayer CSV+metadata。保存C11工程、移动和解包后逐步读取两对并再次导出核对源值。
-
-   标注的 **Visible/show_leader** 控制在每次IRC切步时重新应用；只为某张图临时改变对象渲染开关时，切步后按该图重新核对可见对象。科学记录、标注值和当前步游标不因构图修改。下图排版及渲染通过MCP执行，原生图片已逐张检查。
-
-   [用户截图待引用：C11-06，Mayer属性/CSV/metadata、构型标注图与实际相机参数]
-
-
-   ![历史示例（原参数/原候选）：原生EEVEE：步2真实构型和沿用C10的距离、角度、二面角](screenshot/C11-geometry.png)
-
-
-7. 在 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程** 另存 **C11-final.blend + C11-final.qcdata**，按0.4的归档工程步骤（N18）打包配套ZIP。及时关闭并确认进程退出，再在新Blender依次打开原路径、中文移动副本和ZIP解包副本，每次完成后关闭再开下一处。检查两份Dataset/九数组、六对象引用、1,3逐步值和源构型，并重出三图。历史批次13文件全部摘要一致，三处冷读和九次像素一致渲染Passed；九份重复冷渲染已清理，三张原图与报告仍可取。
-
-   [用户截图待引用：C11-07，独立保存位置、两份数据和三个新进程冷重开结果]
-
-   历史批次Mayer首次导入和1,3切换由Agent Computer Use完成，源值/错误边界与重复步进由MCP核对，冷读由串行原生后台Blender完成。证据见[历史验证索引](../acceptance/tutorial-cu-validation.json)的 `C11_Mayer_native_import_pairs_and_cold_chain`；本项Passed不代表完整教程或统一资格完成。用户复做与独立科研签署仍Not Run，历史[cleanup-validation.json](../acceptance/cleanup-validation.json)保持原身份。
+   只选 **IRC path** 根原子，打开 **对象属性 → QCBlender · 对象与量子化学 → IRC Path → Import Mayer Results**，在 **CSV manifest: step,mayer_output** 选择缺步副本并确认。预期提示 **Mayer step count differs from the IRC path**，不新增 Mayer 表与数据，当前步号保留。此检查应在尚未导入 Mayer 的工程进行。
+2. 同一入口选择完整 `P04/mayer-pyscf.csv` 并确认。预期新增并选中 **QC IRC Mayer orders** 子表，在 **对象属性 → IRC Path** 设 **Atom A=1、Atom B=2**，点击 **Read Pair**。C10 停在步 2 时应显示 **Step 2/3、Mayer order: 0.987349**。完整数值与上表和源文本核对；结果通过面板与 CSV 查看。
+3. 保持子表活动，将 B 改为 **3**、A 保持 **1**，点击 **Read Pair**。步 2 应显示 **Mayer order: 0.950844**。按 0.5 选 **Data=Mayer** 导出三步的全部六对记录，核对上表两对的完整数值、单位和摘要。**Read Pair** 选择只影响面板读取，不裁减导出数组。
+4. 保持表活动，用 **Previous / Next** 走 **2→1→2→3→2**，逐步核对根构型、能量、当前对的 Mayer 值与 C10 三种标注。把 **B=2** 后点击 Read Pair，再重放一次；完成后恢复 **B=3、Read Pair、步 2**。
+5. 将 B 临时设为 **999** 并点击 **Read Pair**，预期提示 **Selected atom pair is absent from Mayer results**，原数组和步号保留；恢复 B=3 并读取。再选 **IRC path** 根原子导入同一完整 CSV，预期提示 **This IRC path already has a Mayer import**，不新增重复子表。按 0.5 检查取消导出，已有结果应完整保留。
+6. 沿用 C10 的构图与照明，按 0.4 保存实际分子和标注效果图，截图记录 Read Pair 面板，保留 **Mayer CSV + metadata**。标注 **Visible / show_leader** 会在切步时重新应用；若为出图临时改过对象渲染开关，切步后再次核对当前图的可见对象。
+7. 保存 **C11.blend + C11.qcdata**，按 0.4 归档并在原路径、移动副本、解包副本重新打开。每处逐步读取 **1,2** 和 **1,3** 两对，核对源构型、能量与标注，再次导出并核对三步六对的完整源值。
 
 ### C12 ETS-NOCV 真实结果表
 
-**真实输入预期：** `P05/complex.fchk` 为CO–BH3六原子 **[C,O,B,H,H,H]**，22电子，中性单重态，RB3LYP/6-31G(d)，源能量 **−139.947332 Eh**。`P05/nocv/ets-nocv.txt` 头部声明 **24 pair、48 orbital**，实际只打印 **11行**（阈值1e−3）；插件展示这11行，不补算缺行。pair1 **Total**，轨道 **1/48**，特征值 **+0.54550/−0.54550**，pair能量 **−57.02 kcal/mol**，原文行7。pair2轨道 **2/47**，特征值 **+0.33615/−0.33615**，pair能量 **−11.91 kcal/mol**，原文行8。pair能量与两轨道能量是不同字段。此结果来自整体KS矩阵重构的 **Multiwfn近似**，不是F_TS过渡态方法；来源与许可见样本清单/NOTICE。
+**输入与目标：** `P05/complex.fchk` 为 CO–BH3，六原子 **[C,O,B,H,H,H]**，22 电子，中性单重态，RB3LYP/6-31G(d)，源能量 **−139.947332 Eh**。`P05/nocv/ets-nocv.txt` 声明 **24 pair、48 orbital**，阈值 **1e−3** 下实际打印 **11 行**；插件展示这些源行。该结果为整体 KS 矩阵重构的 **Multiwfn 近似**，方法不是 F_TS 过渡态方法。来源与许可见样本清单和 NOTICE。
 
-1. 关闭上一工程并确认其进程退出，新建Blender工程，在 **3D视图 → N侧栏 → QCBlender → 工作流 → 导入 Gaussian / Cube / XYZ** 导入 `inputs/P05/complex.fchk`；历史批次该入口复用已有成功GUI记录，通过MCP导入并核对58数组和六个源原子编号。保持 **根原子对象**为唯一活动对象，展开同侧栏 **导入外部结果 → ETS-NOCV 表**。在 **ETS-NOCV output text** 指定 `inputs/P05/nocv/ets-nocv.txt`，**Pair energy unit** 选文件声明的 **kcal/mol**，点 **确定**。预期新增 **QC ETS-NOCV pairs** 子表。导入后根仍活动，不能在根对象上寻找表的记录面板。
+| pair / Spin | 轨道编号 | 特征值 | Pair energy [kcal/mol] | 原文行 |
+| --- | --- | --- | --- | --- |
+| **1 / Total** | **1 / 48** | **+0.54550 / −0.54550** | **−57.02** | **7** |
+| **2 / Total** | **2 / 47** | **+0.33615 / −0.33615** | **−11.91** | **8** |
 
-   [用户截图待引用：C12-01，唯一活动根、ETS-NOCV表入口、路径和单位对话框]
+Pair energy 与两个轨道各自的 energy 是不同字段，核对时保留字段身份。
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：参考原子活动时的ETS-NOCV表导入入口](screenshot/C12-entry-GUI.jpg)
+1. 新建工程，使用 **N 侧栏 → QCBlender → 工作流 → 导入 Gaussian / Cube / XYZ** 导入 `P05/complex.fchk`。只选择根原子对象，打开 **导入外部结果 → ETS-NOCV 表**，填 **ETS-NOCV output text=P05/nocv/ets-nocv.txt、Pair energy unit=kcal/mol**，点击确定。预期新增 **QC ETS-NOCV pairs** 子表，根对象仍为活动对象。
+2. 在 **N 侧栏 → Display Layers** 点击 **QC ETS-NOCV pairs** 行左侧选择箭头，或在 Outliner 选中该子表。打开 **对象属性 → QCBlender · 对象与量子化学 → External Analysis Records**，以 **Record (1-based)=1 / 2** 分别核对上表、两个轨道的能量及源行；再逐条核对全部 **11 行**。在 **来源详情** 查看摘要。关联标记 **user_assigned** 表示使用者将表分配给参考构型，导入未重新计算 ETS-NOCV。
+3. 在表对象的 **External Result Browser** 设 **Pair number=1、Spin=总数（Total）**，关闭全部范围开关并点击 **应用筛选**。预期 **Matching records: 1**，对应 pair1 / 行7。再设 **Pair number=0**（全部）、**Spin=Total、Eigenvalue=Negative orbital**，启用本征值两范围，填 **从=−0.6、到=−0.5** 后应用，仍应只匹配 pair1。本征值保留源符号。
+4. 关闭两本征值与两 pair 能量范围，设 **Pair=0、Spin=Total、排序=Positive eigenvalue**，应用后应有 **11 条**，顺序为 **11,10,9,8,6,7,5,4,2,3,1**；首条 **pair11、positive_eigenvalue=0.00147、source_line=17**。相同值按 pair 顺序稳定排列。
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：真实ETS-NOCV文本路径与kcal/mol单位](screenshot/C12-dialog-GUI.jpg)
+   分别检查以下边界，每次改动后应用：pair 能量范围 **−60..−50 kcal/mol** 只匹配 pair1；**pair999** 或 **Alpha / Beta** 筛选为空；倒置范围应拒绝。通过导入对话框将声明能量单位改成与源文件不符的单位，应拒绝并保留原记录。完成后恢复 **Pair1、Spin=Total、范围关闭、排序=Pair、Record1**。
 
-2. 在 **N侧栏 → Display Layers** 点击 **QC ETS-NOCV pairs 行左侧的选择箭头**，或在Outliner选该子表；保持它唯一活动。打开 **Properties → 对象属性 → QCBlender · 对象与量子化学 → External Analysis Records**。**Record (1-based)=1** 查看pair1全部字段、原文行7，再改为 **2** 核对pair2/行8。来源摘要可在同对象面板 **来源详情** 查阅。关联标记 **user_assigned** 表示用户把表分配给参考构型，不表示插件重新进行了ETS-NOCV计算。本批原文逐行独立核对11行的全部字段和来源摘要。
+   筛选改变匹配记录与显示顺序；存在唯一关联 pair 场时可定位该场。本阶段尚未导入 pair Cube，筛选不会生成密度场；缺失源字段按缺失核对。
+5. 按 0.4 渲染关联的六原子根分子，用属性面板截图保存表记录。需要图内说明时，可用 Blender **Add → Text** 手动排版，明确标为源记录说明并保留单位、原文行、打印范围和来源；表对象本身没有可渲染网格。
 
-   [用户截图待引用：C12-02，活动子表、Record 1/2、完整源字段与行号]
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：pair1记录及原文行7；全部源字段由MCP独立核对](screenshot/C12-record1-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：Record改2后显示pair2及原文行8](screenshot/C12-record2-GUI.jpg)
-
-3. 保持表活动，打开同对象属性的 **External Result Browser**。**Pair number=1**、**Spin=总数**（英文Total）、范围勾选关闭，点 **应用筛选**，预期 **Matching records: 1** 和pair1/行7。Pair number的 **0** 表示全部。再设Pair=0、Spin=总数、**Eigenvalue=Negative orbital**，勾选本征值 **从/到** 并填 **−0.6/−0.5**，点 **应用筛选**，仍只匹配pair1。数值已有符号，本征值不取绝对值。本批范围数值由MCP准备，菜单、勾选与应用由Computer Use实际执行。
-
-   [用户截图待引用：C12-03，Pair/Spin、负本征值上下限及筛选前后结果]
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：Pair1与Total筛选仅保留一条源记录](screenshot/C12-pair1-filter-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use启用负本征值范围并应用；MCP准备数值−0.6至−0.5](screenshot/C12-negative-filter-GUI.jpg)
-
-4. 取消两本征值范围及两pair能量范围勾选，Pair=0、Spin=总数，选择 **排序 → Positive eigenvalue**，点 **应用筛选**。预期11条，首条 **pair11、positive_eigenvalue=0.00147、source_line=17**，完整顺序 **11,10,9,8,6,7,5,4,2,3,1**；相同值按pair顺序稳定排列。修改控件后必须应用。Pair energy范围使用面板标出的 **kcal/mol**，例如−60到−50只匹配pair1。不存在的pair999、Alpha/Beta筛选得到空结果；倒置范围及声明单位不符应拒绝，原记录保持不变。本批25组筛选/排序和3个错误输入由MCP验证，错误对话框未逐项点击。完成后恢复 **Pair1、Spin总数、范围关闭、排序Pair、Record1**。
-
-   [用户截图待引用：C12-04，正本征值排序首行、能量范围、空结果和实际错误]
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：正本征值排序后首条为pair11、源行17](screenshot/C12-sort-GUI.jpg)
-
-   筛选只改变显示顺序与匹配记录；已有唯一关联pair场时可定位它。本例尚未导入pair Cube，应用筛选不会生成密度场。字段缺失按缺失记录，不能推断其数值。
-
-5. 表对象只保存记录，没有可渲染网格。按0.4先选关联根分子出图，并用属性面板截图保存完整表记录。需要带说明文字的效果图时，可用Blender **Add → Text** 手动排版源字段；它是源记录说明，需同时保留单位、原文行号、打印范围和来源，不称为插件自动结果图。下图通过MCP设置原生Font对象并EEVEE渲染：1920×1080、Standard、正交相机 **(1.1,−20,0.1)**、绕X90°、Scale **12**；根显示位置X=−3、绕Z45°，仅改变显示变换，全部科学坐标/数组不变。文字位于Y=−1、朝向相机，默认Font，字号0.15–0.33。沿用C10两Sun照明，世界背景0.06灰/强度0.8；文字浅黄、Emission Strength=1。
-
-   [用户截图待引用：C12-05，表属性截图、六原子和手动源说明效果图；参数可自行调整]
-
-   ![历史示例（原参数/原候选）：原生EEVEE：六原子参考构型与手动排版的pair1/2源记录说明](screenshot/C12-overview.png)
-
-6. 在 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程** 保存 **C12-final.blend + C12-final.qcdata**，按0.4的归档工程步骤（N18）打包ZIP；一个工程完成后及时关闭。确认退出后在新Blender依次打开原路径、中文移动副本、ZIP解包副本，每处核对11条源记录、2份Dataset、60数组、来源关联、筛选参数与渲染，关闭后再开下一处。历史批次40文件摘要和三处冷读/实际像素一致重渲染Passed；后台CLI在启用插件后显式执行已有 **刷新来源**，避免定时器尚未运行就调用依赖缓存的筛选按钮。首次后台时序Failed保留，不改写为通过。
-
-   [用户截图待引用：C12-06，保存位置与三个串行新进程冷重开结果]
-
-   本批入口/源记录/筛选/排序首次确认由Agent Computer Use执行，数组和原文、错误输入、保存由MCP核对，冷读/重渲染由串行原生后台Blender完成。证据见[历史验证索引](../acceptance/tutorial-cu-validation.json)的 `C12_ETS_NOCV_records_filters_and_cold_chain`；本项不代表完整教程或统一资格完成，用户复做及独立科研签署仍Not Run。历史[cleanup-validation.json](../acceptance/cleanup-validation.json)保持原身份。
+   可用 **EEVEE、1920×1080、Standard、正交相机 (1.1,−20,0.1)、绕 X 90°、Scale=12**。根显示位置 **X=−3、绕 Z 45°**；文字放在 **Y=−1** 朝向相机，默认 Font、字号 **0.15–0.33**，浅黄色、**Emission Strength=1**。照明沿用 C10 两盏 Sun，世界背景 **0.06 灰、Strength=0.8**。这些设置只改变显示变换。
+6. 保存 **C12.blend + C12.qcdata**，按 0.4 归档和重新打开检查。在原路径、移动副本、解包副本分别核对 **11 条源记录**、构型与表的来源关联、筛选参数和效果图。C13 从此工程继续并另存。
 
 ### C13 NOCV pair Cube 与两符号密度
 
-**真实输入预期：** `P05/nocv/nocv-pair1.cub`，Pair **1 / Total**，承接C12的CO–BH3构型与ETS-NOCV表；网格 **47×50×57**，133,950个值，值域 **−0.243093..+0.0494892 electron/bohr^3**，SHA-256 `d6d3ec263d5173261791f997eabd78b8112f6685abc3bd851c70deec86a82e33`。正负是**形变密度的符号**；本例参考/单位由用户明确指定，不推断未知字段，也不套用MO相位解释。
+**输入与目标：** 承接 C12，使用 `P05/nocv/nocv-pair1.cub`，**Pair 1 / Total**。网格 **47×50×57**，**133,950** 个值，值域 **−0.243093..+0.0494892 electron/bohr^3**，SHA-256 为 `d6d3ec263d5173261791f997eabd78b8112f6685abc3bd851c70deec86a82e33`。正负表示形变密度的符号；参考构型和单位由使用者依据源计算明确指定。
 
-1. 确认上一工程已保存且进程退出，在一个Blender进程打开 **C12-final.blend**，最后另存C13。只选择 **QC ETS-NOCV pairs** 表对象为活动对象，在 **3D视图 → N侧栏 → QCBlender → 导入外部结果 → NOCV pair Cube** 打开对话框。**Signed pair Cube** 指定 `inputs/P05/nocv/nocv-pair1.cub`，**Pair number=1**，**Spin=总数**（英文Total），**Deformation density unit=electron/bohr^3**，点 **确定**并等待作业完成。预期新增并选中 **QC nocv_deformation_density** 场及配套体积源；表与六原子根保留。
+1. 打开已保存的 **C12.blend**，最后另存 C13。只选择 **QC ETS-NOCV pairs** 表对象，在 **N 侧栏 → QCBlender → 导入外部结果 → NOCV pair Cube** 打开对话框，填 **Signed pair Cube=P05/nocv/nocv-pair1.cub、Pair number=1、Spin=总数（Total）、Deformation density unit=electron/bohr^3**，点击确定并等待完成。预期新增并选中 **QC nocv_deformation_density** 场和配套体积源，表与六原子根保留。
+2. 保持新场活动，在 **对象属性 → QCBlender · 对象与量子化学** 核对网格与单位；点击 **来源详情**，核对 **Geometry / data source** 的 Cube 摘要与 **Geometry field** 的量名、单位和 Spin。选择 ETS 表，按 C12 查看 **Record=1** 的 Pair1 / Total / 源行7；在 **External Result Browser** 设 Pair1 / Total 并应用，应定位已有的唯一 pair 场。分别记录 Cube、表和参考构型摘要。六原子源顺序为 **[C,O,B,H,H,H]**；Cube 源坐标使用 bohr，界面几何坐标使用 Å。
+3. 在场对象的 **几何表示** 设 **正值阈值 [electron/bohr^3]=0.003**，勾选 **Link Thresholds**。分别勾选 **显示正值 / 显示负值**：实体模式下默认蓝色为正、红色为负；同时打开应显示两符号密度，同时关闭只剩根分子。分别保存 **C13-positive.png、C13-negative.png**。
+4. 恢复两符号显示，取消 **Link Thresholds**，设正值阈值 **0.004**、负值阈值 **0.006**，单独改变其中一个并检查另一侧保持。分别切换 **样式=实面 / 线框 / 点**，线框或点半径只影响展示。
 
-   [用户截图待引用：C13-01，活动ETS表、实际入口、路径与Pair/Spin/单位对话框]
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：ETS表活动时打开NOCV pair Cube入口](screenshot/C13-entry-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：真实pair Cube、Pair1、Total和明确密度单位](screenshot/C13-dialog-GUI.jpg)
-
-2. 保持新场唯一活动，打开 **Properties → 对象属性 → QCBlender · 对象与量子化学** 核对网格和单位；点 **来源详情**，查看 **Geometry / data source** 的Cube摘要及 **Geometry field** 的量名、单位和Spin。Pair和表关联另选 **QC ETS-NOCV pairs**，在C12的 **External Analysis Records → Record (1-based)=1** 核对Pair1/Total与原文行7，再到 **External Result Browser** 设Pair1、Spin总数并点 **应用筛选**；预期定位已存在的唯一pair场。保存证据时分别记录Cube、ETS表及构型摘要，完整表manifest绑定由维护者报告核对。六原子编号对应 **[C,O,B,H,H,H]**；Cube采用bohr坐标，界面几何坐标采用Å。不要把普通MO Cube当成pair形变密度。本批全部Cube数值、表行、构型、科学数组及VDB由MCP独立核对，登记报告见当前验证索引。
-
-   [用户截图待引用：C13-02，活动pair场、来源详情、Pair/Spin/单位与表关联]
-
-3. 在同一对象属性的 **几何表示** 将 **正值阈值 [electron/bohr^3]=0.003**，勾选 **Link Thresholds**，分别勾选 **显示正值 / 显示负值**。实体模式下，默认蓝色表示正值、红色表示负值；两者都勾选时显示完整两符号密度，均关闭时只剩根分子。正值/负值单独显示分别导出 `C13-positive.png`、`C13-negative.png`；本批求值顶点分别2,052/2,718，合计4,770，数量仅适用于本批网格和显示参数。
-
-   [用户截图待引用：C13-03，阈值、两个显隐开关及正/负结果]
-
-   ![历史示例（原参数/原候选）：MCP设置阈值与两个显隐开关，Computer Use观察：两符号密度及实际控件](screenshot/C13-both-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：原生EEVEE：仅显示正值，阈值0.003 electron/bohr³](screenshot/C13-positive.png)
-
-   ![历史示例（原参数/原候选）：原生EEVEE：仅显示负值，阈值0.003 electron/bohr³](screenshot/C13-negative.png)
-
-4. 两符号均显示，取消 **Link Thresholds**，将正值阈值设 **0.004**、负值阈值设 **0.006**，分别调整其中一个并观察独立变化。**样式**可选 **实面、线框、点**，线框/点半径只影响展示。透明度入口是 **Properties → 材质属性 → QCBlender · 节点材质 → Positive Opacity / Negative Opacity**：可分别设 **0.35 / 0.65**。这些控件通过 `qc_opacity` 属性控制已链接的Alpha；无需在原生Principled节点上寻找可直接修改的Alpha。完成后恢复实面、Link Thresholds、两阈值0.003、两Opacity1。
-
-   [用户截图待引用：C13-04，独立阈值前后与材质属性两透明度；改变参数不改变源数组]
-
-   ![历史示例（原参数/原候选）：MCP设置独立正负阈值0.004与0.006，Computer Use观察实际界面](screenshot/C13-unlinked-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：MCP设置Positive Opacity0.35及Negative Opacity0.65，Computer Use展开实际材质面板](screenshot/C13-opacity-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：原生EEVEE：不同透明度下可见内部核构型，源密度数组不变](screenshot/C13-opacity.png)
-
-5. 错误输入检查必须重新选择 **QC ETS-NOCV pairs 表对象**，在步骤1的对话框使用同一Cube但 **Pair number=999、Spin=总数**，确认；预期拒绝 **Selected pair and spin do not identify one ETS-NOCV table row**，不新增场、不改变现有科学数据。随后用 **Pair number=1、Spin=Alpha** 再次确认，预期同样拒绝。已有pair场不是导入参考对象。记录真实错误后取消对话框，恢复选择合法Pair1/Total场。本批两次错误导入由MCP调用真实异步Operator，Computer Use仅观察错误提示，不称为本批错误参数点击。
-
-   [用户截图待引用：C13-05，活动参考表、非法参数、真实错误及现有对象不变]
-
-   ![历史示例（原参数/原候选）：MCP执行错误导入后的真实界面提示，Computer Use观察截图](screenshot/C13-guard-MCP.jpg)
-
-6. 按 **N16** 检查撤销/重做：活动pair场，在 **N侧栏 → Display Layers → 复制** 创建副本，只把副本正值阈值改成0.009，原场应保持0.003。3D视口撤销/重做，核对副本存在状态、阈值、独立Mesh/节点树/材质和源绑定；移除本次临时副本时仅移除显示层。记录操作及科学数组保持不变。本批使用MCP的原生复制/撤销/重做和独立断言，未重复点击已登记操作。
-
-   [用户截图待引用：C13-06，副本阈值、原层不变及撤销/重做结果]
-
-   按0.4创建相机并F12渲染总览。本批保留C12显示变换：根X=−3、Z旋转45°；正交相机 **(−3,−20,0.65)**、X旋转90°、Scale **11**，1920×1080、Standard、EEVEE、C12两Sun与灰世界背景，隐藏C12手动说明文字。相机范围完整包围两符号密度；这些是展示参数，科学构型不变。
-
-   ![历史示例（原参数/原候选）：原生EEVEE：Pair1/Total两符号形变密度总览](screenshot/C13-overview.png)
-
-7. 在 **3D视图 → N侧栏 → QCBlender → 工程与诊断 → 保存自包含工程** 保存 **C13-final.blend + C13-final.qcdata**，按0.4的归档工程步骤（N18）打包ZIP，正常关闭并确认退出。依次在新进程打开原路径、中文移动副本、ZIP解包副本，每次核对Pair/Spin/表关联、相对VDB、控件和渲染后关闭再继续。历史批次48文件、3份Dataset、66数组、1VDB、4个科学引用及三处各四张像素一致重渲染Passed；重复冷渲染图核对后清理，四张原图和日志保留。
-
-   [用户截图待引用：C13-07，保存位置、三个串行新进程冷重开及数组/单位/关联核对]
-
-   ![历史示例（原参数/原候选）：MCP保存自包含工程后由Computer Use观察：C13标题无未保存标记，透明度已恢复](screenshot/C13-saved-MCP.jpg)
-
-   首次合法导入由Agent Computer Use确认；参数/错误输入/复制/撤销重做/保存由MCP复用与核对，冷读及重渲染由串行原生CLI执行。证据见[历史验证索引](../acceptance/tutorial-cu-validation.json)的 `C13_pair_density_controls_and_cold_chain`。C12可见启动缓存恢复另有只读报告；不把后台定时器诊断改写为通过。本项不代表统一资格完成，用户复做和独立科研签署仍Not Run。历史[cleanup-validation.json](../acceptance/cleanup-validation.json)保持原身份。
+   在 **Properties → 材质属性 → QCBlender · 节点材质** 设 **Positive Opacity=0.35、Negative Opacity=0.65**，观察两侧透明度独立变化。这些控件控制已链接的 Alpha。完成后恢复 **实面、Link Thresholds、两阈值 0.003、两 Opacity=1**。
+5. 重新只选择 **QC ETS-NOCV pairs** 表对象，使用同一导入入口与 Cube，设 **Pair number=999、Spin=Total** 并确认。预期提示 **Selected pair and spin do not identify one ETS-NOCV table row**，不新增场，现有科学数据保留。再用 **Pair number=1、Spin=Alpha** 检查同一拒绝。记录实际错误后取消对话框，重新选择合法的 Pair1 / Total 场。
+6. 按 N16 检查显示层复制：活动 pair 场，在 **N 侧栏 → Display Layers → 复制** 创建副本，只将副本正值阈值改为 **0.009**，原场应保持 **0.003**。执行 **Edit → 撤销 / 重做**，核对副本状态、阈值、独立的 Mesh / 节点树 / 材质与源绑定；只移除本次临时显示副本，源数据保留。
+7. 按 0.4 保存两符号总览 **C13-overview.png**。可沿用 C12 的根显示变换 **X=−3、Z 旋转 45°**，用正交相机 **(−3,−20,0.65)、X 旋转 90°、Scale=11**，**EEVEE、1920×1080、Standard**，照明沿用 C12，隐藏手动说明文字。构图应完整包围两符号密度。
+8. 保存 **C13.blend + C13.qcdata**，按 0.4 归档和重新打开检查。原路径、移动副本、解包副本分别核对 **Pair / Spin / 表关联**、体积数据、显示控件及重新渲染的正值、负值、透明度和总览效果；每份关闭后再打开下一份。
 
 ### X01 标准XYZ与离散帧
 
-**输入与科学含义：** v2样本包 **P06/water-dimer.xyz**（单帧6原子）及 **P06/p04-three-frames.xyz**（三帧4原子）；原始字节分别来自仓库tests/data/xyz同名文件，来源与CC BY 4.0归属见[SOURCES](SOURCES.md)。文件SHA以实际样本清单/交付索引为准。坐标为Å，多帧必须同原子数、同元素顺序；注释/帧号不自动解释为时间、优化或IRC，XYZ本身不含能量/波函数。
+**输入与目标：** 使用样本包中的 `P06/water-dimer.xyz`（单帧，6 原子）与 `P06/p04-three-frames.xyz`（三帧，每帧 4 原子），来源及 CC BY 4.0 归属见 [SOURCES](SOURCES.md)，SHA-256 按样本清单核对。坐标单位为 **Å**；多帧必须保持原子数与元素顺序。XYZ 的帧号和注释只表示源帧身份，文件自身不提供能量、波函数或正常模式。
 
-1. 按0.1核对v2包与P06两个文件。使用新工程，点 **N侧栏 → 工作流 → 导入 Gaussian / Cube / XYZ**，先选water-dimer.xyz。选新原子对象，按0.3核对6原子 **O/H/H/O/H/H**、Å坐标、UTF-8注释、源文件摘要及原子ID；连接为距离推断。新建外层Quality=3，视图参数不改变坐标。
+1. 新建工程，打开 **N 侧栏 → QCBlender → 工作流 → 导入 Gaussian / Cube / XYZ**，选择 `P06/water-dimer.xyz`。选新原子对象，按 0.3 核对 **O/H/H/O/H/H** 六原子、Å 坐标、UTF-8 原注释、源摘要与固定原子 ID。显示连接为距离推断，新建外层 **Quality=3**；改变显示参数应保留源坐标。
+2. 再导入 `P06/p04-three-frames.xyz`，选择其四原子对象，展开 **Properties → 对象属性 → QCBlender → XYZ Frames**，核对 **Frame 1/3**、原注释和 **Source lines**。点击 **Next → Next → Previous**，走 **1→2→3→2**；核对 **O/O/H/H** 顺序和 ID 保持，坐标来自当前源帧。点击 **Choose XYZ Frame**，输入 **2** 并确认，再次核对来源。多帧 XYZ 以离散帧查看，不提供插值或 Timeline 播放。
+3. 按 C05 为多帧根建立距离 **1,2**、角 **3,1,2**、二面角 **3,1,2,4** 标注。切帧时核对标签中的 **XYZ Frame**、测量值、锚点与引线同步；这些构型与 P04 同源 FCHK 对应，可使用 C10 的逐步测量表核对。帧 2 距离显示约 **1.401928 Å**、二面角约 **−180°**。
 
-   [用户截图待引用：X01-01，单帧路径、导入入口、6原子/顺序/单位/注释与完整来源；用户复做待填写]
-
-   ![Agent首次点击标准XYZ文件导入（e317候选）](screenshot/display-xyz-export/X01-single-import-dialog.jpg)
-
-   ![Agent导入单帧六原子XYZ，显示初值Quality3；源坐标/ID另经MCP核对（e317候选）](screenshot/display-xyz-export/X01-single-quality3.jpg)
-
-
-2. 再导入p04-three-frames.xyz，选其4原子对象，展开 **Properties → QCBlender → XYZ Frames**，查看 **Frame1/3**、原注释与Source lines。点击 **Next→Next→Previous**，核对三帧 **O/O/H/H** 顺序和ID始终不变、坐标取相应源帧；用 **Choose XYZ Frame** 输入帧号2并确认，检查切帧后的来源记录。XYZ仅离散查看，没有插值、Timeline播放、周期晶胞或extxyz属性。
-
-   [用户截图待引用：X01-02，XYZ Frames、Previous/Next/Choose XYZ Frame、三帧注释/行区间与坐标；用户复做待填写]
-
-   ![Agent导入三帧XYZ；Properties中的XYZ Frames入口（e317候选）](screenshot/display-xyz-export/X01-frame1.jpg)
-
-
-3. 按C05对多帧根建立距离 **1,2**、角 **3,1,2**、二面角 **3,1,2,4** 标注，保留源编号。切帧核对文字 **XYZ Frame**、测量值、锚点和引线同步；构型数值可用P04同源FCHK坐标独立计算，不能从空间投影读值。端点不可越界；未知/dummy元素、额外列、截断、NaN/Inf和Properties/Lattice/PBC文件须明确失败。无效测试只用独立输入副本，保留合法视图。
-
-   [用户截图待引用：X01-03，源编号、测量/标注随帧、端点及非法文件真实错误；用户复做待填写]
-
-   ![Agent点击Next至帧3；MCP建立距离/二面角标注并核对随帧值（e317候选）](screenshot/display-xyz-export/X01-frame3-annotations.jpg)
-
-   ![Agent点击Previous返回帧2；1,2距离1.401928Å，二面角-180°（e317候选）](screenshot/display-xyz-export/X01-frame2-annotations.jpg)
-
-
-4. 在N侧栏 **显示层 → 复制** 建独立副本，另可检查 **创建当前版本视图**。原层停帧2，副本选另一帧，核对Mesh/节点/材质/标注独立，原层帧号和参数保留；局部选择仍按固定源ID，切帧不重编号。改变副本显示参数并撤销/重做，核对原层和科学数组不变。
-
-   [用户截图待引用：X01-04，原层/副本不同帧、属性/选择/材质/标注独立及撤销重做；用户复做待填写]
-
-5. 单帧XYZ可显式与同原子顺序、同构型科学来源关联，按0.3检查真实FCHK构型；例如water-dimer.xyz与P03/water-dimer.fchk。多帧XYZ的科学来源关联明确拒绝，不能将当前帧借用第一帧的电子性质；核对错误信息及既有对象/数据绑定保留。XYZ自身不提供MO、能量或正常模式。
-
-   [用户截图待引用：X01-05，单帧真实构型关联、多帧关联拒绝及原绑定保全；用户复做待填写]
-
-6. 按0.4渲染真实构型/标注并保存 **X01.blend + X01.qcdata**；正常退出后在新进程冷重开，核对两个来源、多帧数组、当前帧/注释、原子ID与独立副本。将blend/qcdata一起复制到中文移动目录，再正常退出、用另一新进程打开；归档解包重复核查，帧选择与随帧标注应可继续操作。
-
-   [用户截图待引用：X01-06，保存与退出、新进程原路径/中文移动/解包、切帧与完整来源保留；用户复做待填写]
-
-   ![MCP复用保存自包含工程；Computer Use观察，保留12Dataset、249数组和VDB（9d3ff61）](screenshot/display-xyz-export/X01-portable-save-9d3ff61.jpg)
-
-   ![新候选冷重开MCP核对帧2、源数组和标注；Computer Use观察（9d3ff61）](screenshot/display-xyz-export/X01-cold-9d3ff61.jpg)
-
-
-X01技术证据进入[本批验证索引](../acceptance/display-xyz-export-validation.json)；用户复做与独立科研签署保持Not Run，待实际操作者填写。
+   在帧 1 点 Previous、帧 3 点 Next 检查端点拒绝。若检查非法文件，只编辑独立输入副本：未知或 dummy 元素、额外列、截断、NaN / Inf，以及含 **Properties / Lattice / PBC** 声明的扩展 XYZ 均应明确失败，合法视图保留。
+4. 在 **N 侧栏 → 显示层 → 复制** 创建独立副本，并检查 **创建当前版本视图**。原层停在帧 2，让副本切到另一帧；检查原层帧号与参数保持，Mesh、节点、材质与标注分别独立。局部选择继续使用固定源 ID，切帧不重编号。改变副本参数并执行 **Edit → 撤销 / 重做**，原层和源数组应保持。
+5. 按 C04 步骤 12 的选择顺序与 0.001 Å 容差，将单帧 `water-dimer.xyz` 关联到同原子顺序、同构型的 `P03/water-dimer.fchk`（FCHK 最后选中作为活动参考），核对关联来源与真实 FCHK 构型。再以多帧 XYZ 尝试科学来源关联，应明确拒绝，已有对象及绑定保留；当前显示帧不构成独立静态科学参考。
+6. 按 0.4 保存构型与标注效果图及 **X01.blend + X01.qcdata**。正常退出后重新打开，核对两个来源、多帧数据、当前帧、注释、原子 ID 与独立副本。再按 0.4 检查中文移动目录和 ZIP 解包副本，确认帧选择与随帧标注仍可操作。
 
 ## 2. N01–N18 节点与交互检查
 
-以上教程先通过对象/材质属性操作。需查看实际节点时，选指定视图，将一个编辑器切为 **Geometry Node Editor**，取消其图钉固定，选择该视图的 Geometry Nodes 修改器/节点组。修改器输入与对象属性共享参数；内部绑定 Dataset 的节点不作为独立通用资产。**Asset Browser → QCBlender Nodes** 按目录查找九个公共资产，在几何节点编辑器的 **添加** 菜单选择对应目录/资产并单击放置，添加到独立测试副本，核对已有输入/输出并接入真实视图。操作前保存，新增节点或改接线仅在副本进行；记录实际节点名、接线、原值→新值和可见变化，不以节点名称存在计 Passed。
+本节接着各 C 案例检查参数、节点和保存恢复。每项记录活动对象、实际入口、参数原值与新值、预期与实际结果；已有对应 C 案例的操作记录可直接引用。
 
-新建视图的外层节点按可见Frame查找：原子 **Atoms: selection and representation**；振动 **Modes: displacement and animation**；等值面 **Field: source and isosurface**；映射 **Scalar: sampling and colors**；电荷 **Charge: attributes and colors**；图例 **Legend: range and labels**；切片 **Slice: plane placement**。Frame用于阅读，不增加物理量或公共节点；实际节点和接线仍以所选视图为准。
+开始节点练习前保存工程。在 **N 侧栏 → QCBlender → 显示层 → 复制** 建立测试副本，仅选副本为活动对象。切换 **Geometry Nodes** 工作区，取消节点编辑器图钉，选择副本的 Geometry Nodes 修改器/节点组。记录原接线，保留原节点；新增节点和改线只在副本进行。修改器输入与对象属性共享参数，修改公共资产内部节点会影响其使用者，因此本节只操作资产的外部输入和接线。
 
-1. **N01 QC Select Atoms**：C01/C05 原子；Geometry Nodes 中 Selection、元素号、源编号首末；再局部集合。
+在 **Asset Browser → QCBlender Nodes** 可查找九个公共资产。实际添加时，在几何节点编辑器的 **添加** 菜单中按下文目录选择资产，再单击空白处放置。新节点连入视图、参数改变并出现预期结果后，才记录该项结果。内部绑定 Dataset 的节点由对应视图提供。
 
-   预期/需记录：源编号从1；O2用实际O编号，水再选氢；交集与源数组保持一致。
+节点较多时，可按外层 Frame 查找：原子 **Atoms: selection and representation**；振动 **Modes: displacement and animation**；等值面 **Field: source and isosurface**；映射 **Scalar: sampling and colors**；电荷 **Charge: attributes and colors**；图例 **Legend: range and labels**；切片 **Slice: plane placement**。
 
-   [用户截图待引用：N01，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
+### N01 QC Select Atoms：元素与源编号选择
 
-   对象属性控件示例：选 C05 水二聚体原子副本，在 **局部选择与标注 → 清除局部限制** 恢复完整源编号，再展开 **几何表示**。勾选 **选中项**；**Element (0 = all)=8、First Atom (1-based)=1、Last Atom (0 = all)=0** 时只保留氧编号1、4。取消选中项时输出为空。恢复勾选并设 **Element=0、First=2、Last=3**，只保留氢编号2、3；元素与编号范围共同筛选。标注引用源构型，筛选不会删除源数组或标注。此处展示对象属性控件，公共资产的独立添加与接线按本节开头另行执行。
+1. 使用 C05 的 **P03 水二聚体原子副本**。在 **对象属性 → QCBlender → 局部选择与标注** 点击 **清除局部限制**，并点击 **显示全部氢**；在 **几何表示** 恢复 **Element=0、First Atom=1、Last Atom=0、选中项勾选**。应显示源编号 1–6，O/H/H/O/H/H；标注可暂时隐藏。
+2. 在副本节点树选择 **添加 → 原子选择 → QC Select Atoms**。接着完成 N02 的表示节点接线，使本节点的 **Selection → 表示节点 Selection**。源原子编号从 1 开始，`Last Atom=0` 表示不限制末尾。
+3. 在新选择节点设 **Selection 开启、Element=8、First=1、Last=0**，应只显示氧 1、4；关闭 Selection，应无原子显示。重新开启，设 **Element=0、First=2、Last=3**，应只显示氢 2、3。
+4. 设 **Element=8、First=1、Last=3**，应只保留氧 1；再把 First 改为 2，应为空。元素与编号范围取交集。逐一核对源编号，筛选不得重编号或改动源坐标，已有标注仍引用源构型。
+5. 恢复 **Selection 开启、Element=0、First=1、Last=0**。将原显示分支临时接回组输出，使用对象属性中的同名控件按上述组合检查一次并恢复；然后接回新公共分支。保留副本供 N02、N09 使用。
 
-   ![历史示例（原参数/原候选）：Agent Computer Use（候选2eddb6a）：Element=8；MCP核对源编号1、4](screenshot/N01-element8-GUI.jpg)
+### N02 QC Style Atoms and Bonds：原子与键表示
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：取消选中项，MCP核对零顶点；源标注仍可见](screenshot/N01-selection-off-GUI.jpg)
+1. 保持 N01 副本活动，选择 **添加 → 表示 → 原子与键 → QC Style Atoms and Bonds**。将 **组输入 Geometry → 新表示节点 Geometry**、**N01 Selection → 新表示节点 Selection**，为 **Material** 选择副本已有的元素材质。最后将 **新表示节点 Geometry → 组输出 Geometry**，替换旧显示输出。
+2. 全选六个原子，在新节点将 **Style (0 ball-stick, 1 space-fill, 2 bonds)** 依次设为 **0、1、2**。应分别出现球棍、空间填充和键线；全原子键线应有两个水分子的四条 O–H 键。键由距离推断，不能作为键级结论。
+3. 在 N01 设 **Element=8**，只保留氧 1、4。空间填充应有两个氧球；键线应为空，因为两氧相距 **2.900 Å**，没有推断键。随后恢复全原子。
+4. 设 **Style=2、Bond Radius=0.07 Å**，将半径改为 **0.12 Å**，键应变粗；设 **Style=0、Atom Radius=0.25 Å**，改为 **0.35 Å**，原子球应变大。源坐标、源编号及原显示层不变。临时接回原显示分支后，对象属性 **几何表示 → 样式** 的球棍/空间填充/键线也按此检查；完成后恢复参数并接回新公共分支。
+5. 将测试分支恢复 **Style=0、Atom Radius=0.25 Å、Bond Radius=0.07 Å、VDW Scale=1**；其他已修改参数按记录恢复。继续 N09，或将原输出连线接回。
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：Element=0、First=2、Last=3；MCP核对氢编号2、3](screenshot/N01-first2-last3-GUI.jpg)
+### N03 氢显隐
 
-   公共资产练习使用 C05 的 P03 水二聚体副本：在 **显示层 → 复制** 后，仅选新副本为活动对象，清除局部限制，保持元素0、First=1、Last=0；副本标注可暂时隐藏。切换 **Geometry Nodes** 工作区，取消图钉，选择副本修改器树。在底部编辑器点 **添加 → 原子选择 → QC Select Atoms**，单击空白处放置。保留原图，按 N02 接入新增显示分支；不要修改公共资产内部节点。
+1. 选 C05 的 P03 原子副本，清除局部限制，恢复全元素与全编号范围。在 **对象属性 → QCBlender → 局部选择与标注** 点击 **隐藏氢**，应只显示氧 **1、4**。
+2. 点击 **保留指定氢**，输入源编号 **2** 并确认，应显示氧 1、4 和氢 2；源氢 3、5、6 隐藏。点击 **显示全部氢**，应恢复全部六个原子。
+3. 对一次氢显隐操作执行 N16 的撤销/重做，逐一核对源编号及原显示层。完成后恢复显示全部氢及原来的局部选择。
 
-   [用户截图待引用：N01-public，活动副本、添加菜单、选择输入和结果]
+### N04 QC Style Isosurface / QC Surface Representation：符号与表面样式
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：从添加菜单选择 QC Select Atoms](screenshot/N01-public-add-menu-GUI.jpg)
+1. 使用 C13 的 **P05 Pair 1 / Total 变形密度场副本**。在副本节点树中，通过 **添加 → 表示 → 表面** 分别添加 **QC Style Isosurface v3** 和 **QC Surface Representation**。
+2. 找到指向该场 Volume 源的 **Object Info**，连接 **Object Info Geometry → 等值面 Volume → 等值面 Geometry → 表面表示 Geometry → 组输出 Geometry**。保留原节点，替换其输出连线。新等值面组 **Style=0**，由后接的表面表示节点控制样式。
+3. 在等值面节点设 **Isovalue=0.003 electron/bohr³**，开启 **Positive Phase、Negative Phase**，分别选择副本已有的 **Positive Material、Negative Material**。依次关闭再开启两符号开关，核对相应区域消失及恢复。此处正负是变形密度的增加/减少；C01 的 MO 正负则是轨道相位。
+4. 将表面表示 **Style (0 solid, 1 wire, 2 points)** 依次设为 **0、1、2**，应分别显示实体、线框、点。记录每种样式、阈值和单位；显示形式变化不得改变源场值。
+5. 恢复 **Style=0** 和两个符号开关，或按原记录恢复；需要保留该分支时按 N18 打包保存。
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：在独立副本放置公共选择资产](screenshot/N01-public-added-GUI.jpg)
+### N05 正负等值与透明度独立调整
 
-   N02 分支连好后，在新选择节点勾选 **选中项（Selection）**，设 **Element=8、First=1、Last=0**，只显示氧1、4。取消勾选应为空；恢复勾选并设 Element=0、First=2、Last=3，应显示氢2、3。再测 Element=8、First=1、Last=3，只保留氧1；First=2、Last=3时为空。核对实际源编号，不能只比较显示数量：两个氧和两个氢在本例都求值得到84顶点、160面。恢复全原子参数后继续 N02。
+1. 另选 C13 的普通场显示副本，在 **对象属性 → QCBlender → 几何表示** 开启两个符号，记下阈值。关闭 **Link Thresholds**，设正阈值 **0.003**、负阈值幅度 **0.003 electron/bohr³**。
+2. 只把正阈值改为 **0.004**，再恢复；只把负阈值幅度改为 **0.004**，再恢复。每次应仅相应符号的等值面改变，另一符号保持原阈值。
+3. 打开 **材质属性 → QCBlender · 节点材质**，将 **Positive Opacity** 从原值改为 **0** 再恢复，再对 **Negative Opacity** 做相同操作。分别核对对应表面透明、另一表面保留。使用 Material Preview 或渲染检查透明度。
+4. 恢复两透明度、阈值和 Link Thresholds 原值。记录量与单位；阈值和透明度只改变显示，源场数值不变。若在 N04 的独立分支操作，直接修改新节点上的对应输入并记录实际接线。
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：Selection 输出接入表示节点的 Selection](screenshot/N01-public-selection-wire-GUI.jpg)
+### N06 QC Sample Scalar Field：绑定色场采样
 
-   ![历史示例（原参数/原候选）：Agent原生输入Element=8；MCP核对氧编号1、4，科学数组不变](screenshot/N01-public-oxygen-GUI.jpg)
+1. 复制 C04 的 **密度/ESP 映射视图**，仅选副本，在 **添加 → 数据 → 采样 → QC Sample Scalar Field** 放置新资产。
+2. 找到绑定 ESP 源对象的 **Object Info**，连接其 **Geometry → 新采样节点 Volume**；连接 **Position → 新采样节点 Position**。再将新节点 **Value、Valid → 副本颜色映射节点的对应输入**，替换旧采样输入。密度等值面仍提供表面几何，ESP 提供颜色值。
+3. 记录原效果后，暂时断开新采样节点的 Position 连线，依次输入 **(0,0,0)、(0,−2,0)、(0,−2,1.45) Å**。每个位置使表面使用同一采样值；按 N17 在相同源场和坐标读取数值，记录本批实际 ESP 值，单位 **hartree/e**。域外或掩码无效时，应传递无效状态。
+4. 重新连接 **Position → Position**，应恢复表面逐点采样，副本几何、有效性及颜色恢复，原视图保持不变。C03 的同网格映射也按相同原则核对几何源与颜色源。
 
-   ![历史示例（原参数/原候选）：Agent原生关闭Selection；MCP核对零顶点](screenshot/N01-public-selection-off-GUI.jpg)
+### N07 QC Map Scalar Colors v2：颜色与图例
 
-2. **N02 QC Style Atoms and Bonds**：原子；对象属性→几何表示；球棍/空间填充/键，改原子与键半径。
+1. 保持 N06 副本活动，通过 **添加 → 颜色映射 → QC Map Scalar Colors v2** 放置资产。连接 **密度等值面 Geometry → 新颜色节点 Geometry**、**N06 Value/Valid → 新颜色节点 Value/Valid**；Material 选择副本已有的映射材质。
+2. 将新颜色节点输出接到旧颜色节点原来连接的 **Join Geometry（合并几何）** 输入，删除旧的这条连线，确保只有一份表面进入合并节点。记录原来三个色域输入的接线和图例状态。
+3. 暂时关闭副本 **Show Legend**，断开新颜色节点三个色域输入，填 **Color Minimum=−0.05、Color Center=0、Color Maximum=0.05 hartree/e**；再将最大值改为 **0.1**。正值区的颜色映射应改变，负值区仍按 −0.05..0 映射，零保持中心；无效位置应显示洋红。色域必须满足最小值 < 中心 < 最大值。
+4. 将三个色域输入接回 **组输入** 对应输出，将修改器色域恢复为 **−0.05/0/+0.05 hartree/e**，恢复图例。确认表面与图例的量名、单位、范围一致。
+5. 在副本 **图例排版** 试设位置 **(−3,0,0)**、长度 **1.5**、宽度 **0.4**、字号 **0.15**；在材质控件调整一端色带颜色并恢复。应只影响副本，原视图的材质、色域和图例布局不变。完成后恢复所改布局或记录最终保留值。
 
-   预期/需记录：轮廓不同；半径Å，键是距离推断。
+### N08 QC Planar Slice：平面与采样数
 
-   [用户截图待引用：N02，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
+1. 复制 C04 的 **ESP 切片层**。记下副本原 Center/Rotation/Width/Height/Resolution，再在 **空间观察** 设 **Center=(0,0,1.45) Å、Rotation=(0,0,0)**。
+2. 在副本节点树选择 **添加 → 空间 → 切片 → QC Planar Slice**。将 **组输入 Center/Rotation → 新平面节点对应输入**，设 **Width=6 Å、Height=6 Å、Resolution=101**。新节点输出替换旧平面节点到颜色节点的几何连线，保留 ESP Volume/Position 采样及材质。
+3. 将 **Resolution 101→51**。平面采样点数应由 **10,201→2,601**，范围仍为 X/Y **−3..3 Å**、Z **1.45 Å**，量与单位不变。需要核对等值线时，按 C04 在 **切片等值线 → 更新等值线** 重新生成，再检查曲线与有效区域。
+4. 将 Width/Height/Resolution 接回组输入，恢复原平面参数。新建切片若原值为 **201/轴**，应恢复 **40,401** 个采样点；已有工程按其保存值恢复。
+5. 按 C04 再检查 **按源网格或三个原子定平面** 与 **QC Slice Gizmo** 平移/旋转，记录实际平面和曲线变化，再恢复起始平面。源网格及原切片层应保持不变。
 
-   在 C05 副本 **几何表示 → 样式** 依次选 **球棍／空间填充／键线**。局部集合仅含氧1、4时，空间填充有两个球，键线为空：两氧相距2.900 Å，没有推断的键。点 **清除局部限制**，并恢复 **Element=0、First=1、Last=0、选中项勾选**，键线显示两个水分子的O–H键。将 **Bond Radius [Å] 0.07→0.12**，键应变粗；回到球棍，将 **Atom Radius [Å] 0.25→0.35**，球应变大。原层保持自己的参数。
+### N09 QC Clip Geometry：平面与盒裁剪
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：局部氧1、4的空间填充](screenshot/N02-space-fill-GUI.jpg)
+1. 使用 N01/N02 的 P03 全六原子副本，保持 **Style=0**。通过 **添加 → 空间 → 裁剪 → QC Clip Geometry** 放置资产，连接 **原子表示 Geometry → 裁剪 Geometry → 组输出 Geometry**，替换原先的直通输出。
+2. **Plane Enabled、Box Enabled** 均关闭时，应与未裁剪视图相同。设 **Plane Origin=(0,0,1.45) Å、Plane Normal=(0,0,1)**；设 **Box Minimum=(−0.5,−2,−2) Å、Box Maximum=(0.5,2,5) Å**。法线无量纲，边界使用视图局部 Å 坐标。
+3. 仅开启平面裁剪，应保留上方水分子源编号 **4、5、6**；再同时开启盒裁剪，应保留编号 **4** 的部分显示几何；关闭平面、仅保留盒裁剪，应保留氧 **1、4** 及相关的部分键几何。对照源编号和空间位置，原始原子/场数组应保持不变。
+4. 关闭两个 Enabled，恢复全部分子显示。C01 的场可使用同一裁剪节点，按场几何另行记录边界与结果。保留公共分支时按 N18 完成打包、保存和冷重开。
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：相同局部氧集合的键线为空](screenshot/N02-bonds-empty-selection-GUI.jpg)
+### N10 QC Style Volume Fog：体积雾
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：清除局部限制后，六原子的O–H键线](screenshot/N02-bonds-all-atoms-cleared-GUI.jpg)
+1. 复制 C01 已创建的自旋雾，在副本节点树通过 **添加 → 表示 → 体积 → QC Style Volume Fog v1** 添加资产。连接 **指向自旋场的 Object Info Geometry → 公共组 Volume**、**公共组 Geometry → 组输出 Geometry**，Material 选择副本已有的雾材质。
+2. 打开 **材质属性 → QCBlender · 节点材质**，记录色域、Display Threshold 和 Opacity Scale 原值。将 **Opacity Scale** 设为 **0**，渲染应无雾；设为 **40**，在有非零有效场值的区域应出现雾。Opacity Scale 是显示不透明度缩放。
+3. 按 C01 使用的场单位调整颜色上下限，并将 **Display Threshold** 从 **0** 改为该场一个已知的非零有效幅值，记录对应区域变化；再恢复。确认正负色义、单位及源场绑定保持一致，原显示层不变。
+4. 恢复全部原材质参数和必要接线，保留前后图像。该公共组负责赋材质，颜色、阈值和光学不透明度由雾材质控制。
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：键半径0.12 Å；源数组不变](screenshot/N02-bond-radius012-GUI.jpg)
+### N11 QC Vector Glyph：偶极显示比例
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：球棍原子半径0.35 Å；原层参数不变](screenshot/N02-atom-radius035-GUI.jpg)
+1. 选 C04 的偶极对象 **QC dipole (Debye; physical direction)**，在 Geometry Nodes 修改器输入找到 **Angstrom per Debye**。同时在原子来源记录中核对偶极三分量、单位和坐标原点。
+2. 将比例 **0.5→1.5 Å/Debye**，箭头长度应变为三倍；物理方向、三分量及源坐标原点保持不变。该节点组绑定当前偶极数据，由 **创建偶极矢量** 生成。
+3. 恢复 **0.5 Å/Debye** 或记录的原值，核对箭头恢复。源偶极为零时应无非零长度箭头。
 
-   保持 N01 副本活动，在 **添加 → 表示 → 原子与键 → QC Style Atoms and Bonds** 放置资产。连接 **组输入 → 几何数据** 到新表示节点 **几何数据**，N01 节点 **Selection → Selection**；选择副本的元素材质，再将新表示节点 **几何数据** 接 **组输出 → 几何数据**，替换旧显示输出。本批示例为辅助组输入/输出创建、专用材质和布局由 MCP 准备，三条显示分支接线由 Computer Use 实际拖放；你可直接使用副本原有组输入和组输出。
+### N12 振动与 IR CSV
 
-   [用户截图待引用：N02-public，活动副本、显示分支接线与三种样式]
+1. 选 C02 的 **P02 Job 2 频率原子对象**，打开 **对象属性 → QCBlender → 科学记录与振动模式**，依次选择模式 **1、2、3**，核对源编号、频率与 IR 强度。对应三频率为 **2169.7613、4141.3837、4392.5759 cm⁻¹**，强度为 **7.2483、44.2724、29.9428 km/mol**。
+2. 记录原动画参数，在 **高级参数** 开启 **Animate**，设 **Amplitude=0.35 Å、Cycles per second=1**。在 Timeline 播放，确认实际帧号推进和分子振动，再暂停；换模式后复做。
+3. 关闭 Animate 后改变 **Phase**，并在 **几何表示 → Show Displacement Vectors** 开启位移箭头，检查箭头与所选模式对应。振幅、相位和播放速度属于显示参数，源平衡坐标不变。
+4. 按 0.5 选择 **Data=IR** 导出 CSV 与 metadata，逐行对照源日志的三频率和强度。完成后恢复模式、帧号、Animate、Amplitude、Phase、播放速度及箭头开关原值。
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：原子与键目录中的公共表示资产](screenshot/N02-public-add-menu-GUI.jpg)
+### N13 分析点、源标签与路径
 
-   ![历史示例（原参数/原候选）：Agent Computer Use：新公共表示节点放置于独立副本](screenshot/N02-public-added-GUI.jpg)
+1. 选 C08 的 **QC ESP maximum**，打开 **对象属性 → QCBlender → External Result Browser**。保持 **Source number=0**，开启 ESP 值的两个范围开关，设 **40..60 kcal/mol**，开启 **Show source label、Show matching points**，点击 **应用筛选**。
+2. 应保留最大值源 **2、3**；**Match (1-based)=1** 应突出源 2，标签显示 **maximum 2 | 57.8 kcal/mol**。改变 Match、切换点与标签开关，核对位置和读数分别响应。Source number 是源编号，Record/Match 是列表位置。取消范围、恢复 Source number=0 并应用，恢复全部点。
+3. 选 C09 的 **QC AIM CP C**，将 **Numeric CP property** 填为 **Density of all electrons**，范围设 **0.432..0.433**，应用后应保留源 **4、5**。选 **QC AIM CP N**，同一属性范围 **0..0.02** 应保留源 **9**，密度 **0.01088848625 electron/bohr³**。核对原始属性、坐标及标签，取消范围后恢复全部点。
+4. 选 **QC AIM bond paths**，将 **Path (1-based)** 从 **1→2**，分别核对 **Source residue 1 | 9 points** 和 **Source residue 2 | 47 points**。用原生对象/曲线控件检查路径显隐与线宽，随后恢复原值；路径组编号与临界点源编号分别记录。
 
-   ![历史示例（原参数/原候选）：Agent实际拖放选择及几何接线；辅助输入/输出、材质和布局由MCP准备](screenshot/N01-N02-public-route-GUI.jpg)
+### N14 成对场全量与筛选 CSV
 
-   全6原子选择时，将新节点 **Style (0 ball-stick, 1 space-fill, 2 bonds)** 依次设 **0、1、2**，球棍、空间填充和键线分别应为300/252/48顶点、512/480/32面；此计数适用于本批Quality=2、Atom Radius=0.25 Å、Bond Radius=0.07 Å、VDW Scale=1。核对4条O–H键及源编号1–6。改 Atom Radius 或 Bond Radius 时，只改变相应显示半径，不改变科学坐标；对象属性的两半径操作示例见上方。最后恢复Style=0，再按 N09 加裁剪。
+1. 选 C07 的 IGMH **QC paired field data**，在 **对象属性 → QCBlender → External Result Browser** 核对两列身份：**X=sign_lambda2_rho [electron/bohr³]、Y=delta_g [electron/bohr⁴]**。
+2. 开启 X/Y 的四个范围，填 **X from=−0.04、X to=0.04、Y from=0.001、Y to=0.02**，点击 **Apply Filter**。按 0.5 设 **Data=paired、Rows=Current filter**，导出后核对所有匹配有效体素、原体素索引、列单位及 metadata 的筛选条件，记录实际行数。
+3. 开启 **Swap value columns**，保持四个数值并重新应用/导出。范围应作用于交换后的量列，结果可能改变。随后同步交换 X/Y 范围再应用/导出，应与步骤 2 保留同一体素集合。
+4. 对 C07 的 IRI 记录，使用 **sign_lambda2_rho=−0.04..0.04 electron/bohr³、IRI=0.1..2** 重复筛选与同步交换；IRI 的定义及单位按本批导入记录核对。
+5. 分别导出 **Rows=All source records**。本教程对应原网格应有 **539,448** 个有效体素，核对完整有效体素与原索引。恢复未交换列和原筛选状态，并保存各次 CSV/metadata；移动冷重开后重新导出比较。
 
-   ![历史示例（原参数/原候选）：Agent原生Style=1；MCP核对六原子空间填充252顶点](screenshot/N02-public-spacefill-GUI.jpg)
+### N15 显示层独立性与参数复制
 
-   ![历史示例（原参数/原候选）：Agent原生Style=2；MCP核对4条真实O–H推断键及全部源编号](screenshot/N02-public-bonds-GUI.jpg)
+1. 在 C02 频率原子或 C05 静态原子工程中，选目标层，在 **N 侧栏 → QCBlender → 显示层 → 复制** 创建副本。将副本原子半径 **0.25→0.35 Å**，改变副本材质颜色和一个标注位置，分别检查原层的节点、材质、标注和参数保持原值。
+2. 在显示层列表对副本执行排序、视口显隐、渲染显隐，再恢复；另建一个临时副本测试删除，核对原层和源数据保留。选原层，点击 **创建视图与检查工具 → 创建当前版本视图**，应新增一层并保留原层。
+3. 多选同类层，最后选择参数源使其活动。在 **3D Viewport → 对象菜单或对象右键菜单 → QCBlender → 复制显示参数到选中视图** 选择所需类别并确认。核对所选参数被复制，而目标位置、局部选择、裁剪和图例布局保留。
+4. 数值类别要求同物理量、同单位及适用的同电荷方法；不兼容时应明确拒绝且目标保留原状态。按 N16 撤销/重做一次复制操作，再恢复测试参数。源科学数组及摘要不得变化。IRC 层的复制与换步边界按 P1-B、C10 单独检查。
 
-3. **N03 氢显隐**：C05含氢原子；局部选择与标注的三个氢按钮、撤销重做。
+### N16 撤销与重做
 
-   预期/需记录：指定氢身份正确，副本不改原层。
+1. 在 C01、C05、C06、C07–C13 中，每次选定一个明确操作，先记录活动对象、原参数/筛选/步骤、节点、标注和科学绑定；再执行该操作并记录变化后的状态。
+2. 将鼠标移入 3D Viewport，使用顶部 **Edit（编辑）→ Undo（撤销）**，核对恢复操作前的对象、几何、节点、数据关联、标注与显示参数；再点 **Edit → Redo（重做）**，核对恢复操作后的状态。同一视口也可使用 **Ctrl+Z / Ctrl+Shift+Z**，记录实际入口。
+3. 覆盖氢显隐、局部选择、显示参数复制、外部结果筛选及可操作的步进。C08 检查 ESP 源记录，C09 检查 AIM 源记录，C10 检查 IRC 当前步，C11 检查 Mayer 配对显示，C12 检查 ETS-NOCV Pair 筛选；P1-A/P1-B 的关联及共享 mesh 边界按专项步骤复做。
+4. 最后选择需要保留的状态，再按 0.4 保存。若撤销或重做不一致，记录原错误、最短操作顺序和工程副本，保留该项 Failed。
 
-   [用户截图待引用：N03，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
+### N17 游标、探针与采样线剖面
 
-4. **N04 QC Style Isosurface / QC Surface Representation**：C01/C13场；几何表示；两符号开关与实体/线框/点。
+1. 选 C04 的 ESP 场，在 **3D Viewport → N → View → 3D Cursor** 依次设 **(0,0,1.45)、(0,0,0)、(20,20,20) Å**，每次点 **QCBlender → 创建视图与检查工具 → 读取游标处场值**。记录采样位置、量、单位及有效性。域外或无效值不得记为物理零；核附近是否无效由实际网格掩码决定，若仍有效则记录真实值，内部无效域项保持 Not Run。
+2. 点 **点击探针 · 几何场**，在表面点击预览，按 **Enter** 保存；再次进入并取另一点，按 **Escape**，应恢复进入探针前的记录。选绑定 ESP 色场的密度表面，再用 **点击探针 · 绑定色场** 重复，确认采样的是 ESP，单位为 hartree/e。
+3. 选 ESP 场或切片，将游标设为 **(0,−2,1.45) Å**，点 **记录剖面起点**；保持同一活动视图和绑定，将游标设为 **(0,+2,1.45) Å**，点 **采样线剖面数据**。设 **Sample field=Geometry、Samples=101**；若检查绑定色场，另行明确选择 **Color**。
+4. 选新建的 **QC line profile data** 数据记录，按 0.5 设 **Data=profile** 导出。应有 **101 行、距离 0..4 Å**，端点、单位、valid 和源网格/绑定正确，无效值留空。该记录保存本次采样快照。保存、冷重开后重新导出，比较源值与 metadata。
+5. 将游标和探针记录恢复到需要保留的状态，记录恢复动作；保留各采样记录与其导出文件的对应关系。
 
-   预期/需记录：两符号与三样式确实变化；各量符号含义正确。
+### N18 保存、移动、冷重开与恢复
 
-   公共组手动连接：先在C13的场显示对象上执行“复制当前显示”，保持副本活动；切换到Geometry Nodes编辑器，修改器选择该副本的显示树。保留原对象和原树。通过 **添加 → 表示 → 表面** 分别添加 **QC Style Isosurface v3** 和 **QC Surface Representation**。把树中指向对应Volume源的Object Info的Geometry输出拖到新等值面组的Volume输入，等值面Geometry输出拖到表面表示Geometry输入，表面表示Geometry输出拖到该副本Group Output的Geometry输入。新等值面组Style保持0，避免两层重复转换。
-
-   ![历史示例（原参数/原候选）：Agent实际添加菜单：表示/表面公共资产](screenshot/N04-01-catalog.jpg)
-
-   在新等值面节点上输入Isovalue=0.003（P05 Pair1/Total，electron/bohr³），正负Phase均开启；需要颜色时在Positive Material/Negative Material选择副本已有的正/负材质。表面表示Style依次设0、1、2，记录实际显示和三次截图；返回需要保留的样式后保存。
-
-   ![历史示例（原参数/原候选）：Agent实际Volume与输出接线](screenshot/N04-02-iso-linked.jpg)
-
-   ![历史示例（原参数/原候选）：Agent原生输入Isovalue=0.003](screenshot/N04-03-isovalue.jpg)
-
-   ![历史示例（原参数/原候选）：Agent实际连接独立表面表示分支；MCP辅助对象和材质准备单列](screenshot/N05-01-surface-linked.jpg)
-
-   ![历史示例（原参数/原候选）：Agent原生Style=1；独立边数断言Passed](screenshot/N05-02-wire.jpg)
-
-   ![历史示例（原参数/原候选）：Agent原生Style=2；独立顶点数断言Passed](screenshot/N05-03-points.jpg)
-
-   维护者渲染：以下仅显示独立公共分支，原层在诊断渲染期间临时隐藏，随后完全恢复。MCP原生求值得到实体4770顶点/4762面，线框152384顶点/76192面，点200340顶点/381600面；相关参数、接口和冷读报告见验证索引 `remaining_public_surface_assets`。
-
-   ![历史示例（原参数/原候选）：MCP原生渲染：公共实体分支](screenshot/N04-style-0.png)
-
-   ![历史示例（原参数/原候选）：MCP原生渲染：公共线框分支](screenshot/N04-style-1.png)
-
-   ![历史示例（原参数/原候选）：MCP原生渲染：公共点分支](screenshot/N04-style-2.png)
-
-   [用户截图待引用：N04，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
-
-5. **N05 独立等值与透明度**：C01/C13场；关Link Thresholds、改两阈值；材质属性 → QCBlender · 节点材质 → Positive Opacity / Negative Opacity分别调两透明度。
-
-   预期/需记录：分别响应，字段单位正确，源数值不变。
-
-   [用户截图待引用：N05，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
-
-6. **N06 QC Sample Scalar Field**：C04密度表面绑定ESP；C03同网格采样；Geometry Nodes检查接线。
-
-   预期/需记录：几何和颜色分工；域外无效，与来源绑定一致。
-
-   [用户截图待引用：N06，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
-
-   选 C04 的密度/ESP 映射视图，在 **N 侧栏 → 显示层** 选该层，点 **复制**；仅选新副本作为活动对象，切换 **Geometry Nodes** 工作区，底部编辑器取消图钉，选择副本的修改器树。原视图保持原参数。示例副本为 `QC electron_number_density.003`。
-
-   ![历史示例（原参数/原候选）：Agent原生显示层复制；此后节点调整仅作用于副本](screenshot/N15-field-copy-GUI.jpg)
-
-   在几何节点编辑器点 **添加 → 数据 → 采样 → QC Sample Scalar Field** 并放置。找到绑定 ESP 源对象的 **物体信息**，将其 **几何数据** 输出接新节点 **体积（Volume）**；将 **位置（Position）** 节点的输出接新节点 **位置**。将新节点 **值（Value）** 和 **有效（Valid）** 接副本颜色映射节点对应输入，替换旧取样输入；密度等值面几何仍连接颜色节点，不能把 ESP 源体积用作密度等值面输入。
-
-   ![历史示例（原参数/原候选）：Agent原生添加取样资产；后续Value/Valid接线由MCP完成](screenshot/N06-sample-asset-added-GUI.jpg)
-
-   在副本测试取样位置输入 **(0,0,0)、(0,−2,0)、(0,−2,1.45) Å**，核对同一位置的表面颜色一致。历史0.7 Å网格三ESP值 **1.224086233、−0.044865982、−0.022647081 hartree/e** 仅绑定旧索引；当前0.2 Å网格须重新读取并记录实际值，不沿用此数值。域外/无效检查见N17。
-
-   ![历史示例（原参数/原候选）：位置默认0/0/0；GUI体积接线、MCP数据核对；表面与图例分别计算](screenshot/N06-sample-origin-linked-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent原生把取样位置Y改为−2；162个真实表面顶点均与独立插值参考一致](screenshot/N06-sample-Y-negative-two-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent原生把取样位置Z改为1.45；科学值见同批报告](screenshot/N06-sample-Z-one-point-four-five-GUI.jpg)
-
-   最后重新连接 **位置 → 位置**，恢复表面逐点采样。副本几何、值、有效性和颜色分量应与断开前相同，源视图不变。
-
-   ![历史示例（原参数/原候选）：Agent原生恢复Position接线；MCP核对副本求值摘要恢复且原视图不变](screenshot/N06-sample-Position-restored-GUI.jpg)
-
-7. **N07 QC Map Scalar Colors v2**：C04映射视图；颜色映射、零中心/有效范围、图例排版、材质色带。
-
-   预期/需记录：色标/量单位同步，范围递增，无效洋红，副本布局独立。
-
-   [用户截图待引用：N07，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
-
-   保持 N06 副本活动，在几何节点编辑器 **添加 → 颜色映射 → QC Map Scalar Colors v2** 放置资产。将密度等值面输出接其 **几何数据**，新取样节点 **值/有效** 接对应输入；**材质**选择副本原颜色映射节点的专用材质。新节点输出替换旧颜色节点到 **合并几何** 的连线，不能在多输入合并口同时保留两份表面。
-
-   ![历史示例（原参数/原候选）：Agent原生放置颜色资产；接线和副本专用材质由MCP设置](screenshot/N07-color-asset-added-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：MCP连接新颜色节点；同色域下副本几何和颜色分量与原管线相同](screenshot/N07-color-asset-connected-MCP.jpg)
-
-   测试节点独立输入时，先关闭副本 **Show Legend**，暂时断开新节点三个色域输入，填 **Color Minimum=−0.05、Color Center=0、色彩最大值=0.05**；再把最大值改为 **0.1**。正值区的颜色分量应改变，负值区仍按 −0.05..0 映射，零仍为中心。随后将三个色域输入接回 **组输入** 对应输出，并恢复图例；使表面和图例共同使用修改器的 −0.05/0/+0.05 色域。
-
-   ![历史示例（原参数/原候选）：Agent原生把色彩最大值改为0.1；MCP独立核对零中心分段映射，测试期间图例关闭](screenshot/N07-color-upper-bound-GUI.jpg)
-
-   副本图例可单独设位置 **(−3,0,0)**、长度 **1.5**、宽度 **0.4**、字号 **0.15**；源视图的节点坐标、Frame、材质、色域和求值结果应保留原值。
-
-   ![历史示例（原参数/原候选）：MCP调整副本图例；Computer Use观察截图，原显示层不变](screenshot/N07-field-copy-legend-independent-MCP.jpg)
-
-8. **N08 QC Planar Slice**：C04切片；空间观察、定平面/Gizmo、切片等值线。
-
-   预期/需记录：平面/分辨率/曲线变化，采样与单位一致。
-
-   [用户截图待引用：N08，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
-
-   选 C04 的 ESP 切片层，按 N06 的复制步骤生成独立副本，示例名 `C04 public slice asset test`；仅选副本，编辑其 Geometry Nodes 修改器树。在 **添加 → 空间 → 切片 → QC Planar Slice** 放置新资产。将 **组输入 → 中心/旋转** 接新节点对应输入；**宽度=6、高度=6、分辨率=101**。用新节点输出替换旧平面节点到颜色节点的几何连线，保留原有 ESP Volume/Position 采样及材质。
-
-   ![历史示例（原参数/原候选）：Agent原生加入平面资产，MCP绑定中心/旋转并连接真实ESP切片](screenshot/N08-slice-asset-connected-MCP.jpg)
-
-   把新节点 **分辨率 101→51**：切片网格顶点应由 **10,201→2,601**，范围仍为 X/Y **−3..3 Å**、Z **1.45 Å**，取样量和单位不变。本项测试新增节点的网格；等值线的重建沿用 C04 步骤，不根据原有曲线宣称已重建为51分辨率。最后将宽度/高度/分辨率接回组输入；新建外层若保持本轮201/轴，应恢复40,401点，已有工程仍按其保存的实际分辨率恢复。公共资产独立初值101不变，原层参数保留。
-
-   ![历史示例（原参数/原候选）：Agent原生修改新平面节点分辨率；MCP核对2601顶点和21点独立插值参考](screenshot/N08-slice-resolution-51-GUI.jpg)
-
-9. **N09 QC Clip Geometry**：C01原子/场；添加裁剪控件后空间观察。
-
-   预期/需记录：平面/盒分别裁预期区域，原始数据不变。
-
-   [用户截图待引用：N09，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
-
-   先用 N01/N02 的 P03 全6原子副本练习；C01 的场显示可使用同一裁剪入口，按其几何另外记录预期。保持副本活动、Style=0，在 **Geometry Nodes → 添加 → 空间 → 裁剪 → QC Clip Geometry** 放置资产。连接 **QC Style Atoms and Bonds → 几何数据 → QC Clip Geometry → 几何数据 → 组输出**，替换之前直通输出；Plane Enabled 与 Box Enabled 均关闭时，应与未裁剪几何完全相同。
-
-   [用户截图待引用：N09-public，活动副本、裁剪分支、边界输入及保留区域]
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：空间、裁剪目录中的 QC Clip Geometry](screenshot/N09-public-add-menu-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent Computer Use：放置公共裁剪资产](screenshot/N09-public-added-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent实际拖放表示到裁剪、裁剪到输出；边界向量由MCP准备](screenshot/N09-public-route-GUI.jpg)
-
-   设置平面 **Origin=(0,0,1.45) Å、法线=(0,0,1)**，方框 **Minimum=(−0.5,−2,−2) Å、Maximum=(0.5,2,5) Å**。仅勾选平面Enabled时保留上方水分子源编号4、5、6；再同时勾选方框Enabled时保留编号4的部分几何；关闭平面、只保留方框时保留氧1、4及与其关联的部分键几何。每次比较裁剪前后位置和源编号，科学数组保持不变。本批依次核对150、50、100顶点与CPU半空间/闭区间盒参考完全一致；这是所记录质量、半径和边界的计数，不能代用于其他视图或场网格。最后关闭两项Enabled，恢复300顶点、512面。
-
-   ![历史示例（原参数/原候选）：Agent原生开启平面裁剪；MCP逐顶点核对保留4、5、6](screenshot/N09-public-plane-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent原生同时开启平面和方框；MCP核对交集50顶点、编号4](screenshot/N09-public-intersection-GUI.jpg)
-
-   ![历史示例（原参数/原候选）：Agent原生仅保留方框裁剪；MCP核对100顶点及源编号1、4](screenshot/N09-public-box-GUI.jpg)
-
-   按0.4先 **打包关联库**，再 **保存自包含工程** 和 **归档工程**；关闭本进程后，分别在新进程读取原工程、中文移动副本、ZIP解包副本。核对公共节点接口、所有输入、源编号和科学数组。Agent本批保存、归档及冷重开使用已登记操作的MCP/命令行复用；三个副本图、几何、50数组和48标注完全一致，移动/解包位置未取得外部节点库仍能求值。完整C05成图与其他案例验收分别记录。
-
-   ![历史示例（原参数/原候选）：Computer Use观察已保存工程；裁剪恢复及MCP打包保存，完整成图另验收](screenshot/N09-public-restored-saved-MCP-observation.jpg)
-
-10. **N10 QC Style Volume Fog**：C01自旋雾；几何表示/颜色映射/材质控制。
-
-   预期/需记录：颜色/阈值/不透明度变化，全透明无雾。
-
-   公共组手动连接：在C01已创建的自旋雾副本上保持活动，Geometry Nodes编辑器选择副本的显示修改器；通过 **添加 → 表示 → 体积 → QC Style Volume Fog v1** 添加公共组。Object Info的Geometry输出接其Volume输入，公共组Geometry输出接该副本Group Output。Material选择对应雾材质；该组只赋材质，颜色/阈值/Opacity Scale在材质面板或其着色树中调整，科学字段不改变。
-
-   ![历史示例（原参数/原候选）：Agent实际体积公共资产添加菜单](screenshot/N10-01-catalog.jpg)
-
-   ![历史示例（原参数/原候选）：Agent实际两条Geometry接线；signed光学材质由MCP另行准备](screenshot/N10-02-fog-linked.jpg)
-
-   维护者补验使用C13真实Pair1/Total带符号变形密度的独立Volume分支。Opacity Scale=0渲染全透明，40有非零alpha；本例Eevee光照下RGB偏暗，另用Cycles16 samples/640×360检查可见雾。下图是低采样诊断，参数和MCP渲染工具身份见索引，不作为C01用户点击或科研签名。48文件/3Dataset/66数组与两个内嵌节点库在新进程冷读通过，原工程和科学数组未变。
-
-   ![历史示例（原参数/原候选）：MCP原生Cycles诊断：真实带符号变形密度雾，光学缩放40](screenshot/N10-fog-Cycles-40.png)
-
-   [用户截图待引用：N10，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
-
-11. **N11 QC Vector Glyph**：C04偶极；节点或几何控件Angstrom per Debye。
-
-   预期/需记录：显示长度变，物理方向/三分量/原点不变。
-
-   [用户截图待引用：N11，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
-
-12. **N12 振动与IR CSV**：C02频率原子；科学记录模式、Advanced/高级参数、Timeline、位移箭头；按0.5导出数据（Data）=IR。
-
-   预期/需记录：切模式/实际帧推进/IR记录与导出值核对，平衡坐标不变。
-
-   [用户截图待引用：N12，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
-
-13. **N13 分析点标注**：C08/C09点/路径层；External Result Browser、应用筛选。
-
-   预期/需记录：显隐/定位/标签随记录选择，源值保留。
-
-   [用户截图待引用：N13，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
-
-14. **N14 成对场全量/筛选CSV**：C07 paired记录；External Result Browser→Apply Paired Field Filter、Swap value columns；0.5导出paired。
-
-   预期/需记录：两字段量/单位、全量有效体素539,448及原索引；筛选历史36,391/28,630/12,736只作本轮CSV行数待核实预期，交换列后筛选条件随角色保存。
-
-   [用户截图待引用：N14，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
-
-15. **N15 显示层独立性**：C02/C05副本；Display Layers、创建当前版本视图、右键复制显示参数。
-
-   预期/需记录：节点/材质/标注独立，排序/显隐/删除正确，原数组SHA不变。
-
-   [用户截图待引用：N15，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
-
-16. **N16 撤销/重做**：C01/C05/C06/C07–C13；保持目标对象活动，将鼠标移入3D视口，在顶部 **Edit（编辑）→ Undo（撤销）/Redo（重做）** 各执行一次；同一视口也可用Ctrl+Z/Ctrl+Shift+Z。记录实际使用的入口，操作后核对对象、节点、科学绑定和显示结果。
-
-   预期/需记录：对象、节点、数据关联恢复；失败先记缺陷，不吞异常。
-
-   历史维护者补验记录：候选deb9416中，C08 ESP源记录筛选、C09 AIM源记录筛选、C10真实IRC步进、C11 Mayer配对重绘、C12 ETS-NOCV Pair筛选均通过原生撤销、重做和再次恢复。重复操作按登记规则由MCP执行，显式保存操作前/后原生undo检查点；对象、节点、几何、标注、数据绑定及科学数组与完整场景快照严格一致。五个工程分别保存并正常关闭，再逐个新进程冷读通过，仅规范化portable路径。该记录不替代用户按上述菜单复做，也不填写独立科研签名；完整报告见验证索引 `C08_C12_native_undo_redo`。
-
-   [用户截图待引用：N16，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
-
-17. **N17 游标/无效域/探针/采样线剖面数据**：C04场/切片；读取游标、点击探针、记录剖面起点/采样线剖面数据/0.5导出profile。
-
-   预期/需记录：量单位与坐标换算正确，无效/域外非零替代；CSV重导一致。
-
-   [用户截图待引用：N17，活动对象、参数变化前后与实际结果；可引用对应 C 案例步骤证据]
-
-18. **N18 保存/移动/冷重开与恢复**：每例先执行0.4，保留完整`.blend + .qcdata`、输入及摘要。一个工程完成后保存并正常退出，确认该Blender进程退出，才打开下一工程或冷重开副本。
-
-   若显示缓存确实丢失，先复制工程与完整配套数据作为恢复副本，只打开此副本。活动对象选需要恢复的**QC标量场视图**，在 **3D Viewport → N → QCBlender → 工程与诊断 → 重建显示缓存** 点击一次；等待真实作业完成，核对原数组、来源、单位、VDB绑定和显示几何。该操作从已保存科学数组生成缓存；缺科学数组应恢复原配套数据。示例为核附近诊断ESP，显示阈值30 hartree/e、56顶点/54面。
-
-   [用户截图待引用：N18-01，活动场对象、重建按钮、完成状态与恢复结果]
-
-   ![历史示例（原参数/原候选）：Agent首次Computer Use点击重建显示缓存；MCP随后核对终态与全部科学数组、关联对象和几何](screenshot/N18-recovery-entry-GUI.jpg)
-
-   若同一Dataset目录已移动，保持对应QC场对象活动，点 **工程与诊断 → 重新定位数据**。文件浏览器进入保留的同一Dataset目录，选择`manifest.json`；编辑文件名后按Enter提交文字，再点击确认。核对关联对象和体积路径均更新，科学身份及数组摘要一致。只用原Dataset，其他Dataset的manifest会明确拒绝。创建场、保存自包含工程与重新定位前，插件会让 Blender 实际读取目标 VDB 的 qc_value、qc_negative、qc_valid 网格；失败信息包含路径和原生原因，原对象及工程绑定保留。Windows 上文件存在而 Blender 无法读取时，可选择较短的工程位置重试。
-
-   [用户截图待引用：N18-02，同一Dataset的manifest、实际路径及完成后的场对象]
-
-   ![历史示例（原参数/原候选）：Agent首次Computer Use在原生文件对话框选择同一Dataset的manifest.json并确认；MCP核对路径迁移与科学身份](screenshot/N18-relocate-dialog-GUI.jpg)
-
-   ![Agent Computer Use确认同一manifest的损坏VDB测试副本；显示原生原因及路径，MCP核对原绑定不变（a3ed826）](screenshot/reliability/07-native-volume-error.png)
-
-
-   恢复失败时记录原错误和日志，保留工程及输入。缺科学数组、不匹配manifest均须明确失败，不把它们当作物理零或新数据。历史维护者只在独立诊断副本暂存一份数组后执行拒绝检查，随后按SHA恢复；用户教程不要求删除配套数据。
-
-   [用户截图待引用：N18-03，若发生失败，记录完整错误及输入身份；正常工程无需人为破坏数据]
-
-   ![历史示例（原参数/原候选）：MCP缺科学数组请求留下的错误报告，Computer Use仅观察截图；数组随后按原SHA恢复，绑定未被替换](screenshot/N18-missing-array-MCP.jpg)
-
-   恢复完成后仍在该唯一进程点 **工程与诊断 → 保存自包含工程** 另存；核对`.blend + .qcdata`后正常关闭。新进程冷重开，复核Dataset、数组、体积、节点和渲染。中文移动和归档解包继续按0.4逐个执行。此诊断工程55个配套文件、3个Dataset/108数组/1个VDB一致，冷读和重渲染像素一致；示例图仅为核区小网格片段。
-
-   [用户截图待引用：N18-04，保存目标、唯一新进程的工程路径、科学记录与恢复渲染]
-
-   ![历史示例（原参数/原候选）：MCP保存恢复后的核区诊断ESP，原生Blender渲染；新进程冷读及像素一致，阈值30 hartree/e](screenshot/N18-recovered-diagnostic.png)
-
-   历史N06–N08证据：加入公共资产后，先执行 0.4 的 **打包关联库**，再用 **保存自包含工程** 另存并归档。示例工程 `C04-public-nodes-packed.blend + .qcdata` 含两个内嵌节点库；三次冷重开分别使用新的唯一可见进程，MCP核对17个对象引用、7个Dataset、222数组、4个体积文件和117文件摘要。移动和解包时原相对路径的节点库不存在，内嵌资产仍求值正常。
-
-   ![历史示例（原参数/原候选）：MCP另存并归档公共节点工程；Computer Use观察截图](screenshot/N18-public-nodes-packed-saved-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：中文移动副本冷重开，外部节点库不存在；MCP求值核对、Computer Use观察](screenshot/N18-public-nodes-cold-moved-MCP.jpg)
-
-   ![历史示例（原参数/原候选）：ZIP解包副本冷重开，内嵌节点库和科学数组完整；MCP核对、Computer Use观察](screenshot/N18-public-nodes-cold-unpacked-MCP.jpg)
-
-
+1. 每例按 0.4 保存完整 **`.blend + .qcdata`**、输入与摘要。手动添加公共节点的工程先执行 **文件 → 外部数据 → 打包关联库**，再 **保存自包含工程** 和 **归档工程**。
+2. 正常关闭并确认 Blender 进程退出，再以新进程依次检查原位置、中文/空格移动目录和 ZIP 解包目录；每处检查后关闭再开下一处。核对来源、单位、步骤/帧号、数组、体积、公共节点接口、接线、材质、标注和渲染；有 CSV 的重新导出比较。
+3. 若显示缓存丢失，先复制工程与完整配套数据作为恢复副本，只打开此副本。选需要恢复的 **QC 标量场视图**，点击 **3D Viewport → N → QCBlender → 工程与诊断 → 重建显示缓存**，等待作业完成。核对原科学数组、来源、单位、体积绑定和显示结果；该操作需要已保存的科学数组。
+4. 若同一 Dataset 目录已移动，保持对应 QC 场对象活动，点 **工程与诊断 → 重新定位数据**。在文件浏览器中进入保留的同一 Dataset 目录，选择 **manifest.json**；编辑文件名后按 Enter，再确认。应更新关联对象与体积路径，并保持科学身份和数组摘要一致。
+5. 缺科学数组、不同 Dataset 的 manifest 或 Blender 无法读取的 VDB 应明确失败，保留原对象和绑定。记录完整路径、原生错误和日志；缺数组时恢复原配套数据，Windows 路径问题可用较短位置的完整工程副本重试。正常工程无需人为破坏数据。
+6. 恢复完成后 **保存自包含工程** 另存，核对配套数据后正常关闭；在新进程重新打开并按步骤 2 复核。将保存、原位置冷重开、移动冷重开、解包冷重开及实际发生的恢复分别记录。
 
 ## 3. 结果记录与独立科研签署
 
 ### 3.1 操作证据与身份
 
-每个案例按下表逐步填写，可复制行；未实际执行保持 Not Run。所有路径相对本次批次，用户截图引用填写在相应操作步骤后。本文插图标为 Agent 操作示例，只证明图中所示动作与状态；未展示步骤继续保留待引用，不据此认定全教程 GUI Passed。
-
-| 案例/步骤 | 活动对象/选择顺序 | 编辑器/面板/实际文字 | 参数原值→新值 | 预期→实际 | 结果 | 证据位置 | 执行者/方式 |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| CXX/步骤号 | 待填写 | 待填写 | 待填写 | 待填写 | Not Run | 证据见各步骤 | 待填写 |
-
-| 证据身份 | 可证明的范围 | 本次填写 |
-| --- | --- | --- |
-| User：用户实际操作 | 用户执行的明确点击与反馈；无反馈步骤不推定完成 | Not Run；截图/反馈待填写 |
-| Agent Computer Use | 经授权在可见窗口实际点击；记录安装、进程、活动对象与截图 | Not Run；由根Agent记录 |
-| MCP操作与数据核对 | 经授权调用真实 registered operators、原生文件对话框，核对数组/摘要/进程，记录真实窗口截图、渲染与新进程冷重开；写明实际调用及辅助范围 | Not Run；本轮结果见当前验证索引，历史技术范围见旧索引 |
-| 原生脚本数据核对 | 维护者的自动化解析/数组/原生operator检查；独立绑定候选与命令 | Not Run；本表由当前批次执行者填写，维护者本轮结果见验证索引 |
-| 独立科研复做与签署 | 独立使用者复做操作，并判断科学记录与成图适用性 | Not Run；姓名/日期留空 |
-
-[当前批次验证索引](../acceptance/display-xyz-export-validation.json)记录显示精度、XYZ、显式CSV导出的实际候选、输入与工具身份；本轮新增入口的Agent点击、MCP/原生数据检查及工程冷读Passed；具体覆盖与旧截图复用范围见索引，独立使用者不从Agent记录继承签署。历史[cleanup-validation.json](../acceptance/cleanup-validation.json)、[tutorial-validation.json](../acceptance/tutorial-validation.json)、[tutorial-cu-validation.json](../acceptance/tutorial-cu-validation.json)保留原批次身份，仅对应原实现与原参数；历史Passed不继承到当前批次。用户截图占位由实际操作者补入。
+把[记录模板](RECORD-TEMPLATE.md)复制到本批 `records/`，逐步填写活动对象、选择顺序、实际入口、参数前后、预期与实际、状态和证据文件。截图放在本批目录，能看清对象、控件和结果；数值检查同时保留原始记录或 CSV。每个案例注明实际操作者及身份。
 
 ### 3.2 独立使用者案例结果
 
-此表仅由实际独立验收者填写；Agent 技术记录放在 3.1。每项写 Passed / Failed / Not Run，任何必需项 Failed 则该例 Failed；缺输入、未执行或只见测试报告不能填写 Passed。记录缺陷编号和修复后的候选身份，重新执行受影响步骤。
+按 C01–C13、X01、P1-A/P1-B、N01–N18 分别汇总。任何必需步骤失败，该例记 Failed；缺输入、未执行或无法判断的项目记 Not Run。每例分别填写保存、原地重开、移动重开、归档解包重开和适用导出结果。
 
-| 案例 | 导入 | 源数值/单位 | 参数/节点前后 | PNG | 保存重开 | 移动冷重开 | 实测/缺陷；证据位置 | 用户签名与日期 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| C01 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 证据见各步骤 |  |
-| C02 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 证据见各步骤 |  |
-| C03 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 证据见各步骤 |  |
-| C04 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 证据见各步骤 |  |
-| C05 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 证据见各步骤 |  |
-| C06 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 证据见各步骤 |  |
-| C07 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 证据见各步骤 |  |
-| C08 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 证据见各步骤 |  |
-| C09 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 证据见各步骤 |  |
-| C10 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 证据见各步骤 |  |
-| C11 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 证据见各步骤 |  |
-| C12 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 证据见各步骤 |  |
-| C13 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 证据见各步骤 |  |
-| X01 | Not Run | Not Run | Not Run | Not Run | Not Run | Not Run | 证据见各步骤 |  |
+科研核对至少包含以下内容：
 
-| 节点/交互 | 结果 | 实测引用/证据位置 | 缺陷 |
-| --- | --- | --- | --- |
-| N01 | Not Run | 证据见各步骤 |  |
-| N02 | Not Run | 证据见各步骤 |  |
-| N03 | Not Run | 证据见各步骤 |  |
-| N04 | Not Run | 证据见各步骤 |  |
-| N05 | Not Run | 证据见各步骤 |  |
-| N06 | Not Run | 证据见各步骤 |  |
-| N07 | Not Run | 证据见各步骤 |  |
-| N08 | Not Run | 证据见各步骤 |  |
-| N09 | Not Run | 证据见各步骤 |  |
-| N10 | Not Run | 证据见各步骤 |  |
-| N11 | Not Run | 证据见各步骤 |  |
-| N12 | Not Run | 证据见各步骤 |  |
-| N13 | Not Run | 证据见各步骤 |  |
-| N14 | Not Run | 证据见各步骤 |  |
-| N15 | Not Run | 证据见各步骤 |  |
-| N16 | Not Run | 证据见各步骤 |  |
-| N17 | Not Run | 证据见各步骤 |  |
-| N18 | Not Run | 证据见各步骤 |  |
+| 检查 | 需要写下的内容 |
+| --- | --- |
+| 输入身份 | 摘要、生成程序/版本、方法/基组、电荷/多重度、计算段 |
+| 原子与构型 | 元素顺序、源编号、坐标单位、步骤/帧号 |
+| 数值与单位 | 原始记录位置、界面或 CSV 实测值、比较容差及结果 |
+| 显示参数 | 等值、颜色范围、网格、振幅、筛选及前后变化 |
+| 科研用途 | 图中颜色/符号的含义、已核对的具体用途、尚未验证的范围 |
+
+若要用于自己的课题，再加入一个熟悉的真实计算案例，按同样步骤核对并说明适用范围。完整版本验收还需 **VMD/VESTA 同输入、同参数的外部视觉对照**：记录软件版本、输入摘要、量/单位、网格与等值、方向和配色，对照图及差异判断单独保存；条件未齐或未执行时记 Not Run。
 
 ### 3.3 最终签署
 
-仅在C01–C13与X01必需项、0.5导出检查全部Passed、N01–N18 逐项 Passed、真实必要样本与许可/获取记录齐全、同批科学回归/离线安装/保存和移动冷重开及包摘要核对全部 Passed、缺陷修复后已重做时，由独立使用者填写：
+可以先签署已完成的专项范围，例如 P1-A 与 P1-B；在记录中明确列出已执行项和未覆盖项。A01–A09 全部通过且图片、参数摘要、自包含工程与中文移动重开证据齐全，可填写 Alpha 短验收。
 
-- 独立使用者姓名：________
-- 日期：________
-- 本批候选 ZIP SHA-256：________
-- 本批样本清单身份及输入摘要记录：________
-- 复做工程、截图和数值记录目录：________
-- 科研适用性与剩余限制：________
-- 签署：________
+完整验收需 **C01–C13、X01、P1-A/P1-B、N01–N18、0.5 导出检查及各例 0.4 保存重开均通过**，外部视觉对照完成，必要输入及许可记录齐全，缺陷在实际安装包上复验。再核对提供者交付的同批科学回归、离线安装、保存/移动冷读及安装包摘要记录。
 
-独立人工验收当前 **Not Run**。Agent 不代签，不将已编写教程、已生成样本或技术检查作为独立科研接受证据。
-
-
-## 历史二维图截图定位
-
-以下图片仅绑定[历史点击索引](../acceptance/tutorial-cu-validation.json)及原候选/参数，保留旧工程追溯；不用于当前操作或0.2 Å结果验收。当前新建IR、剖面、paired、ESP面积、IRC/Mayer结果按0.5导出数据，已有工程图形不会自动删除，原Dataset仍可导出。
-
-![历史示例（原参数/原候选）：Agent操作示例：选中密度线剖面创建正交相机，每侧留白5%](screenshot/00-04-camera.jpg)
-
-![历史示例（原参数/原候选）：Agent操作示例：仅渲染密度剖面，EEVEE、1920×1080、100%、AgX；默认点光源与世界背景](screenshot/00-04-render.jpg)
-
-![历史示例（原参数/原候选）：Agent操作示例：新进程冷重开密度剖面工程；4个Dataset、119个数组和1个体积文件另经MCP核对](screenshot/00-04-cold-final.jpg)
-
-![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-02-ir-mode1](screenshot/C02-02-ir-mode1.jpg)
-
-![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-02-ir-mode2-full](screenshot/C02-02-ir-mode2-full.jpg)
-
-![历史示例（原参数/原候选）：Agent操作示例（候选92d498c）：C02-02-ir-mode3](screenshot/C02-02-ir-mode3.jpg)
-
-![历史示例（原参数/原候选）：Agent点击：Sample field选颜色，采样101点；游标坐标由MCP设置](screenshot/C04-08-color-profile-dialog.jpg)
-
-![历史示例（原参数/原候选）：Agent点击图幅宽度6与应用排版；MCP正面取景，CSV仍覆盖0–4 Å](screenshot/C04-08-color-profile-layout.jpg)
-
-![历史示例（原参数/原候选）：Agent操作示例：独立密度剖面示例的游标起点，场单位 electron/bohr^3](screenshot/C04-08-cursor-start.jpg)
-
-![历史示例（原参数/原候选）：Agent操作示例：独立密度剖面示例的创建参数，场单位 electron/bohr^3](screenshot/C04-08-profile-dialog.jpg)
-
-![历史示例（原参数/原候选）：Agent操作示例：密度剖面结果，距离0–4 Å；隐藏其他图表文字以避免重叠](screenshot/C04-08-profile-final.jpg)
-
-![历史示例（原参数/原候选）：Agent操作示例：导出剖面CSV，101个有效采样点；场单位electron/bohr^3](screenshot/C04-08-profile-csv.jpg)
-
-![历史示例（原参数/原候选）：Agent操作示例：关闭IR谱显示层，谱线与所属文字同步隐藏；视口与渲染开关独立](screenshot/C05-06-ir-layer-hidden.jpg)
-
-![历史示例（原参数/原候选）：Agent Computer Use启用范围并更新：36,391点；范围数值由MCP准备](screenshot/C07-IGMH-filter-GUI.jpg)
-
-![历史示例（原参数/原候选）：Agent Computer Use交换轴并更新：相同数字应用于新轴后为28,630点](screenshot/C07-IGMH-swap-GUI.jpg)
-
-![历史示例（原参数/原候选）：MCP恢复IGMH 36,391点范围并真实渲染；量名和单位另见上方面板截图](screenshot/C07-scatter-v2.png)
-
-![历史示例（原参数/原候选）：Agent Computer Use应用中心范围：4bin、14.4784 Å²、19.7838%](screenshot/C08-area-center-GUI.jpg)
-
-![历史示例（原参数/原候选）：Agent Computer Use切换并应用完整源区间：6bin、21.2676 Å²、29.0608%](screenshot/C08-area-source-interval-GUI.jpg)
-
-![历史示例（原参数/原候选）：MCP配置相机，原生EEVEE渲染：40个源面积bin的原缩放柱形](screenshot/C08-area-v2.png)
-
-![历史示例（原参数/原候选）：原生EEVEE渲染：三步归一化能量曲线及步2游标](screenshot/C10-curve.png)
-
-![历史示例（原参数/原候选）：原生EEVEE渲染：曲线与源构型标注总览](screenshot/C10-overview.png)
-
-![历史示例（原参数/原候选）：Agent Computer Use导入后自动生成1,2曲线；MCP核对当前第二步游标](screenshot/C11-fixed-pair12-GUI.jpg)
-
-![历史示例（原参数/原候选）：Agent Computer Use将Atom B改为3并点击Plot Pair；MCP核对三点曲线和完整源值](screenshot/C11-fixed-pair13-GUI.jpg)
-
-![历史示例（原参数/原候选）：原生EEVEE：源原子对1,3的三点归一化Mayer曲线，步2谷底游标](screenshot/C11-curve.png)
-
-![历史示例（原参数/原候选）：原生EEVEE：左能量曲线、中央真实构型、右Mayer曲线；单位分别来自源记录](screenshot/C11-overview.png)
+在模板中填写操作者、日期、实际安装包与输入摘要、证据目录、科研适用性和剩余限制，由实际操作者与科研审阅者签名。参与开发者如实注明身份。完整版本的独立验收须由未参与开发的使用者复做；科研适用性由能够核对相应计算条件与物理含义的审阅者判断并签署。
