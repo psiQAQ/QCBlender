@@ -10,19 +10,25 @@
 
 ## 当前交付
 
-当前 Alpha 候选为 `outputs/candidates/current/alpha-0.1.0-19e4cf0/qcblender-0.1.0.zip`，50,656,085 字节，SHA-256 `0c2d9add59b6332f243c5cd87b852a38b94090286f1b7671d7666694a4b73a03`。固定产品提交 `19e4cf0becf5a5173d692d1f4a9c621e6d01512e`，产品树 `5db4996cbb456f52529c86219d85f0db0541ae49`；[Alpha 技术验证](acceptance/alpha-readiness-validation.md)及[机器索引](acceptance/alpha-readiness-validation.json)记录 127 标准库、67 公开科学、123 完整本地科学、12 次六视觉、真实 GUI、取消、Undo/Redo 与中文移动冷重开 Passed。
+本地 Alpha 技术候选为 `outputs/candidates/current/alpha-0.1.0-19e4cf0/qcblender-0.1.0.zip`，50,656,085 字节，SHA-256 `0c2d9add59b6332f243c5cd87b852a38b94090286f1b7671d7666694a4b73a03`。固定产品提交 `19e4cf0becf5a5173d692d1f4a9c621e6d01512e`，产品树 `5db4996cbb456f52529c86219d85f0db0541ae49`；[Alpha 技术验证](acceptance/alpha-readiness-validation.md)及[机器索引](acceptance/alpha-readiness-validation.json)记录 127 标准库、67 公开科学、123 完整本地科学、12 次六视觉、真实 GUI、取消、Undo/Redo 与中文移动冷重开 Passed。
 
 证据入口 `outputs/evidence/2026-10-05/alpha-readiness/`；`ac6/`保存同批报告/命令，`gui-alpha/`保存点击状态/截图/摘要，`av2/`保存六视觉报告与图，`preservation-map.jsonl.gz`将工作树旧路径映射到经过 SHA-256 核对的 `objects/`。全部原始报告保留执行时的状态。当前候选目录保留原始公开 artifact 文件及报告；没有重新打包。
 
 实际 GUI 工程位于 `outputs/projects/alpha-readiness/中文路径移动/alpha-mo9-ac6.blend + .qcdata/`，59 文件、三个 Dataset，移动后原字节及新进程参数核对 Passed。原生和视觉复现工程可从保全映射恢复原始相对路径，当前公开复现 ZIP 也可重新解压。脚本和共用依赖入口沿用[开发说明](DEVELOPMENT.md)，重新构建须重新绑定提交和候选摘要。
 
-本地 run ID 为 0，未运行 GitHub CI、未创建草稿、未推送标签。组件许可复核、独立使用者短 SOP、维护者公开批准及正式 v1 人工/科研验收保持 Not Run；远端任务和公开门禁单独维护。四个任务工作树缓存目录有访问拒绝，保全/清理收据记录实际状态；不改变 ACL 或所有权。
+该本地批次 run ID 为 0，不作为远端候选证据；2026-10-06 的实际 GitHub CI 见下方记录，发布标签与草稿仍 Not Run。组件许可复核、独立使用者短 SOP、维护者公开批准及正式 v1 人工/科研验收保持 Not Run；远端任务和公开门禁单独维护。四个任务工作树缓存目录有访问拒绝，保全/清理收据记录实际状态；不改变 ACL 或所有权。
 
 本轮本地合并、注释归档及正常清理结果见[交付收据](acceptance/alpha-readiness-delivery.json)。
 
 任务提交 `9cc9a005` 已 ff-only 合入 main，四个 `archive/2026-10-05/feat/alpha-*` 注释标签可达 main。四个任务工作树的 Git 登记及分支移除 Passed；三个磁盘目录移除 Passed，`.worktrees/alpha-core` 普通移除 Failed（Directory not empty），残留由 `.scratch/alpha-readiness/issues/11-worktree-residue.md` 跟踪。清理后 32,170 条原路径映射、7,419 个内容对象、13 个候选文件/报告及中文工程 59 文件摘要复核 Passed；详细收据为 `closing/post-cleanup-verification.json`。不可枚举缓存目录保留，不计入保全成功范围。
 
 完整 SOP 连续操作见 [SOP](v1-acceptance/SOP.md) 的“完整 SOP 执行顺序与完成标准”及 A00–A09 展开步骤。文档检查和编辑脚本位于 `outputs/evidence/2026-10-05/alpha-readiness/sop-flow/`，含 `sop-flow-verification.json`、`preservation.json` 与本地归档收据；检查覆盖 433 个本地链接、三段 PowerShell 语法、原案例和历史截图保留。本次仅补文档，未重跑 Blender，独立使用者验收 Not Run。
+
+### GitHub 候选 CI（2026-10-06）
+
+HTTP 403 下载失败已修复，实际 [run 37414740265](https://github.com/psiQAQ/QCBlender/actions/runs/37414740265) / artifact `11390153636` 全步骤 Passed；129 标准库、67 公开科学及10份资格报告均通过。CI 原始候选在 `outputs/candidates/current/alpha-ci-0.1.0-f8b1115/`，扩展 ZIP 50,656,040字节，SHA-256 `6f25cbaf2df9a41137bfef74abbb7c3b365905370bd70bc77327a9cabeb0dfd8`，候选提交 `f8b111549e34b7ad995139d09042ca912661d352`。下载后的原 artifact、报告、源码/wheels及公开材料摘要复核 Passed；文件未重新打包。
+
+详细原因与范围见[Actions 下载修复](acceptance/actions-download-fix.md)。证据在 `outputs/evidence/2026-10-06/actions-fix/`，成功运行及下载验证在 `run-37414740265/`；候选清单含依赖和各文件摘要。原始失败日志与本地请求探测保留，组件许可及独立人工门禁 Not Run，09 的剩余发布标签/草稿尚未执行。
 
 ## 2026-10-05 可靠性历史交付
 
