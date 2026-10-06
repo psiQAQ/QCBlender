@@ -1,7 +1,7 @@
 # 校验目录与人工教程整理计划
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Baseline: main@5ff3b67c594f77a8d81b1509f59b27571154bfd0
 Date: 2026-10-06
 
@@ -82,3 +82,5 @@ Date: 2026-10-06
 2026-10-06：01–05 及 07 已完成；主分支整合结果见 `validation/agent/VALIDATION.md`，本地归档见 `validation/agent/reports/2026-10-06/delivery/`。用户已确认 06 两个逐文件清单的全部 257 个文件，后续执行与结果在 06 记录。用户新增的子 Agent 模型偏好已写入根 AGENTS：默认 GPT-6.1 Sol、high，仅用户明确指定其他模型时覆盖。
 
 2026-10-06：06 已完成授权范围的逐文件删除，清理后 134 项标准库及 123 项完整科学测试通过。追加任务 08 已合入 main，三个重复转发页移除，419 张历史截图与其他独有材料保持原字节；主 Agent 已更新 ARTIFACTS 的现行入口。
+
+2026-10-06：01–08 全部完成。六个任务分支均已本地合并并以注释标签归档，六个工作树及已合并分支正常移除，子任务证据已保全；两批收据位于 `validation/agent/reports/2026-10-06/delivery/`。最终材料检查见 `closing/workspace.json`，当前链接、保护对象和用户原有修改的收尾核对由 `closing/verification.json` 记录。人工截图、独立操作及科研判断仍按 Not Run 保留。

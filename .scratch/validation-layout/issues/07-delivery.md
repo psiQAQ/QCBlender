@@ -24,3 +24,5 @@ main 含所有验收完成提交；主 Agent 的检查报告可定位；已有�
 本批新生成的测试临时副本共清理 5,155 个文件、586,275,328 字节，集中输入和当前安装包在清理前后通过核对；两处普通权限拒绝已通过一次普通删除重试完成，无 ACL/所有权变更。原始尝试与后续成功收据分别保留为 `task-temporary-cleanup.json` 和 `task-temporary-cleanup-retry.json`。MO9 工程、XYZ 工程、代表性剖面 CSV 与全部执行报告保留。历史 257 个文件的授权与删除结果另由任务 06 记录。
 
 main 只保留任务开始前的三处未提交修改，新增内容与初始补丁逐行一致。本轮没有 push；历史清理的批准与执行由 06 单独记录。
+
+后续 `chore/validation-cleanup` 和 `docs/validation-legacy-docs` 已分别以最终提交 `2551bdf`、`61acdb2` 创建注释归档标签，两个工作树及分支正常移除；6 份子任务报告和脚本已按原相对路径保全至主检出。结果为 Passed，见 `delivery/followup-worktrees.json`。本主题共六个工作树完成保全及正常移除。
