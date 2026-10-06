@@ -1,7 +1,7 @@
 # outputs 深度精简
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Baseline: main@f6a2391
 Date: 2026-10-06
 
@@ -39,3 +39,7 @@ Date: 2026-10-06
 新报告和可审查脚本位于 validation/agent/reports/2026-10-06/outputs-prune/。历史摘要位于 docs/archive/outputs-history/，ARTIFACTS 是唯一产物路由。最终分别报告文件数、逻辑字节变化、磁盘可用空间变化和未统计范围。
 
 无法删除的已审查清单项交付准确绝对路径、原错误、对应 PowerShell 命令及重试脚本；重试前复核身份。未知、未枚举和受保护对象不混入删除命令。目录递归命令仅用于已完整枚举且全部属于退役集合的目录。
+
+## 结果
+
+已删除89,895文件、8,545,515,461字节；outputs逐文件对账剩余10,641文件、1,230,709,507字节，其中5,039个权限受限已审查文件保留并交付准确命令。完整当前入口为docs/ARTIFACTS.md；本批final-summary.json汇总验证与统计，delivery.json记录最终main、注释标签和工作树/分支状态。未知、用户及恢复对象均不进入删除集合。
