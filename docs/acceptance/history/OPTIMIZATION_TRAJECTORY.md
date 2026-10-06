@@ -1,12 +1,12 @@
 # Gaussian 优化轨迹技术记录
 
-> 产物状态更新（2026-09-29）：本页是历史技术验收记录。候选 ZIP、生成工程及图像已纳入用户批准的清理范围；日志、摘要和历史 Passed 保留，二进制可用性以 [清理记录](acceptance/storage-cleanup.md) 为准。本文中“可重开”“保留候选”等描述只代表验收当时状态。当前可用的用户工程单独保存，后续演示从集中输入重建。
+> 产物状态更新（2026-09-29）：本页是历史技术验收记录。候选 ZIP、生成工程及图像已纳入用户批准的清理范围；日志、摘要和历史 Passed 保留，二进制可用性以 [清理记录](../storage-cleanup.md) 为准。本文中“可重开”“保留候选”等描述只代表验收当时状态。当前可用的用户工程单独保存，后续演示从集中输入重建。
 
 2026-09-27，Windows x64 / Blender 5.1.1，分支 `feat/result-browser`。本页记录 Agent 技术验证；独立人工验收和外部视觉对照仍为 **Not Run**，排在本轮开发之后。ORCA、`.mwfn`、周期体系和新分析类型按后续需求另行立项。
 
 ## 使用与边界
 
-导入 Gaussian Log/Out、选择计算段后，通过 **Optimization Trajectory → Create Optimization View** 创建独立轨迹视图；Previous、Next 和 Choose Step 浏览离散构型。面板显示该步能量、收敛值/阈值、计算状态和原文行号，Source Details 中的 Optimization step 提供完整来源。具体操作见[用户指南](USER_GUIDE.md#gaussian-优化轨迹浏览)。
+导入 Gaussian Log/Out、选择计算段后，通过 **Optimization Trajectory → Create Optimization View** 创建独立轨迹视图；Previous、Next 和 Choose Step 浏览离散构型。面板显示该步能量、收敛值/阈值、计算状态和原文行号，Source Details 中的 Optimization step 提供完整来源。具体操作见[用户指南](../../USER_GUIDE.md#gaussian-优化轨迹浏览)。
 
 复用 cclib 1.8.1 的构型序列，逐步与 Gaussian 明确打印的步号、orientation 表、原子编号和坐标核对。仅将同一步范围内唯一可选择的目标方法能量关联到该步；缺失或歧义不补值。优化收敛和整个计算的终止状态分别记录，最终重复打印的 orientation 不新增步。
 
@@ -29,7 +29,7 @@ SHA-256：`04b1fec4736f0f837b68b59e0e687e0aca2507b0f5d3d5a094bbc8b6fc587c8e`。
 - 第 1 步 PNG（`outputs/optimization-trajectory/step-1.png`）、第 4 步 PNG（`outputs/optimization-trajectory/step-4.png`）、冷重开 PNG（`outputs/optimization-trajectory/gui-moved/step-4-reopened.png`）。
 - 轨迹面板截图（`outputs/optimization-trajectory/gui-final-step4.png`）、当前步来源截图（`outputs/optimization-trajectory/gui-final-source-details.png`）。
 
-真实输入沿用 [local-log-downloads.json](../validation/shared/data/local-log-downloads.json) 中 cclib-data 固定提交的 Gaussian 16 `water_neutral_nbo_opt_freq.out`，当前文件在 `validation/shared/data/local/log-examples/`，SHA-256 为 `9493d24655fb261a2c945d292ad517567f3024996594a25f678199df74017519`。优化段含 4 步，后续频率段分别处理。截断、失败状态、缺能量、歧义和身份冲突使用该真实输入的明确修改作为边界测试，不冒充新增真实计算。
+真实输入沿用 [local-log-downloads.json](../../../validation/shared/data/local-log-downloads.json) 中 cclib-data 固定提交的 Gaussian 16 `water_neutral_nbo_opt_freq.out`，当前文件在 `validation/shared/data/local/log-examples/`，SHA-256 为 `9493d24655fb261a2c945d292ad517567f3024996594a25f678199df74017519`。优化段含 4 步，后续频率段分别处理。截断、失败状态、缺能量、歧义和身份冲突使用该真实输入的明确修改作为边界测试，不冒充新增真实计算。
 
 ## 验证结果
 
@@ -45,7 +45,7 @@ SHA-256：`04b1fec4736f0f837b68b59e0e687e0aca2507b0f5d3d5a094bbc8b6fc587c8e`。
 | 新候选完整 SOP 重跑 | Not Run | 本轮执行相关回归，未将旧候选完整 C01–C13/N01–N18 证据转记为新候选全量通过 |
 | 独立人工验收、VMD/VESTA 外部视觉对照 | Not Run | 后置任务；Agent 技术结果不代签 |
 
-当前操作见 [用户指南](USER_GUIDE.md)，新候选构建和复验流程见 [DEVELOPMENT](DEVELOPMENT.md)。本页只保留对应历史批次的结果与范围。
+当前操作见 [用户指南](../../USER_GUIDE.md)，新候选构建和复验流程见 [DEVELOPMENT](../../DEVELOPMENT.md)。本页只保留对应历史批次的结果与范围。
 
 ## 评审与修复记录
 

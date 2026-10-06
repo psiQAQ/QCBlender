@@ -2,32 +2,6 @@
 
 更新：2026-10-06。当前 0.1.0 Alpha 教程材料在 [validation](../validation/README.md)，安装候选与原始报告由 [current-install.json](../validation/agent/current-install.json) 定位。环境为 Windows x64、Blender 5.1.1、CPython 3.13.9、NumPy 2.3.4、OpenVDB 13。技术流程见 [Agent 校验](../validation/agent/README.md)；独立使用者及科研接受仍依据实际反馈确认。
 
-## 历史 0.0.1 可靠性候选与证据
-
-该历史候选固定产品源码为`a3ed8264aad860f25c922dd7c91efce3f6f078d3`，详见[可靠性技术验证](acceptance/reliability-validation.md)及[机器索引](acceptance/reliability-validation.json)。105科学测试、40相关单测、15项原生体积检查、15项IGMH/静态参考检查、六视觉场景及保全冷读Passed；真实界面声明导入、Undo/Redo、动态参考禁用、运行中ESP取消、损坏VDB拒绝和工程保存/原地与中文移动冷读Passed。GUI CSV在按Esc前已完成，运行中GUI取消Not Run；真实worker取消另有原生脚本证据。天然权限拒绝目标与独立使用者/科研签署Not Run。
-
-流式摘要实验的科学身份与摘要一致；256³冷/热峰值分别下降约15.2/16.0 MiB、端到端中位耗时改善约1.7%/1.5%，未达到扩大优化门槛。前后候选与本轮最终候选分开绑定，详见实验报告。
-
-历史P1的97项科学测试、当前构型关联与共享mesh记录继续由[P1验证](acceptance/audit-p1-validation.md)保留原候选身份。
-
-## 历史展示、XYZ与CSV批次
-
-以下表格保持2026-10-02批次范围。固定源码为`9d3ff61d2e32c47357fe624cf93052bfed6dd041`；产品树、文件/候选/输入摘要、实际命令、42份本批通过报告及GUI身份见[展示精度、XYZ与CSV验证索引](acceptance/display-xyz-export-validation.json)。后续文档和收尾提交不改变该候选身份。产物位置和重建入口见[ARTIFACTS](ARTIFACTS.md)。历史[公共教程资格](acceptance/tutorial-final-qualification.json)与[清理验证](acceptance/cleanup-validation.json)保留原批次身份。
-
-| 检查 | 状态 | 本批实际范围 |
-| --- | --- | --- |
-| 科学回归及相关单测 | Passed | 82科学测试，无失败/错误/跳过；21项复制/布局/输入/清理单测；集中输入摘要与新XYZ严格边界 |
-| 展示精度与公共资产 | Passed | 新原子外层Quality3、新切片201/轴；源坐标/编号不变，九公共资产实现、签名/接口和资产默认值保留；已有工程显示参数保留 |
-| 标准XYZ | Passed | 单帧/同元素顺序三帧Å；离散切帧、逐帧身份/推断连接/距离与二面角/复制独立性；多帧不能借用第一帧关联科学记录 |
-| 数据导出与二维清理 | Passed | IR、优化/收敛、IRC、Mayer、剖面、paired、ESP面积；真实worker完整/筛选、逐值、单位/掩码/来源、取消无遗留、唯一目录；539448有效体素完整导出 |
-| 实际GUI操作 | Passed | XYZ导入/切帧、0.2Å密度、201切片、采样记录、值列/面积筛选、Mayer读取；目录修复后重新点击profile/IR/ESP筛选导出并MCP核对。e317→9d3ff61仅SKIP_SAVE一行，未变操作通过差异审阅复用，旧截图保留原候选 |
-| 同候选安装与专项 | Passed | ZIP/安装副本/源码一致、11个锁定wheels；生命周期、原地/中文移动冷重开、缓存、公共资产、轮廓与图例专项 |
-| 工程保全与旧谱图 | Passed | 可见工程12Dataset/249数组/1VDB，两新进程原地/中文移动冷读，帧2/Quality3/40401切片顶点与标注保留；旧谱图对象不删除且可导出三模式原数据 |
-| 公开v2样本 | Passed | P06增加两份自有XYZ，科学文件/来源/许可与摘要核对；P03/P05原Cube字节不改，P02继续独立取得 |
-| 用户复做、独立科研签署、发布 | Not Run | Agent不代签，不从技术通过推导科研接受；没有push或发布 |
-
-历史操作截图及候选图注保存在[SOP 历史证据](v1-acceptance/HISTORY.md)，人工操作使用[教程](../validation/human/SOP.md)，按就地引用补充截图并反馈问题。0.2Å网格和显示细分是展示设置，不是收敛证明；原始Cube保留其固定源网格。旧二维图仅在历史工程与证据中保留，新建结果使用CSV。归档与权限/占用对象的状态见ARTIFACTS收尾路由。
-
 ## 输入和科学边界
 
 | 能力 | 当前实现与证据边界 |
@@ -59,3 +33,33 @@ GBasis 来源固定在 `science-sources.lock.json`，当前 wheel 为 `0.1.0+qcb
 当前构建、输入校验、安装和同批工程冷重开步骤见 [DEVELOPMENT](DEVELOPMENT.md)。`qualify_package.py` 只核对报告及文件身份，不代替实际运行。四组真实案例的计算参数与复建入口见 [复杂案例](COMPLEX_EXAMPLES.md)。
 
 独立复做使用 [人工 SOP](../validation/human/SOP.md)。候选身份、数值比较和技术结果由 Agent 流程维护；使用者的实际操作与科研接受不能由自动测试代替。
+
+## 历史候选结果
+
+以下记录保留原候选身份。专题全文和机器索引见[验收索引](acceptance/README.md)，原产物可用性以[ARTIFACTS](ARTIFACTS.md)为准。
+
+### 历史 0.0.1 可靠性候选与证据
+
+该历史候选固定产品源码为`a3ed8264aad860f25c922dd7c91efce3f6f078d3`，详见[可靠性技术验证](acceptance/reliability-validation.md)及[机器索引](acceptance/reliability-validation.json)。105科学测试、40相关单测、15项原生体积检查、15项IGMH/静态参考检查、六视觉场景及保全冷读Passed；真实界面声明导入、Undo/Redo、动态参考禁用、运行中ESP取消、损坏VDB拒绝和工程保存/原地与中文移动冷读Passed。GUI CSV在按Esc前已完成，运行中GUI取消Not Run；真实worker取消另有原生脚本证据。天然权限拒绝目标与独立使用者/科研签署Not Run。
+
+流式摘要实验的科学身份与摘要一致；256³冷/热峰值分别下降约15.2/16.0 MiB、端到端中位耗时改善约1.7%/1.5%，未达到扩大优化门槛。前后候选与本轮最终候选分开绑定，详见实验报告。
+
+历史P1的97项科学测试、当前构型关联与共享mesh记录继续由[P1验证](acceptance/audit-p1-validation.md)保留原候选身份。
+
+### 历史展示、XYZ与CSV批次
+
+以下表格保持2026-10-02批次范围。固定源码为`9d3ff61d2e32c47357fe624cf93052bfed6dd041`；产品树、文件/候选/输入摘要、实际命令、42份本批通过报告及GUI身份见[展示精度、XYZ与CSV验证索引](acceptance/display-xyz-export-validation.json)。后续文档和收尾提交不改变该候选身份。产物位置和重建入口见[ARTIFACTS](ARTIFACTS.md)。历史[公共教程资格](acceptance/tutorial-final-qualification.json)与[清理验证](acceptance/cleanup-validation.json)保留原批次身份。
+
+| 检查 | 状态 | 本批实际范围 |
+| --- | --- | --- |
+| 科学回归及相关单测 | Passed | 82科学测试，无失败/错误/跳过；21项复制/布局/输入/清理单测；集中输入摘要与新XYZ严格边界 |
+| 展示精度与公共资产 | Passed | 新原子外层Quality3、新切片201/轴；源坐标/编号不变，九公共资产实现、签名/接口和资产默认值保留；已有工程显示参数保留 |
+| 标准XYZ | Passed | 单帧/同元素顺序三帧Å；离散切帧、逐帧身份/推断连接/距离与二面角/复制独立性；多帧不能借用第一帧关联科学记录 |
+| 数据导出与二维清理 | Passed | IR、优化/收敛、IRC、Mayer、剖面、paired、ESP面积；真实worker完整/筛选、逐值、单位/掩码/来源、取消无遗留、唯一目录；539448有效体素完整导出 |
+| 实际GUI操作 | Passed | XYZ导入/切帧、0.2Å密度、201切片、采样记录、值列/面积筛选、Mayer读取；目录修复后重新点击profile/IR/ESP筛选导出并MCP核对。e317→9d3ff61仅SKIP_SAVE一行，未变操作通过差异审阅复用，旧截图保留原候选 |
+| 同候选安装与专项 | Passed | ZIP/安装副本/源码一致、11个锁定wheels；生命周期、原地/中文移动冷重开、缓存、公共资产、轮廓与图例专项 |
+| 工程保全与旧谱图 | Passed | 可见工程12Dataset/249数组/1VDB，两新进程原地/中文移动冷读，帧2/Quality3/40401切片顶点与标注保留；旧谱图对象不删除且可导出三模式原数据 |
+| 公开v2样本 | Passed | P06增加两份自有XYZ，科学文件/来源/许可与摘要核对；P03/P05原Cube字节不改，P02继续独立取得 |
+| 用户复做、独立科研签署、发布 | Not Run | Agent不代签，不从技术通过推导科研接受；没有push或发布 |
+
+历史操作截图及候选图注保存在[SOP 历史证据](v1-acceptance/HISTORY.md)，人工操作使用[教程](../validation/human/SOP.md)，按就地引用补充截图并反馈问题。0.2Å网格和显示细分是展示设置，不是收敛证明；原始Cube保留其固定源网格。旧二维图仅在历史工程与证据中保留，新建结果使用CSV。归档与权限/占用对象的状态见ARTIFACTS收尾路由。

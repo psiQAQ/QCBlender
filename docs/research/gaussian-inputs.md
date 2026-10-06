@@ -1,5 +1,7 @@
 # Gaussian 输入能力、数值边界与 ORCA 迁移依据
 
+> 历史研究快照（2026-09-22）。文中的候选、后续计划和未完成项对应当时阶段；现行实现及限制见[支持范围](../VALIDATION.md)，实际验证见[验收索引](../acceptance/README.md)。
+
 核对日期：2026-09-22。本文是 QCBlender 的设计研究，不代表插件已经实现或通过下述验收。首版目标是用 Blender Geometry Nodes 控制量子化学结果的展示；Gaussian 是首个数据来源，ORCA 是后续来源。
 
 ## 结论与建议

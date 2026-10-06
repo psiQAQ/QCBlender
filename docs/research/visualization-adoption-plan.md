@@ -7,7 +7,7 @@
 ## 1. 比较基准与证据边界
 
 - **固定 SOP 基准**：技术复跑基线 `ce56c50`，固定 SOP 候选 SHA-256 为 `03311fdeb0c83a38a546ebddedee1fe05e8dcb7260b53c889dd9fee3fa7ee231`。C01–C13 六栏技术检查、N01–N18、35 个真实样本摘要和 26 次冷重开均 Passed，见 [技术复跑记录](../v1-acceptance/AGENT-REPLAY.md)。
-- **结果浏览基准**：`065a444`、`2402bc9`、`5496f67` 已完成计算段选择、来源浏览及技术验证，见 [结果浏览记录](../RESULT_BROWSER.md)。
+- **结果浏览基准**：`065a444`、`2402bc9`、`5496f67` 已完成计算段选择、来源浏览及技术验证，见 [结果浏览记录](../acceptance/history/RESULT_BROWSER.md)。
 - **验收边界**：独立人工 SOP 仍为 Not Run；发布前置条件不变。技术复跑与后续功能开发分别记录。
 - **架构**：[ADR 0001](../adr/0001-self-contained-extension.md)的单扩展和科学数据/显示分离保持不变。VTK、MolecularNodes 仅作固定源码参考，不进入产品运行依赖。
 - **来源**：两份调研原文保留在本地 `docs/GPT-Web-Chat/`，研究验证记录在忽略的 `outputs/visualization-adoption/`。
@@ -20,7 +20,7 @@
 | 内置 MO、密度和 ESP | [prepare/evaluate_field](../../qcblender/evaluate.py#L35)检查方法、占据、密度矩阵和基组，分块求值并支持取消；[轨道选择](../../qcblender/data.py#L53)使用自旋、占据和能量。 | 能力限于明确的方法集合和已验证组合；ECP、ghost、最高 g 以上角动量及受限分数占据等仍被拒绝。补数值对照，不引入新的 SCF 引擎。 |
 | 科学数据与显示分离 | [Dataset 与保存](../../qcblender/data.py#L87)已有 metadata、float64 数组、来源哈希、形状/单位/有效域及内容寻址存储；[worker](../../qcblender/worker.py#L136)已有求值缓存。 | 可迁移工程和来源浏览已通过技术验证；只读详情按需读取 metadata，不加载科学数组。 |
 | 双场着色、切片和多视图 | [add_mapping](../../qcblender/blender/scalars.py#L164)独立绑定几何与色场；[采样节点](../../qcblender/blender/assets.py#L34)、[显示层](../../qcblender/blender/layers.py#L8)和[等值面](../../qcblender/blender/views.py#L198)均已存在。 | 按来源分组和字段角色详情已完成；复制、坐标变换、无效域和冷重开保持为回归检查。 |
-| 计算结果浏览 | [导入入口](../../qcblender/blender/ui.py)已提供异步计算段摘要和确认导入，来源详情可查看计算身份与原文位置。 | 选中 Gaussian 段内的离散优化轨迹已完成；范围与证据见 [技术记录](../OPTIMIZATION_TRAJECTORY.md)。 |
+| 计算结果浏览 | [导入入口](../../qcblender/blender/ui.py)已提供异步计算段摘要和确认导入，来源详情可查看计算身份与原文位置。 | 选中 Gaussian 段内的离散优化轨迹已完成；范围与证据见 [技术记录](../acceptance/history/OPTIMIZATION_TRAJECTORY.md)。 |
 | IGMH/IRI、ESP、AIM、IRC/Mayer、ETS-NOCV/NOCV | [双场导入](../../qcblender/external_fields.py#L11)、[离散分析数据](../../qcblender/analysis_data.py#L12)、[IRC](../../qcblender/irc.py#L39)与[NOCV](../../qcblender/nocv.py#L8)已有显式关联、单位和来源记录。 | C07–C13 真实输出已通过本轮技术验收；新增变体仍须分别验证解析、显示与科学值。 |
 | 周期体系 | 当前 [Grid](../../qcblender/evaluate.py#L13)能保存完整仿射网格，原子构型与显示变换已有约束。 | 仿射网格不等于周期物理能力。晶胞、周期镜像和跨边界连接按后续需求开展。 |
 
@@ -28,7 +28,7 @@
 
 ### Multiwfn：优先补外部结果的语义与验收
 
-参数交互首批已完成：原生界面分工、单位/区间语义、点击探针与切片、等值线与剖面排版、外部记录过滤和定位。2026-09-28 最终候选的 69 项科学回归和 C01–C13、N01–N18 技术复跑 Passed，见 [参数研究](multiwfn-parameters.md)和[验收记录](../MULTIWFN_PARAMETERS.md)。下表保留各来源的科学约束与后续变体验证边界。
+参数交互首批已完成：原生界面分工、单位/区间语义、点击探针与切片、等值线与剖面排版、外部记录过滤和定位。2026-09-28 最终候选的 69 项科学回归和 C01–C13、N01–N18 技术复跑 Passed，见 [参数研究](multiwfn-parameters.md)和[验收记录](../acceptance/history/MULTIWFN_PARAMETERS.md)。下表保留各来源的科学约束与后续变体验证边界。
 
 作者[官方下载页](http://sobereva.com/multiwfn/download.html)列出日期版 `2026.9.20` 和源码归档包，采用自定义许可；本轮未确认官方 Git 入口。参考版本、输入波函数、分析参数和实际输出需要共同记录。已有 `analysis.sources`、`reference_source`、用户关联和原文行号可复用，生成程序的版本和参数不能从文件后缀推断。[现有记录入口](../../qcblender/analysis_data.py#L12)
 
@@ -76,11 +76,11 @@ IGMH/IRI 当前要求两场同网格，这是该导入器的合同；一般表�
 | 顺序 | 状态 | 范围与证据 |
 | --- | --- | --- |
 | 固定 SOP 技术复跑 | Passed | C01–C13、N01–N18 与真实样本，见 [技术记录](../v1-acceptance/AGENT-REPLAY.md) |
-| 计算段选择、来源浏览 | Passed | 三项任务均 resolved，见 [结果浏览记录](../RESULT_BROWSER.md) |
-| Gaussian 优化轨迹浏览 | Passed | 独立视图逐步构型、能量、收敛与来源；25/25 科学回归、GUI/MCP、独立候选和移动冷重开，见 [技术记录](../OPTIMIZATION_TRAJECTORY.md) |
+| 计算段选择、来源浏览 | Passed | 三项任务均 resolved，见 [结果浏览记录](../acceptance/history/RESULT_BROWSER.md) |
+| Gaussian 优化轨迹浏览 | Passed | 独立视图逐步构型、能量、收敛与来源；25/25 科学回归、GUI/MCP、独立候选和移动冷重开，见 [技术记录](../acceptance/history/OPTIMIZATION_TRAJECTORY.md) |
 | AIM/NOCV 校验、自动取景、场值线剖面 | Passed | 四项独立开发、逐批安装验收；最终候选 45/45 科学回归与完整技术 SOP 通过，见[技术记录](../acceptance/source-adoption.md) |
 | VMD 参数交互首批 | Passed | 四包实现、48 项科学回归、安装、MCP、Computer Use 与双冷重开通过，见[技术记录](../acceptance/vmd-parameters.md) |
-| MolecularNodes 参数交互首批 | Passed | 固定局部选择、真实步测量标注、图例排版及最终 C01–C13 / N01–N18 技术 SOP 通过，见[技术记录](../MOLECULARNODES_PARAMETERS.md) |
+| MolecularNodes 参数交互首批 | Passed | 固定局部选择、真实步测量标注、图例排版及最终 C01–C13 / N01–N18 技术 SOP 通过，见[技术记录](../acceptance/history/MOLECULARNODES_PARAMETERS.md) |
 | 独立人工验收、外部视觉对照 | Not Run | 在本轮功能开发及技术验证之后执行，记录确切候选；人工签名由用户完成 |
 | 发布机制 | Not Run | 继续受人工验收和候选资格门槛约束 |
 

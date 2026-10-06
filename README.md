@@ -46,6 +46,8 @@ QCBlender 在 Blender 中显示已有量子化学结果，并对支持的 HF/DFT
 
 ## 开发者文档
 
+完整分类见[文档索引](docs/README.md)，当前说明、研究依据与历史验收各有独立入口。
+
 | 类别 | 入口与用途 |
 | --- | --- |
 | 构建与验证 | [开发说明](docs/DEVELOPMENT.md)：环境、构建与同批复验；[验证状态](docs/VALIDATION.md)：精确候选及 Passed / Not Run |

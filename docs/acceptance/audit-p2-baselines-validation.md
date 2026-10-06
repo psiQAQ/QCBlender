@@ -2,7 +2,7 @@
 
 2026-10-04，本批技术验证 **Passed**。Gaussian 首任务在 SCF 前失败后，后续正常任务能独立选段导入；ETS-NOCV 同 spin/pair 的重复记录比较全部规范化科学字段，相同记录保留首次来源，冲突明确给出字段和两条来源行号。
 
-候选、产品树和摘要见[机器索引](audit-p2-baselines-validation.json)，工程、原始报告、命令和迁移映射统一见 [ARTIFACTS](../ARTIFACTS.md)。两个范围外 P1（动态构型关联、共享 mesh 副本切步）仍未修复。独立用户/科研签署为 **Not Run**。
+候选、产品树和摘要见[机器索引](audit-p2-baselines-validation.json)，工程、原始报告、命令和迁移映射统一见 [ARTIFACTS](../ARTIFACTS.md)。本候选未包含两个范围外 P1（动态构型关联、共享 mesh 副本切步）的修复；后续修复及对应候选见 [P1 验证](audit-p1-validation.md)。独立用户/科研签署为 **Not Run**。
 
 | 检查 | 结果 |
 | --- | --- |
@@ -25,6 +25,8 @@
 1. 无须选中对象。在3D视图的 **N侧栏 → QCBlender → 工作流 → 导入 Gaussian / Cube / XYZ** 打开本批`installed-p2/sources/`中的拼接日志。文件确认后展开任务列表，第一段失败、第二段正常；选择失败段并确认会报告缺少显式构型。
 
 ![失败段与正常段分别列出](../v1-acceptance/screenshot/audit-p2/gaussian-two-jobs.png)
+
+该批失败段的独立预览见[失败段摘要](../v1-acceptance/screenshot/audit-p2/gaussian-failed-preview.png)，保留无显式构型、无能量及不继承前段构型的界面状态。
 
 2. 选择第二个正常任务，核对摘要中的MP2/STO-3G、3原子和能量，点击 **确定**。导入后全部科学数组与单独正常日志一致。
 

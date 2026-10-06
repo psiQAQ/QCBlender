@@ -15,7 +15,7 @@ Blocked by: none
 
 ## Answer
 
-2026-09-27：Passed。完成离散优化视图、逐步构型/能量/收敛及原文来源，原视图性质保持独立。科学回归 25/25、最终候选干净配置安装、GUI/MCP、复制与撤销/重做、保存及移动冷重开通过；Standards 和 Spec 复审通过。完整证据与候选摘要见 [技术记录](../../../docs/OPTIMIZATION_TRAJECTORY.md)。
+2026-09-27：Passed。完成离散优化视图、逐步构型/能量/收敛及原文来源，原视图性质保持独立。科学回归 25/25、最终候选干净配置安装、GUI/MCP、复制与撤销/重做、保存及移动冷重开通过；Standards 和 Spec 复审通过。完整证据与候选摘要见 [技术记录](../../../docs/acceptance/history/OPTIMIZATION_TRAJECTORY.md)。
 
 新候选完整 SOP 重跑、独立人工验收和外部视觉对照为 Not Run；后两项按用户要求后置。未新增依赖。
 
