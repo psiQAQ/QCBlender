@@ -74,9 +74,14 @@ def safe_path(path, root):
     return path
 
 
+def lexical_output_path(path):
+    path = Path(path)
+    require(path.is_absolute() and path.is_relative_to(OUTPUTS) and '..' not in path.parts, 'outside outputs')
+    return path
+
+
 def safe_output_path(path):
-    require(Path(path).is_absolute() and Path(path).is_relative_to(OUTPUTS), 'outside outputs')
-    return safe_path(path, OUTPUTS)
+    return safe_path(lexical_output_path(path), OUTPUTS)
 
 
 def safe_report_path(path):
@@ -314,12 +319,13 @@ def apply():
                 except (OSError, AssertionError) as error:
                     failures.append({'path': row['path'], 'reason': str(error), 'phase': 'protection preflight'})
             for skipped in saved.get('skipped', []):
-                path = safe_output_path(skipped['path'])
-                reason = classify(path, {})[1] if path != OUTPUTS else ''
-                needed = path == OUTPUTS or protection_required(path, reason)
+                path = lexical_output_path(skipped['path'])
+                needed = path == OUTPUTS
                 if POLICY is not None:
                     retained = (*POLICY.get('protected_paths', []), *POLICY.get('retained_references', []))
-                    needed = needed or any(target.is_relative_to(path) for target in retained)
+                    needed = (needed or covered(path, POLICY.get('protected_paths', []))
+                              or path in POLICY.get('retained_references', [])
+                              or any(target.is_relative_to(path) for target in retained))
                 needed = needed or any((ROOT / target).is_relative_to(path) for target in tracked)
                 if needed:
                     failures.append({'path': str(path), 'reason': skipped['reason'], 'phase': 'protection preflight'})

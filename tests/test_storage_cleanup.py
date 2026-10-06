@@ -180,6 +180,72 @@ class PolicySafety(unittest.TestCase):
         self.assertEqual(report['skipped'], [])
         self.assertEqual(json.loads(summary.read_text(encoding='utf-8'))['skipped'], data['skipped'])
 
+    def test_unknown_windows_junction_and_denied_paths_do_not_block_retirement(self):
+        row = self.make_row('old/profile/delete.bin')
+        self.make_manifest([row])
+        junction = self.root / 'build-python/Lib/site-packages'
+        denied = self.root / 'unknown/denied'
+        summary = cleanup.REPORTS / 'summary.json'
+        data = json.loads(summary.read_text(encoding='utf-8'))
+        data['skipped'] = [{'path': str(junction), 'reason': 'link or junction'},
+                           {'path': str(denied), 'reason': '[WinError 5] denied directory'}]
+        summary.write_text(json.dumps(data), encoding='utf-8')
+        original_resolve = Path.resolve
+
+        def resolve(path, *args, **kwargs):
+            if path == denied:
+                raise PermissionError('[WinError 5] cannot resolve denied directory')
+            if path == junction:
+                return self.root.parent / 'external-site-packages'
+            return original_resolve(path, *args, **kwargs)
+
+        with patch.object(cleanup, 'tracked_paths', return_value=set()), \
+             patch.object(Path, 'resolve', resolve), \
+             patch.object(Path, 'is_junction', lambda path: path == junction):
+            report = cleanup.apply()
+        self.assertEqual(report['removed']['files'], 1)
+        self.assertEqual(report['protection_preflight'], 'Passed')
+        self.assertEqual(report['skipped'], [])
+        self.assertEqual(json.loads(summary.read_text(encoding='utf-8'))['skipped'], data['skipped'])
+
+    def test_explicitly_protected_windows_junction_and_denied_paths_abort_before_delete(self):
+        row = self.make_row('old/profile/delete.bin')
+        self.make_manifest([row])
+        protected_root = self.root / 'known-protected'
+        junction = protected_root / 'linked'
+        denied = protected_root / 'denied'
+        cleanup.POLICY['protected_paths'].append(protected_root)
+        summary = cleanup.REPORTS / 'summary.json'
+        data = {'policy': cleanup.policy_record(), 'skipped': [
+            {'path': str(junction), 'reason': 'link or junction'},
+            {'path': str(denied), 'reason': '[WinError 5] protected directory denied'}]}
+        summary.write_text(json.dumps(data), encoding='utf-8')
+        original_resolve = Path.resolve
+
+        def resolve(path, *args, **kwargs):
+            if path == denied:
+                raise PermissionError('[WinError 5] cannot resolve protected directory')
+            if path == junction:
+                return self.root.parent / 'external-protected'
+            return original_resolve(path, *args, **kwargs)
+
+        with patch.object(cleanup, 'tracked_paths', return_value=set()), \
+             patch.object(Path, 'resolve', resolve), \
+             patch.object(Path, 'is_junction', lambda path: path == junction):
+            report = cleanup.apply()
+        self.assertEqual(report['removed']['files'], 0)
+        self.assertEqual(report['protection_preflight'], 'Failed')
+        self.assertEqual([(item['path'], item['reason']) for item in report['skipped']],
+                         [(item['path'], item['reason']) for item in data['skipped']])
+        self.assertTrue(all(item['phase'] == 'protection preflight' for item in report['skipped']))
+        self.assertTrue(Path(row['path']).exists())
+
+    def test_skipped_outside_or_parent_traversal_path_is_rejected_before_delete(self):
+        for path in (self.root.parent / 'outside', self.root / '..' / 'outside'):
+            with self.subTest(path=path):
+                with self.assertRaisesRegex(AssertionError, 'outside outputs'):
+                    cleanup.lexical_output_path(path)
+
     def test_apply_retains_changed_and_missing_hash_files_and_original_permission_error(self):
         rows = [self.make_row('old/profile/changed.bin'), self.make_row('old/profile/missing.bin'),
                 self.make_row('old/profile/denied.bin'), self.make_row('old/profile/delete.bin')]
