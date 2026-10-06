@@ -99,10 +99,10 @@ prepare_build 固定工具版本，fetch_dependencies 核对每个 wheel，build
 
 ## 增量构建准备
 
-已有环境先运行输入检查，再核对已有工具、科学依赖和 wheels；缺少准备产物时回到首次路径，不隐式使用其他检出的 backend-wheel.json。本仓库保留的现有合格缓存位于 `outputs/wheels/qualified/`；复用时明确设置以下路径，随后逐文件校验后端记录与 wheel。首次准备仍使用前文默认 `outputs/wheels/`，不要以文件名相同替代摘要核对。
+已有环境先运行输入检查，再核对已有工具、科学依赖和 wheels；缺少准备产物时回到首次路径，不隐式使用其他检出的 backend-wheel.json。首次与增量构建统一使用 `outputs/wheels/`，随后逐文件校验后端记录与 wheel。不要以文件名相同替代摘要核对。
 
 ~~~powershell
-$wheels = "$repo/outputs/wheels/qualified"
+$wheels = "$repo/outputs/wheels"
 $env:QCBLENDER_WHEELS_DIR = $wheels
 ~~~
 
@@ -128,6 +128,10 @@ Invoke-QCCheck 'environment' $blenderPython @('-I', '-c', $checkEnvironment)
 ~~~
 
 环境核对通过后，增量与首次路径均执行以下流程。产品源码变化必须构建新候选并复验；已有环境不意味着旧测试报告可沿用。
+
+共用构建环境按 `tools/build-requirements.txt` 保留五个锁定包及其 RECORD 文件；科学环境保留完整的 `outputs/science/`。本地解释器使用已安装的 Blender Python。GBasis 固定原始 ZIP 保留在 `outputs/build-sources/`，后端构建不需要历史 qcint 编译环境。保留当前构建工具、锁定运行 wheels 和 GBasis 原始 ZIP 后，可以离线构建；从空环境重新安装构建工具还需要相应的离线 wheel 或已获授权的下载。
+
+回归输入的当前入口为 `validation/shared/data/regression/`。`tools/collect_m0_fixtures.py --reference-root <参考检出> --output-root <目标检出>` 优先核对或复制集中输入；缺少 IOData/GBasis fixture 时，从参考检出的唯一原始 ZIP 恢复，不依赖历史展开源树。ChemTools 输入缺失时直接给出缺失路径与固定来源 URL，不隐式下载。
 
 ## 科学与非科学检查
 

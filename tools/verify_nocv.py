@@ -1,12 +1,18 @@
 """Check explicit NOCV pair/Cube association and native signed field persistence."""
+import argparse
 import hashlib
 from pathlib import Path
 import sys
 
-import bpy
-
 ROOT = Path(__file__).resolve().parents[1]
-sys.path[:0] = [str(ROOT), str(ROOT / 'outputs' / 'science')]
+parser = argparse.ArgumentParser()
+parser.add_argument('--output-dir', type=Path, required=True)
+parser.add_argument('--reference-root', type=Path, default=ROOT)
+parser.add_argument('--reopen', action='store_true')
+args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
+import bpy
+sys.path[:0] = [str(ROOT), str(args.reference_root / 'outputs' / 'science')]
+from tools.comparison_fixture import prepare_comparison_cube
 import qcblender
 from qcblender.analysis_data import import_ets
 from qcblender.cube import read_cube
@@ -16,11 +22,12 @@ from qcblender.worker import write_volume
 from qcblender.blender.project import save_project
 from qcblender.blender.views import atom_view, field_view
 
-OUT = ROOT / 'outputs' / 'nocv-acceptance'
-OUT.mkdir(parents=True, exist_ok=True)
+OUT = args.output_dir.resolve()
+if not args.reopen:
+    OUT.mkdir(parents=True, exist_ok=False)
 qcblender.register()
 
-if '--reopen' in sys.argv:
+if args.reopen:
     field = next(obj for obj in bpy.data.objects if obj.get('qc_analysis_role') == 'nocv_field')
     data = load_dataset(bpy.path.abspath(field['qc_dataset']))
     assert data.metadata['analysis']['pair']['pair'] == 1
@@ -28,7 +35,7 @@ if '--reopen' in sys.argv:
     assert field.qc_settings.volume is not None
     print('NOCV signed field cold reopen Passed; real NOCV fixture Not Run')
 else:
-    cube = ROOT / 'outputs' / 'vesta-comparison' / 'ch4-alpha-mo8.cube'
+    cube = prepare_comparison_cube(args.reference_root, OUT)
     reference = read_cube(cube)
     table_file = OUT / 'synthetic-ets.txt'
     table_file.write_text('Note: All energies are given in kcal/mol\n'

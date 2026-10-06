@@ -1,4 +1,5 @@
 """Inspect real examples and prepare external NCI Cubes in a background Blender."""
+import argparse
 import hashlib
 import importlib
 import json
@@ -7,21 +8,26 @@ from importlib.metadata import version
 import time
 import sys
 
+ROOT = Path(__file__).resolve().parents[1]
+parser = argparse.ArgumentParser()
+parser.add_argument('--candidate', type=Path, required=True)
+parser.add_argument('--output-dir', type=Path, required=True)
+parser.add_argument('--reference-root', type=Path, default=ROOT)
+args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
+OUT = args.output_dir.resolve()
+if OUT.exists():
+    raise FileExistsError('Choose an unused output directory: ' + str(OUT))
+OUT.mkdir(parents=True)
 import bpy
 import numpy as np
-
-ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'outputs/complex-examples'
 sys.path.insert(0, str(ROOT))
 from tools.local_inputs import input_path
-SOURCES = input_path('complex-examples')
+SOURCES = input_path('complex-examples', args.reference_root)
 MODULE = 'bl_ext.user_default.qcblender'
-repo = next(r for r in bpy.context.preferences.extensions.repos if r.module == 'user_default')
-if not (Path(repo.directory) / 'qcblender/blender_manifest.toml').is_file():
-    bpy.ops.extensions.package_install_files(filepath=str(ROOT / 'outputs/dist/qcblender-0.0.1.zip'),
-                                            repo='user_default', enable_on_install=True, overwrite=True)
-else:
-    bpy.ops.preferences.addon_enable(module=MODULE)
+config = Path(bpy.utils.user_resource('CONFIG')).resolve()
+assert any(config.is_relative_to(ROOT / directory) for directory in ('outputs', 'validation/work'))
+assert bpy.ops.extensions.package_install_files(filepath=str(args.candidate.resolve()),
+    repo='user_default', enable_on_install=True, overwrite=True) == {'FINISHED'}
 readers = importlib.import_module(MODULE + '.readers')
 storage = importlib.import_module(MODULE + '.data')
 

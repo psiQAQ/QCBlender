@@ -108,6 +108,18 @@ Copy-Item -LiteralPath "$qa/extension.json" -Destination "$reports/cold-moved.js
 
 `verify_extension.py` 使用固定 `extension.json`，上面的命令已把安装与两次冷重开报告分阶段保存。安装和移动工程必须来自本批 `$qa`，不借用历史 `.blend`。
 
+专项工具同样从当前候选和集中输入开始，在新目录重建 fixture：
+
+```powershell
+Invoke-Validation 'external-worker' $blender @('--background', '--factory-startup', '--offline-mode', '--disable-autoexec', '--python-exit-code', '1', '--python', 'tools/verify_external_worker.py', '--', '--candidate', $candidate, '--reference-root', $repo, '--output-dir', "$batch/external-worker")
+Invoke-Validation 'numeric-nocv' $blender @('--background', '--factory-startup', '--offline-mode', '--disable-autoexec', '--python-exit-code', '1', '--python', 'tools/verify_nocv.py', '--', '--reference-root', $repo, '--output-dir', "$batch/numeric-nocv")
+Invoke-Validation 'numeric-nocv-cold' $blender @('--background', '--offline-mode', '--disable-autoexec', "$batch/numeric-nocv/nocv.blend", '--python-exit-code', '1', '--python', 'tools/verify_nocv.py', '--', '--reopen', '--reference-root', $repo, '--output-dir', "$batch/numeric-nocv")
+```
+
+worker 检查读取集中保存的 C07 IGMH 和 Gaussian NBO 原件，另从 CH4 波函数重建数值 Cube 与测试 ETS 表；数值 NOCV 关联检查不代表真实 NOCV 科研验收。`prepare_vesta_comparison.py` 使用 `--reference-root` 和必需的 `--output-dir` 重建同一 MO Cube；`prepare_complex_examples.py` 需要明确 `--candidate`、`--reference-root` 和新的 `--output-dir`。`verify_node_layout.py` 的 baseline/check/reopen 三阶段共享本批 `--out`，每阶段明确 `--candidate` 和 `--reference-root`，资产直接从指定 ZIP 提取。
+
+构建和科学环境只维护 `outputs/build-site/`、`outputs/science/` 及根 `outputs/wheels/`；重建方式见[开发说明](../../docs/DEVELOPMENT.md#增量构建准备)。环境精简清单可用 `tools/runtime_cleanup_plan.py --root <参考检出> --report-dir <新目录>` 生成，工具只输出建议，不删除文件。五个构建包文件按 distribution RECORD 归属保留，完整科学环境及原始源码/许可另列保护路径。
+
 Alpha 主流程和 XYZ/CSV 的明确入口如下。它们使用上一步的本批安装配置；运行前保证前一个 Blender 已退出。
 
 ```powershell

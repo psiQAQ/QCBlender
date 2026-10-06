@@ -6,16 +6,18 @@ from pathlib import Path
 import sys
 import zipfile
 
-import bpy
-import numpy as np
-
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
 parser.add_argument('--out', type=Path, required=True)
 parser.add_argument('--reference-root', type=Path, required=True)
+parser.add_argument('--candidate', type=Path, required=True)
 parser.add_argument('--phase', choices=('baseline', 'check', 'reopen'), required=True)
-args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
+args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
+import bpy
+import numpy as np
 OUT = args.out.resolve()
+if args.phase == 'baseline' and OUT.exists():
+    raise FileExistsError('Choose an unused baseline directory: ' + str(OUT))
 OUT.mkdir(parents=True, exist_ok=True)
 sys.path[:0] = [str(ROOT), str(args.reference_root / 'outputs/science')]
 import qcblender
@@ -29,7 +31,7 @@ from tools.local_inputs import input_path
 # Register source code against a read-only reference library in our own run directory.
 library = OUT / 'library'
 library.mkdir(exist_ok=True)
-with zipfile.ZipFile(args.reference_root / 'outputs/candidates/current/qcblender-0.0.1.zip') as archive:
+with zipfile.ZipFile(args.candidate.resolve()) as archive:
     entry = next(name for name in archive.namelist() if name.endswith('/assets/nodes.blend') or name == 'assets/nodes.blend')
     (library / 'nodes.blend').write_bytes(archive.read(entry))
 asset_library.LIBRARY_DIR = library
