@@ -12,7 +12,7 @@
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
 | 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,656,021 字节，SHA-256 `56dd541da291173f35758df3146832b51eeaa8547796cfd3b5578e37ddf95ad2` |
 | 完整候选及原报告 | `outputs/candidates/current/alpha-ci-0.1.0-190e11e/`；源码 `190e11e`、run `37415371574`；[身份记录](../validation/agent/current-install.json) |
-| 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `docs/v1-acceptance/tutorial-samples.json` |
+| 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[教程整合验证](../validation/agent/VALIDATION.md)；本次精简结果见下节 |
 
 独立用户操作、截图补齐、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
@@ -76,11 +76,13 @@ Passed：151 项基础测试、124 项完整科学测试、5 项重建入口测�
 <a id="用户验证-sop2026-10-06"></a>
 ## 2026-10-06 旧 SOP 整理记录
 
-当前操作进入[人工 SOP](../validation/human/SOP.md)，历史材料见[v1 索引](v1-acceptance/README.md)。原 SOP 文档整理的范围和验证由[历史摘要](archive/outputs-history/evidence--2026-10-06--sop-user-guide.md)保存。
+当前操作进入[人工 SOP](../validation/human/SOP.md)，历史材料见[v1 索引](../validation/agent/v1-acceptance/README.md)。原 SOP 文档整理的范围和验证由[历史摘要](archive/outputs-history/evidence--2026-10-06--sop-user-guide.md)保存。
 
 ## 文档整理（2026-10-06）
 
-[文档总索引](README.md)集中当前入口，四份原根目录历史技术报告已归入[验收历史](acceptance/README.md#早期专项验收全文)。v1冻结清单、来源、历史记录和419张截图保持原位。逐文件基线、引用审查、冻结身份与链接检查保存在 `validation/agent/reports/2026-10-06/docs-organize/`；文档137份、链接/锚点1,248个、保护材料439份核对Passed，公开样本和教程材料检查Passed；Blender及科研复算Not Run。`delivery.json`记录本地提交、标签和工作树处置。
+[文档总索引](README.md)集中当前使用、开发和研究入口。技术验收与 v1 材料共454个文件归入 `validation/agent/acceptance/` 和 `validation/agent/v1-acceptance/`；四份原根目录专项报告见[验收历史](../validation/agent/acceptance/README.md#早期专项验收全文)。419张截图、冻结清单和历史机器记录共436份文件保持迁移前原始字节，历史路径按[对应关系](../validation/agent/acceptance/README.md#历史路径与当前位置)定位。
+
+逐文件基线、引用审查、摘要与链接检查保存在 `validation/agent/reports/2026-10-06/docs-organize/`，最终迁移证据在 `migration/`；48项候选/发布/数据准备测试、实际冻结包和文档检查 Passed。主检出的材料复核、本地提交、两个注释归档标签及工作树处置由 `delivery.json` 定位。Blender、科研复算及独立人工验收 Not Run。
 
 ## 持续维护
 

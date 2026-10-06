@@ -2,11 +2,13 @@
 
 这里维护可重复执行的技术检查、文件身份和清理清单。[本轮整合检查](VALIDATION.md)记录主分支上的实际结果。人工学习从 [人工 SOP](../human/SOP.md) 开始；本地限定的优化、频率和 NBO 案例见 [LOCAL-CASES](LOCAL-CASES.md)。[COVERAGE](COVERAGE.md) 保留旧 A/C/N/X/P1 编号与当前入口的对应关系。
 
-当前安装包定位在 [current-install.json](current-install.json)，实际安装文件为 `validation/shared/install/qcblender-0.1.0.zip`。公开输入在 `validation/shared/data/public/`，本机资料在 `validation/shared/data/local/`，回归输入在 `validation/shared/data/regression/`。冻结样本 ZIP 位于 `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；其原始清单仍为 `docs/v1-acceptance/tutorial-samples.json`。
+当前安装包定位在 [current-install.json](current-install.json)，实际安装文件为 `validation/shared/install/qcblender-0.1.0.zip`。公开输入在 `validation/shared/data/public/`，本机资料在 `validation/shared/data/local/`，回归输入在 `validation/shared/data/regression/`。冻结样本 ZIP 位于 `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；其原始清单仍为 `validation/agent/v1-acceptance/tutorial-samples.json`。
 
 > 冻结样本包：已经固定内容和文件身份的样本 ZIP，整理目录时保留原始字节。
 
 ## 选择检查范围
+
+候选验收、GUI 操作登记和固定基准见[技术验收索引](acceptance/README.md)；冻结样本清单、来源和历史截图见[v1 材料](v1-acceptance/README.md)。两组材料由 `docs/` 迁入，历史机器记录的原路径按[迁移对应关系](acceptance/README.md#历史路径与当前位置)定位。
 
 | 变化范围 | 执行入口 | 能证明的范围 |
 | --- | --- | --- |
@@ -84,7 +86,7 @@ Invoke-Validation 'tutorial-samples' $python @('-I', 'tools/verify_tutorial_samp
 
 ## 安装、导出与冷重开
 
-先遵守 [Blender 操作规则](../../docs/agents/blender-interaction.md)，核对当前连接 PID、工程保存状态与 [操作登记表](../../docs/acceptance/blender-operations.json)。同一时刻只运行一个 Blender 进程。以下命令按顺序串行执行，使用本批独立配置，不连接现有用户会话。
+先遵守 [Blender 操作规则](../../docs/agents/blender-interaction.md)，核对当前连接 PID、工程保存状态与 [操作登记表](acceptance/blender-operations.json)。同一时刻只运行一个 Blender 进程。以下命令按顺序串行执行，使用本批独立配置，不连接现有用户会话。
 
 > 冷重开：前一个 Blender 进程退出后，启动一个新进程读取已保存工程。
 

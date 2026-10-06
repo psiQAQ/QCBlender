@@ -2,7 +2,7 @@
 
 2026-10-04，AUDIT-01 与 AUDIT-04 技术验证 **Passed**。IRC/优化关联使用双方当前步骤的源 Å 坐标，并记录具体参考对象和科学身份。任一端换步后关联失效；共享原子 mesh 在写入前拒绝换步，先使 Object Data 单用户后才能继续。
 
-候选固定产品源码 `a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d`，产品树 `c1a5bc48b035434c4a3245909e1e629bec4f0665`。精确 ZIP、报告摘要和保全工程由[机器索引](audit-p1-validation.json)及 [ARTIFACTS](../ARTIFACTS.md)定位。独立用户复做及科研签署 **Not Run**。
+候选固定产品源码 `a4baaaf2cf163d93d8d7e25f3c9bd5e96ae01c3d`，产品树 `c1a5bc48b035434c4a3245909e1e629bec4f0665`。精确 ZIP、报告摘要和保全工程由[机器索引](audit-p1-validation.json)及 [ARTIFACTS](../../../docs/ARTIFACTS.md)定位。独立用户复做及科研签署 **Not Run**。
 
 | 检查 | 状态及范围 |
 | --- | --- |

@@ -2,9 +2,9 @@
 
 > 产物状态更新（2026-09-29）：本页是历史技术验收记录。候选 ZIP、生成工程及图像已纳入用户批准的清理范围；日志、摘要和历史 Passed 保留，二进制可用性以 [清理记录](../storage-cleanup.md) 为准。本文中“可重开”“保留候选”等描述只代表验收当时状态。当前可用的用户工程单独保存，后续演示从集中输入重建。
 
-本轮按 [规格](../../../.scratch/multiwfn-parameters/spec.md) 顺序集成。独立人工验收和外部视觉对照单独维护。
+本轮按 [规格](../../../../.scratch/multiwfn-parameters/spec.md) 顺序集成。独立人工验收和外部视觉对照单独维护。
 
-当前操作见 [用户指南](../../USER_GUIDE.md)，新候选构建和复验流程见 [DEVELOPMENT](../../DEVELOPMENT.md)。本页只保留对应历史批次的结果与范围。
+当前操作见 [用户指南](../../../../docs/USER_GUIDE.md)，新候选构建和复验流程见 [DEVELOPMENT](../../../../docs/DEVELOPMENT.md)。本页只保留对应历史批次的结果与范围。
 
 ## 第一批：界面与资产
 
@@ -24,7 +24,7 @@
 | ESP 单位冲突拒绝且场景完整、声明位置和五列面积区间 | Passed | `final-sop/cases/C08/metadata-check.json` |
 | 第一批最终资格 | Passed | `qualification.json`、`evidence-index.json`；源码、安装副本、ZIP 和 wheel 摘要一致 |
 
-运行故障与复验方法见 [开发注意事项](../../DEVELOPMENT_PITFALLS.md)。本记录不替代 SOP 独立人工签署。
+运行故障与复验方法见 [开发注意事项](../../../../docs/DEVELOPMENT_PITFALLS.md)。本记录不替代 SOP 独立人工签署。
 
 第一批本地技术标签为 `qa/multiwfn-parameters-2026-09-28-01`。其范围限于上述检查；最终全量 SOP 已在第四批 `04-results-r2` 候选上完成。
 

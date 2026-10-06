@@ -1,10 +1,10 @@
 # 输入来源历史索引
 
-当前输入分类和位置见 [validation/shared/data](../../validation/shared/data/README.md)。本页保存来源 URL、计算条件与历史获取过程；下列路径和命令属于各自批次，不作为新检出的准备步骤。当前工具按稳定输入 key 或公开样本 archive_path 读取集中资料。
+当前输入分类和位置见 [validation/shared/data](../../shared/data/README.md)。本页保存来源 URL、计算条件与历史获取过程；下列路径和命令属于各自批次，不作为新检出的准备步骤。当前工具按稳定输入 key 或公开样本 archive_path 读取集中资料。
 
 ## 历史来源记录
 
-本清单固定当时 `0.0.1` 候选的本地输入。SHA-256 是原始文件字节摘要；该批验收使用 `Get-FileHash <路径> -Algorithm SHA256` 复核。样本不得随扩展 ZIP 分发。当时本地大样本位于忽略目录 `tests/data/local/`；S01–S08 的来源锁现位于 [complex-example-sources.json](../../validation/shared/data/complex-example-sources.json) 和 [local-log-downloads.json](../../validation/shared/data/local-log-downloads.json)。
+本清单固定当时 `0.0.1` 候选的本地输入。SHA-256 是原始文件字节摘要；该批验收使用 `Get-FileHash <路径> -Algorithm SHA256` 复核。样本不得随扩展 ZIP 分发。当时本地大样本位于忽略目录 `tests/data/local/`；S01–S08 的来源锁现位于 [complex-example-sources.json](../../shared/data/complex-example-sources.json) 和 [local-log-downloads.json](../../shared/data/local-log-downloads.json)。
 
 | ID | 本地路径（相对仓库根） | 固定公开来源、版本和许可 | SHA-256 | 计算条件 / 用途 |
 | --- | --- | --- | --- | --- |
@@ -44,7 +44,7 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/aligfellow/xyzrender/$
 
 ## 本轮补充的真实波函数与 IRC 输入
 
-以下是本轮已下载或真实计算生成的输入，原件位于忽略目录。核查依据见 [C07–C09 来源研究](../research/sop-real-sources-c07-c09.md)和 [C10–C13 来源与生成记录](../research/sop-real-sources-c10-c13.md)。波函数齐全不等于外部分析输出已经生成，也不替代 GUI、渲染、冷重开或人工签署。
+以下是本轮已下载或真实计算生成的输入，原件位于忽略目录。核查依据见 [C07–C09 来源研究](../../../docs/research/sop-real-sources-c07-c09.md)和 [C10–C13 来源与生成记录](../../../docs/research/sop-real-sources-c10-c13.md)。波函数齐全不等于外部分析输出已经生成，也不替代 GUI、渲染、冷重开或人工签署。
 
 | ID | 本地路径（相对仓库根） | 固定公开来源、版本和许可 | SHA-256 | 计算条件 / 用途 |
 | --- | --- | --- | --- | --- |
@@ -128,7 +128,7 @@ C12/C13 使用 S19–S21 的字节相同 Windows 示例副本：`c10-c13/multiwf
 
 ## 外部分析结果与验收状态
 
-C07–C13 的本轮真实输入与分析结果现已取得，固定清单共 **35 项（S01–S35）**。下表只汇总样本及科学解析状态；Blender GUI、节点、PNG、保存/移动/冷重开的历史记录见 [HISTORY](HISTORY.md) 与 [Agent 复跑](AGENT-REPLAY.md)，独立人工验收由 [任务 02](../../.scratch/v1-acceptance/issues/02-human-acceptance.md) 维护。S09–S11 保留为早期预检材料：其生成参数仍不全，也未与 S12 建立计算身份关联；本轮 C07 科学核对使用 S25–S28。[上游示例说明](https://xyzrender.readthedocs.io/en/latest/examples/nci_surf.html)
+C07–C13 的本轮真实输入与分析结果现已取得，固定清单共 **35 项（S01–S35）**。下表只汇总样本及科学解析状态；Blender GUI、节点、PNG、保存/移动/冷重开的历史记录见 [HISTORY](HISTORY.md) 与 [Agent 复跑](AGENT-REPLAY.md)，独立人工验收由 [任务 02](../../../.scratch/v1-acceptance/issues/02-human-acceptance.md) 维护。S09–S11 保留为早期预检材料：其生成参数仍不全，也未与 S12 建立计算身份关联；本轮 C07 科学核对使用 S25–S28。[上游示例说明](https://xyzrender.readthedocs.io/en/latest/examples/nci_surf.html)
 
 | 功能 | 本轮导入文件与参考构型 | 样本及科学解析状态 |
 | --- | --- | --- |
@@ -144,7 +144,7 @@ S08 的许可未核清前，验收可在本地使用；不得把该数据文件�
 
 ## 集中输入与重建（2026-09-29）
 
-该批机器入口为 `tests/data/local-inputs.json`，当前入口为 [validation/shared/data/local-inputs.json](../../validation/shared/data/local-inputs.json)。索引记录稳定 ID、相对路径、SHA-256、用途及使用者。`tools/local_inputs.py` 在读取前检查必需文件及摘要，缺失或变更直接失败；没有输出目录回退或自动跳过。下表保留该批 `tests/data/` 的来源定位，当前位置按迁移映射查找。
+该批机器入口为 `tests/data/local-inputs.json`，当前入口为 [validation/shared/data/local-inputs.json](../../shared/data/local-inputs.json)。索引记录稳定 ID、相对路径、SHA-256、用途及使用者。`tools/local_inputs.py` 在读取前检查必需文件及摘要，缺失或变更直接失败；没有输出目录回退或自动跳过。下表保留该批 `tests/data/` 的来源定位，当前位置按迁移映射查找。
 
 | 输入组（相对 `tests/data/local/`） | 数据、单位、关联与用途 | 来源和限制 |
 | --- | --- | --- |

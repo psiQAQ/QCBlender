@@ -19,4 +19,4 @@ Status: resolved
 
 ## 验收记录
 
-Agent 技术验证 Passed，详见 [结果浏览技术记录](../../docs/acceptance/history/RESULT_BROWSER.md)。独立人工验收与发布批准 Not Run。
+Agent 技术验证 Passed，详见 [结果浏览技术记录](../../validation/agent/acceptance/history/RESULT_BROWSER.md)。独立人工验收与发布批准 Not Run。

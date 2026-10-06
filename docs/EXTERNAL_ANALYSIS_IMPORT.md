@@ -42,4 +42,4 @@ step,mayer_output
 
 ## 验证边界
 
-真实样本的历史技术验收覆盖 NBO、IGMH/IRI、ESP、AIM、IRC/Mayer、ETS-NOCV 和 NOCV 场，来源与范围见 [SOP 来源清单](v1-acceptance/SOURCES.md) 和 [Agent 复跑记录](v1-acceptance/AGENT-REPLAY.md)。当前候选实际复验与未执行项目以 [VALIDATION](VALIDATION.md) 为准；独立用户验收尚未签署。
+真实样本的历史技术验收覆盖 NBO、IGMH/IRI、ESP、AIM、IRC/Mayer、ETS-NOCV 和 NOCV 场，来源与范围见 [SOP 来源清单](../validation/agent/v1-acceptance/SOURCES.md) 和 [Agent 复跑记录](../validation/agent/v1-acceptance/AGENT-REPLAY.md)。当前候选实际复验与未执行项目以 [VALIDATION](VALIDATION.md) 为准；独立用户验收尚未签署。

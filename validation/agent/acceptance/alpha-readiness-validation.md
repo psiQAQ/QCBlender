@@ -1,6 +1,6 @@
 # GitHub Alpha 本地技术验证
 
-2026-10-05，Windows x64 / Blender 5.1.1；基线 `main@9bfa682`，固定产品提交 `19e4cf0becf5a5173d692d1f4a9c621e6d01512e`。本轮完成资源边界、科学缓存身份、异步科学预检、实时参数摘要、公开候选 CI 和草稿发布流程。完整身份、检查状态与截图摘要见[机器索引](alpha-readiness-validation.json)，文件位置由[ARTIFACTS](../ARTIFACTS.md)统一维护。
+2026-10-05，Windows x64 / Blender 5.1.1；基线 `main@9bfa682`，固定产品提交 `19e4cf0becf5a5173d692d1f4a9c621e6d01512e`。本轮完成资源边界、科学缓存身份、异步科学预检、实时参数摘要、公开候选 CI 和草稿发布流程。完整身份、检查状态与截图摘要见[机器索引](alpha-readiness-validation.json)，文件位置由[ARTIFACTS](../../../docs/ARTIFACTS.md)统一维护。
 
 候选 `qcblender-0.1.0.zip`：50,656,085 字节，SHA-256 `0c2d9add59b6332f243c5cd87b852a38b94090286f1b7671d7666694a4b73a03`。产品树 `5db4996cbb456f52529c86219d85f0db0541ae49`。本地候选 run ID 为 **0**，没有 GitHub artifact ID，不能作为远端发布资格。后续 GitHub CI 必须对实际远端提交重新生成证据；发布阶段仅上传该次候选的原文件。
 
@@ -51,6 +51,6 @@ P01 为 UHF/STO-3G，源 SHA-256 `ef562c4b210e7c380219282d7684370cca1f0e8349dffa
 
 ## 发布门禁
 
-发布研究由独立 subagent 完成，参考 MolecularNodes 草稿流程、ChemBlender 精确标签/artifact 核验与 BlenderKit 阶段交接，见[研究与来源](../research/github-release-workflow.md)。默认分支手动发布，输入 `tag`、`candidate_run_id`、`dry_run`；默认仅验证。公开附件排除 P02。artifact 过期、标签/提交/版本/摘要不一致、报告或许可证据缺失均停止；重复附件核对原摘要，不覆盖公开内容。
+发布研究由独立 subagent 完成，参考 MolecularNodes 草稿流程、ChemBlender 精确标签/artifact 核验与 BlenderKit 阶段交接，见[研究与来源](../../../docs/research/github-release-workflow.md)。默认分支手动发布，输入 `tag`、`candidate_run_id`、`dry_run`；默认仅验证。公开附件排除 P02。artifact 过期、标签/提交/版本/摘要不一致、报告或许可证据缺失均停止；重复附件核对原摘要，不覆盖公开内容。
 
 维护者完成组件许可复核和独立短 SOP 试装后，明确批准并在 GitHub UI 将草稿公开为 prerelease。首次 Alpha 的门禁与正式 `v1.0.0` 完整验收分别维护。

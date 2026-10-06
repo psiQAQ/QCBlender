@@ -52,4 +52,4 @@ PID 3144 的当前状态已使用 **Save Portable QC Project** 另存到 `output
 
 已验收的候选 ZIP、历史生成工程及图像由本次授权清理，原始日志、摘要和历史 Passed 留存。历史记录中的二进制路径只是当时证据索引，不再声称可直接打开。需要新候选时从当前源码重建，记录新摘要并重新做安装资格检查；新包不是已删除固定候选的逐字节复现。
 
-后续遵循 [存储维护规则](../agents/storage-maintenance.md)。保留安装环境、配置、构建/测试解释器、共享 wheels、集中输入、参考资料、源码子模块、Git 历史及既有技术/归档标签。本地提交合回 `main`，归档为 `archive/2026-09-29/chore/storage-cleanup`；不保留开发分支引用。
+后续遵循 [存储维护规则](../../../docs/agents/storage-maintenance.md)。保留安装环境、配置、构建/测试解释器、共享 wheels、集中输入、参考资料、源码子模块、Git 历史及既有技术/归档标签。本地提交合回 `main`，归档为 `archive/2026-09-29/chore/storage-cleanup`；不保留开发分支引用。

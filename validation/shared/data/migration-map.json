@@ -2,7 +2,7 @@
   "schema": "qcblender.validation-data-migration.v1",
   "date": "2026-10-06",
   "frozen_manifest": {
-    "path": "docs/v1-acceptance/tutorial-samples.json",
+    "path": "validation/agent/v1-acceptance/tutorial-samples.json",
     "sha256": "3e2d87de8e6e93f72765b90027e67393e33bf007de36895b4778d5febc9ab73c"
   },
   "catalogs": [
@@ -900,8 +900,12 @@
       "source": "tests/data/distribution/README.md",
       "path": "validation/agent/packages/README.md",
       "group": "package",
-      "bytes": 802,
-      "sha256": "ae16208c0f52d61900558dbba4f8456b48ba8faec7fd8b60e86bd8084252fbea"
+      "bytes": 826,
+      "sha256": "e5fb1a5eb6196df19d9c519ff9ceac305be82219683ab9bddba6cdb325389e6f",
+      "source_identity": {
+        "bytes": 802,
+        "sha256": "ae16208c0f52d61900558dbba4f8456b48ba8faec7fd8b60e86bd8084252fbea"
+      }
     },
     {
       "source": "tests/data/distribution/qcblender-public-tutorial-samples-v2.zip",

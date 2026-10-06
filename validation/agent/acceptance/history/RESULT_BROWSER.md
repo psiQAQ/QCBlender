@@ -10,7 +10,7 @@
 
 `239cd7c447a2d4caec07646d4d3fdad832f1b5f1b6d5fc9b3c0a33e0bc8539c7`
 
-计算段选择和来源浏览的现行操作见 [用户指南](../../USER_GUIDE.md)。下表保存此历史批次的具体边界与结果。
+计算段选择和来源浏览的现行操作见 [用户指南](../../../../docs/USER_GUIDE.md)。下表保存此历史批次的具体边界与结果。
 
 固定 SOP 候选 `outputs/dist/qcblender-0.0.1.zip` 保持不变，SHA-256 为 `03311fdeb0c83a38a546ebddedee1fe05e8dcb7260b53c889dd9fee3fa7ee231`；旧人工验收证据未覆盖。
 
@@ -41,7 +41,7 @@ Computer Use 完成真实导入确认、计算段下拉选择/取消、来源详
 
 可重开的工程包括 `GUI-result-browser.blend` 与配套 `.qcdata/`、`gui-moved/`、`verification-final-role/moved/sources.blend` 和 `offline-final-role/moved 中文 path/mo8.blend`。GUI 的复制对象可独立编辑；完整科学数组保存在配套目录。
 
-当前操作见 [用户指南](../../USER_GUIDE.md)，新候选构建和复验流程见 [DEVELOPMENT](../../DEVELOPMENT.md)。本页只保留对应历史批次的结果与范围。
+当前操作见 [用户指南](../../../../docs/USER_GUIDE.md)，新候选构建和复验流程见 [DEVELOPMENT](../../../../docs/DEVELOPMENT.md)。本页只保留对应历史批次的结果与范围。
 
 ## 评审与修复记录
 

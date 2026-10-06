@@ -11,7 +11,7 @@ Blocked by: 01, 02, 03, 04, 05
 
 ## 验收
 
-固定 SOP 候选技术复跑 Passed，确切包与证据见 [Agent 复跑记录](../../../docs/v1-acceptance/AGENT-REPLAY.md)；结果浏览候选见 [技术记录](../../../docs/acceptance/history/RESULT_BROWSER.md)。独立人工验收和外部视觉对照为 Not Run，安排在优化轨迹浏览与技术验证之后，发布仍以前述验收为前置条件。
+固定 SOP 候选技术复跑 Passed，确切包与证据见 [Agent 复跑记录](../../../validation/agent/v1-acceptance/AGENT-REPLAY.md)；结果浏览候选见 [技术记录](../../../validation/agent/acceptance/history/RESULT_BROWSER.md)。独立人工验收和外部视觉对照为 Not Run，安排在优化轨迹浏览与技术验证之后，发布仍以前述验收为前置条件。
 
 主设计V01–V08技术验收均通过；交付ZIP和可复现证据。独立用户认可另行记录，Agent不能代签。
 

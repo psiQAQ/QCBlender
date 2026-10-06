@@ -40,7 +40,7 @@ Computer Use 实际确认面板按钮与对话框，已确认入口的重复操�
 - C10/C11：真实 H2O2 IRC 中三步对应 FCHK，RHF/STO-3G、4 原子、18 电子；Mayer 来自同波函数的 PySCF 2.13.1 计算，每步 6 原子对，数值无量纲。文本采用 Multiwfn 兼容语法，实际计算生产者不是 Multiwfn。
 - C12/C13：同次 Multiwfn COBH3 ETS-NOCV，9 对显著记录；pair 1/Total 为 -77.88 kcal/mol，λ=±0.56514、轨道 1/51；配对 Cube 74×92×78，electron/bohr^3，数组逐体素核对。KS/Fock 重建能量属于近似，不能称严格 FTS；有限网格电荷积分不作为收敛声明。
 
-C07–C09 的独立 ESP/密度/Hessian/IRI 复算及 C13 λψ² 差值逐体素核对见 [研究记录一](../research/sop-real-sources-c07-c09.md)、[研究记录二](../research/sop-real-sources-c10-c13.md)。原作者样本的独立再分发许可未明确时仅用于本地验收，不加入 ZIP。
+C07–C09 的独立 ESP/密度/Hessian/IRI 复算及 C13 λψ² 差值逐体素核对见 [研究记录一](../../../docs/research/sop-real-sources-c07-c09.md)、[研究记录二](../../../docs/research/sop-real-sources-c10-c13.md)。原作者样本的独立再分发许可未明确时仅用于本地验收，不加入 ZIP。
 
 ## N01–N18
 

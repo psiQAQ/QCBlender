@@ -1,6 +1,6 @@
 # 冻结的公开教程样本
 
-`qcblender-public-tutorial-samples-v2.zip` 为既有本地交付包的原始字节，未重新生成或压缩。来源及逐文件记录见 `docs/v1-acceptance/tutorial-samples.json` 和 `docs/acceptance/tutorial-sample-delivery.json`。
+`qcblender-public-tutorial-samples-v2.zip` 为既有本地交付包的原始字节，未重新生成或压缩。来源及逐文件记录见 `validation/agent/v1-acceptance/tutorial-samples.json` 和 `validation/agent/acceptance/tutorial-sample-delivery.json`。
 
 文件大小为 12,175,753 字节，SHA-256 为 `b4bc3e0ebbdf29ccb3905b16eeb898c94b9f16f209baae3c3ae1a8646b0348dd`。包内保留 LICENSE、NOTICE.md 和来源清单；30 个 included 文件覆盖 P01/P03/P04/P05/P06，采用 CC BY 4.0、署名 QCBlender contributors。P02 的再分发许可未确认，包内没有 P02 文件。
 

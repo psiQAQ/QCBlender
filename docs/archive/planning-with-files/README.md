@@ -6,8 +6,8 @@
 | --- | --- |
 | V1 实施、M0–M8 进度 | [规格及任务](../../../.scratch/qcblender-v1/spec.md) |
 | 设计与研究 | [设计](../../QCBLENDER_V1_DESIGN.md)、[领域规则](../../agents/domain.md)、`docs/research/` |
-| SOP 技术复跑 | [任务 04](../../../.scratch/v1-acceptance/issues/04-agent-replay.md)、[技术报告](../../v1-acceptance/AGENT-REPLAY.md) |
-| 样本及计算条件 | [SOURCES](../../v1-acceptance/SOURCES.md)、`docs/research/sop-real-sources-*.md` |
+| SOP 技术复跑 | [任务 04](../../../.scratch/v1-acceptance/issues/04-agent-replay.md)、[技术报告](../../../validation/agent/v1-acceptance/AGENT-REPLAY.md) |
+| 样本及计算条件 | [SOURCES](../../../validation/agent/v1-acceptance/SOURCES.md)、`docs/research/sop-real-sources-*.md` |
 | 缺陷与复验 | [开发问题记录](../../DEVELOPMENT_PITFALLS.md) |
 | 独立人工验收与发布 | [验收规格](../../../.scratch/v1-acceptance/spec.md) |
 | 后续工作流 | [任务规则](../../agents/issue-tracker.md) |

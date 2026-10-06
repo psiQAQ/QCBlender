@@ -1,14 +1,25 @@
 # 技术验收索引
 
-当前安装候选由 [current-install.json](../../validation/agent/current-install.json) 定位，执行步骤见 [Agent 校验](../../validation/agent/README.md)，支持范围见 [VALIDATION](../VALIDATION.md)。本目录记录具名候选的结果；各报告的 Passed / Failed / Not Run 只属于其源码、安装包和输入。
+当前安装候选由 [current-install.json](../current-install.json) 定位，执行步骤见 [Agent 校验](../README.md)，支持范围见 [VALIDATION](../../../docs/VALIDATION.md)。本目录记录具名候选的结果；各报告的 Passed / Failed / Not Run 只属于其源码、安装包和输入。
 
 ## 持续使用的方法与登记
 
 | 内容 | 入口 |
 | --- | --- |
-| 已确认 GUI 操作及复用条件 | [操作登记表](blender-operations.json)、[交互规则](../agents/blender-interaction.md) |
+| 已确认 GUI 操作及复用条件 | [操作登记表](blender-operations.json)、[交互规则](../../../docs/agents/blender-interaction.md) |
 | 固定视觉与性能基准方法 | [基准说明](visual-performance-baselines.md) |
-| 历史生成物清理边界 | [清理记录](storage-cleanup.md)；现存位置见 [ARTIFACTS](../ARTIFACTS.md) |
+| 历史生成物清理边界 | [清理记录](storage-cleanup.md)；现存位置见 [ARTIFACTS](../../../docs/ARTIFACTS.md) |
+
+## 历史路径与当前位置
+
+历史机器记录和冻结清单保留原始字节、候选身份及当时的路径。读取其中的材料时，先按下表换算仓库相对路径，再核对原记录的 SHA-256；操作登记表中的截图同样适用。路径迁移不改变原有 Passed / Failed / Not Run。
+
+| 记录中的路径前缀 | 当前路径前缀 |
+| --- | --- |
+| `docs/acceptance/` | `validation/agent/acceptance/` |
+| `docs/v1-acceptance/` | `validation/agent/v1-acceptance/` |
+
+上述映射只改变位置。其他历史 `outputs/` 产物的保留或退役状态由 [ARTIFACTS](../../../docs/ARTIFACTS.md) 定位。当前工具直接读取新路径；发布验证器也能读取迁移前标签内的旧布局。
 
 ## 候选和专题记录
 
@@ -35,4 +46,4 @@
 | `MOLECULARNODES_PARAMETERS.md` | [MolecularNodes 参数交互](history/MOLECULARNODES_PARAMETERS.md) |
 | `MULTIWFN_PARAMETERS.md` | [Multiwfn 参数与界面](history/MULTIWFN_PARAMETERS.md) |
 
-原始报告或工程退役后的可用性从 [ARTIFACTS](../ARTIFACTS.md) 查找，历史批次摘要见 [outputs 索引](../archive/outputs-history/README.md)。技术验证不替代独立人工或科研签署。
+原始报告或工程退役后的可用性从 [ARTIFACTS](../../../docs/ARTIFACTS.md) 查找，历史批次摘要见 [outputs 索引](../../../docs/archive/outputs-history/README.md)。技术验证不替代独立人工或科研签署。

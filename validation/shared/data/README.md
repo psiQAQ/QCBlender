@@ -11,6 +11,8 @@
 | [migration-map.json](migration-map.json) | 旧路径到当前位置的逐文件映射 | 不表示任何旧文件已删除 |
 | [complex-example-sources.json](complex-example-sources.json)、[local-log-downloads.json](local-log-downloads.json) | 外部输入的固定获取地址与身份 | 来源记录，不授予额外再分发许可 |
 
+迁移表中 `bytes` 和 `sha256` 校验当前文件；样本包目录 README 的路径说明更新后，原来源身份保存在该条目的 `source_identity`。冻结 ZIP、清单及科学输入的字节身份保持不变。
+
 ## 准备公开材料
 
 在仓库根目录使用已有 Python 3.13 执行：
@@ -21,7 +23,7 @@ python -B tools/prepare_validation_data.py --report outputs/runs/validation-layo
 
 命令从 `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip` 按允许成员集合恢复文件，验证 30 个输入、许可证与 P04 CSV 相对引用。已有文件必须匹配来源身份；不同内容直接失败，不覆盖用户文件。每次运行指定新的报告文件名。
 
-公开包内的 `tutorial-samples.json` 与仓库的 [冻结清单](../../../docs/v1-acceptance/tutorial-samples.json) 保持原字节。清单的 `archive_path` 是 `public/` 内的当前路径；`path` 是冻结时的来源位置，不能作为当前读取入口。`P06/source.json` 同样保留生成时的来源定位。CI 校验冻结 ZIP、成员集合、逐文件身份及许可声明。
+公开包内的 `tutorial-samples.json` 与仓库的 [冻结清单](../../agent/v1-acceptance/tutorial-samples.json) 保持原字节。清单的 `archive_path` 是 `public/` 内的当前路径；`path` 是冻结时的来源位置，不能作为当前读取入口。`P06/source.json` 同样保留生成时的来源定位。CI 校验冻结 ZIP、成员集合、逐文件身份及许可声明。
 
 ## 复制本地输入与计算原件
 

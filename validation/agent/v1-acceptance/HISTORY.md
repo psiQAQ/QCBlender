@@ -1,25 +1,25 @@
 # SOP 历史证据与维护索引
 
-本页保存从 SOP 移出的历史批次说明、技术检查与截图。整理基线为提交 `190e11e`，整理日期为 2026-10-06。下面的历史引文保留原文、候选身份和图注；其中的“本轮”“当前”及步骤位置指各自记录时的语境。当前人工操作以 [SOP](../../validation/human/SOP.md) 为准，材料和技术流程集中在 [validation](../../validation/README.md)。
+本页保存从 SOP 移出的历史批次说明、技术检查与截图。整理基线为提交 `190e11e`，整理日期为 2026-10-06。下面的历史引文保留原文、候选身份和图注；其中的“本轮”“当前”及步骤位置指各自记录时的语境。当前人工操作以 [SOP](../../human/SOP.md) 为准，材料和技术流程集中在 [validation](../../README.md)。
 
 ## 维护与验收管理入口
 
 | 内容 | 权威入口 |
 | --- | --- |
-| 安装包、工程、保全与重建 | [ARTIFACTS](../ARTIFACTS.md) |
-| 独立人工验收状态 | [任务 02](../../.scratch/v1-acceptance/issues/02-human-acceptance.md) |
-| 完整版本验收与外部对照范围 | [验收规格](../../.scratch/v1-acceptance/spec.md) |
-| Alpha 技术验证和发布门禁 | [Alpha 验证](../acceptance/alpha-readiness-validation.md)、[发布流程](../research/github-release-workflow.md) |
+| 安装包、工程、保全与重建 | [ARTIFACTS](../../../docs/ARTIFACTS.md) |
+| 独立人工验收状态 | [任务 02](../../../.scratch/v1-acceptance/issues/02-human-acceptance.md) |
+| 完整版本验收与外部对照范围 | [验收规格](../../../.scratch/v1-acceptance/spec.md) |
+| Alpha 技术验证和发布门禁 | [Alpha 验证](../acceptance/alpha-readiness-validation.md)、[发布流程](../../../docs/research/github-release-workflow.md) |
 | P1 关联与共享 mesh | [P1 验证](../acceptance/audit-p1-validation.md) |
 | 拼接日志与重复 ETS-NOCV | [P2 验证](../acceptance/audit-p2-baselines-validation.md) |
 | 静态参考、IGMH、取消及 VDB | [可靠性验证](../acceptance/reliability-validation.md) |
-| 交互复用与产物维护 | [Blender 交互规则](../agents/blender-interaction.md)、[存储维护规则](../agents/storage-maintenance.md) |
+| 交互复用与产物维护 | [Blender 交互规则](../../../docs/agents/blender-interaction.md)、[存储维护规则](../../../docs/agents/storage-maintenance.md) |
 
 用户操作、Agent Computer Use、MCP/原生数据检查和独立科研审阅分别记录；技术通过仅覆盖其绑定的候选与范围，不转写为用户签署。维护者在相应任务和验证索引维护状态，不在操作教程中追加执行日志。
 
 ## 准备、Alpha 与通用操作的历史记录
 
-本教程保留 **C01–C13** 科学案例和 **N01–N18** 节点/交互检查编号。按钮位置与当前插件界面一致；对话框及部分控件仍使用英文。操作结果只记 **Passed / Failed / Not Run**。用户实际点击、Agent Computer Use 点击、MCP操作与数据核对、独立科研签署分别记录；Agent 不填写使用者签名。维护者按 [交互规则](../agents/blender-interaction.md) 和 [操作登记表](../acceptance/blender-operations.json) 复用已确认且功能未变的操作，MCP/命令行复验单独记录，完整案例结果仍逐项验收。
+本教程保留 **C01–C13** 科学案例和 **N01–N18** 节点/交互检查编号。按钮位置与当前插件界面一致；对话框及部分控件仍使用英文。操作结果只记 **Passed / Failed / Not Run**。用户实际点击、Agent Computer Use 点击、MCP操作与数据核对、独立科研签署分别记录；Agent 不填写使用者签名。维护者按 [交互规则](../../../docs/agents/blender-interaction.md) 和 [操作登记表](../acceptance/blender-operations.json) 复用已确认且功能未变的操作，MCP/命令行复验单独记录，完整案例结果仍逐项验收。
 
 本文保留未变操作的历史Agent截图及所有用户截图占位；已有图的候选、输入和参数仅绑定[历史点击索引](../acceptance/tutorial-cu-validation.json)。旧二维图截图集中于文末历史证据定位，不能作为当前CSV导出或0.2 Å网格的验收。当前批次引用[展示精度、XYZ与数据导出验证索引](../acceptance/display-xyz-export-validation.json)；本轮新增入口已由Agent实际点击确认，MCP/原生检查与原地、中文移动冷重开通过；每张图保留其候选身份，e317→9d3ff61的单行目录修复按索引复核并重新点击验证。用户复做和独立科研签署仍为 **Not Run**。实际操作者在每步占位下追加独立文件名的截图，不覆盖历史证据。
 
@@ -36,9 +36,9 @@
 | 7 缺陷与复做 | Failed 时保留错误、工程与输入，登记缺陷；修复后以新候选重做相关操作、导出及工程闭环 | 未解决必需项仍为 Failed；缺输入或未执行仍为 Not Run，不能从历史通过记录继承 |
 | 8 汇总与签署 | 按 3.1 填写工具、对象、参数及证据；按 3.2 逐行汇总；满足 3.3 条件后由独立使用者签署 | C/X、N、必要技术与许可材料全部符合完成条件，签名及科研适用性由实际独立验收者填写 |
 
-本路线适用于 manifest **0.1.0** 的 GitHub Alpha 候选。每次记录扩展 ZIP、源码提交、样本 ZIP 和 P01 SHA-256；候选技术结果、Agent 点击、独立使用者试装与科研签署分别记录。首次 Alpha 的公开门禁见[发布研究与流程](../research/github-release-workflow.md)，正式 v1 仍按全部 C/N 案例验收。
+本路线适用于 manifest **0.1.0** 的 GitHub Alpha 候选。每次记录扩展 ZIP、源码提交、样本 ZIP 和 P01 SHA-256；候选技术结果、Agent 点击、独立使用者试装与科研签署分别记录。首次 Alpha 的公开门禁见[发布研究与流程](../../../docs/research/github-release-workflow.md)，正式 v1 仍按全部 C/N 案例验收。
 
-先取得本批扩展 ZIP、v2 公开样本 ZIP、`release-manifest.json` 和 `SHA256SUMS.txt`。本地候选由[产物路由](../ARTIFACTS.md)定位；GitHub 附件仅在实际发布后下载。核对包大小、摘要及清单中的源码提交，不把本地 run ID 0 当作 GitHub CI 身份。将 v2 包解压到 `inputs/`，保持 P01 等目录结构。
+先取得本批扩展 ZIP、v2 公开样本 ZIP、`release-manifest.json` 和 `SHA256SUMS.txt`。本地候选由[产物路由](../../../docs/ARTIFACTS.md)定位；GitHub 附件仅在实际发布后下载。核对包大小、摘要及清单中的源码提交，不把本地 run ID 0 当作 GitHub CI 身份。将 v2 包解压到 `inputs/`，保持 P01 等目录结构。
 
 科学 Dataset 的 **1 GiB** 上限包含保留源数组、新场值、有效域掩码及各 `.npy` 文件头。求值预算是另一个估算，计入全部驻留输入、输出与工作数组，不等于 Dataset 大小，也不是进程峰值保证。512³ 请求必须在大型数组分配和 VDB 写入前拒绝。
 

@@ -1,6 +1,6 @@
 # 可靠性、IGMH 声明与流式摘要验证
 
-2026-10-05，Windows x64 / Blender 5.1.1。源码提交 `a3ed8264aad860f25c922dd7c91efce3f6f078d3`，产品树 `0cec91ad2ed7804e78a01c39105d49e3d39150d8`。最终候选位于 `outputs/candidates/current/reliability-final-a3ed826/qcblender-0.0.1.zip`，SHA-256 为 `8094278edf08a2e6d54640e4f0cd376d8cbb98568c92464720f963dff4bb8c71`。本地技术资格Passed；36份最终候选报告与ZIP、安装源码及11个锁定wheel一致。逐报告摘要见[机器索引](reliability-validation.json)，保留和重建位置见[ARTIFACTS](../ARTIFACTS.md)，本地归档状态见[交付收据](reliability-delivery.json)。
+2026-10-05，Windows x64 / Blender 5.1.1。源码提交 `a3ed8264aad860f25c922dd7c91efce3f6f078d3`，产品树 `0cec91ad2ed7804e78a01c39105d49e3d39150d8`。最终候选位于 `outputs/candidates/current/reliability-final-a3ed826/qcblender-0.0.1.zip`，SHA-256 为 `8094278edf08a2e6d54640e4f0cd376d8cbb98568c92464720f963dff4bb8c71`。本地技术资格Passed；36份最终候选报告与ZIP、安装源码及11个锁定wheel一致。逐报告摘要见[机器索引](reliability-validation.json)，保留和重建位置见[ARTIFACTS](../../../docs/ARTIFACTS.md)，本地归档状态见[交付收据](reliability-delivery.json)。
 
 ## 当前技术证据
 

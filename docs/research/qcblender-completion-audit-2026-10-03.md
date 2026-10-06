@@ -19,7 +19,7 @@
 | 输入 | IOData适配FCHK；cclib和自有事件适配Gaussian Log；多数据/斜轴Cube；标准单帧及同原子顺序多帧XYZ | 本轮科学回归、实际worker导入、XYZ严格边界及来源浏览Passed；Gaussian首段SCF前失败再拼接任务的边界另复现缺陷 | 后缀不证明量名、单位或收敛；支持范围见[VALIDATION第27–35行](../VALIDATION.md) |
 | 求值 | 范围内实值、非周期、全电子HF/DFT的MO、总/Alpha/Beta/自旋密度、完整ESP | 本轮82科学测试Passed，0失败/错误/跳过；MO、密度、ESP与独立参考误差保持约4.85e-9、8.44e-7 electron/bohr³、4.61e-6 hartree/e | 参考只证明所测样本；完整网格收敛、远场及性能实验本轮Not Run；[VALIDATION:31–49](../VALIDATION.md) |
 | 外部分析 | IGMH/IRI配对场、ESP极值/面积、NBO/E(2)、AIM、Mayer、ETS-NOCV表及pair Cube读取、来源与筛选 | 本轮相应解析/身份、七类导出和C04/C07–C13来源重建检查Passed；历史完整案例/渲染保留；NOCV冲突字段遗漏另复现缺陷 | 运行时不执行这些外部分析算法；新二维结果使用记录与CSV；[VALIDATION:41–43](../VALIDATION.md) |
-| 轨迹 | Gaussian优化逐步构型/能量/收敛/原文；有序IRC FCHK、逐步Mayer；XYZ离散切帧 | 本轮XYZ逐帧身份/连接/测量/复制、IRC/Mayer导出Passed；动态关联及共享mesh切步另复现缺陷 | XYZ帧序不代表物理时间或IRC；不宣称任意IRC日志和扫描/QST路径解析；[优化边界:9–16](../acceptance/history/OPTIMIZATION_TRAJECTORY.md) |
+| 轨迹 | Gaussian优化逐步构型/能量/收敛/原文；有序IRC FCHK、逐步Mayer；XYZ离散切帧 | 本轮XYZ逐帧身份/连接/测量/复制、IRC/Mayer导出Passed；动态关联及共享mesh切步另复现缺陷 | XYZ帧序不代表物理时间或IRC；不宣称任意IRC日志和扫描/QST路径解析；[优化边界:9–16](../../validation/agent/acceptance/history/OPTIMIZATION_TRAJECTORY.md) |
 | 显示 | 原子/键、双相场、双场着色、切片/轮廓、雾、振动、局部选择/测量标注、显示层和九公共资产 | 本轮安装检查的实际场求值/阈值/相位/渲染及XYZ显示Passed；Quality3、201切片和0.2Å入口的历史当前候选证据已核摘要 | 本轮未重跑全部显示入口；显示细分不代表科学收敛；[VALIDATION:12–17](../VALIDATION.md) |
 | 导出 | IR、optimization、IRC、Mayer、profile、paired、ESP_AREA的CSV与metadata | 本轮真实worker七类全量/筛选、539448有效paired体素、无效剖面留空、取消无遗留和记录对象检查Passed | 新建二维图已移除；旧图对象保留；[导出任务:13–15](../../.scratch/display-xyz-export/issues/03-data-export.md) |
 | 保存与恢复 | 自包含`.blend + .qcdata`、原地/移动冷重开、缓存及重定位 | 本轮安装归档与新XYZ/导出综合工程原地、中文移动后新进程冷重开Passed；快照、metadata和CSV摘要一致 | 此专项不等于所有历史工程重新验收；旧权限/占用对象仍保留；[ARTIFACTS:41–47](../ARTIFACTS.md) |
@@ -52,7 +52,7 @@ GUI前置环境的失败记录另行保留：首次沙箱GUI未暴露可操作�
 
 ## 2. 四类产品缺陷及维护缺口
 
-优先级按影响建议：P1为可能使科学身份与显示内容静默不一致，P2为特定输入边界下的解析或说明错误。以下缺陷均对应审计固定源码96f9c7e；后续AUDIT-02/03与AUDIT-01/04均已修复并验证，分别见[P2验证](../acceptance/audit-p2-baselines-validation.md)及[P1当前验证](../acceptance/audit-p1-validation.md)。复现报告中的`execution_status`或`verification_status=Passed`表示测试达成了预期复现，不能解释为缺陷产品行为通过。
+优先级按影响建议：P1为可能使科学身份与显示内容静默不一致，P2为特定输入边界下的解析或说明错误。以下缺陷均对应审计固定源码96f9c7e；后续AUDIT-02/03与AUDIT-01/04均已修复并验证，分别见[P2验证](../../validation/agent/acceptance/audit-p2-baselines-validation.md)及[P1当前验证](../../validation/agent/acceptance/audit-p1-validation.md)。复现报告中的`execution_status`或`verification_status=Passed`表示测试达成了预期复现，不能解释为缺陷产品行为通过。
 
 ### 2.1 AUDIT-01 / P1：动态构型关联使用基础Dataset，忽略当前步骤
 
@@ -231,9 +231,9 @@ ORCA、Molden、`.mwfn`、周期体系、Hide Dust、DI/ESM 及新科学分析�
 | P05 | 自定义CO/BH₃与整体几何，真实SCF及Multiwfn ETS-NOCV | 包内；CC BY 4.0；能量为整体KS矩阵重构的Multiwfn近似，不称F_TS方法 |
 | P06 | 从P03/P04源FCHK提取的标准XYZ，Å、固定原子顺序 | 包内；CC BY 4.0；不携带FCHK能量、波函数或IRC语义 |
 
-条件、来源和预期值见[SOURCES第159–183行](../v1-acceptance/SOURCES.md)。P01/P03/P05是自行定义的示意构型，没有声称优化结构；较早S01–S35输入仍各自遵守其来源和许可边界。P02下载失败、摘要不符或不具备使用权时，相应案例必须保持Not Run；原站定位与本地读取说明不授予再分发权限。
+条件、来源和预期值见[SOURCES第159–183行](../../validation/agent/v1-acceptance/SOURCES.md)。P01/P03/P05是自行定义的示意构型，没有声称优化结构；较早S01–S35输入仍各自遵守其来源和许可边界。P02下载失败、摘要不符或不具备使用权时，相应案例必须保持Not Run；原站定位与本地读取说明不授予再分发权限。
 
-公开v2包为12,175,753字节，SHA-256 `b4bc3e0ebbdf29ccb3905b16eeb898c94b9f16f209baae3c3ae1a8646b0348dd`；本轮复核匹配。包只含P01/P03/P04/P05/P06及清单、LICENSE、NOTICE，不包含P02或程序。[样本交付索引](../acceptance/tutorial-sample-delivery.json)、[本轮核验](D:/workspace/QCBlender/outputs/evidence/2026-10-03/plugin-audit/completion-evidence.json)
+公开v2包为12,175,753字节，SHA-256 `b4bc3e0ebbdf29ccb3905b16eeb898c94b9f16f209baae3c3ae1a8646b0348dd`；本轮复核匹配。包只含P01/P03/P04/P05/P06及清单、LICENSE、NOTICE，不包含P02或程序。[样本交付索引](../../validation/agent/acceptance/tutorial-sample-delivery.json)、[本轮核验](D:/workspace/QCBlender/outputs/evidence/2026-10-03/plugin-audit/completion-evidence.json)
 
 ### 9.3 建议顺序与验收门槛
 
@@ -249,4 +249,4 @@ ORCA、Molden、`.mwfn`、周期体系、Hide Dust、DI/ESM 及新科学分析�
 
 本次独立安装环境和已保全的原副本共6,036文件、500,234,681字节已删除；这是删除文件大小之和，不是全仓净节省。十个权限目录内74文件、207,636字节已由创建用户读取复制并核对摘要，原件继续保留，未修改ACL或所有权；因此[清理状态为Partial](D:/workspace/QCBlender/outputs/evidence/2026-10-03/plugin-audit/cleanup-receipt.json)。所有本批Blender进程已正常退出。
 
-产物统一由[ARTIFACTS](../ARTIFACTS.md)定位。研究报告已提交为`26fa9c9`并合入main。后续两项P2与基准实现、归档身份和当前候选由[ARTIFACTS](../ARTIFACTS.md)及[修复验证](../acceptance/audit-p2-baselines-validation.md)定位；原始审计证据保持原身份。最终摘要与链接检查见[final-verification.json](D:/workspace/QCBlender/outputs/evidence/2026-10-03/plugin-audit/final-verification.json)。
+产物统一由[ARTIFACTS](../ARTIFACTS.md)定位。研究报告已提交为`26fa9c9`并合入main。后续两项P2与基准实现、归档身份和当前候选由[ARTIFACTS](../ARTIFACTS.md)及[修复验证](../../validation/agent/acceptance/audit-p2-baselines-validation.md)定位；原始审计证据保持原身份。最终摘要与链接检查见[final-verification.json](D:/workspace/QCBlender/outputs/evidence/2026-10-03/plugin-audit/final-verification.json)。

@@ -18,7 +18,7 @@
 | PORT-01 | VDB 绝对路径令移动后的工程继续依赖原目录 | 保存相对路径并刷新体积缓存；首次保存、Save As、失败回滚及移动冷重开 Passed |
 | ESP-01 | Multiwfn 最大/最小值各自从 1 编号，全局 serial 去重误拒绝真实输出 | 按 `(kind, serial)` 去重；同类重复仍拒绝，真实 19 点导入及 GUI 重试 Passed |
 
-固定候选、逐例结果及原始日志见 [Agent 技术复跑记录](v1-acceptance/AGENT-REPLAY.md)。独立人工验收由 SOP 单独记录。
+固定候选、逐例结果及原始日志见 [Agent 技术复跑记录](../validation/agent/v1-acceptance/AGENT-REPLAY.md)。独立人工验收由 SOP 单独记录。
 
 ## 2026-09-23：Blender 5.1 视频输出设置
 

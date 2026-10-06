@@ -8,7 +8,7 @@
 
 最新完整候选 `outputs/candidates/current/alpha-ci-0.1.0-190e11e/`、`outputs/projects/user-session-20260930/`、`outputs/projects/human-acceptance/`、未知 `outputs/projects/recovery/`、`outputs/projects/cleanup-followup-original/` 与 `outputs/recovery/` 保持保护。当前教程、集中科学输入、源码子模块和必要完整许可证保持当前入口。未知工程仅记未知，不据目录名认定用户归属或可以删除。
 
-来源输入从 [集中数据索引](../../../validation/shared/data/README.md) 和 [来源历史索引](../../v1-acceptance/SOURCES.md) 核对。CSV保持组内相对引用；checkpoint、Gaussian计算日志、生成器与条件保存一份。旧unknown_inputs列表含真实原件、合成负例和副本，逐文件分类后处理。
+来源输入从 [集中数据索引](../../../validation/shared/data/README.md) 和 [来源历史索引](../../../validation/agent/v1-acceptance/SOURCES.md) 核对。CSV保持组内相对引用；checkpoint、Gaussian计算日志、生成器与条件保存一份。旧unknown_inputs列表含真实原件、合成负例和副本，逐文件分类后处理。
 
 ## 批次
 

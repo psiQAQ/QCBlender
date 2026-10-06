@@ -8,7 +8,7 @@ Type: task
 
 执行用户于 2026-09-26 批准的 SOP 全流程复跑计划：C01–C13、N01–N18，补齐可追溯真实样本，GUI 操作配合 Blender MCP 核对，修复并复验；不填写独立人工签名。当前用户已授权分批本地提交修复及工作流迁移，不推送或发布。
 
-技术报告：[Agent 复跑记录](../../../docs/v1-acceptance/AGENT-REPLAY.md)。
+技术报告：[Agent 复跑记录](../../../validation/agent/v1-acceptance/AGENT-REPLAY.md)。
 
 进度与证据索引：`outputs/v1-acceptance/replay/`。每例六项检查按 `Passed / Failed / Not Run` 记录，未验证的项目不能计入通过。
 

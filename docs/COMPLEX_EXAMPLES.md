@@ -4,7 +4,7 @@
 
 ## 打开与展示
 
-历史场景和成片已纳入 [产物清理](acceptance/storage-cleanup.md)，下表路径用于定位旧报告，不保证文件仍存在。后续从 [集中输入](v1-acceptance/SOURCES.md) 按本页重建步骤生成场景；所需 ZIP 从当前源码构建并重新验证安装。移动新场景时必须同时复制同名 `.qcdata` 目录。
+历史场景和成片已纳入 [产物清理](../validation/agent/acceptance/storage-cleanup.md)，下表路径用于定位旧报告，不保证文件仍存在。后续从 [集中输入](../validation/agent/v1-acceptance/SOURCES.md) 按本页重建步骤生成场景；所需 ZIP 从当前源码构建并重新验证安装。移动新场景时必须同时复制同名 `.qcdata` 目录。
 
 | 案例 | 场景与成片 | 物理量与参数 |
 | --- | --- | --- |

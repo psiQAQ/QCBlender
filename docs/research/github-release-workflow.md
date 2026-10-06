@@ -54,7 +54,7 @@ Alpha 技术门禁包括核心测试、固定科学环境与真实必要样本�
 
 所有随包组件都需要可审查的许可材料。当前 [THIRD_PARTY](../../THIRD_PARTY.md) 记录 IOData/GBasis 包元数据与根 LICENSE 的声明差异，以及 SciPy/OpenBLAS/GCC runtime 随包材料；保留真实差异并完成复核，未完成时保持本地候选。Alpha 不提供许可豁免。
 
-公开样本依据 [SOURCES](../v1-acceptance/SOURCES.md) 第 157–183 行与 [样本机器清单](../v1-acceptance/tutorial-samples.json)。仅推广许可合格的 v2 样本及由公开输入生成的复现材料。P02/S08 及未知许可原件和相关 `.blend/.qcdata` 不加入公开附件；SOP 保留原站获取、SHA 核验及剩余限制。
+公开样本依据 [SOURCES](../../validation/agent/v1-acceptance/SOURCES.md) 第 157–183 行与 [样本机器清单](../../validation/agent/v1-acceptance/tutorial-samples.json)。仅推广许可合格的 v2 样本及由公开输入生成的复现材料。P02/S08 及未知许可原件和相关 `.blend/.qcdata` 不加入公开附件；SOP 保留原站获取、SHA 核验及剩余限制。
 
 复现 ZIP 的 `.qcdata` 成员严格来自 scene 清单及其 Dataset manifest 引用的数组和 VDB；目录身份和数组/缓存摘要一并核对，任何未引用文件均拒绝。扩展 ZIP 严格包含 tag 的扩展内容、两份明确生成的节点资产、许可/锁记录和锁定 wheels。候选与推广阶段均检查完整成员，避免目录中额外原件进入附件。
 

@@ -2,7 +2,7 @@
 
 2026-10-04，本批技术验证 **Passed**。Gaussian 首任务在 SCF 前失败后，后续正常任务能独立选段导入；ETS-NOCV 同 spin/pair 的重复记录比较全部规范化科学字段，相同记录保留首次来源，冲突明确给出字段和两条来源行号。
 
-候选、产品树和摘要见[机器索引](audit-p2-baselines-validation.json)，工程、原始报告、命令和迁移映射统一见 [ARTIFACTS](../ARTIFACTS.md)。本候选未包含两个范围外 P1（动态构型关联、共享 mesh 副本切步）的修复；后续修复及对应候选见 [P1 验证](audit-p1-validation.md)。独立用户/科研签署为 **Not Run**。
+候选、产品树和摘要见[机器索引](audit-p2-baselines-validation.json)，工程、原始报告、命令和迁移映射统一见 [ARTIFACTS](../../../docs/ARTIFACTS.md)。本候选未包含两个范围外 P1（动态构型关联、共享 mesh 副本切步）的修复；后续修复及对应候选见 [P1 验证](audit-p1-validation.md)。独立用户/科研签署为 **Not Run**。
 
 | 检查 | 结果 |
 | --- | --- |

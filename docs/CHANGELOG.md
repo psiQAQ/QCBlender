@@ -1,5 +1,7 @@
 # 开发演进
 
+- 2026-10-06：技术验收及 v1 材料共454个文件集中至 `validation/agent/acceptance/`、`validation/agent/v1-acceptance/`；同步文档链接、Agent 指针和工具路径，发布检查兼容迁移前标签。419张截图和17份冻结清单/机器记录保持原始字节，原路径有明确映射；样本包 README 的当前校验身份同步更新，原来源身份另存。48项相关测试、冻结样本包及迁移链接/摘要检查 Passed；Blender和科研复算 Not Run。主检出复核和本地归档见[产物入口](ARTIFACTS.md#文档整理2026-10-06)。
+
 - 2026-10-06：整理docs入口，四份历史专项技术报告归入acceptance/history，补文档、验收、研究和历史索引；当前科学支持范围前置，早期研究与P2候选的阶段边界明确标注。v1冻结清单及419张独有截图原位保留，来源、历史数值和机器验收身份不变。同步用户重试收据：5,039个文件全部删除，两批累计94,934文件/9,285,384,609字节。1,248个本地链接/锚点、439份保护摘要及冻结公开材料检查Passed；Blender和科研复算Not Run。本地归档见[产物入口](ARTIFACTS.md#文档整理2026-10-06)。
 
 - 2026-10-06：完成 outputs 深度精简，历史技术结论整理为 67 份 Markdown；按精确清单删除 89,895 文件/8,545,515,461 字节，5,039 个已审查但权限受限的文件保留并交付身份复核重试命令。保留当前候选、用户/恢复工程、集中科学原件、完整许可和一套环境；根 wheels 统一到锁定身份，构建环境缩至 429 文件。151 基础/124 完整科学及真实离线构建、安装、冷重开和受影响工具检查 Passed；用户工程 11 个原数组读回 Passed。GUI 点击、checkpoint 复算、独立人工/科研验收 Not Run；产品源码与依赖锁未改，本地归档，无 push。见[产物入口](ARTIFACTS.md#outputs-精简结果2026-10-06)。
@@ -12,23 +14,23 @@
 
 - 2026-10-06：将 SOP 整理为用户验证流程，纳入 XYZ 入门、当前步骤关联、共享 mesh 与单用户恢复、科研核对和保存迁移操作。正文由 2,042 行减为 827 行，保留 A00–A09、C01–C13、X01、N01–N18，并展开 P1-A/P1-B；材料身份、填写模板及历史说明分为独立文档，393 张原截图与图注完整保留。同步入口索引与截图记录规则。案例覆盖、链接/锚点、三份材料摘要和五段 PowerShell 语法检查 Passed；未运行 Blender 或代填人工结果。证据及本地归档见[产物路由](ARTIFACTS.md#用户验证-sop2026-10-06)。
 
-- 2026-10-06：修复 GitHub 候选 CI 下载 Blender 官方清单时的 HTTP 403，为清单与 ZIP 统一标识 QCBlender-CI 请求；官方摘要与篡改拒绝门禁保留。129 标准库、67 公开科学、构建/离线安装/冷读及复现通过，实际 run 37414740265 / artifact 11390153636 成功，下载原文件摘要、源码/wheels/公开材料复核 Passed。产品和依赖锁未变；发布许可、独立试装及公开批准保持 Not Run。详见[Actions 修复](acceptance/actions-download-fix.md)。
+- 2026-10-06：修复 GitHub 候选 CI 下载 Blender 官方清单时的 HTTP 403，为清单与 ZIP 统一标识 QCBlender-CI 请求；官方摘要与篡改拒绝门禁保留。129 标准库、67 公开科学、构建/离线安装/冷读及复现通过，实际 run 37414740265 / artifact 11390153636 成功，下载原文件摘要、源码/wheels/公开材料复核 Passed。产品和依赖锁未变；发布许可、独立试装及公开批准保持 Not Run。详见[Actions 修复](../validation/agent/acceptance/actions-download-fix.md)。
 
 - 2026-10-05：SOP 补齐完整连续执行流程：干净配置安装与 A00–A09 首次出图，C01–C13/X01 工程依赖，N01–N18、每例导出/渲染/保存/中文移动/归档解包冷重开及最终签署。展开实际对象、按钮、参数、文件和完成判断；433 个本地链接及三段 PowerShell 示例语法检查 Passed。产品与原案例/历史验收结果未变，独立人工/科研复做仍 Not Run。检查记录由[产物路由](ARTIFACTS.md)定位。
 
-- 2026-10-05：完成 1 GiB 科学数据资源契约、全驻留输入求值预算、科学源码/依赖缓存指纹、异步计算前预检及实时资源拒绝；新增中文 Markdown/JSON 当前视图参数摘要，缺字段及自定义图保持 partial/unverified。新增 Windows x64 / Blender 5.1.1 公开核心候选 CI、原始 artifact 身份核验及手动草稿发布工作流；manifest 0.1.0。127 标准库、67 公开科学、123 完整本地科学、六视觉新建/冷读共12次及真实 GUI/取消/Undo/Redo/摘要/中文移动冷重开 Passed；Standards/Spec 0 遗留。SOP、指南、架构与节点契约同步。当前候选固定19e4cf0，本地证据 run ID 0，组件许可和独立人工/科研门禁 Not Run；实际 GitHub CI/草稿/公开尚未执行。任务提交9cc9a005已ff-only合入main，四个注释归档标签可达main；四个Git工作树登记和分支移除Passed，三个磁盘目录移除Passed，alpha-core普通移除Failed并原位保留。清理后证据、候选及中文工程摘要复核Passed；本地归档及保全清理的实际结果见[Alpha 验证](acceptance/alpha-readiness-validation.md)、[交付收据](acceptance/alpha-readiness-delivery.json)和[产物路由](ARTIFACTS.md)。
+- 2026-10-05：完成 1 GiB 科学数据资源契约、全驻留输入求值预算、科学源码/依赖缓存指纹、异步计算前预检及实时资源拒绝；新增中文 Markdown/JSON 当前视图参数摘要，缺字段及自定义图保持 partial/unverified。新增 Windows x64 / Blender 5.1.1 公开核心候选 CI、原始 artifact 身份核验及手动草稿发布工作流；manifest 0.1.0。127 标准库、67 公开科学、123 完整本地科学、六视觉新建/冷读共12次及真实 GUI/取消/Undo/Redo/摘要/中文移动冷重开 Passed；Standards/Spec 0 遗留。SOP、指南、架构与节点契约同步。当前候选固定19e4cf0，本地证据 run ID 0，组件许可和独立人工/科研门禁 Not Run；实际 GitHub CI/草稿/公开尚未执行。任务提交9cc9a005已ff-only合入main，四个注释归档标签可达main；四个Git工作树登记和分支移除Passed，三个磁盘目录移除Passed，alpha-core普通移除Failed并原位保留。清理后证据、候选及中文工程摘要复核Passed；本地归档及保全清理的实际结果见[Alpha 验证](../validation/agent/acceptance/alpha-readiness-validation.md)、[交付收据](../validation/agent/acceptance/alpha-readiness-delivery.json)和[产物路由](ARTIFACTS.md)。
 
-- 2026-10-05：外部分析增加静态参考及异步身份检查；创建场、保存和重新定位前检查原生VDB网格；取消保留原错误、退出状态与待清理任务。IGMH分量、片段和来源声明按user_assigned持久化及导出。105科学测试、40单测、六视觉与真实GUI/Undo/Redo/原地和中文移动冷读Passed，Standards/Spec各1项修复后0遗留。标准库流式摘要实验保持科学身份，256³收益未达到32 MiB或10%门槛，停止扩大重构。资格提交42a11be已ff-only合入main，五个注释归档标签已创建并保留，五个工作树及分支正常移除；清单删除40,911文件/15,384,029,053字节，996个保护文件和1,316份保全版本摘要复核Passed，16个未分类文件和19个拒绝目录保留。独立人工/科研签署及天然权限拒绝目标Not Run；候选、保全及本地收尾见[验证](acceptance/reliability-validation.md)、[交付收据](acceptance/reliability-delivery.json)与[产物路由](ARTIFACTS.md)，不push/发布。
+- 2026-10-05：外部分析增加静态参考及异步身份检查；创建场、保存和重新定位前检查原生VDB网格；取消保留原错误、退出状态与待清理任务。IGMH分量、片段和来源声明按user_assigned持久化及导出。105科学测试、40单测、六视觉与真实GUI/Undo/Redo/原地和中文移动冷读Passed，Standards/Spec各1项修复后0遗留。标准库流式摘要实验保持科学身份，256³收益未达到32 MiB或10%门槛，停止扩大重构。资格提交42a11be已ff-only合入main，五个注释归档标签已创建并保留，五个工作树及分支正常移除；清单删除40,911文件/15,384,029,053字节，996个保护文件和1,316份保全版本摘要复核Passed，16个未分类文件和19个拒绝目录保留。独立人工/科研签署及天然权限拒绝目标Not Run；候选、保全及本地收尾见[验证](../validation/agent/acceptance/reliability-validation.md)、[交付收据](../validation/agent/acceptance/reliability-delivery.json)与[产物路由](ARTIFACTS.md)，不push/发布。
 
 - 2026-10-04：重试遗留清理，f458工作树登记及已合并chore/repository-cleanup分支正常移除，当前仅main；注释归档标签保留，b48c目录已不存在。14,816文件/798,822,391字节完整保全并核对SHA-256，补存科学数据11组Dataset/600数组/8VDB新进程读回Passed；f458磁盘残留普通删除仍访问拒绝，06保持pending。收据与保全映射见[产物路由](ARTIFACTS.md)“遗留清理状态”；未修改ACL/所有权，未force删除。
 
-- 2026-10-04：修复AUDIT-01当前构型关联与AUDIT-04共享mesh切步。关联绑定两端当前科学身份和具体参考对象，换步失效；共享原子mesh在写入前拒绝换步并提示单用户操作。97科学测试、六视觉场景及保全冷读、真实GUI/Undo/Redo和关联/共享对象原生专项Passed；Standards/Spec各1项修复复审、0阻断遗留。独立人工签署Not Run。[验证](acceptance/audit-p1-validation.md)、[产物路由](ARTIFACTS.md)与[交付收据](acceptance/audit-p1-delivery.json)记录确切身份及保留状态。
+- 2026-10-04：修复AUDIT-01当前构型关联与AUDIT-04共享mesh切步。关联绑定两端当前科学身份和具体参考对象，换步失效；共享原子mesh在写入前拒绝换步并提示单用户操作。97科学测试、六视觉场景及保全冷读、真实GUI/Undo/Redo和关联/共享对象原生专项Passed；Standards/Spec各1项修复复审、0阻断遗留。独立人工签署Not Run。[验证](../validation/agent/acceptance/audit-p1-validation.md)、[产物路由](ARTIFACTS.md)与[交付收据](../validation/agent/acceptance/audit-p1-delivery.json)记录确切身份及保留状态。
 
-- 2026-10-04：修复Gaussian首段SCF前失败时遗漏后续任务边界，以及ETS-NOCV重复记录遗漏正负本征值/单轨道能量冲突。建立六场景固定视觉基准和64³/128³/256³、1/8/32视图性能采样；91科学测试、17基准单测、28视觉检查、原生GUI与工程冷读Passed。Standards/Spec各1项已修复、0遗留；独立人工签署Not Run，两项P1仍在范围外。[验证](acceptance/audit-p2-baselines-validation.md)与[产物路由](ARTIFACTS.md)记录候选、工程、原始成功失败报告；本批合并、注释标签、工作树清理和推送状态见[交付收据](acceptance/audit-p2-delivery.json)。
+- 2026-10-04：修复Gaussian首段SCF前失败时遗漏后续任务边界，以及ETS-NOCV重复记录遗漏正负本征值/单轨道能量冲突。建立六场景固定视觉基准和64³/128³/256³、1/8/32视图性能采样；91科学测试、17基准单测、28视觉检查、原生GUI与工程冷读Passed。Standards/Spec各1项已修复、0遗留；独立人工签署Not Run，两项P1仍在范围外。[验证](../validation/agent/acceptance/audit-p2-baselines-validation.md)与[产物路由](ARTIFACTS.md)记录候选、工程、原始成功失败报告；本批合并、注释标签、工作树清理和推送状态见[交付收据](../validation/agent/acceptance/audit-p2-delivery.json)。
 
 - 2026-10-03：完成固定96f9c7e的插件完成度与六参考对象调研。82科学测试、30相关单测通过（1项Windows跳过），候选安装、XYZ/七类CSV、来源浏览及保存/迁移冷读Passed；四类产品缺陷未修复，两类P1实际点击复现。十维比较、五项改进建议和证据见[调研报告](research/qcblender-completion-audit-2026-10-03.md)。保全工程与日志后清理6,036文件/500,234,681字节，74份已核对副本的原件因权限边界保留；独立人工/科研签署Not Run。研究工作树未提交/合并，产品与依赖未改，未push/发布。
 
-- 2026-10-03：展示/XYZ/CSV任务本地ff-only收尾；四个注释archive标签、本轮四工作树及分支正常移除，已归档cleanup-followup旧分支删除。清理11,095文件/1,073,258,330字节，保留最新候选、工程、输入和必要证据；清理后重建与12Dataset/249数组/1VDB原生冷读Passed。旧f458权限及空b48c占用单列延期，独立签署Not Run；收据见[产物路由](ARTIFACTS.md)与[清理索引](acceptance/display-xyz-export-cleanup.json)，不push/发布。
+- 2026-10-03：展示/XYZ/CSV任务本地ff-only收尾；四个注释archive标签、本轮四工作树及分支正常移除，已归档cleanup-followup旧分支删除。清理11,095文件/1,073,258,330字节，保留最新候选、工程、输入和必要证据；清理后重建与12Dataset/249数组/1VDB原生冷读Passed。旧f458权限及空b48c占用单列延期，独立签署Not Run；收据见[产物路由](ARTIFACTS.md)与[清理索引](../validation/agent/acceptance/display-xyz-export-cleanup.json)，不push/发布。
 
 - 2026-10-02：新建原子外层Quality3、切片201/轴，教程生成网格0.2Å；标准XYZ单帧/离散多帧与来源/编号/随帧测量接入。新建二维谱图/曲线/散点/面积柱形改为七类显式UTF-8 CSV+metadata，默认工程目录/系统Documents、跨工程偏好与单次覆盖；旧工程图形保留。固定main源码9d3ff61候选完成82科学测试、21相关单测、42份同批资格证据、实际点击与MCP逐值检查及原地/中文移动冷读；修复导出覆盖目录被上次操作记住的问题。27张新图紧接SOP步骤，v2样本加入两份自有XYZ，九公共资产/依赖锁/P03/P05原Cube保持。索引与产物路由已更新；独立用户/科研签署Not Run，未push/发布。
 
@@ -142,7 +144,7 @@ N01/N02/N09原生资产添加、五条接线及选择/样式/裁剪开关Passed�
 
 ## 2026-10-01 C03 双符号、独立着色与冷重开补验
 
-候选92d498c的Cube/cub声明、双符号阈值/样式/透明度、真实几何场着色及别名替换Passed；完整工程3 Dataset、18数组、9引用与3 VDB经原路径、中文移动、解包三个新可见进程读取和渲染Passed，渲染像素一致。已确认操作通过MCP复验，首次映射由Computer Use点击确认，截图紧接SOP步骤。操作登记新增映射/替换和层显隐；完整C/N、主分支合并归档与独立科研签署仍未完成。[验证索引](acceptance/tutorial-cu-validation.json)引用本批报告和摘要，工程及原始证据保留，未push或发布。
+候选92d498c的Cube/cub声明、双符号阈值/样式/透明度、真实几何场着色及别名替换Passed；完整工程3 Dataset、18数组、9引用与3 VDB经原路径、中文移动、解包三个新可见进程读取和渲染Passed，渲染像素一致。已确认操作通过MCP复验，首次映射由Computer Use点击确认，截图紧接SOP步骤。操作登记新增映射/替换和层显隐；完整C/N、主分支合并归档与独立科研签署仍未完成。[验证索引](../validation/agent/acceptance/tutorial-cu-validation.json)引用本批报告和摘要，工程及原始证据保留，未push或发布。
 
 ## 2026-10-01 Blender 操作复用与单进程偏好
 
@@ -150,13 +152,13 @@ N01/N02/N09原生资产添加、五条接线及选择/样式/裁剪开关Passed�
 
 ## 2026-10-01 教程点击补验：C02与冷重开
 
-候选92d498c完成C02能量原文、三个模式与IR、优化轨迹及独立复制、Log Job2→新FCHK连续导入、相机/F12导出、保存自包含工程和归档的实际点击补验；原路径、中文移动与归档解包由三个新可见进程打开并重新渲染Passed。4 Dataset、69数组、5对象引用、45配套文件及ZIP46条目摘要一致。新增27张示例截图紧接对应步骤，保留用户占位；[索引](acceptance/tutorial-cu-validation.json)总体Not Run，历史局部Passed另列。完整C/N、合并归档和独立科研签署未完成；产品与依赖未改，未push或发布。
+候选92d498c完成C02能量原文、三个模式与IR、优化轨迹及独立复制、Log Job2→新FCHK连续导入、相机/F12导出、保存自包含工程和归档的实际点击补验；原路径、中文移动与归档解包由三个新可见进程打开并重新渲染Passed。4 Dataset、69数组、5对象引用、45配套文件及ZIP46条目摘要一致。新增27张示例截图紧接对应步骤，保留用户占位；[索引](../validation/agent/acceptance/tutorial-cu-validation.json)总体Not Run，历史局部Passed另列。完整C/N、合并归档和独立科研签署未完成；产品与依赖未改，未push或发布。
 
 ## 2026-10-01 教程点击补验与逐步骤截图
 
 SOP将24张原生JPEG示例紧接实际步骤展示，逐项保留用户截图占位；末尾结果表仅记录结果和签署。实际点击通过能量/三模式播放、Log Job2→新FCHK、密度取样与101点CSV、氢显隐与菜单重做、相机渲染、自包含保存及新进程冷重开。
 
-修复关闭IR层时子文字残留的显示缺陷1554ee2；兼容旧工程文字，保留个人显隐选择和视口/渲染独立状态。新候选68个Python文件与源码/安装逐字节一致，安装/公共资产/helper/显隐专项及69项科学回归Passed；首轮科学检查缺少显式ROOT日志输入的失败和之后摘要核对副本的通过分别保存。最终工程4个Dataset、119个数组及1个VDB核对Passed。索引见[点击补验](acceptance/tutorial-cu-validation.json)。完整C01–C13/N01–N18逐步点击、用户复做及独立科研签署仍Not Run，02 claimed、03 pending；不将历史MCP通过继承为本批全覆盖。截图阶段保全后清理8643项/488,083,431字节，核对42660项保护摘要；未知恢复与历史权限对象保留。未push或发布。
+修复关闭IR层时子文字残留的显示缺陷1554ee2；兼容旧工程文字，保留个人显隐选择和视口/渲染独立状态。新候选68个Python文件与源码/安装逐字节一致，安装/公共资产/helper/显隐专项及69项科学回归Passed；首轮科学检查缺少显式ROOT日志输入的失败和之后摘要核对副本的通过分别保存。最终工程4个Dataset、119个数组及1个VDB核对Passed。索引见[点击补验](../validation/agent/acceptance/tutorial-cu-validation.json)。完整C01–C13/N01–N18逐步点击、用户复做及独立科研签署仍Not Run，02 claimed、03 pending；不将历史MCP通过继承为本批全覆盖。截图阶段保全后清理8643项/488,083,431字节，核对42660项保护摘要；未知恢复与历史权限对象保留。未push或发布。
 
 main合并、archive标签和本批工作树移除因完整GUI验收未完成被自动审批拒绝；main保持b453723，本批两个分支和工作树保留，未执行被拒动作。
 
@@ -164,7 +166,7 @@ main合并、archive标签和本批工作树移除因完整GUI验收未完成被
 
 本轮完成本地ff-only合并0a90411与四分支注释archive标签；正常移除四工作树及已合并分支，05/06 resolved。逐文件保全1516项证据；两次清理删除24750文件/1,845,200,762字节，最终活跃独立配置保留后同口径净减少1,573,886,482字节。清理后输入110、科学69及保留环境重建/71项包文件对照Passed；最终MCP可见窗口为独立PID21116。旧f458拒绝与b48c占用继续单列，历史清理任务未resolved；原用户未保存窗口与默认配置保留。收据见产物路由。
 
-按用户追加授权以MCP完成剩余技术检查；相同90ff9bf源码及4a0ac3e4候选的C01–C13核心、N01–N18、连续Log Job2→新FCHK原生对话框、真实截图、渲染和撤销重做Passed。新自包含工程55个科学对象，在三个新可见进程中核对原路径、中文移动与解压副本的1098次数组摘要及15个VDB，Passed。证据与重建入口见[验证索引](acceptance/tutorial-validation.json)和[产物路由](ARTIFACTS.md)。用户本批复做、鼠标点击与独立科研签署保持Not Run；无需恢复Computer Use作为本轮技术前置。未改变产品、科学契约、公共接口或依赖；未push或发布。
+按用户追加授权以MCP完成剩余技术检查；相同90ff9bf源码及4a0ac3e4候选的C01–C13核心、N01–N18、连续Log Job2→新FCHK原生对话框、真实截图、渲染和撤销重做Passed。新自包含工程55个科学对象，在三个新可见进程中核对原路径、中文移动与解压副本的1098次数组摘要及15个VDB，Passed。证据与重建入口见[验证索引](../validation/agent/acceptance/tutorial-validation.json)和[产物路由](ARTIFACTS.md)。用户本批复做、鼠标点击与独立科研签署保持Not Run；无需恢复Computer Use作为本轮技术前置。未改变产品、科学契约、公共接口或依赖；未push或发布。
 
 ## 2026-10-01 公共教程与节点可读性：技术批次
 
@@ -172,7 +174,7 @@ main合并、archive标签和本批工作树移除因完整GUI验收未完成被
 
 资格固定90ff9bf；69项科学、19项单测、110项输入、样本/checkpoint、节点/安装/图例/剖面/相机/优化/浏览及双冷重开Passed；核心教程原生数据及42个对象绑定/785次数组摘要/12个VDB保全Passed。修订旧剖面断言与无original_path的新生成输入核验；补齐旧映射及空记录表取景前置。早期子Agent安装写入默认userpref，无前次快照；新增guard后未再改变，失败和通过分别保存。
 
-可见新候选PID37508已打开，原用户PID14284受保护。Computer Use宿主不可用，完整点击/截图/新候选MCP/科研签署Not Run；05 claimed、06 pending。候选、样本、工程已保全，索引见[本轮验证](acceptance/tutorial-validation.json)；archive、工作树/分支移除及结束配置清理等待综合验收，旧权限/占用继续单列。未push或发布。
+可见新候选PID37508已打开，原用户PID14284受保护。Computer Use宿主不可用，完整点击/截图/新候选MCP/科研签署Not Run；05 claimed、06 pending。候选、样本、工程已保全，索引见[本轮验证](../validation/agent/acceptance/tutorial-validation.json)；archive、工作树/分支移除及结束配置清理等待综合验收，旧权限/占用继续单列。未push或发布。
 
 ## 2026-09-30 工作树与 outputs 维护
 
@@ -186,7 +188,7 @@ main合并、archive标签和本批工作树移除因完整GUI验收未完成被
 
 任务 06 已将 b48c 的 34,459 个文件完整归档并逐文件核对摘要，保存位置为主检出 outputs/cleanup-followup-20260930；用户未保存工程另存为 user-session/未命名.blend + .qcdata 并在新可见进程冷重开通过。f458 的可读文件已归档，但 11 个目录与 3 个 ZIP 仍访问拒绝，保留旧工作树；未改权限或强制删除。合并与当前工作树移除另由任务 06 的执行收据记录。
 
-追加授权修复新文件对话框沿用上一次 Log 预览摘要和计算段的问题；仅在新 GUI invoke 清空摘要并重置计算段，显式预览的来源变化检查保留。新候选 qcf3 的科学、单测、节点、安装、资产、恢复、图例、双冷重开及来源浏览回归 Passed，资格绑定 a7f9b43。经授权通过 MCP + Computer Use 在可见 Blender 完成导入失败顺序、能量与模式、密度剖面、保存和新进程重开及 CSV 检查并截图；指南有效点数定位改为 CSV 的 valid 列。精简[验证索引](acceptance/cleanup-validation.json)进入版本控制；独立科研签署 Not Run。以下记录原技术批次。
+追加授权修复新文件对话框沿用上一次 Log 预览摘要和计算段的问题；仅在新 GUI invoke 清空摘要并重置计算段，显式预览的来源变化检查保留。新候选 qcf3 的科学、单测、节点、安装、资产、恢复、图例、双冷重开及来源浏览回归 Passed，资格绑定 a7f9b43。经授权通过 MCP + Computer Use 在可见 Blender 完成导入失败顺序、能量与模式、密度剖面、保存和新进程重开及 CSV 检查并截图；指南有效点数定位改为 CSV 的 valid 列。精简[验证索引](../validation/agent/acceptance/cleanup-validation.json)进入版本控制；独立科研签署 Not Run。以下记录原技术批次。
 
 用户指南按任务整理对象条件、实际面板路径和按钮文字；开发说明分开首次准备与增量构建，补齐逐步退出码、报告索引及资格汇总示例。节点辅助测试增加实际原子编号和固定接口契约断言，产品及依赖保持现状。69 项科学回归、11 项单测、节点、同批安装/生命周期、资产、工程双冷重开、恢复与图例专项 Passed；最终技术资格绑定 `87b5316`，详见[构建复验记录](../.scratch/cleanup-followup/issues/03-first-build.md)。候选、成功与失败日志、工程及配套数据保留在本轮工作树。人工指南点击检查 Not Run，验证索引尚为本地草稿；main 未合并，新旧工作树均保留，独立科研验收签署继续 Not Run。
 
@@ -196,27 +198,27 @@ main合并、archive标签和本批工作树移除因完整GUI验收未完成被
 
 ## 2026-09-29 输入集中与产物维护
 
-SOP 和回归大样本集中到忽略的 `tests/data/local/`，通过受跟踪索引核对摘要；相关 Blender 检查可从原始输入重建。用户当前工程另存到 `outputs/recovery/pid3144-preserved/`；历史候选、生成工程和缓存按逐文件清单清理，保留安装环境、参考资料、原始输入及日志。详细结果见 [清理记录](acceptance/storage-cleanup.md)，维护规则见 [存储维护](agents/storage-maintenance.md)。本次变更在 `chore/storage-cleanup` 本地完成，归档标签为 `archive/2026-09-29/chore/storage-cleanup`。旧阶段“长期保留全部候选和工程”的政策由此更新；历史验证结果不改写，独立人工验收和外部视觉对照继续 Not Run。
+SOP 和回归大样本集中到忽略的 `tests/data/local/`，通过受跟踪索引核对摘要；相关 Blender 检查可从原始输入重建。用户当前工程另存到 `outputs/recovery/pid3144-preserved/`；历史候选、生成工程和缓存按逐文件清单清理，保留安装环境、参考资料、原始输入及日志。详细结果见 [清理记录](../validation/agent/acceptance/storage-cleanup.md)，维护规则见 [存储维护](agents/storage-maintenance.md)。本次变更在 `chore/storage-cleanup` 本地完成，归档标签为 `archive/2026-09-29/chore/storage-cleanup`。旧阶段“长期保留全部候选和工程”的政策由此更新；历史验证结果不改写，独立人工验收和外部视觉对照继续 Not Run。
 
 ## 2026-09-28 Multiwfn 交互与原生编辑器分工
 
-折叠工作流面板和按对象能力启用入口，持久参数移入对象属性、材质和原生节点，加入资产分类、点击探针、切片 Gizmo、等值线、线剖面排版及外部结果筛选。ESP/IGMH/IRI 来源单位明确校验。69 项科学回归、干净配置安装和最终 C01–C13/N01–N18 技术 SOP Passed；提交 `d0942ce`，标签 `qa/multiwfn-parameters-2026-09-28-04`，详情见 [技术记录](acceptance/history/MULTIWFN_PARAMETERS.md)。不增加 Multiwfn 运行依赖；日志保留，二进制按清理记录管理。
+折叠工作流面板和按对象能力启用入口，持久参数移入对象属性、材质和原生节点，加入资产分类、点击探针、切片 Gizmo、等值线、线剖面排版及外部结果筛选。ESP/IGMH/IRI 来源单位明确校验。69 项科学回归、干净配置安装和最终 C01–C13/N01–N18 技术 SOP Passed；提交 `d0942ce`，标签 `qa/multiwfn-parameters-2026-09-28-04`，详情见 [技术记录](../validation/agent/acceptance/history/MULTIWFN_PARAMETERS.md)。不增加 Multiwfn 运行依赖；日志保留，二进制按清理记录管理。
 
 ## 2026-09-28 MolecularNodes 选择与标注交互
 
-新增非连续源编号、固定邻域集合、独立局部层、真实计算步测量和场景标注，扩充图例排版。58 项科学回归、布局检查、安装及完整技术 SOP Passed；标签 `qa/mn-parameters-20260928-03`，详情见 [技术记录](acceptance/history/MOLECULARNODES_PARAMETERS.md)。邻域不自动随构型重算，测量不把振动展示位移当作真实构型；日志保留，用户指定的当前工程单独保全。
+新增非连续源编号、固定邻域集合、独立局部层、真实计算步测量和场景标注，扩充图例排版。58 项科学回归、布局检查、安装及完整技术 SOP Passed；标签 `qa/mn-parameters-20260928-03`，详情见 [技术记录](../validation/agent/acceptance/history/MOLECULARNODES_PARAMETERS.md)。邻域不自动随构型重算，测量不把振动展示位移当作真实构型；日志保留，用户指定的当前工程单独保全。
 
 ## 2026-09-28 VMD 参数交互
 
-按用途组织显示参数，显式选择着色场，增加单次有效范围读取、零中心范围和工程内参数复制。48 项科学回归、复制策略、GUI 和双冷重开 Passed；标签 `qa/vmd-parameters-20260928`，详情见 [技术记录](acceptance/vmd-parameters.md)。复制后各视图独立，不建立跨轨道对应；日志保留，二进制按清理记录管理。
+按用途组织显示参数，显式选择着色场，增加单次有效范围读取、零中心范围和工程内参数复制。48 项科学回归、复制策略、GUI 和双冷重开 Passed；标签 `qa/vmd-parameters-20260928`，详情见 [技术记录](../validation/agent/acceptance/vmd-parameters.md)。复制后各视图独立，不建立跨轨道对应；日志保留，二进制按清理记录管理。
 
 ## 2026-09-27 源码借鉴四项功能
 
-AIM 属性核对类型和坐标，ETS-NOCV 区分占位与已计算表，提供正交取景相机及带有效性标记的场值线剖面/CSV。四批安装、对应功能和最终技术 SOP Passed；标签 `qa/source-adoption-20260927-01` 至 `04`，最终提交 `b2c227c`，详情见 [技术记录](acceptance/source-adoption.md)。取景限正交、剖面为一次采样快照；日志保留，二进制按清理记录管理。
+AIM 属性核对类型和坐标，ETS-NOCV 区分占位与已计算表，提供正交取景相机及带有效性标记的场值线剖面/CSV。四批安装、对应功能和最终技术 SOP Passed；标签 `qa/source-adoption-20260927-01` 至 `04`，最终提交 `b2c227c`，详情见 [技术记录](../validation/agent/acceptance/source-adoption.md)。取景限正交、剖面为一次采样快照；日志保留，二进制按清理记录管理。
 
 ## 2026-09-27 计算段、来源与优化轨迹浏览
 
-Gaussian Log 导入先异步预览计算段并核对源摘要；来源详情按摘要/计算段分组。优化轨迹提供真实离散步的构型、能量、收敛值和原文位置。结果浏览 21 项、优化阶段 25 项科学回归及 GUI/冷重开 Passed，开发基线归档为 `archive/2026-09-28/feat/result-browser`；分别见 [结果浏览](acceptance/history/RESULT_BROWSER.md) 和 [优化轨迹](acceptance/history/OPTIMIZATION_TRAJECTORY.md)。不自动跨段继承几何，不将优化步解释为物理时间；日志保留，二进制按清理记录管理。
+Gaussian Log 导入先异步预览计算段并核对源摘要；来源详情按摘要/计算段分组。优化轨迹提供真实离散步的构型、能量、收敛值和原文位置。结果浏览 21 项、优化阶段 25 项科学回归及 GUI/冷重开 Passed，开发基线归档为 `archive/2026-09-28/feat/result-browser`；分别见 [结果浏览](../validation/agent/acceptance/history/RESULT_BROWSER.md) 和 [优化轨迹](../validation/agent/acceptance/history/OPTIMIZATION_TRAJECTORY.md)。不自动跨段继承几何，不将优化步解释为物理时间；日志保留，二进制按清理记录管理。
 
 ## 2026-09-26 Blender 中文界面材质节点
 

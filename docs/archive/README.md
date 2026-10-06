@@ -7,4 +7,4 @@
 | [outputs 批次摘要](outputs-history/README.md) | 历史任务的候选身份、参数、技术结果、失败与未运行边界；原始二进制可用性由清理收据决定 |
 | [早期 planning-with-files](planning-with-files/README.md) | 已迁入本地任务体系前的设计、研究和复跑记录；不继续维护旧任务状态 |
 
-按主题找技术验收全文，进入[验收索引](../acceptance/README.md)。v1 的来源、冻结样本清单和原始界面截图在 [v1 材料](../v1-acceptance/README.md)；其中冻结清单仍被现行工具读取，保持原路径和字节。
+按主题找技术验收全文，进入[验收索引](../../validation/agent/acceptance/README.md)。v1 的来源、冻结样本清单和原始界面截图在 [v1 材料](../../validation/agent/v1-acceptance/README.md)；其中冻结清单仍被现行工具读取，保持原路径和字节。

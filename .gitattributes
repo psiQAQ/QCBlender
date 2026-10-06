@@ -20,3 +20,9 @@ validation/shared/data/complex-example-sources.json -text -diff
 validation/shared/data/local-log-downloads.json -text -diff
 # Preserve the upstream GNU license text, including its original final blank line.
 LICENSE -text whitespace=-blank-at-eof
+
+# Preserve relocated frozen manifests and historical machine reports byte for byte.
+validation/agent/acceptance/*.json -text
+validation/agent/v1-acceptance/tutorial-samples.json -text
+# This historical report was saved with CRLF; preserve its original byte identity.
+validation/agent/acceptance/alpha-readiness-delivery.json whitespace=cr-at-eol

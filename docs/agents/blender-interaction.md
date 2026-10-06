@@ -1,10 +1,10 @@
 # Blender 交互与操作复用
 
-本仓库维护者在开发和验收中按本页操作 Blender。跨历史操作记录统一保存在 [操作登记表](../acceptance/blender-operations.json)，产物保存位置仍由 [ARTIFACTS](../ARTIFACTS.md) 路由。
+本仓库维护者在开发和验收中按本页操作 Blender。跨历史操作记录统一保存在 [操作登记表](../../validation/agent/acceptance/blender-operations.json)，产物保存位置仍由 [ARTIFACTS](../ARTIFACTS.md) 路由。
 
 ## 工具顺序
 
-1. 操作前查询登记表，核对操作的已验证功能、参数范围、活动对象/选择顺序、Blender 版本、安装候选及相关实现摘要。
+1. 操作前查询登记表，核对操作的已验证功能、参数范围、活动对象/选择顺序、Blender 版本、安装候选及相关实现摘要。历史截图路径按[迁移对应关系](../../validation/agent/acceptance/README.md#历史路径与当前位置)定位后核对原 SHA-256；机器记录保留生成时字节。
 2. Computer Use 已实际成功执行且当前功能未变的操作，后续通过 Blender MCP 复用；不因切换任务、工程或会话重复点击已经覆盖的操作。复用仅限登记的对象条件、参数范围和交互行为。每次仍检查当前工程的可观察结果；历史 GUI 通过不自动使本批数据或整个案例通过。
 3. MCP 无法覆盖时使用已有命令行工具或 Blender 原生后台运行能力，记录命令、退出码及报告。Agent 启动的后台 Blender 与交互窗口串行运行，不另开并行实例。插件自身按作业启动的计算子进程记录归属与完成状态，不作为第二个 GUI/MCP 操作目标。
 4. 首次操作、相关功能调整后的复验、需要确认界面/对话框/可见结果的变更、MCP 和命令行均不能完成时，使用 Computer Use。成功后更新登记表。
@@ -30,7 +30,7 @@
 
 复用时在本批报告记录操作 ID、历史证据、相关实现未变依据、实际执行工具、PID、候选/输入摘要、参数、预期和实际结果。登记表的 GUI 历史证据保持原身份；新的 MCP 执行单独记录，不改写为本批 Computer Use 点击。
 
-用户 [SOP](../../validation/human/SOP.md) 只写输入、操作、参数和可观察预期；截图在有可见结果的步骤后就地引用，使用者按指定名称保存到 `validation/human/screenshots/`。人工流程直接安装并进入案例，结果反馈由使用者提出。Agent 的候选身份、执行日志、状态和技术截图放入 `validation/agent/reports/`，当前流程见 [Agent 校验](../../validation/agent/README.md)。旧截图及其候选身份由[历史证据](../v1-acceptance/HISTORY.md)保存。理由：操作正文与技术记录分别维护，使用者可以连续照做。
+用户 [SOP](../../validation/human/SOP.md) 只写输入、操作、参数和可观察预期；截图在有可见结果的步骤后就地引用，使用者按指定名称保存到 `validation/human/screenshots/`。人工流程直接安装并进入案例，结果反馈由使用者提出。Agent 的候选身份、执行日志、状态和技术截图放入 `validation/agent/reports/`，当前流程见 [Agent 校验](../../validation/agent/README.md)。旧截图及其候选身份由[历史证据](../../validation/agent/v1-acceptance/HISTORY.md)保存。理由：操作正文与技术记录分别维护，使用者可以连续照做。
 
 技术截图的图注记录实际操作工具与覆盖范围。MCP/命令行执行后通过 Computer Use 观察的截图，标明“观察”，并关联真实执行报告。仅为帮助定位界面而在 SOP 使用插图时，配简洁的操作图注，候选和验证范围由专题记录承载。
 

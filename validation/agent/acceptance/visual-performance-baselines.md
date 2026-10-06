@@ -4,7 +4,7 @@
 
 视觉配置为 Blender 5.1.1、Cycles CPU、32 samples、seed 17、640×448、4线程、Standard/sRGB、关闭自适应采样和降噪。字体使用该 Blender 构建内置 Bfont。每张全图及各固定区域均须满足 RGB MAE ≤ 0.003，任一通道差值大于 8/255 的像素比例 ≤ 0.01。环境或科学身份不符、缺图、尺寸不符直接失败。差异图放大8倍便于定位，不参与阈值计算。
 
-以下为 PowerShell 命令，在仓库根目录运行。先按 [DEVELOPMENT](../DEVELOPMENT.md) 构建并安装当前候选到本任务隔离 Blender 配置，再设置 `BLENDER_USER_CONFIG`、`BLENDER_USER_EXTENSIONS`、`BLENDER_USER_DATAFILES`、`TEMP`、`TMP`；所有目录放在新的 `outputs/runs/<任务>/` 下。目标目录必须尚不存在，避免覆盖旧证据。
+以下为 PowerShell 命令，在仓库根目录运行。先按 [DEVELOPMENT](../../../docs/DEVELOPMENT.md) 构建并安装当前候选到本任务隔离 Blender 配置，再设置 `BLENDER_USER_CONFIG`、`BLENDER_USER_EXTENSIONS`、`BLENDER_USER_DATAFILES`、`TEMP`、`TMP`；所有目录放在新的 `outputs/runs/<任务>/` 下。目标目录必须尚不存在，避免覆盖旧证据。
 
 ```powershell
 $blender = 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe'
@@ -31,4 +31,4 @@ $env:TMP = "$benchmarkRoot/temp"
 
 `report.json` 保存原始耗时、median/min/max、对应worker或Blender进程的生命周期峰值内存、硬件、候选、输入和脚本摘要。显示组共享同一Blender进程，因此后续组的进程峰值可能包含前组高水位。`--baseline <旧report.json>` 只比较环境及参数兼容的报告；速度变化仅记录，无阻断阈值。错误缓存命中、科学数组变化、异常及超时仍为 **Failed**。worker有执行期限；阻塞的Blender主线程调用还需启动器设置外层进程期限。
 
-本批结果及保全位置统一通过 [ARTIFACTS](../ARTIFACTS.md) 查找。技术验证不替代独立科研签署。
+本批结果及保全位置统一通过 [ARTIFACTS](../../../docs/ARTIFACTS.md) 查找。技术验证不替代独立科研签署。

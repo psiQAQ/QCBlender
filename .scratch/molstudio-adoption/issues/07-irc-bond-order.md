@@ -17,4 +17,4 @@ Blocked by: 06
 
 构造 Mayer 文本通过步序/原子对关联、错配拒绝、Blender 曲线和冷重开检查。06 尚无真实 IRC 序列，且缺对应真实 Mayer 结果，科学验收 `Not Run`。
 
-2026-09-27：真实样本及 Agent 技术检查已补齐并 Passed，详见 [SOP 复跑任务](../../v1-acceptance/issues/04-agent-replay.md) 和 [样本来源](../../../docs/v1-acceptance/SOURCES.md)。上方 Comments 为历史记录；独立人工验收由 v1-acceptance 任务 02 维护。
+2026-09-27：真实样本及 Agent 技术检查已补齐并 Passed，详见 [SOP 复跑任务](../../v1-acceptance/issues/04-agent-replay.md) 和 [样本来源](../../../validation/agent/v1-acceptance/SOURCES.md)。上方 Comments 为历史记录；独立人工验收由 v1-acceptance 任务 02 维护。

@@ -22,7 +22,7 @@ GBasis 来源固定在 `science-sources.lock.json`，当前 wheel 为 `0.1.0+qcb
 
 源码提供 IGMH/IRI 配对 Cube、ESP 极值/面积、NBO/E(2)、AIM、IRC FCHK/Mayer、ETS-NOCV 表与 NOCV pair Cube 的读取和显示；运行时不执行这些外部分析算法。输入角色、单位及关联限制见 [外部分析导入](EXTERNAL_ANALYSIS_IMPORT.md)。
 
-真实结果的历史技术证据见 [SOP Agent 复跑](v1-acceptance/AGENT-REPLAY.md)、[来源清单](v1-acceptance/SOURCES.md) 和 [源码借鉴验收](acceptance/source-adoption.md)。本次科学回归覆盖相应解析/身份检查，未重跑每项外部结果的全部渲染及 GUI 工作流。Gaussian 优化日志仅支持已识别任务类型；扫描、重启、QST2/QST3 和复合路径不纳入逐步浏览。外部 IRC 使用显式有序 FCHK 清单，不代表任意 IRC 日志均可解析。
+真实结果的历史技术证据见 [SOP Agent 复跑](../validation/agent/v1-acceptance/AGENT-REPLAY.md)、[来源清单](../validation/agent/v1-acceptance/SOURCES.md) 和 [源码借鉴验收](../validation/agent/acceptance/source-adoption.md)。本次科学回归覆盖相应解析/身份检查，未重跑每项外部结果的全部渲染及 GUI 工作流。Gaussian 优化日志仅支持已识别任务类型；扫描、重启、QST2/QST3 和复合路径不纳入逐步浏览。外部 IRC 使用显式有序 FCHK 清单，不代表任意 IRC 日志均可解析。
 
 ## 科学依据与复现
 
@@ -36,19 +36,19 @@ GBasis 来源固定在 `science-sources.lock.json`，当前 wheel 为 `0.1.0+qcb
 
 ## 历史候选结果
 
-以下记录保留原候选身份。专题全文和机器索引见[验收索引](acceptance/README.md)，原产物可用性以[ARTIFACTS](ARTIFACTS.md)为准。
+以下记录保留原候选身份。专题全文和机器索引见[验收索引](../validation/agent/acceptance/README.md)，原产物可用性以[ARTIFACTS](ARTIFACTS.md)为准。
 
 ### 历史 0.0.1 可靠性候选与证据
 
-该历史候选固定产品源码为`a3ed8264aad860f25c922dd7c91efce3f6f078d3`，详见[可靠性技术验证](acceptance/reliability-validation.md)及[机器索引](acceptance/reliability-validation.json)。105科学测试、40相关单测、15项原生体积检查、15项IGMH/静态参考检查、六视觉场景及保全冷读Passed；真实界面声明导入、Undo/Redo、动态参考禁用、运行中ESP取消、损坏VDB拒绝和工程保存/原地与中文移动冷读Passed。GUI CSV在按Esc前已完成，运行中GUI取消Not Run；真实worker取消另有原生脚本证据。天然权限拒绝目标与独立使用者/科研签署Not Run。
+该历史候选固定产品源码为`a3ed8264aad860f25c922dd7c91efce3f6f078d3`，详见[可靠性技术验证](../validation/agent/acceptance/reliability-validation.md)及[机器索引](../validation/agent/acceptance/reliability-validation.json)。105科学测试、40相关单测、15项原生体积检查、15项IGMH/静态参考检查、六视觉场景及保全冷读Passed；真实界面声明导入、Undo/Redo、动态参考禁用、运行中ESP取消、损坏VDB拒绝和工程保存/原地与中文移动冷读Passed。GUI CSV在按Esc前已完成，运行中GUI取消Not Run；真实worker取消另有原生脚本证据。天然权限拒绝目标与独立使用者/科研签署Not Run。
 
 流式摘要实验的科学身份与摘要一致；256³冷/热峰值分别下降约15.2/16.0 MiB、端到端中位耗时改善约1.7%/1.5%，未达到扩大优化门槛。前后候选与本轮最终候选分开绑定，详见实验报告。
 
-历史P1的97项科学测试、当前构型关联与共享mesh记录继续由[P1验证](acceptance/audit-p1-validation.md)保留原候选身份。
+历史P1的97项科学测试、当前构型关联与共享mesh记录继续由[P1验证](../validation/agent/acceptance/audit-p1-validation.md)保留原候选身份。
 
 ### 历史展示、XYZ与CSV批次
 
-以下表格保持2026-10-02批次范围。固定源码为`9d3ff61d2e32c47357fe624cf93052bfed6dd041`；产品树、文件/候选/输入摘要、实际命令、42份本批通过报告及GUI身份见[展示精度、XYZ与CSV验证索引](acceptance/display-xyz-export-validation.json)。后续文档和收尾提交不改变该候选身份。产物位置和重建入口见[ARTIFACTS](ARTIFACTS.md)。历史[公共教程资格](acceptance/tutorial-final-qualification.json)与[清理验证](acceptance/cleanup-validation.json)保留原批次身份。
+以下表格保持2026-10-02批次范围。固定源码为`9d3ff61d2e32c47357fe624cf93052bfed6dd041`；产品树、文件/候选/输入摘要、实际命令、42份本批通过报告及GUI身份见[展示精度、XYZ与CSV验证索引](../validation/agent/acceptance/display-xyz-export-validation.json)。后续文档和收尾提交不改变该候选身份。产物位置和重建入口见[ARTIFACTS](ARTIFACTS.md)。历史[公共教程资格](../validation/agent/acceptance/tutorial-final-qualification.json)与[清理验证](../validation/agent/acceptance/cleanup-validation.json)保留原批次身份。
 
 | 检查 | 状态 | 本批实际范围 |
 | --- | --- | --- |
@@ -62,4 +62,4 @@ GBasis 来源固定在 `science-sources.lock.json`，当前 wheel 为 `0.1.0+qcb
 | 公开v2样本 | Passed | P06增加两份自有XYZ，科学文件/来源/许可与摘要核对；P03/P05原Cube字节不改，P02继续独立取得 |
 | 用户复做、独立科研签署、发布 | Not Run | Agent不代签，不从技术通过推导科研接受；没有push或发布 |
 
-历史操作截图及候选图注保存在[SOP 历史证据](v1-acceptance/HISTORY.md)，人工操作使用[教程](../validation/human/SOP.md)，按就地引用补充截图并反馈问题。0.2Å网格和显示细分是展示设置，不是收敛证明；原始Cube保留其固定源网格。旧二维图仅在历史工程与证据中保留，新建结果使用CSV。归档与权限/占用对象的状态见ARTIFACTS收尾路由。
+历史操作截图及候选图注保存在[SOP 历史证据](../validation/agent/v1-acceptance/HISTORY.md)，人工操作使用[教程](../validation/human/SOP.md)，按就地引用补充截图并反馈问题。0.2Å网格和显示细分是展示设置，不是收敛证明；原始Cube保留其固定源网格。旧二维图仅在历史工程与证据中保留，新建结果使用CSV。归档与权限/占用对象的状态见ARTIFACTS收尾路由。

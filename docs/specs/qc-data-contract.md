@@ -128,7 +128,7 @@ IR保留原始频率/强度列表及源模式身份，可显式导出CSV。振�
 
 跨工程Addon偏好`数据导出目录`使用绝对路径；留空时取已保存.blend父目录，否则取Windows真实系统Documents（包含系统重定向）。对话框`Output directory`可单次覆盖。每次在目标目录创建唯一结果子目录，先写完整暂存结果，成功后提交；取消/失败清理本次暂存，不覆盖已完成结果。导出目录不替代worker缓存或.qcdata。
 
-新建IR、IRC/Mayer、profile、paired和ESP面积记录不生成二维棒图、曲线/游标、剖面坐标轴、散点或柱图；三维构型/振动、场/切片/等值线/图例、AIM空间路径与数据表仍保留。旧工程图形不自动删除，其源Dataset仍可导出。本批界面/截图/保存与冷重开验证状态见[本批验证索引](../acceptance/display-xyz-export-validation.json)。
+新建IR、IRC/Mayer、profile、paired和ESP面积记录不生成二维棒图、曲线/游标、剖面坐标轴、散点或柱图；三维构型/振动、场/切片/等值线/图例、AIM空间路径与数据表仍保留。旧工程图形不自动删除，其源Dataset仍可导出。本批界面/截图/保存与冷重开验证状态见[本批验证索引](../../validation/agent/acceptance/display-xyz-export-validation.json)。
 
 ## 7. 缓存与状态
 
