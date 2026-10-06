@@ -14,22 +14,26 @@
 | 当前完整候选与原报告 | `outputs/candidates/current/alpha-ci-0.1.0-190e11e/`；候选 run `37415371574`、源码 `190e11e`，十份原报告和复现包保留 |
 | 冻结公开样本包 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单仍在 `docs/v1-acceptance/tutorial-samples.json` |
 | Agent 检查及本批结果 | [检查流程](../validation/agent/README.md)、[整合验证](../validation/agent/VALIDATION.md)；完整日志、命令与报告在 `validation/agent/reports/2026-10-06/integration/` |
-| 历史文件删除审批 | [CLEANUP](../validation/agent/CLEANUP.md)及两份逐文件表；257 个文件共 1,387,868,294 字节，尚未删除 |
+| 历史文件清理结果 | [CLEANUP](../validation/agent/CLEANUP.md)及删除收据；维护者确认的 257 个文件已逐文件删除，合计 1,387,868,294 字节，保留对象核对通过 |
 
-134 项基础、67 项公开科学、123 项完整科学测试通过；当前 ZIP 的真实安装、MO9/摘要、XYZ/CSV、保存和中文路径冷重开通过。公开材料独立复制检查通过。产品源码与依赖锁未变；本轮 GUI 点击、维护者操作/截图、原始 checkpoint 复算及独立科研判断为 Not Run。受限 P02 与本机计算原件不进入公开教程包。
+134 项基础、67 项公开科学、123 项完整科学测试通过；当前 ZIP 的真实安装、MO9/摘要、XYZ/CSV、保存和中文路径冷重开通过。公开材料独立复制检查通过。历史文件删除后再运行 134 项基础与 123 项完整科学测试，均通过。产品源码与依赖锁未变；本轮 GUI 点击、维护者操作/截图、原始 checkpoint 复算及独立科研判断为 Not Run。受限 P02 与本机计算原件不进入公开教程包。
 
 ## 教程整合与本地归档（2026-10-06）
 
 计划与任务状态在 [.scratch/validation-layout](../.scratch/validation-layout/spec.md)。子任务依次合入 main：Agent 流程 `d6a61d6`、数据迁移 `6e03549`、人工教程 `fb860a6`；主 Agent 在 main 运行综合检查。校验工具为剖面检查显式创建场对象，原失败报告保留，复跑和新进程读回通过。
 
-子任务报告与生成脚本保全在 `validation/agent/reports/2026-10-06/subagents/`，归档收据在 `validation/agent/reports/2026-10-06/delivery/`。本批注释标签使用 `archive/2026-10-06/` 下的 `chore/validation-agent`、`chore/validation-data-paths`、`docs/validation-tutorial`、`chore/validation-layout`。标签、工作树和分支的实际处理状态以收据为准；没有 push。
+子任务报告与生成脚本保全在 `validation/agent/reports/2026-10-06/subagents/`，归档收据在 `validation/agent/reports/2026-10-06/delivery/`。本批注释标签使用 `archive/2026-10-06/` 下的 `chore/validation-agent`、`chore/validation-data-paths`、`docs/validation-tutorial`、`chore/validation-layout`、`chore/validation-cleanup`、`docs/validation-legacy-docs`。前四项见 `worktrees.json`，后两项见 `followup-worktrees.json`；标签、工作树和分支的实际处理状态以收据为准，没有 push。
+
+旧验收目录移除三个重复转发页，现由 [历史材料索引](v1-acceptance/README.md) 组织来源和证据；419 张历史截图、原技术结果、冻结清单及操作登记表的内容保持不变。保护对象复核见 `validation/agent/reports/2026-10-06/legacy-docs/`，主分支收尾检查见 `validation/agent/reports/2026-10-06/closing/`。
+
+历史批次中的旧安装包、样本包和复现包路径保留为当时身份；已删除的对象以 [清理记录](../validation/agent/CLEANUP.md) 为准，原报告和保全元数据仍可追溯。当前可用安装与输入统一从本页“当前交付”进入。
 
 本批代表工程与导出保留位置、已移除的任务临时副本及重建命令由归档收据列明。重建时按 [Agent 流程](../validation/agent/README.md)使用新的批次目录、集中输入和当前安装文件；历史报告的原路径保持执行时身份。
 
 <a id="用户验证-sop2026-10-06"></a>
 ## 2026-10-06 旧 SOP 整理记录
 
-[SOP](v1-acceptance/SOP.md) 为用户连续操作入口，包含材料核对、独立配置、XYZ 入门、P1 关联/共享对象、Alpha 出图、C01–C13/X01、N01–N18、导出与保存重开。安装包与输入身份在 [MATERIALS](v1-acceptance/MATERIALS.md)，可复制填写的表格在 [RECORD-TEMPLATE](v1-acceptance/RECORD-TEMPLATE.md)，393 张原截图、图注和历史技术说明移至 [HISTORY](v1-acceptance/HISTORY.md)。原截图文件与验证报告保留。
+当前连续操作统一进入 [人工 SOP](../validation/human/SOP.md)，安装包、输入与打包方法见 [校验入口](../validation/README.md)，技术身份和验证由 [Agent 流程](../validation/agent/README.md) 维护。该历史批次的 393 张原截图、图注和技术说明保留于 [HISTORY](v1-acceptance/HISTORY.md)；旧操作包装页的整理结果见 [历史材料索引](v1-acceptance/README.md)。
 
 正文由 2,042 行整理为 827 行，44 个 A/C/X/N/P1 条目、原 C/X 锚点、历史图片、材料身份、本地链接和五段 PowerShell 语法核对 Passed。编辑片段、检查脚本与报告在 `outputs/evidence/2026-10-06/sop-user-guide/`，本地提交、归档和工作树清理结果见该目录的 `delivery.json`。归档标签为 `archive/2026-10-06/docs/sop-user-guide`。本次为文档整理，Blender 复做及独立人工/科研签署 Not Run；既有产品和验收结论未改。
 
@@ -53,7 +57,7 @@
 
 任务提交 `9cc9a005` 已 ff-only 合入 main，四个 `archive/2026-10-05/feat/alpha-*` 注释标签可达 main。四个任务工作树的 Git 登记及分支移除 Passed；三个磁盘目录移除 Passed，`.worktrees/alpha-core` 普通移除 Failed（Directory not empty），残留由 `.scratch/alpha-readiness/issues/11-worktree-residue.md` 跟踪。清理后 32,170 条原路径映射、7,419 个内容对象、13 个候选文件/报告及中文工程 59 文件摘要复核 Passed；详细收据为 `closing/post-cleanup-verification.json`。不可枚举缓存目录保留，不计入保全成功范围。
 
-完整 SOP 连续操作见 [SOP](v1-acceptance/SOP.md) 的“完整 SOP 执行顺序与完成标准”及 A00–A09 展开步骤。文档检查和编辑脚本位于 `outputs/evidence/2026-10-05/alpha-readiness/sop-flow/`，含 `sop-flow-verification.json`、`preservation.json` 与本地归档收据；检查覆盖 433 个本地链接、三段 PowerShell 语法、原案例和历史截图保留。本次仅补文档，未重跑 Blender，独立使用者验收 Not Run。
+当前连续操作见 [人工 SOP](../validation/human/SOP.md)；该批 A00–A09 历史展开步骤与说明由 [历史材料索引](v1-acceptance/README.md) 定位。文档检查和编辑脚本位于 `outputs/evidence/2026-10-05/alpha-readiness/sop-flow/`，含 `sop-flow-verification.json`、`preservation.json` 与本地归档收据；检查覆盖 433 个本地链接、三段 PowerShell 语法、原案例和历史截图保留。本次仅补文档，未重跑 Blender，独立使用者验收 Not Run。
 
 ### GitHub 候选 CI（2026-10-06）
 
@@ -95,7 +99,7 @@ HTTP 403 下载失败已修复，实际 [run 37414740265](https://github.com/psi
 | --- | --- |
 | 插件候选 | `outputs/candidates/current/display-xyz-export-9d3ff61/qcblender-0.0.1.zip`；源码`9d3ff61d2e32c47357fe624cf93052bfed6dd041`，SHA-256`362b87d3d1f41ec949da8597a47b248e7ef74ca574d96454d1dda31100556ce9`，50,635,717字节；本地资格Passed，未发布 |
 | 当前验证 | [显示/XYZ/CSV索引](acceptance/display-xyz-export-validation.json)；`outputs/evidence/2026-10-02/display-xyz-export/final/`的42份通过报告、qualification.json、证据索引与完整命令/日志；早期目录缺陷Failed保持在同任务gui/ |
-| 教程与截图 | 用户操作见 [SOP](v1-acceptance/SOP.md)；本批图位于`screenshot/display-xyz-export/`，原图注在[历史证据](v1-acceptance/HISTORY.md)，保留e317/9d及MCP准备身份；用户复做/独立签署Not Run |
+| 教程与截图 | 用户操作见 [人工 SOP](../validation/human/SOP.md)；本批图位于`screenshot/display-xyz-export/`，原图注在[历史证据](v1-acceptance/HISTORY.md)，保留e317/9d及MCP准备身份；用户复做/独立签署Not Run |
 | 公开样本 | [样本交付](acceptance/tutorial-sample-delivery.json)；`outputs/evidence/2026-10-02/display-xyz-export/final/samples/qcblender-public-tutorial-samples-v2.zip`；SHA-256`b4bc3e0ebbdf29ccb3905b16eeb898c94b9f16f209baae3c3ae1a8646b0348dd`，12,175,753字节；P06两份XYZ，自有数据CC BY 4.0；P02独立获取 |
 | 保全工程与数据 | `outputs/projects/display-xyz-export/gui/evidence.blend + evidence.qcdata/`，12Dataset/249数组/1VDB，原地及中文移动冷读Passed；`final/data/native-exports/`保存全量/筛选CSV，`final/gui/exports/`保存实际点击导出 |
 | 复用登记 | [Blender规则](agents/blender-interaction.md)、[操作登记](acceptance/blender-operations.json)；历史GUI身份不重写，产品单行目录修复后重新点击；旧图形工程另有兼容导出报告 |
