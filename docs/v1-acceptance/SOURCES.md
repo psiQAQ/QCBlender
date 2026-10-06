@@ -128,7 +128,7 @@ C12/C13 使用 S19–S21 的字节相同 Windows 示例副本：`c10-c13/multiwf
 
 ## 外部分析结果与验收状态
 
-C07–C13 的本轮真实输入与分析结果现已取得，固定清单共 **35 项（S01–S35）**。下表只汇总样本及科学解析状态；Blender GUI、节点、PNG、保存/移动/冷重开和独立人工签署继续按 [SOP](SOP.md) 分别记录。S09–S11 保留为早期预检材料：其生成参数仍不全，也未与 S12 建立计算身份关联；本轮 C07 科学核对使用 S25–S28。[上游示例说明](https://xyzrender.readthedocs.io/en/latest/examples/nci_surf.html)
+C07–C13 的本轮真实输入与分析结果现已取得，固定清单共 **35 项（S01–S35）**。下表只汇总样本及科学解析状态；Blender GUI、节点、PNG、保存/移动/冷重开的历史记录见 [HISTORY](HISTORY.md) 与 [Agent 复跑](AGENT-REPLAY.md)，独立人工验收由 [任务 02](../../.scratch/v1-acceptance/issues/02-human-acceptance.md) 维护。S09–S11 保留为早期预检材料：其生成参数仍不全，也未与 S12 建立计算身份关联；本轮 C07 科学核对使用 S25–S28。[上游示例说明](https://xyzrender.readthedocs.io/en/latest/examples/nci_surf.html)
 
 | 功能 | 本轮导入文件与参考构型 | 样本及科学解析状态 |
 | --- | --- | --- |

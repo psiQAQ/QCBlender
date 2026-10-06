@@ -60,7 +60,7 @@ Alpha 技术门禁包括核心测试、固定科学环境与真实必要样本�
 
 人工 Alpha 短 SOP 由实际操作者执行：记录 ZIP/样本 SHA → Windows x64 / Blender 5.1.1 新清洁配置离线安装确切 ZIP → 导入 P01、创建固定 Alpha MO9 并核对原子/轨道/量名 → 调整等值面、保存 PNG 和自包含 `.blend + .qcdata` → 正常关闭 → 中文路径移动工程 → 新进程冷重开并核对科学记录/节点/视图/来源 → 填写结果和针对该 ZIP 的公开批准。修复后重新构建候选，重做受影响步骤。
 
-本轮 Alpha 准备使用 `.scratch/alpha-readiness/`。正式 [v1 发布机制](../../.scratch/v1-acceptance/issues/03-release-mechanism.md) 仍依赖独立人工任务 02；完整签署标准见 [SOP 3.3](../v1-acceptance/SOP.md#33-最终签署)。正式 v1 全部人工必需项通过后再领取，不将 Alpha 准备任务作为其完成证据。
+本轮 Alpha 准备使用 `.scratch/alpha-readiness/`。正式 [v1 发布机制](../../.scratch/v1-acceptance/issues/03-release-mechanism.md) 仍依赖 [独立人工任务 02](../../.scratch/v1-acceptance/issues/02-human-acceptance.md)；完整验收要求见 [v1 验收规格](../../.scratch/v1-acceptance/spec.md)。正式 v1 全部人工必需项通过后再领取，不将 Alpha 准备任务作为其完成证据。
 
 首次 Blender Extensions 上架与后续自动上传属于正式发布后续，不在本轮配置 token 或上传。官方要求先安装测试，再由 Blender ID 上传并等待审核；更新 API 使用上传 ZIP 和认证 token。依据：[Blender 5.1 上架说明](https://docs.blender.org/manual/en/5.1/advanced/extensions/getting_started.html)、[Blender CI/CD](https://developer.blender.org/docs/features/extensions/ci_cd/)。上传成功、等待审核和已经上架分别记录。
 
