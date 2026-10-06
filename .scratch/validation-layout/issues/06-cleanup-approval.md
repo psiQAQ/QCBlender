@@ -1,7 +1,7 @@
 # 06 确认并清理历史文件
 
 Triage: ready-for-human
-Status: pending
+Status: resolved
 Blocked by: 05
 Owner: main agent and maintainer
 
@@ -18,3 +18,13 @@ Owner: main agent and maintainer
 2026-10-06：用户已批准计划落地与实施，尚未批准逐文件删除清单。本任务保持 pending。
 
 2026-10-06：05 已通过。待确认的准确范围见 `validation/agent/CLEANUP.md` 及其两份逐文件表：33 个压缩包或安装对象、224 个旧输入副本，共 1,387,868,294 字节。旧 ZIP 的来源/许可/清单已保全；所有旧输入均有逐字节核对的集中副本。19 个读取失败对象、用户工程、环境及未知归属对象保留。本说明不构成删除批准。
+
+2026-10-06：维护者选择“确认全部 257 个文件（推荐）”，明确批准上述两份逐文件清单。主 Agent 在独立 `chore/validation-cleanup` 分支记录执行，实际文件处理限定主检出清单路径，删除前后复核身份和保留对象。
+
+## Answer
+
+已逐文件删除获批的 257 个历史文件，共 1,387,868,294 字节；没有删除父目录或清单外文件。292 行集中输入映射、232 条历史 ZIP 成员保全记录、当前安装包、完整最新候选和原始 CI 容器在删除前后核对 Passed；未处理项为 0。用户工程、环境、19 个原读取失败对象及其他未知对象保持原位。
+
+执行收据：`validation/agent/reports/2026-10-06/cleanup-apply/receipt.json`。原清单和旧报告保留其历史身份；旧 ZIP 现已不可用，通过清理收据定位其保全元数据，新的安装使用唯一当前入口。该操作没有改变人工验收或发布状态。
+
+清理后 134 项标准库测试及 123 项完整科学测试均 Passed，失败、错误、跳过均为 0；报告分别为同目录 `stdlib-after-cleanup.json` 和 `science-after-cleanup.json`。本地输入复制说明使用集中布局 `--reference-layout current`。

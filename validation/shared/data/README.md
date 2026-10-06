@@ -25,18 +25,18 @@ python -B tools/prepare_validation_data.py --report outputs/runs/validation-layo
 
 ## 复制本地输入与计算原件
 
-首次迁移从仍保有旧资料的主检出复制。在本任务工作树的根目录执行以下命令，将 `--reference-root` 换成源检出的绝对路径：
+在新检出或工作树中，从已经整理好的参考检出复制。本机主检出已完成集中保存并清理旧副本，使用以下命令；`--reference-root` 为源检出的绝对路径：
 
 ```powershell
 python -B tools/prepare_validation_data.py `
   --reference-root D:/workspace/QCBlender `
-  --reference-layout legacy `
+  --reference-layout current `
   --include-local `
   --include-calculations `
   --report outputs/runs/validation-layout/local-inputs.json
 ```
 
-合入主检出后，可在主检出再次运行同一命令，补齐忽略的输入。`legacy` 只读取迁移清单列出的旧位置；资料完成整理后，工作树复制应改用 `--reference-layout current`，显式读取参考检出的当前位置。命令不扫描删除、不回退寻找旧目录，也不修改参考检出。删除原件另按审查后的清单确认。
+`current` 显式读取参考检出的集中位置。只有参考检出仍保有未迁移的旧布局时才选择 `--reference-layout legacy`，它只读取迁移清单列出的旧位置。命令不扫描删除、不回退寻找旧目录，也不修改参考检出。历史副本的实际清理结果见 [清理记录](../../agent/CLEANUP.md)。
 
 计算原件按 `local/calculations/public-tutorial/owned/` 与 `irc/` 保存；与公开输入字节相同的文件复用 `public/`，对应原始位置由迁移映射定位。原始脚本、日志、PySCF checkpoint 及计算条件保留，不改写日志中的历史执行路径。需要重跑某个原始计算时，先按映射在新的工作目录恢复它的输入层级；不要直接运行归档脚本覆盖原件。工程内部 `.blend + .qcdata` 保持成套，不迁入此目录。
 

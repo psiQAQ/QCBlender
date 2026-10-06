@@ -13,8 +13,10 @@
 | 安装与工程移动 | Passed | [install.json](reports/2026-10-06/integration/install.json)、[cold-original.json](reports/2026-10-06/integration/cold-original.json)、[cold-moved.json](reports/2026-10-06/integration/cold-moved.json)；独立配置中的真实离线安装、生成、渲染及两个新进程读回 |
 | 主流程 MO9、摘要与保存 | Passed | [alpha.json](reports/2026-10-06/integration/alpha.json)：生成、参数摘要、实际渲染、自包含工程及中文路径冷重开 |
 | XYZ 与科学 CSV | Passed | [xyz-export-v2.json](reports/2026-10-06/integration/xyz-export-v2.json)：XYZ 帧和标注、各类 CSV、101 点剖面、取消清理及新进程数组读回 |
-| 清理工具边界 | Passed | [cleanup-tests.log](reports/2026-10-06/integration/cleanup-tests.log)：4 项；历史文件删除仍待确认 |
+| 清理工具边界 | Passed | [cleanup-tests.log](reports/2026-10-06/integration/cleanup-tests.log)：4 项 |
 | 旧输入及压缩包元数据保全 | Passed | [preservation.json](reports/2026-10-06/cleanup-prepared/preservation.json)：224 个旧输入与集中副本相符，保全 232 条 ZIP 成员记录 |
+| 已确认的历史文件清理 | Passed | [receipt.json](reports/2026-10-06/cleanup-apply/receipt.json)：逐文件删除 257 项，合计 1,387,868,294 字节；集中输入、当前候选和保全元数据复核通过 |
+| 清理后读取与测试 | Passed | [stdlib-after-cleanup.json](reports/2026-10-06/cleanup-apply/stdlib-after-cleanup.json)：134 项；[science-after-cleanup.json](reports/2026-10-06/cleanup-apply/science-after-cleanup.json)：123 项完整科学测试；失败、错误、跳过均为 0 |
 | 本轮 GUI 点击、维护者教程操作与截图 | Not Run | 29 个公开截图和 3 个本机截图由维护者按教程补充 |
 | 原始 checkpoint 密度比较 | Not Run | 9 个原件已保留；未在本轮运行 PySCF 复算 |
 | 独立科研判断与发布批准 | Not Run | 不由自动检查推导 |
@@ -23,4 +25,4 @@ Blender 后台进程逐个运行，启动前检查已有进程，命令收据记
 
 完整命令与第一次执行记录见 [checks.json](reports/2026-10-06/integration/checks.json)，受影响工具的独立复跑见 [xyz-recheck.json](reports/2026-10-06/integration/xyz-recheck.json)。旧脚本缺少剖面场对象的失败报告仍为 `Failed`，修复记录见 [CHANGELOG](../../docs/CHANGELOG.md)，最终 XYZ 状态以 v2 报告为准。其他未涉及的专题没有在本轮重新执行 GUI。
 
-本地提交、工作树保全与归档状态由 [ARTIFACTS](../../docs/ARTIFACTS.md) 统一路由。历史文件清理须按 [CLEANUP](CLEANUP.md) 的两个逐文件清单单独确认。
+本地提交、工作树保全与归档状态由 [ARTIFACTS](../../docs/ARTIFACTS.md) 统一路由。已确认清单的删除范围、保留对象与执行结果见 [CLEANUP](CLEANUP.md)。
