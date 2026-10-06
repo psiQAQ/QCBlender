@@ -30,9 +30,9 @@ QCBlender 在 Blender 中显示已有量子化学结果，并对支持的 HF/DFT
 4. 在对象属性中调整等值和正负相位，在材质属性中调整颜色；正负表示轨道相位。生成网格初值为0.2 Å、边缘3 Å、预算512 MiB；新建原子外层Quality=3，新切片每轴201点。九个公共节点资产的原有默认值保留。
 5. 在 **N 侧栏 → 工程与诊断 → 保存自包含工程** 保存 `.blend` 和同名 `.qcdata/`；两者一起移动。设置相机与灯光后可用 Blender 原生渲染出图。
 
-安装、样本获取及 C01–C13、X01、N01–N18 操作按 [用户验证 SOP](docs/v1-acceptance/SOP.md) 执行；[用户指南](docs/USER_GUIDE.md) 提供入口索引。[安装包与样本](docs/v1-acceptance/MATERIALS.md) 列出材料身份，[来源目录](docs/v1-acceptance/SOURCES.md) 记录获取与许可。v2 样本包的 P01/P03/P04/P05/P06 使用 CC BY 4.0；C02/C06 的 P02 需单独取得、核对 SHA，其再分发许可未确认。使用者将[记录模板](docs/v1-acceptance/RECORD-TEMPLATE.md)复制到自己的批次目录填写结果和签署。
+人工操作按 [用户教程](validation/human/SOP.md) 从安装开始，再按需选择专题；[校验目录](validation/README.md) 集中教程、截图、安装包和数据，并说明人工完成后的打包方法。[数据目录](validation/shared/data/README.md) 管理公开、本地限定及回归输入。公开 P01/P03/P04/P05/P06 使用 CC BY 4.0；P02 仅供本机限定案例使用，再分发许可未确认。技术检查见 [Agent 流程](validation/agent/README.md)。
 
-原始 IR、优化/收敛、IRC、Mayer、采样线剖面、成对场体素与ESP面积记录可在 **N侧栏 → 工程与诊断 → 导出数据** 显式保存为UTF-8 CSV和metadata.json；每次创建唯一结果子目录。默认目录为已保存.blend的父目录，否则为系统Documents；Addon偏好“数据导出目录”可设置跨工程绝对路径，单次导出可覆盖。详见[SOP 0.5](docs/v1-acceptance/SOP.md#05-显式数据导出)。
+原始 IR、优化/收敛、IRC、Mayer、采样线剖面、成对场体素与ESP面积记录可在 **N侧栏 → 工程与诊断 → 导出数据与参数摘要** 显式保存为UTF-8 CSV和metadata.json；每次创建唯一结果子目录。默认目录为已保存.blend的父目录，否则为系统Documents；Addon偏好“数据导出目录”可设置跨工程绝对路径，单次导出可覆盖。操作见[参数摘要](validation/human/SOP.md#export)和[剖面 CSV](validation/human/topics/04-spatial-tools.md)。
 
 ## 保存与科学限制
 
@@ -51,8 +51,8 @@ QCBlender 在 Blender 中显示已有量子化学结果，并对支持的 HF/DFT
 | 构建与验证 | [开发说明](docs/DEVELOPMENT.md)：环境、构建与同批复验；[验证状态](docs/VALIDATION.md)：精确候选及 Passed / Not Run |
 | 架构与数据 | [架构](docs/QCBLENDER_V1_DESIGN.md)、[数据契约](docs/specs/qc-data-contract.md)、[节点契约](docs/specs/geometry-nodes.md)、[单扩展 ADR](docs/adr/0001-self-contained-extension.md) |
 | 科学依据 | [领域词汇](CONTEXT.md)、[输入格式研究](docs/research/gaussian-inputs.md)、[Gaussian 能量语义](docs/research/gaussian-energy-semantics.md) |
-| 样本与复现 | [来源与许可目录](docs/v1-acceptance/SOURCES.md)、[用户验证 SOP](docs/v1-acceptance/SOP.md)、[复杂案例参数与复建](docs/COMPLEX_EXAMPLES.md) |
+| 样本与复现 | [数据目录](validation/shared/data/README.md)、[用户教程](validation/human/SOP.md)、[复杂案例参数与复建](docs/COMPLEX_EXAMPLES.md) |
 | 开发约定与问题 | [AGENTS](AGENTS.md)、[本地任务规则](docs/agents/issue-tracker.md)、[开发问题记录](docs/DEVELOPMENT_PITFALLS.md) |
 | 许可证与历史 | [LICENSE](LICENSE)、[第三方材料](THIRD_PARTY.md)、[CHANGELOG](docs/CHANGELOG.md) |
 
-首次公开 Alpha 使用 [P01/MO9 短 SOP](docs/v1-acceptance/SOP.md#alpha-首次出图与短验收)，在“工程与诊断 → 导出数据与参数摘要”选择“当前视图参数摘要”，保存中文 Markdown 与 JSON。发布方式及门禁见[GitHub 发布研究](docs/research/github-release-workflow.md)。
+Alpha 首次操作使用 [P01/MO9 主流程](validation/human/SOP.md)，在“工程与诊断 → 导出数据与参数摘要”选择“当前视图参数摘要”，保存中文 Markdown 与 JSON。发布方式及门禁见[GitHub 发布研究](docs/research/github-release-workflow.md)。

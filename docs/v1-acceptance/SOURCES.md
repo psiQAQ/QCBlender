@@ -1,6 +1,10 @@
-# SOP 与科学回归输入目录
+# 输入来源历史索引
 
-本清单固定当前 `0.0.1` 候选的本地输入。SHA-256 是原始文件字节摘要；验收前用 `Get-FileHash <路径> -Algorithm SHA256` 复核。样本不得随扩展 ZIP 分发。本地大样本位于忽略目录 `tests/data/local/`；S01–S08 的已有来源锁见 [`tests/data/complex-example-sources.json`](../../tests/data/complex-example-sources.json) 和 [`tests/data/local-log-downloads.json`](../../tests/data/local-log-downloads.json)。
+当前输入分类和位置见 [validation/shared/data](../../validation/shared/data/README.md)。本页保存来源 URL、计算条件与历史获取过程；下列路径和命令属于各自批次，不作为新检出的准备步骤。当前工具按稳定输入 key 或公开样本 archive_path 读取集中资料。
+
+## 历史来源记录
+
+本清单固定当时 `0.0.1` 候选的本地输入。SHA-256 是原始文件字节摘要；该批验收使用 `Get-FileHash <路径> -Algorithm SHA256` 复核。样本不得随扩展 ZIP 分发。当时本地大样本位于忽略目录 `tests/data/local/`；S01–S08 的来源锁现位于 [complex-example-sources.json](../../validation/shared/data/complex-example-sources.json) 和 [local-log-downloads.json](../../validation/shared/data/local-log-downloads.json)。
 
 | ID | 本地路径（相对仓库根） | 固定公开来源、版本和许可 | SHA-256 | 计算条件 / 用途 |
 | --- | --- | --- | --- | --- |
@@ -140,7 +144,7 @@ S08 的许可未核清前，验收可在本地使用；不得把该数据文件�
 
 ## 集中输入与重建（2026-09-29）
 
-本文件是输入的人工阅读目录；机器入口为 [`tests/data/local-inputs.json`](../../tests/data/local-inputs.json)。索引记录稳定 ID、相对路径、SHA-256、用途及使用者。`tools/local_inputs.py` 在读取前检查必需文件及摘要，缺失或变更直接失败；没有输出目录回退或自动跳过。已有受 Git 跟踪的 `tests/data/` 小样本及其来源清单保持原位。
+该批机器入口为 `tests/data/local-inputs.json`，当前入口为 [validation/shared/data/local-inputs.json](../../validation/shared/data/local-inputs.json)。索引记录稳定 ID、相对路径、SHA-256、用途及使用者。`tools/local_inputs.py` 在读取前检查必需文件及摘要，缺失或变更直接失败；没有输出目录回退或自动跳过。下表保留该批 `tests/data/` 的来源定位，当前位置按迁移映射查找。
 
 | 输入组（相对 `tests/data/local/`） | 数据、单位、关联与用途 | 来源和限制 |
 | --- | --- | --- |

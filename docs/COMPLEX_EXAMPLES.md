@@ -39,7 +39,7 @@
 
 ## 来源与外部预处理
 
-[来源清单](../tests/data/complex-example-sources.json) 固定上游提交、URL、SHA-256 和仓库许可证。原始文件及许可证留在忽略的 `tests/data/local/complex-examples`，统一索引见 [SOURCES.md](v1-acceptance/SOURCES.md)。
+[来源清单](../validation/shared/data/complex-example-sources.json) 固定上游提交、URL、SHA-256 和仓库许可证。原始文件及许可证留在忽略的 `validation/shared/data/local/complex-examples/`，统一索引见 [数据目录](../validation/shared/data/README.md)。
 
 - [cclib 测试数据](https://github.com/cclib/cclib/tree/f90be37ffa1ab4cfec97495bdd01d670ca329f17/data)：DVB、色氨酸，BSD-3-Clause 仓库。
 - [ChemTools 数据](https://github.com/theochem/chemtools/tree/47c9fe255848b8dbc6f589beb738421f76401885/chemtools/data)：水二聚体及 NCIPLOT/ELF Cube，GPL-3.0-or-later 仓库。ELF 只登记为可选素材，不宣称新增其内置计算。

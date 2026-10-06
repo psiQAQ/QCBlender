@@ -30,7 +30,7 @@
 
 复用时在本批报告记录操作 ID、历史证据、相关实现未变依据、实际执行工具、PID、候选/输入摘要、参数、预期和实际结果。登记表的 GUI 历史证据保持原身份；新的 MCP 执行单独记录，不改写为本批 Computer Use 点击。
 
-用户 [SOP](../v1-acceptance/SOP.md) 只写输入、操作、参数、预期现象和完成判断。用户将[记录模板](../v1-acceptance/RECORD-TEMPLATE.md)复制到自己的批次目录填写，截图和结果保存在该目录。Agent 的候选身份、执行日志、状态和截图引用写入 `docs/acceptance/` 对应专题；现有截图文件保留在 `docs/v1-acceptance/screenshot/`，原图注与旧批次上下文集中在[历史证据](../v1-acceptance/HISTORY.md)。理由：操作正文与执行记录分别维护，使用者可以连续照做。
+用户 [SOP](../../validation/human/SOP.md) 只写输入、操作、参数和可观察预期；截图在有可见结果的步骤后就地引用，使用者按指定名称保存到 `validation/human/screenshots/`。人工流程直接安装并进入案例，结果反馈由使用者提出。Agent 的候选身份、执行日志、状态和技术截图放入 `validation/agent/reports/`，当前流程见 [Agent 校验](../../validation/agent/README.md)。旧截图及其候选身份由[历史证据](../v1-acceptance/HISTORY.md)保存。理由：操作正文与技术记录分别维护，使用者可以连续照做。
 
 技术截图的图注记录实际操作工具与覆盖范围。MCP/命令行执行后通过 Computer Use 观察的截图，标明“观察”，并关联真实执行报告。仅为帮助定位界面而在 SOP 使用插图时，配简洁的操作图注，候选和验证范围由专题记录承载。
 

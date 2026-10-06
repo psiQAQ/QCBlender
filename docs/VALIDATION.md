@@ -1,10 +1,10 @@
-# 0.0.1 支持范围与验证状态
+# 支持范围与验证入口
 
-更新：2026-10-05。当前本地待验收候选使用Windows x64、Blender 5.1.1、CPython 3.13.9、NumPy 2.3.4、OpenVDB 13。独立使用者及科研签署尚未执行，未发布。
+更新：2026-10-06。当前 0.1.0 Alpha 教程材料在 [validation](../validation/README.md)，安装候选与原始报告由 [current-install.json](../validation/agent/current-install.json) 定位。环境为 Windows x64、Blender 5.1.1、CPython 3.13.9、NumPy 2.3.4、OpenVDB 13。技术流程见 [Agent 校验](../validation/agent/README.md)；独立使用者及科研接受仍依据实际反馈确认。
 
-## 当前候选与证据
+## 历史 0.0.1 可靠性候选与证据
 
-当前候选固定产品源码为`a3ed8264aad860f25c922dd7c91efce3f6f078d3`，详见[可靠性技术验证](acceptance/reliability-validation.md)及[机器索引](acceptance/reliability-validation.json)。105科学测试、40相关单测、15项原生体积检查、15项IGMH/静态参考检查、六视觉场景及保全冷读Passed；真实界面声明导入、Undo/Redo、动态参考禁用、运行中ESP取消、损坏VDB拒绝和工程保存/原地与中文移动冷读Passed。GUI CSV在按Esc前已完成，运行中GUI取消Not Run；真实worker取消另有原生脚本证据。天然权限拒绝目标与独立使用者/科研签署Not Run。
+该历史候选固定产品源码为`a3ed8264aad860f25c922dd7c91efce3f6f078d3`，详见[可靠性技术验证](acceptance/reliability-validation.md)及[机器索引](acceptance/reliability-validation.json)。105科学测试、40相关单测、15项原生体积检查、15项IGMH/静态参考检查、六视觉场景及保全冷读Passed；真实界面声明导入、Undo/Redo、动态参考禁用、运行中ESP取消、损坏VDB拒绝和工程保存/原地与中文移动冷读Passed。GUI CSV在按Esc前已完成，运行中GUI取消Not Run；真实worker取消另有原生脚本证据。天然权限拒绝目标与独立使用者/科研签署Not Run。
 
 流式摘要实验的科学身份与摘要一致；256³冷/热峰值分别下降约15.2/16.0 MiB、端到端中位耗时改善约1.7%/1.5%，未达到扩大优化门槛。前后候选与本轮最终候选分开绑定，详见实验报告。
 
@@ -26,7 +26,7 @@
 | 公开v2样本 | Passed | P06增加两份自有XYZ，科学文件/来源/许可与摘要核对；P03/P05原Cube字节不改，P02继续独立取得 |
 | 用户复做、独立科研签署、发布 | Not Run | Agent不代签，不从技术通过推导科研接受；没有push或发布 |
 
-历史操作截图及候选图注保存在[SOP 历史证据](v1-acceptance/HISTORY.md)，用户按[SOP](v1-acceptance/SOP.md)操作，并在自己的批次目录填写[记录模板](v1-acceptance/RECORD-TEMPLATE.md)。0.2Å网格和显示细分是展示设置，不是收敛证明；原始Cube保留其固定源网格。旧二维图仅在历史工程与证据中保留，新建结果使用CSV。归档与权限/占用对象的状态见ARTIFACTS收尾路由。
+历史操作截图及候选图注保存在[SOP 历史证据](v1-acceptance/HISTORY.md)，人工操作使用[教程](../validation/human/SOP.md)，按就地引用补充截图并反馈问题。0.2Å网格和显示细分是展示设置，不是收敛证明；原始Cube保留其固定源网格。旧二维图仅在历史工程与证据中保留，新建结果使用CSV。归档与权限/占用对象的状态见ARTIFACTS收尾路由。
 
 ## 输入和科学边界
 
@@ -58,4 +58,4 @@ GBasis 来源固定在 `science-sources.lock.json`，当前 wheel 为 `0.1.0+qcb
 
 当前构建、输入校验、安装和同批工程冷重开步骤见 [DEVELOPMENT](DEVELOPMENT.md)。`qualify_package.py` 只核对报告及文件身份，不代替实际运行。四组真实案例的计算参数与复建入口见 [复杂案例](COMPLEX_EXAMPLES.md)。
 
-独立复做使用 [SOP](v1-acceptance/SOP.md)，记录 Blender 版本、输入方法/基组、源摘要和预期/实际结果。人工签署由使用者完成，不能用 Agent 测试结果填写。
+独立复做使用 [人工 SOP](../validation/human/SOP.md)。候选身份、数值比较和技术结果由 Agent 流程维护；使用者的实际操作与科研接受不能由自动测试代替。

@@ -63,34 +63,19 @@ Blender 路径按本机安装修改。 CONFIG、EXTENSIONS 和 DATAFILES 必须�
 
 ## 必要输入与前置检查
 
-[来源清单](v1-acceptance/SOURCES.md) 和 tests/data/local-inputs.json 固定来源、许可及 SHA-256。没有必要样本时在本阶段停止，不用旧工程或跳过代替。
+[集中数据目录](../validation/shared/data/README.md) 和 `validation/shared/data/local-inputs.json` 固定来源、许可及身份。没有必要样本时在本阶段停止，不用旧工程或跳过代替。人工教程已备好资源时可直接从安装开始，以下命令用于开发检出的技术准备。
 
-可以从已有本地检出复制清单所列原件。设置 sourceRoot 为实际来源；复制前后核对字节，不覆盖不同内容，也不复制旧候选、工程或报告。清单中仅供本地验收或发布许可待核的样本继续放在忽略目录，不随 ZIP 或 Git 分发。
+公开资源从仓库内的冻结 v2 包恢复；本地原件可从已完成整理的参考检出复制。准备工具只处理清单内的路径，已有不同内容直接失败，不覆盖用户文件；受限输入保持在忽略目录，公开教程包排除。
 
 ~~~powershell
-$copyInputs = @'
-import hashlib, json, shutil, sys
-from pathlib import Path
-source_root, root = map(lambda value: Path(value).resolve(), sys.argv[1:])
-catalog = json.loads((root / 'tests/data/local-inputs.json').read_text(encoding='utf-8'))
-for entry in catalog['files'].values():
-    relative = Path(entry['path'])
-    source, target = source_root / relative, root / relative
-    assert source.resolve().is_relative_to(source_root / 'tests/data/local'), source
-    assert target.resolve().is_relative_to(root / 'tests/data/local'), target
-    assert hashlib.sha256(source.read_bytes()).hexdigest() == entry['sha256'], source
-    target.parent.mkdir(parents=True, exist_ok=True)
-    if not target.exists():
-        shutil.copyfile(source, target)
-    assert hashlib.sha256(target.read_bytes()).hexdigest() == entry['sha256'], target
-print('INPUT_COPY_PASSED:', len(catalog['files']))
-'@
 $sourceRoot = '<已有原件的仓库绝对路径>'
-Invoke-QCCheck 'copy-inputs' $blenderPython @('-I', '-c', $copyInputs, $sourceRoot, $repo)
+Invoke-QCCheck 'copy-inputs' $blenderPython @('-I', 'tools/prepare_validation_data.py',
+    '--reference-root', $sourceRoot, '--reference-layout', 'current',
+    '--include-local', '--include-calculations', '--report', "$batch/input-preparation.json")
 Invoke-QCCheck 'inputs' $blenderPython @('-I', 'tools/local_inputs.py')
 ~~~
 
-已在当前检出准备原件时，只执行 inputs 检查。QCBLENDER_REFERENCE_ROOT 可显式指向相同清单的输入仓库，但部分日志回归和恢复工具直接读取当前 tests/data/local/log-examples；以上复制方式无需该变量。必要输入不存在、摘要不同或超出清单规定用途时，应记录阻塞。
+只需要公开回归时，省略 `--reference-root`、`--reference-layout`、`--include-local`、`--include-calculations`。首次从旧 `tests/data/` 布局迁入时，显式选择 `--reference-layout legacy`，工具不会自动回退查找旧路径。已备齐本地原件时只执行 inputs 检查。`QCBLENDER_REFERENCE_ROOT` 可显式指向已整理的参考检出；部分完整科学测试直接使用当前检出的 `validation/shared/data/local/`，运行前按上面命令准备。每次指定新报告路径。
 
 ## 首次环境准备
 
@@ -156,11 +141,11 @@ Invoke-QCCheck 'helpers' $blender @('--background', '--factory-startup', '--offl
 
 科学报告记录 tests/failures/errors/skipped 和参考误差；核对实际样本与数量，必要样本不能 skipped。节点辅助测试比较实际源原子编号及固定公共接口，范围与上轮十组完整节点图对照分别记录。完整网格收敛实验另由 qualify_scientific_fields.py 执行；未执行记 Not Run。
 
-公共教程批次先从[ARTIFACTS](ARTIFACTS.md)核对公开样本包与输入摘要，再执行解析检查。sourceRoot沿用输入检查中已核对的主检出；包不存在时停止，不从旧报告继承通过。
+公共教程批次先完成上面的数据准备，再执行解析检查。使用本检出的冻结 v2 包和当前输入；包不存在时停止，不从旧报告继承通过。
 
 ~~~powershell
-$tutorialPackage = Join-Path $sourceRoot 'outputs/evidence/2026-09-30/public-tutorial/samples/qcblender-public-tutorial-samples-v1.zip'
-Invoke-QCCheck 'tutorial-samples' $blenderPython @('-I', 'tools/verify_tutorial_samples.py', '--reference-root', $sourceRoot, '--package', $tutorialPackage, '--report', "$batch/tutorial-samples.json")
+$tutorialPackage = Join-Path $repo 'validation/agent/packages/qcblender-public-tutorial-samples-v2.zip'
+Invoke-QCCheck 'tutorial-samples' $blenderPython @('-I', 'tools/verify_tutorial_samples.py', '--reference-root', $repo, '--site', $scienceSite, '--package', $tutorialPackage, '--report', "$batch/tutorial-samples.json")
 ~~~
 
 `--checkpoints`仅由已有PySCF计算环境执行，解释器/版本单列，不作为插件依赖。完整命令见本轮验证索引；缺必要checkpoint时在该检查停止，新批次不覆盖旧报告。
@@ -209,7 +194,7 @@ Invoke-QCCheck 'legend-cold-moved' $blender @('--background', '--offline-mode', 
 Copy-Item -LiteralPath "$legend/checks.json" -Destination "$batch/legend-cold-moved.json"
 ~~~
 
-检查实际渲染。图例初建和第一次重开的报告 status 为 Not Run，表示完整双冷重开链尚未完成；保留这些阶段快照，用第二次重开后的完整 Passed 报告参加资格汇总。更广范围按改动选择 [SOP](v1-acceptance/SOP.md) 和专项工具；已有工具不等于每项命令对当前候选均通过。GUI 实际点击、完整 SOP、性能、独立人工签署及其他平台分别记录，不由包资格推导。
+检查实际渲染。图例初建和第一次重开的报告 status 为 Not Run，表示完整双冷重开链尚未完成；保留这些阶段快照，用第二次重开后的完整 Passed 报告参加资格汇总。更广范围按改动选择 [Agent 检查覆盖](../validation/agent/COVERAGE.md) 和专项工具；已有工具不等于每项命令对当前候选均通过。GUI 实际点击、人工教程、性能、独立科研接受及其他平台分别记录，不由包资格推导。
 
 ## 生成索引与汇总资格
 

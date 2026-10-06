@@ -2,7 +2,7 @@
 
 适用 Windows x64、Blender 5.1.1。版本及安装包可用性见 [README](../README.md)，技术范围见 [验证记录](VALIDATION.md)。
 
-安装、样本获取、参数核对、渲染、保存和独立复做按 [用户验证 SOP](v1-acceptance/SOP.md) 执行。材料身份见[安装包与样本](v1-acceptance/MATERIALS.md)，结果填写使用[记录模板](v1-acceptance/RECORD-TEMPLATE.md)。下面提供操作入口索引。
+安装、导入、渲染、导出与保存按 [人工 SOP](../validation/human/SOP.md) 执行。案例、截图和安装包集中在 [validation](../validation/README.md)，下面提供操作入口索引。
 
 ## 操作入口与对象选择
 
@@ -38,18 +38,19 @@
 
 | 任务 | 教程位置 |
 | --- | --- |
-| 安装、文件摘要、对象/编辑器选择 | [准备与通用操作](v1-acceptance/SOP.md#0-准备安装与通用操作) |
-| MO、开壳层密度、裁剪和体积雾 | [C01](v1-acceptance/SOP.md#c01-fchk开壳层轨道与密度) |
-| 能量、振动、优化与Log后FCHK导入 | [C02](v1-acceptance/SOP.md#c02-logout-能量振动与优化) |
-| Cube单位、别名及双符号 | [C03](v1-acceptance/SOP.md#c03-cubecub-物理量网格与双符号) |
-| ESP、电荷/偶极、色标、切片、探针、剖面和CSV | [C04](v1-acceptance/SOP.md#c04-esp电荷偶极切片探针与剖面) |
-| 氢、局部集合、标注、显示层和参数复制 | [C05](v1-acceptance/SOP.md#c05-氢显隐局部选择标注与显示层) |
-| NBO、IGMH/IRI、ESP分析、AIM、IRC/Mayer、ETS-NOCV | [C06–C13](v1-acceptance/SOP.md#c06-nbo-与-e2)；格式说明见 [外部分析导入](EXTERNAL_ANALYSIS_IMPORT.md) |
-| 取景、渲染、保存、搬移、归档与恢复 | [每例出图与保存](v1-acceptance/SOP.md#04-相机渲染保存与移动冷重开每例执行) |
-| 节点、材质与交互覆盖 | [N01–N18](v1-acceptance/SOP.md#2-n01n18-节点与交互检查) |
-| 标准XYZ、离散帧、测量与独立副本 | [X01](v1-acceptance/SOP.md#x01-标准xyz与离散帧) |
-| CSV/metadata、默认目录、筛选与取消 | [通用数据导出](v1-acceptance/SOP.md#05-显式数据导出) |
-| 用户操作记录、数值核对和科研签署 | [结果记录](v1-acceptance/SOP.md#3-结果记录与独立科研签署) |
+| 安装、对象/编辑器选择、第一张 MO 图 | [入门主流程](../validation/human/SOP.md) |
+| 能量、振动、优化与 NBO | [本机限定案例](../validation/agent/LOCAL-CASES.md) |
+| Cube 单位和双符号 | [Cube 专题](../validation/human/topics/02-cube.md) |
+| 密度、ESP、电荷/偶极、色标 | [电子分布专题](../validation/human/topics/03-density-esp.md) |
+| 切片、探针、剖面 CSV、裁剪和体积雾 | [空间观察专题](../validation/human/topics/04-spatial-tools.md) |
+| 氢显隐、局部选择、标注、显示层、XYZ 与参数复制 | [分子显示专题](../validation/human/topics/01-molecule-xyz.md) |
+| IGMH/IRI | [成对场专题](../validation/human/topics/05-igmh-iri.md) |
+| ESP 极值、面积和 AIM | [点、路径和分析记录](../validation/human/topics/06-esp-aim.md) |
+| IRC/Mayer | [反应路径专题](../validation/human/topics/07-irc-mayer.md) |
+| ETS-NOCV 和 pair Cube | [NOCV 专题](../validation/human/topics/08-ets-nocv.md) |
+| 公共几何节点 | [节点专题](../validation/human/topics/09-nodes.md) |
+| 取景、渲染、参数摘要和保存重开 | [导出与保存](../validation/human/SOP.md#export) |
+| 错误输入、筛选/取消、关联、恢复等技术边界 | [Agent 检查覆盖](../validation/agent/COVERAGE.md) |
 
 源文件始终决定科学值和单位，显示操作不改科学数组。源编号从1起，坐标Å；键由距离推断，MO两符号表示相位，振动播放速度属于显示参数。两个来源关联、Cube单位声明、外部分析参数均须核对真实生成记录。保存使用 **N侧栏 → 工程与诊断 → 保存自包含工程**，并将同名 `.blend` 与 `.qcdata/` 一起移动。
 
@@ -57,16 +58,16 @@
 
 IRC和优化关联比较双方当前步骤的源Å坐标。最后选择的对象作为活动参考；在对象属性主面板点击 **关联选中数据源**。任一端换步后，来源详情中的Geometry association显示stale；返回原步仍需重新关联。旧工程关联、复制层和当前版本新视图也需重新建立关联。
 
-原生Alt+D产生的共享原子mesh不能切换IRC/优化步骤。仅选要独立调整的副本，使用 **3D Viewport → Object → Relations → Make Single User → Object & Data**，再点击对应面板的Previous/Next/Choose Step。选择顺序、关联失效、单用户恢复和Undo/Redo操作见[SOP P1-A/P1-B](v1-acceptance/SOP.md#当前构型关联与共享对象检查)。
+原生Alt+D产生的共享原子mesh不能切换IRC/优化步骤。仅选要独立调整的副本，使用 **3D Viewport → Object → Relations → Make Single User → Object & Data**，再点击对应面板的Previous/Next/Choose Step。选择顺序、关联失效、单用户恢复和Undo/Redo检查见[Agent 覆盖](../validation/agent/COVERAGE.md)。
 
 ## Gaussian 优化轨迹浏览
 
-操作步骤集中在 [SOP C02](v1-acceptance/SOP.md#c02-logout-能量振动与优化)：导入P02的Job1、创建独立轨迹，选新对象后在对象属性 **Optimization Trajectory** 使用 **Previous / Next / Choose Step**。Job2的模式/能量在 **科学记录与振动模式**。轨迹源值、截图和复做结果填写到本批记录模板的C02条目。
+操作步骤集中在[本机限定案例](../validation/agent/LOCAL-CASES.md)：导入P02的Job1、创建独立轨迹，选新对象后在对象属性 **Optimization Trajectory** 使用 **Previous / Next / Choose Step**。Job2的模式/能量在 **科学记录与振动模式**。
 
 新建原子显示外层Quality=3，新建切片每轴201点；生成网格初值0.2 Å、边缘3 Å、512 MiB。公共QC Style Atoms and Bonds的Quality=2、QC Planar Slice的Resolution=101仍保留。Addon偏好“数据导出目录”留空时使用已保存.blend父目录，否则真实系统Documents；导出对话框Output directory可单次覆盖。导出目录不替代.qcdata工程数据。
 
 ## Alpha 首次出图与资源检查
 
-按 [Alpha 短 SOP](v1-acceptance/SOP.md#alpha-首次出图与短验收) 完成 P01、Alpha 源 MO9、0.2 Å / margin 3 Å / 512 MiB、等值 0.045 bohr^-3/2 的路线。首次点击生成先异步科学预检，通过后打开参数对话框；网格、结果大小和求值预算即时更新，超限显示原因。资格绑定源 manifest 与科学指纹，重绑或新进程重开后重新检查。
+按 [人工主流程](../validation/human/SOP.md#orbital) 完成 P01、Alpha 源 MO9、0.2 Å / margin 3 Å / 512 MiB、等值 0.045 bohr^-3/2 的路线。首次点击生成先异步科学预检，通过后打开参数对话框；网格、结果大小和求值预算即时更新，超限显示原因。资格绑定源 manifest 与科学指纹，重绑或新进程重开后重新检查。
 
 选最终视图，在“工程与诊断 → 导出数据与参数摘要”选择“当前视图参数摘要”，得到中文 view-summary.md 与 metadata.json。摘要读取当前节点和材质，无法核实的自定义图和缺字段显示 partial/unverified。源科学数组、现有 CSV 数据格式不变。

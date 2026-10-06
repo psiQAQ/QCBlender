@@ -29,7 +29,7 @@ SHA-256：`04b1fec4736f0f837b68b59e0e687e0aca2507b0f5d3d5a094bbc8b6fc587c8e`。
 - 第 1 步 PNG（`outputs/optimization-trajectory/step-1.png`）、第 4 步 PNG（`outputs/optimization-trajectory/step-4.png`）、冷重开 PNG（`outputs/optimization-trajectory/gui-moved/step-4-reopened.png`）。
 - 轨迹面板截图（`outputs/optimization-trajectory/gui-final-step4.png`）、当前步来源截图（`outputs/optimization-trajectory/gui-final-source-details.png`）。
 
-真实输入沿用 [local-log-downloads.json](../tests/data/local-log-downloads.json) 中 cclib-data 固定提交的 Gaussian 16 `water_neutral_nbo_opt_freq.out`，SHA-256 为 `9493d24655fb261a2c945d292ad517567f3024996594a25f678199df74017519`。优化段含 4 步，后续频率段分别处理。截断、失败状态、缺能量、歧义和身份冲突使用该真实输入的明确修改作为边界测试，不冒充新增真实计算。
+真实输入沿用 [local-log-downloads.json](../validation/shared/data/local-log-downloads.json) 中 cclib-data 固定提交的 Gaussian 16 `water_neutral_nbo_opt_freq.out`，当前文件在 `validation/shared/data/local/log-examples/`，SHA-256 为 `9493d24655fb261a2c945d292ad517567f3024996594a25f678199df74017519`。优化段含 4 步，后续频率段分别处理。截断、失败状态、缺能量、歧义和身份冲突使用该真实输入的明确修改作为边界测试，不冒充新增真实计算。
 
 ## 验证结果
 
