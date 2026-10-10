@@ -50,6 +50,9 @@ class QCBLENDER_OT_open_properties(bpy.types.Operator):
                                ('RENDER', '渲染', ''), ('OUTPUT', '输出', '')])
 
     def execute(self, context):
+        if self.editor in ('OBJECT', 'MATERIAL') and context.object is None:
+            self.report({'WARNING'}, '请先选择一个对象')
+            return {'CANCELLED'}
         areas = [a for a in context.screen.areas if a.type == 'PROPERTIES']
         if not areas:
             self.report({'ERROR'}, '请先将一个编辑器切换为属性编辑器')
