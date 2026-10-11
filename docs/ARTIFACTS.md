@@ -1,6 +1,6 @@
 # 产物查找入口
 
-更新：2026-10-10。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
+更新：2026-10-11。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
 
 ## 当前交付
 
@@ -10,18 +10,24 @@
 | --- | --- |
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
-| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,656,108 字节，SHA-256 `988048e2e8fa15cf891b7538c00b5d607eb9f791fbb6d09287c7da1b322c371e` |
-| 完整候选及原报告 | `outputs/candidates/current/empty-properties-2989bd6/`；源码 `2989bd6`；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/empty-properties.md) |
+| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,660,488 字节，SHA-256 `dcd413f902e1bbff9495b878a2ab83442dcb2db02bb8e57643b2159fcacfd9c6` |
+| 完整候选及原报告 | `outputs/candidates/current/ui-bounds-50f1f3b/`；源码 `50f1f3b`；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/ui-bounds.md) |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
-| 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[教程整合验证](../validation/agent/VALIDATION.md)；本次精简结果见下节 |
+| 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[教程整合验证](../validation/agent/VALIDATION.md)；当前界面修复与历史精简结果见下文 |
 
 独立用户操作、截图补齐、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
+
+## 空场景按钮与编号范围（2026-10-11）
+
+空场景直接 QC 对象菜单和科学预检入口增加前置条件；轨道、步、帧、模式、原子及结果行按实际数据限制。NOCV 保留源 Pair 编号；NBO 先检查日志，再选择有界 Job/block。162 项基础测试、26 项相关科学解析测试、安装后 180 项空场景/默认对象审计、11 项原生 RNA 范围检查及共享对象保存冷读 Passed。Computer Use 实际点击空场景属性入口、轨道边界和 NBO 两步对话框 Passed；独立人工与科研签署 Not Run。详见[本批验证](../validation/agent/acceptance/ui-bounds.md)。
+
+当前 ZIP 由源码 `50f1f3b` 构建，82 个产品文件核验通过，11 个 wheel 与上一候选逐字节相同。报告位于 `validation/agent/reports/2026-10-11/ui-bounds/`，自包含验证工程、独立安装环境和保留脚本位于 `outputs/runs/ui-bounds/`。上一候选 `outputs/candidates/current/empty-properties-2989bd6/` 及其报告继续保留。任务分支按 `archive/2026-10-11/fix/` 本地归档，收尾状态见本批 `closing.json`。
 
 ## 空场景属性入口修复（2026-10-10）
 
 没有活动对象时，“查看对象属性”提示选择对象并保留属性编辑器状态。10 项原生窗口回归、安装后窗口及后台回归、152 项基础测试、离线安装/计算/渲染及中文路径冷重开 Passed；Computer Use 点击因 helper 故障 Not Run，独立人工验收 Not Run。来源、命令和证据见[验证记录](../validation/agent/acceptance/empty-properties.md)。
 
-新安装包已替换当前入口；旧 CI 候选仍保留在 `outputs/candidates/current/alpha-ci-0.1.0-190e11e/`。11 个 wheel 与旧候选逐字节相同。共用环境、用户输入与工程保留；本次验证工程位于 `outputs/runs/empty-properties/install/qa/`，本批报告位于 `validation/agent/reports/2026-10-10/empty-properties/`。
+该批安装包已由 2026-10-11 候选接替；旧 CI 候选仍保留在 `outputs/candidates/current/alpha-ci-0.1.0-190e11e/`。11 个 wheel 与旧候选逐字节相同。共用环境、用户输入与工程保留；本次验证工程位于 `outputs/runs/empty-properties/install/qa/`，本批报告位于 `validation/agent/reports/2026-10-10/empty-properties/`。
 
 ## outputs 精简结果（2026-10-06）
 

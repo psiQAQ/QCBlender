@@ -4,9 +4,9 @@
 
 没有活动对象时，`OBJECT` 不在属性编辑器的动态 RNA 枚举中。对象和材质属性入口现在先检查活动对象，缺失时报告“请先选择一个对象”并返回 CANCELLED，保持属性编辑器原有上下文与固定状态。
 
-## 当前安装包
+## 2026-10-10 安装候选
 
-`validation/shared/install/qcblender-0.1.0.zip`：50,656,108 字节，SHA-256 `988048e2e8fa15cf891b7538c00b5d607eb9f791fbb6d09287c7da1b322c371e`。候选副本为 `outputs/candidates/current/empty-properties-2989bd6/qcblender-0.1.0.zip`，当前身份见 [current-install.json](../current-install.json)。
+`validation/shared/install/qcblender-0.1.0.zip`：50,656,108 字节，SHA-256 `988048e2e8fa15cf891b7538c00b5d607eb9f791fbb6d09287c7da1b322c371e`。候选副本为 `outputs/candidates/current/empty-properties-2989bd6/qcblender-0.1.0.zip`。该批候选已由 [2026-10-11 界面修复](ui-bounds.md)接替；当前身份见 [current-install.json](../current-install.json)。
 
 从当前源码通过 `tools/build_extension.py` 重建，79 个产品文件与工作树逐字节一致；manifest 由构建器填写 wheel 列表。11 个 wheel 与上一份 CI 候选逐字节相同，依赖和科学源码锁内容不变。构建时共用 GBasis wheel 读取被拒绝，使用已核验的旧安装包内 wheel 及其原始 backend-wheel 记录；不改动共用环境或依赖版本。旧候选保持在 `outputs/candidates/current/alpha-ci-0.1.0-190e11e/`。
 

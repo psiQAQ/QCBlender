@@ -1,5 +1,7 @@
 # 开发演进
 
+- 2026-10-11：修复空场景直接 QC 对象菜单及科学预检的缺失对象边界；轨道、步/帧、原子、模式/能量、结果行与显示节点编号按实际数据限制，刷新旧工程时归一化过界值，保留源编号和 Last Atom=0 语义。NOCV Pair 使用真实可选记录，NBO 改为先检查日志再选择 Job/block，并拒绝检查后变更的来源。源码 `50f1f3b` 的安装 ZIP 已替换当前入口；82 个产品文件和 11 个原有 wheel 核验 Passed。162 基础、26 相关科学解析、安装后空场景/原生范围、离线计算/渲染/保存及冷重开 Passed；Computer Use 空场景、轨道和 NBO 边界 Passed，独立人工/科研签署 Not Run。旧候选、用户工程、截图和本批证据保留，本地归档；见[验证](../validation/agent/acceptance/ui-bounds.md)与[产物入口](ARTIFACTS.md#空场景按钮与编号范围2026-10-11)。
+
 - 2026-10-10：修复没有活动对象时“查看对象属性”触发动态 RNA 枚举报错；对象与材质属性入口提示先选择对象，保留原属性页及固定状态。源码 `2989bd6` 构建的 0.1.0 ZIP 已更新至 `validation/shared/install/`，11 个 wheel 与旧候选逐字节一致。10 项原生窗口回归、安装后窗口/后台回归、152 项基础测试、离线安装/计算/渲染及中文路径冷重开 Passed；Computer Use 点击因 helper 故障 Not Run，独立人工验收 Not Run。旧候选、验证工程与报告保留，本地归档；见[验证](../validation/agent/acceptance/empty-properties.md)与[产物入口](ARTIFACTS.md#空场景属性入口修复2026-10-10)。
 
 - 2026-10-06：技术验收及 v1 材料共454个文件集中至 `validation/agent/acceptance/`、`validation/agent/v1-acceptance/`；同步文档链接、Agent 指针和工具路径，发布检查兼容迁移前标签。419张截图和17份冻结清单/机器记录保持原始字节，原路径有明确映射；样本包 README 的当前校验身份同步更新，原来源身份另存。48项相关测试、冻结样本包、实际数据准备、教程材料及迁移链接/摘要检查 Passed；Blender和科研复算 Not Run。本地归档见[产物入口](ARTIFACTS.md#文档整理2026-10-06)。

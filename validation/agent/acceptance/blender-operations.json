@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-10-05",
+  "updated": "2026-10-11",
   "rules": "docs/agents/blender-interaction.md",
   "operation_ids_are_stable": true,
   "history_is_not_current_batch_pass": true,
@@ -6656,6 +6656,120 @@
       "independent_scientific_signoff": {
         "status": "Not Run"
       }
+    },
+    {
+      "id": "empty-scene-properties",
+      "title": "空场景属性入口和来源刷新",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-11",
+        "method": "Agent Computer Use native mouse and keyboard actions",
+        "source_commit": "50f1f3b1e82a358cd2a4c0e5d3843d1f7cb4186a",
+        "product_tree": "ed6e9553d865e55b3a7c5e5433b168b5d99f3bac",
+        "candidate_sha256": "dcd413f902e1bbff9495b878a2ab83442dcb2db02bb8e57643b2159fcacfd9c6",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "validated_scope": "无对象时的属性提示、刷新与禁用控件",
+        "visible_entry": "N 侧栏 → QCBlender",
+        "reports": [
+          {
+            "path": "validation/agent/reports/2026-10-11/ui-bounds/computer-use.json",
+            "bytes": 3393,
+            "sha256": "8287e01efaebd16683d2dccc82d80a817bcfff6da31c38dfc973fc022f7f50d6",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "validation/agent/reports/2026-10-11/ui-bounds/cu-empty-properties.png",
+            "bytes": 184572,
+            "sha256": "5e0cbbca4269addf432b5d4b2da9b0ed58f7c56e0fcdb360a356c388e7d457d4"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-11/ui-bounds/cu-empty-panels.png",
+            "bytes": 184792,
+            "sha256": "52d087493bdcd43bc0f774d20c6c173260c95a8fd70d36a93cef5352c4a37f59"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/editor_ui.py": "6cc8e1c080e9a1ae7b16f34ad9423214745de4ed9158757365e01cfc68820e0c",
+        "qcblender/blender/ui.py": "93fc96220f622456eaf83cd5eaa5d368e566a0db9c48c4103277ade8d094dd8b"
+      },
+      "fingerprint_review": "复用前核对 Operator、回调、元数据缓存、worker 与注册接口的变化。",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "无对象时的属性提示、刷新与禁用控件",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed"
+      },
+      "independent_human_review": "Not Run",
+      "independent_scientific_review": "Not Run"
+    },
+    {
+      "id": "bounded-orbital-nbo-selectors",
+      "title": "轨道编号及 NBO Job/block 范围",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-11",
+        "method": "Agent Computer Use native mouse and keyboard actions",
+        "source_commit": "50f1f3b1e82a358cd2a4c0e5d3843d1f7cb4186a",
+        "product_tree": "ed6e9553d865e55b3a7c5e5433b168b5d99f3bac",
+        "candidate_sha256": "dcd413f902e1bbff9495b878a2ab83442dcb2db02bb8e57643b2159fcacfd9c6",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "validated_scope": "真实 CH4 的轨道边界、Gaussian NBO 两步检查及 Job/block 联动；未执行 NBO 关联导入",
+        "visible_entry": "N 侧栏 → QCBlender",
+        "reports": [
+          {
+            "path": "validation/agent/reports/2026-10-11/ui-bounds/computer-use.json",
+            "bytes": 3393,
+            "sha256": "8287e01efaebd16683d2dccc82d80a817bcfff6da31c38dfc973fc022f7f50d6",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "validation/agent/reports/2026-10-11/ui-bounds/cu-orbital-upper.png",
+            "bytes": 222547,
+            "sha256": "ef59ddfb9b089ffb8644cc004c6129d4c8c36a4b55e313e1dcd1b1a80c32ca71"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-11/ui-bounds/cu-orbital-lower.png",
+            "bytes": 223152,
+            "sha256": "de1e85d0c533295165301a3ed2db308a4ed17a53b5b762cba25eefc93f48aebe"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-11/ui-bounds/cu-nbo-bounds.png",
+            "bytes": 244074,
+            "sha256": "c6ebd0755efd31112363190c16b05ec0ccb2e9ee54fac103b3103575f6f8d746"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/ui.py": "93fc96220f622456eaf83cd5eaa5d368e566a0db9c48c4103277ade8d094dd8b",
+        "qcblender/blender/index_ranges.py": "b3028ebc102ff05e7efefd22d20e7a6c45151fa7795dfce557d2c555ebe9ce26",
+        "qcblender/blender/nbo.py": "f0cc3ab40ee332ecd7f6c6621e8d043a018ef55edc001684470edb6b3daba3a5",
+        "qcblender/gaussian_log.py": "f1351ad472b55b86d57f7bc8f55358b4b066a369737f7a8565fa1cd03d7beab9",
+        "qcblender/worker.py": "234842126240aab42eb35ff4ef8c4933607c2c913e87ee4e38dca33b065218b1"
+      },
+      "fingerprint_review": "复用前核对 Operator、回调、元数据缓存、worker 与注册接口的变化。",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "真实 CH4 的轨道边界、Gaussian NBO 两步检查及 Job/block 联动；未执行 NBO 关联导入",
+        "requires_current_result_assertions": true,
+        "current_batch_replay_status": "Passed"
+      },
+      "independent_human_review": "Not Run",
+      "independent_scientific_review": "Not Run"
     }
   ]
 }

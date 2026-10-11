@@ -23,6 +23,8 @@
 
 ## 候选和专题记录
 
+当前界面修复：[空场景按钮与编号范围](ui-bounds.md)；上一批：[空场景属性入口](empty-properties.md)。
+
 | 批次或主题 | 说明与机器记录 |
 | --- | --- |
 | Alpha 科学预检、摘要与保存 | [验证说明](alpha-readiness-validation.md)、[索引](alpha-readiness-validation.json)、[交付](alpha-readiness-delivery.json) |

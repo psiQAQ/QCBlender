@@ -16,7 +16,7 @@
 
 3. 在表对象的 **External Result Browser** 中选 **Spin=Total**，在 **Pair energy [kcal/mol]** 一行开启两端范围，填 **From=−60、To=−50**，点击 **应用筛选**。应显示 **Matching records: 1**，匹配 **Pair1**。这是表的筛选结果。
 
-4. 保持表对象活动，点击 **N 侧栏 → 导入外部结果 → NOCV pair Cube**，选择 **Signed pair Cube=[shared/data/public/P05/nocv/nocv-pair1.cub](../../shared/data/public/P05/nocv/nocv-pair1.cub)**，设 **Pair number=1、Spin=Total、Deformation density unit=electron/bohr^3**。完成后选 **QC nocv_deformation_density**，其网格应为 **47×50×57**。在 **几何表示** 设 **正值阈值=0.003**，保持 **Link Thresholds、显示正值、显示负值** 开启。切到 **Material Preview**，应看到两种颜色的变形密度。截图保存为 `human/screenshots/81-nocv-density.png`。
+4. 保持表对象活动，点击 **N 侧栏 → 导入外部结果 → NOCV pair Cube**，选择 **Signed pair Cube=[shared/data/public/P05/nocv/nocv-pair1.cub](../../shared/data/public/P05/nocv/nocv-pair1.cub)**，设 **Spin=Total**，从 **Pair number** 的实际源编号列表选择 **1**，并设 **Deformation density unit=electron/bohr^3**。完成后选 **QC nocv_deformation_density**，其网格应为 **47×50×57**。在 **几何表示** 设 **正值阈值=0.003**，保持 **Link Thresholds、显示正值、显示负值** 开启。切到 **Material Preview**，应看到两种颜色的变形密度。截图保存为 `human/screenshots/81-nocv-density.png`。
 
 ![与 Pair1 表记录对应的正负变形密度](../screenshots/81-nocv-density.png)
 

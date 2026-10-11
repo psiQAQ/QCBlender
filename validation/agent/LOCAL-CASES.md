@@ -37,7 +37,7 @@
 <a id="nbo"></a>
 ## NBO 与 E(2)
 
-6. 在 **Display Layers** 选回 **P02-frequency**，点击 **N 侧栏 → 导入外部结果 → NBO 记录**。将 **Gaussian Log / Out** 设为 `shared/data/local/log-examples/water_neutral_nbo_opt_freq.out` 的实际文件，填 **Gaussian job (1-based)=2、NBO block within job (1-based)=1**，确认。应生成并选中 **QC NBO: water_neutral_nbo_opt_freq.out**。
+6. 在 **Display Layers** 选回 **P02-frequency**，点击 **N 侧栏 → 导入外部结果 → NBO 记录**。将 **Gaussian Log / Out** 设为 `shared/data/local/log-examples/water_neutral_nbo_opt_freq.out` 的实际文件，先确认以检查日志；检查完成后出现编号对话框，再选 **Gaussian job (1-based)=2、NBO block within job (1-based)=1** 并确认。编号按日志中的实际 Job 和该 Job 的 block 数限制；改选 Job 后，block 的范围同步更新。应生成并选中 **QC NBO: water_neutral_nbo_opt_freq.out**。
 
 > NBO 是自然键轨道，用于按键、孤对等方式分析电子分布。E(2) 是供体与受体轨道之间的二阶微扰相互作用能。
 

@@ -33,3 +33,9 @@ Implement the approved record range scope in `record_ranges.py`,
   installed. Scientific filter tests have not executed with that interpreter.
 - Not Run: native Blender controls, undo/redo, saved-project reopen and integrated
   extension validation. These are assigned to the coordinating task.
+
+## Integrated validation
+
+- Passed on 2026-10-11: the coordinating task ran 26 scientific log/filter/NOCV tests using the existing installed dependency site, with zero failures, errors or skips.
+- Passed: installed Blender RNA ranges, per-object shared-binding refresh, saved-project cold reopen and complete extension install/evaluation qualification. Current evidence is `validation/agent/acceptance/ui-bounds.md`.
+- Not Run: independent human/scientific sign-off and a new undo/redo pass for every selector.
