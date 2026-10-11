@@ -8,7 +8,7 @@
 | --- | --- |
 | 安装、生成第一张轨道图、导出和保存重开 | [人工 SOP](human/SOP.md) |
 | 分子显示、XYZ、ESP、分析结果等专题 | [专题目录](human/SOP.md#topics) |
-| 保存自己的截图 | `human/screenshots/`，文件名写在对应步骤下 |
+| 保存自己的截图 | `human/screenshots/`，以 `Pxx-内容.png` 命名，具体路径写在对应步骤下 |
 | 保存教程渲染图 | `human/renders/`，教程直接引用渲染成品 |
 | 查找案例输入与来源 | [数据目录](shared/data/README.md) |
 | 查看当前安装文件 | [安装材料](shared/install/README.md) |
@@ -32,6 +32,8 @@
 | `work/human/` | 按教程生成的工程、配套科学数据、导出文件和移动副本，Git 忽略 |
 | `work/agent/<批次>/` | 新 Agent 验证批次的工作文件，Git 忽略 |
 
+截图前缀沿用所在章节的案例编号：P01 轨道入门与自旋密度，P03 水二聚体场和分析，P04 IRC，P05 ETS-NOCV，P06 XYZ 与公共节点；后缀说明图片内容。截图用于展示独有的操作入口、控件或视觉结果，同一结果的重复确认保留文字说明。
+
 教程中的图片只引用 `human/` 内的图片文件。`.blend`、`.qcdata/`、CSV 导出和工程 ZIP 放在 `work/human/`；保留需要继续使用的工程及配套数据。既有 Agent 工作目录和 `outputs/runs/` 批次原位保留，由 [ARTIFACTS](../docs/ARTIFACTS.md) 定位。
 
 ## 人工完成后的打包
@@ -54,4 +56,4 @@
 
 ## 开发维护
 
-当前整理规格与执行状态见[教程素材任务](../.scratch/tutorial-assets-20261011/spec.md)。新检出准备数据的方法见[数据目录](shared/data/README.md)；技术核对和清理收据与人工教程分开维护。发布前通过 [Agent 文档检查](agent/README.md#教程材料与完整图片检查)确认图片已补齐。全仓工程及历史证据仍由 [ARTIFACTS](../docs/ARTIFACTS.md) 路由。
+当前整理规格与执行状态见[教程截图任务](../.scratch/tutorial-screenshots-20261011/spec.md)。新检出准备数据的方法见[数据目录](shared/data/README.md)；技术核对和清理收据与人工教程分开维护。发布前通过 [Agent 文档检查](agent/README.md#教程材料与完整图片检查)确认图片已补齐。全仓工程及历史证据仍由 [ARTIFACTS](../docs/ARTIFACTS.md) 路由。

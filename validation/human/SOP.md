@@ -13,16 +13,16 @@
 
 本文的文件路径均相对**材料根目录**，即解压后同时含有 `human/` 和 `shared/` 的文件夹。保留这两个目录的相对位置；无需安装 Gaussian、Multiwfn 或 PySCF。
 
-教程截图保存在 `human/screenshots/`，渲染图保存在 `human/renders/`；工程和导出文件保存在 `work/human/`。按步骤保存图片后，下方引用便会显示对应图片。
+教程截图保存在 `human/screenshots/`，以案例编号和内容命名，如 `P01-orbital.png`；本页使用 P01 前缀。渲染图保存在 `human/renders/`，工程和导出文件保存在 `work/human/`。按步骤保存图片后，下方引用便会显示对应图片。
 
 <a id="install"></a>
 ## 安装并找到插件
 
 1. 打开 Blender，选择 **Edit → Preferences → Get Extensions → 右上角菜单 → Install from Disk**，选择 [shared/install/qcblender-0.1.0.zip](../shared/install/qcblender-0.1.0.zip)，完成安装。在 **Add-ons** 中搜索 **QCBlender**，确认已经启用。
 
-2. 展开 QCBlender，点击 **Check Scientific Runtime**。等待检查完成，应显示科学运行环境可用。截图保存为 `human/screenshots/01-install.png`。
+2. 展开 QCBlender，点击 **Check Scientific Runtime**。等待检查完成，应显示科学运行环境可用。截图保存为 `human/screenshots/P01-install.png`。
 
-![插件已启用，科学运行环境检查完成](screenshots/01-install.png)
+![插件已启用，科学运行环境检查完成](screenshots/P01-install.png)
 
 3. 关闭偏好设置，选择 **File → New → General**。在右上角 **Outliner** 选中默认 **Cube** 并删除，保留 Camera 和 Light。鼠标移入 **3D Viewport**，切到 **Object Mode**，按 `N`，打开 **QCBlender** 页；点击视口右上角的 **Material Preview**。之后文中的“N 侧栏”均指这里。
 
@@ -53,9 +53,9 @@
 
 > 网格间距决定空间采样的疏密，边距决定分子周围计算多宽。本文参数用于学习显示操作。
 
-6. 完成后选中 **QC orbital_amplitude**。在 **对象属性 → 几何表示** 将 **正值阈值** 设为 **0.045**，保持 **Link Thresholds**、**显示正相位**、**显示负相位** 开启。应看到两种颜色的轨道表面；在 **科学记录与振动模式** 中应看到 `spin: alpha`、`source_number: 9`，单位为 `bohr^-3/2`。截图保存为 `human/screenshots/02-orbital.png`。
+6. 完成后选中 **QC orbital_amplitude**。在 **对象属性 → 几何表示** 将 **正值阈值** 设为 **0.045**，保持 **Link Thresholds**、**显示正相位**、**显示负相位** 开启。应看到两种颜色的轨道表面；在 **科学记录与振动模式** 中应看到 `spin: alpha`、`source_number: 9`，单位为 `bohr^-3/2`。截图保存为 `human/screenshots/P01-orbital.png`。
 
-![两个氧原子周围的 Alpha MO9 双相位表面及阈值](screenshots/02-orbital.png)
+![两个氧原子周围的 Alpha MO9 双相位表面及阈值](screenshots/P01-orbital.png)
 
 > 等值面是场数值达到指定阈值的位置；Link Thresholds 让两种相位使用相同的阈值幅度。
 
@@ -75,11 +75,11 @@
 <a id="export"></a>
 ## 导出当前参数
 
-10. 回到主窗口，选中 **QC orbital_amplitude**，点击 **N 侧栏 → 工程与诊断 → 导出数据与参数摘要**。将 **Data** 设为 **当前视图参数摘要**；在 **Output directory** 选择材料根目录下的 `work/human/exports/`，让文件浏览器填入它的实际绝对路径，再确认。
+10. 回到主窗口，选中 **QC orbital_amplitude**，点击 **N 侧栏 → 工程与诊断 → 导出数据与参数摘要**。将 **Data** 设为 **当前视图参数摘要**；在 **Output directory** 选择材料根目录下的 `work/human/exports/`，让文件浏览器填入它的实际绝对路径。截图保存为 `human/screenshots/P01-summary.png`，然后确认导出。
 
-11. 按 **Data exported:** 提示中的完整路径打开新生成的子目录。应有 **view-summary.md** 和 **metadata.json**；打开前者，检查其中有 **Alpha、源轨道 9、0.2 Å 网格、0.045 阈值**。插件每次自动创建一个不同名称的子目录。截图保存为 `human/screenshots/04-summary.png`。
+![当前视图参数摘要的导出选项与保存目录](screenshots/P01-summary.png)
 
-![导出目录中的参数摘要及配套文件](screenshots/04-summary.png)
+11. 按 **Data exported:** 提示中的完整路径打开新生成的子目录。应有 **view-summary.md** 和 **metadata.json**；打开前者，检查其中有 **Alpha、源轨道 9、0.2 Å 网格、0.045 阈值**。插件每次自动创建一个不同名称的子目录。
 
 > 参数摘要保存当前视图设置。CSV 是以逗号分隔各列的文本表格；[剖面专题](topics/04-spatial-tools.md#profile)会练习一次科学数据 CSV 导出。
 
@@ -92,9 +92,7 @@
 
 13. 选择 **File → Quit** 正常关闭 Blender，再启动 Blender，用 **File → Open** 打开 `work/human/P01/P01.blend`。
 
-14. 选中 **QC orbital_amplitude**，切到 **Material Preview**。两种相位仍应完整显示，阈值仍为 **0.045**；按小键盘 `0` 应能恢复刚才的取景。截图保存为 `human/screenshots/05-reopened.png`。
-
-![重新打开工程后保留的轨道、阈值及取景](screenshots/05-reopened.png)
+14. 选中 **QC orbital_amplitude**，切到 **Material Preview**。两种相位仍应完整显示，阈值仍为 **0.045**；按小键盘 `0` 应能恢复刚才的取景。
 
 15. 点击 **工程与诊断 → 归档工程**，保存为 `work/human/P01/P01-project.zip`。在文件管理器中打开 ZIP，应能找到 `.blend` 与配套科学数据目录。以后要分享这个工程时可使用该 ZIP。
 
