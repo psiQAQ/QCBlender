@@ -1,5 +1,5 @@
 Triage: ready-for-agent
-Status: pending
+Status: claimed
 Blocked by: 06
 
 # 文档交付与本地归档
