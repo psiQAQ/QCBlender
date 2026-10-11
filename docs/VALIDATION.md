@@ -1,6 +1,8 @@
 # 支持范围与验证入口
 
-更新：2026-10-06。当前 0.1.0 Alpha 教程材料在 [validation](../validation/README.md)，安装候选与原始报告由 [current-install.json](../validation/agent/current-install.json) 定位。环境为 Windows x64、Blender 5.1.1、CPython 3.13.9、NumPy 2.3.4、OpenVDB 13。技术流程见 [Agent 校验](../validation/agent/README.md)；独立使用者及科研接受仍依据实际反馈确认。
+更新：2026-10-11。当前 0.1.0 Alpha 教程材料在 [validation](../validation/README.md)，安装候选与原始报告由 [current-install.json](../validation/agent/current-install.json) 定位。环境为 Windows x64、Blender 5.1.1、CPython 3.13.9、NumPy 2.3.4、OpenVDB 13。技术流程见 [Agent 校验](../validation/agent/README.md)；独立使用者及科研接受仍依据实际反馈确认。
+
+本批源码 `7dc0d11` 的技术验收见[主干维护验证](../validation/agent/acceptance/upstream-20261011.md)：181 基础、130 科学、真实节点身份、三种色带的有效域/图例/CSV、多 Cube、默认画面、隔离及日常安装与实际 GUI Passed；独立人工与科研接受 Not Run。标准标量/电荷材质支持 QC Default、Viridis、Cividis，源构型检查保留科学身份并排除 UI 派生原子计数。参考子模块更新不增加运行依赖。
 
 ## 输入和科学边界
 
@@ -28,7 +30,7 @@ GBasis 来源固定在 `science-sources.lock.json`，当前 wheel 为 `0.1.0+qcb
 
 现有独立参考测试保留 CH4 UHF/cc-pVDZ 的 27 点 MO 与 18 点 Gaussian Cubegen 密度/ESP 对照；最大绝对误差约为 4.85e-9、8.44e-7 electron/bohr³、4.61e-6 hartree/e。AO 重叠与电子数测试覆盖开闭壳层、球谐/笛卡尔及矩形 MO；这些结果只证明所测样本。
 
-网格收敛与远场专项历史证据：LiH+ 半宽 8 bohr、步长 0.1 bohr 得 2.99994998 个电子，200 bohr 的 rΦ=0.99993221；原报告 `outputs/scientific-convergence.json`。本次未单独重跑该完整实验。历史性能表保存在 Git 中的本文件基线版本；本次未执行性能基准，不作速度承诺。
+网格收敛与远场专项历史证据：LiH+ 半宽 8 bohr、步长 0.1 bohr 得 2.99994998 个电子，200 bohr 的 rΦ=0.99993221；原报告 `outputs/scientific-convergence.json`。本次未单独重跑该完整实验。当前[原子样式性能基准](research/upstream-20261011-atom-performance.md)覆盖 32/128/512 原子的工程重复构型，记录创建/求值/提取和工作集；没有旧版本对照、视口 FPS 或更大体系的结论。
 
 当前构建、输入校验、安装和同批工程冷重开步骤见 [DEVELOPMENT](DEVELOPMENT.md)。`qualify_package.py` 只核对报告及文件身份，不代替实际运行。四组真实案例的计算参数与复建入口见 [复杂案例](COMPLEX_EXAMPLES.md)。
 

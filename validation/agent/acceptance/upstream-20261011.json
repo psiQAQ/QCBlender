@@ -1,0 +1,130 @@
+{
+  "status": "Passed",
+  "scope": "Candidate installation and technical acceptance; local archival is recorded in closing.json",
+  "date": "2026-10-11",
+  "source_commit": "7dc0d11aea8f33cc4d3b9c7f9f4d28b373fee118",
+  "product_tree": "24acf92e290ede3ec0fcef37d5a01a4e7cb44d93",
+  "candidate": {
+    "path": "validation/shared/install/qcblender-0.1.0.zip",
+    "sha256": "60d572186e127e40e1031a75fff325c3038ab7cc44102d3bdf1e79b6763860ee"
+  },
+  "bytes": 50664814,
+  "reports": [
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/final/package.json",
+      "sha256": "3f89f1d7539dc8053ca9a068d1d89e555633e4a774a8e89f418c2520f22deb71"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/final/stdlib.json",
+      "sha256": "0e1ce339024f0e1b14221fb22b00a46f9672aff3f1b631e0e0788a50644afd4a"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/final/science.json",
+      "sha256": "92868b28353c2125bca5d6b930cb767ea62ca09855e0458b44634f21bd4a4b40"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/final/color.json",
+      "sha256": "d6f3ec69fd1e424753719727f26cc847718b5b5cff3308da28fda9ddcea20c86"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/final/color-reopen.json",
+      "sha256": "9e5a4e71f7033c7d716819d015f516606689fd73e1616f5f94f68f1bd8d4716b"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/final/node-helpers-installed.json",
+      "sha256": "f380676a5475d046ab2f0dd0fd87b39aa1901006556a0f775c7f9d2ec81d284c"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/final/node-assets.json",
+      "sha256": "b40aecfa5c232b4d8dd4271a16cf725592d30f8acd5882b40079c7aa00bbe0e9"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/final/validity/validity.json",
+      "sha256": "caed6fe2c58589204aa6ca0378b4e0c1190fc23b30b74a034570dfae9d3c2357"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/final/validity-viridis/validity.json",
+      "sha256": "c09d33daa1719035798325fda5b1ee034a80721a2aeb1dadae573c05cdb25580"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/final/validity-cividis/validity.json",
+      "sha256": "a805ae12ef617816846498094c9690b757c6ef1c96f14a373674d34cacf04449"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/final/visual-density-esp/density-esp.json",
+      "sha256": "47b31b9041f5d79300cce7eef5a037ef659b7bdeccfa479f855df831fc5b07ca"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/final/visual-legend-annotations/legend-annotations.json",
+      "sha256": "ac711c1eb4bf2b3a0dc312c9155b6acb1d1435e4cd3776b6a17c0ef74be97d8d"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/final/benchmark/report.json",
+      "sha256": "970849aaf392f9ab4c430a728f8abf586207937dd02b75ebaa54ca4c01341308"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/gui/acceptance.json",
+      "sha256": "77b30a5a6b750b50f653149d99b75dbf77e22d6644e298e6f13711eb859af304"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/gui/cold-original.json",
+      "sha256": "5bb8805296b39f6de69efdf8ddabfe78f8366160a03dc29663a607b116572d84"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/gui/cold-moved.json",
+      "sha256": "97df12ce60782704dd7279cefb7271191ddd4b52f2517462e313c26eb2db0970"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/gui/cold-daily.json",
+      "sha256": "2dcf38261a621100b20a53cc4816bad1ba2afbf1f2c8d15a6cd318a4bfff777d"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/daily-install.json",
+      "sha256": "c6199870ad4c5df5dc5c45931cd23243d04707d0f071ec7f0e234227ba3df46c"
+    },
+    {
+      "path": "outputs/runs/up11/final-qa/extension.json",
+      "sha256": "91fe197805a18015975c16bbaa2b0b4ec6c9c64d53dca8ea547c828808248c7e"
+    },
+    {
+      "path": "outputs/runs/up11/final-geometry/geometry.json",
+      "sha256": "886c0f8a1e17cdf224b78fce361ce4f924d5081dd5511058ec2af1dc56600d25"
+    },
+    {
+      "path": "outputs/runs/up11/final-multicube/overlay.json",
+      "sha256": "a93c3bd2609222b0bdf88e550c76834eb5bd3e8dea5d4b074fd40a09c924c5e2"
+    },
+    {
+      "path": "outputs/runs/up11/final-multicube/overlay-reopen-saved.json",
+      "sha256": "70d8312f91d3e3cdedea00c47fcd8dd2dc2ad50192f07d7e77c949935166ed47"
+    },
+    {
+      "path": "outputs/runs/up11/final-multicube/overlay-reopen-moved.json",
+      "sha256": "a7748b548c1a99b8361db438ebcef2a68bf58c70b9276b344ee3a410fc7f92bb"
+    },
+    {
+      "path": "validation/agent/reports/2026-10-11/upstream/daily-gui/acceptance.json",
+      "sha256": "b072203be650509ca214d8b977c99692168cd71a1969109fa5eb6b16a224a06f"
+    }
+  ],
+  "package_source_files": 83,
+  "locked_wheels": 11,
+  "daily_installation": "C:\\Users\\ustcw\\AppData\\Roaming\\Blender Foundation\\Blender\\5.1\\extensions\\user_default\\qcblender",
+  "daily_backup": {
+    "path": "outputs/runs/up11/daily-backup.zip",
+    "sha256": "1dfa7dfe96169169e412de3efa5e4d8deefe782cc7bdd7ea965a78ada6a381ca"
+  },
+  "protected_user_files": {
+    "validation/human/screenshots/01-install.png": "fce36f64273699742839c87bba054a22b864139a2da21f095a1c2b559a9cacbc",
+    "validation/human/screenshots/02-orbital.png": "bfc78f40d2f7b4ef7635fc5be8009dc850100f8eb6f7a68a5f972ef758a18fc2",
+    "validation/human/未命名.blend": "361b2492dfc4dfc1ce56a3325f80f72aa4c98676526a692724b3d6bb11836577"
+  },
+  "independent_human_review": "Not Run",
+  "independent_scientific_acceptance": "Not Run",
+  "license_review": "Not Run",
+  "public_release_approval": "Not Run",
+  "remote_push": "Not Run",
+  "rebuilding": "Build from source_commit with existing locked wheels; do not promise byte-identical ZIP timestamps",
+  "product_identity_at_test_commits": "7dc0d11, a5f0206, 7042b56 and delivery checkout share the exact product tree",
+  "process_records": "*-process.json capture actual commands, PID, profile and exit; GUI PIDs 210260 and 211664 saved and exited before cold reopen"
+}

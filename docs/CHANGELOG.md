@@ -1,5 +1,7 @@
 # 开发演进
 
+- 2026-10-11：三个参考子模块固定到本批默认主干，补齐 MolecularNodes 18、GXNU-MolStudio 32 与 VTK 1775 提交的来源范围。新增标准标量/电荷色带 QC Default、Viridis、Cividis 及目标身份保护；实际回归发现并修复 `_atom_count` UI 元数据导致的源构型误拒绝。补逐点节点身份、有效域/图例/CSV 和原子样式性能证据，更新多 Cube 与节点属性教程。源码 `7dc0d11`、83 个产品文件、11 个原有 wheel 的当前 ZIP 和日常安装均已更新；181 基础、130 科学、隔离/日常安装、实际色带与距离标注 GUI、原地/中文移动冷读 Passed，独立用户/科研及发布审核 Not Run。用户工程、两张截图、旧候选及本批证据保留；本地归档，见[验收](../validation/agent/acceptance/upstream-20261011.md)与[产物入口](ARTIFACTS.md#upstream-20261011)。
+
 - 2026-10-11：修复空场景直接 QC 对象菜单及科学预检的缺失对象边界；轨道、步/帧、原子、模式/能量、结果行与显示节点编号按实际数据限制，刷新旧工程时归一化过界值，保留源编号和 Last Atom=0 语义。NOCV Pair 使用真实可选记录，NBO 改为先检查日志再选择 Job/block，并拒绝检查后变更的来源。源码 `50f1f3b` 的安装 ZIP 已替换当前入口；82 个产品文件和 11 个原有 wheel 核验 Passed。162 基础、26 相关科学解析、安装后空场景/原生范围、离线计算/渲染/保存及冷重开 Passed；Computer Use 空场景、轨道和 NBO 边界 Passed，独立人工/科研签署 Not Run。旧候选、用户工程、截图和本批证据保留，本地归档；见[验证](../validation/agent/acceptance/ui-bounds.md)与[产物入口](ARTIFACTS.md#空场景按钮与编号范围2026-10-11)。
 
 - 2026-10-10：修复没有活动对象时“查看对象属性”触发动态 RNA 枚举报错；对象与材质属性入口提示先选择对象，保留原属性页及固定状态。源码 `2989bd6` 构建的 0.1.0 ZIP 已更新至 `validation/shared/install/`，11 个 wheel 与旧候选逐字节一致。10 项原生窗口回归、安装后窗口/后台回归、152 项基础测试、离线安装/计算/渲染及中文路径冷重开 Passed；Computer Use 点击因 helper 故障 Not Run，独立人工验收 Not Run。旧候选、验证工程与报告保留，本地归档；见[验证](../validation/agent/acceptance/empty-properties.md)与[产物入口](ARTIFACTS.md#空场景属性入口修复2026-10-10)。

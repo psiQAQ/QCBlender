@@ -10,18 +10,36 @@
 | --- | --- |
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
-| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,660,488 字节，SHA-256 `dcd413f902e1bbff9495b878a2ab83442dcb2db02bb8e57643b2159fcacfd9c6` |
-| 完整候选及原报告 | `outputs/candidates/current/ui-bounds-50f1f3b/`；源码 `50f1f3b`；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/ui-bounds.md) |
+| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,664,814 字节，SHA-256 `60d572186e127e40e1031a75fff325c3038ab7cc44102d3bdf1e79b6763860ee` |
+| 完整候选及原报告 | `outputs/candidates/current/upstream-7dc0d11/`；源码 `7dc0d11`；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/upstream-20261011.md) |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
-| 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[教程整合验证](../validation/agent/VALIDATION.md)；当前界面修复与历史精简结果见下文 |
+| 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
 独立用户操作、截图补齐、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
+
+<a id="upstream-20261011"></a>
+## 主干维护、色带和源构型（2026-10-11）
+
+三份上游增量研究、色带预设、真实节点身份/有效域回归和原子样式基准已合入 main。教程补充多 Cube 叠加、色带操作、源属性与求值几何；当前 0.1.0 Alpha ZIP 和日常 Blender 5.1.1 安装使用同一验证候选。181 基础、130 科学、原生专项、实际 GUI 应用/取消/撤销/菜单重做/反转/距离标注、原地和中文移动冷读 Passed；独立用户及科研接受 Not Run。
+
+| 保留对象 | 位置与作用 |
+| --- | --- |
+| 当前身份及验证 | `validation/agent/reports/2026-10-11/upstream/delivery.json`；[验收说明](../validation/agent/acceptance/upstream-20261011.md)和[机器索引](../validation/agent/acceptance/upstream-20261011.json) |
+| 当前构建与上一候选 | `outputs/candidates/current/upstream-7dc0d11/`；上一批 `ui-bounds-50f1f3b/` 原包继续保留 |
+| 科学、节点、色带、有效域、视觉及性能报告 | `validation/agent/reports/2026-10-11/upstream/final/`；性能口径见[研究](research/upstream-20261011-atom-performance.md) |
+| 实际界面截图与读回记录 | 同批 `gui/`、`daily-gui/`；截图属于 Agent Computer Use |
+| 自包含工程与输入副本 | `outputs/runs/up11/gui-project/accepted.blend` 和同名 `.qcdata/`；`daily-gui-project/`、`final-multicube/` 保留日常与公开叠加工程 |
+| 日常安装更新前备份 | `outputs/runs/up11/daily-backup.zip`、`daily-backup.json`，包含原扩展和配置文件的逐项摘要 |
+| 重建命令及过程证据 | `outputs/runs/up11/` 保留脚本；同批报告根目录的 `*-process.json` 记录实际命令、PID、配置与退出码 |
+| 本地归档 | 同批 `closing.json`、`worktree-preservation.json`；注释标签 `archive/2026-10-11/<完整分支名>` 保存七个本批分支提交 |
+
+按[开发说明](DEVELOPMENT.md)从 `7dc0d11` 和现有锁定 wheels 重建；新 ZIP 需记录新摘要。旧候选、早期失败日志与工程继续保留；本批只移除已合并且已保全的工作树和分支，未执行 outputs 批量清理。
 
 ## 空场景按钮与编号范围（2026-10-11）
 
 空场景直接 QC 对象菜单和科学预检入口增加前置条件；轨道、步、帧、模式、原子及结果行按实际数据限制。NOCV 保留源 Pair 编号；NBO 先检查日志，再选择有界 Job/block。162 项基础测试、26 项相关科学解析测试、安装后 180 项空场景/默认对象审计、11 项原生 RNA 范围检查及共享对象保存冷读 Passed。Computer Use 实际点击空场景属性入口、轨道边界和 NBO 两步对话框 Passed；独立人工与科研签署 Not Run。详见[本批验证](../validation/agent/acceptance/ui-bounds.md)。
 
-当前 ZIP 由源码 `50f1f3b` 构建，82 个产品文件核验通过，11 个 wheel 与上一候选逐字节相同。报告位于 `validation/agent/reports/2026-10-11/ui-bounds/`，自包含验证工程、独立安装环境和保留脚本位于 `outputs/runs/ui-bounds/`。上一候选 `outputs/candidates/current/empty-properties-2989bd6/` 及其报告继续保留。任务分支按 `archive/2026-10-11/fix/` 本地归档，收尾状态见本批 `closing.json`。
+该批 ZIP 由源码 `50f1f3b` 构建，82 个产品文件核验通过，11 个 wheel 与上一候选逐字节相同；当前入口已由上面的主干维护候选接替。报告位于 `validation/agent/reports/2026-10-11/ui-bounds/`，自包含验证工程、独立安装环境和保留脚本位于 `outputs/runs/ui-bounds/`。上一候选 `outputs/candidates/current/empty-properties-2989bd6/` 及其报告继续保留。任务分支按 `archive/2026-10-11/fix/` 本地归档，收尾状态见该批 `closing.json`。
 
 ## 空场景属性入口修复（2026-10-10）
 

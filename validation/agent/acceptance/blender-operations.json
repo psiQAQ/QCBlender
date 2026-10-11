@@ -6770,6 +6770,142 @@
       },
       "independent_human_review": "Not Run",
       "independent_scientific_review": "Not Run"
+    },
+    {
+      "id": "scalar-charge-color-presets",
+      "title": "标准标量与电荷色带预设",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-11",
+        "method": "Agent Computer Use native clicks with separate read-only state assertions",
+        "source_commit": "7dc0d11aea8f33cc4d3b9c7f9f4d28b373fee118",
+        "product_tree": "24acf92e290ede3ec0fcef37d5a01a4e7cb44d93",
+        "candidate_sha256": "60d572186e127e40e1031a75fff325c3038ab7cc44102d3bdf1e79b6763860ee",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "CH4 UHF/cc-pVDZ; scalar field then source atom view",
+        "visible_entry": "Properties > Material > QCBlender > Color map",
+        "validated_scope": "Computer Use: real CH4 density/ESP scalar_map choose/cancel/apply Viridis/Cividis, Undo, Edit menu Redo, Reverse=1, visible legend; charge_map/shared/copy/read-only coverage is native CLI only",
+        "reports": [
+          {
+            "path": "validation/agent/reports/2026-10-11/upstream/gui/acceptance.json",
+            "sha256": "77b30a5a6b750b50f653149d99b75dbf77e22d6644e298e6f13711eb859af304",
+            "status": "Passed"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-11/upstream/daily-gui/acceptance.json",
+            "sha256": "b072203be650509ca214d8b977c99692168cd71a1969109fa5eb6b16a224a06f",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "validation/agent/reports/2026-10-11/upstream/gui/01-viridis-selected.png",
+            "sha256": "65b02b81f08fc1f0b4f2d46990d7ba85fbddf74a075c2c1c2d5928f00e11a3a4"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-11/upstream/gui/02-viridis-applied.png",
+            "sha256": "ffa51fc43ca1c81558c5eed8d315e090899391df611604b293b2c1f365783aaf"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-11/upstream/gui/03-undo.png",
+            "sha256": "e8be8e63bf7554049cacd4ffc05a8312d9cd861694f146c79ca1b0a796b644da"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-11/upstream/gui/04-redo.png",
+            "sha256": "a5a6684e4a5e5c4e2083b8b0a35d3975b7597eac7b19f35e5aab124eeb1fb8f1"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-11/upstream/gui/05-cividis.png",
+            "sha256": "f5f3572f1e87f48366674e1ed37aa8da329aabe6a98f7185c451b973e907dfa4"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-11/upstream/gui/06-reverse.png",
+            "sha256": "2f0d12fb11b3db3d83e109689577f7d498dcd3ed37314908a84b1778b6fea7be"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-11/upstream/daily-gui/01-preset-dialog.png",
+            "sha256": "5332d52016fb7e7cb4bfeeb82e71c2db2e73ebaa29ac4142fc708c5dbbb40711"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/color_presets.py": "7d6b057fd21bf68014b6de4c2111f4572d21f2370ce55307a8aaefd133b71fbd",
+        "qcblender/blender/color_presets.py": "860f997625fbed020be27a49b4ccd4a6915e1df9d9e90faf56050cbf3b179e0d",
+        "qcblender/blender/ui.py": "7ffd37666356ce83a186eb253df8ac08de4d0c307f29360de30054e492f7a183",
+        "qcblender/blender/copy_display.py": "5248dce188947476bbcb44230fe305dafb31772e59e2c78d4f2235a4d26ca614",
+        "qcblender/blender/scalars.py": "5f87b7ad022a0e661c090bdfc09c8df3a9b6c34c967dc8301108dc0cb03533c1",
+        "qcblender/blender/view_summary.py": "e488679da7be2376ed8e9f6e5c0a2fab6d767508496ca3dcadc131249dfbcb07",
+        "qcblender/auto_load.py": "8d95bd858ee742fc4c62266a24bbf8c3c3e9dff8be6afd3e1666934f012488ff"
+      },
+      "fingerprint_review": "Review registration and transitive helpers as well as these files before reusing this operation.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Native checks cover all 3 presets in scalar_map and charge_map, target refusal/rollback, shared material, QC copy and new-view independence, exact summary and cold reopen.",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true
+      }
+    },
+    {
+      "id": "source-distance-annotation-metadata",
+      "title": "源构型身份读取与距离标注",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-11",
+        "method": "Agent Computer Use native clicks with separate read-only state assertions",
+        "source_commit": "7dc0d11aea8f33cc4d3b9c7f9f4d28b373fee118",
+        "product_tree": "24acf92e290ede3ec0fcef37d5a01a4e7cb44d93",
+        "candidate_sha256": "60d572186e127e40e1031a75fff325c3038ab7cc44102d3bdf1e79b6763860ee",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "CH4 UHF/cc-pVDZ; scalar field then source atom view",
+        "visible_entry": "Properties > Object > QCBlender > 局部选择与标注",
+        "validated_scope": "Computer Use: Properties > Object > QCBlender > local selection and annotations > Distance; source atoms 1,2 of CH4; actual created label 1.0878 angstrom; cold original/moved/daily preserve both labels",
+        "reports": [
+          {
+            "path": "validation/agent/reports/2026-10-11/upstream/gui/acceptance.json",
+            "sha256": "77b30a5a6b750b50f653149d99b75dbf77e22d6644e298e6f13711eb859af304",
+            "status": "Passed"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-11/upstream/daily-gui/acceptance.json",
+            "sha256": "b072203be650509ca214d8b977c99692168cd71a1969109fa5eb6b16a224a06f",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "validation/agent/reports/2026-10-11/upstream/gui/07-distance-dialog.png",
+            "sha256": "1da2efa4c4ed7a6f4b8aafc1e1d09f9fa38b7825b36841dbb3c80c8f34837190"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-11/upstream/gui/08-distance-created-saved.png",
+            "sha256": "c9005d3aaa1c6b664ee9fdf17ab47845163dede1949513370ddddaa6b79c384c"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/geometry.py": "d97e6d2447038da1451e84f97398f492877123b483ddde3f18f1a68ba17f34df",
+        "qcblender/blender/source_browser.py": "0ddd6aa2c85e387a22e829b65756b0f771e25285823d68ce0b4983f8bfbe4d56",
+        "qcblender/blender/annotations.py": "96bfede192bd364d74e67e57a138e4e8b6c5e170296797851cc24684e4ee5530",
+        "qcblender/geometry.py": "815df0eed243e4e582fa1cbea94ebb75d464fc5fd9c8313b24ebbf07e020f1a6",
+        "qcblender/measurements.py": "784aceb2030a1b51c3beebf2f10bc118029b63c22866694011b05a2f6e1e977e"
+      },
+      "fingerprint_review": "Review registration and transitive helpers as well as these files before reusing this operation.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Native checks cover source/current geometry, changed metadata/ID rejection; source POINT identities remain separate from evaluated mesh vertices.",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true
+      }
     }
   ]
 }
