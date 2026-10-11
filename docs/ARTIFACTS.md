@@ -18,6 +18,15 @@
 
 教程现有 26 个图片引用，已提供 4 张；完整图片检查因缺少 22 张截图为 Failed。截图采用 Pxx 案例前缀，当前路径见[截图记录](#tutorial-screenshots-20261011)。完整独立用户操作、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
 
+<a id="tutorial-flow-20261011"></a>
+## 教程步骤衔接与一致性（2026-10-11）
+
+[SOP](../validation/human/SOP.md) 与九专题集中共用的新工程、对象选择、属性刷新、导出和另存说明；各专题补齐前置对象、可见状态、弹窗确认、筛选定位与节点连线。79 项编号操作保留，科学参数与输入不变。
+
+实现提交 `099a3f0`；原参数表与数字、输入链接、26 个图片引用和 4 张已有图片检查 Passed，主检出实际公开材料检查 Passed。Standards/Spec 各 0 发现。仍有 22 张待补图片；科学测试、Blender 实际操作和网站构建 Not Run。
+
+证据在 `validation/agent/reports/2026-10-11/tutorial-flow/`：`sources.json`、`validation.json`、`workspace.json`、`review.json`、`closing.json`。辅助脚本保留于 `outputs/runs/tutorial-flow-20261011/`；用户工程、现有导出与科学输入未修改。三个本地归档标签为 `archive/2026-10-11/docs/tutorial-flow-20261011`、`archive/2026-10-11/docs/tutorial-flow-a-20261011` 和 `archive/2026-10-11/docs/tutorial-flow-b-20261011`。
+
 <a id="tutorial-terms-20261011"></a>
 ## 教程术语与控件说明（2026-10-11）
 

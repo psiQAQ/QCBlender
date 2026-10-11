@@ -1,7 +1,7 @@
 # 初学者教程的流程与一致性检查
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Baseline: 038f799a0482e3f298926ea4f84b1a24cb518afe
 
 ## 目标与范围
