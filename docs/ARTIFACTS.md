@@ -9,13 +9,29 @@
 | 内容 | 当前入口 |
 | --- | --- |
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
+| 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；工程在 `validation/work/human/`；[本批整理](#tutorial-assets-20261011) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
 | 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,664,814 字节，SHA-256 `60d572186e127e40e1031a75fff325c3038ab7cc44102d3bdf1e79b6763860ee` |
 | 完整候选及原报告 | `outputs/candidates/current/upstream-7dc0d11/`；源码 `7dc0d11`；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/upstream-20261011.md) |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
-独立用户操作、截图补齐、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
+教程已有 3 张图片，完整图片检查因缺少 28 张截图为 Failed；补图路径见本批记录。完整独立用户操作、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
+
+<a id="tutorial-assets-20261011"></a>
+## 教程图片与工作目录（2026-10-11）
+
+教程文字、两张界面截图和 P01 渲染成品已纳入 Git；SOP 直接引用 `validation/human/renders/P01-mo.png`。用户工程及自动备份现位于 `validation/work/human/P01/未命名.blend`、`未命名.blend1`，原始字节保留。目录职责、打包范围、实际检查和限制见[验证记录](../validation/agent/acceptance/tutorial-assets-20261011.md)。
+
+| 保留对象 | 位置与作用 |
+| --- | --- |
+| 保全和迁移收据 | `validation/agent/reports/2026-10-11/tutorial-assets/` 下的 `preservation.json`、`project-move.json`、`backup-move.json`、`integration.json` |
+| 材料和图片检查 | 同批 `workspace.json`、`images-required.json`、`validation.json`；9 项回归、30 份公开输入及独立材料副本 Passed；完整图片状态 Failed，待补 28 张 |
+| 原始文件及迁移脚本 | `outputs/runs/tutorial-assets-20261011/`；`before/` 保留文档、三张图片、工程和自动备份 |
+| 独立公开副本 | `validation/work/agent/tutorial-assets-20261011/public-copy/`，用于相对链接和公开资源检查 |
+| 最终状态和本地归档 | 同批 `final-state.json`、`closing.json`；两个注释标签 `archive/2026-10-11/docs/tutorial-assets-20261011`、`archive/2026-10-11/test/tutorial-assets-20261011` |
+
+仅移除核实为空的 `validation/human/P01/`、`validation/human/exports/`、`validation/data-export/`。人工后续所需的 P01、P03、exports、移动案例目录已就绪。已有 Agent 工程和历史证据保持原位；新批次使用 `validation/work/agent/<批次>/`。本批 Blender 运行、工程冷重开及网站构建/部署 Not Run。
 
 <a id="upstream-20261011"></a>
 ## 主干维护、色带和源构型（2026-10-11）

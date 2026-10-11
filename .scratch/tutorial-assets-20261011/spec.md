@@ -1,7 +1,7 @@
 # 教程素材与工作目录整理
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Baseline: main@7669a07816258c9810ccfd54e17ff0b222b396c9
 Date: 2026-10-11
 
@@ -12,7 +12,7 @@ Date: 2026-10-11
 ## 范围
 
 - 将用户实际生成的 P01 渲染图迁至 `human/renders/P01-mo.png`，与两张现有界面截图一起入库；同步 SOP、打包说明及目录用途。31 个图片引用中尚未补入的图片继续明确作为占位，不生成替代图片。
-- 用户已确认 `human/未命名.blend` 未被使用，允许迁至 `work/human/P01/未命名.blend`。先保全和核对 SHA-256，再迁移；只移除经再次核实为空的 `human/P01/`、`human/exports/`、`validation/data-export/`。
+- 用户已确认 `human/未命名.blend` 未被使用，允许迁至 `work/human/P01/未命名.blend`；同名 `.blend1` 自动备份随工程保留。先保全和核对 SHA-256，再迁移；只移除经再次核实为空的 `human/P01/`、`human/exports/`、`validation/data-export/`。
 - 保持公开包范围为 `human/`、`shared/data/public/`、`shared/install/`。检查器拒绝教程内的工程、导出和未知文件，拒绝图片引用工作目录；准备阶段允许图片占位，完整图片门禁要求引用的图片全部存在。
 - 新 Agent 验证批次使用 `validation/work/agent/<批次>/`；现有工作批次和 `outputs/runs/` 原位保留，通过 ARTIFACTS 查找，不批量迁移历史材料。
 
@@ -23,3 +23,7 @@ Date: 2026-10-11
 ## 任务
 
 01 文档与素材整理；02 检查器及针对性回归；03 主检出整合、可移植验证、保全与本地归档。
+
+## Answer
+
+2026-10-11：主检出整合与独立公开材料检查 Passed，9 项回归和 121 个维护文档链接检查 Passed；3 张图片入库，5 个用户文件迁移前后 SHA-256 相同。完整图片状态 Failed，28 张图片待用户补齐，缺图拒绝行为 Passed。Standards/Spec 各 0 发现。保全、验证及最终本地归档收据位于 validation/agent/reports/2026-10-11/tutorial-assets/，由 docs/ARTIFACTS.md#tutorial-assets-20261011 路由；Blender 运行、工程冷重开和网站构建/部署 Not Run。
