@@ -1,7 +1,7 @@
 # 教程产物用途说明
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Baseline: cb1e486de69fcfd0eeb239889fbfcadc8c25d4ae
 
 ## 目标与范围

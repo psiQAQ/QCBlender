@@ -18,6 +18,15 @@
 
 教程现有 26 个图片引用，已提供 4 张；完整图片检查因缺少 22 张截图为 Failed。截图采用 Pxx 案例前缀，当前路径见[截图记录](#tutorial-screenshots-20261011)。完整独立用户操作、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
 
+<a id="tutorial-output-purpose-20261011"></a>
+## 教程产物用途说明（2026-10-11）
+
+[SOP 导出与保存步骤](../validation/human/SOP.md#export)解释参数摘要、结构化记录、数值表、图片和自包含工程的用途与保留方法。九个专题均已检查，七页补充分析记录对象和文件用途；ESP 面积对象按当前实现使用 `QC ESP area data`。
+
+实现提交 `30046ac`；实际材料检查、79 项操作与科学参数、26 个图片引用和 4 张原图字节核对 Passed。尚缺的 22 张图片由操作者补充；本批未重新执行完整图片门禁。Standards/Spec 各 0 发现，科学测试、Blender 操作及网站构建 Not Run。
+
+证据在 `validation/agent/reports/2026-10-11/tutorial-output-purpose/`：`workspace.json`、`validation.json`、`review.json` 和 `closing.json`。辅助脚本保留于 `outputs/runs/tutorial-output-purpose-20261011/`，用户工程和导出文件未修改。归档标签为 `archive/2026-10-11/docs/tutorial-output-purpose-20261011` 与 `archive/2026-10-11/docs/tutorial-topic-outputs-20261011`。
+
 <a id="tutorial-screenshots-20261011"></a>
 ## 当前教程截图（2026-10-11）
 

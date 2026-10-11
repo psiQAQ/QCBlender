@@ -1,5 +1,7 @@
 # 开发演进
 
+- 2026-10-11：SOP 补充参数摘要、JSON/CSV、渲染图、工程与配套数据、归档包的用途和保留边界；九个专题均经审查，七页补充记录对象及文件用途，并更正 ESP 面积对象名称。79 项操作与科学参数、26 个图片引用、4 张原图和实际公开材料检查 Passed；Standards/Spec 各 0 发现。尚缺 22 张图片；科学测试、Blender 和网站构建 Not Run。用户工程与导出文件保留，本地归档见[产物入口](ARTIFACTS.md#tutorial-output-purpose-20261011)。
+
 - 2026-10-11：教程截图统一按实际案例使用 `Pxx-内容.png`，现有安装、轨道和摘要导出截图改为 P01 前缀；摘要导出图移到对应对话框步骤。删除 05-reopened、10-molecule、21-cube-mapping、30-density-esp、42-profile-csv 五处重复截图要求，保留操作和参数，球棍及 ESP 图例由相邻保留图覆盖。图片要求由 31 减为 26，已有 4 张、待补 22 张；79 步和粗体参数、原图字节、公开材料与独立副本检查 Passed，完整图片状态 Failed；Standards/Spec 各 0 发现。科学测试、Blender 操作和网站构建/部署 Not Run。原图保全及本地归档见[产物入口](ARTIFACTS.md#tutorial-screenshots-20261011)。
 
 - 2026-10-11：整理教程图片与工作目录，SOP 直接引用入库的 `human/renders/P01-mo.png`，两张现有界面截图一同入库；工程及自动备份保全后迁至 `work/human/P01/`，目录与打包说明同步。检查器覆盖截图和渲染图，拒绝工作文件混入，并提供完整图片门禁。9 项定向回归、30 份公开输入、独立公开副本与文件字节检查 Passed；31 个图片引用已有 3 张，完整图片状态 Failed，待用户补 28 张。Standards/Spec 各 0 发现，Blender 运行/冷重开及网站构建/部署 Not Run。本地提交及两个归档标签由[产物入口](ARTIFACTS.md#tutorial-assets-20261011)定位。
