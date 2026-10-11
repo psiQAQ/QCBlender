@@ -17,6 +17,8 @@
 
 ## 参考软件与设计取舍
 
+- 2026-10-11 主干增量：[MolecularNodes](upstream-20261011-molecularnodes.md)、[GXNU-MolStudio](upstream-20261011-molstudio.md)、[VTK](upstream-20261011-vtk.md)；记录最近实际参考提交、完整增量范围和本批采用边界。
+
 - [用户资料与设计依据](source-review.md)：2026-09-22 的材料阅读和需求快照；其中“剩余工作”属于当时阶段。
 - [源码采用依据](source-adoption.md)、[可视化采用路线](visualization-adoption-plan.md)：参考实现和具体取舍。
 - [MolStudio 对照](gxnu-molstudio-comparison.md)：功能与工作流比较。

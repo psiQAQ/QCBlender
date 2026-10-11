@@ -17,7 +17,7 @@
 
 本轮早期访问 GitLab 网页/API 返回 403，两次 GitLab `ls-remote` 查询长时间无输出，随后通过本次终端执行会话 `97495`、`69957` 发送 Ctrl-C 停止，两会话均返回 `exit_code=1`。会话没有返回操作系统 PID，未按进程名终止其他进程。调研结束前以只读 `Get-CimInstance Win32_Process` 查询 `git.exe`、命令包含 `ls-remote` 与 `vtk` 的进程，成功退出且无匹配结果。
 
-主 Agent 随后重新查询原源成功：`git ls-remote --symref origin HEAD refs/heads/master` 与同命令的官方 GitHub 镜像结果均为默认 `master`、完整目标 SHA `4b0325a...`，返回码 0。本报告已读取其本轮记录 `D:/workspace/QCBlender/.worktrees/upstream-20261011/outputs/upstream-20261011/remote-refs.json`。早期访问失败与后续成功是两次不同访问的事实，不能据早期失败认定原源目前仍不可用。来源更新由主 Agent 维护，镜像读取没有修改 `.gitmodules`。
+主 Agent 随后重新查询原源成功：`git ls-remote --symref origin HEAD refs/heads/master` 与同命令的官方 GitHub 镜像结果均为默认 `master`、完整目标 SHA `4b0325a...`，返回码 0。本轮查询记录保存在 `validation/agent/reports/2026-10-11/upstream/remote-refs.json`。早期访问失败与后续成功是两次不同访问的事实，不能据早期失败认定原源目前仍不可用。来源更新由主 Agent 维护，镜像读取没有修改 `.gitmodules`。
 
 ## 2. 完整提交范围及浅历史边界
 
