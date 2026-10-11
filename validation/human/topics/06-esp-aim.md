@@ -2,7 +2,7 @@
 
 [返回教程目录](../SOP.md#topics) · [ESP 极值与面积](#esp) · [AIM 点与路径](#aim)
 
-路径相对材料根目录。接续[密度与 ESP](03-density-esp.md#mapping)步骤 1–5，使用 **P03-atoms**、**QC electron_number_density** 和 **QC electrostatic_potential**。在 **Display Layers** 隐藏切片、雾、偶极或其他案例对象，只保留本页需要的层。
+路径相对材料根目录。先完成[密度与 ESP](03-density-esp.md#mapping)步骤 1–5，或打开保留了这三层的工程：**P03-atoms**、**QC electron_number_density** 和 **QC electrostatic_potential**。在 **Display Layers** 显示原子与映射后的密度表面，独立 ESP 表面保持隐藏；若已练习其他专题，隐藏切片、雾、偶极及其他案例对象。切到 **Material Preview**。
 
 本页截图使用案例 `P03-` 前缀。
 
@@ -11,7 +11,7 @@
 
 > ESP 是静电势，描述单位正试探电荷在某位置的势能。ESP 极值是在指定表面上找到的最大值和最小值；本例外部分析使用电子密度为 0.001 electron/bohr^3 的等值面。
 
-1. 选 **QC electron_number_density**，将 **几何表示 → 正值阈值** 改为 **0.001**。再选 **QC electrostatic_potential**，点击 **N 侧栏 → 导入外部结果 → ESP 表面分析**，按下表输入并确认。应新增 **QC ESP maximum、QC ESP minimum、QC ESP area data**。
+1. 在 **Display Layers** 点击 **QC electron_number_density** 行最左侧的选择图标，点击 **工作流 → 对象属性与显示参数**，将 **几何表示 → 正值阈值** 改为 **0.001**。再用列表的选择图标选 **QC electrostatic_potential**，点击 **N 侧栏 → 导入外部结果 → ESP 表面分析**，按下表输入并确认。应新增 **QC ESP maximum、QC ESP minimum、QC ESP area data**；选中 ESP 表面时它会恢复可见，导入后再次隐藏该层。
 
 > 最大值、最小值对象用于定位外部分析给出的 ESP 极值点；**QC ESP area data** 是面积分布的记录对象，用于查看和筛选各势值区间的面积及占比。
 
@@ -28,9 +28,9 @@
 | Distribution center unit | kcal/mol |
 | Area unit | angstrom^2 |
 
-> External Analysis Records 查看源记录，Record 指当前对象记录表中的行位置；External Result Browser 查看筛选结果，Match 指当前匹配列表中的位置。两者从 1 开始，源编号用于回查原分析中的点。
+> External Analysis Records 查看源记录，Record 指当前对象记录表中的行位置；External Result Browser 查看筛选结果，Match 指当前匹配列表中的位置。两者从 1 开始，源编号用于回查原分析中的点。改变 Record 只浏览源记录；设置 Match 后点击应用筛选，才更新视口中的高亮与标签。
 
-2. 选 **QC ESP maximum**，打开 **对象属性 → External Analysis Records**，应有 **4 条记录**；将 **Record (1-based)** 设为 **2**，应显示源编号 **2**、值 **57.8 kcal/mol**。在 **External Result Browser** 设 **Match (1-based)=2**，点击 **应用筛选**，应突出该点并显示它的标签。选 **QC ESP minimum**，其记录应有 **3 条**，第 1 条值为 **−25.5 kcal/mol**。截图保存为 `human/screenshots/P03-esp-extrema.png`。
+2. 选 **QC ESP minimum**，点击 **工作流 → 对象属性与显示参数**，展开 **External Analysis Records**，应有 **3 条记录**；设 **Record (1-based)=1**，值应为 **−25.5 kcal/mol**。再选 **QC ESP maximum**，重新点击该对象属性入口，应有 **4 条记录**；将 **Record (1-based)** 设为 **2**，应显示源编号 **2**、值 **57.8 kcal/mol**。展开 **External Result Browser**，保持默认的全部源编号、全部类型及关闭的数值范围，设 **Match (1-based)=2**，保持 **Show source label** 开启，点击 **应用筛选**，应突出该点并显示它的标签。截图保存为 `human/screenshots/P03-esp-extrema.png`。
 
 ![ESP 最大值、最小值与所选源点标签](../screenshots/P03-esp-extrema.png)
 
@@ -38,7 +38,7 @@
 
 > 源百分比沿用原分析表；本例以原分析的总表面积为分母。筛选后只加总选中区间的面积和源百分比，便于查看它们占整个表面的比例。
 
-3. 选 **QC ESP area data**，在 **External Analysis Records** 应看到 **40 条记录**、总面积 **73.1833 angstrom^2**。在 **External Result Browser** 选 **Area bin selection=Center in range**，开启 **Center [kcal/mol]** 两端范围，填 **From=0、To=20**，点击 **应用筛选**。应显示面积 **14.4784 angstrom^2**、源百分比约 **19.7838%**。截图保存为 `human/screenshots/P03-esp-area.png`；看完后关闭两端范围并重新应用，恢复全表。
+3. 选 **QC ESP area data**，重新点击 **工作流 → 对象属性与显示参数**，在 **External Analysis Records** 应看到 **40 条记录**、总面积 **73.1833 angstrom^2**。在 **External Result Browser** 选 **Area bin selection=Center in range**，开启 **Center [kcal/mol]** 两端范围，填 **From=0、To=20**，点击 **应用筛选**。应显示面积 **14.4784 angstrom^2**、源百分比约 **19.7838%**。截图保存为 `human/screenshots/P03-esp-area.png`；看完后关闭两端范围并重新应用，恢复全表。
 
 ![ESP 面积分布的源总面积和范围内面积](../screenshots/P03-esp-area.png)
 
@@ -61,12 +61,12 @@
 
 > Density of all electrons 是该点的总电子密度；属性值来自输入分析表，本例单位为 electron/bohr^3。
 
-5. 选 **QC AIM CP N**，在 **External Analysis Records** 将 **Record (1-based)** 设为 **3**。应显示源编号 **9**，位置约 **(0,0,1.451) Å**，`Density of all electrons` 为 **0.01088848625**。在 **External Result Browser** 设 **Match (1-based)=3**，点击 **应用筛选**，应突出两个水分子之间的该点。截图保存为 `human/screenshots/P03-aim-point.png`。
+5. 选 **QC AIM CP N**，点击 **工作流 → 对象属性与显示参数**，在 **External Analysis Records** 将 **Record (1-based)** 设为 **3**。应显示源编号 **9**，位置约 **(0,0,1.451) Å**，`Density of all electrons` 为 **0.01088848625**。在 **External Result Browser** 保持默认筛选条件，设 **Match (1-based)=3**，保持 **Show source label** 开启，点击 **应用筛选**，应突出两个水分子之间的该点。截图保存为 `human/screenshots/P03-aim-point.png`。
 
 ![AIM 源点 9 的位置及电子密度属性](../screenshots/P03-aim-point.png)
 
 > Path 选择源路径中的第几条；points 是该路径包含的采样点数，用于了解导入曲线的离散记录。
 
-6. 选 **QC AIM bond paths**，在 **External Result Browser** 应看到 **10 recorded AIM paths**。将 **Path (1-based)** 从 **1** 改为 **2**，面板应分别显示 **9 points / 47 points**。在视口旋转观察路径；如果原子球遮挡路径，可临时隐藏 **P03-atoms**。截图保存为 `human/screenshots/P03-aim-paths.png`。
+6. 选 **QC AIM bond paths**，重新点击 **工作流 → 对象属性与显示参数**，在 **External Result Browser** 应看到 **10 recorded AIM paths**。将 **Path (1-based)** 从 **1** 改为 **2**，面板应分别显示 **9 points / 47 points**。在视口旋转观察路径；如果原子球遮挡路径，可临时隐藏 **P03-atoms**。截图保存为 `human/screenshots/P03-aim-paths.png`。
 
 ![水二聚体的 AIM 路径及所选路径点数](../screenshots/P03-aim-paths.png)

@@ -2,15 +2,15 @@
 
 [返回教程目录](../SOP.md#topics) · [源属性与求值几何](#attributes)
 
-路径相对材料根目录。本专题从 **File → New → General** 开始，在 Outliner 删除默认 Cube。
+路径相对材料根目录。先按[准备新工程](../SOP.md#new-scene)准备场景并打开 QCBlender 侧栏。
 
 本页截图使用案例 `P06-` 前缀。
 
 > 几何节点（Geometry Nodes）用连线把选择、表示和裁剪组合起来。节点树是这组计算连接；修改器把节点树应用到对象，生成视口中看到的几何。这里在显示副本上建立一个简单分支。
 
-1. 点击 **N 侧栏 → 工作流 → 导入 Gaussian / Cube / XYZ**，导入 [shared/data/public/P06/water-dimer.xyz](../../shared/data/public/P06/water-dimer.xyz)。选中新原子对象，在 **Display Layers → Duplicate** 创建副本，隐藏原层，保持副本活动。
+1. 点击 **N 侧栏 → 工作流 → 导入 Gaussian / Cube / XYZ**，导入 [shared/data/public/P06/water-dimer.xyz](../../shared/data/public/P06/water-dimer.xyz)。选中新原子对象，在三维视口按 `F2` 命名为 **P06-original**。在 **Display Layers → Duplicate** 创建副本，将副本命名为 **P06-nodes**；关闭原层的眼睛和相机图标，保持副本活动。Duplicate 会为副本复制可编辑的外层节点树。
 
-2. 切换顶部 **Geometry Nodes** 工作区，打开副本已有的 **QC Atoms and Bonds** 修改器节点树。通过节点编辑器的 **添加** 菜单，放入下列三个公共节点。
+2. 切换顶部 **Geometry Nodes** 工作区，在 Outliner 选 **P06-nodes**。在 **Properties → Modifiers** 找到已有的 **QC Atoms and Bonds** 几何节点修改器；让下方几何节点编辑器显示这个修改器使用的 **QC Atoms View v2** 节点树副本，名称可能带 `.001` 等后缀。若编辑器固定在其他树，先取消其图钉固定；将鼠标移入节点编辑器，按 `Home` 查看全部节点，应能看到组输入、原有表示节点和组输出。通过节点编辑器的 **添加** 菜单，放入下列三个公共节点，并将它们摆在原节点下方的空白区域。
 
 | 菜单 | 节点 |
 | --- | --- |
@@ -20,18 +20,19 @@
 
 > 插口是节点边缘用于输入或输出数据的连接点。Geometry 传递几何，Selection 传递哪些原子被选中的条件，Material 指定外观材质；连线把上游输出交给下游输入。组输入接收对象的原子载体，组输出交付最终显示几何。
 
-3. 按下表连接新分支；接入 **组输出 Geometry** 时替换原来接到该插口的连线。为新表示节点的 **Material** 选择副本原节点已经使用的元素材质。
+3. 留在外层节点树，按下表从输出插口拖线到输入插口，连接新分支；接入 **组输出 Geometry** 时替换原来接到该插口的连线。组输入的 **Material** 沿用副本的元素材质。保留原节点，便于对照；本步完成后由新分支提供显示几何。
 
 | 起点 | 终点 |
 | --- | --- |
 | 组输入 Geometry | 新 QC Style Atoms and Bonds 的 Geometry |
+| 组输入 Material | 新 QC Style Atoms and Bonds 的 Material |
 | 新 QC Select Atoms 的 Selection | 新 QC Style Atoms and Bonds 的 Selection |
 | 新 QC Style Atoms and Bonds 的 Geometry | 新 QC Clip Geometry 的 Geometry |
 | 新 QC Clip Geometry 的 Geometry | 组输出 Geometry |
 
 > Element 采用元素原子序数，氧为 8；First/Last 使用源原子编号，Last=0 表示不限制末尾。Style 选择表示方式：0 为球棍，1 为空间填充球，2 为仅显示键。
 
-4. 在新选择节点开启 **Selection**，设 **Element (0 = all)=8、First Atom (1-based)=1、Last Atom (0 = all)=0**；在表示节点设 **Style (0 ball-stick, 1 space-fill, 2 bonds)=1**。应只看到两个氧球。再将 **Element=0、Style=0、Atom Radius=0.25、Bond Radius=0.07**，应恢复两个水分子的球棍。截图保存为 `human/screenshots/P06-nodes.png`。
+4. 直接在新选择节点上开启 **Selection**，设 **Element (0 = all)=8、First Atom (1-based)=1、Last Atom (0 = all)=0**；在新表示节点上设 **Style (0 ball-stick, 1 space-fill, 2 bonds)=1**。应只看到两个氧球。再将新选择节点的 **Element=0**，新表示节点的 **Style=0、Atom Radius=0.25、Bond Radius=0.07**，应恢复两个水分子的球棍。这里修改新节点的输入值；修改器上的旧样式参数仍连接原分支。截图保存为 `human/screenshots/P06-nodes.png`。
 
 ![公共选择、表示和裁剪节点的新分支及分子显示](../screenshots/P06-nodes.png)
 
@@ -41,7 +42,7 @@
 
 > Pack Linked Libraries 将工程链接的外部库打包进 `.blend`，让这里使用的节点库随工程保存，便于移动后继续使用。
 
-如果要保存这个自定义工程，先选择 **File → External Data → Pack Linked Libraries**，再使用[保存自包含工程](../SOP.md#save)。
+如果要保存这个自定义工程，在材料根目录创建 `work/human/P06/`。先选择 **File → External Data → Pack Linked Libraries**，再按[保存自包含工程](../SOP.md#save)保存为 `work/human/P06/P06-nodes.blend`；保留同目录的 `P06-nodes.qcdata/`。重新打开后，选 **P06-nodes** 检查新分支和六原子显示仍在。
 
 > 保存得到的 `.blend` 保留本页的节点组合与显示设置，配套 `.qcdata/` 保存该工程引用的科学数据。两者一起保留，供重新打开、继续编辑或移动工程。
 
