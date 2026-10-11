@@ -12,7 +12,7 @@
 
 | 变化范围 | 执行入口 | 能证明的范围 |
 | --- | --- | --- |
-| 文档、相对路径、公开打包 | [verify_workspace.py](tools/verify_workspace.py) | 路径、链接、公开资源集合与允许的截图空位；参数见 `--help` |
+| 文档、相对路径、公开打包 | [verify_workspace.py](tools/verify_workspace.py) | 路径、链接、公开资源集合和教程文件边界；准备阶段允许图片空位，`--require-images` 要求全部图片存在 |
 | 本地输入迁移 | `tools/local_inputs.py`、`tests/test_local_inputs.py` | 索引解析、必要文件与内容身份；缺少必要输入应失败 |
 | 冻结样本 ZIP | `tools/candidate_artifacts.py check-samples` | 原始 ZIP 身份、30 个公开输入、来源清单和 P02 排除 |
 | 公开科学能力 | `tools/run_science_tests.py --suite public-core` | `tools/test_profiles.py` 中明确列出的科学测试 |
@@ -31,13 +31,13 @@
 
 以下命令在仓库根目录的 PowerShell 中运行。使用已安装的 Blender 5.1.1 和项目现有 `outputs/science/`；环境不齐时按 [开发说明](../../docs/DEVELOPMENT.md) 查明缺项，再按授权补充依赖。这里的示例不安装依赖。
 
-批次名 `a1` 必须尚未使用。原始工程写到 `validation/work/a1/`，命令日志和技术报告写到 `validation/agent/reports/a1/`；两者都不进入公开教程包。
+批次名 `a1` 必须尚未使用。原始工程写到 `validation/work/agent/a1/`，命令日志和技术报告写到 `validation/agent/reports/a1/`；两者都不进入公开教程包。既有批次及 `outputs/runs/` 内容保持原位，按 [ARTIFACTS](../../docs/ARTIFACTS.md) 查找。
 
 ```powershell
 $repo = (Get-Location).Path
 $blender = 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe'
 $python = 'C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe'
-$batch = Join-Path $repo 'validation/work/a1'
+$batch = Join-Path $repo 'validation/work/agent/a1'
 $reports = Join-Path $repo 'validation/agent/reports/a1'
 $candidate = Join-Path $repo 'validation/shared/install/qcblender-0.1.0.zip'
 $samples = Join-Path $repo 'validation/agent/packages/qcblender-public-tutorial-samples-v2.zip'
@@ -63,6 +63,26 @@ function Invoke-Validation([string]$name, [string]$executable, [string[]]$argume
 ```
 
 命令收据只记录退出码。各工具报告中的覆盖范围、跳过项和冷重开状态仍需检查。
+
+## 教程材料与完整图片检查
+
+在仓库根目录的 PowerShell 中，使用上文定义的 `$python`；每次换用尚不存在的报告路径和副本目录：
+
+```powershell
+& $python -B -I validation/agent/tools/verify_workspace.py --report validation/agent/reports/tutorial-next/prepare.json --portable-dir validation/work/agent/tutorial-next/public-copy
+if ($LASTEXITCODE -ne 0) { throw 'Tutorial material validation failed' }
+```
+
+此检查允许尚待操作者补入的截图和渲染图，报告会列出各图片是否存在；独立副本只包含教程文档、引用的图片、公开输入和安装材料。教程目录中出现工程、科学数据或未知文件时检查失败，应先按保全流程整理对应文件。
+
+图片补齐后，发布前运行完整图片检查：
+
+```powershell
+& $python -B -I validation/agent/tools/verify_workspace.py --require-images --report validation/agent/reports/tutorial-next/images.json
+if ($LASTEXITCODE -ne 0) { throw 'Tutorial images are incomplete' }
+```
+
+`--require-images` 只确认引用的图片文件齐全；Git 跟踪、网站构建和实际部署须分别核对。
 
 ## 输入与科学检查
 

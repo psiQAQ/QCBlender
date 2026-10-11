@@ -13,7 +13,7 @@
 
 本文的文件路径均相对**材料根目录**，即解压后同时含有 `human/` 和 `shared/` 的文件夹。保留这两个目录的相对位置；无需安装 Gaussian、Multiwfn 或 PySCF。
 
-图片位置留给实际操作时的截图。看到“截图保存为”时，将截图放到指定目录并使用指定文件名，下面的图片引用便会显示它。
+教程截图保存在 `human/screenshots/`，渲染图保存在 `human/renders/`；工程和导出文件保存在 `work/human/`。按步骤保存图片后，下方引用便会显示对应图片。
 
 <a id="install"></a>
 ## 安装并找到插件
@@ -68,9 +68,9 @@
 
 8. 在文件管理器中，在材料根目录创建 `work/human/P01/` 和 `work/human/exports/`。回到 Blender，选中 **QC orbital_amplitude**，转到能看清两种相位的角度，点击 **N 侧栏 → 创建视图与检查工具 → 创建取景相机**。按小键盘 `0` 查看相机范围，整个轨道应在画面内。
 
-9. 在 **Render Properties** 选择 **EEVEE**，在 **Output Properties** 设分辨率 **1280 × 720、100%**。按 `F12` 渲染，在结果窗口选择 **Image → Save As**，保存到 `work/human/P01/P01-mo.png`。应看到完整的两种相位表面，构图与相机视图一致。截图保存为 `human/screenshots/03-render.png`。
+9. 在 **Render Properties** 选择 **EEVEE**，在 **Output Properties** 设分辨率 **1280 × 720、100%**。按 `F12` 渲染，在结果窗口选择 **Image → Save As**，保存到 `human/renders/P01-mo.png`。应看到完整的两种相位表面，构图与相机视图一致。
 
-![第一张轨道渲染图](screenshots/03-render.png)
+![第一张轨道渲染图](renders/P01-mo.png)
 
 <a id="export"></a>
 ## 导出当前参数
