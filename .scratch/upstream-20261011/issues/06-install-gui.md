@@ -1,5 +1,5 @@
 Triage: ready-for-agent
-Status: pending
+Status: claimed
 Blocked by: 05
 
 # 候选安装及实际GUI验证
