@@ -11,12 +11,14 @@ from .graph import tag_view, frame_nodes
 from .native_volume import check_field_cache
 
 
-def socket(tree, name, kind, direction='INPUT', default=None, minimum=None):
+def socket(tree, name, kind, direction='INPUT', default=None, minimum=None, maximum=None):
     result = tree.interface.new_socket(name=name, in_out=direction, socket_type=kind)
     if default is not None:
         result.default_value = default
     if minimum is not None:
         result.min_value = minimum
+    if maximum is not None:
+        result.max_value = maximum
     return result
 
 
@@ -65,7 +67,7 @@ def bind(obj, directory, data):
     obj['qc_coordinate_unit'] = 'angstrom'
     obj['qc_diagnostics'] = json.dumps(data.metadata.get('diagnostics', []))
     from .source_browser import _metadata, binding_key
-    _metadata[binding_key(obj)] = data.metadata
+    _metadata[binding_key(obj)] = dict(data.metadata, _atom_count=len(data.arrays['atomic_numbers']))
 
 
 def atom_view(directory):
@@ -109,9 +111,9 @@ def atom_view(directory):
     socket(tree, 'Bond Radius', 'NodeSocketFloat', default=0.07, minimum=0.001)
     socket(tree, 'Selection', 'NodeSocketBool', default=True)
     socket(tree, 'Element (0 = all)', 'NodeSocketInt', default=0, minimum=0)
-    socket(tree, 'First Atom (1-based)', 'NodeSocketInt', default=1, minimum=1)
-    socket(tree, 'Last Atom (0 = all)', 'NodeSocketInt', default=0, minimum=0)
-    socket(tree, 'Style (0 ball-stick, 1 space-fill, 2 bonds)', 'NodeSocketInt', default=0, minimum=0)
+    socket(tree, 'First Atom (1-based)', 'NodeSocketInt', default=1, minimum=1, maximum=max(1, len(positions)))
+    socket(tree, 'Last Atom (0 = all)', 'NodeSocketInt', default=0, minimum=0, maximum=len(positions))
+    socket(tree, 'Style (0 ball-stick, 1 space-fill, 2 bonds)', 'NodeSocketInt', default=0, minimum=0, maximum=2)
     socket(tree, 'VDW Scale', 'NodeSocketFloat', default=1., minimum=.01)
     socket(tree, 'Quality', 'NodeSocketInt', default=3, minimum=1)
     socket(tree, 'Material', 'NodeSocketMaterial', default=material('QC Elements', (.35, .35, .35, 1), 'qc_element_color'))
@@ -240,7 +242,7 @@ def field_view(directory, parent=None, index=0):
     socket(tree, 'Isovalue', 'NodeSocketFloat', default=threshold, minimum=1e-7)
     socket(tree, 'Link Thresholds', 'NodeSocketBool', default=True)
     socket(tree, 'Negative Isovalue', 'NodeSocketFloat', default=threshold, minimum=1e-7)
-    socket(tree, 'Style (0 solid, 1 wire, 2 points)', 'NodeSocketInt', default=0, minimum=0)
+    socket(tree, 'Style (0 solid, 1 wire, 2 points)', 'NodeSocketInt', default=0, minimum=0, maximum=2)
     socket(tree, 'Wire Radius', 'NodeSocketFloat', default=.012, minimum=.0001)
     socket(tree, 'Point Radius', 'NodeSocketFloat', default=.025, minimum=.0001)
     socket(tree, 'Quality', 'NodeSocketInt', default=2, minimum=1)

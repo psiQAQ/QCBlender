@@ -30,6 +30,8 @@ def point_view(directory, data, parent, points, name, color, role):
     obj['qc_view_kind'] = 'analysis'
     obj['qc_analysis_role'] = role
     obj['qc_analysis_index'] = 1
+    from .record_ranges import refresh_record_ranges
+    refresh_record_ranges(obj, data.metadata)
     tree = bpy.data.node_groups.new(name + ' points', 'GeometryNodeTree')
     tree.is_modifier = True
     tree.interface.new_socket(name='Geometry', in_out='INPUT', socket_type='NodeSocketGeometry')
@@ -71,6 +73,8 @@ def path_view(directory, data, parent):
     obj['qc_view_kind'] = 'analysis'
     obj['qc_analysis_role'] = 'aim_paths'
     obj['qc_analysis_index'] = 1
+    from .record_ranges import refresh_record_ranges
+    refresh_record_ranges(obj, data.metadata)
     return obj
 
 
@@ -85,6 +89,8 @@ def table_view(directory, data, parent, name, role):
     obj['qc_data_record'] = True
     obj['qc_analysis_role'] = role
     obj['qc_analysis_index'] = 1
+    from .record_ranges import refresh_record_ranges
+    refresh_record_ranges(obj, data.metadata)
     return obj
 
 
@@ -246,7 +252,6 @@ class QCBLENDER_PT_external_results(bpy.types.Panel):
         role = obj['qc_analysis_role']
         layout = self.layout
         layout.label(text=analysis['kind'] + ': ' + role)
-        layout.prop(obj, '["qc_analysis_index"]', text='Record (1-based)')
         index = int(obj['qc_analysis_index']) - 1
         if role.startswith('esp_') and role != 'esp_area':
             records = [row for row in analysis['extrema'] if row['kind'] == role[4:]]
@@ -263,6 +268,9 @@ class QCBLENDER_PT_external_results(bpy.types.Panel):
         else:
             records, unit = analysis['pairs'], analysis['energy_unit']
         layout.label(text=f'{len(records)} records | {unit}')
+        row = layout.row()
+        row.enabled = bool(records)
+        row.prop(obj, '["qc_analysis_index"]', text='Record (1-based)')
         if 0 <= index < len(records):
             for key, value in records[index].items():
                 layout.label(text=f'{key}: {value}'[:110])

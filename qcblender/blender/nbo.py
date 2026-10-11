@@ -60,6 +60,8 @@ class QCBLENDER_OT_import_nbo(AsyncOperation, bpy.types.Operator):
         obj['qc_view_kind'] = 'nbo'
         obj['qc_nbo_index'] = 1
         obj['qc_e2_index'] = 1
+        from .record_ranges import refresh_record_ranges
+        refresh_record_ranges(obj, data.metadata)
         context.view_layer.objects.active = obj
         for selected in context.selected_objects:
             selected.select_set(False)
@@ -92,7 +94,9 @@ class QCBLENDER_PT_nbo(bpy.types.Panel):
         layout.label(text=f"Job {result['job_number']}, NBO block {result['block_number']}")
         layout.label(text=f"{len(result['orbitals'])} orbitals; {len(result['interactions'])} E(2) records")
         layout.label(text='NBOs are not mapped to canonical MOs')
-        layout.prop(obj, '["qc_nbo_index"]', text='NBO row (1-based)')
+        row = layout.row()
+        row.enabled = bool(result['orbitals'])
+        row.prop(obj, '["qc_nbo_index"]', text='NBO row (1-based)')
         index = int(obj['qc_nbo_index']) - 1
         if 0 <= index < len(result['orbitals']):
             orbital = result['orbitals'][index]

@@ -120,6 +120,8 @@ class QCBLENDER_OT_import_irc_mayer(bpy.types.Operator):
             directory = store_analysis(result)
             obj = table_view(directory, result, root, 'QC IRC Mayer orders', 'irc_mayer')
             obj['qc_pair_a'], obj['qc_pair_b'] = map(int, result.arrays['mayer_pairs'][0])
+            from .record_ranges import refresh_record_ranges
+            refresh_record_ranges(obj, dict(result.metadata, _atom_count=len(result.arrays['atomic_numbers'])))
             context.view_layer.objects.active = obj
             root.select_set(False)
             obj.select_set(True)
@@ -184,13 +186,19 @@ class QCBLENDER_PT_irc(bpy.types.Panel):
         else:
             layout.label(text='Energy: 未记录；切步时读取')
         row = layout.row(align=True)
-        row.operator('qcblender.irc_step', text='Previous').direction = 'PREV'
-        row.operator('qcblender.irc_step', text='Next').direction = 'NEXT'
+        previous, following = row.row(), row.row()
+        previous.enabled = step > 1
+        following.enabled = step < record.get('count', 0)
+        previous.operator('qcblender.irc_step', text='Previous').direction = 'PREV'
+        following.operator('qcblender.irc_step', text='Next').direction = 'NEXT'
         if root == obj:
             layout.operator('qcblender.import_irc_mayer', text='Import Mayer Results')
         if obj.get('qc_analysis_role') == 'irc_mayer':
-            layout.prop(obj, '["qc_pair_a"]', text='Atom A (1-based)')
-            layout.prop(obj, '["qc_pair_b"]', text='Atom B (1-based)')
+            from .source_browser import cached_metadata
+            pair_controls = layout.column()
+            pair_controls.enabled = cached_metadata(obj).get('_atom_count', 0) > 0
+            pair_controls.prop(obj, '["qc_pair_a"]', text='Atom A (1-based)')
+            pair_controls.prop(obj, '["qc_pair_b"]', text='Atom B (1-based)')
             layout.operator('qcblender.select_irc_mayer_pair', text='Read Pair')
             values = obj.get('qc_mayer_display_values', [])
             pair = sorted((int(obj['qc_pair_a']), int(obj['qc_pair_b'])))
