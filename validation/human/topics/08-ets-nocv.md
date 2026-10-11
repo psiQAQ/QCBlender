@@ -10,6 +10,8 @@
 
 1. 点击 **N 侧栏 → 工作流 → 导入 Gaussian / Cube / XYZ**，导入 [shared/data/public/P05/complex.fchk](../../shared/data/public/P05/complex.fchk)。只选新原子对象，点击 **导入外部结果 → ETS-NOCV 表**，选 **ETS-NOCV output text=[shared/data/public/P05/nocv/ets-nocv.txt](../../shared/data/public/P05/nocv/ets-nocv.txt)**、**Pair energy unit=kcal/mol** 并确认。应保留 **C/O/B/H/H/H** 六原子分子，并新增 **QC ETS-NOCV pairs**。
 
+> **QC ETS-NOCV pairs** 是分析表的记录对象，用于查看各 Pair 的能量和本征值，并筛选对应的成对贡献。
+
 2. 在 **Display Layers** 选 **QC ETS-NOCV pairs**，打开 **对象属性 → External Analysis Records**。应有 **11 条实际打印的记录**；**Record (1-based)=1** 应为 **Pair1 / Total**、**pair_energy=−57.02 kcal/mol**，正负本征值为 **+0.54550/−0.54550**。截图保存为 `human/screenshots/P05-nocv-table.png`。
 
 ![ETS-NOCV 的 Pair1 数值、单位和源记录](../screenshots/P05-nocv-table.png)
@@ -22,6 +24,6 @@
 
 ![与 Pair1 表记录对应的正负变形密度](../screenshots/P05-nocv-density.png)
 
-> 变形密度的正值表示电子密度增加，负值表示电子密度减少；本例表面的单位是 electron/bohr^3。
+> 变形密度的正值表示电子密度增加，负值表示电子密度减少；本例表面的单位是 electron/bohr^3，用于观察对应 Pair 的电子密度重排发生在哪些区域。
 
 5. 在 **Display Layers** 选回 **QC ETS-NOCV pairs**，保留步骤 3 的范围，再点击 **应用筛选**。应定位刚才导入的唯一 **Pair1 / Total** 场。然后在 **几何表示** 关闭再开启 **显示负值**，对应部分应消失后恢复，另一符号仍可见。

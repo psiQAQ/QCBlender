@@ -36,11 +36,11 @@
 
 6. 重新选 **QC electrostatic_potential**，将 **3D Cursor** 设为 **(0,−2,1.45) Å**，点击 **创建视图与检查工具 → 记录剖面起点**。将游标改为 **(0,+2,1.45) Å**，点击 **采样线剖面数据**，设 **Sample field=Geometry、Samples=101** 并确认。应新增 **QC line profile data**。
 
-> 剖面沿一条直线采样，生成一组距离与场值。数据对象通过属性和 CSV 查看。
+> 剖面沿一条直线采样，生成一组距离与场值。**QC line profile data** 是这次采样的记录对象，供查看属性和导出 CSV。
 
 7. 选 **QC line profile data**，点击 **工程与诊断 → 导出数据与参数摘要**，设 **Data=profile**，选择材料根下 `work/human/exports/` 的实际绝对路径并确认。按 **Data exported:** 提示打开新子目录，应有 **profile.csv** 和 **metadata.json**。CSV 应包含 **101 行数据（不含表头）**，`distance_angstrom` 从 **0** 到 **4**，`unit` 为 **hartree/e**，并带有 `valid` 列。
 
-> `valid` 表示该采样点是否有有效场值；无效点的场值留空。`metadata.json` 保存这份导出的来源、单位及采样条件。
+> `profile.csv` 保存采样点的距离、坐标、场值和单位，可在表格或绘图软件中查看沿线变化。`valid` 表示该采样点是否有有效场值；无效点的场值留空。配套 `metadata.json` 用于核对来源、单位和采样条件，应与 CSV 一起保留；共同文件说明见[数据导出](../SOP.md#export)。
 
 <a id="display"></a>
 ## 裁剪与体积雾

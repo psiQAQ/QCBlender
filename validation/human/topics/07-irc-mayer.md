@@ -36,4 +36,6 @@
 
 ![IRC 当前步与原子对 1、2 的 Mayer 键级](../screenshots/P04-mayer.png)
 
-需要表格时，选择路径根对象后可导出 **Data=IRC**，得到 `irc_steps.csv`；选择 Mayer 表后可导出 **Data=Mayer**，得到 `mayer.csv`。共同导出方法见[剖面 CSV](04-spatial-tools.md#profile)。
+需要表格时，选择路径根对象后可导出 **Data=IRC**，得到 `irc_steps.csv`；选择 Mayer 表后可导出 **Data=Mayer**，得到 `mayer.csv`。共同导出方法见[数据导出](../SOP.md#export)。
+
+> `irc_steps.csv` 保存各步的能量与来源文件信息，供整理路径能量变化；`mayer.csv` 保存所有源步、原子对及其键级，供比较成键变化。两份表可在表格或绘图软件中按步号对应查看。

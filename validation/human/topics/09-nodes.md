@@ -37,6 +37,8 @@
 
 如果要保存这个自定义工程，先选择 **File → External Data → Pack Linked Libraries**，再使用[保存自包含工程](../SOP.md#save)。
 
+> 保存得到的 `.blend` 保留本页的节点组合与显示设置，配套 `.qcdata/` 保存该工程引用的科学数据。两者一起保留，供重新打开、继续编辑或移动工程。
+
 在 **Asset Browser → QCBlender Nodes** 可找到全部公共节点；其他节点的用途如下。
 
 | 节点 | 用途 |

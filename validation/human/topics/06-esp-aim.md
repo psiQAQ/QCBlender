@@ -11,7 +11,9 @@
 
 > ESP 极值是在指定表面上找到的静电势最大值和最小值。本例外部分析使用密度为 0.001 electron/bohr^3 的表面。
 
-1. 选 **QC electron_number_density**，将 **几何表示 → 正值阈值** 改为 **0.001**。再选 **QC electrostatic_potential**，点击 **N 侧栏 → 导入外部结果 → ESP 表面分析**，按下表输入并确认。应新增 **QC ESP maximum、QC ESP minimum、QC ESP area distribution**。
+1. 选 **QC electron_number_density**，将 **几何表示 → 正值阈值** 改为 **0.001**。再选 **QC electrostatic_potential**，点击 **N 侧栏 → 导入外部结果 → ESP 表面分析**，按下表输入并确认。应新增 **QC ESP maximum、QC ESP minimum、QC ESP area data**。
+
+> 最大值、最小值对象用于定位外部分析给出的 ESP 极值点；**QC ESP area data** 是面积分布的记录对象，用于查看和筛选各势值区间的面积及占比。
 
 | 控件 | 输入值 |
 | --- | --- |
@@ -28,7 +30,7 @@
 
 > Record 是源记录中的行位置；Match 是当前匹配列表中的行位置。面板同时显示源编号，便于找到原来的点。
 
-3. 选 **QC ESP area distribution**，在 **External Analysis Records** 应看到 **40 条记录**、总面积 **73.1833 angstrom^2**。在 **External Result Browser** 选 **Area bin selection=Center in range**，开启 **Center [kcal/mol]** 两端范围，填 **From=0、To=20**，点击 **应用筛选**。应显示面积 **14.4784 angstrom^2**、源百分比约 **19.7838%**。截图保存为 `human/screenshots/P03-esp-area.png`；看完后关闭两端范围并重新应用，恢复全表。
+3. 选 **QC ESP area data**，在 **External Analysis Records** 应看到 **40 条记录**、总面积 **73.1833 angstrom^2**。在 **External Result Browser** 选 **Area bin selection=Center in range**，开启 **Center [kcal/mol]** 两端范围，填 **From=0、To=20**，点击 **应用筛选**。应显示面积 **14.4784 angstrom^2**、源百分比约 **19.7838%**。截图保存为 `human/screenshots/P03-esp-area.png`；看完后关闭两端范围并重新应用，恢复全表。
 
 ![ESP 面积分布的源总面积和范围内面积](../screenshots/P03-esp-area.png)
 
@@ -40,6 +42,8 @@
 > AIM 拓扑分析从电子密度中找出临界点和路径。本例文件中的 C/N 是临界点类别编码，分别表示核临界点和键临界点。
 
 4. 在 **Display Layers** 隐藏 ESP 极值和密度表面，只选 **P03-atoms**。点击 **N 侧栏 → 导入外部结果 → AIM 拓扑**，按下表选择三份文件并确认。应新增 **QC AIM CP C、QC AIM CP N、QC AIM bond paths**；C/N 两层分别有 **6/5 个点**。
+
+> C/N 点对象用于在构型中定位临界点并查看其源属性；**QC AIM bond paths** 用于观察导入的路径及各路径的采样点记录。
 
 | 控件 | 输入文件 |
 | --- | --- |

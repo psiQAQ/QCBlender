@@ -12,6 +12,8 @@
 
 2. 只选 **P03-atoms**，点击 **N 侧栏 → 导入外部结果 → IGMH / IRI 成对场**。按下表输入 IGMH 参数，确认并等待完成；在 **Display Layers** 选新建的 **QC paired field data**，按 `F2` 命名为 **IGMH-data**。
 
+> **QC paired field data** 是成对场的分析记录对象，绑定两份网格值及分析声明，用于后面的筛选和数据导出；三维表面用于观察相互作用区域。
+
 | 控件 | 输入值 |
 | --- | --- |
 | Analysis | IGMH |
@@ -46,6 +48,8 @@
 
 > 这份 IRI 使用指数 a=1.1，其单位沿用生成计算的定义。两种分析都用 `sign(lambda2)rho` 场着色，原值直接使用。
 
-5. 选 **IGMH-data**，打开 **对象属性 → External Result Browser**。保持 **Swap value columns** 关闭，打开 X、Y 两行的全部范围开关，填 **X From=−0.04、To=0.04；Y From=0.001、To=0.02**，点击 **Apply Filter**。应提示 **Paired field filter saved for data export**。X 对应 `sign_lambda2_rho [electron/bohr^3]`，Y 对应 `delta_g [electron/bohr^4]`。这里的筛选供 **导出数据与参数摘要 → Data=paired → Rows=Current filter** 使用；输出文件名为 `paired_voxels.csv`，导出方法见[剖面 CSV](04-spatial-tools.md#profile)。
+5. 选 **IGMH-data**，打开 **对象属性 → External Result Browser**。保持 **Swap value columns** 关闭，打开 X、Y 两行的全部范围开关，填 **X From=−0.04、To=0.04；Y From=0.001、To=0.02**，点击 **Apply Filter**。应提示 **Paired field filter saved for data export**。X 对应 `sign_lambda2_rho [electron/bohr^3]`，Y 对应 `delta_g [electron/bohr^4]`。这里的筛选供 **导出数据与参数摘要 → Data=paired → Rows=Current filter** 使用；输出文件名为 `paired_voxels.csv`，共同导出方法见[数据导出](../SOP.md#export)。
 
 > 成对场在相同网格位置保存两个值。筛选作用于导出的数据行，三维表面继续由等值和颜色参数控制。
+
+`paired_voxels.csv` 每行对应一个满足筛选条件的有效网格点，包含位置及 X、Y 两个场值，可用于绘制散点图或比较两场的数值关系。
