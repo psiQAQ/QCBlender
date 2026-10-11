@@ -341,6 +341,8 @@ class QCBLENDER_MT_object(bpy.types.Menu):
     bl_label = 'QCBlender'
 
     def draw(self, context):
+        if not is_qc(context):
+            return
         layout = self.layout
         layout.operator('qcblender.source_details', text='来源详情')
         layout.operator('qcblender.open_properties', text='对象属性').editor = 'OBJECT'
