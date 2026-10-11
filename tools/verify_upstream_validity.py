@@ -58,7 +58,18 @@ def legend_samples(view, material):
         assert len(indices) == 130, len(indices)
         assert all(attrs['qc_sample_valid'].data[index].value for index in indices)
         polygons = [polygon for polygon in mesh.polygons if all(marked[index] for index in polygon.vertices)]
-        assert polygons and all(mesh.materials[polygon.material_index] == material for polygon in polygons)
+        # Depsgraph meshes may reference evaluated Material IDs. Compare their
+        # original datablocks so copies with identical names remain distinct.
+        used_slots = sorted({polygon.material_index for polygon in polygons})
+        identity = {'legend_polygons': len(polygons), 'expected_material': material.name,
+                    'expected_original': material.original.as_pointer(),
+                    'slots': [{'index': index, 'name': mesh.materials[index].name,
+                               'is_evaluated': mesh.materials[index].is_evaluated,
+                               'original': mesh.materials[index].original.as_pointer()}
+                              for index in used_slots]}
+        assert polygons and all(mesh.materials[index].original == material.original
+                                for index in used_slots), identity
+        print('LEGEND_MATERIAL_IDENTITY: ' + json.dumps(identity))
         fractions = [attrs['qc_color_fraction'].data[index].value for index in indices]
         np.testing.assert_allclose([min(fractions), max(fractions)], [0, 1], atol=1e-6)
         assert any(abs(value - .5) < 1e-6 for value in fractions)
