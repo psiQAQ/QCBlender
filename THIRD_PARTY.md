@@ -26,4 +26,6 @@ GBasis wheel 内保留 Python 源码与原始许可文本；SciPy 二进制及�
 `backend-wheel.json` 随扩展保存 GBasis wheel 的版本、文件名和 SHA-256，与 `dependencies.lock.json` 合起来覆盖全部随包 wheels。
 构建工具 uv、build、setuptools 只用于开发。
 `qcblender/radii.py` 的范德华半径表提取自 MolecularNodes contributors 的 `molecularnodes/assets/data.py`，固定 commit `5ad56c9cf33c4f82ceb3ca507d26d0cab6f7203c`，GPL-3.0-or-later；修改为从皮米转换至埃的数值表。原始文件和许可证保留于 MolecularNodes 子模块；插件无 MolecularNodes 运行时依赖。
+
+`qcblender/color_presets.py` 的 Viridis、Cividis 各 13 个 RGBA 色阶、位置与插值方式提取自 MolecularNodes contributors 的 `molecularnodes/nodes/geometry/color_matplotlib.py`，固定 commit `2eb05987d0fa60678ea2d793c95fe4bc886270af`，GPL-3.0-or-later。两组冻结数据在本批参考提交 `f88961b28828dfb32697748b575298dec20af3af` 中相同；保留完整数值并改为 QCBlender 的静态预设表。QC_DEFAULT 为本项目既有红白蓝色带。原始来源与采用边界见 `docs/research/upstream-20261011-molecularnodes.md`；运行及构建均不增加 MolecularNodes、matplotlib 或 nodebpy 依赖。
 对外发布前须完成所有组件的许可材料复核；当前产物用于本地开发验收。

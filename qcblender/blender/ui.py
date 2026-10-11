@@ -132,7 +132,7 @@ def _material_section(node):
     return '材质' if control else None
 
 
-def draw_material_controls(layout, mat, section='材质', unit=''):
+def draw_material_controls(layout, mat, section='材质', unit='', preset_role=''):
     if not mat or not mat.use_nodes:
         return
     nodes = mat.node_tree.nodes
@@ -147,6 +147,11 @@ def draw_material_controls(layout, mat, section='材质', unit=''):
         if node.get('qc_role') in ('color_ramp', 'opacity_ramp') and section == _material_section(node):
             layout.label(text='Opacity multiplier' if node['qc_role'] == 'opacity_ramp' else 'Color map')
             layout.template_color_ramp(node, 'color_ramp', expand=True)
+            if node['qc_role'] == 'color_ramp' and preset_role:
+                row = layout.row()
+                row.operator_context = 'INVOKE_DEFAULT'
+                operator = row.operator('qcblender.apply_color_preset', text='应用色带预设…')
+                operator.material_role = preset_role
         elif node.get('qc_role') == 'color_invert' and section == '材质':
             layout.prop(node.outputs[0], 'default_value', text='Reverse (0 or 1)')
         elif node.get('qc_control') and section == _material_section(node):
@@ -658,6 +663,16 @@ def draw_view_parameters(layout, obj, section=None):
         layout.label(text=str(error), icon='INFO')
         return
 
+    preset_materials = {}
+    if section in (None, '材质'):
+        from .copy_display import _state
+        try:
+            preset_materials = {role: mat for role, (mat, _) in _state(obj)['materials'].items()
+                                if role in ('scalar_map', 'charge_map')}
+        except (ValueError, KeyError, TypeError, ReferenceError):
+            # Custom graphs keep their native controls without preset actions.
+            pass
+
     for group in GROUPS:
         if section is not None and group != section:
             continue
@@ -702,4 +717,5 @@ def draw_view_parameters(layout, obj, section=None):
                          text=socket_label(item.name, quantity, color_unit if item.name.startswith('Color ') else field.get('unit', '')))
         for mat in materials:
             if mat:
-                draw_material_controls(box, mat, group, color_unit)
+                role = next((name for name, target in preset_materials.items() if target == mat), '')
+                draw_material_controls(box, mat, group, color_unit, role)
