@@ -11,6 +11,8 @@ def current_geometry(obj, data=None):
     if obj is None or obj.type != 'MESH' or obj.get('qc_view_kind') != 'atoms' or obj.mode != 'OBJECT':
         raise ValueError('Select a QC atom view in Object mode')
     metadata = read_metadata(obj)
+    # read_metadata adds this UI count from the array manifest; it is not scientific metadata.
+    metadata.pop('_atom_count', None)
     if data is None:
         data = load_dataset(bpy.path.abspath(obj['qc_dataset']))
     if (data.metadata != metadata or obj.get('qc_source_sha256') != metadata['source']['sha256']

@@ -1,5 +1,6 @@
 """Installed B annotation checks on the saved A feature project."""
 import argparse
+import copy
 import importlib.util
 from itertools import combinations
 import json
@@ -152,6 +153,72 @@ def check_layer_visibility(owner):
             child.hide_render = render
 
 
+def check_geometry_identity(owner):
+    """Exercise real metadata/Dataset IO with the native atom-identity boundary."""
+    geometry = module('blender.geometry')
+    storage = module('data')
+    data = storage.load_dataset(bpy.path.abspath(owner['qc_dataset']))
+    metadata = module('blender.source_browser').read_metadata(owner)
+    assert metadata['_atom_count'] == len(data.arrays['atomic_numbers'])
+    assert '_atom_count' not in data.metadata
+    expected, record = geometry.current_geometry(owner)
+    supplied, supplied_record = geometry.current_geometry(owner, data)
+    np.testing.assert_array_equal(supplied, expected)
+    assert supplied_record == record
+    errors = {}
+
+    def rejected(label, expected_error, data=None):
+        try:
+            geometry.current_geometry(owner, data)
+        except ValueError as error:
+            assert expected_error in str(error), (label, error)
+            errors[label] = str(error)
+        else:
+            raise AssertionError('Changed geometry identity accepted: ' + label)
+
+    for key, value in [('title', 'changed validation title'), ('_other', 'changed private metadata'),
+                       ('selected_job', 999), ('source', dict(data.metadata['source'], sha256='f' * 64))]:
+        changed = copy.deepcopy(data)
+        changed.metadata[key] = value
+        rejected('metadata_' + key, 'source identity differs', changed)
+    for key, value, error in [('qc_source_sha256', 'f' * 64, 'source identity differs'),
+                               ('qc_source_job', 999, 'source identity differs'),
+                               ('qc_dataset_sha256', 'f' * 64, 'manifest differs')]:
+        present, original = key in owner, owner.get(key)
+        owner[key] = value
+        try:
+            rejected(key, error)
+        finally:
+            if present:
+                owner[key] = original
+            else:
+                del owner[key]
+    for name in ('qc_atom_id', 'qc_atomic_number'):
+        item = owner.data.attributes[name].data[0]
+        original = item.value
+        item.value = 999
+        try:
+            rejected(name, 'identities or ordering changed')
+        finally:
+            item.value = original
+    positions, restored_record = geometry.current_geometry(owner)
+    np.testing.assert_array_equal(positions, expected)
+    assert restored_record == record
+    return {'status': 'Passed', 'derived_atom_count': metadata['_atom_count'], 'rejections': errors}
+
+
+def check_geometry(out):
+    out.mkdir(parents=True, exist_ok=True)
+    before = evidence.hashes()
+    atoms = [obj for obj in bpy.context.scene.objects if obj.get('qc_view_kind') == 'atoms']
+    assert atoms, 'Open a project with a bound atom view'
+    report = {'status': 'Passed', 'checks': {obj.name: check_geometry_identity(obj) for obj in atoms},
+              'module_file': module('blender.geometry').__file__, 'blender': bpy.app.version_string}
+    assert evidence.hashes() == before
+    (out / 'geometry.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
+    return report
+
+
 def check_annotations(out):
     out.mkdir(parents=True, exist_ok=True)
     before_arrays = evidence.hashes()
@@ -160,6 +227,7 @@ def check_annotations(out):
     irc = next(obj for obj in bpy.context.scene.objects if obj.get('qc_irc'))
     assert len(methane.data.vertices) == 5 and optimization['qc_optimization_count'] == 4
     assert irc['qc_irc_step'] == 2
+    geometry_identity = {obj.name: check_geometry_identity(obj) for obj in (methane, optimization, irc)}
 
     atom = add(methane, 'ATOM', '1,2')
     distance = add(methane, 'DISTANCE', '1,2')[0]
@@ -340,7 +408,7 @@ def check_annotations(out):
         'corrupt_annotation_step_transaction': 'Passed',
         'nonuniform_scale_science_invariant': 'Passed',
         'real_vibration_science_invariant': 'Passed',
-        'synthetic_degenerate_fixture': 'Passed'}, 'errors': errors,
+        'synthetic_degenerate_fixture': 'Passed'}, 'errors': errors, 'geometry_identity': geometry_identity,
         'annotations': {obj.name: snapshot(obj) for obj in (methane, optimization, upgraded, irc, water)},
         'render_pixels': evidence.render(out / 'evidence.png')}
     evidence.save_evidence(out, report)
@@ -359,9 +427,9 @@ def check_reopen(out):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--out', type=Path, required=True)
-    parser.add_argument('--check', choices=['annotations', 'reopen'], required=True)
+    parser.add_argument('--check', choices=['annotations', 'reopen', 'geometry'], required=True)
     args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
     bpy.ops.preferences.addon_enable(module=evidence.MODULE)
     assert Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to(args.out.parent.resolve())
-    result = {'annotations': check_annotations, 'reopen': check_reopen}[args.check](args.out)
+    result = {'annotations': check_annotations, 'reopen': check_reopen, 'geometry': check_geometry}[args.check](args.out)
     print(json.dumps(result, ensure_ascii=False))
