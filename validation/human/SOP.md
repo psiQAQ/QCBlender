@@ -93,7 +93,7 @@
 <a id="export"></a>
 ## 导出当前参数
 
-> Data 选择要导出的内容类型；Output directory 指定保存目录。绝对路径从盘符开始定位，例如 `D:/教程材料/work/human/exports/`。
+> Data 选择要导出的内容类型；Output directory 指定保存目录。绝对路径从盘符开始定位文件夹，可由文件浏览器自动填入。
 
 10. 回到主窗口，选中 **QC orbital_amplitude**，点击 **N 侧栏 → 工程与诊断 → 导出数据与参数摘要**。将 **Data** 设为 **当前视图参数摘要**；在 **Output directory** 选择材料根目录下的 `work/human/exports/`，让文件浏览器填入它的实际绝对路径。截图保存为 `human/screenshots/P01-summary.png`，然后确认导出。
 
