@@ -27,6 +27,7 @@
 
 | 批次或主题 | 说明与机器记录 |
 | --- | --- |
+| 教程截图与案例命名 | [当前截图要求、命名与保全](tutorial-screenshots-20261011.md) |
 | 教程素材与工作目录 | [文件布局、图片门禁及保全](tutorial-assets-20261011.md) |
 | Alpha 科学预检、摘要与保存 | [验证说明](alpha-readiness-validation.md)、[索引](alpha-readiness-validation.json)、[交付](alpha-readiness-delivery.json) |
 | GitHub Actions 下载与资格 | [下载修复](actions-download-fix.md) |
