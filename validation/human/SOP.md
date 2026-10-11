@@ -28,18 +28,23 @@
 
 ![插件已启用，科学运行环境检查完成](screenshots/P01-install.png)
 
-3. 关闭偏好设置，选择 **File → New → General**。在右上角 **Outliner** 选中默认 **Cube** 并删除，保留 Camera 和 Light。鼠标移入 **3D Viewport**，切到 **Object Mode**，按 `N`，打开 **QCBlender** 页；点击视口右上角的 **Material Preview**。之后文中的“N 侧栏”均指这里。
+<a id="new-scene"></a>
+3. 关闭偏好设置；如果已有需要保留的工程，先保存，再选择 **File → New → General**。在右上角 **Outliner** 选中默认 **Cube** 并删除，保留 Camera 和 Light。鼠标移入 **3D Viewport**，切到 **Object Mode**，按 `N`，打开 **QCBlender** 页；点击视口右上角的 **Material Preview**。之后文中的“N 侧栏”均指这里。
 
 > Outliner 是场景对象列表；3D Viewport 是观察和选择三维对象的视口，Object Mode 用于操作整个对象。Material Preview 是材质预览，可直接看到分子和表面的颜色。
 
 > Cube 是默认立方体，Camera 是决定出图取景的相机，Light 是灯光；本教程导入的原子和场表面也都是场景对象。
 
-> Properties 是属性编辑区，用于查看和修改所选对象及场景的设置。“对象属性”指右侧 **Properties → Object → QCBlender · 对象与量子化学**。也可选中对象后点击 **N 侧栏 → 工作流 → 对象属性与显示参数**；该入口会固定当前对象，换对象后再次点击即可。
+> Properties 是属性编辑区，用于查看和修改所选对象及场景的设置。“对象属性”指右侧 **Properties → Object → QCBlender · 对象与量子化学**。本教程使用 **N 侧栏 → 工作流 → 对象属性与显示参数** 打开它；该入口会固定当前对象，每次换对象后再次点击，以便后续参数作用于新对象。
+
+文中的“选中对象”可在 Outliner 点击对应名称。也可在 **N 侧栏 → Display Layers** 点击该对象行最左侧的选择图标；它会取消其他对象的选择，并在视口显示当前对象。眼睛图标控制视口可见性，相机图标控制是否参与渲染。
+
+观察模型时，在 3D Viewport 中按住鼠标中键拖动可旋转视角，滚轮可缩放；也可拖动视口右上角的坐标轴导航控件。
 
 <a id="orbital"></a>
 ## 生成第一张轨道图
 
-4. 点击 **N 侧栏 → 工作流 → 导入 Gaussian / Cube / XYZ**，选择 [shared/data/public/P01/o2-uhf.fchk](../shared/data/public/P01/o2-uhf.fchk)。应出现两个氧原子。选中这个原子对象，按 `F2` 命名为 **P01-atoms**；点击 **数据集与数值摘要 → 查看完整来源**，应看到 **filename: o2-uhf.fchk**、**coordinate_unit: angstrom**。关闭来源窗口。
+4. 点击 **N 侧栏 → 工作流 → 导入 Gaussian / Cube / XYZ**，选择 [shared/data/public/P01/o2-uhf.fchk](../shared/data/public/P01/o2-uhf.fchk)。应出现两个氧原子，它们属于同一个原子对象。在 Outliner 选中这个原子对象，按 `F2` 命名为 **P01-atoms**；点击 **数据集与数值摘要 → 查看完整来源**，应看到 **filename: o2-uhf.fchk**、**coordinate_unit: angstrom**。关闭来源窗口。
 
 > FCHK 是格式化的量子化学计算结果文件，提供分子构型和波函数。构型是原子的空间位置；波函数提供计算轨道等物理量所需的信息。本例的计算条件见[样本说明](../shared/data/public/NOTICE.md)。
 
@@ -80,11 +85,11 @@
 <a id="render"></a>
 ## 渲染图片
 
-8. 在文件管理器中，在材料根目录创建 `work/human/P01/` 和 `work/human/exports/`。回到 Blender，选中 **QC orbital_amplitude**，转到能看清两种相位的角度，点击 **N 侧栏 → 创建视图与检查工具 → 创建取景相机**。按小键盘 `0` 查看相机范围，整个轨道应在画面内。
-
 > 渲染是按相机、灯光和材质生成图片；创建取景相机用于把当前观察对象纳入出图范围。Render Properties 是渲染设置区，EEVEE 是本例使用的渲染引擎；Output Properties 控制输出尺寸，1280 × 720 是图片的宽、高像素数，100% 表示按此尺寸输出。
 
-9. 在 **Render Properties** 选择 **EEVEE**，在 **Output Properties** 设分辨率 **1280 × 720、100%**。按 `F12` 渲染，在结果窗口选择 **Image → Save As**，保存到 `human/renders/P01-mo.png`。应看到完整的两种相位表面，构图与相机视图一致。
+8. 在文件管理器中，在材料根目录创建 `work/human/P01/` 和 `work/human/exports/`。回到 Blender，在 **Render Properties** 选择 **EEVEE**，在 **Output Properties** 设分辨率 **1280 × 720、100%**。选中 **QC orbital_amplitude**，转到能看清两种相位的角度，点击 **N 侧栏 → 创建视图与检查工具 → 创建取景相机**。在 3D Viewport 按小键盘 `0` 查看相机范围，整个轨道应在画面内；没有小键盘时选择 **View → Cameras → Active Camera**。
+
+9. 按 `F12` 渲染，在结果窗口选择 **Image → Save As**，保存到 `human/renders/P01-mo.png`。应看到完整的两种相位表面，构图与相机视图一致。
 
 ![第一张轨道渲染图](renders/P01-mo.png)
 
@@ -95,13 +100,13 @@
 
 > Data 选择要导出的内容类型；Output directory 指定保存目录。绝对路径从盘符开始定位文件夹，可由文件浏览器自动填入。
 
-10. 回到主窗口，选中 **QC orbital_amplitude**，点击 **N 侧栏 → 工程与诊断 → 导出数据与参数摘要**。将 **Data** 设为 **当前视图参数摘要**；在 **Output directory** 选择材料根目录下的 `work/human/exports/`，让文件浏览器填入它的实际绝对路径。截图保存为 `human/screenshots/P01-summary.png`，然后确认导出。
+10. 在渲染结果窗口按 `F11` 返回主窗口，选中 **QC orbital_amplitude**，点击 **N 侧栏 → 工程与诊断 → 导出数据与参数摘要**。将 **Data** 设为 **当前视图参数摘要**；在 **Output directory** 选择材料根目录下的 `work/human/exports/`，让文件浏览器填入它的实际绝对路径。截图保存为 `human/screenshots/P01-summary.png`，然后确认导出。
 
 ![当前视图参数摘要的导出选项与保存目录](screenshots/P01-summary.png)
 
-11. 按 **Data exported:** 提示中的完整路径打开新生成的子目录。应有 **view-summary.md** 和 **metadata.json**；打开前者，检查其中有 **Alpha、源轨道 9、0.2 Å 网格、0.045 阈值**。插件每次自动创建一个不同名称的子目录。
+11. 按 **Data exported:** 提示中的完整路径打开新生成的子目录；若提示已消失，到 `work/human/exports/` 查找刚生成的目录。应有 **view-summary.md** 和 **metadata.json**；打开前者，检查其中有 **Alpha、源轨道 9、0.2 Å 网格、0.045 阈值**。插件每次自动创建一个不同名称的子目录。
 
-这两个文件记录图中数据的来源和导出时读取的参数，方便以后核对与追溯，例如确认这张图使用 Alpha 源轨道 9，以及当时的网格和阈值。
+这两个文件记录图中数据的来源和导出时读取的参数，方便以后核对与追溯。
 
 > 计算方法规定采用的量子化学近似，基组是表达轨道的一组基础函数；它们帮助区分计算条件。色带把数值映射为颜色。
 
@@ -116,12 +121,14 @@
 
 > CSV 是以逗号分隔各列的数值表格，可用表格或绘图软件打开。[剖面专题](topics/04-spatial-tools.md#profile)会练习一次科学数据 CSV 导出。
 
-专题中导出 CSV 时，同目录的 `metadata.json` 用于说明数据来源、列名、单位和适用的筛选条件。需要分析或分享数据时，将 CSV 和该文件一起保留。
+专题中导出 CSV 时，先选专题指定的记录对象，再使用步骤 10 的入口，将 **Data** 改为该专题指定的类型。若尚未创建 `work/human/exports/`，先在文件管理器中创建它；只有支持筛选的类型才显示 **Rows**，按专题要求选择导出范围。同目录的 `metadata.json` 用于说明数据来源、列名、单位和适用的筛选条件。需要分析或分享数据时，将 CSV 和该文件一起保留。
 
 <a id="save"></a>
 ## 保存、重新打开和归档工程
 
 > 自包含工程把场景及它引用的科学数据保存到配套位置，便于重新打开和移动。
+
+下面的文件名用于 P01 主线。保存专题工程时，先创建对应案例目录，并换成有区别的名称，例如 `work/human/P03/P03-density-esp.blend`；重新打开和归档时沿用自己的工程名。
 
 12. 点击 **N 侧栏 → 工程与诊断 → 保存自包含工程**，保存为 `work/human/P01/P01.blend`。在文件管理器中应同时看到 `work/human/P01/P01.qcdata/`。
 
@@ -129,18 +136,18 @@
 
 13. 选择 **File → Quit** 正常关闭 Blender，再启动 Blender，用 **File → Open** 打开 `work/human/P01/P01.blend`。
 
-14. 选中 **QC orbital_amplitude**，切到 **Material Preview**。两种相位仍应完整显示，阈值仍为 **0.045**；按小键盘 `0` 应能恢复刚才的取景。
+14. 选中 **QC orbital_amplitude**，切到 **Material Preview**。两种相位仍应完整显示，阈值仍为 **0.045**；按小键盘 `0`（或 **View → Cameras → Active Camera**）应能恢复刚才的取景。
 
 > 归档把已保存的工程及配套数据打包成一个 ZIP 压缩文件，便于备份或传递。
 
-15. 点击 **工程与诊断 → 归档工程**，保存为 `work/human/P01/P01-project.zip`。在文件管理器中打开 ZIP，应能找到 `.blend` 与配套科学数据目录。该 ZIP 用于备份或分享已保存的工程；接收者解压后保持目录结构，再打开其中的 `.blend`。
+15. 点击 **工程与诊断 → 归档工程**，保存为 `work/human/P01/P01-project.zip`。在文件管理器中打开 ZIP，应能找到 `.blend` 与配套科学数据目录。接收者解压后保持目录结构，再打开其中的 `.blend`。
 
 归档使用磁盘上已保存的工程。若归档前又修改了场景，先再次执行 **保存自包含工程**。独立导出的 PNG、CSV 和参数摘要仍在各自保存目录，需要一起分享时另行附上。
 
 <a id="topics"></a>
 ## 按需选择功能专题
 
-后续专题可按需要选择。标明“接续”的专题使用前页生成的对象，其余从新工程开始；新建前先保存你想保留的工程。出图和保存使用上面的共同方法，无需每例重复渲染、导出或重新启动 Blender。
+后续专题可按需要选择。标明“接续”的专题使用指定前置步骤生成的对象，不必完成前页所有可选练习；其余按[准备新工程](#new-scene)开始。出图、导出和保存按需使用上面的共同方法：选中当前案例的目标对象，替换主线中的 P01 对象名与文件名，为图片和工程使用不同名称。
 
 | 想学习的功能 | 专题 |
 | --- | --- |
