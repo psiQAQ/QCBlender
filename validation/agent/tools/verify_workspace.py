@@ -12,6 +12,8 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[3]
 PUBLIC_PARTS = ('human', 'shared/data/public', 'shared/install')
+IMAGE_SUFFIXES = ('.png', '.jpg', '.jpeg', '.webp')
+HUMAN_DIRECTORIES = ('topics', 'screenshots', 'renders')
 LINK = re.compile(r'(!?)\[[^\]]*\]\((<[^>]*>|[^)\s]+)(?:\s+"[^"]*")?\)')
 FORBIDDEN = re.compile(r'SHA[ -]?256|Get-FileHash|RECORD-TEMPLATE|\bPassed\b|\bFailed\b|\bNot Run\b|填写[^\n。]*结果|签署', re.I)
 
@@ -106,11 +108,37 @@ def check_materials(materials, install):
             'public_members': sorted(actual), 'installer': candidate.name}
 
 
-def check_documents(materials):
+def human_resources(human):
+    """Reject work files before the complete human tree can be copied publicly."""
+    files = list(safe_files(human))
+    for path in sorted(human.rglob('*')):
+        relative = path.relative_to(human)
+        if path.is_dir() and relative.as_posix() not in HUMAN_DIRECTORIES:
+            raise ValueError(f'Unexpected human directory: {relative.as_posix()}')
+    images = set()
+    for path in files:
+        relative = path.relative_to(human)
+        if relative.as_posix() in ('SOP.md', 'screenshots/.gitkeep', 'renders/.gitkeep') or (
+                len(relative.parts) == 2 and relative.parts[0] == 'topics' and path.suffix == '.md'):
+            continue
+        elif (len(relative.parts) == 2 and relative.parts[0] in ('screenshots', 'renders')
+              and path.suffix.lower() in IMAGE_SUFFIXES):
+            images.add(path)
+        else:
+            raise ValueError(f'Unexpected human resource: {relative.as_posix()}')
+    return images
+
+
+def check_documents(materials, require_images=False):
+    materials = materials.resolve()
     human = materials / 'human'
+    supplied_images = human_resources(human)
     allowed = [(materials / part).resolve() for part in PUBLIC_PARTS]
     files = [p for part in PUBLIC_PARTS for p in safe_files(materials / part) if p.suffix == '.md']
-    result = {'markdown_files': len(files), 'links': 0, 'screenshot_slots': [], 'numbered_operations': 0}
+    image_roots = [(human / name).resolve() for name in ('screenshots', 'renders')]
+    image_slots = {}
+    result = {'markdown_files': len(files), 'links': 0, 'numbered_operations': 0,
+              'require_images': require_images}
     for path in files:
         text = path.read_text(encoding='utf-8')
         if path.is_relative_to(human):
@@ -134,17 +162,29 @@ def check_documents(materials):
             if not any(target.is_relative_to(root) for root in allowed):
                 raise ValueError(f'Link leaves public package: {path}: {link}')
             result['links'] += 1
-            if is_image and target.is_relative_to((human / 'screenshots').resolve()):
-                if target.suffix.lower() not in ('.png', '.jpg', '.jpeg', '.webp'):
-                    raise ValueError(f'Unsupported screenshot name: {target}')
-                result['screenshot_slots'].append({'path': target.relative_to(materials.resolve()).as_posix(),
-                                                   'present': target.is_file()})
+            if is_image:
+                if target.parent not in image_roots or target.suffix.lower() not in IMAGE_SUFFIXES:
+                    raise ValueError(f'Unsupported tutorial image path: {path}: {link}')
+                image_slots[target] = {'path': target.relative_to(materials).as_posix(),
+                                       'present': target.is_file()}
                 continue
             if not target.exists():
                 raise FileNotFoundError(f'Broken public link: {path}: {link}')
             if fragment and target.suffix == '.md' and fragment not in anchors(target):
                 raise ValueError(f'Broken anchor: {path}: {link}')
+    extra_images = supplied_images - image_slots.keys()
+    if extra_images:
+        raise ValueError('Unreferenced human images: ' + ', '.join(
+            path.relative_to(human).as_posix() for path in sorted(extra_images)))
+    result['image_slots'] = [image_slots[path] for path in sorted(image_slots)]
+    result['images_supplied'] = sum(row['present'] for row in result['image_slots'])
+    result['images_missing'] = [row['path'] for row in result['image_slots'] if not row['present']]
+    # Keep the screenshot-only fields for existing report readers.
+    result['screenshot_slots'] = [row for row in result['image_slots']
+                                  if row['path'].startswith('human/screenshots/')]
     result['screenshots_supplied'] = sum(row['present'] for row in result['screenshot_slots'])
+    if require_images and result['images_missing']:
+        raise FileNotFoundError('Missing required tutorial images: ' + ', '.join(result['images_missing']))
     result['human_execution'] = 'Not Run'
     return result
 
@@ -153,6 +193,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=ROOT)
     parser.add_argument('--report', type=Path, required=True)
+    parser.add_argument('--require-images', action='store_true',
+                        help='Require every referenced screenshot and render; default allows image placeholders')
     parser.add_argument('--portable-dir', type=Path,
                         help='New directory beneath validation/work; only public roots are copied')
     args = parser.parse_args()
@@ -168,7 +210,7 @@ def main():
         ['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip(), 'candidate_sha256': install['sha256']}
     try:
         report['resources'] = check_materials(materials, install)
-        report['documents'] = check_documents(materials)
+        report['documents'] = check_documents(materials, require_images=args.require_images)
         frozen = root / 'validation/agent/v1-acceptance/tutorial-samples.json'
         if (materials / 'shared/data/public/tutorial-samples.json').read_bytes() != frozen.read_bytes():
             raise ValueError('Public source manifest differs from the frozen original')
@@ -180,7 +222,7 @@ def main():
             for part in PUBLIC_PARTS:
                 shutil.copytree(materials / part, detached / part)
             report['portable'] = {'root': str(detached), 'resources': check_materials(detached, install),
-                                  'documents': check_documents(detached)}
+                                  'documents': check_documents(detached, require_images=args.require_images)}
         report['status'] = 'Passed'
     except (OSError, ValueError, KeyError, zipfile.BadZipFile) as error:
         report['error'] = f'{type(error).__name__}: {error}'
