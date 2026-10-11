@@ -11,9 +11,11 @@
 <a id="mapping"></a>
 ## 密度表面按 ESP 着色
 
-> Eh（Hartree）是能量单位；方法和基组说明这份能量来自什么计算条件。
+> Eh（Hartree）是能量单位；RHF 是本例所用计算方法的名称，6-31G(d) 是基组名称，两者说明这份能量的计算条件。
 
 1. 点击 **N 侧栏 → 工作流 → 导入 Gaussian / Cube / XYZ**，选择 [shared/data/public/P03/water-dimer.fchk](../../shared/data/public/P03/water-dimer.fchk)。选中新原子对象，命名为 **P03-atoms**。应有 **O/H/H/O/H/H** 六个原子；在 **对象属性 → 科学记录与振动模式** 查看电子总能量，应约为 **−152.013820 Eh**。本样本计算条件为 **RHF/6-31G(d)**。
+
+> electron/bohr^3 表示每立方 bohr 的电子数；hartree/e 表示每单位元电荷的势能，用于描述 ESP。网格和内存参数的用途见[主线参数表](../SOP.md#orbital)。
 
 2. 选 **P03-atoms**，点击 **工作流 → 生成量子化学场**，设 **Quantity=Electron density**、**Grid spacing=0.2**、**Grid margin=3**、**Memory budget=512**，确认。应生成 **QC electron_number_density**，单位为 **electron/bohr^3**。
 
@@ -59,7 +61,7 @@
 
 9. 在 **Display Layers** 暂时隐藏密度表面，选 **P03-atoms**。点击 **对象属性 → 科学记录与振动模式 → 设置原子电荷着色**，选 **Mulliken** 并确认。在 **图例排版** 开启 **显示图例**；氧应显示为负电荷一侧的红色，氢为正电荷一侧的蓝色，图例单位为 **e**。在 **颜色映射** 将 **Charge Maximum** 改为 **0.5 e**，观察颜色范围变化。原子电荷也可按上面的 **应用色带预设…** 更换配色；图例继续使用当前布居方法与 **e**，颜色对应关系以该图例为准。
 
-> 偶极矢量描述正负电荷分布的偏离；Debye 是偶极矩单位。Angstrom per Debye 设置每 Debye 对应的箭头显示长度，单位为 Å，不改变源偶极矩。
+> 偶极矢量用大小和方向描述电荷分布；Debye 是偶极矩单位。Modifiers 是调节几何处理参数的修改器面板；Angstrom per Debye 设置每 Debye 对应的箭头显示长度，单位为 Å，不改变源偶极矩。
 
 10. 保持 **P03-atoms** 活动，点击 **N 侧栏 → 创建视图与检查工具 → 创建偶极矢量**，选新对象 **QC dipole (Debye; physical direction)**。在 **Properties → Modifiers** 将 **Angstrom per Debye** 从 **0.5** 改为 **1.5**；箭头应沿 **+Z**，长度变为三倍。截图保存为 `human/screenshots/P03-charge-dipole.png`。继续空间观察前，在 **Display Layers** 隐藏偶极层、恢复密度表面。
 
@@ -70,7 +72,7 @@
 
 **生成量子化学场 → Quantity** 还提供以下选项，网格操作与步骤 2 相同。
 
-> Alpha、Beta 是两个自旋通道；自旋密度是 Alpha 密度减去 Beta 密度。本例闭壳层水二聚体的两个通道相同。
+> Alpha、Beta 是两个自旋通道；自旋密度是 Alpha 密度减去 Beta 密度。闭壳层指电子成对占据空间轨道，本例水二聚体的两个通道相同。
 
 | 选项 | 显示的量 |
 | --- | --- |

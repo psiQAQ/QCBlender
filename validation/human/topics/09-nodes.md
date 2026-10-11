@@ -35,7 +35,7 @@
 
 ![公共选择、表示和裁剪节点的新分支及分子显示](../screenshots/P06-nodes.png)
 
-> Plane Enabled 启用平面裁剪；Plane Origin 给出视图局部坐标中的平面位置，Plane Normal 是决定平面朝向的无量纲方向向量。它们控制显示范围，源构型仍保留。
+> Plane Enabled 启用平面裁剪；Plane Origin 给出以视图对象原点和坐标轴为参考的平面位置，Plane Normal 用三个无量纲分量指定平面朝向。它们控制显示范围，源构型仍保留。
 
 5. 在新裁剪节点开启 **Plane Enabled**，设 **Plane Origin=(0,0,1.45)、Plane Normal=(0,0,1)**。应只剩上方水分子；关闭 **Plane Enabled**，恢复六原子显示。
 

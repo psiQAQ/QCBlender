@@ -9,7 +9,7 @@
 <a id="slice"></a>
 ## 切片与等值线
 
-> 切片在一个平面上显示场值；Center 是视图局部坐标中的平面中心，Rotation 决定朝向，Width/Height 决定宽、高。101 点/轴表示平面有 101×101 个显示采样点，源网格仍为 0.2 Å。
+> 切片在一个平面上显示场值；Center 是视图局部坐标中的平面中心，局部坐标以该对象的原点和坐标轴为参考。Rotation 决定朝向，Width/Height 决定宽、高。101 点/轴表示平面有 101×101 个显示采样点，源网格仍为 0.2 Å。
 
 1. 在 **Display Layers** 选 **QC electrostatic_potential**，点击 **创建视图与检查工具 → 创建切片**，确认对话框后选中新切片。在 **对象属性 → 空间观察** 设 **Center=(0,0,1.45) Å、Rotation=(0,0,0)、Width=6 Å、Height=6 Å**；在 **几何表示** 将 **显示采样数/轴** 设为 **101**，在 **颜色映射** 设 **−0.05 / 0 / +0.05 hartree/e**。隐藏两个独立场表面，按小键盘 `7` 从顶面观察，应看到有颜色的平面。
 
@@ -25,6 +25,8 @@
 
 <a id="profile"></a>
 ## 取点与剖面 CSV
+
+> 3D Cursor 是可用坐标定位的三维游标；本页用它指定读取场值的位置和线剖面的两个端点。
 
 4. 在 **Display Layers** 选 **QC electrostatic_potential**；打开 **3D Viewport → N → View → 3D Cursor**，设坐标 **(0,0,1.45) Å**。点击 **QCBlender → 创建视图与检查工具 → 读取游标处场值**，应得到这个位置的 ESP 读数，单位为 **hartree/e**。
 
@@ -49,7 +51,7 @@
 
 8. 在 **Display Layers** 只显示并选中 **P03-atoms**，点击 **创建视图与检查工具 → 添加裁剪控件**。在 **对象属性 → 空间观察** 开启 **Plane Enabled**，设 **Plane Origin=(0,0,1.45) Å、Plane Normal=(0,0,1)**，应只显示上方水分子。关闭平面，开启 **Box Enabled**，设 **Box Minimum=(−0.5,−2,−2) Å、Box Maximum=(0.5,2,5) Å**，应看到两个氧及部分键几何。最后关闭两个 Enabled，恢复完整分子。
 
-> 体积雾把场显示为空间中的半透明分布；Opacity Scale 是显示不透明度的缩放因子，设为 0 时透明，不改变电子密度值。
+> 体积雾把场显示为空间中的半透明分布；Rendered 使用场景的渲染设置预览效果。Opacity Scale 是显示不透明度的缩放因子，设为 0 时透明，不改变电子密度值。
 
 9. 选 **QC electron_number_density**，点击 **创建视图与检查工具 → 创建体积雾**，选新雾层。在 **Display Layers** 只保留雾层与 **P03-atoms** 可见；切到视口右上角 **Rendered**。在 **Properties → Material → QCBlender · 节点材质** 将 **Opacity Scale** 设为 **40**，应在分子周围看到雾；改为 **0**，雾应消失，再恢复 **40**。截图保存为 `human/screenshots/P03-fog.png`。
 
