@@ -7,6 +7,7 @@ from bpy.props import CollectionProperty, IntProperty, PointerProperty, StringPr
 
 from ..data import load_dataset
 from .graph import view_modifier, frame_nodes
+from .index_ranges import collection_index
 
 
 def select_mode(settings, context):
@@ -42,9 +43,9 @@ class QCEnergyItem(bpy.types.PropertyGroup):
 
 class QCViewSettings(bpy.types.PropertyGroup):
     modes: CollectionProperty(type=QCModeItem)
-    active_mode: IntProperty(default=0, min=0, update=select_mode)
+    active_mode: collection_index('active_mode', 'modes', update=select_mode)
     energies: CollectionProperty(type=QCEnergyItem)
-    active_energy: IntProperty(default=0, min=0)
+    active_energy: collection_index('active_energy', 'energies')
     spectrum: PointerProperty(type=bpy.types.Object)
     volume: PointerProperty(type=bpy.types.Object)
     association_reference: PointerProperty(type=bpy.types.Object)

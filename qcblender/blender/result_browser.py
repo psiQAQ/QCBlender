@@ -5,6 +5,28 @@ import bpy
 from bpy.props import BoolProperty, EnumProperty, FloatProperty, IntProperty, PointerProperty, StringProperty
 
 
+def match_count(state):
+    from .source_browser import cached_metadata
+    obj = state.id_data
+    analysis = cached_metadata(obj).get('analysis', {})
+    role = obj.get('qc_analysis_role', obj.get('qc_view_kind', ''))
+    if role == 'aim_paths':
+        return len(analysis.get('paths', []))
+    try:
+        result = _records(analysis, role, state)
+    except (ValueError, KeyError, TypeError):
+        return 0
+    return max((len(result.get(key, [])) for key in ('indexes', 'orbitals', 'interactions')), default=0)
+
+
+def get_row_index(state):
+    return min(max(1, int(state.get('row_index', 1))), max(1, match_count(state)))
+
+
+def set_row_index(state, value):
+    state['row_index'] = min(max(1, int(value)), max(1, match_count(state)))
+
+
 class QCBLENDER_PG_result_browser(bpy.types.PropertyGroup):
     swap_axes: BoolProperty(name='Swap value columns', default=False)
     x_low_on: BoolProperty(name='X minimum', default=False)
@@ -28,7 +50,7 @@ class QCBLENDER_PG_result_browser(bpy.types.PropertyGroup):
     marker_size: FloatProperty(name='Highlight radius (Å)', default=.12, min=.01, max=2)
     show_labels: BoolProperty(name='Show source label', default=True)
     show_points: BoolProperty(name='Show matching points', default=True)
-    row_index: IntProperty(name='Match (1-based)', default=1, min=1)
+    row_index: IntProperty(name='Match (1-based)', default=1, min=1, get=get_row_index, set=set_row_index)
     orbital_type: EnumProperty(name='Orbital type', items=[('ALL', 'All', ''), ('BD', 'BD', ''),
         ('BD*', 'BD*', ''), ('CR', 'CR', ''), ('LP', 'LP', ''), ('LP*', 'LP*', ''),
         ('RY', 'RY', ''), ('RY*', 'RY*', ''), ('LV', 'LV', ''), ('3C', '3C', ''), ('3C*', '3C*', '')])
@@ -269,10 +291,10 @@ class QCBLENDER_OT_apply_result_filter(bpy.types.Operator):
             elif role == 'esp_area':
                 pass
             elif role == 'nbo':
-                if result['orbitals']:
-                    obj['qc_nbo_index'] = result['orbitals'][min(state.row_index, len(result['orbitals'])) - 1] + 1
-                if result['interactions']:
-                    obj['qc_e2_index'] = result['interactions'][min(state.row_index, len(result['interactions'])) - 1] + 1
+                if state.row_index <= len(result['orbitals']):
+                    obj['qc_nbo_index'] = result['orbitals'][state.row_index - 1] + 1
+                if state.row_index <= len(result['interactions']):
+                    obj['qc_e2_index'] = result['interactions'][state.row_index - 1] + 1
             elif role == 'ets_nocv' and result['indexes'] and state.row_index <= len(result['indexes']):
                 if (obj.parent is None
                         or analysis.get('reference_source') != obj.parent.get('qc_source_sha256')
@@ -420,7 +442,9 @@ class QCBLENDER_PT_result_browser(bpy.types.Panel):
             _draw_range(layout, state, 'eigen', 'Eigenvalue')
             _draw_range(layout, state, 'value', f"Pair energy [{analysis.get('energy_unit', 'unit unknown')}]")
             layout.prop(state, 'sort_by')
-        layout.prop(state, 'row_index')
+        row = layout.row()
+        row.enabled = bool(match_count(state))
+        row.prop(state, 'row_index')
         action_button(layout, context, 'result_filter', 'qcblender.apply_result_filter', '应用筛选')
         if saved:
             if role == 'esp_area':

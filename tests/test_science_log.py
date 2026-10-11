@@ -17,6 +17,19 @@ DATA = ROOT / 'validation/shared/data/regression/cclib'
 
 
 class GaussianLog(unittest.TestCase):
+    def test_nbo_block_preview_respects_calculation_boundaries(self):
+        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+            path = Path(directory) / 'blocks.log'
+            path.write_text(' # HF/STO-3G\nNatural Bond Orbitals (Summary)\n'
+                            'Natural Bond Orbitals (Summary)\n'
+                            'Link1:  Proceeding to internal job step number 2\n'
+                            ' # HF/STO-3G\n'
+                            'Link1:  Proceeding to internal job step number 3\n'
+                            ' # HF/STO-3G\nNatural Bond Orbitals (Summary)\n', encoding='utf-8')
+            report = inspect_log(path, include_nbo=True)
+            self.assertEqual([job['nbo_blocks'] for job in report['jobs']], [2, 0, 1])
+            self.assertTrue(all('nbo_blocks' not in job for job in inspect_log(path)['jobs']))
+
     def test_preview_matches_real_multijob_import_without_geometry_inheritance(self):
         path = input_path('log-examples/water_neutral_nbo_opt_freq.out')
         preview = inspect_log(path)

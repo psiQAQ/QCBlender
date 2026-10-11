@@ -55,7 +55,7 @@ def main():
             snapshot.parent.mkdir()
             shutil.copy2(source, snapshot)
             gaussian = importlib.import_module(args.module + '.gaussian_log')
-            report = dict(gaussian.inspect_log(snapshot), status='succeeded')
+            report = dict(gaussian.inspect_log(snapshot, include_nbo=request.get('include_nbo', False)), status='succeeded')
         elif request['action'] == 'contours':
             storage = importlib.import_module(args.module + '.data')
             contours = importlib.import_module(args.module + '.contours')
@@ -102,6 +102,9 @@ def main():
                 if digest != request['reference_sha256']:
                     raise ValueError('Reference calculation changed during import')
                 static_reference.load_static_reference(reference_dir, request['reference_sha256'])
+                if (request.get('source_sha256')
+                        and hashlib.sha256(snapshot.read_bytes()).hexdigest() != request['source_sha256']):
+                    raise ValueError('Gaussian source changed after job/block selection')
                 nbo = importlib.import_module(args.module + '.nbo')
                 data = nbo.associated_nbo(snapshot, request['job_index'], request['block_index'], reference_dir)
             elif request['action'] == 'import_pair':

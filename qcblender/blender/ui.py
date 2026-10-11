@@ -7,6 +7,7 @@ from pathlib import Path
 import bpy
 from bpy.props import EnumProperty, FloatProperty, IntProperty, StringProperty
 from bpy_extras.io_utils import ImportHelper
+from .index_ranges import bounded_int, orbital_bounds, limit_orbital
 
 ADDON_ID = __package__.rsplit('.', 1)[0]
 _operations = {}
@@ -379,8 +380,17 @@ class QCBLENDER_OT_qualify_science(AsyncOperation, bpy.types.Operator):
     memory_mb: IntProperty(name='Qualification memory budget (MiB)', default=512, min=32, max=16384)
     reason: StringProperty(options={'HIDDEN'})
 
+    @classmethod
+    def poll(cls, context):
+        from .capabilities import poll_action
+        return poll_action(cls, context, 'generate')
+
     def invoke(self, context, event):
-        self._retry_binding = science_binding(context)
+        try:
+            self._retry_binding = science_binding(context)
+        except (ValueError, OSError, KeyError) as error:
+            self.report({'ERROR'}, str(error))
+            return {'CANCELLED'}
         return context.window_manager.invoke_props_dialog(self, width=600)
 
     def draw(self, context):
@@ -428,8 +438,8 @@ class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
         ('beta_density', 'Beta density', 'Beta spin electrons'),
         ('spin_density', 'Spin density', 'Alpha minus beta, SCF occupations'),
         ('electrostatic_potential', 'Electrostatic potential', 'Nuclear minus electronic potential')])
-    spin: EnumProperty(name='Spin', items=[('alpha', 'Alpha', ''), ('beta', 'Beta', '')])
-    orbital: IntProperty(name='Orbital number (1-based)', default=1, min=1)
+    spin: EnumProperty(name='Spin', items=[('alpha', 'Alpha', ''), ('beta', 'Beta', '')], update=limit_orbital)
+    orbital: bounded_int('orbital', orbital_bounds, name='Orbital number (1-based)', default=1, min=1)
     orbital_choice: EnumProperty(name='Orbital', items=[('HOMO', 'HOMO', 'Highest-energy occupied orbital in this spin channel'),
         ('LUMO', 'LUMO', 'Lowest-energy unoccupied orbital in this spin channel'),
         ('EXPLICIT', 'Source number', 'Choose the original orbital number')], default='HOMO')
@@ -456,6 +466,7 @@ class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
         except (RuntimeError, ValueError, OSError, KeyError, MemoryError) as error:
             self.report({'ERROR'}, str(error))
             return {'CANCELLED'}
+        limit_orbital(self, context)
         return context.window_manager.invoke_props_dialog(self, width=600)
 
     def draw(self, context):
@@ -465,7 +476,12 @@ class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
             layout.prop(self, 'spin')
             layout.prop(self, 'orbital_choice')
             if self.orbital_choice == 'EXPLICIT':
-                layout.prop(self, 'orbital')
+                row = layout.row()
+                count = orbital_bounds(self, context)[1]
+                row.enabled = bool(count)
+                row.prop(self, 'orbital')
+                if count:
+                    layout.label(text=f'Orbitals 1-{count}')
             if hasattr(self, '_preview'):
                 from ..science_preflight import preview_orbital
                 try:

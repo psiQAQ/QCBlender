@@ -1,11 +1,54 @@
 """Explicit ETS-NOCV pair Cube import into native signed isosurfaces."""
 import hashlib
 from pathlib import Path
+from functools import lru_cache
+import json
 
 import bpy
 from bpy.props import EnumProperty, IntProperty, StringProperty
 
 from .ui import AsyncOperation
+
+
+@lru_cache(maxsize=32)
+def _pair_items(pairs, spin):
+    return [(str(number), str(number), 'Original pair number')
+            for number in sorted({row['pair'] for row in json.loads(pairs) if row['spin'] == spin})]
+
+
+@lru_cache(maxsize=16)
+def _spin_items(pairs):
+    found = {row['spin'] for row in json.loads(pairs)}
+    return [(spin, spin, '') for spin in ('Total', 'Alpha', 'Beta') if spin in found]
+
+
+def _pairs(context):
+    from .source_browser import cached_metadata
+    return json.dumps(cached_metadata(context.object).get('analysis', {}).get('pairs', []), sort_keys=True)
+
+
+def spin_choices(self, context):
+    return _spin_items(_pairs(context))
+
+
+def pair_choices(self, context):
+    return _pair_items(_pairs(context), self.spin)
+
+
+def limit_nocv_pair(self, context):
+    items = pair_choices(self, context)
+    if not items:
+        return
+    numbers = [int(item[0]) for item in items]
+    chosen = min(numbers, key=lambda number: (abs(number - self.pair_number), number))
+    if self.pair_number != chosen:
+        self.pair_number = chosen
+    self.pair_choice = str(chosen)
+
+
+def choose_pair(self, context):
+    if self.pair_choice and self.pair_number != int(self.pair_choice):
+        self.pair_number = int(self.pair_choice)
 
 
 class QCBLENDER_OT_import_nocv(AsyncOperation, bpy.types.Operator):
@@ -14,8 +57,9 @@ class QCBLENDER_OT_import_nocv(AsyncOperation, bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     cube_path: StringProperty(name='Signed pair Cube', subtype='FILE_PATH')
-    pair_number: IntProperty(name='Pair number', min=1, default=1)
-    spin: EnumProperty(name='Spin', items=[('Total', 'Total', ''), ('Alpha', 'Alpha', ''), ('Beta', 'Beta', '')])
+    pair_number: IntProperty(name='Pair number', min=1, default=1, update=limit_nocv_pair, options={'HIDDEN'})
+    spin: EnumProperty(name='Spin', items=spin_choices, update=limit_nocv_pair)
+    pair_choice: EnumProperty(name='Pair number', items=pair_choices, update=choose_pair)
     unit: StringProperty(name='Deformation density unit', default='electron/bohr^3')
 
     @classmethod
@@ -24,10 +68,11 @@ class QCBLENDER_OT_import_nocv(AsyncOperation, bpy.types.Operator):
         return poll_action(cls, context, 'nocv_field')
 
     def invoke(self, context, event):
+        limit_nocv_pair(self, context)
         return context.window_manager.invoke_props_dialog(self, width=520)
 
     def draw(self, context):
-        for name in ('cube_path', 'pair_number', 'spin', 'unit'):
+        for name in ('cube_path', 'spin', 'pair_choice', 'unit'):
             self.layout.prop(self, name)
         self.layout.label(text='Pair and spin must match one row in the active ETS-NOCV table')
 

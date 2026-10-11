@@ -54,6 +54,9 @@ class QualificationHandoff(unittest.TestCase):
         self.binding_patch = patch.object(ui, 'science_binding', return_value=self.binding)
         self.binding_mock = self.binding_patch.start()
         self.addCleanup(self.binding_patch.stop)
+        self.range_patch = patch.object(ui, 'limit_orbital')
+        self.range_patch.start()
+        self.addCleanup(self.range_patch.stop)
         self.bpy_patch = patch.object(ui, 'bpy', self.bpy)
         self.bpy_patch.start()
         self.addCleanup(self.bpy_patch.stop)
@@ -72,6 +75,15 @@ class QualificationHandoff(unittest.TestCase):
         self.assertEqual(generate.invoke(self.context, None), {'CANCELLED'})
         self.ops.qualify_science.assert_called_once_with('EXEC_DEFAULT', memory_mb=512)
         self.ops.generate_field.assert_not_called()
+
+    def test_missing_source_cancels_qualification_dialog_with_reason(self):
+        self.binding_mock.side_effect = ValueError('Choose a bound QC source')
+        self.context.window_manager.invoke_props_dialog = Mock()
+        operator = ui.QCBLENDER_OT_qualify_science()
+        operator.report = Mock()
+        self.assertEqual(operator.invoke(self.context, None), {'CANCELLED'})
+        operator.report.assert_called_once_with({'ERROR'}, 'Choose a bound QC source')
+        self.context.window_manager.invoke_props_dialog.assert_not_called()
 
     def test_synchronous_qualification_cancel_does_not_finish_dispatcher(self):
         self.ops.qualify_science.return_value = {'CANCELLED'}

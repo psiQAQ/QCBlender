@@ -4,7 +4,8 @@ import json
 import textwrap
 
 import bpy
-from bpy.props import EnumProperty, IntProperty
+from bpy.props import EnumProperty
+from .index_ranges import bounded_int, step_bounds
 
 
 def load_bound_dataset(obj):
@@ -102,7 +103,7 @@ class QCBLENDER_OT_optimization_step(bpy.types.Operator):
     bl_label = 'Choose Optimization Step'
     bl_options = {'REGISTER', 'UNDO'}
     direction: EnumProperty(items=[('GOTO', 'Choose', ''), ('PREV', 'Previous', ''), ('NEXT', 'Next', '')])
-    step: IntProperty(name='Step', default=1, min=1, max=10000)
+    step: bounded_int('step', step_bounds, name='Step', default=1, min=1)
 
     @classmethod
     def poll(cls, context):

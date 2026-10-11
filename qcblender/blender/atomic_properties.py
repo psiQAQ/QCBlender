@@ -8,6 +8,7 @@ from ..data import load_dataset
 from .scalars import scalar_material, add_legend, color_fraction
 from .views import material, socket
 from .graph import view_modifier, tag_view, frame_nodes
+from .index_ranges import atom_bounds, atom_count, bounded_int, limit_property
 
 _charge_items = {}
 
@@ -16,15 +17,22 @@ class QCBLENDER_OT_distance(bpy.types.Operator):
     bl_idname = 'qcblender.measure_distance'
     bl_label = 'Label Equilibrium Atom Distance'
     bl_options = {'REGISTER', 'UNDO'}
-    first: IntProperty(name='First atom (1-based)', default=1, min=1)
-    second: IntProperty(name='Second atom (1-based)', default=2, min=1)
+    first: bounded_int('first', atom_bounds, name='First atom (1-based)', default=1, min=1)
+    second: bounded_int('second', atom_bounds, name='Second atom (1-based)', default=2, min=1)
 
     @classmethod
     def poll(cls, context):
-        return context.object is not None and context.object.get('qc_view_kind') == 'atoms'
+        return atom_count(context.object) >= 2
 
     def invoke(self, context, event):
+        for name in ('first', 'second'):
+            limit_property(self, name, atom_bounds, context)
         return context.window_manager.invoke_props_dialog(self)
+
+    def draw(self, context):
+        self.layout.label(text=f'Atoms 1-{atom_count(context.object)}')
+        self.layout.prop(self, 'first')
+        self.layout.prop(self, 'second')
 
     def execute(self, context):
         parent = context.object

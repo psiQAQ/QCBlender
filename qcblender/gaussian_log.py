@@ -199,15 +199,19 @@ def summarize_jobs(lines):
     return jobs
 
 
-def inspect_log(path):
+def inspect_log(path, include_nbo=False):
     path = Path(path)
     if path.suffix.lower() not in ('.log', '.out'):
         raise ValueError('Calculation preview requires a Gaussian Log/Out file')
     if path.stat().st_size > 512 * 1024**2:
         raise MemoryError('Source exceeds the current 512 MiB import limit')
     lines = path.read_text(encoding='utf-8', errors='replace').splitlines(keepends=True)
+    jobs = summarize_jobs(lines)
+    if include_nbo:
+        for job, (start, end) in zip(jobs, split_jobs(lines)):
+            job['nbo_blocks'] = sum('Natural Bond Orbitals (Summary)' in line for line in lines[start:end])
     return {'source': source_record(path, 'gaussian-log', 'qcblender.gaussian_log 0.1'),
-            'jobs': summarize_jobs(lines)}
+            'jobs': jobs}
 
 
 def read_log(path, job_index=0):

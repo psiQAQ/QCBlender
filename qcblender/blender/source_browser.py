@@ -22,8 +22,12 @@ def refresh_loaded_sources(_unused=None):
     _metadata.clear()
     for obj in bpy.data.objects:
         source = source_object(obj)
-        if source.get('qc_dataset') and binding_key(source) not in _metadata:
-            refresh_source(source)
+        if source.get('qc_dataset'):
+            if binding_key(source) not in _metadata:
+                refresh_source(source)
+            if 'error' not in cached_metadata(obj):
+                from .record_ranges import refresh_record_ranges
+                refresh_record_ranges(obj, cached_metadata(obj))
 
 
 def source_object(obj):
@@ -72,6 +76,15 @@ def read_metadata(obj):
     for key in ('geometry_source', 'color_source'):
         if key in analysis and not isinstance(analysis[key], dict):
             raise ValueError('Invalid external source: ' + key)
+    arrays = record.get('arrays', {})
+    atoms = arrays.get('atomic_numbers', {}) if isinstance(arrays, dict) else None
+    if not isinstance(atoms, dict):
+        raise ValueError('Invalid atomic number array record')
+    shape = atoms.get('shape', [])
+    if not isinstance(shape, list):
+        raise ValueError('Invalid atomic number array shape')
+    if len(shape) == 1 and type(shape[0]) is int and shape[0] >= 0:
+        meta = dict(meta, _atom_count=shape[0])
     return meta
 
 
@@ -81,6 +94,9 @@ def refresh_source(obj):
     except (OSError, ValueError, KeyError, TypeError) as error:
         value = {'error': str(error)}
     _metadata[binding_key(obj)] = value
+    if 'error' not in value:
+        from .record_ranges import refresh_record_ranges
+        refresh_record_ranges(obj, value)
     return value
 
 
@@ -355,8 +371,12 @@ class QCBLENDER_OT_refresh_sources(bpy.types.Operator):
     def execute(self, context):
         _metadata.clear()
         for obj in context.scene.objects:
-            if source_object(obj).get('qc_dataset') and binding_key(obj) not in _metadata:
-                refresh_source(obj)
+            if source_object(obj).get('qc_dataset'):
+                if binding_key(obj) not in _metadata:
+                    refresh_source(obj)
+                if 'error' not in cached_metadata(obj):
+                    from .record_ranges import refresh_record_ranges
+                    refresh_record_ranges(obj, cached_metadata(obj))
         if context.area:
             context.area.tag_redraw()
         return {'FINISHED'}

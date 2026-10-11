@@ -3,7 +3,8 @@ import json
 
 import bpy
 import bmesh
-from bpy.props import EnumProperty, IntProperty
+from bpy.props import EnumProperty
+from .index_ranges import bounded_int, frame_bounds
 
 
 def initialize_trajectory(obj, data):
@@ -70,7 +71,7 @@ class QCBLENDER_OT_trajectory_frame(bpy.types.Operator):
     bl_label = 'Choose XYZ Frame'
     bl_options = {'REGISTER', 'UNDO'}
     direction: EnumProperty(items=[('GOTO', 'Choose', ''), ('PREV', 'Previous', ''), ('NEXT', 'Next', '')])
-    frame: IntProperty(name='Frame', default=1, min=1)
+    frame: bounded_int('frame', frame_bounds, name='Frame', default=1, min=1)
 
     @classmethod
     def poll(cls, context):
@@ -82,6 +83,10 @@ class QCBLENDER_OT_trajectory_frame(bpy.types.Operator):
             return self.execute(context)
         self.frame = context.object['qc_trajectory_frame']
         return context.window_manager.invoke_props_dialog(self)
+
+    def draw(self, context):
+        self.layout.label(text=f'Frames 1-{context.object["qc_trajectory_count"]}')
+        self.layout.prop(self, 'frame')
 
     def execute(self, context):
         from ..data import load_dataset

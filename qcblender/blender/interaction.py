@@ -15,6 +15,7 @@ from ..profile import source_positions
 from ..sampling import sample_point
 from .graph import view_modifier
 from .geometry import current_geometry
+from .index_ranges import bounded_int, plane_atom_bounds, limit_plane_atoms
 from .profile import profile_source
 from .source_browser import binding_key, bound_field, field_source, mapped_field
 
@@ -202,10 +203,10 @@ class QCBLENDER_OT_define_plane(bpy.types.Operator):
                                                  ('jk', 'Grid jk', ''), ('ki', 'Grid ki', ''),
                                                  ('atoms', 'Three source atoms', '')], default='ij')
     position: FloatProperty(name='Grid position', default=.5, min=0, max=1)
-    atom_1: IntProperty(name='First source atom', default=1, min=1)
-    atom_2: IntProperty(name='Second source atom', default=2, min=1)
-    atom_3: IntProperty(name='Third source atom', default=3, min=1)
-    configuration: StringProperty(name='Associated atom view')
+    atom_1: bounded_int('atom_1', plane_atom_bounds, name='First source atom', default=1, min=1)
+    atom_2: bounded_int('atom_2', plane_atom_bounds, name='Second source atom', default=2, min=1)
+    atom_3: bounded_int('atom_3', plane_atom_bounds, name='Third source atom', default=3, min=1)
+    configuration: StringProperty(name='Associated atom view', update=limit_plane_atoms)
 
     @classmethod
     def poll(cls, context):
@@ -217,9 +218,10 @@ class QCBLENDER_OT_define_plane(bpy.types.Operator):
         self.mode = record.get('mode', 'ij')
         self.position = record.get('position', .5)
         numbers = record.get('source_numbers', [1, 2, 3])
+        self.configuration = record.get('configuration', '')
         if numbers and len(numbers) == 3:
             self.atom_1, self.atom_2, self.atom_3 = numbers
-        self.configuration = record.get('configuration', '')
+        limit_plane_atoms(self, context)
         return context.window_manager.invoke_props_dialog(self)
 
     def draw(self, context):
@@ -228,8 +230,12 @@ class QCBLENDER_OT_define_plane(bpy.types.Operator):
             self.layout.prop(self, 'position')
         elif self.mode == 'atoms':
             self.layout.prop_search(self, 'configuration', bpy.data, 'objects')
+            count = plane_atom_bounds(self, context)[1] or 0
+            column = self.layout.column()
+            column.enabled = count >= 3
             for name in ('atom_1', 'atom_2', 'atom_3'):
-                self.layout.prop(self, name)
+                column.prop(self, name)
+            self.layout.label(text=f'Atoms 1-{count}' if count >= 3 else 'Choose a view with at least three atoms')
 
     def execute(self, context):
         obj = context.object
