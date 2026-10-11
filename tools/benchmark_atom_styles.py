@@ -10,17 +10,19 @@ system or evidence of independent scientific acceptance.
 import argparse
 import ctypes
 import itertools
+import json
 import math
 import os
 from pathlib import Path
 import subprocess
 import sys
 import time
+import tomllib
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools import benchmark_fields as bench
-from tools.package_identity import extension_manifest
+from tools.package_identity import dependency_identity, extension_manifest
 
 STYLES = {'ball-stick': 0, 'space-fill': 1, 'bonds': 2}
 STYLE_SOCKET = 'Style (0 ball-stick, 1 space-fill, 2 bonds)'
@@ -122,6 +124,42 @@ def file_identity(directory):
     """Hash every dataset file, including manifest bytes; detect extra files."""
     return {path.relative_to(directory).as_posix(): bench.sha256(path)
             for path in sorted(directory.rglob('*')) if path.is_file()}
+
+
+def verify_installed_manifest(installed, root=ROOT):
+    """Validate build_extension's only manifest substitution and locked bytes."""
+    installed, root = Path(installed), Path(root)
+    for source, destination in (('dependencies.lock.json', 'dependencies.lock.json'),
+                                ('science-sources.lock.json', 'science-sources.lock.json'),
+                                ('outputs/backend-wheel.json', 'backend-wheel.json')):
+        if bench.sha256(installed / destination) != bench.sha256(root / source):
+            raise ValueError('Installed lock/backend record differs from checkout: ' + destination)
+    lock_bytes = (root / 'dependencies.lock.json').read_bytes()
+    science_bytes = (root / 'science-sources.lock.json').read_bytes()
+    lock = json.loads(lock_bytes)
+    backend = json.loads((root / 'outputs/backend-wheel.json').read_bytes())
+    packages = lock['packages'] + [backend]
+    filenames = [package['filename'] for package in packages]
+    if (len(filenames) != len(set(filenames))
+            or any(Path(name).name != name or '/' in name or '\\' in name or not name.endswith('.whl')
+                   for name in filenames)):
+        raise ValueError('Locked wheel membership contains duplicate or unsafe filenames')
+    expected = extension_manifest(root)
+    if expected.get('wheels') != []:
+        raise ValueError('Source manifest must declare the build wheel placeholder')
+    expected['wheels'] = ['./wheels/' + name for name in filenames]
+    manifest = installed / 'blender_manifest.toml'
+    if tomllib.loads(manifest.read_text(encoding='utf-8')) != expected:
+        raise ValueError('Installed extension manifest differs from source and locked wheels')
+    wheels = installed / 'wheels'
+    if {path.relative_to(wheels).as_posix() for path in wheels.rglob('*') if path.is_file()} != set(filenames):
+        raise ValueError('Installed wheel membership differs from locks')
+    for package in packages:
+        if bench.sha256(wheels / package['filename']) != package['sha256']:
+            raise ValueError('Installed wheel checksum mismatch: ' + package['filename'])
+    return {'installed_manifest_sha256': bench.sha256(manifest),
+            'installed_dependencies': dependency_identity(lock_bytes, science_bytes, backend),
+            'installed_lock_and_wheel_match': True}
 
 
 def memory():
@@ -275,11 +313,9 @@ def main():
     try:
         bench.enable(args, report)
         installed = Path(report['provenance']['installed_root'])
-        manifest = installed / 'blender_manifest.toml'
-        if bench.sha256(manifest) != bench.sha256(ROOT / 'qcblender/blender_manifest.toml'):
-            raise ValueError('Installed extension manifest differs from checkout')
+        installed_package = verify_installed_manifest(installed)
         report['environment']['qcblender_version'] = extension_manifest(ROOT)['version']
-        report['provenance']['installed_manifest_sha256'] = bench.sha256(manifest)
+        report['provenance'].update(installed_package)
         report['provenance']['tool_sha256']['benchmark_atom_styles.py'] = bench.sha256(__file__)
         report['provenance']['product_tree'] = subprocess.check_output(
             ['git', 'rev-parse', 'HEAD:qcblender'], cwd=ROOT, text=True).strip()

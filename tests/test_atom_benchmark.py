@@ -1,7 +1,9 @@
 """Pure boundary checks; actual Geometry Nodes timings require Blender."""
 import copy
+import hashlib
 import json
 from pathlib import Path
+import shutil
 import tempfile
 import unittest
 
@@ -105,6 +107,81 @@ class BenchmarkBoundaries(unittest.TestCase):
             self.assertNotEqual(first, second)
             (directory / 'extra.npy').write_bytes(b'added')
             self.assertNotEqual(second, atoms.file_identity(directory))
+
+
+class InstalledPackageIdentity(unittest.TestCase):
+    def setUp(self):
+        (ROOT / 'outputs').mkdir(exist_ok=True)
+        self.temporary = tempfile.TemporaryDirectory(prefix='atom-manifest-tests-', dir=ROOT / 'outputs')
+        self.addCleanup(self.temporary.cleanup)
+        self.root = Path(self.temporary.name) / 'source'
+        self.installed = Path(self.temporary.name) / 'installed'
+        (self.root / 'qcblender').mkdir(parents=True)
+        (self.root / 'outputs').mkdir()
+        (self.installed / 'wheels').mkdir(parents=True)
+        self.wheels = [('test_dependency-1-py3-none-any.whl', b'locked dependency bytes'),
+                       ('qc_gbasis-1-py3-none-any.whl', b'locked backend bytes')]
+        records = []
+        for name, raw in self.wheels:
+            (self.installed / 'wheels' / name).write_bytes(raw)
+            records.append({'name': name.split('-')[0], 'version': '1', 'filename': name,
+                            'sha256': hashlib.sha256(raw).hexdigest()})
+        self.source_manifest = (ROOT / 'qcblender/blender_manifest.toml').read_text(encoding='utf-8')
+        (self.root / 'qcblender/blender_manifest.toml').write_text(self.source_manifest, encoding='utf-8')
+        self.built_manifest = self.source_manifest.replace('wheels = []',
+            'wheels = ' + json.dumps(['./wheels/' + name for name, _ in self.wheels]))
+        (self.installed / 'blender_manifest.toml').write_text(self.built_manifest, encoding='utf-8')
+        for source, destination, value in (
+            ('dependencies.lock.json', 'dependencies.lock.json', {'packages': records[:1], 'host_provided': {}}),
+            ('science-sources.lock.json', 'science-sources.lock.json', {'locked_science_source': 'fixture'}),
+            ('outputs/backend-wheel.json', 'backend-wheel.json', records[1]),
+        ):
+            path = self.root / source
+            path.write_text(json.dumps(value), encoding='utf-8')
+            shutil.copyfile(path, self.installed / destination)
+
+    def test_build_expanded_wheel_manifest_is_accepted(self):
+        identity = atoms.verify_installed_manifest(self.installed, self.root)
+        self.assertEqual(identity['installed_manifest_sha256'], atoms.bench.sha256(self.installed / 'blender_manifest.toml'))
+
+    def test_unrelated_manifest_change_is_rejected(self):
+        path = self.installed / 'blender_manifest.toml'
+        path.write_text(self.built_manifest.replace('version = "0.1.0"', 'version = "0.1.1"'), encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'manifest'):
+            atoms.verify_installed_manifest(self.installed, self.root)
+
+    def test_missing_extra_duplicate_and_reordered_manifest_wheels_are_rejected(self):
+        expected = ['./wheels/' + name for name, _ in self.wheels]
+        for wheel_list in (expected[:1], expected + ['./wheels/extra.whl'], expected + expected[:1], expected[::-1]):
+            with self.subTest(wheels=wheel_list):
+                text = self.source_manifest.replace('wheels = []', 'wheels = ' + json.dumps(wheel_list))
+                (self.installed / 'blender_manifest.toml').write_text(text, encoding='utf-8')
+                with self.assertRaisesRegex(ValueError, 'manifest'):
+                    atoms.verify_installed_manifest(self.installed, self.root)
+
+    def test_changed_lock_and_backend_records_are_rejected(self):
+        for name in ('dependencies.lock.json', 'science-sources.lock.json', 'backend-wheel.json'):
+            path = self.installed / name
+            original = path.read_bytes()
+            with self.subTest(record=name):
+                path.write_bytes(original + b' ')
+                with self.assertRaisesRegex(ValueError, 'lock|backend'):
+                    atoms.verify_installed_manifest(self.installed, self.root)
+                path.write_bytes(original)
+
+    def test_modified_wheel_bytes_and_unexpected_installed_wheel_are_rejected(self):
+        name, original = self.wheels[0]
+        path = self.installed / 'wheels' / name
+        path.write_bytes(original + b' changed')
+        with self.assertRaisesRegex(ValueError, 'checksum'):
+            atoms.verify_installed_manifest(self.installed, self.root)
+        path.unlink()
+        with self.assertRaisesRegex(ValueError, 'membership'):
+            atoms.verify_installed_manifest(self.installed, self.root)
+        path.write_bytes(original)
+        (self.installed / 'wheels/extra.whl').write_bytes(b'unexpected')
+        with self.assertRaisesRegex(ValueError, 'membership'):
+            atoms.verify_installed_manifest(self.installed, self.root)
 
 
 if __name__ == '__main__':
