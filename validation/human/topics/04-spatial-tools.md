@@ -4,6 +4,8 @@
 
 路径相对材料根目录。接续[密度与 ESP](03-density-esp.md#mapping)的步骤 1–5；需要 **P03-atoms**、**QC electron_number_density** 和 **QC electrostatic_potential**。如已生成偶极或 P01 自旋密度，先在 **Display Layers** 隐藏这些额外层。
 
+本页截图使用案例 `P03-` 前缀。
+
 <a id="slice"></a>
 ## 切片与等值线
 
@@ -11,9 +13,9 @@
 
 > 切片在一个平面上显示场值；101 点/轴表示平面有 101×101 个显示采样点，源网格仍为 0.2 Å。
 
-2. 在切片的 **切片等值线** 面板点击 **开启等值线**，选择 **几何场**，在 **阈值列表** 输入 **−0.02,0,0.02**，勾选 **数值标签**，点击 **更新等值线**。应在有效区域看到曲线和数值标签。截图保存为 `human/screenshots/40-slice.png`。
+2. 在切片的 **切片等值线** 面板点击 **开启等值线**，选择 **几何场**，在 **阈值列表** 输入 **−0.02,0,0.02**，勾选 **数值标签**，点击 **更新等值线**。应在有效区域看到曲线和数值标签。截图保存为 `human/screenshots/P03-slice.png`。
 
-![ESP 平面切片与三组等值线](../screenshots/40-slice.png)
+![ESP 平面切片与三组等值线](../screenshots/P03-slice.png)
 
 > 等值线连接平面上相同场值的位置；这里的线值单位是 hartree/e。
 
@@ -26,9 +28,9 @@
 
 4. 在 **Display Layers** 选 **QC electrostatic_potential**；打开 **3D Viewport → N → View → 3D Cursor**，设坐标 **(0,0,1.45) Å**。点击 **QCBlender → 创建视图与检查工具 → 读取游标处场值**，应得到这个位置的 ESP 读数，单位为 **hartree/e**。
 
-5. 在 **Display Layers** 显示并选中 **QC electron_number_density**，点击 **创建视图与检查工具 → 点击探针 · 绑定色场**。在表面点击一个位置，按 `Enter` 确认；应显示所点击位置的 ESP 及其单位。截图保存为 `human/screenshots/41-probe.png`。
+5. 在 **Display Layers** 显示并选中 **QC electron_number_density**，点击 **创建视图与检查工具 → 点击探针 · 绑定色场**。在表面点击一个位置，按 `Enter` 确认；应显示所点击位置的 ESP 及其单位。截图保存为 `human/screenshots/P03-probe.png`。
 
-![密度表面上的取点位置及绑定 ESP 读数](../screenshots/41-probe.png)
+![密度表面上的取点位置及绑定 ESP 读数](../screenshots/P03-probe.png)
 
 > 绑定色场是这层表面所采用的着色数据。这里读取 ESP；“几何场”则读取形成表面的密度。
 
@@ -36,9 +38,7 @@
 
 > 剖面沿一条直线采样，生成一组距离与场值。数据对象通过属性和 CSV 查看。
 
-7. 选 **QC line profile data**，点击 **工程与诊断 → 导出数据与参数摘要**，设 **Data=profile**，选择材料根下 `work/human/exports/` 的实际绝对路径并确认。按 **Data exported:** 提示打开新子目录，应有 **profile.csv** 和 **metadata.json**。CSV 应包含 **101 行数据（不含表头）**，`distance_angstrom` 从 **0** 到 **4**，`unit` 为 **hartree/e**，并带有 `valid` 列。截图保存为 `human/screenshots/42-profile-csv.png`。
-
-![导出的 profile.csv 数据和配套 metadata.json](../screenshots/42-profile-csv.png)
+7. 选 **QC line profile data**，点击 **工程与诊断 → 导出数据与参数摘要**，设 **Data=profile**，选择材料根下 `work/human/exports/` 的实际绝对路径并确认。按 **Data exported:** 提示打开新子目录，应有 **profile.csv** 和 **metadata.json**。CSV 应包含 **101 行数据（不含表头）**，`distance_angstrom` 从 **0** 到 **4**，`unit` 为 **hartree/e**，并带有 `valid` 列。
 
 > `valid` 表示该采样点是否有有效场值；无效点的场值留空。`metadata.json` 保存这份导出的来源、单位及采样条件。
 
@@ -49,8 +49,8 @@
 
 > 裁剪隐藏平面或盒子外的显示几何；原始原子坐标保持不变。
 
-9. 选 **QC electron_number_density**，点击 **创建视图与检查工具 → 创建体积雾**，选新雾层。在 **Display Layers** 只保留雾层与 **P03-atoms** 可见；切到视口右上角 **Rendered**。在 **Properties → Material → QCBlender · 节点材质** 将 **Opacity Scale** 设为 **40**，应在分子周围看到雾；改为 **0**，雾应消失，再恢复 **40**。截图保存为 `human/screenshots/43-fog.png`。
+9. 选 **QC electron_number_density**，点击 **创建视图与检查工具 → 创建体积雾**，选新雾层。在 **Display Layers** 只保留雾层与 **P03-atoms** 可见；切到视口右上角 **Rendered**。在 **Properties → Material → QCBlender · 节点材质** 将 **Opacity Scale** 设为 **40**，应在分子周围看到雾；改为 **0**，雾应消失，再恢复 **40**。截图保存为 `human/screenshots/P03-fog.png`。
 
-![密度体积雾及显示不透明度控件](../screenshots/43-fog.png)
+![密度体积雾及显示不透明度控件](../screenshots/P03-fog.png)
 
 > 体积雾把场显示为空间中的半透明分布；Opacity Scale 调整显示不透明度。

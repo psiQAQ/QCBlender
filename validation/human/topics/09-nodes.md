@@ -4,6 +4,8 @@
 
 路径相对材料根目录。本专题从 **File → New → General** 开始，在 Outliner 删除默认 Cube。
 
+本页截图使用案例 `P06-` 前缀。
+
 > 几何节点用连线把选择、表示和裁剪组合起来。这里在显示副本上建立一个简单分支。
 
 1. 点击 **N 侧栏 → 工作流 → 导入 Gaussian / Cube / XYZ**，导入 [shared/data/public/P06/water-dimer.xyz](../../shared/data/public/P06/water-dimer.xyz)。选中新原子对象，在 **Display Layers → Duplicate** 创建副本，隐藏原层，保持副本活动。
@@ -25,9 +27,9 @@
 | 新 QC Style Atoms and Bonds 的 Geometry | 新 QC Clip Geometry 的 Geometry |
 | 新 QC Clip Geometry 的 Geometry | 组输出 Geometry |
 
-4. 在新选择节点开启 **Selection**，设 **Element (0 = all)=8、First Atom (1-based)=1、Last Atom (0 = all)=0**；在表示节点设 **Style (0 ball-stick, 1 space-fill, 2 bonds)=1**。应只看到两个氧球。再将 **Element=0、Style=0、Atom Radius=0.25、Bond Radius=0.07**，应恢复两个水分子的球棍。截图保存为 `human/screenshots/90-nodes.png`。
+4. 在新选择节点开启 **Selection**，设 **Element (0 = all)=8、First Atom (1-based)=1、Last Atom (0 = all)=0**；在表示节点设 **Style (0 ball-stick, 1 space-fill, 2 bonds)=1**。应只看到两个氧球。再将 **Element=0、Style=0、Atom Radius=0.25、Bond Radius=0.07**，应恢复两个水分子的球棍。截图保存为 `human/screenshots/P06-nodes.png`。
 
-![公共选择、表示和裁剪节点的新分支及分子显示](../screenshots/90-nodes.png)
+![公共选择、表示和裁剪节点的新分支及分子显示](../screenshots/P06-nodes.png)
 
 > Element 采用元素原子序数，氧为 8；First/Last 使用源原子编号，Last=0 表示不限制末尾。
 

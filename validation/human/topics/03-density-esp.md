@@ -4,6 +4,8 @@
 
 路径相对材料根目录。本专题从 **File → New → General** 开始，在 Outliner 删除默认 Cube。后面的[空间观察](04-spatial-tools.md)和[外部 ESP 与 AIM](06-esp-aim.md)继续使用这里的 P03 对象。
 
+本页水二聚体截图使用 `P03-` 前缀，氧分子自旋密度截图使用 `P01-` 前缀。
+
 > 电子密度表示空间中电子数的分布。ESP 是静电势，描述单位正试探电荷在该位置的势能。
 
 <a id="mapping"></a>
@@ -21,9 +23,7 @@
 
 > 这里用密度确定表面位置，用 ESP 确定颜色。隐藏独立 ESP 表面后，着色仍使用它的场数据。
 
-5. 保持密度表面活动，在 **颜色映射** 设 **Color Minimum=−0.05、Color Center=0、Color Maximum=0.05**。在 **图例排版** 开启 **显示图例**，设 **长度=2.6、宽度=0.25、字号=0.2、小数位数=3、位置=(3.5,0,0)**。转到能读清图例的视角；图例应显示 **hartree/e** 与上述范围。在 **Properties → Material → QCBlender · 节点材质** 把 **Reverse (0 or 1)** 设为 **1**，表面和图例应一起反转颜色，再恢复 **0**。截图保存为 `human/screenshots/30-density-esp.png`。
-
-![密度表面的 ESP 颜色与相同范围的图例](../screenshots/30-density-esp.png)
+5. 保持密度表面活动，在 **颜色映射** 设 **Color Minimum=−0.05、Color Center=0、Color Maximum=0.05**。在 **图例排版** 开启 **显示图例**，设 **长度=2.6、宽度=0.25、字号=0.2、小数位数=3、位置=(3.5,0,0)**。转到能读清图例的视角；图例应显示 **hartree/e** 与上述范围。在 **Properties → Material → QCBlender · 节点材质** 把 **Reverse (0 or 1)** 设为 **1**，表面和图例应一起反转颜色，再恢复 **0**。
 
 <a id="presets"></a>
 ## 应用色带预设
@@ -32,9 +32,9 @@
 
 > 色带把数值范围映射为颜色。预设提供一组颜色与插值设置；物理量、单位和数值范围继续由当前视图决定。
 
-6. 打开 **Properties → Material → QCBlender · 节点材质**，在 **Color map** 下点击 **应用色带预设…**。查看对话框中的目标材质，将 **色带预设** 选为 **Viridis**，确认应用。表面与图例应一起换色；图例的量名、单位和数值范围保持原样。截图保存为 `human/screenshots/33-color-presets.png`。
+6. 打开 **Properties → Material → QCBlender · 节点材质**，在 **Color map** 下点击 **应用色带预设…**。查看对话框中的目标材质，将 **色带预设** 选为 **Viridis**，确认应用。表面与图例应一起换色；图例的量名、单位和数值范围保持原样。截图保存为 `human/screenshots/P03-color-presets.png`。
 
-![色带预设入口及使用 Viridis 的表面与图例](../screenshots/33-color-presets.png)
+![色带预设入口、使用 Viridis 的 ESP 着色密度表面及 hartree/e 图例](../screenshots/P03-color-presets.png)
 
 | 选项 | 用途 |
 | --- | --- |
@@ -57,9 +57,9 @@
 
 > Mulliken 电荷是按一种电子分配方法得到的原子部分电荷，单位 e 为元电荷。
 
-10. 保持 **P03-atoms** 活动，点击 **N 侧栏 → 创建视图与检查工具 → 创建偶极矢量**，选新对象 **QC dipole (Debye; physical direction)**。在 **Properties → Modifiers** 将 **Angstrom per Debye** 从 **0.5** 改为 **1.5**；箭头应沿 **+Z**，长度变为三倍。截图保存为 `human/screenshots/31-charge-dipole.png`。继续空间观察前，在 **Display Layers** 隐藏偶极层、恢复密度表面。
+10. 保持 **P03-atoms** 活动，点击 **N 侧栏 → 创建视图与检查工具 → 创建偶极矢量**，选新对象 **QC dipole (Debye; physical direction)**。在 **Properties → Modifiers** 将 **Angstrom per Debye** 从 **0.5** 改为 **1.5**；箭头应沿 **+Z**，长度变为三倍。截图保存为 `human/screenshots/P03-charge-dipole.png`。继续空间观察前，在 **Display Layers** 隐藏偶极层、恢复密度表面。
 
-![水二聚体的原子电荷颜色和偶极箭头](../screenshots/31-charge-dipole.png)
+![水二聚体的原子电荷颜色和偶极箭头](../screenshots/P03-charge-dipole.png)
 
 > 偶极矢量描述正负电荷分布的偏离；Debye 是偶极矩单位。Angstrom per Debye 只设置箭头显示比例。
 
@@ -76,6 +76,6 @@
 
 > 自旋密度描述两个自旋通道的密度差；本例闭壳层水二聚体的两个通道相同。
 
-11. 若要看非零自旋密度，在同一工程导入 [shared/data/public/P01/o2-uhf.fchk](../../shared/data/public/P01/o2-uhf.fchk)，选新氧分子原子对象，生成 **Quantity=Spin density**，使用 **0.2 Å / 3 Å / 512 MiB**。选 **QC spin_density**，设 **正值阈值=0.002 electron/bohr^3**。在 **Display Layers** 暂时隐藏 P03 的分子和场，应看到氧分子周围的自旋密度。截图保存为 `human/screenshots/32-spin-density.png`。看完后隐藏本步氧分子和自旋场，恢复 **P03-atoms** 与密度/ESP 表面，便可继续 P03 专题。
+11. 若要看非零自旋密度，在同一工程导入 [shared/data/public/P01/o2-uhf.fchk](../../shared/data/public/P01/o2-uhf.fchk)，选新氧分子原子对象，生成 **Quantity=Spin density**，使用 **0.2 Å / 3 Å / 512 MiB**。选 **QC spin_density**，设 **正值阈值=0.002 electron/bohr^3**。在 **Display Layers** 暂时隐藏 P03 的分子和场，应看到氧分子周围的自旋密度。截图保存为 `human/screenshots/P01-spin-density.png`。看完后隐藏本步氧分子和自旋场，恢复 **P03-atoms** 与密度/ESP 表面，便可继续 P03 专题。
 
-![氧分子的非零自旋密度](../screenshots/32-spin-density.png)
+![氧分子的非零自旋密度](../screenshots/P01-spin-density.png)
