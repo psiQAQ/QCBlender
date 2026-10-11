@@ -18,6 +18,7 @@
 | 创建偶极 | 含偶极记录的原子视图 | N 侧栏 → 创建视图与检查工具 | 创建偶极矢量 |
 | 声明 Cube 量与单位 | unknown_scalar 场视图 | 对象属性的 QCBlender 主面板 | 声明 Cube 物理量与单位 |
 | 绑定或替换着色场 | 要着色的几何视图 | 对象属性 → 颜色映射 | 选择／替换着色场 |
+| 应用色带预设、反转颜色 | 已有标量着色或电荷着色的 QC 表面、切片或原子视图 | Properties → Material → QCBlender · 节点材质 → Color map | 应用色带预设…；色带预设：QC Default / Viridis / Cividis；Reverse (0 or 1) |
 | 创建切片、等值面或体积雾 | 有关联体场的标量视图 | N 侧栏 → 创建视图与检查工具 | 创建切片、创建等值面层、创建体积雾 |
 | 采样线剖面数据 | 有关联体场的场视图或切片 | N侧栏 → 创建视图与检查工具 | 记录剖面起点、采样线剖面数据 |
 | 导出科学记录或当前视图摘要 | 含相应数据的原子、场或分析记录 | N侧栏 → 工程与诊断 | 导出数据与参数摘要；数据（Data）选择当前视图参数摘要或IR/optimization/IRC/Mayer/profile/paired/ESP_AREA |
@@ -42,8 +43,8 @@
 | --- | --- |
 | 安装、对象/编辑器选择、第一张 MO 图 | [入门主流程](../validation/human/SOP.md) |
 | 能量、振动、优化与 NBO | [本机限定案例](../validation/agent/LOCAL-CASES.md) |
-| Cube 单位和双符号 | [Cube 专题](../validation/human/topics/02-cube.md) |
-| 密度、ESP、电荷/偶极、色标 | [电子分布专题](../validation/human/topics/03-density-esp.md) |
+| Cube 单位、双符号、多场叠加与跨场着色 | [Cube 专题](../validation/human/topics/02-cube.md) |
+| 密度、ESP、电荷/偶极、图例和色带预设 | [电子分布专题](../validation/human/topics/03-density-esp.md) |
 | 切片、探针、剖面 CSV、裁剪和体积雾 | [空间观察专题](../validation/human/topics/04-spatial-tools.md) |
 | 氢显隐、局部选择、标注、显示层、XYZ 与参数复制 | [分子显示专题](../validation/human/topics/01-molecule-xyz.md) |
 | IGMH/IRI | [成对场专题](../validation/human/topics/05-igmh-iri.md) |
@@ -55,6 +56,16 @@
 | 错误输入、筛选/取消、关联、恢复等技术边界 | [Agent 检查覆盖](../validation/agent/COVERAGE.md) |
 
 源文件始终决定科学值和单位，显示操作不改科学数组。源编号从1起，坐标Å；键由距离推断，MO两符号表示相位，振动播放速度属于显示参数。两个来源关联、Cube单位声明、外部分析参数均须核对真实生成记录。保存使用 **N侧栏 → 工程与诊断 → 保存自包含工程**，并将同名 `.blend` 与 `.qcdata/` 一起移动。
+
+## 色带预设与多场显示
+
+在 **Properties → Material → QCBlender · 节点材质** 的 **Color map** 下点击 **应用色带预设…**，选择 **QC Default、Viridis 或 Cividis**，确认后替换当前材质的色阶与插值；选择菜单选项时尚未应用，取消保留原色带。**Reverse (0 or 1)** 独立控制反转。应用预设保留数值范围、中心值、反转值、透明度与图例布局；表面和图例使用同一材质。操作可通过 Blender 的 **Edit → Undo / Redo** 撤销或恢复。
+
+对话框显示目标材质，并说明共享它的视图会同步更新。需要独立配色时，先在 **Display Layers → Duplicate** 创建展示副本。预设用于标准标量/电荷着色；自定义图无法确认目标、目标只读或对话框打开后目标改变时，操作会报告原因，重新选择有效目标后再打开对话框。
+
+多份 Cube 可以在同一场景各自生成表面，分别调整阈值与视口/渲染可见性；同构型示例见 [多 Cube 叠加](../validation/human/topics/02-cube.md#overlay)。把第二个场用于第一表面的着色，另用 **选择／替换着色场**。源文件的物理量与单位分别保留。
+
+原子选择与标注始终使用源原子编号。球棍求值后，一个原子会生成多个球面顶点；求值网格的顶点行号不能当作源原子编号，球面位置也不是核位置。源 POINT 属性、缺失属性和有效标志的读法见 [节点专题](../validation/human/topics/09-nodes.md#attributes)。
 
 ## 当前步骤关联与共享对象
 

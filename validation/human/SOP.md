@@ -106,8 +106,8 @@
 | 想学习的功能 | 专题 |
 | --- | --- |
 | 球棍、氢显隐、局部选择、测量标注、显示层、XYZ 帧 | [分子显示与 XYZ](topics/01-molecule-xyz.md) |
-| 导入现成 Cube，声明量与单位，调整两符号表面 | [Cube 场](topics/02-cube.md) |
-| 密度表面按 ESP 着色、图例、原子电荷、偶极和自旋密度 | [密度与 ESP](topics/03-density-esp.md) |
+| 导入 Cube，声明量与单位，调整两符号表面，多场叠加与跨场着色 | [Cube 场](topics/02-cube.md) |
+| 密度表面按 ESP 着色、图例、色带预设、原子电荷、偶极和自旋密度 | [密度与 ESP](topics/03-density-esp.md) |
 | 切片、等值线、探针、剖面 CSV、裁剪和体积雾 | [空间观察与数据导出](topics/04-spatial-tools.md) |
 | IGMH、IRI 表面与成对场筛选 | [IGMH 与 IRI](topics/05-igmh-iri.md) |
 | ESP 极值和面积、AIM 临界点与路径 | [外部 ESP 与 AIM 分析](topics/06-esp-aim.md) |
