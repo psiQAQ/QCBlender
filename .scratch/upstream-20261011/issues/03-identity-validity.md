@@ -1,5 +1,5 @@
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Blocked by: 01
 
 # 原子身份与有效域
@@ -7,6 +7,8 @@ Blocked by: 01
 扩展实际节点求值验证，逐点核对源编号、坐标、元素、电荷；补无效域实际覆盖缺口。仅发现实际缺陷才修产品。Blender运行交主Agent串行执行。
 
 ## Comments
+
+主 Agent 已在 Blender 5.1.1 隔离安装候选 `be6a7ad` 运行原生检查：27 组身份筛选 Passed；默认、Viridis、Cividis 的有效域、实际材质线性像素、图例和 CSV Passed。图例采用求值材质的 `.original` 身份严格核对。报告见 `validation/agent/reports/2026-10-11/upstream/node-helpers.json`、`validity-fixed/validity.json`、`validity-viridis/validity.json`、`validity-cividis/validity.json`。未发现需要修改产品科学实现的缺陷。
 
 - 2026-10-11 实现代理领取，前置 01 已 resolved。只维护两个原生验证脚本；产品未修改。
 
