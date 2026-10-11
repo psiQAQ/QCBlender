@@ -18,6 +18,15 @@
 
 教程现有 26 个图片引用，已提供 4 张；完整图片检查因缺少 22 张截图为 Failed。截图采用 Pxx 案例前缀，当前路径见[截图记录](#tutorial-screenshots-20261011)。完整独立用户操作、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
 
+<a id="tutorial-terms-20261011"></a>
+## 教程术语与控件说明（2026-10-11）
+
+[SOP](../validation/human/SOP.md) 与九专题在正文首次使用处解释初学者可能不熟悉的术语、参数和控件。共用界面说明集中在主线，专题解释独有含义与用途；原操作、输入、参数和图片引用保留。
+
+实现提交 `87da946`；79 项编号操作逐行、表格原值、粗体参数、输入链接、26 个图片引用与 4 张原图检查 Passed，实际公开材料检查 Passed。Standards/Spec 各 0 发现。仍有 22 张待补图片；科学测试、Blender 操作和网站构建 Not Run。
+
+证据在 `validation/agent/reports/2026-10-11/tutorial-terms/`：`sources.json`、`workspace-accepted.json`、`validation-accepted.json`、`review.json`、`closing.json`。辅助脚本保留于 `outputs/runs/tutorial-terms-20261011/`；用户工程、现有导出与科学输入未修改。三个本地归档标签为 `archive/2026-10-11/docs/tutorial-terms-20261011`、`archive/2026-10-11/docs/tutorial-terms-a-20261011` 和 `archive/2026-10-11/docs/tutorial-terms-b-20261011`。
+
 <a id="tutorial-output-purpose-20261011"></a>
 ## 教程产物用途说明（2026-10-11）
 

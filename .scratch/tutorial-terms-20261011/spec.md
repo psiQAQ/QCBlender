@@ -1,7 +1,7 @@
 # 教程首次出现的术语与控件说明
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Baseline: fcc1b13b85c4f7e10c8d51dbc0cb2f5b7143206f
 
 ## 目标
