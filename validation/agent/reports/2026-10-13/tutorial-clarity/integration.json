@@ -1,0 +1,12 @@
+{
+  "status": "Passed",
+  "transferred_files": 20,
+  "original_main_snapshot_matched": true,
+  "copied_bytes_match_candidate": true,
+  "git_commit": "Not Run",
+  "git_push": "Not Run",
+  "temporary_worktrees_removed": 4,
+  "temporary_branches_removed": 4,
+  "main_is_only_worktree": true,
+  "completed_date": "2026-10-14"
+}

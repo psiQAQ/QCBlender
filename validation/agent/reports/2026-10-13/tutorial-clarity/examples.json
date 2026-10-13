@@ -1,0 +1,148 @@
+{
+  "status": "Passed",
+  "completed_date": "2026-10-14",
+  "sop": {
+    "report": "sop-example.json",
+    "verified_by": "main agent"
+  },
+  "topics_01_03": {
+    "verified_by": "tutorial_a",
+    "method": "current source, actual atom_selection.evaluate_steps and P03 Cube input",
+    "local_selection_steps": [
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        5,
+        6
+      ]
+    ],
+    "cube_shape": [
+      91,
+      38,
+      156
+    ],
+    "sources": [
+      "blender/ui.py",
+      "blender/parameters.py",
+      "blender/assets.py",
+      "blender/views.py",
+      "blender/layers.py",
+      "blender/atom_selection.py",
+      "blender/copy_display.py",
+      "blender/association.py",
+      "blender/atomic_properties.py",
+      "blender/scalars.py",
+      "blender/color_presets.py",
+      "atom_selection.py",
+      "association.py",
+      "color_presets.py"
+    ]
+  },
+  "topics_04_06": {
+    "verified_by": "tutorial_b",
+    "method": "current source, actual paired _tables generator and external analysis parsers",
+    "paired_filter_rows_before_and_after_swap": 36391,
+    "swapped_locations_and_values_and_units": "Passed",
+    "esp_center_filter": {
+      "range": [
+        0,
+        20
+      ],
+      "bins": 4,
+      "area": 14.4784,
+      "source_percent": 19.7838
+    },
+    "esp_interval_overlap": {
+      "range": [
+        0,
+        20
+      ],
+      "bins": 6,
+      "area": 21.2676,
+      "source_percent": 29.0608
+    },
+    "sources": [
+      "blender/interaction.py",
+      "blender/profile.py",
+      "blender/inspection.py",
+      "blender/charts.py",
+      "blender/scalars.py",
+      "blender/assets.py",
+      "blender/parameters.py",
+      "blender/editor_ui.py",
+      "blender/fog.py",
+      "blender/external_fields.py",
+      "blender/external_results.py",
+      "blender/result_browser.py",
+      "blender/data_export.py",
+      "planes.py",
+      "profile.py",
+      "external_fields.py",
+      "external_results.py",
+      "result_filters.py",
+      "data_export.py"
+    ]
+  },
+  "topics_07_09": {
+    "verified_by": "tutorial_c",
+    "method": "current source, actual ETS parser, IRC/Mayer importer and XYZ sample",
+    "ets_records": 11,
+    "ets_record_2": {
+      "pair": 2,
+      "pair_energy_kcal_mol": -11.91
+    },
+    "ets_filter_pairs": {
+      "-60 to -50": [
+        1
+      ],
+      "-12 to -11": [
+        2,
+        3
+      ]
+    },
+    "mayer_1_2": [
+      0.987331413844,
+      0.987349305673,
+      0.987331413844
+    ],
+    "sources": [
+      "blender/irc.py",
+      "blender/annotations.py",
+      "blender/external_results.py",
+      "blender/result_browser.py",
+      "blender/nocv.py",
+      "blender/assets.py",
+      "blender/views.py",
+      "blender/inspection.py",
+      "blender/parameters.py",
+      "irc.py",
+      "external_results.py",
+      "result_filters.py",
+      "analysis_data.py"
+    ]
+  },
+  "ui_limitation": "ESP/AIM source-number, type and label switches exist in state but are not drawn; tutorial uses visible Record/Match controls and initial defaults.",
+  "blender_gui": "Not Run",
+  "rendering": "Not Run",
+  "independent_human_review": "Not Run",
+  "website_build_and_deploy": "Not Run"
+}

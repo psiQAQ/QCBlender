@@ -146,7 +146,7 @@ def check_documents(materials, require_images=False):
                 raise ValueError(f'Human document contains a technical result workflow: {path}')
             if re.search(r'\b[A-Za-z]:[\\/]|tests/data/|outputs/', text):
                 raise ValueError(f'Human document depends on a repository or absolute path: {path}')
-            result['numbered_operations'] += len(re.findall(r'^\d+\. ', text, re.M))
+            result['numbered_operations'] += len(re.findall(r'^(?:### )?\d+\. ', text, re.M))
             for raw in re.findall(r'`(shared/data/public/[^`]+|shared/install/[^`]+)`', text):
                 target = materials / raw
                 if not target.exists():

@@ -1,0 +1,287 @@
+{
+  "status": "Passed",
+  "source_commit": "7c17ae7b1a60fad0b6adf026e15c23ce92baa806",
+  "candidate_sha256": "60d572186e127e40e1031a75fff325c3038ab7cc44102d3bdf1e79b6763860ee",
+  "resources": {
+    "public_inputs": 30,
+    "p04_relative_files": "Passed",
+    "public_members": [
+      "LICENSE",
+      "NOTICE.md",
+      "P01/o2-uhf.fch",
+      "P01/o2-uhf.fchk",
+      "P03/aim/CPprop.txt",
+      "P03/aim/CPs.pdb",
+      "P03/aim/paths.pdb",
+      "P03/color.cube",
+      "P03/esp/stdout.log",
+      "P03/esp/surfanalysis.pdb",
+      "P03/igmh/dg_inter.cub",
+      "P03/igmh/sl2r.cub",
+      "P03/iri/func1.cub",
+      "P03/iri/func2.cub",
+      "P03/water-dimer.fch",
+      "P03/water-dimer.fchk",
+      "P04/mayer-pyscf.csv",
+      "P04/step-001-mayer-pyscf.txt",
+      "P04/step-001.fchk",
+      "P04/step-002-mayer-pyscf.txt",
+      "P04/step-002.fchk",
+      "P04/step-003-mayer-pyscf.txt",
+      "P04/step-003.fchk",
+      "P04/steps.csv",
+      "P05/bh3.fchk",
+      "P05/co.fchk",
+      "P05/complex.fchk",
+      "P05/nocv/ets-nocv.txt",
+      "P05/nocv/nocv-pair1.cub",
+      "P06/p04-three-frames.xyz",
+      "P06/source.json",
+      "P06/water-dimer.xyz",
+      "README.md",
+      "tutorial-samples.json"
+    ],
+    "installer": "qcblender-0.1.0.zip"
+  },
+  "documents": {
+    "markdown_files": 13,
+    "links": 128,
+    "numbered_operations": 79,
+    "require_images": false,
+    "image_slots": [
+      {
+        "path": "human/renders/P01-mo.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-install.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-orbital.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-spin-density.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P01-summary.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-aim-paths.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-aim-point.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-charge-dipole.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-color-presets.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-cube-overlay.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-cube.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-esp-area.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-esp-extrema.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-fog.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-igmh.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-iri.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-probe.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-slice.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P04-irc.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P04-mayer.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P05-nocv-density.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P05-nocv-table.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P06-annotations.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P06-layers.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P06-nodes.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P06-xyz-frames.png",
+        "present": false
+      }
+    ],
+    "images_supplied": 4,
+    "images_missing": [
+      "human/screenshots/P01-spin-density.png",
+      "human/screenshots/P03-aim-paths.png",
+      "human/screenshots/P03-aim-point.png",
+      "human/screenshots/P03-charge-dipole.png",
+      "human/screenshots/P03-color-presets.png",
+      "human/screenshots/P03-cube-overlay.png",
+      "human/screenshots/P03-cube.png",
+      "human/screenshots/P03-esp-area.png",
+      "human/screenshots/P03-esp-extrema.png",
+      "human/screenshots/P03-fog.png",
+      "human/screenshots/P03-igmh.png",
+      "human/screenshots/P03-iri.png",
+      "human/screenshots/P03-probe.png",
+      "human/screenshots/P03-slice.png",
+      "human/screenshots/P04-irc.png",
+      "human/screenshots/P04-mayer.png",
+      "human/screenshots/P05-nocv-density.png",
+      "human/screenshots/P05-nocv-table.png",
+      "human/screenshots/P06-annotations.png",
+      "human/screenshots/P06-layers.png",
+      "human/screenshots/P06-nodes.png",
+      "human/screenshots/P06-xyz-frames.png"
+    ],
+    "screenshot_slots": [
+      {
+        "path": "human/screenshots/P01-install.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-orbital.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-spin-density.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P01-summary.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-aim-paths.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-aim-point.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-charge-dipole.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-color-presets.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-cube-overlay.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-cube.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-esp-area.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-esp-extrema.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-fog.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-igmh.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-iri.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-probe.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P03-slice.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P04-irc.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P04-mayer.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P05-nocv-density.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P05-nocv-table.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P06-annotations.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P06-layers.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P06-nodes.png",
+        "present": false
+      },
+      {
+        "path": "human/screenshots/P06-xyz-frames.png",
+        "present": false
+      }
+    ],
+    "screenshots_supplied": 3,
+    "human_execution": "Not Run"
+  }
+}

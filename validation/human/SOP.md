@@ -1,13 +1,30 @@
 # QCBlender 安装与操作教程
 
+
 ## 目录
 
 - [安装并找到插件](#install)
+  - [1. 安装并启用 QCBlender](#step-01)
+  - [2. 检查科学运行环境](#step-02)
+  - [3. 准备新工程和操作界面](#step-03)
 - [生成第一张轨道图](#orbital)
+  - [4. 导入氧分子并查看来源](#step-04)
+  - [5. 选择轨道并设置计算网格](#step-05)
+  - [6. 调整轨道表面阈值](#step-06)
+  - [7. 切换相位显示和透明度](#step-07)
 - [渲染图片](#render)
+  - [8. 设置输出尺寸并创建取景相机](#step-08)
+  - [9. 渲染并保存图片](#step-09)
 - [导出当前参数](#export)
+  - [10. 选择参数摘要并导出](#step-10)
+  - [11. 打开摘要并核对参数](#step-11)
 - [保存、重新打开和归档工程](#save)
+  - [12. 保存自包含工程](#step-12)
+  - [13. 关闭并重新打开工程](#step-13)
+  - [14. 检查重开后的显示和取景](#step-14)
+  - [15. 归档工程及配套数据](#step-15)
 - [按需选择功能专题](#topics)
+
 
 适用 Windows x64、Blender 5.1.1、QCBlender 0.1.0。本文共 15 步；完成后可继续选择专题。
 
@@ -18,18 +35,27 @@
 <a id="install"></a>
 ## 安装并找到插件
 
-1. 打开 Blender，选择 **Edit → Preferences → Get Extensions → 右上角菜单 → Install from Disk**，选择 [shared/install/qcblender-0.1.0.zip](../shared/install/qcblender-0.1.0.zip)，完成安装。在 **Add-ons** 中搜索 **QCBlender**，确认已经启用。
+<a id="step-01"></a>
+### 1. 安装并启用 QCBlender
+
+打开 Blender，选择 **Edit → Preferences → Get Extensions → 右上角菜单 → Install from Disk**，选择 [shared/install/qcblender-0.1.0.zip](../shared/install/qcblender-0.1.0.zip)，完成安装。在 **Add-ons** 中搜索 **QCBlender**，确认已经启用。
 
 > Preferences 是偏好设置窗口；Get Extensions 用于管理扩展，Install from Disk 从本地 ZIP 安装，Add-ons 用于启用或停用插件。
 
+<a id="step-02"></a>
+### 2. 检查科学运行环境
+
 > Check Scientific Runtime 检查插件执行量子化学数值计算所需的运行环境是否可用。
 
-2. 展开 QCBlender，点击 **Check Scientific Runtime**。等待检查完成，应显示科学运行环境可用。截图保存为 `human/screenshots/P01-install.png`。
+展开 QCBlender，点击 **Check Scientific Runtime**。等待检查完成，应显示科学运行环境可用。截图保存为 `human/screenshots/P01-install.png`。
 
 ![插件已启用，科学运行环境检查完成](screenshots/P01-install.png)
 
 <a id="new-scene"></a>
-3. 关闭偏好设置；如果已有需要保留的工程，先保存，再选择 **File → New → General**。在右上角 **Outliner** 选中默认 **Cube** 并删除，保留 Camera 和 Light。鼠标移入 **3D Viewport**，切到 **Object Mode**，按 `N`，打开 **QCBlender** 页；点击视口右上角的 **Material Preview**。之后文中的“N 侧栏”均指这里。
+<a id="step-03"></a>
+### 3. 准备新工程和操作界面
+
+关闭偏好设置；如果已有需要保留的工程，先保存，再选择 **File → New → General**。在右上角 **Outliner** 选中默认 **Cube** 并删除，保留 Camera 和 Light。鼠标移入 **3D Viewport**，切到 **Object Mode**，按 `N`，打开 **QCBlender** 页；点击视口右上角的 **Material Preview**。之后文中的“N 侧栏”均指这里。
 
 > Outliner 是场景对象列表；3D Viewport 是观察和选择三维对象的视口，Object Mode 用于操作整个对象。Material Preview 是材质预览，可直接看到分子和表面的颜色。
 
@@ -44,15 +70,37 @@
 <a id="orbital"></a>
 ## 生成第一张轨道图
 
-4. 点击 **N 侧栏 → 工作流 → 导入 Gaussian / Cube / XYZ**，选择 [shared/data/public/P01/o2-uhf.fchk](../shared/data/public/P01/o2-uhf.fchk)。应出现两个氧原子，它们属于同一个原子对象。在 Outliner 选中这个原子对象，按 `F2` 命名为 **P01-atoms**；点击 **数据集与数值摘要 → 查看完整来源**，应看到 **filename: o2-uhf.fchk**、**coordinate_unit: angstrom**。关闭来源窗口。
+<a id="step-04"></a>
+### 4. 导入氧分子并查看来源
+
+点击 **N 侧栏 → 工作流 → 导入 Gaussian / Cube / XYZ**，选择 [shared/data/public/P01/o2-uhf.fchk](../shared/data/public/P01/o2-uhf.fchk)。应出现两个氧原子，它们属于同一个原子对象。在 Outliner 选中这个原子对象，按 `F2` 命名为 **P01-atoms**；点击 **数据集与数值摘要 → 查看完整来源**，应看到 **filename: o2-uhf.fchk**、**coordinate_unit: angstrom**。关闭来源窗口。
 
 > FCHK 是格式化的量子化学计算结果文件，提供分子构型和波函数。构型是原子的空间位置；波函数提供计算轨道等物理量所需的信息。本例的计算条件见[样本说明](../shared/data/public/NOTICE.md)。
 
 > 数据集是导入的科学数据及其来源记录；`filename` 是源文件名，`coordinate_unit` 是坐标单位。`angstrom` 即 Å（埃），1 Å = 0.1 nm。
 
+<a id="step-05"></a>
+### 5. 选择轨道并设置计算网格
+
 > 活动对象是本次操作针对的对象；只选一个对象时就是它，多选时通常为最后选中的对象。生成量子化学场会在空间网格上计算所选物理量，网格是规则排列的采样点。
 
-5. 保持 **P01-atoms** 活动，点击 **工作流 → 生成量子化学场**。首次使用时先等待自动检查，再在 **Generate Quantum Field** 对话框中设置下表，点击 **OK**。
+> MO 是分子轨道；Alpha 和 Beta 是两种自旋通道的标记。轨道振幅的正负表示波函数的相位。
+
+> Quantity（计算的物理量）决定生成哪一种场；先按要观察的内容选择，再设置计算网格。网格是数值计算的采样位置，与表面的配色和透明度分开设置。
+
+- **Molecular orbital**：生成一个轨道的振幅，用正负相位表面观察轨道形状；需要继续选择自旋通道和轨道。
+- **Electron density**：生成 Alpha 与 Beta 通道相加的总电子密度，用于观察整体电子分布。
+- **Alpha density / Beta density**：分别生成一个自旋通道的电子密度。
+- **Spin density**：生成 Alpha 密度减 Beta 密度，用于观察两个自旋通道分布的差别。
+- **Electrostatic potential**：生成静电势，可给密度表面着色；操作见[密度与 ESP](topics/03-density-esp.md)。
+
+> 选择 Molecular orbital 后，Spin 指定 Alpha 或 Beta 通道；Orbital 决定如何在该通道中找到轨道。
+
+- **HOMO**：自动选择该通道中能量最高的已占据轨道。
+- **LUMO**：自动选择该通道中能量最低的未占据轨道。
+- **Source number**：使用源文件里的轨道编号，需要填写从 1 开始的 Orbital number。本例固定使用 Alpha 轨道 9，便于核对同一结果。
+
+保持 **P01-atoms** 活动，点击 **工作流 → 生成量子化学场**。首次使用时先等待自动检查。在 **Generate Quantum Field** 对话框中，先选 **Quantity=Molecular orbital、Spin=Alpha**，将 **Orbital** 依次切到 **HOMO** 和 **LUMO**，观察预览中的 **Source MO**、占据数和能量；本例应分别显示源轨道 **8（占据数 1）** 和 **10（占据数 0）**，即一个已占据轨道和一个未占据轨道。此时还没有生成场。再切到 **Source number**，输入 **9**，按下表补齐网格参数并点击 **OK**。
 
 | 控件 | 输入值 | 用途 |
 | --- | --- | --- |
@@ -64,32 +112,46 @@
 | Grid margin (angstrom) | 3 | 在分子外围扩展计算区域的距离 |
 | Memory budget (MiB) | 512 | 供计算程序估算内存需求并安排分批计算的预算 |
 
-> MO 是分子轨道；Alpha 和 Beta 是两种自旋的标记。这里选择源文件中的 Alpha 第 9 个轨道，两种表面颜色表示波函数的正负相位。
-
 > MiB 是内存容量单位，1 MiB = 1024² 字节；这里的预算用于本次数值计算，不是 Blender 总内存的硬限制。本文参数用于学习显示操作。
 
-> 等值面连接场值达到某个阈值的位置；正值阈值设置正相位表面的取值。Link Thresholds 让正负相位使用相同的阈值幅度，两个“显示相位”开关分别控制可见性。
+<a id="step-06"></a>
+### 6. 调整轨道表面阈值
+
+> 等值面连接场值达到某个阈值的位置；调整阈值会改变轨道表面的形状和大小。Link Thresholds 用于决定正、负相位是否采用相同的阈值幅度，显示开关则决定对应表面是否可见。
+
+- **Link Thresholds 开启**：负相位沿用正相位的阈值幅度，适合用相同尺度观察两种相位。
+- **Link Thresholds 关闭**：可以分别设置正、负相位的阈值幅度。
+- **显示正相位 / 显示负相位**：分别控制两种表面的可见性；只想暂时隐藏一种相位时，操作它的显示开关。
 
 > `orbital_amplitude` 表示轨道振幅；bohr 是原子尺度的长度单位，约等于 0.529 Å，轨道振幅的单位 `bohr^-3/2` 表示 bohr 的 −3/2 次方。
 
-6. 完成后选中 **QC orbital_amplitude**。在 **对象属性 → 几何表示** 将 **正值阈值** 设为 **0.045**，保持 **Link Thresholds**、**显示正相位**、**显示负相位** 开启。应看到两种颜色的轨道表面；在 **科学记录与振动模式** 中应看到 `spin: alpha`、`source_number: 9`，单位为 `bohr^-3/2`。截图保存为 `human/screenshots/P01-orbital.png`。
+完成后选中 **QC orbital_amplitude**。在 **对象属性 → 几何表示** 将 **正值阈值** 设为 **0.045**，保持 **Link Thresholds**、**显示正相位**、**显示负相位** 开启。应看到两种颜色的轨道表面；在 **科学记录与振动模式** 中应看到 `spin: alpha`、`source_number: 9`，单位为 `bohr^-3/2`。截图保存为 `human/screenshots/P01-orbital.png`。
 
 ![两个氧原子周围的 Alpha MO9 双相位表面及阈值](screenshots/P01-orbital.png)
 
 > `spin` 记录自旋通道，`source_number` 记录源轨道编号。科学记录用于核对当前表面对应哪份计算数据。
 
+<a id="step-07"></a>
+### 7. 切换相位显示和透明度
+
 > Material 是材质设置区，节点材质通过相连的计算单元控制颜色和透明度。Positive Opacity 调整正相位表面的不透明度；0 为全透明，1 为不透明。
 
-7. 关闭再开启 **显示负相位**，应只有一种相位的表面消失后恢复。打开 **Properties → Material → QCBlender · 节点材质**，将 **Positive Opacity** 设为 **0.4**，正相位应变透明；最后恢复 **1**，保留两种相位。
+关闭再开启 **显示负相位**，应只有一种相位的表面消失后恢复。打开 **Properties → Material → QCBlender · 节点材质**，将 **Positive Opacity** 设为 **0.4**，正相位应变透明；最后恢复 **1**，保留两种相位。
 
 <a id="render"></a>
 ## 渲染图片
 
 > 渲染是按相机、灯光和材质生成图片；创建取景相机用于把当前观察对象纳入出图范围。Render Properties 是渲染设置区，EEVEE 是本例使用的渲染引擎；Output Properties 控制输出尺寸，1280 × 720 是图片的宽、高像素数，100% 表示按此尺寸输出。
 
-8. 在文件管理器中，在材料根目录创建 `work/human/P01/` 和 `work/human/exports/`。回到 Blender，在 **Render Properties** 选择 **EEVEE**，在 **Output Properties** 设分辨率 **1280 × 720、100%**。选中 **QC orbital_amplitude**，转到能看清两种相位的角度，点击 **N 侧栏 → 创建视图与检查工具 → 创建取景相机**。在 3D Viewport 按小键盘 `0` 查看相机范围，整个轨道应在画面内；没有小键盘时选择 **View → Cameras → Active Camera**。
+<a id="step-08"></a>
+### 8. 设置输出尺寸并创建取景相机
 
-9. 按 `F12` 渲染，在结果窗口选择 **Image → Save As**，保存到 `human/renders/P01-mo.png`。应看到完整的两种相位表面，构图与相机视图一致。
+在文件管理器中，在材料根目录创建 `work/human/P01/` 和 `work/human/exports/`。回到 Blender，在 **Render Properties** 选择 **EEVEE**，在 **Output Properties** 设分辨率 **1280 × 720、100%**。选中 **QC orbital_amplitude**，转到能看清两种相位的角度，点击 **N 侧栏 → 创建视图与检查工具 → 创建取景相机**。在 3D Viewport 按小键盘 `0` 查看相机范围，整个轨道应在画面内；没有小键盘时选择 **View → Cameras → Active Camera**。
+
+<a id="step-09"></a>
+### 9. 渲染并保存图片
+
+按 `F12` 渲染，在结果窗口选择 **Image → Save As**，保存到 `human/renders/P01-mo.png`。应看到完整的两种相位表面，构图与相机视图一致。
 
 ![第一张轨道渲染图](renders/P01-mo.png)
 
@@ -98,13 +160,27 @@
 <a id="export"></a>
 ## 导出当前参数
 
-> Data 选择要导出的内容类型；Output directory 指定保存目录。绝对路径从盘符开始定位文件夹，可由文件浏览器自动填入。
+<a id="step-10"></a>
+### 10. 选择参数摘要并导出
 
-10. 在渲染结果窗口按 `F11` 返回主窗口，选中 **QC orbital_amplitude**，点击 **N 侧栏 → 工程与诊断 → 导出数据与参数摘要**。将 **Data** 设为 **当前视图参数摘要**；在 **Output directory** 选择材料根目录下的 `work/human/exports/`，让文件浏览器填入它的实际绝对路径。截图保存为 `human/screenshots/P01-summary.png`，然后确认导出。
+> 导出数据与参数摘要用于把当前视图的说明或已有科学记录保存成文件。Data 选择输出内容，可用选项随活动对象的数据变化；先选要导出的对象，再打开对话框。Output directory 选择保存目录，文件浏览器会填入从盘符开始的实际绝对路径。
+
+- **当前视图参数摘要**：导出供人阅读的 view-summary.md 与配套 metadata.json，用于核对图中的来源和显示参数。本主线使用这一项。
+- **profile、paired、ESP_AREA 等科学数据项**：导出对应对象已有的数值记录及 metadata.json，供表格或绘图软件使用；各专题说明应选哪一项。
+
+> paired 与 ESP_AREA 还提供 Rows（导出行的范围），用于决定导出完整记录还是选中的部分。
+
+- **All source records**：导出该类数据的全部记录。
+- **Current filter**：按当前筛选条件导出成对场的有效网格点或 ESP 面积区间。先在专题中设置筛选条件，再选这一项。
+
+在渲染结果窗口按 `F11` 返回主窗口，选中 **QC orbital_amplitude**，点击 **N 侧栏 → 工程与诊断 → 导出数据与参数摘要**。将 **Data** 设为 **当前视图参数摘要**；在 **Output directory** 选择材料根目录下的 `work/human/exports/`，让文件浏览器填入它的实际绝对路径。截图保存为 `human/screenshots/P01-summary.png`，然后确认导出。
 
 ![当前视图参数摘要的导出选项与保存目录](screenshots/P01-summary.png)
 
-11. 按 **Data exported:** 提示中的完整路径打开新生成的子目录；若提示已消失，到 `work/human/exports/` 查找刚生成的目录。应有 **view-summary.md** 和 **metadata.json**；打开前者，检查其中有 **Alpha、源轨道 9、0.2 Å 网格、0.045 阈值**。插件每次自动创建一个不同名称的子目录。
+<a id="step-11"></a>
+### 11. 打开摘要并核对参数
+
+按 **Data exported:** 提示中的完整路径打开新生成的子目录；若提示已消失，到 `work/human/exports/` 查找刚生成的目录。应有 **view-summary.md** 和 **metadata.json**；打开前者，检查其中有 **Alpha、源轨道 9、0.2 Å 网格、0.045 阈值**。插件每次自动创建一个不同名称的子目录。
 
 这两个文件记录图中数据的来源和导出时读取的参数，方便以后核对与追溯。
 
@@ -130,17 +206,29 @@
 
 下面的文件名用于 P01 主线。保存专题工程时，先创建对应案例目录，并换成有区别的名称，例如 `work/human/P03/P03-density-esp.blend`；重新打开和归档时沿用自己的工程名。
 
-12. 点击 **N 侧栏 → 工程与诊断 → 保存自包含工程**，保存为 `work/human/P01/P01.blend`。在文件管理器中应同时看到 `work/human/P01/P01.qcdata/`。
+<a id="step-12"></a>
+### 12. 保存自包含工程
+
+点击 **N 侧栏 → 工程与诊断 → 保存自包含工程**，保存为 `work/human/P01/P01.blend`。在文件管理器中应同时看到 `work/human/P01/P01.qcdata/`。
 
 > `.blend` 是 Blender 工程，保存场景对象、显示设置、材质、节点和相机等内容；同名 `.qcdata/` 保存工程需要的科学数据和场缓存。继续编辑或重新出图需要保留两者；移动时保持它们同处一个目录，不单独改名或手动修改配套数据。
 
-13. 选择 **File → Quit** 正常关闭 Blender，再启动 Blender，用 **File → Open** 打开 `work/human/P01/P01.blend`。
+<a id="step-13"></a>
+### 13. 关闭并重新打开工程
 
-14. 选中 **QC orbital_amplitude**，切到 **Material Preview**。两种相位仍应完整显示，阈值仍为 **0.045**；按小键盘 `0`（或 **View → Cameras → Active Camera**）应能恢复刚才的取景。
+选择 **File → Quit** 正常关闭 Blender，再启动 Blender，用 **File → Open** 打开 `work/human/P01/P01.blend`。
+
+<a id="step-14"></a>
+### 14. 检查重开后的显示和取景
+
+选中 **QC orbital_amplitude**，切到 **Material Preview**。两种相位仍应完整显示，阈值仍为 **0.045**；按小键盘 `0`（或 **View → Cameras → Active Camera**）应能恢复刚才的取景。
+
+<a id="step-15"></a>
+### 15. 归档工程及配套数据
 
 > 归档把已保存的工程及配套数据打包成一个 ZIP 压缩文件，便于备份或传递。
 
-15. 点击 **工程与诊断 → 归档工程**，保存为 `work/human/P01/P01-project.zip`。在文件管理器中打开 ZIP，应能找到 `.blend` 与配套科学数据目录。接收者解压后保持目录结构，再打开其中的 `.blend`。
+点击 **工程与诊断 → 归档工程**，保存为 `work/human/P01/P01-project.zip`。在文件管理器中打开 ZIP，应能找到 `.blend` 与配套科学数据目录。接收者解压后保持目录结构，再打开其中的 `.blend`。
 
 归档使用磁盘上已保存的工程。若归档前又修改了场景，先再次执行 **保存自包含工程**。独立导出的 PNG、CSV 和参数摘要仍在各自保存目录，需要一起分享时另行附上。
 

@@ -49,6 +49,16 @@ class TutorialWorkspace(unittest.TestCase):
         self.assertEqual(report['human_execution'], 'Not Run')
         self.assertNotIn('work', workspace.PUBLIC_PARTS)
 
+    def test_step_headings_and_legacy_steps_are_counted_with_toc_links(self):
+        self.write('human/SOP.md', '# Tutorial\n\n[Install](#step-01)\n'
+                   '[Import](#step-02)\n\n<a id="step-01"></a>\n'
+                   '### 1. 安装插件\n\nOpen preferences.\n\n'
+                   '<a id="step-02"></a>\n### 2. 导入分子\n\nChoose a file.\n')
+        self.write('human/topics/01-example.md', '# Example\n\n1. Legacy operation.\n')
+        report = workspace.check_documents(self.materials)
+        self.assertEqual(report['numbered_operations'], 3)
+        self.assertEqual(report['links'], 2)
+
     def test_missing_images_are_preparation_placeholders_but_fail_strict_gate(self):
         report = workspace.check_documents(self.materials)
         self.assertEqual(report['images_supplied'], 0)

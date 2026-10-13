@@ -1,6 +1,6 @@
 # 产物查找入口
 
-更新：2026-10-11。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
+更新：2026-10-14。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
 
 ## 当前交付
 
@@ -17,6 +17,18 @@
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
 教程现有 26 个图片引用，已提供 4 张；完整图片检查因缺少 22 张截图为 Failed。截图采用 Pxx 案例前缀，当前路径见[截图记录](#tutorial-screenshots-20261011)。完整独立用户操作、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
+
+<a id="tutorial-clarity-20261013"></a>
+## 教程用途、选项与步骤目录（2026-10-14）
+
+[SOP](../validation/human/SOP.md) 与九专题已审查并补充用途、选项区别和必要示例；79 个原编号步骤均为有名称的三级标题，各文档开头目录覆盖全部二、三级标题。原编号、参数、输入、截图和显式锚点保留；ESP/AIM 改用实际可见的 Record/Match 操作。材料检查继续统计新形式的步骤。本地提交由归档标签 archive/2026-10-14/docs/tutorial-clarity-main 定位，[任务](../.scratch/tutorial-clarity-20261013/spec.md) 记录范围和验收。
+
+证据在 validation/agent/reports/2026-10-13/tutorial-clarity/：structure.json、sop-example.json、examples.json、checker-tests.json、workspace.json、integration.json。结构和原内容边界、实际输入/函数、10 项检查器回归、材料与独立公开副本 Passed。公开副本位于 validation/work/agent/tutorial-clarity-20261013/public-copy/，保留主线与专题完整相对目录；既有图片缺位保持记录。Blender GUI、渲染、独立人工操作及网站构建/部署 Not Run；用户工程、科学输入和安装包未修改。维护脚本及本轮开始前的文档字节保存在 outputs/runs/tutorial-clarity-20261013/。
+
+<a id="local-selection-modes-20261013"></a>
+## 局部选择教程（2026-10-13）
+
+[分子与 XYZ](../validation/human/topics/01-molecule-xyz.md) 包含七种 Mode 的定义与 P06 五步连续演示；[任务](../.scratch/local-selection-modes-20261013/spec.md) 记录范围与验收。实际坐标与当前选择函数、文档边界和材料检查 Passed，Blender GUI 与独立人工操作 Not Run。证据保存在 validation/agent/reports/2026-10-13/local-selection-modes/ 的 examples.json 与 workspace-accepted.json；维护脚本在 outputs/runs/local-selection-modes-20261013/。本次说明与后续教程整合在同一本地提交中，由归档标签 archive/2026-10-14/docs/tutorial-clarity-main 定位；未产生或删除工程及科学输入。
 
 <a id="tutorial-flow-20261011"></a>
 ## 教程步骤衔接与一致性（2026-10-11）

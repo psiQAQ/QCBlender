@@ -1,0 +1,58 @@
+{
+  "status": "Passed",
+  "examples": [
+    {
+      "mode": "REPLACE",
+      "selected": [
+        1,
+        2,
+        3
+      ],
+      "status": "Passed"
+    },
+    {
+      "mode": "UNION",
+      "selected": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "status": "Passed"
+    },
+    {
+      "mode": "INTERSECT",
+      "selected": [
+        1,
+        4
+      ],
+      "status": "Passed"
+    },
+    {
+      "mode": "DIFFERENCE",
+      "selected": [
+        4
+      ],
+      "status": "Passed"
+    },
+    {
+      "mode": "INVERT",
+      "selected": [
+        1,
+        2,
+        3,
+        5,
+        6
+      ],
+      "status": "Passed"
+    }
+  ],
+  "checks": [
+    "actual P06 coordinates and selection functions",
+    "seven mode definitions",
+    "unchanged surrounding steps, links and images",
+    "UTF-8 without BOM and LF"
+  ],
+  "blender_gui": "Not Run",
+  "independent_human_review": "Not Run"
+}

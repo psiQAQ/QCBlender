@@ -1,0 +1,23 @@
+{
+  "status": "Passed",
+  "tests_run": 10,
+  "failures": 0,
+  "errors": 0,
+  "command": [
+    "C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_tutorial_workspace.py",
+    "-v"
+  ],
+  "cwd": "D:\\workspace\\QCBlender\\.worktrees\\tutorial-clarity-main",
+  "file_sha256": {
+    "validation/agent/tools/verify_workspace.py": "0189cf4ec14a284824015eacf2c2f394d4e3f257d6c5b3dec331b465c8e5f1d6",
+    "tests/test_tutorial_workspace.py": "addc232a5283449f09463db5ac5b148405de7b53241c473e0d0920b7d0829c25"
+  }
+}

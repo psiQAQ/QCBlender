@@ -1,0 +1,36 @@
+{
+  "status": "Passed",
+  "sample": {
+    "filename": "o2-uhf.fchk",
+    "sha256": "ef562c4b210e7c380219282d7684370cca1f0e8349dffa1d4388af5831472e36",
+    "format": "gaussian-fchk",
+    "parser": "qc-iodata 1.0.1"
+  },
+  "spin": "alpha",
+  "orbital_preview": {
+    "HOMO": {
+      "source_number": 8,
+      "occupation": 1.0,
+      "energy_hartree": -0.411434861,
+      "spin": "alpha"
+    },
+    "LUMO": {
+      "source_number": 10,
+      "occupation": 0.0,
+      "energy_hartree": 0.702998183,
+      "spin": "alpha"
+    },
+    "EXPLICIT": {
+      "source_number": 9,
+      "occupation": 1.0,
+      "energy_hartree": -0.411434861,
+      "spin": "alpha"
+    }
+  },
+  "source_checks": [
+    "qcblender/blender/ui.py Quantity/Spin/Orbital and preview controls",
+    "qcblender/data.py orbital_selection",
+    "qcblender/blender/data_export.py Data/Rows and conditional availability"
+  ],
+  "blender_gui": "Not Run"
+}

@@ -1,0 +1,88 @@
+{
+  "status": "Passed",
+  "documents": [
+    {
+      "path": "validation/human/SOP.md",
+      "steps": 15,
+      "sha256": "e4f003202f8aaf0f2eda2b09961e768e91f8b42504b0e8e57f5513151a46ec68",
+      "contents_and_step_anchors": "Passed",
+      "original_numbers_links_images": "Passed",
+      "encoding": "UTF-8 without BOM; LF"
+    },
+    {
+      "path": "validation/human/topics/01-molecule-xyz.md",
+      "steps": 11,
+      "sha256": "2e9c60dd1c2be7b148c140db0a5920486fe1f7942bcb810f2d6c6917eb9b158a",
+      "contents_and_step_anchors": "Passed",
+      "original_numbers_links_images": "Passed",
+      "encoding": "UTF-8 without BOM; LF"
+    },
+    {
+      "path": "validation/human/topics/02-cube.md",
+      "steps": 7,
+      "sha256": "b138e7588c9ea356018b8b584a1e6cdc5c4448338dda48cd847df75e717913d5",
+      "contents_and_step_anchors": "Passed",
+      "original_numbers_links_images": "Passed",
+      "encoding": "UTF-8 without BOM; LF"
+    },
+    {
+      "path": "validation/human/topics/03-density-esp.md",
+      "steps": 11,
+      "sha256": "da7ba57e2a417f80a920f17507160740f6c87d8bed098cfd2a157ac050b8ea9a",
+      "contents_and_step_anchors": "Passed",
+      "original_numbers_links_images": "Passed",
+      "encoding": "UTF-8 without BOM; LF"
+    },
+    {
+      "path": "validation/human/topics/04-spatial-tools.md",
+      "steps": 9,
+      "sha256": "da2b0f8dd4fcfae24efa6f084c7da727aee89c2325b6c224c20a49d86c58056a",
+      "contents_and_step_anchors": "Passed",
+      "original_numbers_links_images": "Passed",
+      "encoding": "UTF-8 without BOM; LF"
+    },
+    {
+      "path": "validation/human/topics/05-igmh-iri.md",
+      "steps": 5,
+      "sha256": "cfe501553f7783964c0b8cd38bee29428eb2c4f0ff54708d4fb5992f2d7ae7f1",
+      "contents_and_step_anchors": "Passed",
+      "original_numbers_links_images": "Passed",
+      "encoding": "UTF-8 without BOM; LF"
+    },
+    {
+      "path": "validation/human/topics/06-esp-aim.md",
+      "steps": 6,
+      "sha256": "1d2167a6722ad0cb11c3f57c0642a30282fd804afa51ecba17c6937f261ac224",
+      "contents_and_step_anchors": "Passed",
+      "original_numbers_links_images": "Passed",
+      "encoding": "UTF-8 without BOM; LF"
+    },
+    {
+      "path": "validation/human/topics/07-irc-mayer.md",
+      "steps": 5,
+      "sha256": "164af1207e0aabcfb8ebb95a64b24db261d86a5085cdc3800923963a07d44a07",
+      "contents_and_step_anchors": "Passed",
+      "original_numbers_links_images": "Passed",
+      "encoding": "UTF-8 without BOM; LF"
+    },
+    {
+      "path": "validation/human/topics/08-ets-nocv.md",
+      "steps": 5,
+      "sha256": "5fe9d11e1903c283cc9e00ddb6621d2424cf5934d011cc8d21a519350bf8b591",
+      "contents_and_step_anchors": "Passed",
+      "original_numbers_links_images": "Passed",
+      "encoding": "UTF-8 without BOM; LF"
+    },
+    {
+      "path": "validation/human/topics/09-nodes.md",
+      "steps": 5,
+      "sha256": "7321a1bb2c78cbbd0f9cec5166246cda95b023f9d17d7df4422a8a3bc4dc5f11",
+      "contents_and_step_anchors": "Passed",
+      "original_numbers_links_images": "Passed",
+      "encoding": "UTF-8 without BOM; LF"
+    }
+  ],
+  "step_count": 79,
+  "blender_gui": "Not Run",
+  "independent_human_review": "Not Run"
+}
