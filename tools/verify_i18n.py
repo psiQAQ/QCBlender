@@ -63,8 +63,7 @@ try:
     assert initial_geometry == geometry(original)
     record('native_translation_context_and_geometry')
 
-    cls = selection.QCBLENDER_OT_local_selection
-    prop = cls.bl_rna.properties['mode']
+    prop = bpy.ops.qcblender.local_selection.get_rna_type().properties['mode']
     assert prop.translation_context == i18n.CONTEXT
     expected = {'REPLACE': '替换', 'UNION': '并集', 'INTERSECT': '交集', 'DIFFERENCE': '差集',
                 'INVERT': '反选', 'CLEAR': '清除限制', 'RECOMPUTE': '重新计算'}
