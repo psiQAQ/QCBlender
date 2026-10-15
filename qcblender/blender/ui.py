@@ -663,7 +663,7 @@ def parameter_section_available(obj, group):
 def draw_view_parameters(layout, obj, section=None):
     """Edit the existing node controls in their native Properties sections."""
     layout = ui_layout(layout)
-    from .parameters import GROUPS, GROUP_LABELS, STYLES, STYLE_SOCKETS, socket_group, socket_label
+    from .parameters import GROUPS, GROUP_LABELS, STYLES, STYLE_SOCKETS, socket_group, socket_item_label
     from .capabilities import record
     field = record(obj, 'qc_field')
     try:
@@ -723,7 +723,7 @@ def draw_view_parameters(layout, obj, section=None):
                     button.socket_id, button.style = item.identifier, value
             else:
                 box.prop(modifier, '["' + item.identifier + '"]',
-                         text=socket_label(socket_name(item), quantity, color_unit if socket_name(item).startswith('Color ') else field.get('unit', '')))
+                         text=socket_item_label(item, quantity, color_unit if socket_name(item).startswith('Color ') else field.get('unit', '')), translate=False)
         for mat in materials:
             if mat:
                 role = next((name for name, target in preset_materials.items() if target == mat), '')

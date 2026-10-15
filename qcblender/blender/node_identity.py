@@ -80,6 +80,15 @@ def node_socket(sockets, key):
     return sockets[key]
 
 
+def socket_display_override(item):
+    """Return a user-owned display name, or None for a generated socket label."""
+    tree = _tree_for_socket(item)
+    entry = _record(tree)['display'].get('socket:' + item.identifier) if tree is not None else None
+    if entry is not None:
+        return item.name if item.name != entry['last'] else None
+    return item.name if socket_name(item) not in MESSAGES else None
+
+
 def interface_socket(tree, name, direction='INPUT'):
     matches = [item for item in tree.interface.items_tree
                if item.item_type == 'SOCKET' and item.in_out == direction
@@ -122,7 +131,8 @@ def _managed(owner, attribute, key, record, language, source=None, suffix=''):
     if current != entry['last']:
         return  # Preserve an editable name/label changed by its owner.
     translated = _translate(entry['source'], language) + entry.get('suffix', '')
-    setattr(owner, attribute, translated)
+    if current != translated:
+        setattr(owner, attribute, translated)
     entry['last'] = getattr(owner, attribute)  # Blender may append a suffix.
 
 
@@ -133,7 +143,7 @@ def localize_tree(tree, language=None, _seen=None):
         language = interface_language()
     if language not in ('en_US', 'zh_HANS'):
         raise ValueError('Unsupported QC node display language')
-    if getattr(tree, 'library', None) is not None:
+    if getattr(tree, 'library', None) is not None or not getattr(tree, 'is_editable', True):
         return
     if _seen is None:
         _seen = set()
@@ -178,9 +188,11 @@ def refresh_localization():
         if tree.get('qc_view_graph') or tree.get('qc_asset_id'):
             localize_tree(tree, language)
     for obj in bpy.data.objects:
+        if obj.library is not None or not obj.is_editable:
+            continue
         for modifier in obj.modifiers:
             tree = getattr(modifier, 'node_group', None)
-            if tree is not None and tree.get('qc_view_graph'):
+            if tree is not None and tree.library is None and tree.is_editable and tree.get('qc_view_graph'):
                 record = _record(tree)
                 _managed(modifier, 'name', 'modifier', record, language)
                 _save(tree, record)

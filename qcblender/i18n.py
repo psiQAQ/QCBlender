@@ -43,27 +43,40 @@ def interface_language():
     return _language()
 
 
+def _canonical(message):
+    catalog = messages()
+    if message in catalog:
+        return message
+    sources = [source for source, translation in catalog.items() if translation == message]
+    return sources[0] if len(sources) == 1 else message
+
+
 def iface(message, **values):
+    message = _canonical(message)
     result = messages().get(message, message) if _language() == 'zh_HANS' else message
     return result.format(**values) if values else result
 
 
 def tip(message, **values):
+    message = _canonical(message)
     result = messages().get(message, message) if _language(True) == 'zh_HANS' else message
     return result.format(**values) if values else result
 
 
 def error_text(error):
     text = str(error)
-    if _language() != 'zh_HANS':
-        return text
+    language = _language()
     catalog = messages()
-    if text in catalog:
-        return catalog[text]
-    for template, translated in catalog.items():
+    canonical = _canonical(text)
+    if canonical in catalog:
+        return catalog[canonical] if language == 'zh_HANS' else canonical
+    pairs = list(catalog.items()) if language == 'zh_HANS' else [(value, key) for key, value in catalog.items()]
+    for template, translated in pairs:
         parts = list(string.Formatter().parse(template))
         fields = [field for _, field, _, _ in parts if field is not None]
-        if not fields or sum(len(literal) for literal, _, _, _ in parts) < 8:
+        literal_bytes = sum(len(literal.encode('utf-8')) for literal, _, _, _ in parts)
+        target_bytes = sum(len(literal.encode('utf-8')) for literal, _, _, _ in string.Formatter().parse(translated))
+        if not fields or min(literal_bytes, target_bytes) < 8:
             continue
         pattern = ''.join(re.escape(literal) + ('(.*?)' if field is not None else '')
                           for literal, field, _, _ in parts)

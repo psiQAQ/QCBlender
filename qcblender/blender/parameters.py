@@ -82,6 +82,9 @@ def socket_group(name, kind, values, quantity=''):
 
 def socket_label(name, quantity='', unit=''):
     from ..i18n import iface
+    from ..translations_nodes import MESSAGES
+    if name not in MESSAGES:
+        return name
     if name == 'Quality':
         return iface('Display Detail')
     if name == 'Resolution':
@@ -110,6 +113,12 @@ def socket_label(name, quantity='', unit=''):
     if name in ('Charge Minimum', 'Charge Center', 'Charge Maximum'):
         return label + ' [e]'
     return label
+
+
+def socket_item_label(item, quantity='', unit=''):
+    from .node_identity import socket_display_override, socket_name
+    custom = socket_display_override(item)
+    return custom if custom is not None else socket_label(socket_name(item), quantity, unit)
 
 
 if __name__ == '__main__':

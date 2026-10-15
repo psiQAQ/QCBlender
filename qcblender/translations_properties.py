@@ -2,6 +2,11 @@
 from .property_labels import MESSAGES
 
 MESSAGES = dict(MESSAGES, **{
+    'Direction': '方向',
+    'Role': '角色',
+    'Target': '目标',
+    'Action': '操作',
+    'Annotation Id': '标注标识',
     'Fragments contain repeated atoms; the overlap declaration is retained: {atoms}':
         '片段之间包含重复原子；已保留交叠声明：{atoms}',
     'External analyses require a static scientific reference; use an independent file for the corresponding step':

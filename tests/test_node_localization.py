@@ -6,7 +6,7 @@ import unittest
 from qcblender.asset_catalog import CATEGORIES, catalog_id, catalog_text
 from qcblender.blender.node_identity import (canonical_display, interface_socket,
     localize_tree, node_socket, remember_sockets, socket_name, socket_identity_signature,
-    adopt_generated_copy)
+    adopt_generated_copy, socket_display_override)
 
 
 class Tree(dict):
@@ -33,6 +33,27 @@ class Sockets(list):
 
 
 class NodeLocalization(unittest.TestCase):
+    def test_custom_socket_display_is_preserved_even_when_it_matches_a_ui_message(self):
+        from qcblender.blender.parameters import socket_label, socket_item_label
+        tree = Tree()
+        custom = tree.add_socket('Workflow', 'custom')
+        standard = tree.add_socket('Width', 'width')
+        localize_tree(tree, 'zh_HANS')
+        self.assertEqual(socket_display_override(custom), 'Workflow')
+        self.assertEqual(socket_label('Workflow'), 'Workflow')
+        standard.name = 'Workflow'
+        self.assertEqual(socket_item_label(standard), 'Workflow')
+        self.assertEqual(socket_name(standard), 'Width')
+
+    def test_noneditable_embedded_tree_is_not_mutated(self):
+        tree = Tree()
+        tree.is_editable = False
+        tree.add_socket('Width', 'width')
+        before = dict(tree)
+        localize_tree(tree, 'zh_HANS')
+        self.assertEqual(dict(tree), before)
+        self.assertEqual(tree.interface.items_tree[0].name, 'Width')
+
     def test_locale_roundtrip_keeps_roles_identifiers_values_and_user_rename(self):
         tree = Tree('QC Select Atoms.001')
         atom = tree.add_socket('First Atom (1-based)', 'Socket_1')

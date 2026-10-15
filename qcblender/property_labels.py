@@ -91,6 +91,12 @@ qc_role|QC role|QC 角色|Stable internal role of this generated item.|此生成
 qc_spectrum_label|Spectrum label|光谱标签|Display label of the spectrum.|光谱的显示标签。
 qc_transfer|Transfer function|传递函数|Mapping from scientific scalar values to display properties.|科学标量值到显示属性的映射。
 qc_value|Scientific value|科学数值|Scientific value represented by this item; see its source record for units.|此项表示的科学数值；单位见来源记录。
+qc_pair_a|First atom of pair|原子对中的第一个原子|Source atom number of the first atom in the selected pair.|选定原子对中第一个原子的来源编号。
+qc_pair_b|Second atom of pair|原子对中的第二个原子|Source atom number of the second atom in the selected pair.|选定原子对中第二个原子的来源编号。
+qc_hydrogen_visibility|Hydrogen visibility|氢原子可见性|Saved hydrogen display mode: hide, keep selected, or restore.|保存的氢原子显示模式：隐藏、保留选定原子或恢复。
+qc_hydrogen_keep|Retained hydrogen atoms|保留的氢原子|One-based source atom numbers retained when hiding hydrogen atoms.|隐藏氢原子时保留的原子编号，按来源顺序从 1 开始。
+qc_profile_start|Profile start|剖面起点|Saved world-space start position and scientific source identity for a profile.|保存的剖面起点世界坐标及科学来源标识。
+qc_vdw_missing|Missing van der Waals radii|缺少范德华半径的元素|Atomic numbers of elements without a supported van der Waals radius.|缺少受支持范德华半径的元素原子序数。
 '''
 
 LABELS = {}

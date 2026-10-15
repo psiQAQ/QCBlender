@@ -93,6 +93,13 @@ class I18nCoreTests(unittest.TestCase):
                 self.view.language = language
                 self.assertEqual(i18n.iface('Source'), expected)
 
+    def test_known_legacy_chinese_messages_return_to_english_without_touching_values(self):
+        self.view.language = 'en_US'
+        self.assertEqual(i18n.iface('来源'), 'Source')
+        self.assertEqual(i18n.error_text('缺少科学场：用户 field.cube'),
+                         'Missing scientific field: 用户 field.cube')
+        self.assertEqual(i18n.error_text('我的自定义内容'), '我的自定义内容')
+
     def test_missing_blender_or_preferences_keeps_canonical_messages(self):
         with patch.dict('sys.modules', {'bpy': None}):
             self.assertEqual(i18n.iface('Source'), 'Source')

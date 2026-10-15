@@ -91,7 +91,7 @@ def _legacy_legend(obj):
                     or _link(node_socket(number.inputs, 'Value')) != node_socket(inputs.outputs, label):
                 raise ValueError('Legacy legend number source is customized')
             nodes.add(number)
-        elif text.label != 'QC Legend Title':
+        elif canonical_display(tree, 'node:' + text.name, text.label) != 'QC Legend Title':
             raise ValueError('Legacy legend title is customized')
         if label is None:
             titles.append(text)

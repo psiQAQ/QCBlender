@@ -60,6 +60,8 @@ class _PropertyLayout:
 
 
 def _draw(self, context):
+    if _original_draw is None:
+        return rna_prop_ui.draw(self.layout, context, self._context_path, self._property_type)
     obj, _ = rna_prop_ui.rna_idprop_context_value(context, self._context_path, self._property_type)
     if obj is None or not any(key in LABELS for key in obj.keys()):
         return _original_draw(self, context)
