@@ -6,13 +6,14 @@ import json
 from uuid import uuid4
 
 import bpy
-from bpy.props import BoolProperty, EnumProperty, FloatProperty, FloatVectorProperty, IntProperty, StringProperty
+from bpy.props import BoolProperty, CollectionProperty, EnumProperty, FloatProperty, FloatVectorProperty, IntProperty, StringProperty
 from mathutils import Vector
 import numpy as np
 
 from ..measurements import (ATOM_COUNTS, DIHEDRAL_CONVENTION, annotation_prefix, measure, measurement_text, parse_source_atom_numbers,
                             validate_annotation_style)
 from ..annotation_geometry import measurement_geometry
+from ..annotation_inputs import edit_numbers, resize_numbers
 from .geometry import current_geometry
 from .views import material
 
@@ -440,6 +441,82 @@ def _atom_view(context):
     return obj if obj is not None and obj.get('qc_view_kind') == 'atoms' else None
 
 
+class QCAnnotationAtomInput(bpy.types.PropertyGroup):
+    number: IntProperty(name='Source atom number', min=1, default=1,
+                        description='Type or step through source atom numbers; clamp to the source range and keep the previous number if another input already uses it')
+
+
+class QCBLENDER_UL_annotation_atoms(bpy.types.UIList):
+    def draw_item(self, context, layout, data, item, icon, active_data, active_propname, index=0):
+        ui_layout(layout).prop(item, 'number', text=iface('Atom {value0}', value0=index + 1))
+
+
+def _init_atom_inputs(operator, numbers, atom_count):
+    operator.atom_inputs.clear()
+    for number in numbers:
+        operator.atom_inputs.add().number = number
+    operator.input_count = len(numbers)
+    operator.active_input = 0
+    operator.input_limit = atom_count
+    operator.accepted_atoms = json.dumps(numbers)
+    operator.swap_pair = 'NONE'
+
+
+def _check_atom_inputs(operator, *, batch=False):
+    if not operator.accepted_atoms:
+        return False
+    previous = json.loads(operator.accepted_atoms)
+    count = operator.input_limit
+    proposed = [item.number for item in operator.atom_inputs]
+    accepted = edit_numbers(previous, proposed, count)
+    if batch:
+        accepted = resize_numbers(accepted, operator.input_count, count)
+    if operator.swap_pair != 'NONE':
+        index = int(operator.swap_pair) - 1
+        if 0 <= index < len(accepted) - 1:
+            accepted[index], accepted[index + 1] = accepted[index + 1], accepted[index]
+        operator.swap_pair = 'NONE'
+    changed = proposed != accepted or operator.input_count != len(accepted)
+    while len(operator.atom_inputs) > len(accepted):
+        operator.atom_inputs.remove(len(operator.atom_inputs) - 1)
+    while len(operator.atom_inputs) < len(accepted):
+        operator.atom_inputs.add()
+    for item, number in zip(operator.atom_inputs, accepted):
+        item.number = number
+    operator.input_count = len(accepted)
+    operator.active_input = min(operator.active_input, len(accepted) - 1)
+    operator.accepted_atoms = json.dumps(accepted)
+    return changed
+
+
+def _draw_atom_inputs(layout, operator, *, batch=False):
+    layout = ui_layout(layout)
+    box = layout.box()
+    box.label(text=iface('Source atom range: 1–{value0}', value0=operator.input_limit))
+    if batch:
+        box.prop(operator, 'input_count')
+    if len(operator.atom_inputs) > 6:
+        box.template_list('QCBLENDER_UL_annotation_atoms', '', operator, 'atom_inputs',
+                          operator, 'active_input', rows=6)
+    else:
+        for index, item in enumerate(operator.atom_inputs):
+            box.prop(item, 'number', text=iface('Atom {value0}', value0=index + 1))
+    if not batch and len(operator.atom_inputs) > 1:
+        box.label(text='Swap positions')
+        swaps = box.row(align=True)
+        for index in range(1, len(operator.atom_inputs)):
+            swaps.prop_enum(operator, 'swap_pair', str(index), text=f'{index} ↔ {index + 1}')
+
+
+def _input_numbers(operator, atom_count, fallback, *, batch=False):
+    if operator.accepted_atoms:
+        _check_atom_inputs(operator, batch=batch)
+        expression = ','.join(str(item.number) for item in operator.atom_inputs)
+    else:
+        expression = operator.atoms or fallback
+    return parse_source_atom_numbers(expression, atom_count)
+
+
 def _draw_style(layout, operator, kind, creating=False):
     layout = ui_layout(layout)
     box = layout.box()
@@ -504,7 +581,15 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
 
     kind: EnumProperty(name='Annotation', items=[('ATOM', 'Atom numbers', ''),
                        ('DISTANCE', 'Distance', ''), ('ANGLE', 'Angle', ''), ('DIHEDRAL', 'Dihedral', '')])
-    atoms: StringProperty(name='Source atom numbers', description='Enter one-based source atom numbers in measurement order; the source atoms are unchanged', default='1,2')
+    atoms: StringProperty(name='Source atom numbers', description='Enter one-based source atom numbers in measurement order; the source atoms are unchanged', default='1,2', options={'HIDDEN', 'SKIP_SAVE'})
+    atom_inputs: CollectionProperty(type=QCAnnotationAtomInput, options={'HIDDEN', 'SKIP_SAVE'})
+    input_count: IntProperty(name='Number of atom labels', default=1, min=1, options={'SKIP_SAVE'})
+    active_input: IntProperty(default=0, min=0, options={'HIDDEN', 'SKIP_SAVE'})
+    input_limit: IntProperty(default=1, min=1, options={'HIDDEN', 'SKIP_SAVE'})
+    accepted_atoms: StringProperty(default='', options={'HIDDEN', 'SKIP_SAVE'})
+    swap_pair: EnumProperty(name='Swap positions', description='Explicitly exchange adjacent atom positions without allowing duplicate numbers',
+                           items=[('NONE', 'No swap', ''), ('1', '1 ↔ 2', ''), ('2', '2 ↔ 3', ''), ('3', '3 ↔ 4', '')],
+                           default='NONE', options={'HIDDEN', 'SKIP_SAVE'})
     size: FloatProperty(name='Text size (local scene units)', description='Size of the annotation text in atom-view local scene units', default=.16, min=.001)
     color: FloatVectorProperty(name='Color', description='Initial material color; later edits belong to the material nodes',
                                subtype='COLOR', size=3, default=(0., 0., 0.), min=0, max=1)
@@ -530,21 +615,39 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
     def invoke(self, context, event):
         if not self.properties.is_property_set('decimals', ghost=False):
             self.decimals = 4 if self.kind in ('ATOM', 'DISTANCE') else 2
-        self.atoms = '1' if self.kind == 'ATOM' else ','.join(str(i) for i in range(1, ATOM_COUNTS[self.kind] + 1))
+        try:
+            positions, _ = current_geometry(_atom_view(context))
+            required = 1 if self.kind == 'ATOM' else ATOM_COUNTS[self.kind]
+            if len(positions) < required:
+                raise ValueError('The source geometry has too few distinct atoms for this annotation')
+            numbers = (parse_source_atom_numbers(self.atoms, len(positions))
+                       if self.properties.is_property_set('atoms', ghost=False) else list(range(1, required + 1)))
+            if self.kind != 'ATOM' and len(numbers) != required:
+                raise ValueError(f'{self.kind} needs {required} ordered source atom numbers')
+            self.atoms = ','.join(map(str, numbers))
+            _init_atom_inputs(self, numbers, len(positions))
+        except (ValueError, KeyError, OSError, TypeError) as error:
+            self.report({'ERROR'}, error_text(error))
+            return {'CANCELLED'}
         return context.window_manager.invoke_props_dialog(self, width=460)
+
+    def check(self, context):
+        return _check_atom_inputs(self, batch=self.kind == 'ATOM')
 
     def draw(self, context):
         layout = ui_layout(self.layout)
-        layout.prop(self, 'atoms')
+        _draw_atom_inputs(layout, self, batch=self.kind == 'ATOM')
         _draw_style(layout, self, self.kind, creating=True)
 
     def execute(self, context):
         owner = _atom_view(context)
         try:
             positions, record = current_geometry(owner)
-            numbers = parse_source_atom_numbers(self.atoms, len(positions))
+            numbers = _input_numbers(self, len(positions), '', batch=self.kind == 'ATOM')
             if self.kind != 'ATOM' and len(numbers) != ATOM_COUNTS[self.kind]:
                 raise ValueError(f'{self.kind} needs {ATOM_COUNTS[self.kind]} ordered source atom numbers')
+            self.atoms = ','.join(map(str, numbers))
+            _init_atom_inputs(self, numbers, len(positions))
             symbols = [_symbol(int(owner.data.attributes['qc_atomic_number'].data[n - 1].value))
                        for n in numbers]
             decimals = self.decimals if self.properties.is_property_set('decimals', ghost=False) else (
@@ -573,6 +676,15 @@ class QCBLENDER_OT_edit_annotation(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     annotation_id: StringProperty()
+    atoms: StringProperty(name='Source atom numbers', default='', options={'HIDDEN', 'SKIP_SAVE'})
+    atom_inputs: CollectionProperty(type=QCAnnotationAtomInput, options={'HIDDEN', 'SKIP_SAVE'})
+    input_count: IntProperty(default=1, min=1, options={'HIDDEN', 'SKIP_SAVE'})
+    active_input: IntProperty(default=0, min=0, options={'HIDDEN', 'SKIP_SAVE'})
+    input_limit: IntProperty(default=1, min=1, options={'HIDDEN', 'SKIP_SAVE'})
+    accepted_atoms: StringProperty(default='', options={'HIDDEN', 'SKIP_SAVE'})
+    swap_pair: EnumProperty(name='Swap positions', description='Explicitly exchange adjacent atom positions without allowing duplicate numbers',
+                           items=[('NONE', 'No swap', ''), ('1', '1 ↔ 2', ''), ('2', '2 ↔ 3', ''), ('3', '3 ↔ 4', '')],
+                           default='NONE', options={'HIDDEN', 'SKIP_SAVE'})
     size: FloatProperty(name='Text size (local scene units)', description='Size of the annotation text in atom-view local scene units', default=.16, min=.001)
     offset: FloatVectorProperty(name='Offset (local scene units)', description='Move text from its atom-centroid anchor without moving source atoms', size=3)
     decimals: IntProperty(name='Decimal places', description='Displayed decimal places; the saved scientific value is unchanged', default=4, min=0, max=10)
@@ -601,11 +713,22 @@ class QCBLENDER_OT_edit_annotation(bpy.types.Operator):
             self.report({'ERROR'}, error_text('Annotation no longer exists'))
             return {'CANCELLED'}
         self.kind = entry['kind']
+        try:
+            positions, _ = current_geometry(owner)
+            numbers = parse_source_atom_numbers(','.join(map(str, entry['source_atom_numbers'])), len(positions))
+            _init_atom_inputs(self, numbers, len(positions))
+        except (ValueError, KeyError, OSError, TypeError) as error:
+            self.report({'ERROR'}, error_text(error))
+            return {'CANCELLED'}
         for name in ('size', 'offset', 'decimals', 'show_leader', 'line_width', 'visible', *STYLE_DEFAULTS):
             setattr(self, name, entry.get(name, STYLE_DEFAULTS.get(name)))
         return context.window_manager.invoke_props_dialog(self, width=460)
 
+    def check(self, context):
+        return _check_atom_inputs(self)
+
     def draw(self, context):
+        _draw_atom_inputs(self.layout, self)
         _draw_style(self.layout, self, self.kind)
 
     def execute(self, context):
@@ -617,6 +740,13 @@ class QCBLENDER_OT_edit_annotation(bpy.types.Operator):
             if found is None:
                 raise ValueError('Annotation no longer exists')
             child, entry, _, _, leader = found
+            self.kind = entry['kind']
+            numbers = _input_numbers(self, len(positions), ','.join(map(str, entry['source_atom_numbers'])))
+            self.atoms = ','.join(map(str, numbers))
+            _init_atom_inputs(self, numbers, len(positions))
+            if numbers != entry['source_atom_numbers']:
+                entry['source_atom_numbers'] = numbers
+                entry['symbols'] = [_symbol(int(owner.data.attributes['qc_atomic_number'].data[n - 1].value)) for n in numbers]
             entry.update(_style_values(self, entry['kind']))
             entry, anchor, body = _prepare(entry, positions, record)
             _ensure_legacy_font(child, body)

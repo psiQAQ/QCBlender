@@ -1,5 +1,6 @@
 """Viewport probe and native slice controls; scientific arrays remain source data."""
 from .node_identity import socket_name
+from .viewport_context import target_context, target_object, viewport_context
 from ..i18n import error_text, iface, prepare_class, ui_layout
 import hashlib
 import json
@@ -287,6 +288,9 @@ class QCBLENDER_OT_define_plane(bpy.types.Operator):
 
 
 def _probe_draw(operator):
+    if (bpy.context.window != operator._viewport.window or bpy.context.area != operator._area
+            or bpy.context.region != operator._region):
+        return
     font = __import__('blf')
     font.size(0, 15)
     for index, line in enumerate(error_text(operator._hud).splitlines()):
@@ -308,17 +312,30 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
             'GEOMETRY': 'Click the active QC surface or slice to sample its geometry field using trilinear interpolation; Enter saves the sample and Esc restores the previous one',
             'COLOR': 'Click the active QC surface or slice to sample its bound color field; a valid color-field binding is required, Enter saves and Esc restores the previous sample',
         }
+        if getattr(getattr(context, 'area', None), 'type', None) == 'PROPERTIES':
+            messages = {
+                'GEOMETRY': 'Click the Properties object in the largest 3D View in the same window to sample its geometry field; Enter saves and Esc restores the previous sample',
+                'COLOR': 'Click the Properties object in the largest 3D View in the same window to sample its bound color field; a valid binding is required, Enter saves and Esc restores',
+            }
+            return tip(messages.get(getattr(properties, 'role', None), 'Probe the Properties object by clicking in the largest 3D View in the same window; Enter saves and Esc restores the previous sample'))
         return tip(messages.get(getattr(properties, 'role', None), cls.bl_description))
 
     @classmethod
     def poll(cls, context):
         from .capabilities import poll_action
-        return (context.area is not None and context.area.type == 'VIEW_3D'
-                and poll_action(cls, context, 'probe_click'))
+        try:
+            viewport_context(context)
+        except (ValueError, ReferenceError) as error:
+            cls.poll_message_set(error_text(error))
+            return False
+        return poll_action(cls, target_context(context), 'probe_click')
 
     def invoke(self, context, event):
         try:
-            self._target = context.object
+            self._viewport = viewport_context(context)
+            self._target = target_object(context)
+            if self._target is None:
+                raise ValueError('Select or pin an Object in Object Properties')
             self._geometry, self._geometry_field, geometry_meta, self._geometry_source = bound_field(self._target)
             if self.role == 'COLOR':
                 _, _, sample_meta = mapped_field(self._target)
@@ -343,7 +360,7 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
             self._data = load_dataset(bpy.path.abspath(self._source['qc_dataset']))
             if self._data.metadata != sample_meta or binding_key(self._source) != self._source_binding:
                 raise ValueError('Sampled field Dataset changed while the probe started')
-        except (ValueError, OSError, KeyError, TypeError) as error:
+        except (ValueError, OSError, KeyError, TypeError, ReferenceError) as error:
             self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         self._old_probe = self._target.get('qc_probe')
@@ -351,17 +368,12 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
             del self._target['qc_probe']
         self._pending = None
         self._pending_transforms = None
-        self._area = context.area
-        self._region = next((region for region in self._area.regions if region.type == 'WINDOW'), None)
-        self._view = self._area.spaces.active.region_3d
-        if self._region is None or self._view is None:
-            if self._old_probe is not None:
-                self._target['qc_probe'] = self._old_probe
-            self.report({'ERROR'}, error_text('3D viewport window is unavailable'))
-            return {'CANCELLED'}
+        self._area = self._viewport.area
+        self._region = self._viewport.region
+        self._view = self._viewport.view
         self._hud = 'QC probe: click active surface; Enter saves; Esc restores'
         self._handle = bpy.types.SpaceView3D.draw_handler_add(_probe_draw, (self,), 'WINDOW', 'POST_PIXEL')
-        for area in context.screen.areas:
+        for area in self._viewport.screen.areas:
             area.tag_redraw()
         context.window_manager.modal_handler_add(self)
         if event.type == 'LEFTMOUSE' and event.value == 'PRESS':
@@ -370,11 +382,12 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
 
     def _close(self, context):
         bpy.types.SpaceView3D.draw_handler_remove(self._handle, 'WINDOW')
-        for area in context.screen.areas:
+        for area in self._viewport.window.screen.areas:
             area.tag_redraw()
 
     def _check_binding(self, context):
-        if context.object != self._target or self._target.hide_get():
+        self._viewport.validate()
+        if bpy.data.objects.get(self._target.name) != self._target or self._target.hide_get():
             raise ValueError('Active surface changed or is hidden')
         geometry, geometry_field, geometry_meta, geometry_source = bound_field(self._target)
         if self.role == 'COLOR':
@@ -397,6 +410,8 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
             raise ValueError('Field binding changed during probe')
 
     def modal(self, context, event):
+        if context.window != self._viewport.window:
+            return {'PASS_THROUGH'}
         if event.type in {'ESC', 'RIGHTMOUSE'} and event.value == 'PRESS':
             if self._old_probe is not None:
                 self._target['qc_probe'] = self._old_probe
@@ -415,7 +430,7 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
                        for saved, obj in zip(self._pending_transforms,
                                              (self._target, self._geometry, self._source))):
                     raise ValueError('Field transform changed after the sample')
-            except (ValueError, OSError, KeyError, TypeError) as error:
+            except (ValueError, OSError, KeyError, TypeError, ReferenceError) as error:
                 self._pending = None
                 self._pending_transforms = None
                 self._hud = 'QC probe invalid: ' + str(error)
@@ -428,6 +443,8 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
             return {'FINISHED'}
         if event.type != 'LEFTMOUSE' or event.value != 'PRESS':
             return {'RUNNING_MODAL'}
+        if not self._viewport.contains(event):
+            return {'RUNNING_MODAL'}
         self._pending = None
         self._pending_transforms = None
         try:
@@ -435,10 +452,6 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
             field = self._field
             region = self._region
             coord = (event.mouse_x - region.x, event.mouse_y - region.y)
-            if not (0 <= coord[0] < region.width and 0 <= coord[1] < region.height):
-                self._hud = 'QC probe: no hit in the 3D viewport window'
-                self._area.tag_redraw()
-                return {'RUNNING_MODAL'}
             origin = view3d_utils.region_2d_to_origin_3d(region, self._view, coord)
             direction = view3d_utils.region_2d_to_vector_3d(region, self._view, coord)
             evaluated = self._target.evaluated_get(context.evaluated_depsgraph_get())
@@ -470,7 +483,7 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
         except ValueError as error:
             state = 'outside field' if 'outside the field domain' in str(error) else 'invalid'
             self._hud = 'QC probe ' + state + ': ' + str(error)
-        except (OSError, KeyError, TypeError, np.linalg.LinAlgError) as error:
+        except (OSError, KeyError, TypeError, ReferenceError, np.linalg.LinAlgError) as error:
             self._hud = 'QC probe invalid: ' + str(error)
         self._area.tag_redraw()
         return {'RUNNING_MODAL'}

@@ -11,4 +11,5 @@ STDLIB = tuple('test_' + name for name in (
     'local_inputs', 'multi_field_accept', 'native_volume', 'native_volume_project',
     'static_reference_capabilities', 'storage_cleanup', 'candidate_artifacts',
     'generate_qualification', 'view_summary', 'release_candidate', 'validation_data',
-    'empty_button_guards', 'record_ranges', 'color_presets', 'atom_benchmark'))
+    'empty_button_guards', 'record_ranges', 'color_presets', 'atom_benchmark',
+    'annotation_inputs', 'object_summary', 'source_summary_cache', 'sidebar_layout', 'property_viewport_context'))

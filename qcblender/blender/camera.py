@@ -1,5 +1,6 @@
 """Create a new orthographic camera around selected QC display views."""
 from ..i18n import error_text
+from .viewport_context import target_object, viewport_context
 
 import bpy
 from bpy.props import FloatProperty
@@ -68,18 +69,35 @@ class QCBLENDER_OT_create_framed_camera(bpy.types.Operator):
                           subtype='FACTOR')
 
     @classmethod
+    def description(cls, context, properties):
+        from ..i18n import tip
+        if getattr(getattr(context, 'area', None), 'type', None) == 'PROPERTIES':
+            return tip('Frame the Properties object with an orthographic camera using the largest 3D View in the same window; other selected objects are excluded')
+        return tip(cls.bl_description)
+
+    @classmethod
     def poll(cls, context):
-        return context.area is not None and context.area.type == 'VIEW_3D'
+        try:
+            viewport_context(context)
+        except (ValueError, ReferenceError) as error:
+            cls.poll_message_set(error_text(error))
+            return False
+        if context.area.type == 'PROPERTIES' and target_object(context) is None:
+            cls.poll_message_set(error_text('Select or pin an Object in Object Properties'))
+            return False
+        return True
 
     def execute(self, context):
         try:
-            space = context.space_data
-            view = context.region_data or space.region_3d
-            if view is None:
-                raise ValueError('A VIEW_3D viewing direction is required')
-            selected = [obj for obj in context.selected_objects
-                        if obj.get('qc_view_kind') in _DISPLAY_KINDS and _renderable(obj, context)]
-            if not selected and context.view_layer.objects.active is not None:
+            view = viewport_context(context).view
+            if context.area.type == 'PROPERTIES':
+                target = target_object(context)
+                selected = [target] if (target is not None and target.get('qc_view_kind') in _DISPLAY_KINDS
+                                        and _renderable(target, context)) else []
+            else:
+                selected = [obj for obj in context.selected_objects
+                            if obj.get('qc_view_kind') in _DISPLAY_KINDS and _renderable(obj, context)]
+            if context.area.type == 'VIEW_3D' and not selected and context.view_layer.objects.active is not None:
                 active = context.view_layer.objects.active
                 if active.get('qc_view_kind') in _DISPLAY_KINDS and _renderable(active, context):
                     selected = [active]
@@ -98,7 +116,7 @@ class QCBLENDER_OT_create_framed_camera(bpy.types.Operator):
             depsgraph = context.evaluated_depsgraph_get()
             points = [point for obj in selected for point in _view_points(obj, depsgraph)]
             location, scale, clip_end = fit_orthographic(points, basis, aspect, self.margin)
-        except (ValueError, ZeroDivisionError, TypeError) as error:
+        except (ValueError, ZeroDivisionError, TypeError, ReferenceError) as error:
             self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
 
