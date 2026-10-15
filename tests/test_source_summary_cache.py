@@ -86,8 +86,12 @@ class SourceSummaryCache(unittest.TestCase):
             self.assertEqual(self.rows(result)['xyz']['value'], '2 / 3')
             self.owner['qc_trajectory_frame'] = 3
             self.assertEqual(self.rows(self.browser.cached_object_summary(annotation))['xyz']['value'], '3 / 3')
-            for obj in (None, Object('Cube', parent=self.owner), Object('Cube', qc_dataset='fixture.qcdata')):
+            for obj in (None, Object('Cube', parent=self.owner)):
                 self.assertFalse(self.browser.cached_object_summary(obj)['available'])
+            raw_volume = Object('Volume', qc_dataset='fixture.qcdata')
+            raw_summary = self.browser.cached_object_summary(raw_volume)
+            self.assertTrue(raw_summary['available'])
+            self.assertEqual(raw_summary['state'], 'uncached')
 
     def test_cache_binding_identity_prevents_reusing_another_manifest(self):
         self.browser.cache_dataset(self.owner, self.data)
