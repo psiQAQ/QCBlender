@@ -79,7 +79,7 @@
 
 > 图例标出颜色对应的数值和单位。长度、宽度调整色条尺寸，字号调整文字大小；位置以当前视图对象为参考，尺寸和位置均使用视图局部布局单位。小数位数控制图例标签的显示精度。
 
-保持密度表面活动，在 **颜色映射（Color Mapping）** 设 **颜色最小值（Color Minimum）=−0.05、颜色中心值（Color Center）=0、颜色最大值（Color Maximum）=0.05**。在 **图例排版（Legend Layout）** 开启 **显示图例（Show Legend）**，设 **图例长度（Legend Length）=2.6、图例宽度（Legend Width）=0.25、图例字号（Legend Text Size）=0.2、图例小数位数（Legend Decimals）=3、图例位置（Legend Position）=(3.5,0,0)**。转到能读清图例的视角；图例应显示 **hartree/e** 与上述范围。在 **属性（Properties） → 材质（Material） → QCBlender · 节点材质（QCBlender · Node Materials）** 把 **反转（0 或 1）（Reverse (0 or 1)）** 设为 **1**，表面和图例应一起反转颜色，再恢复 **0**。
+保持密度表面活动，在 **颜色映射（Color Mapping）** 设 **颜色最小值（Color Minimum）=−0.05、颜色中心值（Color Center）=0、颜色最大值（Color Maximum）=0.05**。在 **图例排版（Legend Layout）** 开启 **显示图例（Show Legend）**，设 **长度（Length）=2.6、宽度（Width）=0.25、字号（Text Size）=0.2、小数位数（Decimal Places）=3、位置（Position）=(3.5,0,0)**。转到能读清图例的视角；图例应显示 **hartree/e** 与上述范围。在 **属性（Properties） → 材质（Material） → QCBlender · 节点材质（QCBlender · Node Materials）** 把 **反转（0 或 1）（Reverse (0 or 1)）** 设为 **1**，表面和图例应一起反转颜色，再恢复 **0**。
 
 <a id="presets"></a>
 ## 应用色带预设

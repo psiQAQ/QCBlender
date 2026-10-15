@@ -33,9 +33,9 @@
 - **中心（Center）**：平面的中心位置，用于移动观察截面。
 - **旋转（Rotation）**：平面的朝向；本例先用零旋转从顶面观察。
 - **宽度（Width） / 高度（Height）**：平面的宽、高，用于确定观察范围。
-- **显示采样数/轴（Resolution）**：每个方向的显示采样点数。101 表示 101×101 个点；加密显示采样不会加密源网格，本例源网格仍为 0.2 Å。
+- **显示采样数/轴（Display Samples per Axis）**：每个方向的显示采样点数。101 表示 101×101 个点；加密显示采样不会加密源网格，本例源网格仍为 0.2 Å。
 
-在 **显示层（Display Layers）** 点击 **QC electrostatic_potential** 行最左侧的选择图标；它会重新显示该层。点击 **N 侧栏 → 创建视图与检查工具（Create Views and Inspection Tools） → 创建切片（Create Slice）**，点击 **确定（OK）**。新切片名为 **QC scalar slice**，选中它并点击 **对象属性与显示参数（Object Properties and Display Parameters）**。在 **空间观察（Spatial View）** 设 **中心（Center）=(0,0,1.45) Å、旋转（Rotation）=(0,0,0)、宽度（Width）=6 Å、高度（Height）=6 Å**；在 **几何表示（Geometry Representation）** 将 **显示采样数/轴（Resolution）** 设为 **101**，在 **颜色映射（Color Mapping）** 设 **颜色最小值（Color Minimum） / 颜色中心值（Color Center） / 颜色最大值（Color Maximum）=−0.05/0/+0.05 hartree/e**。关闭密度和独立 ESP 表面的眼睛图标，保留切片与 **P03-atoms** 可见；鼠标移入视口，按小键盘 `7`，或选择视口菜单 **视图（View） → 视图（Viewpoint） → 顶视图（Top）**，从顶面观察，应看到有颜色的平面。
+在 **显示层（Display Layers）** 点击 **QC electrostatic_potential** 行最左侧的选择图标；它会重新显示该层。点击 **N 侧栏 → 创建视图与检查工具（Create Views and Inspection Tools） → 创建切片（Create Slice）**，点击 **确定（OK）**。新切片名为 **QC scalar slice**，选中它并点击 **对象属性与显示参数（Object Properties and Display Parameters）**。在 **空间观察（Spatial View）** 设 **中心（Center）=(0,0,1.45) Å、旋转（Rotation）=(0,0,0)、宽度（Width）=6 Å、高度（Height）=6 Å**；在 **几何表示（Geometry Representation）** 将 **显示采样数/轴（Display Samples per Axis）** 设为 **101**，在 **颜色映射（Color Mapping）** 设 **颜色最小值（Color Minimum） / 颜色中心值（Color Center） / 颜色最大值（Color Maximum）=−0.05/0/+0.05 hartree/e**。关闭密度和独立 ESP 表面的眼睛图标，保留切片与 **P03-atoms** 可见；鼠标移入视口，按小键盘 `7`，或选择视口菜单 **视图（View） → 视图（Viewpoint） → 顶视图（Top）**，从顶面观察，应看到有颜色的平面。
 
 <a id="step-02"></a>
 ### 2. 绘制 ESP 等值线
