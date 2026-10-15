@@ -6,6 +6,7 @@ PUBLIC_SCIENCE = tuple('test_science_' + name for name in (
     'resources', 'view_summary_export'))
 
 STDLIB = tuple('test_' + name for name in (
+    'i18n_core', 'node_localization', 'ui_localization',
     'cancel_finalization', 'copy_display', 'fog_materials', 'legend_layout',
     'local_inputs', 'multi_field_accept', 'native_volume', 'native_volume_project',
     'static_reference_capabilities', 'storage_cleanup', 'candidate_artifacts',

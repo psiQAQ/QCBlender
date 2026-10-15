@@ -51,7 +51,8 @@ class StaticReferenceCapabilities(unittest.TestCase):
                         relevant, enabled, reason = self.capability(SimpleNamespace(object=target), action)
                         self.assertTrue(relevant)
                         self.assertFalse(enabled)
-                        self.assertIn('独立', reason)
+                        from qcblender.static_reference import STATIC_REFERENCE_REASON
+                        self.assertEqual(STATIC_REFERENCE_REASON, reason)
 
     def test_static_and_unavailable_optimization_remain_enabled(self):
         for metadata in ({}, {'optimization': {'status': 'unavailable', 'steps': []}}):
