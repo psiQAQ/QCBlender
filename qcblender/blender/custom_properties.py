@@ -20,7 +20,8 @@ class QCBLENDER_OT_property_help(bpy.types.Operator):
     def description(cls, context, properties):
         key = properties.property_key
         record = LABELS.get(key)
-        return key + ('\n' + tip(record[1]) if record else '')
+        return key + '\n' + tip(record[1]) if record else tip(
+            'Explain the purpose and stored key of a QCBlender custom property')
 
     def execute(self, context):
         key = self.property_key

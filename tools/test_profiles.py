@@ -3,10 +3,10 @@
 PUBLIC_SCIENCE = tuple('test_science_' + name for name in (
     'adapter', 'reference', 'cube', 'xyz', 'project', 'current_association',
     'geometry', 'measurements', 'planes', 'profile', 'framing', 'field_ranges',
-    'resources', 'view_summary_export'))
+    'resources', 'view_summary_export')) + ('test_annotation_geometry', 'test_annotations_core')
 
 STDLIB = tuple('test_' + name for name in (
-    'i18n_core', 'node_localization', 'ui_localization',
+    'i18n_core', 'node_localization', 'ui_localization', 'operator_tooltips',
     'cancel_finalization', 'copy_display', 'fog_materials', 'legend_layout',
     'local_inputs', 'multi_field_accept', 'native_volume', 'native_volume_project',
     'static_reference_capabilities', 'storage_cleanup', 'candidate_artifacts',

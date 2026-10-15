@@ -214,8 +214,15 @@ def verify_path(owner, kind):
     label.data = own_curve
     own_material = label.data.materials[0]
     label.data.materials[0] = original_label.data.materials[0]
-    errors['shared_annotation_material'] = reject(roots, lambda: navigation(kind, 'NEXT' if kind == 'irc' else 'PREV'),
-                                                  'material must be independent')
+    shared_material = label.data.materials[0]
+    material_before = (list(shared_material.diffuse_color), shared_material.use_nodes,
+                       [(node.name, node.bl_idname) for node in shared_material.node_tree.nodes])
+    require(navigation(kind, 'NEXT' if kind == 'irc' else 'PREV') == {'FINISHED'},
+            'Shared annotation material blocked independent geometry navigation')
+    require(label.data.materials[0] == shared_material, 'Navigation replaced the user material')
+    require(material_before == (list(shared_material.diffuse_color), shared_material.use_nodes,
+                               [(node.name, node.bl_idname) for node in shared_material.node_tree.nodes]),
+            'Navigation modified the shared material')
     label.data.materials[0] = own_material
     for obj in roots:
         require_geometry(obj)

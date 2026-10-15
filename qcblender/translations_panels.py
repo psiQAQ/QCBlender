@@ -1,6 +1,7 @@
 """Panel grouping, project actions and annotation-font diagnostics."""
 
 MESSAGES = {
+    'Explain the purpose and stored key of a QCBlender custom property': '说明 QCBlender 自定义属性的用途与存储键',
     'Import': '导入',
     'Compute': '计算',
     'Display Views': '显示视图',

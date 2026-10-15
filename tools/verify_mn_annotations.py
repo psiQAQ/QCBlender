@@ -59,7 +59,8 @@ def assert_values(owner):
         np.testing.assert_allclose(leader.data.splines[0].points[0].co[:3], anchor, atol=2e-6)
         np.testing.assert_allclose(leader.data.splines[0].points[1].co[:3], child.location, atol=2e-6)
         if entry['kind'] == 'ATOM':
-            assert entry['value'] is None and child.data.body == entry['symbols'][0] + str(entry['source_atom_numbers'][0])
+            assert entry['value'] is None and child.data.body == measurements.annotation_prefix(
+                'ATOM', entry['source_atom_numbers'], entry['prefix_mode'], entry['prefix']) + entry['symbols'][0] + str(entry['source_atom_numbers'][0])
             continue
         try:
             value = measurements.measure(entry['kind'], positions, entry['source_atom_numbers'])
@@ -70,7 +71,8 @@ def assert_values(owner):
             assert entry['undefined_reason'] is None
             np.testing.assert_allclose(entry['value'], value, rtol=0, atol=1e-10)
             assert child.data.body == measurements.measurement_text(
-                entry['kind'], entry['source_atom_numbers'], value, record, entry['decimals'])
+                entry['kind'], entry['source_atom_numbers'], value, record, entry['decimals'],
+                prefix_mode=entry['prefix_mode'], prefix=entry['prefix'])
 
 
 def add(owner, kind, numbers, decimals=None):
@@ -270,7 +272,7 @@ def check_annotations(out):
     distance_id = json.loads(distance['qc_annotation'])['id']
     evidence.activate(methane)
     assert bpy.ops.qcblender.edit_annotation(annotation_id=distance_id, size=.21,
-        color=(.3, .6, .9), offset=(.4, .1, .2), decimals=3,
+        offset=(.4, .1, .2), decimals=3,
         line_width=.025, show_leader=False, visible=False) == {'FINISHED'}
     styled = labels(methane)[distance_id][1]
     assert abs(styled['size'] - .21) < 1e-6 and styled['decimals'] == 3
@@ -319,8 +321,12 @@ def check_annotations(out):
     opt_mesh = np.array([vertex.co[:] for vertex in optimization.data.vertices])
     opt_step = optimization['qc_optimization_step']
     for child in (opt_label, leaders(optimization)[json.loads(opt_label['qc_annotation'])['id']][0]):
-        material = child.data.materials[0]
-        child.data.materials[0] = None
+        # Shared native geometry is invalid; editable material slots are unrestricted.
+        original_data = child.data
+        shared_user = child.copy()
+        optimization.users_collection[0].objects.link(shared_user)
+        shared_user.parent = None
+        del shared_user['qc_annotation']
         try:
             errors['corrupt_' + child.type.lower()] = reject(
                 lambda: bpy.ops.qcblender.optimization_step(direction='GOTO', step=1), optimization)
@@ -328,7 +334,8 @@ def check_annotations(out):
             np.testing.assert_array_equal([vertex.co[:] for vertex in optimization.data.vertices], opt_mesh)
             assert snapshot(optimization) == opt_before
         finally:
-            child.data.materials[0] = material
+            bpy.data.objects.remove(shared_user, do_unlink=True)
+            assert child.data == original_data
     assert bpy.ops.qcblender.optimization_step(direction='GOTO', step=1) == {'FINISHED'}
     assert_values(optimization)
     assert json.loads(opt_label['qc_annotation'])['geometry']['step'] == 1
