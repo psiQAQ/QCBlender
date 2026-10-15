@@ -164,8 +164,8 @@ class QCBLENDER_PT_create(bpy.types.Panel):
             measurements = layout.box()
             measurements.label(text='Atom and Geometry Annotations')
             buttons = measurements.grid_flow(columns=2, even_columns=True, align=True)
-            for kind, title in [('ATOM', 'Atom Number Annotation'), ('DISTANCE', 'Distance Annotation'),
-                                ('ANGLE', 'Angle Annotation'), ('DIHEDRAL', 'Dihedral Annotation')]:
+            for kind, title in [('ATOM', 'Atom numbers'), ('DISTANCE', 'Distance'),
+                                ('ANGLE', 'Angle'), ('DIHEDRAL', 'Dihedral')]:
                 buttons.operator('qcblender.add_annotation', text=title).kind = kind
         camera = layout.box()
         camera.label(text='Camera')

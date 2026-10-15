@@ -96,10 +96,10 @@
 
 | 按钮 | 源原子编号（Source atom numbers） | 应看到的内容 |
 | --- | --- | --- |
-| 编号标注（Atom Number Annotation） | 1 | `Atom: O1`，文字可用引线指向氧 1 |
-| 距离标注（Distance Annotation） | 1,4 | `Distance(1,4) = 2.900 Å`，两氧之间出现虚线 |
-| 角度标注（Angle Annotation） | 2,1,3 | `Angle(2,1,3) = 112.770 °`，以氧 1 为圆心画内角圆弧 |
-| 二面角标注（Dihedral Annotation） | 2,1,4,5 | `Dihedral(2,1,4,5) = 0.000 °`，圆弧位于氧 1 与氧 4 的中点，两个三角面对应 H2–O1–O4 与 O1–O4–H5 |
+| 原子编号（Atom numbers） | 1 | `Atom: O1`，文字可用引线指向氧 1 |
+| 距离（Distance） | 1,4 | `Distance(1,4) = 2.900 Å`，两氧之间出现虚线 |
+| 角度（Angle） | 2,1,3 | `Angle(2,1,3) = 112.770 °`，以氧 1 为圆心画内角圆弧 |
+| 二面角（Dihedral） | 2,1,4,5 | `Dihedral(2,1,4,5) = 0.000 °`，圆弧位于氧 1 与氧 4 的中点，两个三角面对应 H2–O1–O4 与 O1–O4–H5 |
 
 距离虚线的实线段与间隔长度为 1:1，两端对称，节距自动均匀分配，不需填写单独的虚线长度。**测量线直径（场景局部单位）（Measurement diameter (local scene units)）** 独立于 **引线直径（场景局部单位）（Leader diameter (local scene units)）**，默认 **0.01**。对角度和二面角，这个测量线直径控制圆弧粗细；**圆弧半径（场景局部单位）（Arc radius (local scene units)）** 默认 **0.5**。这些尺寸可在创建和后续设置中调整，使用原子视图的局部场景单位，用于安排显示大小；测量文字的 Å 或 ° 来自源构型。角度圆弧位于两条角臂的内角范围；二面角圆弧保留有符号角的方向。
 
@@ -174,6 +174,6 @@
 <a id="step-11"></a>
 ### 11. 观察随帧更新的二面角
 
-保持 **P06-frames** 活动，点击 **创建视图与检查工具（Create Views and Inspection Tools） → 原子与几何标注（Atom and Geometry Annotations） → 二面角标注（Dihedral Annotation）**，填 **源原子编号（Source atom numbers）=3,1,2,4**、**小数位数（Decimal places）=3**，保持默认前缀和测量几何可见，点击 **确定（OK）**。当前已在第 2 帧，先点击 **上一步（Previous）** 回第 1 帧，再点击 **下一步（Next） → 下一步（Next）** 观察三帧；应依次看到约 **171.761°、−180.000°、−171.761°**，文字读数、圆弧和三角面随当前构型更新。当前帧号在 **XYZ 帧（XYZ Frames）** 面板核对，来源构型保留在科学记录中，不额外拼入默认标注文字。最后点击 **上一步（Previous）** 回第 2 帧。截图保存为 `human/screenshots/P06-xyz-frames.png`。
+保持 **P06-frames** 活动，点击 **创建视图与检查工具（Create Views and Inspection Tools） → 原子与几何标注（Atom and Geometry Annotations） → 二面角（Dihedral）**，填 **源原子编号（Source atom numbers）=3,1,2,4**、**小数位数（Decimal places）=3**，保持默认前缀和测量几何可见，点击 **确定（OK）**。当前已在第 2 帧，先点击 **上一步（Previous）** 回第 1 帧，再点击 **下一步（Next） → 下一步（Next）** 观察三帧；应依次看到约 **171.761°、−180.000°、−171.761°**，文字读数、圆弧和三角面随当前构型更新。当前帧号在 **XYZ 帧（XYZ Frames）** 面板核对，来源构型保留在科学记录中，不额外拼入默认标注文字。最后点击 **上一步（Previous）** 回第 2 帧。截图保存为 `human/screenshots/P06-xyz-frames.png`。
 
 ![三帧 XYZ 的当前帧与随帧二面角](../screenshots/P06-xyz-frames.png)
