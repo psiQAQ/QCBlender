@@ -10,8 +10,62 @@ import bpy
 from bpy.props import EnumProperty, StringProperty
 
 from ..data import SCHEMA, dataset_path_key, filesystem_path
+from ..object_summary import array_descriptors, summarize_object
 
 _metadata = {}
+_array_descriptors = {}
+
+
+def clear_source_cache():
+    """Clear both lightweight caches together at reload/unregister boundaries."""
+    _metadata.clear()
+    _array_descriptors.clear()
+
+
+def cache_dataset(obj, data):
+    """Cache an already loaded Dataset without reading or evaluating arrays."""
+    key = binding_key(obj)
+    _metadata[key] = dict(data.metadata, _atom_count=len(data.arrays['atomic_numbers']))
+    _array_descriptors[key] = array_descriptors({
+        name: {'shape': array.shape, 'dtype': array.dtype.str}
+        for name, array in data.arrays.items()})
+
+
+def cached_object_summary(obj, limit=6):
+    """Summarize the explicit active object; never refresh or access its mesh."""
+    if obj is None or not (obj.get('qc_view_kind') or obj.get('qc_dataset') or 'qc_annotation' in obj):
+        return summarize_object({}, {}, limit=limit)
+    owner = source_object(obj)
+    bound = bool(owner.get('qc_dataset'))
+    key = binding_key(owner)
+    meta = _metadata.get(key, {}) if bound else {}
+    field = {}
+    if obj.get('qc_field'):
+        try:
+            field = object_record(obj, 'qc_field')
+        except (ValueError, TypeError):
+            meta = {'error': 'Invalid scene field metadata'}
+    if field.get('role') in ('geometry', 'color') and meta and 'error' not in meta:
+        meta = dict(meta, source=field_source(meta, field))
+        if 'selected_job' in meta['source']:
+            meta['selected_job'] = meta['source']['selected_job']
+    context = {'is_qc': True, 'object': obj.name,
+               'owner': owner.name if owner is not obj else None,
+               'view_type': 'annotation' if 'qc_annotation' in obj else obj.get('qc_view_kind'),
+               'bound': bound}
+    for target, prop in (
+        ('xyz_frame', 'qc_trajectory_frame'), ('xyz_count', 'qc_trajectory_count'),
+        ('optimization_step', 'qc_optimization_step'), ('optimization_count', 'qc_optimization_count'),
+        ('irc_step', 'qc_irc_step'),
+    ):
+        context[target] = obj.get(prop, owner.get(prop))
+    # The IRC count exists in a small scene record even for older cached data.
+    if owner.get('qc_irc_record'):
+        try:
+            context['irc_count'] = object_record(owner, 'qc_irc_record').get('count')
+        except (ValueError, TypeError):
+            pass  # A missing count is displayed as unavailable, never inferred.
+    return summarize_object(context, meta, _array_descriptors.get(key, {}) if bound else {}, limit)
 
 
 def cached_metadata(obj):
@@ -21,7 +75,7 @@ def cached_metadata(obj):
 
 @bpy.app.handlers.persistent
 def refresh_loaded_sources(_unused=None):
-    _metadata.clear()
+    clear_source_cache()
     for obj in bpy.data.objects:
         source = source_object(obj)
         if source.get('qc_dataset'):
@@ -87,6 +141,9 @@ def read_metadata(obj):
         raise ValueError('Invalid atomic number array shape')
     if len(shape) == 1 and type(shape[0]) is int and shape[0] >= 0:
         meta = dict(meta, _atom_count=shape[0])
+    # Keep UI descriptors separate: current_geometry compares the returned
+    # scientific metadata exactly after removing the established atom count.
+    _array_descriptors[binding_key(obj)] = array_descriptors(arrays)
     return meta
 
 
@@ -95,6 +152,7 @@ def refresh_source(obj):
         value = read_metadata(obj)
     except (OSError, ValueError, KeyError, TypeError) as error:
         value = {'error': str(error)}
+        _array_descriptors.pop(binding_key(obj), None)
     _metadata[binding_key(obj)] = value
     if 'error' not in value:
         from .record_ranges import refresh_record_ranges
@@ -372,7 +430,7 @@ class QCBLENDER_OT_refresh_sources(bpy.types.Operator):
     bl_description = 'Reload saved metadata for QC sources in the current scene and refresh available record ranges; inspect Source Details if a saved dataset binding cannot be read'
 
     def execute(self, context):
-        _metadata.clear()
+        clear_source_cache()
         for obj in context.scene.objects:
             if source_object(obj).get('qc_dataset'):
                 if binding_key(obj) not in _metadata:
