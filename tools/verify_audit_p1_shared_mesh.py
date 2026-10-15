@@ -112,10 +112,14 @@ def require_geometry(owner):
         if entry['role'] == 'LABEL':
             np.testing.assert_allclose(child.location, anchor + entry['offset'], atol=2e-6, rtol=0)
             text = module('measurements').measurement_text('DISTANCE', entry['source_atom_numbers'], value,
-                                                          record, entry['decimals'])
+                record, entry['decimals'], prefix_mode=entry['prefix_mode'], prefix=entry['prefix'])
             require(child.data.body == text, child.name + ': visible distance differs')
-        else:
+        elif entry['role'] == 'LEADER':
             np.testing.assert_allclose(child.data.splines[0].points[0].co[:3], anchor, atol=2e-6, rtol=0)
+        elif entry['role'] == 'DASH':
+            first, last = child.data.splines[0], child.data.splines[-1]
+            np.testing.assert_allclose(first.points[0].co[:3], points[0], atol=2e-6, rtol=0)
+            np.testing.assert_allclose(last.points[-1].co[:3], points[1], atol=2e-6, rtol=0)
 
 
 def add_distance(owner):
