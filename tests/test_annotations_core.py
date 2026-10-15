@@ -1,5 +1,6 @@
 """Pure boundary tests; native Blender geometry and Undo are validated separately."""
 import copy
+import ast
 import importlib.util
 import json
 from pathlib import Path
@@ -406,6 +407,77 @@ class FaceAll(unittest.TestCase):
             operator.properties.is_property_set = lambda *args, **kwargs: True
             annotations.QCBLENDER_OT_face_annotations.execute(operator, context)
         self.assertEqual([part.rotation_quaternion for part in parts], ['camera-facing', 'original', 'original'])
+
+
+class CreationPrecision(unittest.TestCase):
+    """Run the real invoke with the observed last-operator RNA property boundary."""
+    def decimal_options(self):
+        path = Path(__file__).resolve().parents[1] / 'qcblender/blender/annotations.py'
+        tree = ast.parse(path.read_text(encoding='utf-8'))
+        operator = next(node for node in tree.body if isinstance(node, ast.ClassDef)
+                        and node.name == 'QCBLENDER_OT_add_annotation')
+        prop = next(node for node in operator.body if isinstance(node, ast.AnnAssign)
+                    and node.target.id == 'decimals')
+        return next((ast.literal_eval(keyword.value) for keyword in prop.annotation.keywords
+                     if keyword.arg == 'options'), set())
+
+    def invoke(self, kind, remembered, explicit=None):
+        # Blender's observed inherited value is set even with ghost=False.
+        # SKIP_SAVE excludes it at the operator-history boundary, not at invoke.
+        supplied = {} if 'SKIP_SAVE' in self.decimal_options() else dict(remembered)
+        supplied.update(explicit or {})
+        class Operator:
+            def __init__(self):
+                object.__setattr__(self, '_set', set(supplied))
+                for key, value in {**entry(), **annotations.STYLE_DEFAULTS}.items():
+                    object.__setattr__(self, key, value)
+                object.__setattr__(self, 'kind', kind)
+                object.__setattr__(self, 'decimals', supplied.get('decimals', 4))
+                object.__setattr__(self, 'report', lambda *args: None)
+                object.__setattr__(self, 'properties', types.SimpleNamespace(
+                    is_property_set=lambda key, **kwargs: key in self._set))
+            def __setattr__(self, key, value):
+                self._set.add(key)
+                object.__setattr__(self, key, value)
+        operator = Operator()
+        context = types.SimpleNamespace(window_manager=types.SimpleNamespace(
+            invoke_props_dialog=lambda *args, **kwargs: {'RUNNING_MODAL'}))
+        self.assertEqual(annotations.QCBLENDER_OT_add_annotation.invoke(operator, context, None), {'RUNNING_MODAL'})
+        return operator
+
+    def test_atom_distance_then_angle_and_dihedral_use_kind_defaults(self):
+        remembered = {}
+        for kind, expected in [('ATOM', 4), ('DISTANCE', 4), ('ANGLE', 2), ('DIHEDRAL', 2), ('DISTANCE', 4)]:
+            with self.subTest(kind=kind):
+                operator = self.invoke(kind, remembered)
+                self.assertEqual(operator.decimals, expected)
+                if 'SKIP_SAVE' not in self.decimal_options():
+                    remembered['decimals'] = operator.decimals
+
+    def test_previous_custom_precision_does_not_replace_next_kind_default(self):
+        self.assertEqual(self.invoke('ANGLE', {'decimals': 7}).decimals, 2)
+        self.assertEqual(self.invoke('DISTANCE', {'decimals': 1}).decimals, 4)
+
+    def test_explicit_precision_and_current_dialog_edits_remain_set(self):
+        for kind in ('ATOM', 'DISTANCE', 'ANGLE', 'DIHEDRAL'):
+            with self.subTest(kind=kind):
+                operator = self.invoke(kind, {'decimals': 4}, {'decimals': 6})
+                self.assertEqual(operator.decimals, 6)
+                operator.decimals = 3
+                self.assertTrue(operator.properties.is_property_set('decimals', ghost=False))
+                target = owner([])
+                target.data = types.SimpleNamespace(attributes={'qc_atomic_number': types.SimpleNamespace(
+                    data=[types.SimpleNamespace(value=1) for _ in POSITIONS])})
+                target.users_collection = [object()]
+                created = []
+                def capture(owner, collection, record, positions, geometry):
+                    created.append(annotations._prepare(record, positions, geometry)[0]['decimals'])
+                with patch.object(annotations, '_atom_view', return_value=target), patch.object(
+                        annotations, '_symbol', return_value='H'), patch.object(annotations, '_create', side_effect=capture):
+                    self.assertEqual(annotations.QCBLENDER_OT_add_annotation.execute(operator, types.SimpleNamespace()),
+                                     {'FINISHED'})
+                self.assertTrue(created)
+                self.assertEqual(set(created), {3})
 
 
 if __name__ == '__main__':

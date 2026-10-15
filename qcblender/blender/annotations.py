@@ -509,7 +509,8 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
     color: FloatVectorProperty(name='Color', description='Initial material color; later edits belong to the material nodes',
                                subtype='COLOR', size=3, default=(0., 0., 0.), min=0, max=1)
     offset: FloatVectorProperty(name='Offset (local scene units)', description='Move text from its atom-centroid anchor without moving source atoms', size=3, default=(.2, .2, .2))
-    decimals: IntProperty(name='Decimal places', description='Displayed decimal places; the saved scientific value is unchanged', default=4, min=0, max=10)
+    decimals: IntProperty(name='Decimal places', description='Displayed decimal places; the saved scientific value is unchanged',
+                          default=4, min=0, max=10, options={'SKIP_SAVE'})
     show_leader: BoolProperty(name='Show leader', description='Show the line from the annotation anchor to its text', default=True)
     line_width: FloatProperty(name='Leader diameter (local scene units)', description='Diameter of the round leader, independent of measurement strokes', default=.01, min=.0001)
     visible: BoolProperty(name='Visible', description='Show enabled annotation parts; disable to hide the whole annotation', default=True)
