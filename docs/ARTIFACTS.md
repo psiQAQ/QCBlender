@@ -27,6 +27,8 @@
 
 用户最新工程与配套数据保存在 `outputs/projects/annotations-preserved-20261016/user-session.blend` 及同名 `.qcdata`，原件摘要未变。四类标注渲染与自包含示例在本批报告的 `gallery-r2/`；界面测试工程在 `outputs/runs/annotations-20261016/gui-evidence-r1/`、`gui-evidence-r2/`，安装与迁移工程在同目录 `extension-r2/`。旧全局插件、偏好、旧当前 ZIP 和本批维护脚本均留在该 runs 目录；两个候选及失败复现记录保留，不执行历史产物清理。重建入口为 `tools/build_extension.py`、`tools/verify_annotation_geometry.py`、`tools/verify_annotation_motion.py`、`tools/render_annotation_gallery.py` 与 `tools/verify_extension.py`。
 
+本地合并提交 `547865b` 的 221 项标准库、92 项 public-core 与工作区材料检查 Passed。四个注释标签 `archive/2026-10-16/{feat/annotations-main,feat/annotations-core,docs/annotations-sop,feat/panel-tooltips}` 保存任务提交；223 个忽略产物已归入 `outputs/runs/annotations-20261016/worktree-evidence/` 并逐文件验证，四个工作树及分支正常移除。该批报告中的 `worktree-retention.json`、`archive-local.json` 和 `delivery.json` 保存清单与收据。此前 i18n 空目录残留未动，未 push。
+
 <a id="i18n-20261015"></a>
 ## 全界面双语与全局冷重开（2026-10-15）
 

@@ -31,6 +31,7 @@ r2 在独立 GUI 进程中再次按同一顺序实际点击并确认四次，快
 
 | 状态 | 候选与检查 | 证据及范围 |
 | --- | --- | --- |
+| Passed | 合入 main `547865b` 后的 221 项标准库、92 项 public-core 及工作区材料检查 | [stdlib-main.json](../reports/2026-10-16/annotations/stdlib-main.json)、[science-public-main.json](../reports/2026-10-16/annotations/science-public-main.json)、[workspace-final.json](../reports/2026-10-16/annotations/workspace-final.json)；测试零失败、零错误、零跳过。工作区检查允许既有 22 个截图占位，不代表人工教程完成。 |
 | Passed | r2：92 项 `public-core` 测试，零失败、零错误、零跳过 | [science-public-r2.json](../reports/2026-10-16/annotations/science-public-r2.json)，源码提交为 `739c08b`；含精度历史、几何及标注边界回归。 |
 | Passed | r2：真实 bpy 标注几何、默认材质、前缀、编辑、复制/删除、显隐、相机朝向、旧标注与材质统一、自包含保存 | [geometry-r2/annotation-geometry.json](../reports/2026-10-16/annotations/geometry-r2/annotation-geometry.json)；从实际源坐标独立核对端点、半径、平面、三角网格及数组摘要。进程退出码为 0。 |
 | Passed | r2：标注工程在新进程冷重开 | [geometry-r2/annotation-geometry-reopen.json](../reports/2026-10-16/annotations/geometry-r2/annotation-geometry-reopen.json)；核对记录、材质节点、字体、相对数据路径、数组及几何；记录的安装源码哈希与 r2 对应。 |
@@ -83,3 +84,5 @@ r1 实际 GUI 完成四类创建、二面角自定义前缀改为 `二面角：`
 r2 的原子、距离、键角编辑弹窗由原生 `INVOKE_DEFAULT` 打开，随后通过 Computer Use 实际点击显示开关及确定。分别关闭原子引线、距离虚线、键角引线；距离引线与键角圆弧仍保留。`gui-edits-r2.json` 记录实际结果，`gui-edit-undo-r2.json` 和 `gui-edit-redo-r2.json` 证明编辑可撤销、菜单重做后完整恢复。二面角中文编辑的完整 GUI 入口验证保留在 r1。
 
 原工程的全局 GUI 已恢复，[截图](../reports/2026-10-16/annotations/final-user-gui.png)与冷读快照对应同一进程；磁盘原件未修改。当前安装身份、可重建入口、备份和本地归档由 [ARTIFACTS](../../../docs/ARTIFACTS.md#annotations-20261016)统一定位。旧候选及失败日志保留，未 push 或发布。
+
+本地四个任务分支已合入 main，并建立 `archive/2026-10-16/` 下的 `feat/annotations-main`、`feat/annotations-core`、`docs/annotations-sop`、`feat/panel-tooltips` 注释标签。223 个忽略产物已逐文件保全并校验 ZIP 回读，随后四个工作树及分支正常移除；[保全清单](../reports/2026-10-16/annotations/worktree-retention.json)、[归档收据](../reports/2026-10-16/annotations/archive-local.json)、[最终收据](../reports/2026-10-16/annotations/delivery.json)记录身份与结果。此前 i18n 任务的空目录残留未动。

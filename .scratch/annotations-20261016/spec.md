@@ -1,6 +1,6 @@
 # 标注几何、材质与面板交互改进
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 
 ## 已批准目标与交付
 
@@ -40,3 +40,7 @@ Status: claimed
 - 03-panels-fonts：main；面板、字体、共享入口与实际复现。
 - 04-docs：annotations-docs；SOP与相关专题。
 - 05-integration：main；构建、综合验收、全局安装与本地归档。
+
+## Answer
+
+已完成实现、最终 r2 整包验证、全局安装、原工程恢复和本地归档；详见 [验收记录](../../validation/agent/acceptance/annotations.md)。合入 main 的 `547865b` 通过 221 项标准库、92 项 public-core 及工作区材料检查。四个任务分支均建立注释标签并正常移除工作树；223 个忽略产物先按文件摘要保全。独立人工与科研验收 Not Run；未 push 或发布。
