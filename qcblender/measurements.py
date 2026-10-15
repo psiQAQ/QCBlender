@@ -35,7 +35,27 @@ def geometry_label(record):
     raise ValueError('Annotation geometry kind or step is invalid')
 
 
-def measurement_text(kind, numbers, value, record, decimals, reason=None):
+def annotation_prefix(kind, numbers, mode='DEFAULT', custom=''):
+    """Default annotation notation is language-independent; custom text is exact."""
+    if mode not in ('DEFAULT', 'CUSTOM') or not isinstance(custom, str):
+        raise ValueError('Annotation prefix must use Default or Custom text')
+    if mode == 'CUSTOM':
+        return custom
+    if kind == 'ATOM':
+        return 'Atom: '
+    if kind not in ATOM_COUNTS:
+        raise ValueError('Unknown annotation measurement kind')
+    return f"{kind.title()}({','.join(map(str, numbers))}) = "
+
+
+def measurement_text(kind, numbers, value, record, decimals, reason=None, *, prefix_mode=None, prefix=''):
+    """Render a value; omitted prefix_mode retains the original pure-API format."""
+    if prefix_mode is not None:
+        text = annotation_prefix(kind, numbers, prefix_mode, prefix)
+        unit = 'Å' if kind == 'DISTANCE' else '°'
+        if reason:
+            return f'{text}undefined ({reason}) {unit}'
+        return f'{text}{value:.{decimals}f} {unit}'
     prefix = f"{'-'.join(map(str, numbers))} · {geometry_label(record)}: "
     if reason:
         return f'{prefix}undefined ({reason})'
@@ -43,20 +63,25 @@ def measurement_text(kind, numbers, value, record, decimals, reason=None):
     return f'{prefix}{value:.{decimals}f} {unit}'
 
 
-def validate_annotation_style(entry):
+def validate_annotation_style(entry, *, validate_color=True):
     """Reject invalid saved or edited style before touching Blender objects."""
     try:
         size, width = float(entry['size']), float(entry['line_width'])
-        color = np.asarray(entry['color'], dtype=float)
+        color = np.asarray(entry['color'], dtype=float) if validate_color else None
         offset = np.asarray(entry['offset'], dtype=float)
+        measurement_width = float(entry.get('measurement_width', .01))
+        arc_radius = float(entry.get('arc_radius', .5))
     except (TypeError, ValueError) as error:
         raise ValueError('Annotation style must contain numeric values') from error
-    if (not np.isfinite([size, width]).all() or size <= 0 or width <= 0
-            or color.shape != (3,) or not np.isfinite(color).all()
-            or (color < 0).any() or (color > 1).any()
+    if (not np.isfinite([size, width, measurement_width, arc_radius]).all()
+            or min(size, width, measurement_width, arc_radius) <= 0
+            or (validate_color and (color.shape != (3,) or not np.isfinite(color).all()
+                                   or (color < 0).any() or (color > 1).any()))
             or offset.shape != (3,) or not np.isfinite(offset).all()
             or type(entry['decimals']) is not int or not 0 <= entry['decimals'] <= 10):
         raise ValueError('Annotation size, color, offset, width and decimals must be finite and valid')
+    annotation_prefix(entry.get('kind', 'ATOM'), entry.get('source_atom_numbers', []),
+                      entry.get('prefix_mode', 'DEFAULT'), entry.get('prefix', ''))
 
 
 def measure(kind, positions, source_atom_numbers):

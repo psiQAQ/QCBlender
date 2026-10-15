@@ -3,12 +3,34 @@ from types import SimpleNamespace
 
 import numpy as np
 
-from qcblender.measurements import (geometry_label, measure, measurement_text, parse_source_atom_numbers,
+from qcblender.measurements import (annotation_prefix, geometry_label, measure, measurement_text, parse_source_atom_numbers,
                                      validate_annotation_style)
 from qcblender.geometry import scientific_geometry
 
 
 class MeasurementTests(unittest.TestCase):
+    def test_default_and_exact_custom_prefixes_keep_value_and_unit(self):
+        record = {'kind': 'irc', 'step': 2}
+        self.assertEqual(annotation_prefix('ATOM', [3]), 'Atom: ')
+        self.assertEqual(measurement_text('DISTANCE', [1, 2], 1.23456, record, 4,
+                         prefix_mode='DEFAULT'), 'Distance(1,2) = 1.2346 Å')
+        self.assertEqual(measurement_text('ANGLE', [1, 2, 3], 90., record, 2,
+                         prefix_mode='DEFAULT'), 'Angle(1,2,3) = 90.00 °')
+        for prefix in ('', '   ', '测量：', 'Custom = '):
+            self.assertEqual(measurement_text('DISTANCE', [1, 2], 1.2, record, 2,
+                             prefix_mode='CUSTOM', prefix=prefix), prefix + '1.20 Å')
+        self.assertEqual(measurement_text('DIHEDRAL', [1, 2, 3, 4], None, record, 2,
+                         'zero-length central bond', prefix_mode='DEFAULT'),
+                         'Dihedral(1,2,3,4) = undefined (zero-length central bond) °')
+
+    def test_update_style_does_not_consult_saved_color(self):
+        style = {'size': .16, 'line_width': .01, 'offset': [0., 0., 0.], 'decimals': 4}
+        validate_annotation_style(style, validate_color=False)
+        validate_annotation_style({**style, 'color': 'user owns material'}, validate_color=False)
+        for key in ('measurement_width', 'arc_radius'):
+            with self.assertRaises(ValueError):
+                validate_annotation_style({**style, key: float('nan')}, validate_color=False)
+
     def test_source_numbers_and_visible_geometry_context(self):
         self.assertEqual(parse_source_atom_numbers('1, 3 2', 3), [1, 3, 2])
         for expression in ('1,1', '0,2', '1,4', '1-2', '', '1,,2', '1,', ',1'):
