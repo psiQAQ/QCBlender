@@ -358,7 +358,11 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
                     or self._source_job != sample_meta.get('selected_job', -1)):
                 raise ValueError('Field calculation identity differs from its Dataset')
             self._data = load_dataset(bpy.path.abspath(self._source['qc_dataset']))
-            if self._data.metadata != sample_meta or binding_key(self._source) != self._source_binding:
+            # read_metadata derives this UI count from the manifest array descriptor.
+            # Compare persisted scientific metadata without mutating the binding snapshot.
+            dataset_meta = dict(sample_meta)
+            dataset_meta.pop('_atom_count', None)
+            if self._data.metadata != dataset_meta or binding_key(self._source) != self._source_binding:
                 raise ValueError('Sampled field Dataset changed while the probe started')
         except (ValueError, OSError, KeyError, TypeError, ReferenceError) as error:
             self.report({'ERROR'}, error_text(error))
