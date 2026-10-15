@@ -47,10 +47,12 @@ def discover():
 
 
 def register():
+    from .i18n import prepare_class
     if _registered:
         raise RuntimeError('QCBlender is already registered')
     try:
         for cls in discover():
+            prepare_class(cls)
             bpy.utils.register_class(cls)
             _registered.append(cls)
     except Exception:

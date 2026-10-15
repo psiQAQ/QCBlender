@@ -3,8 +3,13 @@ _hooks_registered = False
 
 def register():
     global _hooks_registered
-    from . import auto_load
-    auto_load.register()
+    from . import auto_load, i18n
+    i18n.register()
+    try:
+        auto_load.register()
+    except Exception:
+        i18n.unregister()
+        raise
     import bpy
     from .blender.properties import QCViewSettings
     bpy.types.Object.qc_settings = bpy.props.PointerProperty(type=QCViewSettings)
@@ -12,13 +17,15 @@ def register():
     from .blender.ui import clear_qualifications, clear_qualification_handoffs
     from bpy.app.handlers import persistent
     from .blender.editor_ui import object_context_menu
-    from .blender import asset_library, charts, fog, interaction, result_browser
+    from .blender import asset_library, charts, fog, interaction, result_browser, localization, custom_properties
     try:
         asset_library.register()
         interaction.register_tool()
         charts.register()
         fog.register()
         result_browser.attach_properties()
+        custom_properties.register()
+        localization.register()
         bpy.app.handlers.load_post.append(refresh_loaded_sources)
         bpy.app.handlers.load_post.append(persistent(clear_qualifications))
         bpy.app.handlers.load_pre.append(persistent(clear_qualification_handoffs))
@@ -58,7 +65,9 @@ def unregister():
         bpy.types.VIEW3D_MT_object_context_menu.remove(object_context_menu)
         bpy.types.VIEW3D_MT_object.remove(object_context_menu)
         _hooks_registered = False
-    from .blender import asset_library, charts, fog, interaction, result_browser
+    from .blender import asset_library, charts, fog, interaction, result_browser, localization, custom_properties
+    localization.unregister()
+    custom_properties.unregister()
     result_browser.detach_properties()
     charts.unregister()
     fog.unregister()
@@ -68,3 +77,5 @@ def unregister():
     if hasattr(bpy.types.Object, 'qc_settings'):
         del bpy.types.Object.qc_settings
     auto_load.unregister()
+    from . import i18n
+    i18n.unregister()
