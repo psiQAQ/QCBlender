@@ -261,9 +261,10 @@ class QualificationHandoff(unittest.TestCase):
         self.assertGreater(len(errors), 1)
         self.assertTrue(all(len(line) <= 75 for line in errors))
         self.assertEqual(' '.join(errors), refusal.strip())
-        self.assertIn({'text': 'Grid: 2 × 3 × 4 | 24 voxels'}, labels)
-        self.assertIn({'text': 'Dataset: 2.00 MiB / 1024 MiB'}, labels)
-        self.assertIn({'text': 'Evaluation estimate: 64.00 MiB / 512 MiB'}, labels)
+        texts = [entry['text'] for entry in labels]
+        self.assertIn('Grid: 2 × 3 × 4 | 24 voxels', texts)
+        self.assertIn('Dataset: 2.00 MiB / 1024 MiB', texts)
+        self.assertIn('Evaluation estimate: 64.00 MiB / 512 MiB', texts)
 
 
 class ScienceBinding(unittest.TestCase):

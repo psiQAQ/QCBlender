@@ -14,7 +14,7 @@ qc_bond_source|Bond source|化学键来源|Method or source used to obtain conne
 qc_calculation_status|Calculation status|计算状态|Status reported for the source calculation.|来源计算报告的状态。
 qc_diagnostics|Diagnostics|诊断信息|Diagnostics retained from source parsing.|源文件解析保留的诊断信息。
 qc_data_record|Data record|数据记录|Identity of the selected scientific record.|选定科学记录的标识。
-qc_charge_method|Charge method|电荷方法|Population-analysis method used for atomic charges.|原子电荷采用的布居分析方法。
+qc_charge_method|Charge method|电荷计算方法|Population-analysis method used for atomic charges.|原子电荷采用的布居分析方法。
 qc_charge_mapping|Charge mapping|电荷映射|Mapping between atomic charges and source atoms.|原子电荷与来源原子的对应关系。
 qc_dipole_debye|Dipole (Debye)|偶极矩（Debye）|Dipole vector in Debye.|以 Debye 为单位的偶极矩向量。
 qc_dipole_source|Dipole source|偶极矩来源|Scientific record supplying the dipole vector.|提供偶极矩向量的科学记录。
@@ -52,7 +52,7 @@ qc_association|Association|关联|Saved association with another scientific view
 qc_camera|QC camera|QC 相机|Marks a camera managed by QCBlender.|标记由 QCBlender 管理的相机。
 qc_clipping|Clipping|裁剪|Saved scientific-view clipping settings.|保存的科学视图裁剪设置。
 qc_color_mapping|Color mapping|颜色映射|Mapping from scientific values to colors.|科学数值到颜色的映射。
-qc_color_source|Color source|颜色来源|Scientific quantity used to determine colors.|决定颜色的科学物理量。
+qc_color_source|Color source|着色来源|Scientific quantity used to determine colors.|决定颜色的科学物理量。
 qc_contour_child|Contour child|等值线子对象|Marks a generated contour child object.|标记生成的等值线子对象。
 qc_contour_color|Contour color|等值线颜色|Display color of the contour.|等值线显示颜色。
 qc_contour_enabled|Contours enabled|启用等值线|Whether contour generation is enabled.|是否启用等值线生成。
