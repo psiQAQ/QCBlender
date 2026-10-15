@@ -20,6 +20,7 @@ Status: resolved
 - [03 界面与动态文案](issues/03-ui.md)
 - [04 教程同步](issues/04-docs.md)
 - [05 整合与全局安装](issues/05-integration.md)
+- [06 空目录清理残留](issues/06-cleanup-residue.md)：产品任务完成后单独跟踪权限拒绝，不阻塞已完成的全局安装。
 
 ## Answer
 

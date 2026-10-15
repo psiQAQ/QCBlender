@@ -27,6 +27,10 @@
 
 用户原会话在 outputs/projects/i18n-preserved-20261015/user-session.blend 及同名 .qcdata；双语测试副本为 user-session-bilingual.blend。旧全局插件、偏好和旧当前 ZIP 备份位于 outputs/runs/i18n-20261015/；两个候选及原报告保留。最终候选渲染/可迁移工程位于该目录 acceptance-r2/，重建入口 tools/build_extension.py 与 tools/verify_extension.py。源码由 archive/2026-10-15/feat/i18n-main 定位，本地整合，不 push 或发布。
 
+本地合并提交 `707a15c`；四个注释归档标签及工作树登记移除完成。三个目录正常移除，`D:\workspace\QCBlender\.worktrees\i18n-docs` 剩余空目录返回 `Permission denied`，原位保留；未修改 ACL 或强制删除。逐文件保全清单 `worktree-retention.json`、原始移除收据 `archive-local.json` 及最终收据 `delivery.json` 位于本批报告目录；目录残留见[任务 06](../.scratch/i18n-20261015/issues/06-cleanup-residue.md)。合并后的当前安装包和教程完整材料检查见 `workspace-final.json`（Passed；允许既有图片占位）。
+
+本地合并提交 `707a15c`；四个注释归档标签及工作树登记移除完成。三个目录正常移除，`D:\workspace\QCBlender\.worktrees\i18n-docs` 剩余空目录返回 `Permission denied`，原位保留；未修改 ACL 或强制删除。逐文件保全清单 `worktree-retention.json`、原始移除收据 `archive-local.json` 及最终收据 `delivery.json` 位于本批报告目录；目录残留见[任务 06](../.scratch/i18n-20261015/issues/06-cleanup-residue.md)。合并后的当前安装包和教程完整材料检查见 `workspace-final.json`（Passed；允许既有图片占位）。
+
 <a id="local-selection-dialog-20261014"></a>
 ## 局部选择弹窗与全局安装（2026-10-15）
 
