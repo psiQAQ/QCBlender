@@ -1,18 +1,93 @@
-"""Workflow actions in the sidebar; persistent controls in native Properties."""
+"""File workflows and read-only summaries in the sidebar; object tools in Properties."""
 from ..i18n import error_text, iface, tip, ui_layout
 import json
 import textwrap
+import unicodedata
 
 import bpy
 from bpy.props import EnumProperty
 
 from .capabilities import action_button, capability, record
-from .source_browser import cached_metadata
+from .source_browser import cached_metadata, source_object
 
 
 def is_qc(context):
     obj = context.object
     return obj is not None and bool(obj.get('qc_view_kind') or obj.get('qc_dataset'))
+
+
+def sidebar_subject(obj):
+    """Resolve only the existing QC ownership rules, never a previous selection."""
+    if obj is None:
+        return None
+    owner = source_object(obj)
+    return owner if owner.get('qc_view_kind') or owner.get('qc_dataset') else None
+
+
+def compact_lines(text, width, max_lines=3):
+    """Bound narrow-sidebar text using display width, including CJK characters."""
+    lines, current, used = [], '', 0
+    for char in str(text).replace('\r', ' ').replace('\n', ' '):
+        size = 2 if unicodedata.east_asian_width(char) in {'W', 'F'} else 1
+        if used + size > width and current:
+            lines.append(current)
+            if len(lines) == max_lines:
+                lines[-1] = lines[-1].rstrip() + '…'
+                return lines
+            current, used = '', 0
+        current += char
+        used += size
+    if current:
+        lines.append(current)
+    return lines
+
+
+def draw_sidebar_summary(layout, context, *, details):
+    from .source_browser import cached_object_summary
+    result = cached_object_summary(context.object)
+    if not result['available']:
+        return
+    width = max(16, int(context.region.width / 7) - 6)
+
+    def line(text):
+        for part in compact_lines(text, width):
+            layout.label(text=part, translate=False)
+
+    def row(entry):
+        value = entry['value']
+        if value is None:
+            value = iface('Not recorded')
+        elif entry['key'] == 'view_type':
+            value = iface({
+                'atoms': 'Atoms', 'field': 'Scalar Field', 'slice': 'Slice', 'fog': 'Volume Fog',
+                'dipole': 'Dipole', 'spectrum': 'Spectrum', 'scatter': 'Scatter', 'nbo': 'NBO',
+                'analysis': 'Analysis', 'profile': 'Line Profile',
+            }.get(value, value))
+        text = f"{iface(entry['label'])}: {value}"
+        if entry.get('unit'):
+            text += f" [{entry['unit']}]"
+        if entry.get('shape') is not None:
+            text += ' · ' + ' × '.join(map(str, entry['shape']))
+        if entry.get('dtype'):
+            text += ' · ' + entry['dtype']
+        line(text)
+
+    for entry in result['details' if details else 'short']:
+        row(entry)
+    if details:
+        for category in result['categories']:
+            layout.separator()
+            count = category['count'] if category['count'] is not None else iface('Not recorded')
+            line(f"{iface(category['label'])}: {count}")
+            for entry in category['items']:
+                row(entry)
+            if category['omitted']:
+                line(iface('Additional records: {value0}; inspect Object Properties', value0=category['omitted']))
+    states = {'uncached': 'Source summary is not cached; refresh sources in Object Properties',
+              'error': 'Source unavailable; inspect Object Properties',
+              'unbound': 'No scientific dataset is bound to this object'}
+    if result['state'] in states:
+        line(iface(states[result['state']]))
 
 
 def summary(layout, obj):
@@ -54,7 +129,7 @@ class QCBLENDER_OT_open_properties(bpy.types.Operator):
     @classmethod
     def description(cls, context, properties):
         return tip({
-            'OBJECT': 'Open Object Properties for the active object and pin that object in the existing Properties Editor',
+            'OBJECT': 'Open and pin Object Properties for the active QC object or the owning QC object of its selected helper',
             'MATERIAL': 'Open Material Properties for the active object and pin that object in the existing Properties Editor',
             'RENDER': 'Open render settings in the existing Properties Editor',
             'OUTPUT': 'Open output settings in the existing Properties Editor',
@@ -70,7 +145,8 @@ class QCBLENDER_OT_open_properties(bpy.types.Operator):
             return {'CANCELLED'}
         area = areas[0]
         if self.editor in ('OBJECT', 'MATERIAL'):
-            area.spaces.active.pin_id = context.object
+            target = sidebar_subject(context.object) if self.editor == 'OBJECT' else context.object
+            area.spaces.active.pin_id = target if target is not None else context.object
             area.spaces.active.use_pin_id = True
         area.spaces.active.context = self.editor
         area.tag_redraw()
@@ -78,7 +154,7 @@ class QCBLENDER_OT_open_properties(bpy.types.Operator):
 
 
 class QCBLENDER_PT_main(bpy.types.Panel):
-    bl_label = 'Workflow'
+    bl_label = 'Import and Export'
     bl_idname = 'QCBLENDER_PT_main'
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
@@ -91,38 +167,57 @@ class QCBLENDER_PT_main(bpy.types.Panel):
         imports.label(text='Import')
         imports.operator('qcblender.import_calculation', text='Import Gaussian / Cube / XYZ', icon='IMPORT')
         imports.operator('qcblender.import_irc_path', text='Import IRC Path')
-        if capability(context, 'generate')[0]:
-            calculation = layout.box()
-            calculation.label(text='Compute')
-            action_button(calculation, context, 'generate', 'qcblender.generate_field', 'Generate Quantum Field', 'VOLUME_DATA')
-        if is_qc(context):
-            layout.operator('qcblender.open_properties', text='Object Properties and Display Parameters', icon='PROPERTIES').editor = 'OBJECT'
+        obj = context.object
+        if obj is not None:
+            from .data_export import export_choices
+            if source_object(obj).get('qc_dataset') and export_choices(None, context):
+                exporting = layout.box()
+                exporting.label(text='Export')
+                exporting.label(text=iface('Source object: {value0}', value0=source_object(obj).name), translate=False)
+                exporting.operator('qcblender.export_data', text='Export Data and Parameter Summary', icon='EXPORT')
 
 
 class QCBLENDER_PT_dataset(bpy.types.Panel):
-    bl_label = 'Dataset and Numerical Summary'
+    bl_label = 'Current QC Object'
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'QCBlender'
-    bl_options = {'DEFAULT_CLOSED'}
     bl_order = 1
 
     @classmethod
     def poll(cls, context):
-        return is_qc(context)
+        return sidebar_subject(context.object) is not None
 
     def draw(self, context):
         layout = ui_layout(self.layout)
-        summary(layout, context.object)
-        layout.operator('qcblender.source_details', text='View Full Source', icon='INFO')
-        layout.operator('qcblender.refresh_sources', text='Refresh Sources', icon='FILE_REFRESH')
+        draw_sidebar_summary(layout, context, details=False)
+        obj = sidebar_subject(context.object)
+        layout.label(text=iface('Properties target: {value0}', value0=obj.name), translate=False)
+        layout.operator('qcblender.open_properties', text='Open Object Properties', icon='PROPERTIES').editor = 'OBJECT'
 
 
-class QCBLENDER_PT_create(bpy.types.Panel):
-    bl_label = 'Create Views and Inspection Tools'
+class QCBLENDER_PT_dataset_details(bpy.types.Panel):
+    bl_label = 'Data and Source Details'
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'QCBlender'
+    bl_options = {'DEFAULT_CLOSED'}
+    bl_order = 2
+
+    @classmethod
+    def poll(cls, context):
+        return sidebar_subject(context.object) is not None
+
+    def draw(self, context):
+        draw_sidebar_summary(ui_layout(self.layout), context, details=True)
+
+
+class QCBLENDER_PT_create(bpy.types.Panel):
+    bl_label = 'Create Views and Tools'
+    bl_space_type = 'PROPERTIES'
+    bl_region_type = 'WINDOW'
+    bl_context = 'object'
+    bl_parent_id = 'QCBLENDER_PT_object'
     bl_options = {'DEFAULT_CLOSED'}
     bl_order = 3
 
@@ -132,6 +227,9 @@ class QCBLENDER_PT_create(bpy.types.Panel):
 
     def draw(self, context):
         layout, obj = ui_layout(self.layout), context.object
+        _action_group(layout, context, 'Compute', [
+            ('generate', 'qcblender.generate_field', 'Generate Quantum Field'),
+        ])
         views = layout.box()
         views.label(text='Display Views')
         for action, operator, text in [
@@ -141,8 +239,6 @@ class QCBLENDER_PT_create(bpy.types.Panel):
             action_button(views, context, action, operator, text)
         if obj.get('qc_view_kind') == 'atoms':
             views.operator('qcblender.local_selection_layer', text='Create Local Display Layer')
-            if obj.get('qc_optimization_available') and not obj.get('qc_optimization_step'):
-                views.operator('qcblender.optimization_view', text='Create Optimization Trajectory View')
         views.operator('qcblender.new_current_view', text='Create Current-Version View')
         _action_group(layout, context, 'Spatial Tools', [
             ('slice', 'qcblender.create_slice', 'Create Slice'),
@@ -160,13 +256,6 @@ class QCBLENDER_PT_create(bpy.types.Panel):
             for action, operator, text in sampling_actions:
                 action_button(sampling, context, action, operator, text)
             draw_probe_actions(sampling, context)
-        if obj.get('qc_view_kind') == 'atoms':
-            measurements = layout.box()
-            measurements.label(text='Atom and Geometry Annotations')
-            buttons = measurements.grid_flow(columns=2, even_columns=True, align=True)
-            for kind, title in [('ATOM', 'Atom numbers'), ('DISTANCE', 'Distance'),
-                                ('ANGLE', 'Angle'), ('DIHEDRAL', 'Dihedral')]:
-                buttons.operator('qcblender.add_annotation', text=title).kind = kind
         camera = layout.box()
         camera.label(text='Camera')
         camera.operator('qcblender.create_framed_camera', text='Create Framed Camera', icon='CAMERA_DATA')
@@ -187,6 +276,7 @@ class QCBLENDER_PT_external_import(bpy.types.Panel):
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'QCBlender'
+    bl_parent_id = 'QCBLENDER_PT_main'
     bl_options = {'DEFAULT_CLOSED'}
     bl_order = 4
 
@@ -196,6 +286,7 @@ class QCBLENDER_PT_external_import(bpy.types.Panel):
 
     def draw(self, context):
         layout = ui_layout(self.layout)
+        layout.label(text=iface('Target: {value0}', value0=context.object.name), translate=False)
         _action_group(layout, context, 'Spatial Field Analysis', [
             ('paired', 'qcblender.import_paired_field', 'IGMH / IRI Paired Fields'),
             ('esp', 'qcblender.import_esp_analysis', 'ESP Surface Analysis'),
@@ -211,25 +302,20 @@ class QCBLENDER_PT_external_import(bpy.types.Panel):
 
 
 class QCBLENDER_PT_project(bpy.types.Panel):
-    bl_label = 'Project and Diagnostics'
+    bl_label = 'Project and Maintenance'
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'QCBlender'
     bl_options = {'DEFAULT_CLOSED'}
-    bl_order = 5
+    bl_order = 4
 
     def draw(self, context):
         layout = ui_layout(self.layout)
         saving = layout.box()
-        saving.label(text='Save and Export')
+        saving.label(text='Save and Archive')
         for operator, text in [('save_project', 'Save Self-Contained Project'), ('archive_project', 'Archive Project')]:
             saving.operator('qcblender.' + operator, text=text)
         obj = context.object
-        if obj is not None:
-            from .source_browser import source_object
-            from .data_export import export_choices
-            if source_object(obj).get('qc_dataset') and export_choices(None, context):
-                saving.operator('qcblender.export_data', text='Export Data and Parameter Summary', icon='EXPORT')
         recovery = layout.box()
         recovery.label(text='Recovery and Maintenance')
         for operator, text in [('rebuild_cache', 'Rebuild Display Cache'), ('relocate_dataset', 'Relocate Dataset'),
