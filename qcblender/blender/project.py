@@ -50,6 +50,7 @@ def rebind_dataset(original, replacement):
 class QCBLENDER_OT_rebuild_cache(AsyncOperation, bpy.types.Operator):
     bl_idname = 'qcblender.rebuild_cache'
     bl_label = 'Rebuild Volume Cache'
+    bl_description = 'Rebuild the active field display cache from its saved scientific arrays without recalculating the science'
 
     @classmethod
     def poll(cls, context):
@@ -71,6 +72,7 @@ class QCBLENDER_OT_rebuild_cache(AsyncOperation, bpy.types.Operator):
 class QCBLENDER_OT_relocate_dataset(bpy.types.Operator, ImportHelper):
     bl_idname = 'qcblender.relocate_dataset'
     bl_label = 'Relocate Scientific Dataset'
+    bl_description = 'Restore a missing dataset link by choosing the manifest of the identical scientific dataset'
     filename_ext = '.json'
     filter_glob: StringProperty(default='manifest.json', options={'HIDDEN'})
 
@@ -163,6 +165,7 @@ def save_project(filepath):
 class QCBLENDER_OT_save_project(bpy.types.Operator, ExportHelper):
     bl_idname = 'qcblender.save_project'
     bl_label = 'Save Portable QC Project'
+    bl_description = 'Save the Blender project with its scientific datasets in a matching qcdata folder so the project can be moved together'
     filename_ext = '.blend'
     filter_glob: StringProperty(default='*.blend', options={'HIDDEN'})
 
@@ -179,6 +182,7 @@ class QCBLENDER_OT_save_project(bpy.types.Operator, ExportHelper):
 class QCBLENDER_OT_archive_project(bpy.types.Operator, ExportHelper):
     bl_idname = 'qcblender.archive_project'
     bl_label = 'Package QC Project'
+    bl_description = 'Package the saved Blender project and its matching scientific data into a portable ZIP archive'
     filename_ext = '.zip'
     filter_glob: StringProperty(default='*.zip', options={'HIDDEN'})
 

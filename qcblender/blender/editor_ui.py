@@ -1,5 +1,5 @@
 """Workflow actions in the sidebar; persistent controls in native Properties."""
-from ..i18n import error_text, iface, ui_layout
+from ..i18n import error_text, iface, tip, ui_layout
 import json
 import textwrap
 
@@ -51,6 +51,15 @@ class QCBLENDER_OT_open_properties(bpy.types.Operator):
     editor: EnumProperty(items=[('OBJECT', 'Object', ''), ('MATERIAL', 'Material', ''),
                                ('RENDER', 'Render', ''), ('OUTPUT', 'Output', '')])
 
+    @classmethod
+    def description(cls, context, properties):
+        return tip({
+            'OBJECT': 'Open Object Properties for the active object and pin that object in the existing Properties Editor',
+            'MATERIAL': 'Open Material Properties for the active object and pin that object in the existing Properties Editor',
+            'RENDER': 'Open render settings in the existing Properties Editor',
+            'OUTPUT': 'Open output settings in the existing Properties Editor',
+        }.get(properties.editor, 'Open the requested settings in the existing Properties Editor'))
+
     def execute(self, context):
         if self.editor in ('OBJECT', 'MATERIAL') and context.object is None:
             self.report({'WARNING'}, error_text('Select an object first'))
@@ -78,9 +87,14 @@ class QCBLENDER_PT_main(bpy.types.Panel):
 
     def draw(self, context):
         layout = ui_layout(self.layout)
-        layout.operator('qcblender.import_calculation', text='Import Gaussian / Cube / XYZ', icon='IMPORT')
-        layout.operator('qcblender.import_irc_path', text='Import IRC Path')
-        action_button(layout, context, 'generate', 'qcblender.generate_field', 'Generate Quantum Field', 'VOLUME_DATA')
+        imports = layout.box()
+        imports.label(text='Import')
+        imports.operator('qcblender.import_calculation', text='Import Gaussian / Cube / XYZ', icon='IMPORT')
+        imports.operator('qcblender.import_irc_path', text='Import IRC Path')
+        if capability(context, 'generate')[0]:
+            calculation = layout.box()
+            calculation.label(text='Compute')
+            action_button(calculation, context, 'generate', 'qcblender.generate_field', 'Generate Quantum Field', 'VOLUME_DATA')
         if is_qc(context):
             layout.operator('qcblender.open_properties', text='Object Properties and Display Parameters', icon='PROPERTIES').editor = 'OBJECT'
 
@@ -118,26 +132,54 @@ class QCBLENDER_PT_create(bpy.types.Panel):
 
     def draw(self, context):
         layout, obj = ui_layout(self.layout), context.object
+        views = layout.box()
+        views.label(text='Display Views')
         for action, operator, text in [
             ('surface', 'qcblender.add_surface_layer', 'Create Isosurface Layer'),
-            ('slice', 'qcblender.create_slice', 'Create Slice'),
             ('fog', 'qcblender.create_fog', 'Create Volume Fog'),
+        ]:
+            action_button(views, context, action, operator, text)
+        if obj.get('qc_view_kind') == 'atoms':
+            views.operator('qcblender.local_selection_layer', text='Create Local Display Layer')
+            if obj.get('qc_optimization_available') and not obj.get('qc_optimization_step'):
+                views.operator('qcblender.optimization_view', text='Create Optimization Trajectory View')
+        views.operator('qcblender.new_current_view', text='Create Current-Version View')
+        _action_group(layout, context, 'Spatial Tools', [
+            ('slice', 'qcblender.create_slice', 'Create Slice'),
             ('clip', 'qcblender.add_clipping', 'Add Clipping Controls'),
+            ('dipole', 'qcblender.show_dipole', 'Create Dipole Vector'),
+        ])
+        sampling_actions = [
             ('probe', 'qcblender.probe_field', 'Read Field Value at Cursor'),
             ('profile_start', 'qcblender.mark_profile_start', 'Mark Profile Start'),
             ('profile', 'qcblender.create_line_profile', 'Sample Line Profile Data'),
-            ('dipole', 'qcblender.show_dipole', 'Create Dipole Vector')]:
-            action_button(layout, context, action, operator, text)
-        draw_probe_actions(layout, context)
+        ]
+        if any(capability(context, action)[0] for action in ('probe', 'profile_start', 'profile', 'probe_click')):
+            sampling = layout.box()
+            sampling.label(text='Field Sampling')
+            for action, operator, text in sampling_actions:
+                action_button(sampling, context, action, operator, text)
+            draw_probe_actions(sampling, context)
         if obj.get('qc_view_kind') == 'atoms':
-            layout.operator('qcblender.local_selection_layer', text='Create Local Display Layer')
+            measurements = layout.box()
+            measurements.label(text='Atom and Geometry Annotations')
+            buttons = measurements.grid_flow(columns=2, even_columns=True, align=True)
             for kind, title in [('ATOM', 'Atom Number Annotation'), ('DISTANCE', 'Distance Annotation'),
                                 ('ANGLE', 'Angle Annotation'), ('DIHEDRAL', 'Dihedral Annotation')]:
-                layout.operator('qcblender.add_annotation', text=iface('Create {value0}', value0=iface(title))).kind = kind
-            if obj.get('qc_optimization_available') and not obj.get('qc_optimization_step'):
-                layout.operator('qcblender.optimization_view', text='Create Optimization Trajectory View')
-        layout.operator('qcblender.new_current_view', text='Create Current-Version View')
-        layout.operator('qcblender.create_framed_camera', text='Create Framed Camera', icon='CAMERA_DATA')
+                buttons.operator('qcblender.add_annotation', text=title).kind = kind
+        camera = layout.box()
+        camera.label(text='Camera')
+        camera.operator('qcblender.create_framed_camera', text='Create Framed Camera', icon='CAMERA_DATA')
+
+
+def _action_group(layout, context, title, actions):
+    """Draw a titled group only when at least one action applies to this object."""
+    if not any(capability(context, action)[0] for action, _, _ in actions):
+        return
+    group = layout.box()
+    group.label(text=title)
+    for action, operator, text in actions:
+        action_button(group, context, action, operator, text)
 
 
 class QCBLENDER_PT_external_import(bpy.types.Panel):
@@ -153,14 +195,19 @@ class QCBLENDER_PT_external_import(bpy.types.Panel):
         return context.object is not None and bool(context.object.get('qc_dataset'))
 
     def draw(self, context):
-        for action, operator, text in [
+        layout = ui_layout(self.layout)
+        _action_group(layout, context, 'Spatial Field Analysis', [
             ('paired', 'qcblender.import_paired_field', 'IGMH / IRI Paired Fields'),
-            ('nbo', 'qcblender.import_nbo', 'NBO Records'),
             ('esp', 'qcblender.import_esp_analysis', 'ESP Surface Analysis'),
+        ])
+        _action_group(layout, context, 'Atom and Bond Analysis', [
+            ('nbo', 'qcblender.import_nbo', 'NBO Records'),
             ('aim', 'qcblender.import_aim_analysis', 'AIM Topology'),
+        ])
+        _action_group(layout, context, 'Energy Decomposition', [
             ('nocv_table', 'qcblender.import_ets_nocv', 'ETS-NOCV Table'),
-            ('nocv_field', 'qcblender.import_nocv_field', 'NOCV pair Cube')]:
-            action_button(ui_layout(self.layout), context, action, operator, text)
+            ('nocv_field', 'qcblender.import_nocv_field', 'NOCV pair Cube'),
+        ])
 
 
 class QCBLENDER_PT_project(bpy.types.Panel):
@@ -173,20 +220,28 @@ class QCBLENDER_PT_project(bpy.types.Panel):
 
     def draw(self, context):
         layout = ui_layout(self.layout)
-        for operator, text in [('save_project', 'Save Self-Contained Project'), ('archive_project', 'Archive Project'),
-                               ('rebuild_cache', 'Rebuild Display Cache'), ('relocate_dataset', 'Relocate Dataset'),
-                               ('cleanup_legacy_node_assets', 'Preview and Clean Up Legacy QC Node Assets'),
-                               ('check_runtime', 'Check Scientific Runtime')]:
-            layout.operator('qcblender.' + operator, text=text)
+        saving = layout.box()
+        saving.label(text='Save and Export')
+        for operator, text in [('save_project', 'Save Self-Contained Project'), ('archive_project', 'Archive Project')]:
+            saving.operator('qcblender.' + operator, text=text)
         obj = context.object
         if obj is not None:
             from .source_browser import source_object
             from .data_export import export_choices
             if source_object(obj).get('qc_dataset') and export_choices(None, context):
-                layout.operator('qcblender.export_data', text='Export Data and Parameter Summary', icon='EXPORT')
+                saving.operator('qcblender.export_data', text='Export Data and Parameter Summary', icon='EXPORT')
+        recovery = layout.box()
+        recovery.label(text='Recovery and Maintenance')
+        for operator, text in [('rebuild_cache', 'Rebuild Display Cache'), ('relocate_dataset', 'Relocate Dataset'),
+                               ('cleanup_legacy_node_assets', 'Preview and Clean Up Legacy QC Node Assets')]:
+            recovery.operator('qcblender.' + operator, text=text)
+        diagnostics = layout.box()
+        diagnostics.label(text='Diagnostics')
+        diagnostics.operator('qcblender.check_runtime', text='Check Scientific Runtime')
+        if obj is not None:
             for diagnostic in json.loads(obj.get('qc_diagnostics', '[]')):
                 for line in textwrap.wrap(error_text(diagnostic), width=40):
-                    layout.label(text=line)
+                    diagnostics.label(text=line)
 
 
 class QCBLENDER_PT_object(bpy.types.Panel):

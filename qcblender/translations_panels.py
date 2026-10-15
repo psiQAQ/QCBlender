@@ -1,0 +1,28 @@
+"""Panel grouping, project actions and annotation-font diagnostics."""
+
+MESSAGES = {
+    'Import': '导入',
+    'Compute': '计算',
+    'Display Views': '显示视图',
+    'Spatial Tools': '空间工具',
+    'Field Sampling': '场值采样',
+    'Atom and Geometry Annotations': '原子与几何标注',
+    'Camera': '相机',
+    'Spatial Field Analysis': '空间场分析',
+    'Atom and Bond Analysis': '原子与键分析',
+    'Energy Decomposition': '能量分解',
+    'Save and Export': '保存与导出',
+    'Recovery and Maintenance': '恢复与维护',
+    'Diagnostics': '诊断信息',
+    'Open Object Properties for the active object and pin that object in the existing Properties Editor': '在现有属性编辑器中打开活动对象的对象属性，并固定显示该对象',
+    'Open Material Properties for the active object and pin that object in the existing Properties Editor': '在现有属性编辑器中打开活动对象的材质属性，并固定显示该对象',
+    'Open render settings in the existing Properties Editor': '在现有属性编辑器中打开渲染设置',
+    'Open output settings in the existing Properties Editor': '在现有属性编辑器中打开输出设置',
+    'Open the requested settings in the existing Properties Editor': '在现有属性编辑器中打开指定设置',
+    'Rebuild the active field display cache from its saved scientific arrays without recalculating the science': '使用已保存的科学数组重建活动场的显示缓存，不重新进行科学计算',
+    'Restore a missing dataset link by choosing the manifest of the identical scientific dataset': '选择同一科学数据集的清单文件，恢复丢失的数据关联',
+    'Save the Blender project with its scientific datasets in a matching qcdata folder so the project can be moved together': '保存 Blender 工程，并将科学数据集集中到配套 qcdata 文件夹，便于一起迁移',
+    'Package the saved Blender project and its matching scientific data into a portable ZIP archive': '将已保存的 Blender 工程和配套科学数据打包为可迁移的 ZIP 压缩包',
+    'The Blender-distributed CJK annotation font is missing': '缺少 Blender 随附的中日韩标注字体',
+    'The CJK annotation font could not be packed into the project': '无法将中日韩标注字体打包进工程',
+}

@@ -24,10 +24,8 @@ def source(name):
 
 
 def messages():
-    spec = importlib.util.spec_from_file_location('ui_messages', ROOT / 'qcblender/translations_ui.py')
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module.MESSAGES
+    from qcblender.i18n import messages as catalog
+    return catalog()
 
 
 class UILocalization(unittest.TestCase):
