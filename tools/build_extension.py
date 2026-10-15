@@ -50,6 +50,10 @@ def main():
         env = os.environ.copy()
         env['BLENDER_USER_RESOURCES'] = str(ROOT / 'outputs' / 'blender-build')
         env['BLENDER_USER_CACHE'] = str(ROOT / 'outputs' / 'blender-cache')
+        for kind in ('CONFIG', 'EXTENSIONS', 'DATAFILES'):
+            directory = ROOT / 'outputs' / 'blender-build' / kind.lower()
+            directory.mkdir(parents=True, exist_ok=True)
+            env['BLENDER_USER_' + kind] = str(directory)
         subprocess.run([str(blender), '--background', '--factory-startup', '--offline-mode', '--disable-autoexec',
                         '--python-exit-code', '1', '--python', str(ROOT / 'tools' / 'build_node_assets.py'),
                         '--', '--package-root', str(stage)], env=env, check=True)

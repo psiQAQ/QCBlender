@@ -3,7 +3,7 @@ import hashlib
 from pathlib import Path
 
 
-STATIC_REFERENCE_REASON = '外部分析需要静态科学参考；请使用对应步骤的独立文件'
+STATIC_REFERENCE_REASON = 'External analyses require a static scientific reference; use an independent file for the corresponding step'
 
 
 def dynamic_reference(metadata):
