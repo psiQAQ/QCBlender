@@ -306,7 +306,7 @@ class QCBLENDER_PT_selection(bpy.types.Panel):
 
     def draw(self, context):
         layout, obj = self.layout, context.object
-        layout.operator('qcblender.local_selection', text='设置局部选择')
+        layout.operator('qcblender.local_selection', text='设置局部选择').mode = 'REPLACE'
         selected = record(obj, 'qc_local_selection_record')
         if selected:
             layout.label(text='固定源编号: ' + ','.join(map(str, selected.get('fixed_numbers', []))))

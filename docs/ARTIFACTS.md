@@ -1,6 +1,6 @@
 # 产物查找入口
 
-更新：2026-10-14。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
+更新：2026-10-15。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
 
 ## 当前交付
 
@@ -11,12 +11,19 @@
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
 | 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；工程在 `validation/work/human/`；[当前截图](#tutorial-screenshots-20261011) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
-| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,664,814 字节，SHA-256 `60d572186e127e40e1031a75fff325c3038ab7cc44102d3bdf1e79b6763860ee` |
-| 完整候选及原报告 | `outputs/candidates/current/upstream-7dc0d11/`；源码 `7dc0d11`；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/upstream-20261011.md) |
+| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,666,870 字节，SHA-256 `58db0ade27053e9e22387e6c92de1acbe6bdfc35ff368244082eab33a3c8f590` |
+| 当前候选及验证 | `outputs/candidates/current/local-selection-dialog-20261014/`；源码基线 `7b98127` 加局部选择界面修复；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/local-selection-dialog.md) |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
 教程现有 26 个图片引用，已提供 4 张；完整图片检查因缺少 22 张截图为 Failed。截图采用 Pxx 案例前缀，当前路径见[截图记录](#tutorial-screenshots-20261011)。完整独立用户操作、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
+
+<a id="local-selection-dialog-20261014"></a>
+## 局部选择弹窗与全局安装（2026-10-15）
+
+设置按钮明确指定 Replace，避免继承上次 Clear 等立即执行模式。原 PID 13284、未保存 P06-single 的三种记忆模式点击、七种选项与距离控件、4 项原子选择回归 Passed；83 源码、11 个原有 wheel 和 102 个全局安装文件核对 Passed。当前窗口已生效，原工程数据、偏好与节点布局保留。
+
+[任务](../.scratch/local-selection-dialog-20261014/spec.md)和[验收](../validation/agent/acceptance/local-selection-dialog.md)记录范围；证据在 validation/agent/reports/2026-10-14/local-selection-dialog/。旧 ZIP、全局插件与偏好备份、维护脚本在 outputs/runs/local-selection-dialog-20261014/；没有删除旧候选。验证时源码尚未提交，身份记录保留当时基线及文件摘要；完整后台重建、冷重开与独立人工验收 Not Run。
 
 <a id="tutorial-clarity-20261013"></a>
 ## 教程用途、选项与步骤目录（2026-10-14）

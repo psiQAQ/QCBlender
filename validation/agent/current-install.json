@@ -3,18 +3,24 @@
   "version": "0.1.0",
   "channel": "alpha",
   "path": "validation/shared/install/qcblender-0.1.0.zip",
-  "bytes": 50664814,
-  "sha256": "60d572186e127e40e1031a75fff325c3038ab7cc44102d3bdf1e79b6763860ee",
-  "source_commit": "7dc0d11aea8f33cc4d3b9c7f9f4d28b373fee118",
-  "product_tree": "24acf92e290ede3ec0fcef37d5a01a4e7cb44d93",
-  "source_path": "outputs/candidates/current/upstream-7dc0d11/qcblender-0.1.0.zip",
-  "validation_report": "validation/agent/reports/2026-10-11/upstream/delivery.json",
+  "bytes": 50666870,
+  "sha256": "58db0ade27053e9e22387e6c92de1acbe6bdfc35ff368244082eab33a3c8f590",
+  "source_commit": "7b981274b1cf20ae45f302b9a19908ccbc42b20b",
+  "source_path": "outputs/candidates/current/local-selection-dialog-20261014/qcblender-0.1.0.zip",
+  "validation_report": "validation/agent/reports/2026-10-14/local-selection-dialog/acceptance.json",
   "platform": "Windows x64 / Blender 5.1.1",
-  "build": "Local offline build with the existing candidate wheels",
+  "build": "Local UI-source ZIP refresh; unchanged validated node assets and 11 existing locked wheels",
   "computer_use_click": "Passed",
   "independent_human_review": "Not Run",
   "license_review": "Not Run",
   "public_release_approval": "Not Run",
   "daily_install": "Passed",
-  "daily_gui_smoke": "Passed"
+  "daily_gui_smoke": "Passed",
+  "source_dirty": true,
+  "base_product_tree": "24acf92e290ede3ec0fcef37d5a01a4e7cb44d93",
+  "source_file_sha256": {
+    "qcblender/blender/editor_ui.py": "1c8272898dbbb1fa6fd4ac4421836aedc976888eaf8b48ca356035341478a2ab"
+  },
+  "global_installation": "%APPDATA%\\Blender Foundation\\Blender\\5.1\\extensions\\user_default\\qcblender",
+  "cold_restart": "Not Run"
 }

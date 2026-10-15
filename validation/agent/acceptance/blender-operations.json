@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-10-11",
+  "updated": "2026-10-15",
   "rules": "docs/agents/blender-interaction.md",
   "operation_ids_are_stable": true,
   "history_is_not_current_batch_pass": true,
@@ -6906,6 +6906,64 @@
         "current_batch_replay_status": "Passed",
         "requires_current_result_assertions": true
       }
+    },
+    {
+      "id": "local-selection-dialog-after-immediate-mode",
+      "title": "清除、重新计算或反选后打开局部选择对话框",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-15",
+        "method": "Agent Computer Use native panel clicks with real invoke callback assertions",
+        "source_commit": "7b981274b1cf20ae45f302b9a19908ccbc42b20b",
+        "source_dirty": true,
+        "candidate_sha256": "58db0ade27053e9e22387e6c92de1acbe6bdfc35ff368244082eab33a3c8f590",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "Existing unsaved P06-single water-dimer.xyz; PID 13284",
+        "visible_entry": "Properties > Object > QCBlender > 局部选择与标注 > 设置局部选择",
+        "validated_scope": "Remembered CLEAR, RECOMPUTE, INVERT each invoke REPLACE explicitly and return RUNNING_MODAL; seven choices and distance/seed controls visible. Dialogs canceled; original scene and node editor preserved.",
+        "reports": [
+          {
+            "path": "validation/agent/reports/2026-10-14/local-selection-dialog/acceptance.json",
+            "sha256": "0e381be9ffc5c11fb6a0f6d7bf10ea4991ecf2ec5d6847df97133af09813f90a",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "validation/agent/reports/2026-10-14/local-selection-dialog/green-clear-dialog.jpg",
+            "sha256": "cbba649ed56c77d5a55c7056d70b000a3d4aa76d6467d09e022d5e0edd370f0b"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-14/local-selection-dialog/distance-controls.jpg",
+            "sha256": "88ca1981adfabc19e7bbb8e685d5f2ba6f0a820d364d2630b29a032918d432db"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-14/local-selection-dialog/mode-options.jpg",
+            "sha256": "79a3bf7946ce003460bbb19eceff3d887a4f40a5f7e76f143750cecedc229dfd"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-14/local-selection-dialog/restored-user-session.jpg",
+            "sha256": "da8976c83a2c193eadceb2ee6dd0ba51190a4ae28086dd34c38ec29f10f84691"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/editor_ui.py": "1c8272898dbbb1fa6fd4ac4421836aedc976888eaf8b48ca356035341478a2ab",
+        "qcblender/blender/atom_selection.py": "4e0464b519f6f9b4d0936245a48be4bae9e44939845ce7fe4e7032d263c32b3f",
+        "qcblender/blender/geometry.py": "d97e6d2447038da1451e84f97398f492877123b483ddde3f18f1a68ba17f34df"
+      },
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "tools/verify_local_selection_dialog.py arms the real installed invoke callback; requires one native Set-button click and cancel per case.",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true
+      },
+      "limitations": "Current session fixed without restart; cold reopen and independent human acceptance Not Run."
     }
   ]
 }
