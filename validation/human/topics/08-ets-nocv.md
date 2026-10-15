@@ -27,7 +27,7 @@
 - **kcal/mol**：千卡每摩尔；本例源表使用这个单位。
 - **hartree**：原子单位能量；用于源表按 hartree 输出的结果。
 
-点击 **N 侧栏 → 工作流（Workflow） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/P05/complex.fchk](../../shared/data/public/P05/complex.fchk)。只选新原子对象，点击 **导入外部结果（Import External Results） → 能量分解（Energy Decomposition） → ETS-NOCV 表（ETS-NOCV Table）**，选 **ETS-NOCV 输出文本（ETS-NOCV output text）=[shared/data/public/P05/nocv/ets-nocv.txt](../../shared/data/public/P05/nocv/ets-nocv.txt)**、**轨道对能量单位（Pair energy unit）=kcal/mol** 并确认。应保留 **C/O/B/H/H/H** 六原子分子，并新增 **QC ETS-NOCV pairs**。
+点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/P05/complex.fchk](../../shared/data/public/P05/complex.fchk)。只选新原子对象，点击 **导入与导出（Import and Export） → 导入外部结果（Import External Results） → 能量分解（Energy Decomposition） → ETS-NOCV 表（ETS-NOCV Table）**，选 **ETS-NOCV 输出文本（ETS-NOCV output text）=[shared/data/public/P05/nocv/ets-nocv.txt](../../shared/data/public/P05/nocv/ets-nocv.txt)**、**轨道对能量单位（Pair energy unit）=kcal/mol** 并确认。应保留 **C/O/B/H/H/H** 六原子分子，并新增 **QC ETS-NOCV pairs**。
 
 <a id="step-02"></a>
 ### 2. 读取源表中的 Pair 记录
@@ -44,7 +44,7 @@
 
 > 自旋（Spin）区分自旋记录。总计（Total）表示总通道，Alpha、Beta 表示分别列出的两种自旋通道；同一轨道对（Pair）的记录需连同自旋（Spin）一起辨认。
 
-在 **显示层（Display Layers）** 点击 **QC ETS-NOCV pairs** 行最左侧的选择图标，点击 **工作流（Workflow） → 对象属性与显示参数（Object Properties and Display Parameters）**，展开 **外部分析记录（External Analysis Records）**。应有 **11 条实际打印的记录**；**记录（从1开始）（Record (1-based)）=1** 应为 **Pair1 / 总计（Total）**、**pair_energy=−57.02 kcal/mol**，正负本征值为 **+0.54550/−0.54550**。截图保存为 `human/screenshots/P05-nocv-table.png`。
+在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 点击 **QC ETS-NOCV pairs** 行最左侧的选择图标，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，展开 **外部分析记录（External Analysis Records）**。应有 **11 条实际打印的记录**；**记录（从1开始）（Record (1-based)）=1** 应为 **Pair1 / 总计（Total）**、**pair_energy=−57.02 kcal/mol**，正负本征值为 **+0.54550/−0.54550**。截图保存为 `human/screenshots/P05-nocv-table.png`。
 
 ![ETS-NOCV 的 Pair1 数值、单位和源记录](../screenshots/P05-nocv-table.png)
 
@@ -75,7 +75,7 @@
 - **轨道对编号（Pair number）**：选择该通道下的源轨道对（Pair）编号；列表来自表中的实际记录。
 - **形变密度单位（Deformation density unit）**：填写 Cube 数值使用的密度单位，本例为 **electron/bohr^3**。
 
-保持表对象活动，点击 **N 侧栏 → 导入外部结果（Import External Results） → 能量分解（Energy Decomposition） → NOCV 贡献对 Cube（NOCV pair Cube）**，选择 **带符号的轨道对 Cube（Signed pair Cube）=[shared/data/public/P05/nocv/nocv-pair1.cub](../../shared/data/public/P05/nocv/nocv-pair1.cub)**，设 **自旋（Spin）=总计（Total）**，从 **轨道对编号（Pair number）** 的实际源编号列表选择 **1**，并设 **形变密度单位（Deformation density unit）=electron/bohr^3**。完成后在 **显示层（Display Layers）** 选 **QC nocv_deformation_density**，重新点击 **工作流（Workflow） → 对象属性与显示参数（Object Properties and Display Parameters）**，其网格应为 **47×50×57**。
+保持表对象活动，点击 **N 侧栏 → 导入与导出（Import and Export） → 导入外部结果（Import External Results） → 能量分解（Energy Decomposition） → NOCV 贡献对 Cube（NOCV pair Cube）**，选择 **带符号的轨道对 Cube（Signed pair Cube）=[shared/data/public/P05/nocv/nocv-pair1.cub](../../shared/data/public/P05/nocv/nocv-pair1.cub)**，设 **自旋（Spin）=总计（Total）**，从 **轨道对编号（Pair number）** 的实际源编号列表选择 **1**，并设 **形变密度单位（Deformation density unit）=electron/bohr^3**。完成后在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 选 **QC nocv_deformation_density**，重新点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，其网格应为 **47×50×57**。
 
 > 变形密度的正值表示电子密度增加，负值表示电子密度减少；本例表面的单位是 electron/bohr^3，用于观察对应轨道对（Pair）的电子密度重排发生在哪些区域。
 
@@ -94,4 +94,4 @@
 
 **应用筛选（Apply Filter）** 会尝试选中与当前匹配记录对应的已导入场。表记录与场通过来源、轨道对（Pair）和自旋（Spin）关联；找到唯一场后活动对象会切换到它，再打开对象属性即可调整该场的显示。
 
-在 **显示层（Display Layers）** 选回 **QC ETS-NOCV pairs**，重新点击 **工作流（Workflow） → 对象属性与显示参数（Object Properties and Display Parameters）**，保留步骤 3 的筛选条件与 **匹配项（Match）=1**，再点击 **应用筛选（Apply Filter）**。活动对象应切换到刚才导入的唯一 **Pair1 / 总计（Total）** 场 **QC nocv_deformation_density**。再次点击 **工作流（Workflow） → 对象属性与显示参数（Object Properties and Display Parameters）**，将原先固定在表对象上的属性区切到场对象；然后在 **几何表示（Geometry Representation）** 关闭再开启 **显示负值（Show Negative Values）**，对应部分应消失后恢复，另一符号仍可见。
+在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 选回 **QC ETS-NOCV pairs**，重新点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，保留步骤 3 的筛选条件与 **匹配项（Match）=1**，再点击 **应用筛选（Apply Filter）**。活动对象应切换到刚才导入的唯一 **Pair1 / 总计（Total）** 场 **QC nocv_deformation_density**。再次点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，将原先固定在表对象上的属性区切到场对象；然后在 **几何表示（Geometry Representation）** 关闭再开启 **显示负值（Show Negative Values）**，对应部分应消失后恢复，另一符号仍可见。

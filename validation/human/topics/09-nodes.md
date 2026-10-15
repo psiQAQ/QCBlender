@@ -22,7 +22,7 @@
 
 > 几何节点（Geometry Nodes）用连线把选择、表示和裁剪组合起来。节点树是这组计算连接；修改器把节点树应用到对象，生成视口中看到的几何。这里在显示副本上建立一个简单分支。
 
-点击 **N 侧栏 → 工作流（Workflow） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/P06/water-dimer.xyz](../../shared/data/public/P06/water-dimer.xyz)。选中新原子对象，在三维视口按 `F2` 命名为 **P06-original**。在 **显示层（Display Layers） → 复制（Duplicate）** 创建副本，将副本命名为 **P06-nodes**；关闭原层的眼睛和相机图标，保持副本活动。复制（Duplicate）会为副本复制可编辑的外层节点树。
+点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/P06/water-dimer.xyz](../../shared/data/public/P06/water-dimer.xyz)。选中新原子对象，在三维视口按 `F2` 命名为 **P06-original**。点击 **打开对象属性（Open Object Properties）**，在 **对象属性（Object Properties） → 显示层管理（Display Layer Management） → 复制（Duplicate）** 创建副本，将副本命名为 **P06-nodes**，重新打开副本的对象属性；在 Outliner 关闭原层的眼睛和相机图标，保持副本活动。复制（Duplicate）会为副本复制可编辑的外层节点树。
 
 <a id="step-02"></a>
 ### 2. 添加选择、表示和裁剪节点

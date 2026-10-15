@@ -35,7 +35,7 @@
 
 > Eh（Hartree）是能量单位；RHF 是本例所用计算方法的名称，6-31G(d) 是基组名称，两者说明这份能量的计算条件。
 
-点击 **N 侧栏 → 工作流（Workflow） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/P03/water-dimer.fchk](../../shared/data/public/P03/water-dimer.fchk)并完成导入。选中新原子对象，按 `F2` 命名为 **P03-atoms**。应有 **O/H/H/O/H/H** 六个原子；点击 **对象属性与显示参数（Object Properties and Display Parameters）**，在 **科学记录与振动模式（Scientific Records and Vibration Modes）** 查看电子总能量，应约为 **−152.013820 Eh**。本样本计算条件为 **RHF/6-31G(d)**。
+点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/P03/water-dimer.fchk](../../shared/data/public/P03/water-dimer.fchk)并完成导入。选中新原子对象，按 `F2` 命名为 **P03-atoms**。应有 **O/H/H/O/H/H** 六个原子；点击 **打开对象属性（Open Object Properties）**，在 **科学记录与振动模式（Scientific Records and Vibration Modes）** 查看电子总能量，应约为 **−152.013820 Eh**。本样本计算条件为 **RHF/6-31G(d)**。
 
 <a id="step-02"></a>
 ### 2. 生成电子密度场
@@ -51,12 +51,12 @@
 
 其他密度选项的区别与自旋密度案例见本页[选择其他密度](#densities)；轨道选项 **分子轨道（Molecular orbital）** 见[主线轨道案例](../SOP.md#orbital)。
 
-选 **P03-atoms**，点击 **工作流（Workflow） → 计算（Compute） → 生成量子化学场（Generate Quantum Field）**。首次使用先等待自动检查，在生成对话框设 **物理量（Quantity）=电子密度（Electron density）**、**网格间距（Grid spacing）=0.2**、**网格边距（Grid margin）=3**、**内存预算（Memory budget）=512**，点击 **确定（OK）** 并等待完成。应生成 **QC electron_number_density**，单位为 **electron/bohr^3**。
+选 **P03-atoms**，重新打开该对象属性，点击 **对象属性（Object Properties） → 创建视图与工具（Create Views and Tools） → 计算（Compute） → 生成量子化学场（Generate Quantum Field）**。首次使用先等待自动检查，在生成对话框设 **物理量（Quantity）=电子密度（Electron density）**、**网格间距（Grid spacing）=0.2**、**网格边距（Grid margin）=3**、**内存预算（Memory budget）=512**，点击 **确定（OK）** 并等待完成。应生成 **QC electron_number_density**，单位为 **electron/bohr^3**。
 
 <a id="step-03"></a>
 ### 3. 生成静电势场
 
-在 **显示层（Display Layers）** 点击 **P03-atoms** 行最左侧的选择图标，用相同入口和网格参数生成 **物理量（Quantity）=静电势（Electrostatic potential）**，点击 **确定（OK）** 并等待完成。应生成 **QC electrostatic_potential**，单位为 **hartree/e**。
+在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 点击 **P03-atoms** 行最左侧的选择图标，重新打开该对象属性，用相同入口和网格参数生成 **物理量（Quantity）=静电势（Electrostatic potential）**，点击 **确定（OK）** 并等待完成。应生成 **QC electrostatic_potential**，单位为 **hartree/e**。
 
 <a id="step-04"></a>
 ### 4. 用 ESP 为密度表面着色
@@ -65,7 +65,7 @@
 
 **选择／替换着色场（Select / Replace Color Field） → 场（Field）** 选择提供颜色数值的场。首次建立映射时，**颜色最小值（Color minimum） / 颜色最大值（Color maximum）** 设置色带范围；以后替换着色场会保留现有范围，需要按新场的单位核对。本例选择 ESP，图例和颜色范围因此采用 **hartree/e**。
 
-选 **QC electron_number_density**，重新点击 **对象属性与显示参数（Object Properties and Display Parameters）**，在 **几何表示（Geometry Representation）** 设 **正值阈值（Positive Isovalue）=0.004**。点击 **颜色映射（Color Mapping） → 选择／替换着色场（Select / Replace Color Field）**，在 **场（Field）** 选 **QC electrostatic_potential**，设 **颜色最小值（Color minimum）=−0.05、颜色最大值（Color maximum）=0.05** 并点击 **确定（OK）**。在 **显示层（Display Layers）** 关闭独立 **QC electrostatic_potential** 表面的眼睛和相机图标，保留映射后的密度表面与 **P03-atoms**。在 **材质预览（Material Preview）** 中，密度表面应出现随位置变化的颜色。
+选 **QC electron_number_density**，重新点击 **打开对象属性（Open Object Properties）**，在 **几何表示（Geometry Representation）** 设 **正值阈值（Positive Isovalue）=0.004**。点击 **颜色映射（Color Mapping） → 选择／替换着色场（Select / Replace Color Field）**，在 **场（Field）** 选 **QC electrostatic_potential**，设 **颜色最小值（Color minimum）=−0.05、颜色最大值（Color maximum）=0.05** 并点击 **确定（OK）**。在 Outliner 关闭独立 **QC electrostatic_potential** 表面的眼睛和相机图标，保留映射后的密度表面与 **P03-atoms**。在 **材质预览（Material Preview）** 中，密度表面应出现随位置变化的颜色。
 
 <a id="step-05"></a>
 ### 5. 设置颜色范围与图例布局
@@ -111,7 +111,7 @@
 
 将 **反转（0 或 1）（Reverse (0 or 1)）** 设为 **1**，表面和图例应一起反转颜色。此时再次应用一个预设，反转值应仍为 **1**；最后恢复 **反转（Reverse）=0**。观察 **颜色最小值（Color Minimum） / 颜色中心值（Color Center） / 颜色最大值（Color Maximum）**、透明度和图例位置，应用预设后这些值应保持原样。
 
-> 材质可以被多个视图共享。对话框中所列材质的所有使用者，以及使用它的图例，都会一起更新。需要独立配色时，先用 **N 侧栏 → 显示层（Display Layers） → 复制（Duplicate）** 创建展示副本，再选副本应用预设。
+> 材质可以被多个视图共享。对话框中所列材质的所有使用者，以及使用它的图例，都会一起更新。需要独立配色时，先重新打开目标的对象属性，用 **显示层管理（Display Layer Management） → 复制（Duplicate）** 创建展示副本，再选副本应用预设。
 
 如果提示目标改变、材质只读或无法确认色带，先取消，重新选中可编辑的标准 QC 着色视图，再打开对话框。确认会替换当前的自定义色阶和插值；希望保留手工配色时可先复制显示层。
 
@@ -125,18 +125,18 @@
 
 **设置原子电荷着色（Set Atomic Charge Colors） → 电荷方法（Charge method）** 选择源文件中已有的原子电荷方法；列表随文件内容变化，操作不会重新计算另一种电荷。本例源文件提供 **Mulliken**，选它后可用原子颜色查看各原子的部分电荷。**最小值（e）（Minimum (e)）** 和 **最大值（e）（Maximum (e)）** 设置初始颜色范围，后续在 **颜色映射（Color Mapping）** 调整。
 
-在 **显示层（Display Layers）** 暂时关闭密度表面的眼睛图标，点击 **P03-atoms** 行最左侧的选择图标。重新点击 **对象属性与显示参数（Object Properties and Display Parameters）**，在 **科学记录与振动模式（Scientific Records and Vibration Modes） → 设置原子电荷着色（Set Atomic Charge Colors）** 选 **Mulliken**，点击 **确定（OK）**。在 **图例排版（Legend Layout）** 开启 **显示图例（Show Legend）**；氧应显示为负电荷一侧的红色，氢为正电荷一侧的蓝色，图例单位为 **e**。在 **颜色映射（Color Mapping）** 将 **电荷最大值（Charge Maximum）** 改为 **0.5 e**，观察颜色范围变化。原子电荷也可按上面的 **应用色带预设…（Apply Color Ramp Preset…）** 更换配色；图例继续使用当前布居方法与 **e**，颜色对应关系以该图例为准。
+在 Outliner 暂时关闭密度表面的眼睛图标，再在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 选择 **P03-atoms**。重新点击 **打开对象属性（Open Object Properties）**，在 **科学记录与振动模式（Scientific Records and Vibration Modes） → 设置原子电荷着色（Set Atomic Charge Colors）** 选 **Mulliken**，点击 **确定（OK）**。在 **图例排版（Legend Layout）** 开启 **显示图例（Show Legend）**；氧应显示为负电荷一侧的红色，氢为正电荷一侧的蓝色，图例单位为 **e**。在 **颜色映射（Color Mapping）** 将 **电荷最大值（Charge Maximum）** 改为 **0.5 e**，观察颜色范围变化。原子电荷也可按上面的 **应用色带预设…（Apply Color Ramp Preset…）** 更换配色；图例继续使用当前布居方法与 **e**，颜色对应关系以该图例为准。
 
 <a id="step-10"></a>
 ### 10. 创建偶极箭头并调整显示长度
 
 > 偶极矢量用大小和方向描述电荷分布；Debye 是偶极矩单位。修改器（Modifiers）是调节几何处理参数的修改器面板；每 Debye 的埃数（Angstrom per Debye）设置每 Debye 对应的箭头显示长度，单位为 Å，不改变源偶极矩。
 
-保持 **P03-atoms** 活动，点击 **N 侧栏 → 创建视图与检查工具（Create Views and Inspection Tools） → 空间工具（Spatial Tools） → 创建偶极矢量（Create Dipole Vector）**。在 **显示层（Display Layers）** 点击新对象 **QC dipole (Debye; physical direction)** 行最左侧的选择图标，重新点击 **对象属性与显示参数（Object Properties and Display Parameters）**，再切到 **属性（Properties） → 修改器（Modifiers）**。将 **每 Debye 的埃数（Angstrom per Debye）** 从 **0.5** 改为 **1.5**；箭头应沿 **+Z**，长度变为三倍。截图保存为 `human/screenshots/P03-charge-dipole.png`。
+保持 **P03-atoms** 活动，重新打开该对象属性，点击 **对象属性（Object Properties） → 创建视图与工具（Create Views and Tools） → 空间工具（Spatial Tools） → 创建偶极矢量（Create Dipole Vector）**。在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 点击新对象 **QC dipole (Debye; physical direction)** 行最左侧的选择图标，重新点击 **打开对象属性（Open Object Properties）**，再切到 **属性（Properties） → 修改器（Modifiers）**。将 **每 Debye 的埃数（Angstrom per Debye）** 从 **0.5** 改为 **1.5**；箭头应沿 **+Z**，长度变为三倍。截图保存为 `human/screenshots/P03-charge-dipole.png`。
 
 ![水二聚体的原子电荷颜色和偶极箭头](../screenshots/P03-charge-dipole.png)
 
-继续空间观察前，在 **显示层（Display Layers）** 关闭偶极层的眼睛、相机图标，恢复密度表面；独立 ESP 表面保持隐藏。
+继续空间观察前，在 Outliner 关闭偶极层的眼睛、相机图标，恢复密度表面；独立 ESP 表面保持隐藏。
 
 <a id="densities"></a>
 ## 选择其他密度
@@ -154,7 +154,7 @@
 
 本页水二聚体是闭壳层，两个通道相同，自旋密度为零。下面改用开壳层氧分子生成非零自旋密度；完成后恢复水二聚体的显示，继续其他 P03 专题。
 
-若要看非零自旋密度，在同一工程导入 [shared/data/public/P01/o2-uhf.fchk](../../shared/data/public/P01/o2-uhf.fchk)，选新氧分子原子对象，按 `F2` 命名为 **P01-spin-atoms**。生成 **物理量（Quantity）=自旋密度（Spin density）**，使用 **0.2 Å / 3 Å / 512 MiB**，点击 **确定（OK）** 并等待完成。选 **QC spin_density**，点击 **对象属性与显示参数（Object Properties and Display Parameters）**，设 **正值阈值（Positive Isovalue）=0.002 electron/bohr^3**。在 **显示层（Display Layers）** 暂时关闭 P03 分子和密度表面的眼睛图标，应看到氧分子周围的自旋密度。截图保存为 `human/screenshots/P01-spin-density.png`。
+若要看非零自旋密度，在同一工程导入 [shared/data/public/P01/o2-uhf.fchk](../../shared/data/public/P01/o2-uhf.fchk)，选新氧分子原子对象，按 `F2` 命名为 **P01-spin-atoms**，重新打开该对象属性，在 **创建视图与工具（Create Views and Tools） → 计算（Compute） → 生成量子化学场（Generate Quantum Field）** 生成 **物理量（Quantity）=自旋密度（Spin density）**，使用 **0.2 Å / 3 Å / 512 MiB**，点击 **确定（OK）** 并等待完成。选 **QC spin_density**，点击 **打开对象属性（Open Object Properties）**，设 **正值阈值（Positive Isovalue）=0.002 electron/bohr^3**。在 Outliner 暂时关闭 P03 分子和密度表面的眼睛图标，应看到氧分子周围的自旋密度。截图保存为 `human/screenshots/P01-spin-density.png`。
 
 ![氧分子的非零自旋密度](../screenshots/P01-spin-density.png)
 

@@ -22,7 +22,7 @@
 
 > CSV manifest 是文件清单；step、fchk 两列把步号与对应的波函数文件配对。IRC path 是管理整条路径的根对象。
 
-点击 **N 侧栏 → 工作流（Workflow） → 导入（Import） → 导入 IRC 路径（Import IRC Path）**，在 **CSV 清单：step,fchk（CSV manifest: step,fchk）** 选择 [shared/data/public/P04/steps.csv](../../shared/data/public/P04/steps.csv)。该 CSV 与以下三份文件保持在同一目录。完成后在 **显示层（Display Layers）** 点击 **IRC path** 行最左侧的选择图标，点击 **工作流（Workflow） → 对象属性与显示参数（Object Properties and Display Parameters）**，在 **IRC 路径（IRC Path）** 应看到 **步 1 / 3（Step 1 / 3）**、能量约 **−148.764884 hartree**。
+点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 IRC 路径（Import IRC Path）**，在 **CSV 清单：step,fchk（CSV manifest: step,fchk）** 选择 [shared/data/public/P04/steps.csv](../../shared/data/public/P04/steps.csv)。该 CSV 与以下三份文件保持在同一目录。完成后在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 点击 **IRC path** 行最左侧的选择图标，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，在 **IRC 路径（IRC Path）** 应看到 **步 1 / 3（Step 1 / 3）**、能量约 **−148.764884 hartree**。
 
 **步 1 / 3（Step 1 / 3）** 表示当前显示三份构型中的第一份。切换步号可比较路径上的构型和能量；步号取自清单中的顺序。
 
@@ -45,7 +45,7 @@
 - 测量几何的显隐独立于文字引线：距离用两原子之间的 1:1 虚线，二面角用圆弧及两组三原子三角面。二面角圆弧以输入的第二、第三个原子的中点为圆心，平面垂直于这两原子确定的轴；半透明三角面显示输入的第 1–2–3 和第 2–3–4 个原子所在平面。
 - **可见（Visible）**：控制该标注是否显示；关闭后仍保留标注设置。
 
-保持 **IRC path** 活动，在 **N 侧栏 → 创建视图与检查工具（Create Views and Inspection Tools） → 原子与几何标注（Atom and Geometry Annotations）** 点击 **距离（Distance）**，源编号填 **1,2**；再点击 **二面角（Dihedral）**，填 **3,1,2,4**。两个标注的 **小数位数（Decimal places）** 均设为 **6**，保持默认前缀与测量几何可见。默认文字分别以 `Distance(1,2) = `、`Dihedral(3,1,2,4) = ` 开头，再接实际数值和单位；这些英文前缀不随界面语言改变。新标注默认为黑色金属材质，创建时可选择颜色。
+保持 **IRC path** 活动，重新打开该对象属性，在 **对象属性（Object Properties） → 局部选择与标注（Local Selection and Annotations）** 点击 **距离（Distance）**，将独立整数控件 **原子 1（Atom 1）=1**、**原子 2（Atom 2）=2**；再点击 **二面角（Dihedral）**，初始为 1/2/3/4 时先点 **2 ↔ 3**、再点 **1 ↔ 2**，核对四项依次为 **3/1/2/4**。编号可直接输入或左右步进，超出来源范围会限制在边界内，撞到同组已有编号则保留原值；交换按钮用于调整顺序。两个标注的 **小数位数（Decimal places）** 均设为 **6**，保持默认前缀与测量几何可见。默认文字分别以 `Distance(1,2) = `、`Dihedral(3,1,2,4) = ` 开头，再接实际数值和单位；这些英文前缀不随界面语言改变。新标注默认为黑色金属材质，创建时可选择颜色。
 
 创建后仍选 **IRC path**，转到能看清标签的视角，必要时在 **局部选择与标注（Local Selection and Annotations） → 源原子标注（Source Atom Annotations）** 找到相应标注行，点击设置图标调整 **偏移（Offset）** 并点击 **确定（OK）**。虚线、圆弧的尺寸可独立于引线调整；二面角三角面与测量圆弧分别显隐。自定义前缀、材质节点编辑、整层朝向相机与旧标注材质处理见[分子专题的标注步骤](01-molecule-xyz.md#step-05)。每条标注的文字、引线与测量线共享自己的材质，二面角面另外共享一份材质；手工编辑材质后切换 IRC 步仍保留节点设置。上述显示设置不改变构型或测量值。
 
@@ -83,10 +83,10 @@
 - **读取原子对（Read Pair）**：读取选定原子对的全部随步值。修改编号后需再次点击；该原子对必须出现在导入的分析结果中。
 - **下一步（Next） / 上一步（Previous）**：切换整条路径的构型，同时显示已读取原子对在该步的键级。
 
-在 **显示层（Display Layers）** 选 **QC IRC Mayer orders**，点击 **工作流（Workflow） → 对象属性与显示参数（Object Properties and Display Parameters）**，在 **IRC 路径（IRC Path）** 填 **原子 A（从1开始）（Atom A (1-based)）=1、原子 B（从1开始）（Atom B (1-based)）=2**，点击 **读取原子对（Read Pair）**。第 2 步应显示约 **0.987349**。点击 **下一步（Next）** 到第 3 步，值应变为约 **0.987331**，构型和标注同步切换；再点击 **上一步（Previous）** 回第 2 步。截图保存为 `human/screenshots/P04-mayer.png`。
+在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 选 **QC IRC Mayer orders**，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，在 **IRC 路径（IRC Path）** 填 **原子 A（从1开始）（Atom A (1-based)）=1、原子 B（从1开始）（Atom B (1-based)）=2**，点击 **读取原子对（Read Pair）**。第 2 步应显示约 **0.987349**。点击 **下一步（Next）** 到第 3 步，值应变为约 **0.987331**，构型和标注同步切换；再点击 **上一步（Previous）** 回第 2 步。截图保存为 `human/screenshots/P04-mayer.png`。
 
 ![IRC 当前步与原子对 1、2 的 Mayer 键级](../screenshots/P04-mayer.png)
 
-需要表格时，在 **显示层（Display Layers）** 选 **IRC path**，按[数据导出](../SOP.md#export)选择 **数据（Data）=IRC** 并设置输出目录，得到 `irc_steps.csv`；再选 **QC IRC Mayer orders**，用同一入口选择 **数据（Data）=Mayer**，得到 `mayer.csv`。两次导出各有一个新子目录，各自的 `metadata.json` 与 CSV 一起保留。
+需要表格时，在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 选 **IRC path**，按[数据导出](../SOP.md#export)选择 **数据（Data）=IRC** 并设置输出目录，得到 `irc_steps.csv`；再选 **QC IRC Mayer orders**，用同一入口选择 **数据（Data）=Mayer**，得到 `mayer.csv`。两次导出各有一个新子目录，各自的 `metadata.json` 与 CSV 一起保留。
 
 > `irc_steps.csv` 保存各步的能量与来源文件信息，供整理路径能量变化；`mayer.csv` 保存所有源步、原子对及其键级，供比较成键变化。绘图时可用步号作横轴，能量（hartree）或无量纲键级作纵轴；步号不是时间。两份表可在表格或绘图软件中按步号对应查看。
