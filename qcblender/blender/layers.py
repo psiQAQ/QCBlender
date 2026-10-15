@@ -1,6 +1,6 @@
 """Scene display layers use native objects, node inputs and Blender undo."""
 from .node_identity import adopt_generated_copy, socket_name
-from ..i18n import error_text, ui_layout
+from ..i18n import error_text, iface, ui_layout
 import json
 
 import bpy
@@ -241,7 +241,13 @@ class QCBLENDER_OT_layer_action(bpy.types.Operator):
             self.report({'ERROR'}, error_text('Display layer no longer exists in this scene'))
             return {'CANCELLED'}
         if self.action == 'SELECT':
-            activate(context, obj)
+            if context.view_layer.objects.get(obj.name) != obj:
+                self.report({'ERROR'}, error_text('The QC object is excluded from the current View Layer; enable its collection in the Outliner'))
+                return {'CANCELLED'}
+            for previous in context.selected_objects:
+                previous.select_set(False)
+            obj.select_set(True)
+            context.view_layer.objects.active = obj
         elif self.action == 'VISIBILITY':
             obj.hide_set(not obj.hide_get())
             sync_chart_children(obj)
@@ -407,19 +413,17 @@ class QCBLENDER_OT_new_current_view(bpy.types.Operator):
 
 
 class QCBLENDER_PT_layers(bpy.types.Panel):
-    bl_label = 'Display Layers'
+    bl_label = 'QC Object Navigation'
     bl_idname = 'QCBLENDER_PT_layers'
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'QCBlender'
-    bl_order = 2
+    bl_options = {'DEFAULT_CLOSED'}
+    bl_order = 3
 
     def draw(self, context):
         layout = ui_layout(self.layout)
         from .source_browser import source_group
-        row = layout.row(align=True)
-        row.operator('qcblender.refresh_sources', text='Refresh Sources', icon='FILE_REFRESH')
-        row.operator('qcblender.source_details', text='Source Details', icon='INFO')
         groups = {}
         for obj in display_layers(context.scene):
             key, label = source_group(obj)
@@ -427,25 +431,37 @@ class QCBLENDER_PT_layers(bpy.types.Panel):
         for label, objects in groups.values():
             layout.label(text=label, icon='FILE', translate=False)
             for obj in objects:
-                draw_layer_row(layout, context, obj)
-        obj = context.object
-        if obj in display_layers(context.scene):
-            row = layout.row(align=True)
-            for action, text, icon in [('DUPLICATE', 'Duplicate', 'DUPLICATE'), ('REMOVE', 'Remove', 'X'),
-                                       ('UP', '', 'TRIA_UP'), ('DOWN', '', 'TRIA_DOWN')]:
-                operator = row.operator('qcblender.layer_action', text=text, icon=icon)
-                operator.target, operator.action = obj.name, action
-        layout.operator('qcblender.open_properties', text='View Object Properties', icon='PROPERTIES').editor = 'OBJECT'
+                row = layout.row(align=True)
+                row.enabled = context.view_layer.objects.get(obj.name) == obj
+                select = row.operator('qcblender.layer_action', text=obj.name, translate=False,
+                                      icon='RESTRICT_SELECT_OFF', depress=obj == context.object)
+                select.target, select.action = obj.name, 'SELECT'
+                if obj.hide_get() or obj.hide_viewport:
+                    row.label(text='', icon='HIDE_ON')
+        if not groups:
+            layout.label(text='No QC objects in this scene', icon='INFO')
 
 
-def draw_layer_row(layout, context, obj):
-    row = layout.row(align=True)
-    select = row.operator('qcblender.layer_action', text='', icon='RESTRICT_SELECT_OFF',
-                          depress=obj == context.object)
-    select.target, select.action = obj.name, 'SELECT'
-    row.label(text=obj.name, translate=False)
-    operator = row.operator('qcblender.layer_action', text='', icon='HIDE_ON' if obj.hide_get() else 'HIDE_OFF')
-    operator.target, operator.action = obj.name, 'VISIBILITY'
-    operator = row.operator('qcblender.layer_action', text='',
-                            icon='RESTRICT_RENDER_ON' if obj.hide_render else 'RESTRICT_RENDER_OFF')
-    operator.target, operator.action = obj.name, 'RENDER'
+class QCBLENDER_PT_layer_management(bpy.types.Panel):
+    bl_label = 'Display Layer Management'
+    bl_space_type = 'PROPERTIES'
+    bl_region_type = 'WINDOW'
+    bl_context = 'object'
+    bl_parent_id = 'QCBLENDER_PT_object'
+    bl_options = {'DEFAULT_CLOSED'}
+
+    @classmethod
+    def poll(cls, context):
+        return context.object is not None and context.object in display_layers(context.scene)
+
+    def draw(self, context):
+        layout, obj = ui_layout(self.layout), context.object
+        layout.label(text=iface('Target: {value0}', value0=obj.name), translate=False)
+        for action, text, icon in [
+            ('VISIBILITY', 'Viewport Visibility', 'HIDE_ON' if obj.hide_get() else 'HIDE_OFF'),
+            ('RENDER', 'Render Visibility', 'RESTRICT_RENDER_ON' if obj.hide_render else 'RESTRICT_RENDER_OFF'),
+            ('DUPLICATE', 'Duplicate', 'DUPLICATE'), ('REMOVE', 'Remove', 'X'),
+            ('UP', 'Move Up', 'TRIA_UP'), ('DOWN', 'Move Down', 'TRIA_DOWN'),
+        ]:
+            operator = layout.operator('qcblender.layer_action', text=text, icon=icon)
+            operator.target, operator.action = obj.name, action

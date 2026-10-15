@@ -14,9 +14,9 @@ import numpy as np
 
 def load_annotations():
     bpy = types.ModuleType('bpy')
-    bpy.types = types.SimpleNamespace(Operator=type('Operator', (), {}))
+    bpy.types = types.SimpleNamespace(**{name: type(name, (), {}) for name in ('Operator', 'PropertyGroup', 'UIList')})
     props = types.ModuleType('bpy.props')
-    for name in ('BoolProperty', 'EnumProperty', 'FloatProperty', 'FloatVectorProperty', 'IntProperty', 'StringProperty'):
+    for name in ('BoolProperty', 'CollectionProperty', 'EnumProperty', 'FloatProperty', 'FloatVectorProperty', 'IntProperty', 'StringProperty'):
         setattr(props, name, lambda **values: None)
     geom = types.ModuleType('qcblender.blender.geometry')
     geom.current_geometry = lambda owner: (owner.positions, owner.record)
@@ -50,6 +50,16 @@ def entry(identifier='id', kind='DISTANCE', version=1):
 class Points(list):
     def add(self, count):
         self.extend(types.SimpleNamespace(co=None) for _ in range(count))
+
+
+class InputSlots(list):
+    def add(self):
+        item = types.SimpleNamespace(number=1)
+        self.append(item)
+        return item
+
+    def remove(self, index):
+        del self[index]
 
 
 class Splines(list):
@@ -176,7 +186,7 @@ class AnnotationUpdates(unittest.TestCase):
         styles = {**annotations.STYLE_DEFAULTS, **saved, 'size': .3, 'decimals': 2}
         operator = types.SimpleNamespace(**{key: styles[key] for key in
             ('size', 'offset', 'decimals', 'show_leader', 'line_width', 'visible', *annotations.STYLE_DEFAULTS)},
-            annotation_id='id', report=lambda *args: None)
+            annotation_id='id', report=lambda *args: None, atoms='', accepted_atoms='', atom_inputs=InputSlots())
         with patch.object(annotations, '_atom_view', return_value=target):
             result = annotations.QCBLENDER_OT_edit_annotation.execute(operator, types.SimpleNamespace())
         self.assertEqual(result, {'FINISHED'})
@@ -440,9 +450,12 @@ class CreationPrecision(unittest.TestCase):
                 self._set.add(key)
                 object.__setattr__(self, key, value)
         operator = Operator()
+        operator.atom_inputs = InputSlots()
+        operator.accepted_atoms = ''
         context = types.SimpleNamespace(window_manager=types.SimpleNamespace(
             invoke_props_dialog=lambda *args, **kwargs: {'RUNNING_MODAL'}))
-        self.assertEqual(annotations.QCBLENDER_OT_add_annotation.invoke(operator, context, None), {'RUNNING_MODAL'})
+        with patch.object(annotations, '_atom_view', return_value=owner([])):
+            self.assertEqual(annotations.QCBLENDER_OT_add_annotation.invoke(operator, context, None), {'RUNNING_MODAL'})
         return operator
 
     def test_atom_distance_then_angle_and_dihedral_use_kind_defaults(self):

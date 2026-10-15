@@ -18,6 +18,7 @@ def load_editor():
     props.EnumProperty = lambda **kwargs: None
     browser = types.ModuleType('qcblender.blender.source_browser')
     browser.cached_metadata = lambda obj: {}
+    browser.source_object = lambda obj: obj
     modules = {'bpy': bpy, 'bpy.props': props,
                'qcblender.blender.source_browser': browser}
     with patch.dict(sys.modules, modules):

@@ -70,8 +70,8 @@ def bind(obj, directory, data):
     obj['qc_schema'] = '0.1'
     obj['qc_coordinate_unit'] = 'angstrom'
     obj['qc_diagnostics'] = json.dumps(data.metadata.get('diagnostics', []))
-    from .source_browser import _metadata, binding_key
-    _metadata[binding_key(obj)] = dict(data.metadata, _atom_count=len(data.arrays['atomic_numbers']))
+    from .source_browser import cache_dataset
+    cache_dataset(obj, data)
 
 
 def atom_view(directory):

@@ -49,7 +49,7 @@ def unregister():
     cancel_all()
     clear_qualifications()
     import bpy
-    from .blender.source_browser import refresh_loaded_sources, _metadata
+    from .blender.source_browser import refresh_loaded_sources, clear_source_cache
     from .blender.editor_ui import object_context_menu
     for handlers in (bpy.app.handlers.load_post, bpy.app.handlers.save_post):
         if refresh_loaded_sources in handlers:
@@ -73,7 +73,7 @@ def unregister():
     fog.unregister()
     interaction.unregister_tool()
     asset_library.unregister()
-    _metadata.clear()
+    clear_source_cache()
     if hasattr(bpy.types.Object, 'qc_settings'):
         del bpy.types.Object.qc_settings
     auto_load.unregister()
