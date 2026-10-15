@@ -27,7 +27,7 @@
 - **kcal/mol**：千卡每摩尔；本例源表使用这个单位。
 - **hartree**：原子单位能量；用于源表按 hartree 输出的结果。
 
-点击 **N 侧栏 → 工作流（Workflow） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/P05/complex.fchk](../../shared/data/public/P05/complex.fchk)。只选新原子对象，点击 **导入外部结果（Import External Results） → ETS-NOCV 表（ETS-NOCV Table）**，选 **ETS-NOCV 输出文本（ETS-NOCV output text）=[shared/data/public/P05/nocv/ets-nocv.txt](../../shared/data/public/P05/nocv/ets-nocv.txt)**、**轨道对能量单位（Pair energy unit）=kcal/mol** 并确认。应保留 **C/O/B/H/H/H** 六原子分子，并新增 **QC ETS-NOCV pairs**。
+点击 **N 侧栏 → 工作流（Workflow） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/P05/complex.fchk](../../shared/data/public/P05/complex.fchk)。只选新原子对象，点击 **导入外部结果（Import External Results） → 能量分解（Energy Decomposition） → ETS-NOCV 表（ETS-NOCV Table）**，选 **ETS-NOCV 输出文本（ETS-NOCV output text）=[shared/data/public/P05/nocv/ets-nocv.txt](../../shared/data/public/P05/nocv/ets-nocv.txt)**、**轨道对能量单位（Pair energy unit）=kcal/mol** 并确认。应保留 **C/O/B/H/H/H** 六原子分子，并新增 **QC ETS-NOCV pairs**。
 
 <a id="step-02"></a>
 ### 2. 读取源表中的 Pair 记录
@@ -75,7 +75,7 @@
 - **轨道对编号（Pair number）**：选择该通道下的源轨道对（Pair）编号；列表来自表中的实际记录。
 - **形变密度单位（Deformation density unit）**：填写 Cube 数值使用的密度单位，本例为 **electron/bohr^3**。
 
-保持表对象活动，点击 **N 侧栏 → 导入外部结果（Import External Results） → NOCV 贡献对 Cube（NOCV pair Cube）**，选择 **带符号的轨道对 Cube（Signed pair Cube）=[shared/data/public/P05/nocv/nocv-pair1.cub](../../shared/data/public/P05/nocv/nocv-pair1.cub)**，设 **自旋（Spin）=总计（Total）**，从 **轨道对编号（Pair number）** 的实际源编号列表选择 **1**，并设 **形变密度单位（Deformation density unit）=electron/bohr^3**。完成后在 **显示层（Display Layers）** 选 **QC nocv_deformation_density**，重新点击 **工作流（Workflow） → 对象属性与显示参数（Object Properties and Display Parameters）**，其网格应为 **47×50×57**。
+保持表对象活动，点击 **N 侧栏 → 导入外部结果（Import External Results） → 能量分解（Energy Decomposition） → NOCV 贡献对 Cube（NOCV pair Cube）**，选择 **带符号的轨道对 Cube（Signed pair Cube）=[shared/data/public/P05/nocv/nocv-pair1.cub](../../shared/data/public/P05/nocv/nocv-pair1.cub)**，设 **自旋（Spin）=总计（Total）**，从 **轨道对编号（Pair number）** 的实际源编号列表选择 **1**，并设 **形变密度单位（Deformation density unit）=electron/bohr^3**。完成后在 **显示层（Display Layers）** 选 **QC nocv_deformation_density**，重新点击 **工作流（Workflow） → 对象属性与显示参数（Object Properties and Display Parameters）**，其网格应为 **47×50×57**。
 
 > 变形密度的正值表示电子密度增加，负值表示电子密度减少；本例表面的单位是 electron/bohr^3，用于观察对应轨道对（Pair）的电子密度重排发生在哪些区域。
 

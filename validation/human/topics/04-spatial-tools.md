@@ -35,7 +35,7 @@
 - **宽度（Width） / 高度（Height）**：平面的宽、高，用于确定观察范围。
 - **显示采样数/轴（Display Samples per Axis）**：每个方向的显示采样点数。101 表示 101×101 个点；加密显示采样不会加密源网格，本例源网格仍为 0.2 Å。
 
-在 **显示层（Display Layers）** 点击 **QC electrostatic_potential** 行最左侧的选择图标；它会重新显示该层。点击 **N 侧栏 → 创建视图与检查工具（Create Views and Inspection Tools） → 创建切片（Create Slice）**，点击 **确定（OK）**。新切片名为 **QC scalar slice**，选中它并点击 **对象属性与显示参数（Object Properties and Display Parameters）**。在 **空间观察（Spatial View）** 设 **中心（Center）=(0,0,1.45) Å、旋转（Rotation）=(0,0,0)、宽度（Width）=6 Å、高度（Height）=6 Å**；在 **几何表示（Geometry Representation）** 将 **显示采样数/轴（Display Samples per Axis）** 设为 **101**，在 **颜色映射（Color Mapping）** 设 **颜色最小值（Color Minimum） / 颜色中心值（Color Center） / 颜色最大值（Color Maximum）=−0.05/0/+0.05 hartree/e**。关闭密度和独立 ESP 表面的眼睛图标，保留切片与 **P03-atoms** 可见；鼠标移入视口，按小键盘 `7`，或选择视口菜单 **视图（View） → 视图（Viewpoint） → 顶视图（Top）**，从顶面观察，应看到有颜色的平面。
+在 **显示层（Display Layers）** 点击 **QC electrostatic_potential** 行最左侧的选择图标；它会重新显示该层。点击 **N 侧栏 → 创建视图与检查工具（Create Views and Inspection Tools） → 空间工具（Spatial Tools） → 创建切片（Create Slice）**，点击 **确定（OK）**。新切片名为 **QC scalar slice**，选中它并点击 **对象属性与显示参数（Object Properties and Display Parameters）**。在 **空间观察（Spatial View）** 设 **中心（Center）=(0,0,1.45) Å、旋转（Rotation）=(0,0,0)、宽度（Width）=6 Å、高度（Height）=6 Å**；在 **几何表示（Geometry Representation）** 将 **显示采样数/轴（Display Samples per Axis）** 设为 **101**，在 **颜色映射（Color Mapping）** 设 **颜色最小值（Color Minimum） / 颜色中心值（Color Center） / 颜色最大值（Color Maximum）=−0.05/0/+0.05 hartree/e**。关闭密度和独立 ESP 表面的眼睛图标，保留切片与 **P03-atoms** 可见；鼠标移入视口，按小键盘 `7`，或选择视口菜单 **视图（View） → 视图（Viewpoint） → 顶视图（Top）**，从顶面观察，应看到有颜色的平面。
 
 <a id="step-02"></a>
 ### 2. 绘制 ESP 等值线
@@ -72,7 +72,7 @@
 
 已知坐标时使用 **读取游标处场值（Read Field Value at Cursor）**；想从可见表面上选位置时使用下一步的点击探针。
 
-在 **显示层（Display Layers）** 点击 **QC electrostatic_potential** 行最左侧的选择图标。打开 **3D 视图（3D Viewport） → N → 视图（View） → 3D 游标（3D Cursor）**，将 **位置（Location）** 的 X/Y/Z 设为 **(0,0,1.45) Å**。切回 N 侧栏的 **QCBlender** 页，点击 **创建视图与检查工具（Create Views and Inspection Tools） → 读取游标处场值（Read Field Value at Cursor）**，底部提示应给出这个位置的 ESP 读数，单位为 **hartree/e**；读完后关闭独立 ESP 表面的眼睛图标。
+在 **显示层（Display Layers）** 点击 **QC electrostatic_potential** 行最左侧的选择图标。打开 **3D 视图（3D Viewport） → N → 视图（View） → 3D 游标（3D Cursor）**，将 **位置（Location）** 的 X/Y/Z 设为 **(0,0,1.45) Å**。切回 N 侧栏的 **QCBlender** 页，点击 **创建视图与检查工具（Create Views and Inspection Tools） → 场值采样（Field Sampling） → 读取游标处场值（Read Field Value at Cursor）**，底部提示应给出这个位置的 ESP 读数，单位为 **hartree/e**；读完后关闭独立 ESP 表面的眼睛图标。
 
 <a id="step-05"></a>
 ### 5. 在密度表面点击读取 ESP
@@ -82,7 +82,7 @@
 - **点击探针 · 几何场（Click Probe · Geometry Field）**：读取形成当前表面的场；在本例密度表面上读取电子密度。
 - **点击探针 · 绑定色场（Click Probe · Bound Color Field）**：在所点击的表面位置读取着色量；本例读取 ESP。
 
-在 **显示层（Display Layers）** 关闭 **QC scalar slice** 的眼睛图标，点击 **QC electron_number_density** 行最左侧的选择图标，显示并选中密度表面。点击 **创建视图与检查工具（Create Views and Inspection Tools） → 点击探针 · 绑定色场（Click Probe · Bound Color Field）**，将鼠标移入视口，在密度表面点击一个位置；看到有效的 ESP 读数后按 `Enter` 确认。应显示所点击位置的 ESP 及其单位。截图保存为 `human/screenshots/P03-probe.png`。
+在 **显示层（Display Layers）** 关闭 **QC scalar slice** 的眼睛图标，点击 **QC electron_number_density** 行最左侧的选择图标，显示并选中密度表面。点击 **创建视图与检查工具（Create Views and Inspection Tools） → 场值采样（Field Sampling） → 点击探针 · 绑定色场（Click Probe · Bound Color Field）**，将鼠标移入视口，在密度表面点击一个位置；看到有效的 ESP 读数后按 `Enter` 确认。应显示所点击位置的 ESP 及其单位。截图保存为 `human/screenshots/P03-probe.png`。
 
 ![密度表面上的取点位置及绑定 ESP 读数](../screenshots/P03-probe.png)
 
@@ -98,7 +98,7 @@
 
 **采样点数（Samples）** 是包括两个端点在内的采样点数；它决定沿线取值的密度，源网格保持原样。起点记录在当前视图上，记录起点后应保持同一视图及其场绑定。
 
-在 **显示层（Display Layers）** 点击 **QC electrostatic_potential** 行最左侧的选择图标。切到 N 侧栏的 **视图（View） → 3D 游标（3D Cursor）**，将 **位置（Location）** 设为 **(0,−2,1.45) Å**；切回 **QCBlender**，点击 **创建视图与检查工具（Create Views and Inspection Tools） → 记录剖面起点（Mark Profile Start）**。再到 **视图（View） → 3D 游标（3D Cursor）** 将游标改为 **(0,+2,1.45) Å**，切回 **QCBlender**，点击 **采样线剖面数据（Sample Line Profile Data）**。确认弹窗显示 **采样场（Sample field）: 几何（Geometry）**，设 **采样点数（Samples）=101** 并点击 **确定（OK）**。应新增并选中 **QC line profile data**。
+在 **显示层（Display Layers）** 点击 **QC electrostatic_potential** 行最左侧的选择图标。切到 N 侧栏的 **视图（View） → 3D 游标（3D Cursor）**，将 **位置（Location）** 设为 **(0,−2,1.45) Å**；切回 **QCBlender**，点击 **创建视图与检查工具（Create Views and Inspection Tools） → 场值采样（Field Sampling） → 记录剖面起点（Mark Profile Start）**。再到 **视图（View） → 3D 游标（3D Cursor）** 将游标改为 **(0,+2,1.45) Å**，切回 **QCBlender**，点击 **采样线剖面数据（Sample Line Profile Data）**。确认弹窗显示 **采样场（Sample field）: 几何（Geometry）**，设 **采样点数（Samples）=101** 并点击 **确定（OK）**。应新增并选中 **QC line profile data**。
 
 <a id="step-07"></a>
 ### 7. 导出剖面 CSV 并核对采样范围
@@ -107,7 +107,7 @@
 
 **数据（Data）=线剖面（profile）** 导出上一步保存的采样记录；导出前选择 **QC line profile data**，即可取得这条剖面。
 
-保持 **QC line profile data** 活动，按[共同导出方法](../SOP.md#export)打开 **工程与诊断（Project and Diagnostics） → 导出数据与参数摘要（Export Data and Parameter Summary）**，设 **数据（Data）=线剖面（profile）**，在 **输出目录（Output directory）** 选择材料根目录下 `work/human/exports/` 的实际绝对路径，点击 **确定（OK）** 并等待完成。按 **数据已导出：（Data exported:）** 提示打开新子目录，应有 **profile.csv** 和 **metadata.json**。CSV 应包含 **101 行数据（不含表头）**，`distance_angstrom` 从 **0** 到 **4**，`unit` 为 **hartree/e**，并带有 `valid` 列。
+保持 **QC line profile data** 活动，按[共同导出方法](../SOP.md#export)打开 **工程与诊断（Project and Diagnostics） → 保存与导出（Save and Export） → 导出数据与参数摘要（Export Data and Parameter Summary）**，设 **数据（Data）=线剖面（profile）**，在 **输出目录（Output directory）** 选择材料根目录下 `work/human/exports/` 的实际绝对路径，点击 **确定（OK）** 并等待完成。按 **数据已导出：（Data exported:）** 提示打开新子目录，应有 **profile.csv** 和 **metadata.json**。CSV 应包含 **101 行数据（不含表头）**，`distance_angstrom` 从 **0** 到 **4**，`unit` 为 **hartree/e**，并带有 `valid` 列。
 
 <a id="display"></a>
 ## 裁剪与体积雾
@@ -121,7 +121,7 @@
 - **启用包围盒裁剪（Box Enabled）**：开启盒子裁剪。**包围盒最小值（Box Minimum） / 包围盒最大值（Box Maximum）** 指定各轴的最小、最大坐标，盒外隐藏，适合保留一个有限区域。
 - 两种裁剪同时开启时，仅保留同时满足两者的部分；要比较效果，先关闭一种再开启另一种。
 
-在 **显示层（Display Layers）** 关闭其他显示层的眼睛图标，只显示并选中 **P03-atoms**，点击 **创建视图与检查工具（Create Views and Inspection Tools） → 添加裁剪控件（Add Clipping Controls）**。重新点击 **对象属性与显示参数（Object Properties and Display Parameters）**，在 **空间观察（Spatial View）** 开启 **启用平面裁剪（Plane Enabled）**，设 **平面原点（Plane Origin）=(0,0,1.45) Å、平面法向量（Plane Normal）=(0,0,1)**，应只显示上方水分子。关闭平面，开启 **启用包围盒裁剪（Box Enabled）**，设 **包围盒最小值（Box Minimum）=(−0.5,−2,−2) Å、包围盒最大值（Box Maximum）=(0.5,2,5) Å**，应看到两个氧及部分键几何。最后关闭 **启用平面裁剪（Plane Enabled）** 和 **启用包围盒裁剪（Box Enabled）**，恢复完整分子。
+在 **显示层（Display Layers）** 关闭其他显示层的眼睛图标，只显示并选中 **P03-atoms**，点击 **创建视图与检查工具（Create Views and Inspection Tools） → 空间工具（Spatial Tools） → 添加裁剪控件（Add Clipping Controls）**。重新点击 **对象属性与显示参数（Object Properties and Display Parameters）**，在 **空间观察（Spatial View）** 开启 **启用平面裁剪（Plane Enabled）**，设 **平面原点（Plane Origin）=(0,0,1.45) Å、平面法向量（Plane Normal）=(0,0,1)**，应只显示上方水分子。关闭平面，开启 **启用包围盒裁剪（Box Enabled）**，设 **包围盒最小值（Box Minimum）=(−0.5,−2,−2) Å、包围盒最大值（Box Maximum）=(0.5,2,5) Å**，应看到两个氧及部分键几何。最后关闭 **启用平面裁剪（Plane Enabled）** 和 **启用包围盒裁剪（Box Enabled）**，恢复完整分子。
 
 <a id="step-09"></a>
 ### 9. 创建密度体积雾并调整不透明度
@@ -130,7 +130,7 @@
 
 **不透明度缩放（Opacity Scale）** 是显示不透明度的缩放因子：增大时雾更浓，设为 0 时透明；电子密度值保持原样。
 
-在 **显示层（Display Layers）** 点击 **QC electron_number_density** 行最左侧的选择图标，点击 **创建视图与检查工具（Create Views and Inspection Tools） → 创建体积雾（Create Volume Fog）**。新雾层名为 **QC volume fog**；选中它，重新点击 **对象属性与显示参数（Object Properties and Display Parameters）**。在 **显示层（Display Layers）** 关闭密度表面的眼睛图标，只保留雾层与 **P03-atoms** 可见。切到视口右上角 **渲染（Rendered）**，再切到 **属性（Properties） → 材质（Material） → QCBlender · 节点材质（QCBlender · Node Materials）**，将 **不透明度缩放（Opacity Scale）** 设为 **40**，应在分子周围看到雾；改为 **0**，雾应消失，再恢复 **40**。截图保存为 `human/screenshots/P03-fog.png`。
+在 **显示层（Display Layers）** 点击 **QC electron_number_density** 行最左侧的选择图标，点击 **创建视图与检查工具（Create Views and Inspection Tools） → 显示视图（Display Views） → 创建体积雾（Create Volume Fog）**。新雾层名为 **QC volume fog**；选中它，重新点击 **对象属性与显示参数（Object Properties and Display Parameters）**。在 **显示层（Display Layers）** 关闭密度表面的眼睛图标，只保留雾层与 **P03-atoms** 可见。切到视口右上角 **渲染（Rendered）**，再切到 **属性（Properties） → 材质（Material） → QCBlender · 节点材质（QCBlender · Node Materials）**，将 **不透明度缩放（Opacity Scale）** 设为 **40**，应在分子周围看到雾；改为 **0**，雾应消失，再恢复 **40**。截图保存为 `human/screenshots/P03-fog.png`。
 
 ![密度体积雾及显示不透明度控件](../screenshots/P03-fog.png)
 

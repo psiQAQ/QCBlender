@@ -40,7 +40,7 @@
 - **轨道振幅 [bohr^-3/2]（Orbital amplitude [bohr^-3/2]）**：用于带正负相位的轨道振幅。
 - **其他外部计算的标量场（Other externally computed scalar field）**：用于上面几项未涵盖的量。本例选择它，在 **物理量（Physical quantity）** 填量名，在 **单位（Unit）** 填原数值的单位；单位无法确认时填 `unknown`。
 
-点击 **N 侧栏 → 工作流（Workflow） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/P03/color.cube](../../shared/data/public/P03/color.cube)并完成导入。会新增六原子水二聚体和一个场表面；选中场表面，按 `F2` 命名为 **P03-color-surface**。点击 **对象属性与显示参数（Object Properties and Display Parameters） → 声明 Cube 物理量与单位（Identify Cube Quantity and Unit）**，选择 **其他外部计算的标量场（Other externally computed scalar field）**，填 **物理量（Physical quantity）=sign_lambda2_rho**、**单位（无法确定时填 unknown）（Unit (use unknown if unavailable)）=electron/bohr^3**，点击 **确定（OK）** 并等待完成。对象属性应显示 **91×38×156 网格**与上述量、单位。
+点击 **N 侧栏 → 工作流（Workflow） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/P03/color.cube](../../shared/data/public/P03/color.cube)并完成导入。会新增六原子水二聚体和一个场表面；选中场表面，按 `F2` 命名为 **P03-color-surface**。点击 **对象属性与显示参数（Object Properties and Display Parameters） → 声明 Cube 物理量与单位（Identify Cube Quantity and Unit）**，选择 **其他外部计算的标量场（Other externally computed scalar field）**，填 **物理量（Physical quantity）=sign_lambda2_rho**、**单位（无法确定时填 unknown）（Unit (use unknown if unavailable)）=electron/bohr^3**，点击 **确定（OK）** 并等待完成。对象属性应显示 **91×38×156 网格**与上述量、单位。
 
 <a id="step-02"></a>
 ### 2. 分别设置正负表面的阈值与显隐

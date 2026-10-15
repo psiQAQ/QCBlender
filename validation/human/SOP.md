@@ -73,13 +73,24 @@
 
 观察模型时，在 3D 视图（3D Viewport）中按住鼠标中键拖动可旋转视角，滚轮可缩放；也可拖动视口右上角的坐标轴导航控件。
 
+N 侧栏按任务分组，先选当前案例对象，再展开需要的一组；不适用于该对象的操作不会显示空组。按钮的悬停说明会解释用途、作用对象、结果和必要前提。
+
+| 面板 | 分组与用途 |
+| --- | --- |
+| 工作流（Workflow） | **导入（Import）** 读取文件；**计算（Compute）** 生成量子化学场。**对象属性与显示参数（Object Properties and Display Parameters）** 仍是直接入口。 |
+| 创建视图与检查工具（Create Views and Inspection Tools） | **显示视图（Display Views）** 创建等值面、体积雾、局部层及其他显示视图；**空间工具（Spatial Tools）** 创建切片、裁剪和偶极；**场值采样（Field Sampling）** 取点与采样剖面；**原子与几何标注（Atom and Geometry Annotations）** 创建四类标注；**相机（Camera）** 设置取景。 |
+| 导入外部结果（Import External Results） | **空间场分析（Spatial Field Analysis）** 导入 IGMH/IRI 与 ESP；**原子与键分析（Atom and Bond Analysis）** 导入 NBO 与 AIM；**能量分解（Energy Decomposition）** 导入 ETS-NOCV 表和配对场。 |
+| 工程与诊断（Project and Diagnostics） | **保存与导出（Save and Export）** 保存、归档和导出；**恢复与维护（Recovery and Maintenance）** 重新定位数据、重建显示缓存及整理旧节点资产；**诊断信息（Diagnostics）** 检查科学运行环境。 |
+
+标注的黑色文字、引线和测量几何，以及二面角的半透明三角面，见[分子与标注案例](topics/01-molecule-xyz.md#step-05)。标注属于对应的原子显示层，显示设置和材质随工程保存；它们的颜色、尺寸与朝向不改变源构型或测量值。
+
 <a id="orbital"></a>
 ## 生成第一张轨道图
 
 <a id="step-04"></a>
 ### 4. 导入氧分子并查看来源
 
-点击 **N 侧栏 → 工作流（Workflow） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/P01/o2-uhf.fchk](../shared/data/public/P01/o2-uhf.fchk)。应出现两个氧原子，它们属于同一个原子对象。在大纲视图（Outliner）选中这个原子对象，按 `F2` 命名为 **P01-atoms**；点击 **数据集与数值摘要（Dataset and Numerical Summary） → 查看完整来源（View Full Source）**，应看到 **filename: o2-uhf.fchk**、**coordinate_unit: angstrom**。关闭来源窗口。
+点击 **N 侧栏 → 工作流（Workflow） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/P01/o2-uhf.fchk](../shared/data/public/P01/o2-uhf.fchk)。应出现两个氧原子，它们属于同一个原子对象。在大纲视图（Outliner）选中这个原子对象，按 `F2` 命名为 **P01-atoms**；点击 **数据集与数值摘要（Dataset and Numerical Summary） → 查看完整来源（View Full Source）**，应看到 **filename: o2-uhf.fchk**、**coordinate_unit: angstrom**。关闭来源窗口。
 
 > FCHK 是格式化的量子化学计算结果文件，提供分子构型和波函数。构型是原子的空间位置；波函数提供计算轨道等物理量所需的信息。本例的计算条件见[样本说明](../shared/data/public/NOTICE.md)。
 
@@ -106,7 +117,7 @@
 - **LUMO**：自动选择该通道中能量最低的未占据轨道。
 - **源编号（Source number）**：使用源文件里的轨道编号，需要填写从 1 开始的轨道编号（从 1 开始）（Orbital number）。本例固定使用 Alpha 轨道 9，便于核对同一结果。
 
-保持 **P01-atoms** 活动，点击 **工作流（Workflow） → 生成量子化学场（Generate Quantum Field）**。首次使用时先等待自动检查。在 **生成量子化学场（Generate Quantum Field）** 对话框中，先选 **物理量（Quantity）=分子轨道（Molecular orbital）、自旋（Spin）=Alpha**，将 **轨道（Orbital）** 依次切到 **HOMO** 和 **LUMO**，观察预览中的 **源轨道（Source MO）**、占据数和能量；本例应分别显示源轨道 **8（占据数 1）** 和 **10（占据数 0）**，即一个已占据轨道和一个未占据轨道。此时还没有生成场。再切到 **源编号（Source number）**，输入 **9**，按下表补齐网格参数并点击 **确定（OK）**。
+保持 **P01-atoms** 活动，点击 **工作流（Workflow） → 计算（Compute） → 生成量子化学场（Generate Quantum Field）**。首次使用时先等待自动检查。在 **生成量子化学场（Generate Quantum Field）** 对话框中，先选 **物理量（Quantity）=分子轨道（Molecular orbital）、自旋（Spin）=Alpha**，将 **轨道（Orbital）** 依次切到 **HOMO** 和 **LUMO**，观察预览中的 **源轨道（Source MO）**、占据数和能量；本例应分别显示源轨道 **8（占据数 1）** 和 **10（占据数 0）**，即一个已占据轨道和一个未占据轨道。此时还没有生成场。再切到 **源编号（Source number）**，输入 **9**，按下表补齐网格参数并点击 **确定（OK）**。
 
 | 控件 | 输入值 | 用途 |
 | --- | --- | --- |
@@ -152,7 +163,7 @@
 <a id="step-08"></a>
 ### 8. 设置输出尺寸并创建取景相机
 
-在文件管理器中，在材料根目录创建 `work/human/P01/` 和 `work/human/exports/`。回到 Blender，在 **渲染属性（Render Properties）** 选择 **EEVEE**，在 **输出属性（Output Properties）** 设分辨率 **1280 × 720、100%**。选中 **QC orbital_amplitude**，转到能看清两种相位的角度，点击 **N 侧栏 → 创建视图与检查工具（Create Views and Inspection Tools） → 创建取景相机（Create Framed Camera）**。在 3D 视图（3D Viewport）按小键盘 `0` 查看相机范围，整个轨道应在画面内；没有小键盘时选择 **视图（View） → 摄像机（Cameras） → 活动摄像机（Active Camera）**。
+在文件管理器中，在材料根目录创建 `work/human/P01/` 和 `work/human/exports/`。回到 Blender，在 **渲染属性（Render Properties）** 选择 **EEVEE**，在 **输出属性（Output Properties）** 设分辨率 **1280 × 720、100%**。选中 **QC orbital_amplitude**，转到能看清两种相位的角度，点击 **N 侧栏 → 创建视图与检查工具（Create Views and Inspection Tools） → 相机（Camera） → 创建取景相机（Create Framed Camera）**。在 3D 视图（3D Viewport）按小键盘 `0` 查看相机范围，整个轨道应在画面内；没有小键盘时选择 **视图（View） → 摄像机（Cameras） → 活动摄像机（Active Camera）**。
 
 <a id="step-09"></a>
 ### 9. 渲染并保存图片
@@ -179,7 +190,7 @@
 - **全部来源记录（All source records）**：导出该类数据的全部记录。
 - **当前筛选（Current filter）**：按当前筛选条件导出成对场的有效网格点或 ESP 面积区间。先在专题中设置筛选条件，再选这一项。
 
-在渲染结果窗口按 `F11` 返回主窗口，选中 **QC orbital_amplitude**，点击 **N 侧栏 → 工程与诊断（Project and Diagnostics） → 导出数据与参数摘要（Export Data and Parameter Summary）**。将 **数据（Data）** 设为 **当前视图参数摘要（Current View Parameter Summary）**；在 **输出目录（Output directory）** 选择材料根目录下的 `work/human/exports/`，让文件浏览器填入它的实际绝对路径。截图保存为 `human/screenshots/P01-summary.png`，然后确认导出。
+在渲染结果窗口按 `F11` 返回主窗口，选中 **QC orbital_amplitude**，点击 **N 侧栏 → 工程与诊断（Project and Diagnostics） → 保存与导出（Save and Export） → 导出数据与参数摘要（Export Data and Parameter Summary）**。将 **数据（Data）** 设为 **当前视图参数摘要（Current View Parameter Summary）**；在 **输出目录（Output directory）** 选择材料根目录下的 `work/human/exports/`，让文件浏览器填入它的实际绝对路径。截图保存为 `human/screenshots/P01-summary.png`，然后确认导出。
 
 ![当前视图参数摘要的导出选项与保存目录](screenshots/P01-summary.png)
 
@@ -215,7 +226,7 @@
 <a id="step-12"></a>
 ### 12. 保存自包含工程
 
-点击 **N 侧栏 → 工程与诊断（Project and Diagnostics） → 保存自包含工程（Save Self-Contained Project）**，保存为 `work/human/P01/P01.blend`。在文件管理器中应同时看到 `work/human/P01/P01.qcdata/`。
+点击 **N 侧栏 → 工程与诊断（Project and Diagnostics） → 保存与导出（Save and Export） → 保存自包含工程（Save Self-Contained Project）**，保存为 `work/human/P01/P01.blend`。在文件管理器中应同时看到 `work/human/P01/P01.qcdata/`。
 
 > `.blend` 是 Blender 工程，保存场景对象、显示设置、材质、节点和相机等内容；同名 `.qcdata/` 保存工程需要的科学数据和场缓存。继续编辑或重新出图需要保留两者；移动时保持它们同处一个目录，不单独改名或手动修改配套数据。
 
@@ -234,7 +245,7 @@
 
 > 归档把已保存的工程及配套数据打包成一个 ZIP 压缩文件，便于备份或传递。
 
-点击 **工程与诊断（Project and Diagnostics） → 归档工程（Archive Project）**，保存为 `work/human/P01/P01-project.zip`。在文件管理器中打开 ZIP，应能找到 `.blend` 与配套科学数据目录。接收者解压后保持目录结构，再打开其中的 `.blend`。
+点击 **工程与诊断（Project and Diagnostics） → 保存与导出（Save and Export） → 归档工程（Archive Project）**，保存为 `work/human/P01/P01-project.zip`。在文件管理器中打开 ZIP，应能找到 `.blend` 与配套科学数据目录。接收者解压后保持目录结构，再打开其中的 `.blend`。
 
 归档使用磁盘上已保存的工程。若归档前又修改了场景，先再次执行 **保存自包含工程（Save Self-Contained Project）**。独立导出的 PNG、CSV 和参数摘要仍在各自保存目录，需要一起分享时另行附上。
 

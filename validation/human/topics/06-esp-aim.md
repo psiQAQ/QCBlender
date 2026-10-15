@@ -37,7 +37,7 @@
 
 > kcal/mol 表示千卡每摩尔，本例按外部分析的约定表达 ESP 数值；angstrom^2 是平方埃，用来表达表面积。导入时声明这些单位，不改变源表中的数值。
 
-在 **显示层（Display Layers）** 点击 **QC electron_number_density** 行最左侧的选择图标，点击 **工作流（Workflow） → 对象属性与显示参数（Object Properties and Display Parameters）**，将 **几何表示（Geometry Representation） → 正值阈值（Positive Isovalue）** 改为 **0.001**。再用列表的选择图标选 **QC electrostatic_potential**，点击 **N 侧栏 → 导入外部结果（Import External Results） → ESP 表面分析（ESP Surface Analysis）**，按下表输入并确认。应新增 **QC ESP maximum、QC ESP minimum、QC ESP area data**；选中 ESP 表面时它会恢复可见，导入后再次隐藏该层。
+在 **显示层（Display Layers）** 点击 **QC electron_number_density** 行最左侧的选择图标，点击 **工作流（Workflow） → 对象属性与显示参数（Object Properties and Display Parameters）**，将 **几何表示（Geometry Representation） → 正值阈值（Positive Isovalue）** 改为 **0.001**。再用列表的选择图标选 **QC electrostatic_potential**，点击 **N 侧栏 → 导入外部结果（Import External Results） → 空间场分析（Spatial Field Analysis） → ESP 表面分析（ESP Surface Analysis）**，按下表输入并确认。应新增 **QC ESP maximum、QC ESP minimum、QC ESP area data**；选中 ESP 表面时它会恢复可见，导入后再次隐藏该层。
 
 | 控件 | 输入值 |
 | --- | --- |
@@ -100,7 +100,7 @@
 - **路径 PDB（Paths PDB）**：提供路径上的采样点，用于绘制曲线。
 - **临界点属性文本（可选）（CP properties text (optional)）**：提供按源编号与点对应的临界点属性；optional 表示可不提供属性表，本例提供它以查看电子密度。
 
-在 **显示层（Display Layers）** 隐藏 ESP 极值和密度表面，只选 **P03-atoms**。点击 **N 侧栏 → 导入外部结果（Import External Results） → AIM 拓扑（AIM Topology）**，按下表选择三份文件并确认。应新增 **QC AIM CP C、QC AIM CP N、QC AIM bond paths**；C/N 两层分别有 **6/5 个点**。
+在 **显示层（Display Layers）** 隐藏 ESP 极值和密度表面，只选 **P03-atoms**。点击 **N 侧栏 → 导入外部结果（Import External Results） → 原子与键分析（Atom and Bond Analysis） → AIM 拓扑（AIM Topology）**，按下表选择三份文件并确认。应新增 **QC AIM CP C、QC AIM CP N、QC AIM bond paths**；C/N 两层分别有 **6/5 个点**。
 
 | 控件 | 输入文件 |
 | --- | --- |

@@ -22,7 +22,7 @@
 
 > 几何节点（Geometry Nodes）用连线把选择、表示和裁剪组合起来。节点树是这组计算连接；修改器把节点树应用到对象，生成视口中看到的几何。这里在显示副本上建立一个简单分支。
 
-点击 **N 侧栏 → 工作流（Workflow） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/P06/water-dimer.xyz](../../shared/data/public/P06/water-dimer.xyz)。选中新原子对象，在三维视口按 `F2` 命名为 **P06-original**。在 **显示层（Display Layers） → 复制（Duplicate）** 创建副本，将副本命名为 **P06-nodes**；关闭原层的眼睛和相机图标，保持副本活动。复制（Duplicate）会为副本复制可编辑的外层节点树。
+点击 **N 侧栏 → 工作流（Workflow） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/P06/water-dimer.xyz](../../shared/data/public/P06/water-dimer.xyz)。选中新原子对象，在三维视口按 `F2` 命名为 **P06-original**。在 **显示层（Display Layers） → 复制（Duplicate）** 创建副本，将副本命名为 **P06-nodes**；关闭原层的眼睛和相机图标，保持副本活动。复制（Duplicate）会为副本复制可编辑的外层节点树。
 
 <a id="step-02"></a>
 ### 2. 添加选择、表示和裁剪节点
@@ -125,7 +125,7 @@
 
 > 求值几何是节点运行后的显示结果。原子样式把一个点变成球面，键样式生成管面，因此一个原子可以产生很多顶点。
 
-球棍的求值网格顶点数不等于原子数，球面或键面顶点的位置也不等于核位置。选择原子、创建距离标注（Create Distance Annotation）或核对构型时，使用源编号与源构型；查看节点结果时，区分样式生成前的原子载体和样式生成后的球棍网格。
+球棍的求值网格顶点数不等于原子数，球面或键面顶点的位置也不等于核位置。选择原子、创建距离标注或核对构型时，使用源编号与源构型；查看节点结果时，区分样式生成前的原子载体和样式生成后的球棍网格。
 
 下表说明常见属性应如何读取；只有对应来源可用时才提供科学属性。
 

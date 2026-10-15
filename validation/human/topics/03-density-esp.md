@@ -35,7 +35,7 @@
 
 > Eh（Hartree）是能量单位；RHF 是本例所用计算方法的名称，6-31G(d) 是基组名称，两者说明这份能量的计算条件。
 
-点击 **N 侧栏 → 工作流（Workflow） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/P03/water-dimer.fchk](../../shared/data/public/P03/water-dimer.fchk)并完成导入。选中新原子对象，按 `F2` 命名为 **P03-atoms**。应有 **O/H/H/O/H/H** 六个原子；点击 **对象属性与显示参数（Object Properties and Display Parameters）**，在 **科学记录与振动模式（Scientific Records and Vibration Modes）** 查看电子总能量，应约为 **−152.013820 Eh**。本样本计算条件为 **RHF/6-31G(d)**。
+点击 **N 侧栏 → 工作流（Workflow） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/P03/water-dimer.fchk](../../shared/data/public/P03/water-dimer.fchk)并完成导入。选中新原子对象，按 `F2` 命名为 **P03-atoms**。应有 **O/H/H/O/H/H** 六个原子；点击 **对象属性与显示参数（Object Properties and Display Parameters）**，在 **科学记录与振动模式（Scientific Records and Vibration Modes）** 查看电子总能量，应约为 **−152.013820 Eh**。本样本计算条件为 **RHF/6-31G(d)**。
 
 <a id="step-02"></a>
 ### 2. 生成电子密度场
@@ -51,7 +51,7 @@
 
 其他密度选项的区别与自旋密度案例见本页[选择其他密度](#densities)；轨道选项 **分子轨道（Molecular orbital）** 见[主线轨道案例](../SOP.md#orbital)。
 
-选 **P03-atoms**，点击 **工作流（Workflow） → 生成量子化学场（Generate Quantum Field）**。首次使用先等待自动检查，在生成对话框设 **物理量（Quantity）=电子密度（Electron density）**、**网格间距（Grid spacing）=0.2**、**网格边距（Grid margin）=3**、**内存预算（Memory budget）=512**，点击 **确定（OK）** 并等待完成。应生成 **QC electron_number_density**，单位为 **electron/bohr^3**。
+选 **P03-atoms**，点击 **工作流（Workflow） → 计算（Compute） → 生成量子化学场（Generate Quantum Field）**。首次使用先等待自动检查，在生成对话框设 **物理量（Quantity）=电子密度（Electron density）**、**网格间距（Grid spacing）=0.2**、**网格边距（Grid margin）=3**、**内存预算（Memory budget）=512**，点击 **确定（OK）** 并等待完成。应生成 **QC electron_number_density**，单位为 **electron/bohr^3**。
 
 <a id="step-03"></a>
 ### 3. 生成静电势场
@@ -132,7 +132,7 @@
 
 > 偶极矢量用大小和方向描述电荷分布；Debye 是偶极矩单位。修改器（Modifiers）是调节几何处理参数的修改器面板；每 Debye 的埃数（Angstrom per Debye）设置每 Debye 对应的箭头显示长度，单位为 Å，不改变源偶极矩。
 
-保持 **P03-atoms** 活动，点击 **N 侧栏 → 创建视图与检查工具（Create Views and Inspection Tools） → 创建偶极矢量（Create Dipole Vector）**。在 **显示层（Display Layers）** 点击新对象 **QC dipole (Debye; physical direction)** 行最左侧的选择图标，重新点击 **对象属性与显示参数（Object Properties and Display Parameters）**，再切到 **属性（Properties） → 修改器（Modifiers）**。将 **每 Debye 的埃数（Angstrom per Debye）** 从 **0.5** 改为 **1.5**；箭头应沿 **+Z**，长度变为三倍。截图保存为 `human/screenshots/P03-charge-dipole.png`。
+保持 **P03-atoms** 活动，点击 **N 侧栏 → 创建视图与检查工具（Create Views and Inspection Tools） → 空间工具（Spatial Tools） → 创建偶极矢量（Create Dipole Vector）**。在 **显示层（Display Layers）** 点击新对象 **QC dipole (Debye; physical direction)** 行最左侧的选择图标，重新点击 **对象属性与显示参数（Object Properties and Display Parameters）**，再切到 **属性（Properties） → 修改器（Modifiers）**。将 **每 Debye 的埃数（Angstrom per Debye）** 从 **0.5** 改为 **1.5**；箭头应沿 **+Z**，长度变为三倍。截图保存为 `human/screenshots/P03-charge-dipole.png`。
 
 ![水二聚体的原子电荷颜色和偶极箭头](../screenshots/P03-charge-dipole.png)
 

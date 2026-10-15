@@ -20,7 +20,7 @@
 
 > IGMH 是按原子片段分析相互作用区域的一种方法；IRI 是相互作用区域指标，用于显示化学键及弱相互作用区域。这里读取已经算好的 Cube。
 
-点击 **N 侧栏 → 工作流（Workflow） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/P03/water-dimer.fchk](../../shared/data/public/P03/water-dimer.fchk)，将原子对象命名为 **P03-atoms**。应看到两个水分子，共六个原子。
+点击 **N 侧栏 → 工作流（Workflow） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/P03/water-dimer.fchk](../../shared/data/public/P03/water-dimer.fchk)，将原子对象命名为 **P03-atoms**。应看到两个水分子，共六个原子。
 
 <a id="step-02"></a>
 ### 2. 导入 IGMH 成对场并声明片段
@@ -47,7 +47,7 @@
 
 **片段原子（JSON）（Fragment atoms (JSON)）** 用方括号列表列出各片段的源原子编号；**声明来源（Declaration source (optional)）** 记录声明的依据，optional 表示可留空。本例两组方括号分别指定两个水分子，成员编号沿用源 Cube 的原子顺序，从 1 开始。
 
-只选 **P03-atoms**，点击 **N 侧栏 → 导入外部结果（Import External Results） → IGMH / IRI 成对场（IGMH / IRI Paired Fields）**。按下表输入 IGMH 参数，确认并等待完成；在 **显示层（Display Layers）** 点击新建 **QC paired field data** 行最左侧的选择图标，将鼠标移入三维视口，按 `F2` 命名为 **IGMH-data**。
+只选 **P03-atoms**，点击 **N 侧栏 → 导入外部结果（Import External Results） → 空间场分析（Spatial Field Analysis） → IGMH / IRI 成对场（IGMH / IRI Paired Fields）**。按下表输入 IGMH 参数，确认并等待完成；在 **显示层（Display Layers）** 点击新建 **QC paired field data** 行最左侧的选择图标，将鼠标移入三维视口，按 `F2` 命名为 **IGMH-data**。
 
 | 控件 | 输入值 |
 | --- | --- |
