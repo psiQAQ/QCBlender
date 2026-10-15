@@ -29,6 +29,8 @@ Sidebar 收敛到导入导出、只读对象摘要、详情、选择导航和工
 
 本地整合及四个工作树的保全/正常移除结果由本批 `worktree-retention.json`、`archive-local.json`、`delivery.json` 记录；注释标签采用 `archive/2026-10-16/{feat/sidebar-main,feat/sidebar-summary,fix/sidebar-context,docs/sidebar-sop}`。不 push。
 
+整合提交 `c915649` 的 266 项标准库、94 项 public-core 和当前安装/教程材料检查 Passed。299 个忽略文件已按逐项摘要保存在 `outputs/runs/sidebar-20261016/worktree-evidence/`；四个工作树与分支均正常移除，四个注释标签可从 main 追溯。本批探针源脚本保存在对应工作树 ZIP 的 `outputs/sidebar-summary/`、`outputs/sidebar-context/`；报告中的旧工作树路径为执行时位置。此前 i18n 空目录残留未动。
+
 <a id="annotations-20261016"></a>
 ## 标注几何、材质与面板提示（2026-10-16）
 
