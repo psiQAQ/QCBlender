@@ -61,6 +61,7 @@ def _view_points(obj, depsgraph):
 class QCBLENDER_OT_create_framed_camera(bpy.types.Operator):
     bl_idname = 'qcblender.create_framed_camera'
     bl_label = 'Create Framed QC Camera'
+    bl_description = 'Create an orthographic scene camera framing the selected renderable QC views from the current 3D viewing direction, with the chosen margin; the active view is used when no selected view qualifies'
     bl_options = {'REGISTER', 'UNDO'}
 
     margin: FloatProperty(name='Margin per side', default=0.05, min=0.0, max=0.49,

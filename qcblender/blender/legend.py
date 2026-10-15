@@ -190,7 +190,7 @@ def upgrade_legend(obj):
 class QCBLENDER_OT_upgrade_legend(bpy.types.Operator):
     bl_idname = 'qcblender.upgrade_legend'
     bl_label = 'Upgrade QC Legend'
-    bl_description = 'Upgrade a known QC legend to editable layout controls'
+    bl_description = 'Upgrade a recognized unchanged legacy QC legend to editable size, position, orientation and decimal controls; customized legacy branches are refused'
     bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod

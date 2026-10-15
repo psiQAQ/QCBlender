@@ -393,6 +393,7 @@ def color_field_choices(self, context):
 class QCBLENDER_OT_select_color_field(bpy.types.Operator):
     bl_idname = 'qcblender.select_color_field'
     bl_label = 'Select Color Field'
+    bl_description = 'Choose a scene-bound scalar field to color the active atom, surface or slice view; replacement keeps the existing range and requires compatible geometry association'
     bl_options = {'REGISTER', 'UNDO'}
     source_name: EnumProperty(name='Field', items=color_field_choices)
     target_name: StringProperty(options={'HIDDEN'})
@@ -479,6 +480,7 @@ class QCBLENDER_OT_select_color_field(bpy.types.Operator):
 class QCBLENDER_OT_map_scalar(bpy.types.Operator):
     bl_idname = 'qcblender.map_scalar'
     bl_label = 'Map Selected Field to Active Surface'
+    bl_description = 'Map the other selected scalar field onto the active receiving surface or atom view; select exactly two bound views with compatible source geometry'
     bl_options = {'REGISTER', 'UNDO'}
     minimum: FloatProperty(name='Color minimum (field unit)', default=-.05)
     maximum: FloatProperty(name='Color maximum (field unit)', default=.05)
@@ -508,6 +510,7 @@ class QCBLENDER_OT_map_scalar(bpy.types.Operator):
 class QCBLENDER_OT_slice(bpy.types.Operator):
     bl_idname = 'qcblender.create_slice'
     bl_label = 'Create Scalar Slice'
+    bl_description = 'Create a planar scalar-field display from the active field or slice using the requested samples per axis and color range'
     bl_options = {'REGISTER', 'UNDO'}
     resolution: IntProperty(name='Samples per axis', default=201, min=2, max=1001)
     minimum: FloatProperty(name='Color minimum (field unit)', default=-.05)

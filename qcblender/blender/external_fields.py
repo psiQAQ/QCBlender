@@ -17,6 +17,7 @@ def paired_record(directory, data, parent):
 class QCBLENDER_OT_import_paired_field(AsyncOperation, bpy.types.Operator):
     bl_idname = 'qcblender.import_paired_field'
     bl_label = 'Import IGMH / IRI Cube Pair'
+    bl_description = 'Import separate geometry and sign(lambda2)rho Cube fields as an IGMH or IRI pair associated with the active static QC reference; declare both units and analysis parameters'
     bl_options = {'REGISTER', 'UNDO'}
 
     method: EnumProperty(name='Analysis', items=[('IGMH', 'IGMH', ''), ('IRI', 'IRI', '')])

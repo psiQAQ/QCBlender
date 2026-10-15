@@ -81,6 +81,7 @@ def add_clip(obj):
 class QCBLENDER_OT_clip(bpy.types.Operator):
     bl_idname = 'qcblender.add_clipping'
     bl_label = 'Add Plane / Box Clipping'
+    bl_description = 'Add plane and box clipping controls to the active atom or scalar display graph; edit view-local positions and bounds in angstroms under Spatial View'
     bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod
@@ -101,6 +102,7 @@ class QCBLENDER_OT_clip(bpy.types.Operator):
 class QCBLENDER_OT_probe(bpy.types.Operator):
     bl_idname = 'qcblender.probe_field'
     bl_label = 'Read Field at 3D Cursor'
+    bl_description = 'Sample the linked geometry field at the 3D cursor using trilinear interpolation and store the value and coordinates on the active view; the cursor must lie in valid field data'
 
     @classmethod
     def poll(cls, context):

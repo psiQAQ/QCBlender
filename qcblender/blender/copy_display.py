@@ -541,7 +541,7 @@ def copy_parameters(source_obj, targets, geometry=True, appearance=True, numeric
 class QCBLENDER_OT_copy_display_parameters(bpy.types.Operator):
     bl_idname = 'qcblender.copy_display_parameters'
     bl_label = 'Copy Display Parameters'
-    bl_description = 'Copy selected display groups from the active view to compatible selected QC views'
+    bl_description = 'Copy the selected geometry, appearance and numerical display groups from the active QC view to compatible selected views; each target keeps its source data'
     bl_options = {'REGISTER', 'UNDO'}
 
     geometry: BoolProperty(name='Geometry Representation', default=True)

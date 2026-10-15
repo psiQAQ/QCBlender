@@ -85,7 +85,7 @@ def apply_preset(obj, role, identifier, *, expected_identity='', expected_pointe
 class QCBLENDER_OT_apply_color_preset(bpy.types.Operator):
     bl_idname = 'qcblender.apply_color_preset'
     bl_label = 'Apply Color Ramp Preset'
-    bl_description = 'Replace the material color ramp on confirmation; shared views update together'
+    bl_description = 'Preview a replacement color ramp for the selected scalar or charge material; confirmation changes stops and interpolation for every view sharing the material'
     bl_options = {'REGISTER', 'UNDO'}
 
     material_role: EnumProperty(items=[('scalar_map', 'Scalar map', ''),
@@ -95,6 +95,15 @@ class QCBLENDER_OT_apply_color_preset(bpy.types.Operator):
                          for key, value in PRESETS.items()], default='QC_DEFAULT')
     target_identity: StringProperty(options={'HIDDEN', 'SKIP_SAVE'})
     target_label: StringProperty(options={'HIDDEN', 'SKIP_SAVE'})
+
+    @classmethod
+    def description(cls, context, properties):
+        from ..i18n import tip
+        messages = {
+            'scalar_map': 'Preview a color-ramp preset for the active view scalar-field material; confirmation replaces stops and interpolation in every view sharing that material',
+            'charge_map': 'Preview a color-ramp preset for the active atom view charge material; confirmation updates every view sharing that material without changing charge values',
+        }
+        return tip(messages.get(getattr(properties, 'material_role', None), cls.bl_description))
 
     @classmethod
     def poll(cls, context):

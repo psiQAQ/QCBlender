@@ -199,6 +199,7 @@ def copy_selection(source, target):
 class QCBLENDER_OT_local_selection(bpy.types.Operator):
     bl_idname = 'qcblender.local_selection'
     bl_label = 'Local Atom Selection'
+    bl_description = 'Set a local display mask on the active atom layer using source atom numbers and an optional distance neighborhood; scientific source data is retained'
     bl_options = {'REGISTER', 'UNDO'}
 
     mode: EnumProperty(name='Display Range Update Mode', items=[
@@ -213,6 +214,20 @@ class QCBLENDER_OT_local_selection(bpy.types.Operator):
     use_radius: BoolProperty(name='Include distance neighborhood', description='Include atoms within the radius of any seed atom', default=False)
     radius: FloatProperty(name='Radius (Å)', default=5., min=0.)
     include_seeds: BoolProperty(name='Include seed atoms', description='Keep the explicitly entered source atoms in the query result', default=True)
+
+    @classmethod
+    def description(cls, context, properties):
+        from ..i18n import tip
+        messages = {
+            'REPLACE': 'Replace the active atom layer local display selection with source atom numbers and an optional distance neighborhood; the saved query can be recomputed at another geometry',
+            'UNION': 'Add the queried source atoms and optional distance neighborhood to the active atom layer current local display selection',
+            'INTERSECT': 'Keep only source atoms shared by the active atom layer current selection and the new number or distance-neighborhood query',
+            'DIFFERENCE': 'Remove the queried source atoms and optional distance neighborhood from the active atom layer current local display selection',
+            'INVERT': 'Invert the active atom layer local display selection over all source atom numbers; existing element and hydrogen display gates still apply',
+            'CLEAR': 'Clear the active atom layer saved local selection query and mask restriction; existing element and hydrogen display gates still apply',
+            'RECOMPUTE': 'Re-evaluate the active atom layer saved number and distance queries at its current geometry, then replace its fixed local display mask',
+        }
+        return tip(messages.get(getattr(properties, 'mode', None), cls.bl_description))
 
     @classmethod
     def poll(cls, context):
@@ -246,6 +261,7 @@ class QCBLENDER_OT_local_selection(bpy.types.Operator):
 class QCBLENDER_OT_local_selection_layer(bpy.types.Operator):
     bl_idname = 'qcblender.local_selection_layer'
     bl_label = 'New Local Atom Layer'
+    bl_description = 'Create an independent atom display layer containing the requested source atoms and optional distance neighborhood; IRC paths must use selection in place'
     bl_options = {'REGISTER', 'UNDO'}
 
     numbers: StringProperty(name='Source atom numbers (1-based)', description='Original atom numbers, for example 1,3-5', default='')

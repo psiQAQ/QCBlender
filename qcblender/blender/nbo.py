@@ -38,6 +38,7 @@ def clear_inspection(self, context):
 class QCBLENDER_OT_import_nbo(AsyncOperation, bpy.types.Operator):
     bl_idname = 'qcblender.import_nbo'
     bl_label = 'Import Gaussian NBO Records'
+    bl_description = 'Inspect a Gaussian Log or Out file, choose its calculation and NBO block, then import NBO and E(2) records against the active static QC reference'
     bl_options = {'REGISTER', 'UNDO'}
 
     filepath: StringProperty(name='Gaussian Log / Out', subtype='FILE_PATH', update=clear_inspection)

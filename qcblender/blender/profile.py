@@ -36,6 +36,7 @@ def profile_source(obj, role):
 class QCBLENDER_OT_mark_profile_start(bpy.types.Operator):
     bl_idname = 'qcblender.mark_profile_start'
     bl_label = 'Mark Profile Start at 3D Cursor'
+    bl_description = 'Store the 3D cursor as the line-profile start on the active field or slice, together with its current field binding; move the cursor before sampling the other endpoint'
     bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod
@@ -62,6 +63,7 @@ class QCBLENDER_OT_mark_profile_start(bpy.types.Operator):
 class QCBLENDER_OT_create_line_profile(bpy.types.Operator):
     bl_idname = 'qcblender.create_line_profile'
     bl_label = 'Sample Line Profile Data'
+    bl_description = 'Sample the chosen geometry or bound color field between the recorded profile start and current 3D cursor; create a separate profile-data record with the requested sample count'
     bl_options = {'REGISTER', 'UNDO'}
 
     field_role: EnumProperty(name='Sample field', items=[('GEOMETRY', 'Geometry', ''), ('COLOR', 'Color', '')], default='GEOMETRY')
@@ -122,6 +124,7 @@ class QCBLENDER_OT_create_line_profile(bpy.types.Operator):
 class QCBLENDER_OT_export_line_profile(bpy.types.Operator):
     bl_idname = 'qcblender.export_line_profile'
     bl_label = 'Export Line Profile Data'
+    bl_description = 'Open the scientific-data export dialog for the active line-profile record so its sampled coordinates and field values can be written with metadata'
 
     @classmethod
     def poll(cls, context):

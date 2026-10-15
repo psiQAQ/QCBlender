@@ -55,6 +55,7 @@ def choose_pair(self, context):
 class QCBLENDER_OT_import_nocv(AsyncOperation, bpy.types.Operator):
     bl_idname = 'qcblender.import_nocv_field'
     bl_label = 'Import NOCV Pair Cube'
+    bl_description = 'Import a signed deformation-density Cube for one recorded pair and spin in the active ETS-NOCV table; declare the field unit and retain the table association'
     bl_options = {'REGISTER', 'UNDO'}
 
     cube_path: StringProperty(name='Signed pair Cube', subtype='FILE_PATH')

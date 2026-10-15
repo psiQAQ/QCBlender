@@ -221,6 +221,7 @@ def unregister():
 class QCBLENDER_OT_fog(bpy.types.Operator):
     bl_idname = 'qcblender.create_fog'
     bl_label = 'Create Volume Fog'
+    bl_description = 'Create an independent volume-fog view of the active scalar field; optical density and opacity controls affect display rather than scientific field values'
     bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod

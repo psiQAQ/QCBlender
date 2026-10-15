@@ -199,6 +199,7 @@ class QCBLENDER_GGT_slice(bpy.types.GizmoGroup):
 class QCBLENDER_OT_define_plane(bpy.types.Operator):
     bl_idname = 'qcblender.define_slice_plane'
     bl_label = 'Define QC Slice Plane'
+    bl_description = 'Define the active QC slice in a source-grid plane or through three source atoms, or return to a freely positioned plane; source identities must remain associated'
     bl_options = {'REGISTER', 'UNDO'}
 
     mode: EnumProperty(name='Plane', items=[('FREE', 'Free', ''), ('ij', 'Grid ij', ''),
@@ -296,8 +297,18 @@ def _probe_draw(operator):
 class QCBLENDER_OT_click_probe(bpy.types.Operator):
     bl_idname = 'qcblender.click_probe'
     bl_label = 'Probe Active QC Surface'
+    bl_description = 'Click the active QC surface or slice to sample its geometry or bound color field; Enter saves the current sample and Esc restores the previous sample'
     bl_options = {'REGISTER', 'UNDO'}
     role: EnumProperty(name='Field', items=[('GEOMETRY', 'Geometry', ''), ('COLOR', 'Bound color', '')], default='GEOMETRY')
+
+    @classmethod
+    def description(cls, context, properties):
+        from ..i18n import tip
+        messages = {
+            'GEOMETRY': 'Click the active QC surface or slice to sample its geometry field using trilinear interpolation; Enter saves the sample and Esc restores the previous one',
+            'COLOR': 'Click the active QC surface or slice to sample its bound color field; a valid color-field binding is required, Enter saves and Esc restores the previous sample',
+        }
+        return tip(messages.get(getattr(properties, 'role', None), cls.bl_description))
 
     @classmethod
     def poll(cls, context):
@@ -468,7 +479,7 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
 class QCBLENDER_WST_probe(bpy.types.WorkSpaceTool):
     bl_idname = 'qcblender.probe_tool'
     bl_label = 'QC Surface Probe'
-    bl_description = 'Click the active QC surface or slice to sample its geometry field'
+    bl_description = 'Use left clicks on the active QC surface or slice to sample its geometry field; Enter saves the sample and Esc restores the previous sample'
     bl_space_type = 'VIEW_3D'
     bl_context_mode = 'OBJECT'
     bl_icon = 'ops.generic.select'
@@ -478,7 +489,7 @@ class QCBLENDER_WST_probe(bpy.types.WorkSpaceTool):
 class QCBLENDER_WST_slice(bpy.types.WorkSpaceTool):
     bl_idname = 'qcblender.slice_tool'
     bl_label = 'QC Slice Gizmo'
-    bl_description = 'Move, rotate or resize the active QC slice'
+    bl_description = 'Drag the active QC slice gizmos to move, rotate or resize its display plane; sampling follows the plane while source field arrays are retained'
     bl_space_type = 'VIEW_3D'
     bl_context_mode = 'OBJECT'
     bl_icon = 'ops.transform.translate'

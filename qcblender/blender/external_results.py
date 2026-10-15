@@ -99,6 +99,7 @@ def table_view(directory, data, parent, name, role):
 class QCBLENDER_OT_import_esp(bpy.types.Operator):
     bl_idname = 'qcblender.import_esp_analysis'
     bl_label = 'Import ESP Surface Results'
+    bl_description = 'Import ESP extrema and area-distribution records against the active static ESP reference; declare the surface definition and units from the generating analysis'
     bl_options = {'REGISTER', 'UNDO'}
 
     extrema_path: StringProperty(name='Extrema PDB', subtype='FILE_PATH')
@@ -149,6 +150,7 @@ class QCBLENDER_OT_import_esp(bpy.types.Operator):
 class QCBLENDER_OT_import_aim(bpy.types.Operator):
     bl_idname = 'qcblender.import_aim_analysis'
     bl_label = 'Import AIM Topology'
+    bl_description = 'Import AIM critical points, paths and optional numeric properties against the active static QC reference; create separate result views for the recorded point types'
     bl_options = {'REGISTER', 'UNDO'}
 
     cps_path: StringProperty(name='CPs PDB', subtype='FILE_PATH')
@@ -194,6 +196,7 @@ class QCBLENDER_OT_import_aim(bpy.types.Operator):
 class QCBLENDER_OT_import_ets(bpy.types.Operator):
     bl_idname = 'qcblender.import_ets_nocv'
     bl_label = 'Import ETS-NOCV Pair Table'
+    bl_description = 'Import an existing ETS-NOCV pair table against the active static QC reference and declare its pair-energy unit; pair Cube fields are imported separately'
     bl_options = {'REGISTER', 'UNDO'}
 
     output_path: StringProperty(name='ETS-NOCV output text', subtype='FILE_PATH')

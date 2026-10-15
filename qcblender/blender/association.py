@@ -152,6 +152,7 @@ def association_summary(obj):
 class QCBLENDER_OT_associate(bpy.types.Operator):
     bl_idname = 'qcblender.associate_sources'
     bl_label = 'Associate Selected Geometry to Active'
+    bl_description = 'Match the other selected atom view to the active atom view by source atom order and geometry; optionally align rigid rotation and translation'
     bl_options = {'REGISTER', 'UNDO'}
     allow_rigid: BoolProperty(name='Align rigid rotation/translation', default=False)
     tolerance: FloatProperty(name='Maximum atom deviation (angstrom)', default=.001, min=1e-6, max=.1)

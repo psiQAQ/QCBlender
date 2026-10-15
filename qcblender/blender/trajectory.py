@@ -70,9 +70,20 @@ def set_frame(obj, data, frame):
 class QCBLENDER_OT_trajectory_frame(bpy.types.Operator):
     bl_idname = 'qcblender.trajectory_frame'
     bl_label = 'Choose XYZ Frame'
+    bl_description = 'Choose or advance the active XYZ trajectory frame and refresh its atom positions and distance-inferred bonds; an independent atom mesh is required'
     bl_options = {'REGISTER', 'UNDO'}
     direction: EnumProperty(items=[('GOTO', 'Choose', ''), ('PREV', 'Previous', ''), ('NEXT', 'Next', '')])
     frame: bounded_int('frame', frame_bounds, name='Frame', default=1, min=1)
+
+    @classmethod
+    def description(cls, context, properties):
+        from ..i18n import tip
+        messages = {
+            'GOTO': 'Choose an imported XYZ frame by its 1-based source order and update the active atom mesh and distance-inferred bonds',
+            'PREV': 'Load the preceding imported XYZ frame into the active atom view and refresh positions and distance-inferred bonds',
+            'NEXT': 'Load the following imported XYZ frame into the active atom view and refresh positions and distance-inferred bonds',
+        }
+        return tip(messages.get(getattr(properties, 'direction', None), cls.bl_description))
 
     @classmethod
     def poll(cls, context):

@@ -56,6 +56,7 @@ def set_step(obj, data, step):
 class QCBLENDER_OT_optimization_view(bpy.types.Operator):
     bl_idname = 'qcblender.optimization_view'
     bl_label = 'Create Optimization View'
+    bl_description = 'Create a separate switchable atom view from the recorded optimization trajectory; bonds are inferred from step 1 and scientific properties remain on the source view'
     bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod
@@ -103,9 +104,20 @@ class QCBLENDER_OT_optimization_view(bpy.types.Operator):
 class QCBLENDER_OT_optimization_step(bpy.types.Operator):
     bl_idname = 'qcblender.optimization_step'
     bl_label = 'Choose Optimization Step'
+    bl_description = 'Choose or advance the active optimization view step and refresh its geometry and annotations; these discrete steps are not physical time'
     bl_options = {'REGISTER', 'UNDO'}
     direction: EnumProperty(items=[('GOTO', 'Choose', ''), ('PREV', 'Previous', ''), ('NEXT', 'Next', '')])
     step: bounded_int('step', step_bounds, name='Step', default=1, min=1)
+
+    @classmethod
+    def description(cls, context, properties):
+        from ..i18n import tip
+        messages = {
+            'GOTO': 'Choose a recorded optimization step by its 1-based order and update the active trajectory view geometry, energy and annotations',
+            'PREV': 'Move the active optimization view to the preceding recorded step and refresh geometry, energy and annotations',
+            'NEXT': 'Move the active optimization view to the following recorded step and refresh geometry, energy and annotations',
+        }
+        return tip(messages.get(getattr(properties, 'direction', None), cls.bl_description))
 
     @classmethod
     def poll(cls, context):

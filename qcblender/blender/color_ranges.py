@@ -58,6 +58,7 @@ def color_source(obj):
 class QCBLENDER_OT_symmetric_color_range(bpy.types.Operator):
     bl_idname = 'qcblender.symmetric_color_range'
     bl_label = 'Set Zero-Centered Color Range'
+    bl_description = 'Set the active view color minimum, center and maximum to -R, 0 and +R in the bound field unit; the sampled field values are retained'
     bl_options = {'REGISTER', 'UNDO'}
     radius: FloatProperty(name='Positive limit R (field unit)', default=.05, min=0)
 
@@ -91,6 +92,7 @@ class QCBLENDER_OT_symmetric_color_range(bpy.types.Operator):
 class QCBLENDER_OT_read_color_range(AsyncOperation, bpy.types.Operator):
     bl_idname = 'qcblender.read_color_range'
     bl_label = 'Read Valid Color Field Range'
+    bl_description = 'Scan valid samples of the bound color field and apply their minimum, midpoint and maximum to the active view color range; invalid grid points are excluded'
     bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod

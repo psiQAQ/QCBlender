@@ -45,6 +45,7 @@ def _mapped_material(obj):
 class QCBLENDER_OT_color_palette(bpy.types.Operator):
     bl_idname = 'qcblender.color_palette'
     bl_label = 'Set QC Scalar Palette'
+    bl_description = 'Apply the selected three-color palette to the active scalar-mapping material; all views sharing that material use the updated colors'
     bl_options = {'REGISTER', 'UNDO'}
 
     palette: EnumProperty(items=[(key, key, '') for key in PALETTES])
@@ -343,7 +344,19 @@ def _draw_contours(target, source, plane, report):
 class QCBLENDER_OT_toggle_contours(bpy.types.Operator):
     bl_idname = 'qcblender.toggle_contours'
     bl_label = 'Enable or Disable QC Contours'
+    bl_description = 'Enable or hide contour geometry on the active QC slice; contour levels and the selected geometry or color field are configured on this slice'
     bl_options = {'REGISTER', 'UNDO'}
+
+    @classmethod
+    def description(cls, context, properties):
+        from ..i18n import tip
+        messages = {
+            'enabled': 'Hide the active slice contours and their labels while keeping their configuration available for later display',
+            'disabled': 'Enable contour display on the active QC slice; existing matching contours are restored and changed settings require an update',
+        }
+        obj = getattr(context, 'object', None)
+        enabled = obj is not None and bool(obj.get('qc_contour_enabled'))
+        return tip(messages['enabled' if enabled else 'disabled'])
 
     @classmethod
     def poll(cls, context):
@@ -371,6 +384,7 @@ class QCBLENDER_OT_toggle_contours(bpy.types.Operator):
 class QCBLENDER_OT_update_contours(AsyncOperation, bpy.types.Operator):
     bl_idname = 'qcblender.update_contours'
     bl_label = 'Update QC Slice Contours'
+    bl_description = 'Resample the active QC slice and rebuild its contours from the selected field and levels; enable contours first and press Esc to cancel calculation'
     bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod
@@ -496,9 +510,19 @@ class QCBLENDER_PT_contours(bpy.types.Panel):
 class QCBLENDER_OT_contour_source(bpy.types.Operator):
     bl_idname = 'qcblender.contour_source'
     bl_label = 'Choose QC Contour Field'
+    bl_description = 'Choose whether the active slice contours represent the geometry field or its bound color field; existing contours are hidden until refreshed'
     bl_options = {'REGISTER', 'UNDO'}
 
     role: EnumProperty(items=[('COLOR', 'Color field', ''), ('GEOMETRY', 'Geometry field', '')])
+
+    @classmethod
+    def description(cls, context, properties):
+        from ..i18n import tip
+        messages = {
+            'GEOMETRY': 'Use the active slice geometry field for contour values; hide the existing contours until they are rebuilt for this source',
+            'COLOR': 'Use the active slice bound color field for contour values; a color-field binding is required and existing contours are hidden until rebuilt',
+        }
+        return tip(messages.get(getattr(properties, 'role', None), cls.bl_description))
 
     @classmethod
     def poll(cls, context):

@@ -15,6 +15,7 @@ def cache_step(root, data, step):
 class QCBLENDER_OT_import_irc(bpy.types.Operator):
     bl_idname = 'qcblender.import_irc_path'
     bl_label = 'Import Ordered IRC FCHK Path'
+    bl_description = 'Import an ordered CSV manifest of IRC step and FCHK paths into one switchable atom view; CSV row order defines the discrete path steps'
     bl_options = {'REGISTER', 'UNDO'}
     manifest_path: StringProperty(name='CSV manifest: step,fchk', subtype='FILE_PATH')
 
@@ -50,8 +51,18 @@ class QCBLENDER_OT_import_irc(bpy.types.Operator):
 class QCBLENDER_OT_irc_step(bpy.types.Operator):
     bl_idname = 'qcblender.irc_step'
     bl_label = 'Change IRC Step'
+    bl_description = 'Move the active IRC atom view to the previous or next imported step and refresh its energy and annotations; an independent atom mesh is required'
     bl_options = {'REGISTER', 'UNDO'}
     direction: EnumProperty(items=[('PREV', 'Previous', ''), ('NEXT', 'Next', '')])
+
+    @classmethod
+    def description(cls, context, properties):
+        from ..i18n import tip
+        messages = {
+            'PREV': 'Move the active IRC path to its preceding imported configuration and refresh the recorded energy and annotations; an independent atom mesh is required',
+            'NEXT': 'Move the active IRC path to its following imported configuration and refresh the recorded energy and annotations; an independent atom mesh is required',
+        }
+        return tip(messages.get(getattr(properties, 'direction', None), cls.bl_description))
 
     @classmethod
     def poll(cls, context):
@@ -96,6 +107,7 @@ class QCBLENDER_OT_irc_step(bpy.types.Operator):
 class QCBLENDER_OT_import_irc_mayer(bpy.types.Operator):
     bl_idname = 'qcblender.import_irc_mayer'
     bl_label = 'Import IRC Mayer Bond Orders'
+    bl_description = 'Import a step-ordered CSV manifest of precomputed Mayer outputs for the active IRC path; each row must match the corresponding imported IRC step'
     bl_options = {'REGISTER', 'UNDO'}
     manifest_path: StringProperty(name='CSV manifest: step,mayer_output', subtype='FILE_PATH')
 
@@ -136,6 +148,7 @@ class QCBLENDER_OT_import_irc_mayer(bpy.types.Operator):
 class QCBLENDER_OT_select_irc_mayer_pair(bpy.types.Operator):
     bl_idname = 'qcblender.select_irc_mayer_pair'
     bl_label = 'Read Selected Mayer Pair'
+    bl_description = 'Read the imported Mayer bond orders for the selected two source atom numbers across the IRC path and display the value at the current step'
     bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod

@@ -254,7 +254,23 @@ def _writable_mesh(obj):
 class QCBLENDER_OT_apply_result_filter(bpy.types.Operator):
     bl_idname = 'qcblender.apply_result_filter'
     bl_label = 'Apply Result Filter'
+    bl_description = 'Apply the active external-result browser filters and focus the selected match where supported; original scientific records are retained'
     bl_options = {'REGISTER', 'UNDO'}
+
+    @classmethod
+    def description(cls, context, properties):
+        from ..i18n import tip
+        messages = {
+            'esp_area': 'Apply the ESP area-bin selection for totals and export; complete source bins are selected and bin areas are not split',
+            'nbo': 'Apply the NBO orbital and E(2) filters and sort order, then select the matching source records in this result view',
+            'ets_nocv': 'Apply the ETS-NOCV pair filters and locate an already imported field view for the selected pair and spin when a unique match exists',
+            'points': 'Filter the active ESP extrema or AIM critical-point layer, update visible matching points and focus the selected result; source records are retained',
+        }
+        obj = getattr(context, 'object', None)
+        role = obj.get('qc_analysis_role', obj.get('qc_view_kind', '')) if obj is not None else ''
+        if role.startswith(('esp_', 'aim_')) and role != 'esp_area':
+            role = 'points'
+        return tip(messages.get(role, cls.bl_description))
 
     @classmethod
     def poll(cls, context):
@@ -346,6 +362,7 @@ class QCBLENDER_OT_apply_result_filter(bpy.types.Operator):
 class QCBLENDER_OT_filter_result_scatter(bpy.types.Operator):
     bl_idname = 'qcblender.filter_result_scatter'
     bl_label = 'Apply Paired Field Filter'
+    bl_description = 'Save the active paired-field X and Y value ranges and axis order for data export; this stores a filter rather than recalculating field values'
     bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod

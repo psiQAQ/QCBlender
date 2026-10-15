@@ -78,11 +78,22 @@ def hydrogen_keep_ids(text, numbers):
 class QCBLENDER_OT_hydrogen_visibility(bpy.types.Operator):
     bl_idname = 'qcblender.hydrogen_visibility'
     bl_label = 'Hydrogen Visibility'
+    bl_description = 'Change hydrogen visibility on the active atom display layer using original source atom numbers; this action does not hide heavy atoms'
     bl_options = {'REGISTER', 'UNDO'}
 
     mode: EnumProperty(items=[('HIDE', 'Hide H', ''), ('KEEP', 'Keep selected H', ''),
                               ('RESTORE', 'Show all', '')])
     keep: StringProperty(name='Hydrogen atom numbers (1-based)', default='')
+
+    @classmethod
+    def description(cls, context, properties):
+        from ..i18n import tip
+        messages = {
+            'HIDE': 'Hide all hydrogen atoms on the active atom display layer; retain the scientific source and other independent display restrictions',
+            'KEEP': 'Enter source numbers of hydrogen atoms to pass the active atom layer hydrogen gate; other hydrogen atoms are hidden and independent display restrictions still apply',
+            'RESTORE': 'Restore hydrogen visibility on the active atom layer; any independent local-selection or element restriction still applies',
+        }
+        return tip(messages.get(getattr(properties, 'mode', None), cls.bl_description))
 
     @classmethod
     def poll(cls, context):
@@ -202,11 +213,26 @@ def cleanup_result_children(obj):
 class QCBLENDER_OT_layer_action(bpy.types.Operator):
     bl_idname = 'qcblender.layer_action'
     bl_label = 'Manage Display Layer'
+    bl_description = 'Select, duplicate, remove, reorder or toggle the visibility of the targeted QC display layer; scientific dataset files are retained'
     bl_options = {'REGISTER', 'UNDO'}
     target: StringProperty()
     action: EnumProperty(items=[('SELECT', 'Select', ''), ('DUPLICATE', 'Duplicate', ''),
         ('REMOVE', 'Remove', ''), ('UP', 'Move up', ''), ('DOWN', 'Move down', ''),
         ('VISIBILITY', 'Toggle viewport', ''), ('RENDER', 'Toggle render', '')])
+
+    @classmethod
+    def description(cls, context, properties):
+        from ..i18n import tip
+        messages = {
+            'SELECT': 'Make the targeted QC display layer the active selected object so its source records and display controls can be inspected',
+            'DUPLICATE': 'Duplicate the targeted QC display layer with independent geometry-node controls and materials; the scientific dataset remains shared',
+            'REMOVE': 'Remove the targeted QC display layer and its owned display helpers from the scene; retain its scientific dataset files',
+            'UP': 'Move the targeted QC display layer one position earlier within its source group; object coordinates and scientific data are retained',
+            'DOWN': 'Move the targeted QC display layer one position later within its source group; object coordinates and scientific data are retained',
+            'VISIBILITY': 'Toggle viewport visibility for the targeted QC layer and its owned display helpers; render visibility is controlled separately',
+            'RENDER': 'Toggle render visibility for the targeted QC layer and its owned display helpers; viewport visibility is controlled separately',
+        }
+        return tip(messages.get(getattr(properties, 'action', None), cls.bl_description))
 
     def execute(self, context):
         layers = display_layers(context.scene)
@@ -268,6 +294,7 @@ class QCBLENDER_OT_layer_action(bpy.types.Operator):
 class QCBLENDER_OT_add_surface(bpy.types.Operator):
     bl_idname = 'qcblender.add_surface_layer'
     bl_label = 'Add Isosurface Layer'
+    bl_description = 'Create another isosurface display layer from the active scalar field with independent display controls and the same scientific source'
     bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod
@@ -298,7 +325,7 @@ class QCBLENDER_OT_add_surface(bpy.types.Operator):
 class QCBLENDER_OT_new_current_view(bpy.types.Operator):
     bl_idname = 'qcblender.new_current_view'
     bl_label = 'Create Current-Version View (Keep Original)'
-    bl_description = 'Create a standard view from the same dataset; preserve the original custom graph'
+    bl_description = 'Create a standard current-version view from the active view dataset while preserving the original custom graph; full IRC paths cannot be duplicated this way'
     bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod

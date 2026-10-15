@@ -18,6 +18,7 @@ _charge_items = {}
 class QCBLENDER_OT_distance(bpy.types.Operator):
     bl_idname = 'qcblender.measure_distance'
     bl_label = 'Label Equilibrium Atom Distance'
+    bl_description = 'Create a distance label for two source atom numbers using the dataset equilibrium geometry in angstroms; this is not a current-step measurement'
     bl_options = {'REGISTER', 'UNDO'}
     first: bounded_int('first', atom_bounds, name='First atom (1-based)', default=1, min=1)
     second: bounded_int('second', atom_bounds, name='Second atom (1-based)', default=2, min=1)
@@ -65,6 +66,7 @@ class QCBLENDER_OT_distance(bpy.types.Operator):
 
 
 def charge_items(self, context):
+    from ..i18n import tip
     obj = context.object
     if obj is None or 'qc_dataset' not in obj:
         return []
@@ -73,12 +75,14 @@ def charge_items(self, context):
         data = load_dataset(path)
         _charge_items[path] = [(c['method'], c['method'], 'Atomic partial charge in e')
                                for c in data.metadata.get('charges', [])]
-    return _charge_items[path]
+    return [(identifier, label, tip(description))
+            for identifier, label, description in _charge_items[path]]
 
 
 class QCBLENDER_OT_color_charge(bpy.types.Operator):
     bl_idname = 'qcblender.color_charge'
     bl_label = 'Color by Atomic Charge'
+    bl_description = 'Color the active atom view with a recorded partial-charge method and an explicit range in e; use a separate atom layer if a scalar color field is already bound'
     bl_options = {'REGISTER', 'UNDO'}
     method: EnumProperty(name='Charge method', items=charge_items)
     minimum: FloatProperty(name='Minimum (e)', default=-1)
@@ -168,6 +172,7 @@ class QCBLENDER_OT_color_charge(bpy.types.Operator):
 class QCBLENDER_OT_dipole(bpy.types.Operator):
     bl_idname = 'qcblender.show_dipole'
     bl_label = 'Show Molecular Dipole'
+    bl_description = 'Create a dipole vector at the source coordinate origin from the recorded molecular dipole; show its physical direction with an adjustable angstrom-per-Debye display scale'
     bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod

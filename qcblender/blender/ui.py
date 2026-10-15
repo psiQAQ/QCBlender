@@ -284,6 +284,7 @@ class QCBlenderPreferences(bpy.types.AddonPreferences):
 class QCBLENDER_OT_check_runtime(AsyncOperation, bpy.types.Operator):
     bl_idname = 'qcblender.check_runtime'
     bl_label = 'Check Scientific Runtime'
+    bl_description = 'Check the scientific worker environment and required modules, then show the runtime report in QCBlender preferences'
 
     def begin(self, context):
         from .jobs import Job
@@ -297,6 +298,7 @@ class QCBLENDER_OT_check_runtime(AsyncOperation, bpy.types.Operator):
 class QCBLENDER_OT_import(AsyncOperation, bpy.types.Operator, ImportHelper):
     bl_idname = 'qcblender.import_calculation'
     bl_label = 'Import Gaussian / Cube / XYZ'
+    bl_description = 'Import Gaussian FCHK, Log or Out, Cube, or XYZ scientific data and create QC views; Gaussian logs require an explicit calculation selection'
     bl_options = {'REGISTER', 'UNDO'}
     filename_ext = '.fchk'
     filter_glob: StringProperty(default='*.fchk;*.fch;*.cube;*.cub;*.log;*.out;*.xyz', options={'HIDDEN'})
@@ -356,6 +358,7 @@ def job_choices(self, context):
 class QCBLENDER_OT_choose_log_job(bpy.types.Operator):
     bl_idname = 'qcblender.choose_log_job'
     bl_label = 'Choose Gaussian Calculation'
+    bl_description = 'Import the selected Gaussian log calculation with its own status and recorded geometry; geometry is not inherited from another calculation'
     filepath: StringProperty(options={'HIDDEN'})
     summary: StringProperty(options={'HIDDEN'})
     job: EnumProperty(name='Calculation', items=job_choices)
@@ -390,6 +393,7 @@ class QCBLENDER_OT_choose_log_job(bpy.types.Operator):
 class QCBLENDER_OT_qualify_science(AsyncOperation, bpy.types.Operator):
     bl_idname = 'qcblender.qualify_science'
     bl_label = 'Check Scientific Source'
+    bl_description = 'Check whether the selected wavefunction source can generate fields within the memory budget before opening field-generation parameters'
     memory_mb: IntProperty(name='Qualification memory budget (MiB)', default=512, min=32, max=16384)
     reason: StringProperty(options={'HIDDEN'})
 
@@ -442,6 +446,7 @@ class QCBLENDER_OT_qualify_science(AsyncOperation, bpy.types.Operator):
 class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
     bl_idname = 'qcblender.generate_field'
     bl_label = 'Generate Quantum Field'
+    bl_description = 'Qualify the selected wavefunction source, choose a quantity and grid, then calculate a new quantum field within the memory budget; press Esc to cancel'
     bl_options = {'REGISTER', 'UNDO'}
 
     quantity: EnumProperty(name='Quantity', items=[
@@ -551,6 +556,7 @@ class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
 class QCBLENDER_OT_declare_field(AsyncOperation, bpy.types.Operator):
     bl_idname = 'qcblender.declare_field'
     bl_label = 'Identify Cube Quantity and Unit'
+    bl_description = 'Declare the quantity and unit already used by an unknown Cube field after checking its generating calculation; array values are not converted'
     quantity: EnumProperty(name='Values already use this quantity/unit', items=[
         ('electron_number_density', 'Electron density [electron/bohr^3]', ''),
         ('spin_density', 'Alpha-minus-beta spin density [electron/bohr^3]', ''),
@@ -595,10 +601,27 @@ class QCBLENDER_OT_declare_field(AsyncOperation, bpy.types.Operator):
 class QCBLENDER_OT_set_view_style(bpy.types.Operator):
     bl_idname = 'qcblender.set_view_style'
     bl_label = 'Set QC View Style'
+    bl_description = 'Switch the active QC atom or isosurface representation using its existing geometry-node controls; scientific source data is retained'
     bl_options = {'REGISTER', 'UNDO'}
 
     socket_id: StringProperty(options={'HIDDEN'})
     style: IntProperty(min=0, max=2, options={'HIDDEN'})
+
+    @classmethod
+    def description(cls, context, properties):
+        from ..i18n import tip
+        messages = {
+            'atoms_0': 'Show the active atom view as ball-and-stick geometry using its existing atom and bond radius controls',
+            'atoms_1': 'Show the active atom view as space-filling spheres using its van der Waals scale control',
+            'atoms_2': 'Show bonds in the active atom view without the ball-and-stick atom spheres',
+            'field_0': 'Show the active isosurface as a solid surface using its existing phase materials and opacity controls',
+            'field_1': 'Show the active isosurface as wire geometry using its wire-radius control',
+            'field_2': 'Show the active isosurface as points using its point-radius control',
+        }
+        obj = getattr(context, 'object', None)
+        kind = obj.get('qc_view_kind', '') if obj is not None else ''
+        key = kind + '_' + str(getattr(properties, 'style', -1))
+        return tip(messages.get(key, cls.bl_description))
 
     @classmethod
     def poll(cls, context):

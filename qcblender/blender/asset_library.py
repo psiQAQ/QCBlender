@@ -170,6 +170,7 @@ def preview_legacy_assets():
 class QCBLENDER_OT_cleanup_legacy_node_assets(bpy.types.Operator):
     bl_idname = 'qcblender.cleanup_legacy_node_assets'
     bl_label = 'Preview and Tidy Legacy QC Node Assets'
+    bl_description = 'Preview legacy QC node assets and clear asset marks only from unchanged standard groups after confirmation'
     bl_options = {'REGISTER', 'UNDO'}
 
     preview: bpy.props.StringProperty(options={'HIDDEN'})

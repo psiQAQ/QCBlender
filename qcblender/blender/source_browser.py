@@ -369,6 +369,7 @@ def source_details(obj):
 class QCBLENDER_OT_refresh_sources(bpy.types.Operator):
     bl_idname = 'qcblender.refresh_sources'
     bl_label = 'Refresh Sources'
+    bl_description = 'Reload saved metadata for QC sources in the current scene and refresh available record ranges; inspect Source Details if a saved dataset binding cannot be read'
 
     def execute(self, context):
         _metadata.clear()
@@ -398,6 +399,7 @@ def source_detail_choices(self, context):
 class QCBLENDER_OT_source_details(bpy.types.Operator):
     bl_idname = 'qcblender.source_details'
     bl_label = 'Source Details'
+    bl_description = 'Inspect the active QC view source files, hashes, calculation selection, fields and associations in a read-only dialog'
     details: StringProperty(options={'HIDDEN'})
     section: EnumProperty(name='Source record', items=source_detail_choices)
 
