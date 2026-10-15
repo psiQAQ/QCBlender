@@ -33,16 +33,18 @@ def main():
         camera_data.type = 'ORTHO'
         camera_data.ortho_scale = 14
         scene.camera = camera
-        cases = [('ATOM', '1', (-3.4, 2.6)), ('DISTANCE', '1,2', (3.4, 2.6)),
+        cases = [('ATOM', '1', (-3.4, 2.6)), ('DISTANCE', '1,4', (3.4, 2.6)),
                  ('ANGLE', '3,1,2', (-3.4, -2.1)), ('DIHEDRAL', '3,1,2,4', (3.4, -2.1))]
         for kind, atoms, (x, y) in cases:
             owner = views.atom_view(args.dataset)
+            data = importlib.import_module(MODULE + '.data').load_dataset(args.dataset)
+            importlib.import_module(MODULE + '.blender.trajectory').initialize_trajectory(owner, data)
             owner.name = 'Gallery ' + kind
             owner.location = (x, y, 0)
             owner.rotation_euler.x = math.radians(65)
             bpy.context.view_layer.update()
             layers.activate(bpy.context, owner)
-            options = dict(kind=kind, atoms=atoms, size=.23, measurement_width=.025,
+            options = dict(kind=kind, atoms=atoms, size=.65, measurement_width=.025,
                            line_width=.012, arc_radius=.65)
             if kind == 'DIHEDRAL':
                 options.update(prefix_mode='CUSTOM', prefix='二面角：')
