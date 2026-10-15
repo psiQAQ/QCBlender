@@ -27,7 +27,7 @@ def igmh_declaration(component, fragments, source, atom_count):
             raise ValueError('IGMH atom numbers must not repeat within one fragment')
         members.extend(fragment)
     overlap = sorted(atom for atom, count in Counter(members).items() if count > 1)
-    warnings = ['片段之间包含重复原子；已保留交叠声明：' + ', '.join(map(str, overlap))] if overlap else []
+    warnings = ['Fragments contain repeated atoms; the overlap declaration is retained: ' + ', '.join(map(str, overlap))] if overlap else []
     return {'component': component, 'fragments': [list(fragment) for fragment in fragments],
             'atom_indexing': 'source_cube_1based', 'source': source.strip(),
             'interpretation': 'user_assigned',
