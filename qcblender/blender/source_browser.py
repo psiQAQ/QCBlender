@@ -33,7 +33,7 @@ def cache_dataset(obj, data):
 
 def cached_object_summary(obj, limit=6):
     """Summarize the explicit active object; never refresh or access its mesh."""
-    if obj is None or not (obj.get('qc_view_kind') or 'qc_annotation' in obj):
+    if obj is None or not (obj.get('qc_view_kind') or obj.get('qc_dataset') or 'qc_annotation' in obj):
         return summarize_object({}, {}, limit=limit)
     owner = source_object(obj)
     bound = bool(owner.get('qc_dataset'))

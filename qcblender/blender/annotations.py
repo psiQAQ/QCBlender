@@ -581,7 +581,7 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
 
     kind: EnumProperty(name='Annotation', items=[('ATOM', 'Atom numbers', ''),
                        ('DISTANCE', 'Distance', ''), ('ANGLE', 'Angle', ''), ('DIHEDRAL', 'Dihedral', '')])
-    atoms: StringProperty(name='Source atom numbers', description='Enter one-based source atom numbers in measurement order; the source atoms are unchanged', default='1,2', options={'HIDDEN'})
+    atoms: StringProperty(name='Source atom numbers', description='Enter one-based source atom numbers in measurement order; the source atoms are unchanged', default='1,2', options={'HIDDEN', 'SKIP_SAVE'})
     atom_inputs: CollectionProperty(type=QCAnnotationAtomInput, options={'HIDDEN', 'SKIP_SAVE'})
     input_count: IntProperty(name='Number of atom labels', default=1, min=1, options={'SKIP_SAVE'})
     active_input: IntProperty(default=0, min=0, options={'HIDDEN', 'SKIP_SAVE'})
@@ -620,7 +620,10 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
             required = 1 if self.kind == 'ATOM' else ATOM_COUNTS[self.kind]
             if len(positions) < required:
                 raise ValueError('The source geometry has too few distinct atoms for this annotation')
-            numbers = list(range(1, required + 1))
+            numbers = (parse_source_atom_numbers(self.atoms, len(positions))
+                       if self.properties.is_property_set('atoms', ghost=False) else list(range(1, required + 1)))
+            if self.kind != 'ATOM' and len(numbers) != required:
+                raise ValueError(f'{self.kind} needs {required} ordered source atom numbers')
             self.atoms = ','.join(map(str, numbers))
             _init_atom_inputs(self, numbers, len(positions))
         except (ValueError, KeyError, OSError, TypeError) as error:

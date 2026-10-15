@@ -120,6 +120,9 @@ def summarize_object(context, metadata, descriptors=None, limit=6):
         details.append(_row(key, label, value))
     if error is not None:
         details.append(_row('error', 'Dataset', error))
+    if 'positions' in descriptors:
+        details.append(_row('positions', 'Source Coordinates', unit=metadata.get('coordinate_unit'),
+                            descriptor=descriptors['positions']))
 
     def category(key, label, count, rows):
         result['categories'].append({'key': key, 'label': label,

@@ -55,18 +55,20 @@ def draw_sidebar_summary(layout, context, *, details):
 
     def row(entry):
         value = entry['value']
-        if value is None:
+        if value is None and entry.get('shape') is not None:
+            value = ' × '.join(map(str, entry['shape']))
+        elif value is None:
             value = iface('Not recorded')
         elif entry['key'] == 'view_type':
             value = iface({
                 'atoms': 'Atoms', 'field': 'Scalar Field', 'slice': 'Slice', 'fog': 'Volume Fog',
                 'dipole': 'Dipole', 'spectrum': 'Spectrum', 'scatter': 'Scatter', 'nbo': 'NBO',
-                'analysis': 'Analysis', 'profile': 'Line Profile',
+                'analysis': 'Analysis', 'profile': 'Line Profile', 'annotation': 'Annotation',
             }.get(value, value))
         text = f"{iface(entry['label'])}: {value}"
         if entry.get('unit'):
             text += f" [{entry['unit']}]"
-        if entry.get('shape') is not None:
+        if entry.get('shape') is not None and entry['value'] is not None:
             text += ' · ' + ' × '.join(map(str, entry['shape']))
         if entry.get('dtype'):
             text += ' · ' + entry['dtype']
