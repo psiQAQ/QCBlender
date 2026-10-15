@@ -1,4 +1,5 @@
 """Apply an explicit preset to an existing scalar or charge material."""
+from ..i18n import error_text, iface, ui_layout
 import json
 
 import bpy
@@ -83,14 +84,14 @@ def apply_preset(obj, role, identifier, *, expected_identity='', expected_pointe
 
 class QCBLENDER_OT_apply_color_preset(bpy.types.Operator):
     bl_idname = 'qcblender.apply_color_preset'
-    bl_label = '应用色带预设'
-    bl_description = '确认后替换当前材质的色带；共享此材质的视图同步更新'
+    bl_label = 'Apply Color Ramp Preset'
+    bl_description = 'Replace the material color ramp on confirmation; shared views update together'
     bl_options = {'REGISTER', 'UNDO'}
 
     material_role: EnumProperty(items=[('scalar_map', 'Scalar map', ''),
                                        ('charge_map', 'Charge map', '')],
                                 default='scalar_map', options={'HIDDEN'})
-    preset: EnumProperty(name='色带预设', items=[(key, value.label, '')
+    preset: EnumProperty(name='Color Ramp Preset', items=[(key, value.label, '')
                          for key, value in PRESETS.items()], default='QC_DEFAULT')
     target_identity: StringProperty(options={'HIDDEN', 'SKIP_SAVE'})
     target_label: StringProperty(options={'HIDDEN', 'SKIP_SAVE'})
@@ -106,15 +107,15 @@ class QCBLENDER_OT_apply_color_preset(bpy.types.Operator):
             self.target_label = target['material'].name
             self._dialog_pointers = target['pointers']
         except (ValueError, KeyError, TypeError, AttributeError, ReferenceError, RuntimeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return context.window_manager.invoke_props_dialog(self, width=480)
 
     def draw(self, context):
-        self.layout.label(text='目标材质：' + self.target_label)
-        self.layout.label(text='所有共享此材质的视图和图例会同步更新。')
-        self.layout.label(text='确认后替换当前色阶和插值；取消保持原状。')
-        self.layout.prop(self, 'preset')
+        ui_layout(self.layout).label(text=iface('Target material: {value0}', value0=self.target_label))
+        ui_layout(self.layout).label(text='All views and legends sharing this material update together.')
+        ui_layout(self.layout).label(text='Confirm to replace the current stops and interpolation; cancel to keep them.')
+        ui_layout(self.layout).prop(self, 'preset')
 
     def cancel(self, context):
         self.target_identity = ''
@@ -131,6 +132,6 @@ class QCBLENDER_OT_apply_color_preset(bpy.types.Operator):
             if hasattr(self, '_dialog_pointers'):
                 del self._dialog_pointers
         except (ValueError, OSError, KeyError, TypeError, AttributeError, ReferenceError, RuntimeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}

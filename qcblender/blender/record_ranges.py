@@ -11,6 +11,7 @@ def _bound_property(obj, name, count):
 
 def _refresh_view_ranges(obj, meta):
     from .graph import view_modifier
+    from .node_identity import adopt_generated_copy, socket_name
 
     try:
         modifier = view_modifier(obj)
@@ -28,12 +29,13 @@ def _refresh_view_ranges(obj, meta):
                        'Last Atom (0 = all)': (0, count)})
     if tree.users > 1:
         tree = tree.copy()
+        adopt_generated_copy(tree)
         modifier.node_group = tree
     for item in tree.interface.items_tree:
         if (item.item_type != 'SOCKET' or item.in_out != 'INPUT'
-                or item.socket_type != 'NodeSocketInt' or item.name not in limits):
+                or item.socket_type != 'NodeSocketInt' or socket_name(item) not in limits):
             continue
-        lower, upper = limits[item.name]
+        lower, upper = limits[socket_name(item)]
         item.min_value, item.max_value = lower, upper
         if item.identifier in modifier:
             modifier.id_properties_ui(item.identifier).update(

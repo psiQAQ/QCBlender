@@ -1,4 +1,6 @@
 """Ordered IRC configurations and imported energy and Mayer records."""
+from ..i18n import error_text, iface, ui_layout
+from .node_identity import socket_name
 import json
 
 import bpy
@@ -20,8 +22,8 @@ class QCBLENDER_OT_import_irc(bpy.types.Operator):
         return context.window_manager.invoke_props_dialog(self, width=520)
 
     def draw(self, context):
-        self.layout.prop(self, 'manifest_path')
-        self.layout.label(text='CSV rows are the exact, 1-based step order')
+        ui_layout(self.layout).prop(self, 'manifest_path')
+        ui_layout(self.layout).label(text='CSV rows are the exact, 1-based step order')
 
     def execute(self, context):
         from ..irc import import_irc
@@ -37,10 +39,10 @@ class QCBLENDER_OT_import_irc(bpy.types.Operator):
             cache_step(root, data, 1)
             modifier = view_modifier(root)
             style = next(item for item in modifier.node_group.interface.items_tree
-                         if item.item_type == 'SOCKET' and item.name == 'Style (0 ball-stick, 1 space-fill, 2 bonds)')
+                         if item.item_type == 'SOCKET' and socket_name(item) == 'Style (0 ball-stick, 1 space-fill, 2 bonds)')
             modifier[style.identifier] = 1
         except (ValueError, OSError, KeyError, TypeError, MemoryError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -86,7 +88,7 @@ class QCBLENDER_OT_irc_step(bpy.types.Operator):
             apply_annotations(prepared)
             apply_association_invalidation(associations)
         except (ValueError, OSError, KeyError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -105,7 +107,7 @@ class QCBLENDER_OT_import_irc_mayer(bpy.types.Operator):
         return context.window_manager.invoke_props_dialog(self, width=520)
 
     def draw(self, context):
-        self.layout.prop(self, 'manifest_path')
+        ui_layout(self.layout).prop(self, 'manifest_path')
 
     def execute(self, context):
         from ..data import load_dataset
@@ -126,7 +128,7 @@ class QCBLENDER_OT_import_irc_mayer(bpy.types.Operator):
             root.select_set(False)
             obj.select_set(True)
         except (ValueError, OSError, KeyError, TypeError, MemoryError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -155,7 +157,7 @@ class QCBLENDER_OT_select_irc_mayer_pair(bpy.types.Operator):
             obj['qc_mayer_display_pair'] = pair
             obj['qc_mayer_display_values'] = data.arrays['mayer_orders'][:, matches[0]].tolist()
         except (ValueError, OSError, KeyError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -178,13 +180,13 @@ class QCBLENDER_PT_irc(bpy.types.Panel):
         obj = context.object
         root = obj if obj.get('qc_irc') else obj.parent
         step = int(root['qc_irc_step'])
-        layout = self.layout
+        layout = ui_layout(self.layout)
         record = json.loads(root.get('qc_irc_record', '{}'))
-        layout.label(text=f"Step {step} / {record.get('count', '未记录')}")
+        layout.label(text=iface('Step {value0} / {value1}', value0=step, value1=record.get('count', iface('Not recorded'))))
         if record.get('step') == step:
-            layout.label(text=f"Energy: {record['energy_hartree']:.10f} hartree")
+            layout.label(text=iface('Energy: {value0:.10f} hartree', value0=record['energy_hartree']))
         else:
-            layout.label(text='Energy: 未记录；切步时读取')
+            layout.label(text='Energy: not recorded; read when changing steps')
         row = layout.row(align=True)
         previous, following = row.row(), row.row()
         previous.enabled = step > 1
@@ -203,5 +205,5 @@ class QCBLENDER_PT_irc(bpy.types.Panel):
             values = obj.get('qc_mayer_display_values', [])
             pair = sorted((int(obj['qc_pair_a']), int(obj['qc_pair_b'])))
             if list(obj.get('qc_mayer_display_pair', [])) == pair and 1 <= step <= len(values):
-                layout.label(text=f'Mayer order: {values[step - 1]:.6g}')
+                layout.label(text=iface('Mayer order: {value0:.6g}', value0=values[step - 1]))
             layout.operator('qcblender.export_data', text='Export Mayer Data')

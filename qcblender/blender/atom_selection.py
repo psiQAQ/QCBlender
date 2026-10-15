@@ -1,4 +1,6 @@
 """Local atom masks on independent QC atom display layers."""
+from ..i18n import error_text, ui_layout
+from .node_identity import node_socket
 import json
 
 import bpy
@@ -37,32 +39,32 @@ def _preflight(obj):
     selected, style = groups['qc.atom_selection.v1'], groups['qc.atom_style.v1']
     inputs = [node for node in tree.nodes if node.type == 'GROUP_INPUT']
     if len(inputs) != 1 or any(
-            _source(selected.inputs[name]) != inputs[0].outputs[name]
+            _source(node_socket(selected.inputs, name)) != node_socket(inputs[0].outputs, name)
             for name in ('Selection', 'Element (0 = all)', 'First Atom (1-based)', 'Last Atom (0 = all)')):
         raise ValueError('QC source selection controls are disconnected')
-    visibility = _source(style.inputs['Selection']).node
+    visibility = _source(node_socket(style.inputs, 'Selection')).node
     if (visibility.bl_idname != 'ShaderNodeMath' or visibility.operation != 'MULTIPLY'
-            or _source(style.inputs['Selection']) != visibility.outputs[0]):
+            or _source(node_socket(style.inputs, 'Selection')) != node_socket(visibility.outputs, 0)):
         raise ValueError('QC hydrogen gate is unsupported')
-    hydrogen = _source(visibility.inputs[1]).node
+    hydrogen = _source(node_socket(visibility.inputs, 1)).node
     hydrogen_attr = obj.data.attributes.get('qc_atom_visible')
     if (hydrogen.bl_idname != 'GeometryNodeInputNamedAttribute' or hydrogen.data_type != 'BOOLEAN'
-            or hydrogen.inputs['Name'].default_value != 'qc_atom_visible'
+            or node_socket(hydrogen.inputs, 'Name').default_value != 'qc_atom_visible'
             or hydrogen_attr is None or hydrogen_attr.domain != 'POINT'
             or hydrogen_attr.data_type != 'BOOLEAN' or len(hydrogen_attr.data) != len(obj.data.vertices)):
         raise ValueError('QC hydrogen gate is unsupported')
-    previous = _source(visibility.inputs[0])
+    previous = _source(node_socket(visibility.inputs, 0))
     local = None
     if previous.node.get('qc_local_selection_gate'):
         local = previous.node
-        mask = _source(local.inputs[1]).node
+        mask = _source(node_socket(local.inputs, 1)).node
         if (local.bl_idname != 'ShaderNodeMath' or local.operation != 'MULTIPLY'
-                or previous != local.outputs[0] or mask.bl_idname != 'GeometryNodeInputNamedAttribute'
-                or mask.data_type != 'BOOLEAN' or mask.inputs['Name'].default_value != ATTRIBUTE
+                or previous != node_socket(local.outputs, 0) or mask.bl_idname != 'GeometryNodeInputNamedAttribute'
+                or mask.data_type != 'BOOLEAN' or node_socket(mask.inputs, 'Name').default_value != ATTRIBUTE
                 or not mask.get('qc_local_selection_attribute')):
             raise ValueError('QC local selection gate is unsupported')
-        previous = _source(local.inputs[0])
-    if previous != selected.outputs['Selection']:
+        previous = _source(node_socket(local.inputs, 0))
+    if previous != node_socket(selected.outputs, 'Selection'):
         raise ValueError('QC source selection is disconnected')
     attr = obj.data.attributes.get(ATTRIBUTE)
     if bool(attr) != bool(local):
@@ -70,7 +72,7 @@ def _preflight(obj):
     if attr and (attr.domain != 'POINT' or attr.data_type != 'BOOLEAN'
                  or len(attr.data) != len(obj.data.vertices)):
         raise ValueError('QC local selection mask is invalid')
-    return tree, visibility, selected.outputs['Selection'], attr
+    return tree, visibility, node_socket(selected.outputs, 'Selection'), attr
 
 
 def _read_record(obj, attr):
@@ -102,15 +104,15 @@ def _write(obj, selected, record, state):
             mask = tree.nodes.new('GeometryNodeInputNamedAttribute')
             created.append(mask)
             mask.data_type = 'BOOLEAN'
-            mask.inputs['Name'].default_value = ATTRIBUTE
+            node_socket(mask.inputs, 'Name').default_value = ATTRIBUTE
             mask['qc_local_selection_attribute'] = 1
             gate = tree.nodes.new('ShaderNodeMath')
             created.append(gate)
             gate.operation = 'MULTIPLY'
             gate['qc_local_selection_gate'] = 1
-            tree.links.new(previous, gate.inputs[0])
-            tree.links.new(mask.outputs['Attribute'], gate.inputs[1])
-            tree.links.new(gate.outputs[0], visibility.inputs[0])
+            tree.links.new(previous, node_socket(gate.inputs, 0))
+            tree.links.new(node_socket(mask.outputs, 'Attribute'), node_socket(gate.inputs, 1))
+            tree.links.new(node_socket(gate.outputs, 0), node_socket(visibility.inputs, 0))
         attr.data.foreach_set('value', [index in selected for index in range(1, len(attr.data) + 1)])
         if record is None:
             if RECORD in obj:
@@ -125,7 +127,7 @@ def _write(obj, selected, record, state):
                 tree.nodes.remove(node)
             if attr is not None:
                 obj.data.attributes.remove(attr)
-            tree.links.new(previous, visibility.inputs[0])
+            tree.links.new(previous, node_socket(visibility.inputs, 0))
         else:
             attr.data.foreach_set('value', old_values)
         if old_record is None:
@@ -199,14 +201,18 @@ class QCBLENDER_OT_local_selection(bpy.types.Operator):
     bl_label = 'Local Atom Selection'
     bl_options = {'REGISTER', 'UNDO'}
 
-    mode: EnumProperty(items=[(key, label, '') for key, label in (
-        ('REPLACE', 'Replace'), ('UNION', 'Union'), ('INTERSECT', 'Intersect'),
-        ('DIFFERENCE', 'Difference'), ('INVERT', 'Invert'), ('CLEAR', 'Clear'),
-        ('RECOMPUTE', 'Recompute'))], default='REPLACE')
-    numbers: StringProperty(name='Source atom numbers (1-based)', default='')
-    use_radius: BoolProperty(name='Include distance neighborhood', default=False)
+    mode: EnumProperty(name='Display Range Update Mode', items=[
+        ('REPLACE', 'Replace', 'Replace the current selection with the query result'),
+        ('UNION', 'Union', 'Add query matches to the current selection'),
+        ('INTERSECT', 'Intersect', 'Keep atoms that match both selections'),
+        ('DIFFERENCE', 'Difference', 'Remove query matches from the current selection'),
+        ('INVERT', 'Invert', 'Select source atoms outside the current selection'),
+        ('CLEAR', 'Clear', 'Remove the local restriction and show all source atoms'),
+        ('RECOMPUTE', 'Recompute', 'Evaluate the saved query at the current geometry')], default='REPLACE')
+    numbers: StringProperty(name='Source atom numbers (1-based)', description='Original atom numbers, for example 1,3-5', default='')
+    use_radius: BoolProperty(name='Include distance neighborhood', description='Include atoms within the radius of any seed atom', default=False)
     radius: FloatProperty(name='Radius (Å)', default=5., min=0.)
-    include_seeds: BoolProperty(name='Include seed atoms', default=True)
+    include_seeds: BoolProperty(name='Include seed atoms', description='Keep the explicitly entered source atoms in the query result', default=True)
 
     @classmethod
     def poll(cls, context):
@@ -218,21 +224,21 @@ class QCBLENDER_OT_local_selection(bpy.types.Operator):
         return context.window_manager.invoke_props_dialog(self, width=460)
 
     def draw(self, context):
-        self.layout.use_property_split = True
-        self.layout.prop(self, 'mode')
+        ui_layout(self.layout).use_property_split = True
+        ui_layout(self.layout).prop(self, 'mode')
         if self.mode not in ('CLEAR', 'RECOMPUTE', 'INVERT'):
-            self.layout.prop(self, 'numbers')
-            self.layout.prop(self, 'use_radius')
+            ui_layout(self.layout).prop(self, 'numbers')
+            ui_layout(self.layout).prop(self, 'use_radius')
             if self.use_radius:
-                self.layout.prop(self, 'radius')
-                self.layout.prop(self, 'include_seeds')
+                ui_layout(self.layout).prop(self, 'radius')
+                ui_layout(self.layout).prop(self, 'include_seeds')
 
     def execute(self, context):
         try:
             _selection(context.object, self.mode, self.numbers, self.use_radius,
                        self.radius, self.include_seeds)
         except (ValueError, OSError, KeyError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -242,10 +248,10 @@ class QCBLENDER_OT_local_selection_layer(bpy.types.Operator):
     bl_label = 'New Local Atom Layer'
     bl_options = {'REGISTER', 'UNDO'}
 
-    numbers: StringProperty(name='Source atom numbers (1-based)', default='')
-    use_radius: BoolProperty(name='Include distance neighborhood', default=False)
+    numbers: StringProperty(name='Source atom numbers (1-based)', description='Original atom numbers, for example 1,3-5', default='')
+    use_radius: BoolProperty(name='Include distance neighborhood', description='Include atoms within the radius of any seed atom', default=False)
     radius: FloatProperty(name='Radius (Å)', default=5., min=0.)
-    include_seeds: BoolProperty(name='Include seed atoms', default=True)
+    include_seeds: BoolProperty(name='Include seed atoms', description='Keep the explicitly entered source atoms in the query result', default=True)
 
     @classmethod
     def poll(cls, context):
@@ -255,12 +261,12 @@ class QCBLENDER_OT_local_selection_layer(bpy.types.Operator):
         return context.window_manager.invoke_props_dialog(self, width=460)
 
     def draw(self, context):
-        self.layout.use_property_split = True
-        self.layout.prop(self, 'numbers')
-        self.layout.prop(self, 'use_radius')
+        ui_layout(self.layout).use_property_split = True
+        ui_layout(self.layout).prop(self, 'numbers')
+        ui_layout(self.layout).prop(self, 'use_radius')
         if self.use_radius:
-            self.layout.prop(self, 'radius')
-            self.layout.prop(self, 'include_seeds')
+            ui_layout(self.layout).prop(self, 'radius')
+            ui_layout(self.layout).prop(self, 'include_seeds')
 
     def execute(self, context):
         from .layers import activate, copy_layer, display_layers
@@ -306,6 +312,6 @@ class QCBLENDER_OT_local_selection_layer(bpy.types.Operator):
                 activate(context, source)
                 raise
         except (ValueError, OSError, KeyError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}

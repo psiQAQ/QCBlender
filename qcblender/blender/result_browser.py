@@ -1,4 +1,6 @@
 """Object Properties browser for external result display state."""
+from ..i18n import error_text, iface, ui_layout
+from .node_identity import node_socket
 import json
 
 import bpy
@@ -215,10 +217,10 @@ def _focus(context, obj, row, state, analysis, parts):
         dots = nodes.new('GeometryNodeMeshToPoints')
         dots.mode = 'VERTICES'
         assign = nodes.new('GeometryNodeSetMaterial')
-        assign.inputs['Material'].default_value = material('QC selected result', (1, .85, .05, 1))
-        links.new(nodes.new('NodeGroupInput').outputs['Geometry'], dots.inputs['Mesh'])
-        links.new(dots.outputs['Points'], assign.inputs['Geometry'])
-        links.new(assign.outputs['Geometry'], nodes.new('NodeGroupOutput').inputs['Geometry'])
+        node_socket(assign.inputs, 'Material').default_value = material('QC selected result', (1, .85, .05, 1))
+        links.new(node_socket(nodes.new('NodeGroupInput').outputs, 'Geometry'), node_socket(dots.inputs, 'Mesh'))
+        links.new(node_socket(dots.outputs, 'Points'), node_socket(assign.inputs, 'Geometry'))
+        links.new(node_socket(assign.outputs, 'Geometry'), node_socket(nodes.new('NodeGroupOutput').inputs, 'Geometry'))
         marker.modifiers.new('QC Result Focus', 'NODES').node_group = tree
         label_curve = bpy.data.curves.new('QC result label', 'FONT')
         label = bpy.data.objects.new('QC result label', label_curve)
@@ -228,7 +230,7 @@ def _focus(context, obj, row, state, analysis, parts):
     else:
         marker, dots, label = parts
     marker.location = Vector(row['position_angstrom'])
-    dots.inputs['Radius'].default_value = state.marker_size
+    node_socket(dots.inputs, 'Radius').default_value = state.marker_size
     _focus_visibility(marker, True)
     label.data.body = point_label(analysis, row, state.aim_numeric_key)
     label.data.size = state.marker_size * 2
@@ -327,16 +329,16 @@ class QCBLENDER_OT_apply_result_filter(bpy.types.Operator):
                         selected.select_set(False)
                     target.select_set(True)
                     context.view_layer.objects.active = target
-                    self.report({'INFO'}, f"Located NOCV pair {row['pair']} {row['spin']}")
+                    self.report({'INFO'}, iface('Located NOCV pair {value0} {value1}', value0=row['pair'], value1=row['spin']))
                 else:
-                    self.report({'INFO'}, 'No existing NOCV field view matches this pair and spin')
+                    self.report({'INFO'}, error_text('No existing NOCV field view matches this pair and spin'))
             _save_state(obj, meta, result)
             if result.get('type_mismatch'):
-                self.report({'INFO'}, 'Selected type belongs to another display layer; this layer has no matches')
+                self.report({'INFO'}, error_text('Selected type belongs to another display layer; this layer has no matches'))
             else:
-                self.report({'INFO'}, 'Result display updated; source records unchanged')
+                self.report({'INFO'}, error_text('Result display updated; source records unchanged'))
         except (ValueError, OSError, KeyError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -362,9 +364,9 @@ class QCBLENDER_OT_filter_result_scatter(bpy.types.Operator):
             _range(parameters['y_min'], parameters['y_max'], 'Y')
             _save_state(obj, meta, parameters)
         except (ValueError, OSError, KeyError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
-        self.report({'INFO'}, 'Paired field filter saved for data export')
+        self.report({'INFO'}, error_text('Paired field filter saved for data export'))
         return {'FINISHED'}
 
 
@@ -388,21 +390,21 @@ class QCBLENDER_PT_result_browser(bpy.types.Panel):
         from .capabilities import action_button, record
         from .source_browser import cached_metadata
 
-        obj, layout = context.object, self.layout
+        obj, layout = context.object, ui_layout(self.layout)
         state = obj.qc_result_browser
         meta = cached_metadata(obj)
         if not meta or meta.get('error'):
-            layout.label(text=meta.get('error', 'Refresh Sources to browse records'), icon='ERROR')
+            layout.label(text=error_text(meta.get('error', 'Refresh Sources to browse records')), icon='ERROR')
             return
         analysis = meta.get('analysis', {})
         role = obj.get('qc_analysis_role', obj.get('qc_view_kind'))
         if role == 'aim_paths':
             paths = analysis.get('paths', [])
-            layout.label(text=f'{len(paths)} recorded AIM paths')
+            layout.label(text=iface('{value0} recorded AIM paths', value0=len(paths)))
             layout.prop(state, 'row_index', text='Path (1-based)')
             if state.row_index <= len(paths):
                 path = paths[state.row_index - 1]
-                layout.label(text=f"Source residue {path['residue']} | {len(path['points_angstrom'])} points")
+                layout.label(text=iface('Source residue {value0} | {value1} points', value0=path['residue'], value1=len(path['points_angstrom'])))
             layout.label(text='Path geometry and visibility use the native object controls')
             return
         saved = record(obj, 'qc_result_displaystate')
@@ -425,7 +427,8 @@ class QCBLENDER_PT_result_browser(bpy.types.Panel):
                 layout.label(text='This table has no recorded Begin/End bounds', icon='ERROR')
             label = ('Recorded interval overlap' if state.area_range_mode == 'source_interval'
                      else 'Center')
-            _draw_range(layout, state, 'value', f"{label} [{analysis.get('distribution_center_unit', 'unit unknown')}]")
+            _draw_range(layout, state, 'value', iface('{label} [{unit}]', label=iface(label),
+                        unit=analysis.get('distribution_center_unit') or iface('Unit unknown')))
             if state.area_range_mode == 'source_interval':
                 layout.label(text='Whole source bins are selected; areas are not split')
         elif role == 'nbo':
@@ -440,17 +443,17 @@ class QCBLENDER_PT_result_browser(bpy.types.Panel):
             layout.prop(state, 'spin')
             layout.prop(state, 'eigen_side')
             _draw_range(layout, state, 'eigen', 'Eigenvalue')
-            _draw_range(layout, state, 'value', f"Pair energy [{analysis.get('energy_unit', 'unit unknown')}]")
+            _draw_range(layout, state, 'value', iface('Pair energy [{value0}]', value0=analysis.get('energy_unit') or iface('Unit unknown')))
             layout.prop(state, 'sort_by')
         row = layout.row()
         row.enabled = bool(match_count(state))
         row.prop(state, 'row_index')
-        action_button(layout, context, 'result_filter', 'qcblender.apply_result_filter', '应用筛选')
+        action_button(layout, context, 'result_filter', 'qcblender.apply_result_filter', 'Apply Filter')
         if saved:
             if role == 'esp_area':
-                layout.label(text=f"Applied selection: {saved.get('selection_mode', 'center')}")
-                layout.label(text=f"Total {saved.get('total_area', 0):.6g} | displayed {saved.get('displayed_area', 0):.6g} {analysis.get('area_unit', '')}")
-                layout.label(text=f"Source percentages shown: {saved.get('displayed_source_percentage', 0):.6g}%")
+                layout.label(text=iface('Applied selection: {value0}', value0=saved.get('selection_mode', 'center')))
+                layout.label(text=iface('Total {value0:.6g} | displayed {value1:.6g} {value2}', value0=saved.get('total_area', 0), value1=saved.get('displayed_area', 0), value2=analysis.get('area_unit', '')))
+                layout.label(text=iface('Source percentages shown: {value0:.6g}%', value0=saved.get('displayed_source_percentage', 0)))
                 indexes = saved.get('indexes', [])
                 if indexes and state.row_index <= len(indexes):
                     row = analysis['area_bins'][indexes[state.row_index - 1]]
@@ -458,21 +461,21 @@ class QCBLENDER_PT_result_browser(bpy.types.Panel):
                         value = row.get(field)
                         layout.label(text=f'{field}: {value if value is not None else "not recorded"}')
             elif role == 'nbo':
-                layout.label(text=f"Orbitals {len(saved.get('orbitals', []))} | E(2) {len(saved.get('interactions', []))}")
-                layout.label(text=f"Applied order: {saved.get('orbital_sort', 'source')} / {saved.get('interaction_sort', 'source')}")
+                layout.label(text=iface('Orbitals {value0} | E(2) {value1}', value0=len(saved.get('orbitals', [])), value1=len(saved.get('interactions', []))))
+                layout.label(text=iface('Applied order: {value0} / {value1}', value0=saved.get('orbital_sort', 'source'), value1=saved.get('interaction_sort', 'source')))
                 orbitals, interactions = saved.get('orbitals', []), saved.get('interactions', [])
                 if orbitals and state.row_index <= len(orbitals):
                     row = analysis['orbitals'][orbitals[state.row_index - 1]]
-                    layout.label(text=f"Orbital {row['number']} {row['type']} | occupancy {row['occupancy']:.6g}")
+                    layout.label(text=iface('Orbital {value0} {value1} | occupancy {value2:.6g}', value0=row['number'], value1=row['type'], value2=row['occupancy']))
                     _draw_source_record(layout, row)
                 if interactions and state.row_index <= len(interactions):
                     row = analysis['interactions'][interactions[state.row_index - 1]]
-                    layout.label(text=f"{row['donor']} → {row['acceptor']} | E(2) {row['e2_kcal_mol']:.6g} kcal/mol")
+                    layout.label(text=iface('{value0} → {value1} | E(2) {value2:.6g} kcal/mol', value0=row['donor'], value1=row['acceptor'], value2=row['e2_kcal_mol']))
                     _draw_source_record(layout, row)
             else:
                 if saved.get('type_mismatch'):
                     layout.label(text='Selected type belongs to another display layer', icon='INFO')
-                layout.label(text=f"Matching records: {len(saved.get('indexes', []))}")
+                layout.label(text=iface('Matching records: {value0}', value0=len(saved.get('indexes', []))))
                 indexes = saved.get('indexes', [])
                 if indexes and state.row_index <= len(indexes):
                     key = 'pairs' if role == 'ets_nocv' else 'extrema' if role.startswith('esp_') else 'critical_points'
@@ -488,11 +491,11 @@ class QCBLENDER_PT_result_browser(bpy.types.Panel):
 
 def _draw_source_record(layout, row):
     if 'source_line' in row:
-        layout.label(text=f"Source line {row['source_line']}")
+        layout.label(text=iface('Source line {value0}', value0=row['source_line']))
     if 'raw_line' in row:
         raw = row['raw_line']
         for offset in range(0, len(raw), 72):
-            layout.label(text=raw[offset:offset + 72])
+            layout.label(text=raw[offset:offset + 72], translate=False)
 
 
 def _draw_range(layout, state, prefix, label):

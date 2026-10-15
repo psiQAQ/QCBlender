@@ -1,4 +1,5 @@
 """User initiated exports of scientific data to an explicit result directory."""
+from ..i18n import enum_items, error_text, iface, ui_layout
 from pathlib import Path
 import uuid
 from functools import lru_cache, partial
@@ -24,7 +25,7 @@ def resolve_output_directory(context, override=''):
 
 @lru_cache(maxsize=32)
 def _enum_items(kinds):
-    return [(kind, '当前视图参数摘要' if kind == 'SUMMARY' else kind,
+    return [(kind, 'Current View Parameter Summary' if kind == 'SUMMARY' else kind,
              'Export view-summary.md and metadata.json' if kind == 'SUMMARY' else 'Export original scientific records')
             for kind in kinds]
 
@@ -53,7 +54,7 @@ def export_choices(self, context):
             from .source_browser import source_object
             if source_object(context.object).get('qc_dataset'):
                 kinds.append('SUMMARY')
-        return _enum_items(tuple(kinds))
+        return enum_items(_enum_items(tuple(kinds)))
     except (ValueError, OSError, KeyError, TypeError, AttributeError):
         return []
 
@@ -84,21 +85,20 @@ class QCBLENDER_OT_export_data(AsyncOperation, bpy.types.Operator):
                 raise ValueError('This Dataset has no supported export records')
             self.kind = choices[0][0]
         except (ValueError, OSError, KeyError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return context.window_manager.invoke_props_dialog(self, width=560)
 
     def draw(self, context):
-        self.layout.prop(self, 'directory')
-        self.layout.prop(self, 'kind')
+        ui_layout(self.layout).prop(self, 'directory')
+        ui_layout(self.layout).prop(self, 'kind')
         if self.kind in ('paired', 'ESP_AREA'):
-            self.layout.prop(self, 'scope')
-        self.layout.label(text='Creates a unique result folder containing ' +
-                               ('view-summary.md and metadata.json' if self.kind == 'SUMMARY' else 'CSV and metadata.json'))
+            ui_layout(self.layout).prop(self, 'scope')
+        ui_layout(self.layout).label(text=iface('Creates a unique result folder containing {value0}', value0='view-summary.md and metadata.json' if self.kind == 'SUMMARY' else 'CSV and metadata.json'))
         if self.kind == 'SUMMARY':
-            self.layout.label(text='Captures stored node/material inputs; unresolved records are partial/unverified')
+            ui_layout(self.layout).label(text='Captures stored node/material inputs; unresolved records are partial/unverified')
         if self.kind == 'paired':
-            self.layout.label(text='Exports every matching valid voxel; Esc cancels while running')
+            ui_layout(self.layout).label(text='Exports every matching valid voxel; Esc cancels while running')
 
     def begin(self, context):
         from .source_browser import read_metadata, source_object
@@ -132,7 +132,7 @@ class QCBLENDER_OT_export_data(AsyncOperation, bpy.types.Operator):
         return job
 
     def accept(self, context, report):
-        self.report({'INFO'}, 'Data exported: ' + report['directory'])
+        self.report({'INFO'}, iface('Data exported: {value0}', value0=report['directory']))
 
     def cleanup_export(self):
         if hasattr(self, '_export_token'):

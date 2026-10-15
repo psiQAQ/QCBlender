@@ -1,3 +1,4 @@
+from ..i18n import error_text
 import json
 
 import bpy
@@ -180,10 +181,10 @@ class QCBLENDER_OT_associate(bpy.types.Operator):
             transform = Matrix(result['rotation_rows']).transposed().to_4x4()
             transform.translation = result['translation_angstrom']
         except (ValueError, OSError, KeyError, TypeError, np.linalg.LinAlgError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         moving.matrix_world = reference.matrix_world @ transform
         moving['qc_association'] = serialized
         moving.qc_settings.association_reference = reference
-        self.report({'INFO'}, 'Atom order and geometry matched; each source retains its own properties')
+        self.report({'INFO'}, error_text('Atom order and geometry matched; each source retains its own properties'))
         return {'FINISHED'}

@@ -1,4 +1,6 @@
 """On-demand provenance inspection; drawing never reads scientific arrays."""
+from ..i18n import enum_items, error_text, iface, ui_layout
+from .node_identity import label_role, node_socket
 import hashlib
 import json
 import textwrap
@@ -108,30 +110,30 @@ def source_group(obj):
         try:
             field = object_record(obj, 'qc_field')
         except (ValueError, TypeError):
-            return (obj.name, 'invalid-field'), '关联无法读取'
+            return (obj.name, 'invalid-field'), iface('Binding unreadable')
         if field.get('role') == 'color':
             source = meta.get('analysis', {}).get('color_source', {})
             if not source:
-                return (obj.name, 'unknown-color-source'), '着色来源未记录；请刷新'
+                return (obj.name, 'unknown-color-source'), iface('Color source is not recorded; refresh sources')
     sha = source.get('sha256') or obj.get('qc_source_sha256', '')
     if not isinstance(sha, str):
         sha = ''
     job = meta.get('selected_job', obj.get('qc_source_job', -1))
     if type(job) is not int:
         job = -1
-    name = source.get('filename', obj.get('qc_source_filename', '未记录'))
+    name = source.get('filename', obj.get('qc_source_filename', iface('Not recorded')))
     # Unknown source identities stay separate, rather than merging by filename.
     identity = job if ('source' in meta or 'qc_source_job' in obj) else binding_key(obj)[0]
     key = (sha or obj.name, identity)
-    label = f"{name} | {sha[:12] or '未记录'}"
+    label = f"{name} | {sha[:12] or iface('Not recorded')}"
     if job != -1:
-        label += f' | Job {job+1}'
+        label += ' | ' + iface('Job {number}', number=job + 1)
     if obj.get('qc_trajectory_frame'):
         frame = obj['qc_trajectory_frame']
         key = (*key, frame)
-        label += f' | XYZ Frame {frame}'
+        label += ' | ' + iface('XYZ Frame {number}', number=frame)
     if 'error' in meta:
-        label += ' | 关联无法读取'
+        label += ' | ' + iface('Binding unreadable')
     return key, label
 
 
@@ -170,29 +172,29 @@ def color_mapping(obj):
               and n.node_tree and n.node_tree.get('qc_asset_id') == 'qc.color_scalar.v2']
     if len(colors) != 1:
         raise ValueError('Color mapping node is missing or ambiguous')
-    links = colors[0].inputs['Value'].links
+    links = node_socket(colors[0].inputs, 'Value').links
     if len(links) != 1:
         raise ValueError('Color sampling link is missing')
     sampler = links[0].from_node
     if sampler.bl_idname != 'GeometryNodeGroup' or not sampler.node_tree or sampler.node_tree.get('qc_asset_id') != 'qc.sample.v1':
         raise ValueError('Color sampling source is not a supported scalar sampler')
-    if links[0].from_socket != sampler.outputs['Value'] or len(colors[0].inputs['Geometry'].links) != 1:
+    if links[0].from_socket != node_socket(sampler.outputs, 'Value') or len(node_socket(colors[0].inputs, 'Geometry').links) != 1:
         raise ValueError('Color sampling or receiving geometry was customized')
-    valid = colors[0].inputs['Valid'].links
-    if len(valid) != 1 or valid[0].from_node != sampler or valid[0].from_socket != sampler.outputs['Valid']:
+    valid = node_socket(colors[0].inputs, 'Valid').links
+    if len(valid) != 1 or valid[0].from_node != sampler or valid[0].from_socket != node_socket(sampler.outputs, 'Valid'):
         raise ValueError('Color validity link is not the supported scalar sampler')
-    links = sampler.inputs['Volume'].links
-    if len(links) != 1 or links[0].from_node.bl_idname != 'GeometryNodeObjectInfo' or links[0].from_socket != links[0].from_node.outputs['Geometry']:
+    links = node_socket(sampler.inputs, 'Volume').links
+    if len(links) != 1 or links[0].from_node.bl_idname != 'GeometryNodeObjectInfo' or links[0].from_socket != node_socket(links[0].from_node.outputs, 'Geometry'):
         raise ValueError('Color volume node link is missing')
     info = links[0].from_node
-    if info.transform_space != 'RELATIVE' or info.inputs['Object'].default_value is None:
+    if info.transform_space != 'RELATIVE' or node_socket(info.inputs, 'Object').default_value is None:
         raise ValueError('Color volume object is missing')
-    position = sampler.inputs['Position'].links
+    position = node_socket(sampler.inputs, 'Position').links
     if (len(position) != 1 or position[0].from_node.bl_idname != 'GeometryNodeInputPosition'
-            or position[0].from_socket != position[0].from_node.outputs['Position']):
+            or position[0].from_socket != node_socket(position[0].from_node.outputs, 'Position')):
         raise ValueError('Color sampling position is unsupported')
     output = geometry_output(tree)
-    geometry_links = colors[0].outputs['Geometry'].links
+    geometry_links = node_socket(colors[0].outputs, 'Geometry').links
     joins = [link.to_node for link in geometry_links
              if link.to_node.bl_idname == 'GeometryNodeJoinGeometry']
     if len(geometry_links) != 1 or len(joins) != 1 or len(output.links) != 1:
@@ -204,21 +206,21 @@ def color_mapping(obj):
     clip = clip_nodes[0] if clip_nodes else None
     if clip:
         controls = ('Plane Enabled', 'Plane Origin', 'Plane Normal', 'Box Enabled', 'Box Minimum', 'Box Maximum')
-        if any(len(clip.inputs[name].links) != 1 or
-               clip.inputs[name].links[0].from_node.type != 'GROUP_INPUT' or
-               clip.inputs[name].links[0].from_socket != clip.inputs[name].links[0].from_node.outputs[name]
+        if any(len(node_socket(clip.inputs, name).links) != 1 or
+               node_socket(clip.inputs, name).links[0].from_node.type != 'GROUP_INPUT' or
+               node_socket(clip.inputs, name).links[0].from_socket != node_socket(node_socket(clip.inputs, name).links[0].from_node.outputs, name)
                for name in controls):
             raise ValueError('Clipping controls differ from the supported QC graph')
-        if len(clip.inputs['Geometry'].links) != 1 or len(clip.outputs['Geometry'].links) != 1:
+        if len(node_socket(clip.inputs, 'Geometry').links) != 1 or len(node_socket(clip.outputs, 'Geometry').links) != 1:
             raise ValueError('Clipping geometry is disconnected or ambiguous')
-    join_output = joins[0].outputs['Geometry']
+    join_output = node_socket(joins[0].outputs, 'Geometry')
     displayed = output.links[0].from_socket
-    color_input = colors[0].inputs['Geometry'].links[0].from_socket
+    color_input = node_socket(colors[0].inputs, 'Geometry').links[0].from_socket
     if displayed != join_output:
-        if (clip is None or displayed != clip.outputs['Geometry']
-                or clip.inputs['Geometry'].links[0].from_socket != join_output):
+        if (clip is None or displayed != node_socket(clip.outputs, 'Geometry')
+                or node_socket(clip.inputs, 'Geometry').links[0].from_socket != join_output):
             raise ValueError('Color geometry has an unsupported node after the legend')
-    elif clip and color_input != clip.outputs['Geometry']:
+    elif clip and color_input != node_socket(clip.outputs, 'Geometry'):
         raise ValueError('Clipping node is not in the supported color geometry chain')
     title_path = [('Curve Instances', 'GeometryNodeRealizeInstances'),
                   ('Geometry', 'GeometryNodeFillCurve'),
@@ -230,11 +232,11 @@ def color_mapping(obj):
                   ('Output', 'GeometryNodeJoinGeometry')]
     titles = []
     for title in tree.nodes:
-        if title.bl_idname != 'GeometryNodeStringToCurves' or title.label != 'QC Legend Title' or title.inputs['String'].links:
+        if title.bl_idname != 'GeometryNodeStringToCurves' or label_role(title) != 'QC Legend Title' or node_socket(title.inputs, 'String').links:
             continue
         node = title
         for output_name, next_type in title_path:
-            links = node.outputs[output_name].links
+            links = node_socket(node.outputs, output_name).links
             if len(links) != 1 or links[0].to_node.bl_idname != next_type:
                 break
             node = links[0].to_node
@@ -248,7 +250,7 @@ def color_mapping(obj):
 
 def mapped_field(obj):
     """Validate the recorded field as well as the mapping graph before using it."""
-    volume = color_mapping(obj)[0].inputs['Object'].default_value
+    volume = node_socket(color_mapping(obj)[0].inputs, 'Object').default_value
     field = object_record(volume, 'qc_field')
     meta = read_metadata(volume)
     recorded = object_record(obj, 'qc_color_source')
@@ -389,7 +391,8 @@ def detail_choices(details):
 
 
 def source_detail_choices(self, context):
-    return detail_choices(self.details)
+    return enum_items([(identifier, iface('{number}. {title}', number=index + 1, title=iface(title)), title)
+                       for index, (identifier, label, title) in enumerate(detail_choices(self.details))])
 
 
 class QCBLENDER_OT_source_details(bpy.types.Operator):
@@ -407,22 +410,24 @@ class QCBLENDER_OT_source_details(bpy.types.Operator):
             self.details = json.dumps(source_details(context.object), ensure_ascii=False)
             self.section = '0'
         except (ValueError, KeyError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return context.window_manager.invoke_props_dialog(self, width=740)
 
     def draw(self, context):
-        self.layout.prop(self, 'section')
+        ui_layout(self.layout).prop(self, 'section')
         title, record = json.loads(self.details)[int(self.section)]
-        box = self.layout.box()
+        box = ui_layout(self.layout).box()
         box.label(text=title)
         for key, value in record.items():
             if key == 'selected_job' and isinstance(value, int):
                 key, value = 'calculation_number', value + 1
             if value is None or value == '':
-                value = '未记录'
+                value = iface('Not recorded')
+            if key == 'error':
+                value = error_text(value)
             for line in textwrap.wrap(f'{key}: {value}', width=100):
-                box.label(text=line)
+                box.label(text=line, translate=False)
 
     def execute(self, context):
         return {'FINISHED'}

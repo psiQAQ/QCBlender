@@ -1,4 +1,6 @@
 """Scene display layers use native objects, node inputs and Blender undo."""
+from .node_identity import adopt_generated_copy, socket_name
+from ..i18n import error_text, ui_layout
 import json
 
 import bpy
@@ -94,7 +96,7 @@ class QCBLENDER_OT_hydrogen_visibility(bpy.types.Operator):
         return self.execute(context)
 
     def draw(self, context):
-        self.layout.prop(self, 'keep')
+        ui_layout(self.layout).prop(self, 'keep')
 
     def execute(self, context):
         from ..data import load_dataset
@@ -116,7 +118,7 @@ class QCBLENDER_OT_hydrogen_visibility(bpy.types.Operator):
             obj['qc_hydrogen_visibility'] = self.mode
             obj['qc_hydrogen_keep'] = ','.join(map(str, sorted(keep)))
         except (ValueError, OSError, KeyError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -147,6 +149,7 @@ def copy_layer(source, collection):
             continue
         modifier.node_group = modifier.node_group.copy()
         tree = modifier.node_group
+        adopt_generated_copy(tree)
         for item in tree.interface.items_tree:
             if item.item_type == 'SOCKET' and item.socket_type == 'NodeSocketMaterial':
                 if item.default_value:
@@ -209,7 +212,7 @@ class QCBLENDER_OT_layer_action(bpy.types.Operator):
         layers = display_layers(context.scene)
         obj = context.scene.objects.get(self.target)
         if obj not in layers:
-            self.report({'ERROR'}, 'Display layer no longer exists in this scene')
+            self.report({'ERROR'}, error_text('Display layer no longer exists in this scene'))
             return {'CANCELLED'}
         if self.action == 'SELECT':
             activate(context, obj)
@@ -221,12 +224,12 @@ class QCBLENDER_OT_layer_action(bpy.types.Operator):
             sync_chart_children(obj)
         elif self.action == 'DUPLICATE':
             if obj.get('qc_irc'):
-                self.report({'ERROR'}, 'Duplicate the source FCHK manifest to create another IRC path')
+                self.report({'ERROR'}, error_text('Duplicate the source FCHK manifest to create another IRC path'))
                 return {'CANCELLED'}
             try:
                 copied = copy_layer(obj, context.collection)
             except (ValueError, KeyError, OSError, TypeError) as error:
-                self.report({'ERROR'}, str(error))
+                self.report({'ERROR'}, error_text(error))
                 return {'CANCELLED'}
             layers.insert(layers.index(obj) + 1, copied)
             for index, layer in enumerate(layers):
@@ -284,7 +287,7 @@ class QCBLENDER_OT_add_surface(bpy.types.Operator):
             index = next(i for i, f in enumerate(data.metadata['fields']) if f['array'] == field['array'])
             obj = field_view(directory, source.parent, index)
         except (ValueError, OSError, KeyError, StopIteration) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         obj.matrix_world = source.matrix_world.copy()
         obj.qc_settings.volume.matrix_world = source.qc_settings.volume.matrix_world.copy()
@@ -355,13 +358,13 @@ class QCBLENDER_OT_new_current_view(bpy.types.Operator):
             obj.matrix_world = source.matrix_world.copy()
             # Only transfer matching public parameters, never replace either graph.
             old, new = view_modifier(source), view_modifier(obj)
-            values = {s.name: old.get(s.identifier, s.default_value) for s in old.node_group.interface.items_tree
+            values = {socket_name(s): old.get(s.identifier, s.default_value) for s in old.node_group.interface.items_tree
                       if s.item_type == 'SOCKET' and s.in_out == 'INPUT' and hasattr(s, 'default_value')}
             for item in new.node_group.interface.items_tree:
-                if item.item_type == 'SOCKET' and item.in_out == 'INPUT' and item.name in values:
+                if item.item_type == 'SOCKET' and item.in_out == 'INPUT' and socket_name(item) in values:
                     if kind == 'fog' and item.socket_type == 'NodeSocketMaterial':
                         continue  # Keep the current transfer graph; the original material remains on the original view.
-                    value = values[item.name]
+                    value = values[socket_name(item)]
                     if item.socket_type == 'NodeSocketMaterial' and value:
                         value = value.copy()
                     new[item.identifier] = value
@@ -371,7 +374,7 @@ class QCBLENDER_OT_new_current_view(bpy.types.Operator):
                 for item in set(context.scene.objects) - before:
                     bpy.data.objects.remove(item, do_unlink=True)
                 activate(context, source)
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -385,7 +388,7 @@ class QCBLENDER_PT_layers(bpy.types.Panel):
     bl_order = 2
 
     def draw(self, context):
-        layout = self.layout
+        layout = ui_layout(self.layout)
         from .source_browser import source_group
         row = layout.row(align=True)
         row.operator('qcblender.refresh_sources', text='Refresh Sources', icon='FILE_REFRESH')
@@ -395,7 +398,7 @@ class QCBLENDER_PT_layers(bpy.types.Panel):
             key, label = source_group(obj)
             groups.setdefault(key, (label, []))[1].append(obj)
         for label, objects in groups.values():
-            layout.label(text=label, icon='FILE')
+            layout.label(text=label, icon='FILE', translate=False)
             for obj in objects:
                 draw_layer_row(layout, context, obj)
         obj = context.object
@@ -405,7 +408,7 @@ class QCBLENDER_PT_layers(bpy.types.Panel):
                                        ('UP', '', 'TRIA_UP'), ('DOWN', '', 'TRIA_DOWN')]:
                 operator = row.operator('qcblender.layer_action', text=text, icon=icon)
                 operator.target, operator.action = obj.name, action
-        layout.operator('qcblender.open_properties', text='查看对象属性', icon='PROPERTIES').editor = 'OBJECT'
+        layout.operator('qcblender.open_properties', text='View Object Properties', icon='PROPERTIES').editor = 'OBJECT'
 
 
 def draw_layer_row(layout, context, obj):
@@ -413,7 +416,7 @@ def draw_layer_row(layout, context, obj):
     select = row.operator('qcblender.layer_action', text='', icon='RESTRICT_SELECT_OFF',
                           depress=obj == context.object)
     select.target, select.action = obj.name, 'SELECT'
-    row.label(text=obj.name)
+    row.label(text=obj.name, translate=False)
     operator = row.operator('qcblender.layer_action', text='', icon='HIDE_ON' if obj.hide_get() else 'HIDE_OFF')
     operator.target, operator.action = obj.name, 'VISIBILITY'
     operator = row.operator('qcblender.layer_action', text='',

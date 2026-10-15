@@ -1,4 +1,5 @@
 """Workflow actions in the sidebar; persistent controls in native Properties."""
+from ..i18n import error_text, iface, ui_layout
 import json
 import textwrap
 
@@ -15,47 +16,48 @@ def is_qc(context):
 
 
 def summary(layout, obj):
-    layout.label(text=obj.name, icon='OBJECT_DATA')
-    layout.label(text='来源: ' + obj.get('qc_source_filename', '未记录'))
+    layout = ui_layout(layout)
+    layout.label(text=obj.name, icon='OBJECT_DATA', translate=False)
+    layout.label(text=iface('Source: {value0}', value0=obj.get('qc_source_filename', iface('Not recorded'))))
     if obj.get('qc_source_job', -1) >= 0:
-        layout.label(text=f"计算段 {obj['qc_source_job'] + 1}")
+        layout.label(text=iface('Calculation {value0}', value0=obj['qc_source_job'] + 1))
     field = record(obj, 'qc_field')
     if field:
-        layout.label(text=f"{field.get('quantity', '未记录')} [{field.get('unit', '未记录')}]")
-        layout.label(text='网格: ' + ' × '.join(map(str, field.get('shape', []))))
+        layout.label(text=f"{field.get('quantity', iface('Not recorded'))} [{field.get('unit', iface('Not recorded'))}]")
+        layout.label(text=iface('Grid: {value0}', value0=' × '.join(map(str, field.get('shape', [])))))
     color = record(obj, 'qc_color_source')
     if color:
-        layout.label(text=f"着色: {color.get('quantity', '未记录')} [{color.get('unit', '未记录')}]")
+        layout.label(text=iface('Color: {value0} [{value1}]', value0=color.get('quantity', iface('Not recorded')), value1=color.get('unit', iface('Not recorded'))))
     if obj.get('qc_optimization_record'):
         step = record(obj, 'qc_optimization_record')
-        layout.label(text=f"优化步 {obj.get('qc_optimization_step')} / {obj.get('qc_optimization_count')}")
+        layout.label(text=iface('Optimization Step {value0} / {value1}', value0=obj.get('qc_optimization_step'), value1=obj.get('qc_optimization_count')))
         if step.get('energy'):
-            layout.label(text=f"{step['energy']['value_hartree']:.10f} Hartree")
+            layout.label(text=iface('{value0:.10f} Hartree', value0=step['energy']['value_hartree']))
     if obj.get('qc_irc'):
         step = record(obj, 'qc_irc_record')
-        layout.label(text=f"IRC 步 {obj.get('qc_irc_step')} / {step.get('count', '未记录')}")
+        layout.label(text=iface('IRC Step {value0} / {value1}', value0=obj.get('qc_irc_step'), value1=step.get('count', iface('Not recorded'))))
     if obj.get('qc_trajectory_frame'):
-        layout.label(text=f"XYZ 帧 {obj['qc_trajectory_frame']} / {obj['qc_trajectory_count']}")
+        layout.label(text=iface('XYZ Frame {value0} / {value1}', value0=obj['qc_trajectory_frame'], value1=obj['qc_trajectory_count']))
     if obj.get('qc_mode_frequency_cm-1') is not None:
-        layout.label(text=f"振动 {obj.get('qc_mode_source_number')}: {obj['qc_mode_frequency_cm-1']:.4f} cm⁻¹")
+        layout.label(text=iface('Vibration {value0}: {value1:.4f} cm⁻¹', value0=obj.get('qc_mode_source_number'), value1=obj['qc_mode_frequency_cm-1']))
     probe = record(obj, 'qc_probe')
     if probe.get('value') is not None:
-        layout.label(text=f"最近采样: {probe['value']:.8g} {probe.get('unit', '')}")
+        layout.label(text=iface('Latest sample: {value0:.8g} {value1}', value0=probe['value'], value1=probe.get('unit', '')))
 
 
 class QCBLENDER_OT_open_properties(bpy.types.Operator):
     bl_idname = 'qcblender.open_properties'
     bl_label = 'Open QC Properties'
-    editor: EnumProperty(items=[('OBJECT', '对象', ''), ('MATERIAL', '材质', ''),
-                               ('RENDER', '渲染', ''), ('OUTPUT', '输出', '')])
+    editor: EnumProperty(items=[('OBJECT', 'Object', ''), ('MATERIAL', 'Material', ''),
+                               ('RENDER', 'Render', ''), ('OUTPUT', 'Output', '')])
 
     def execute(self, context):
         if self.editor in ('OBJECT', 'MATERIAL') and context.object is None:
-            self.report({'WARNING'}, '请先选择一个对象')
+            self.report({'WARNING'}, error_text('Select an object first'))
             return {'CANCELLED'}
         areas = [a for a in context.screen.areas if a.type == 'PROPERTIES']
         if not areas:
-            self.report({'ERROR'}, '请先将一个编辑器切换为属性编辑器')
+            self.report({'ERROR'}, error_text('Switch an editor to the Properties Editor first'))
             return {'CANCELLED'}
         area = areas[0]
         if self.editor in ('OBJECT', 'MATERIAL'):
@@ -67,7 +69,7 @@ class QCBLENDER_OT_open_properties(bpy.types.Operator):
 
 
 class QCBLENDER_PT_main(bpy.types.Panel):
-    bl_label = '工作流'
+    bl_label = 'Workflow'
     bl_idname = 'QCBLENDER_PT_main'
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
@@ -75,16 +77,16 @@ class QCBLENDER_PT_main(bpy.types.Panel):
     bl_order = 0
 
     def draw(self, context):
-        layout = self.layout
-        layout.operator('qcblender.import_calculation', text='导入 Gaussian / Cube / XYZ', icon='IMPORT')
-        layout.operator('qcblender.import_irc_path', text='导入 IRC 路径')
-        action_button(layout, context, 'generate', 'qcblender.generate_field', '生成量子化学场', 'VOLUME_DATA')
+        layout = ui_layout(self.layout)
+        layout.operator('qcblender.import_calculation', text='Import Gaussian / Cube / XYZ', icon='IMPORT')
+        layout.operator('qcblender.import_irc_path', text='Import IRC Path')
+        action_button(layout, context, 'generate', 'qcblender.generate_field', 'Generate Quantum Field', 'VOLUME_DATA')
         if is_qc(context):
-            layout.operator('qcblender.open_properties', text='对象属性与显示参数', icon='PROPERTIES').editor = 'OBJECT'
+            layout.operator('qcblender.open_properties', text='Object Properties and Display Parameters', icon='PROPERTIES').editor = 'OBJECT'
 
 
 class QCBLENDER_PT_dataset(bpy.types.Panel):
-    bl_label = '数据集与数值摘要'
+    bl_label = 'Dataset and Numerical Summary'
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'QCBlender'
@@ -96,14 +98,14 @@ class QCBLENDER_PT_dataset(bpy.types.Panel):
         return is_qc(context)
 
     def draw(self, context):
-        layout = self.layout
+        layout = ui_layout(self.layout)
         summary(layout, context.object)
-        layout.operator('qcblender.source_details', text='查看完整来源', icon='INFO')
-        layout.operator('qcblender.refresh_sources', text='刷新来源', icon='FILE_REFRESH')
+        layout.operator('qcblender.source_details', text='View Full Source', icon='INFO')
+        layout.operator('qcblender.refresh_sources', text='Refresh Sources', icon='FILE_REFRESH')
 
 
 class QCBLENDER_PT_create(bpy.types.Panel):
-    bl_label = '创建视图与检查工具'
+    bl_label = 'Create Views and Inspection Tools'
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'QCBlender'
@@ -115,31 +117,31 @@ class QCBLENDER_PT_create(bpy.types.Panel):
         return is_qc(context)
 
     def draw(self, context):
-        layout, obj = self.layout, context.object
+        layout, obj = ui_layout(self.layout), context.object
         for action, operator, text in [
-            ('surface', 'qcblender.add_surface_layer', '创建等值面层'),
-            ('slice', 'qcblender.create_slice', '创建切片'),
-            ('fog', 'qcblender.create_fog', '创建体积雾'),
-            ('clip', 'qcblender.add_clipping', '添加裁剪控件'),
-            ('probe', 'qcblender.probe_field', '读取游标处场值'),
-            ('profile_start', 'qcblender.mark_profile_start', '记录剖面起点'),
-            ('profile', 'qcblender.create_line_profile', '采样线剖面数据'),
-            ('dipole', 'qcblender.show_dipole', '创建偶极矢量')]:
+            ('surface', 'qcblender.add_surface_layer', 'Create Isosurface Layer'),
+            ('slice', 'qcblender.create_slice', 'Create Slice'),
+            ('fog', 'qcblender.create_fog', 'Create Volume Fog'),
+            ('clip', 'qcblender.add_clipping', 'Add Clipping Controls'),
+            ('probe', 'qcblender.probe_field', 'Read Field Value at Cursor'),
+            ('profile_start', 'qcblender.mark_profile_start', 'Mark Profile Start'),
+            ('profile', 'qcblender.create_line_profile', 'Sample Line Profile Data'),
+            ('dipole', 'qcblender.show_dipole', 'Create Dipole Vector')]:
             action_button(layout, context, action, operator, text)
         draw_probe_actions(layout, context)
         if obj.get('qc_view_kind') == 'atoms':
-            layout.operator('qcblender.local_selection_layer', text='创建局部显示层')
-            for kind, title in [('ATOM', '编号标注'), ('DISTANCE', '距离标注'),
-                                ('ANGLE', '角度标注'), ('DIHEDRAL', '二面角标注')]:
-                layout.operator('qcblender.add_annotation', text='创建' + title).kind = kind
+            layout.operator('qcblender.local_selection_layer', text='Create Local Display Layer')
+            for kind, title in [('ATOM', 'Atom Number Annotation'), ('DISTANCE', 'Distance Annotation'),
+                                ('ANGLE', 'Angle Annotation'), ('DIHEDRAL', 'Dihedral Annotation')]:
+                layout.operator('qcblender.add_annotation', text=iface('Create {value0}', value0=iface(title))).kind = kind
             if obj.get('qc_optimization_available') and not obj.get('qc_optimization_step'):
-                layout.operator('qcblender.optimization_view', text='创建优化轨迹视图')
-        layout.operator('qcblender.new_current_view', text='创建当前版本视图')
-        layout.operator('qcblender.create_framed_camera', text='创建取景相机', icon='CAMERA_DATA')
+                layout.operator('qcblender.optimization_view', text='Create Optimization Trajectory View')
+        layout.operator('qcblender.new_current_view', text='Create Current-Version View')
+        layout.operator('qcblender.create_framed_camera', text='Create Framed Camera', icon='CAMERA_DATA')
 
 
 class QCBLENDER_PT_external_import(bpy.types.Panel):
-    bl_label = '导入外部结果'
+    bl_label = 'Import External Results'
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'QCBlender'
@@ -152,17 +154,17 @@ class QCBLENDER_PT_external_import(bpy.types.Panel):
 
     def draw(self, context):
         for action, operator, text in [
-            ('paired', 'qcblender.import_paired_field', 'IGMH / IRI 成对场'),
-            ('nbo', 'qcblender.import_nbo', 'NBO 记录'),
-            ('esp', 'qcblender.import_esp_analysis', 'ESP 表面分析'),
-            ('aim', 'qcblender.import_aim_analysis', 'AIM 拓扑'),
-            ('nocv_table', 'qcblender.import_ets_nocv', 'ETS-NOCV 表'),
+            ('paired', 'qcblender.import_paired_field', 'IGMH / IRI Paired Fields'),
+            ('nbo', 'qcblender.import_nbo', 'NBO Records'),
+            ('esp', 'qcblender.import_esp_analysis', 'ESP Surface Analysis'),
+            ('aim', 'qcblender.import_aim_analysis', 'AIM Topology'),
+            ('nocv_table', 'qcblender.import_ets_nocv', 'ETS-NOCV Table'),
             ('nocv_field', 'qcblender.import_nocv_field', 'NOCV pair Cube')]:
-            action_button(self.layout, context, action, operator, text)
+            action_button(ui_layout(self.layout), context, action, operator, text)
 
 
 class QCBLENDER_PT_project(bpy.types.Panel):
-    bl_label = '工程与诊断'
+    bl_label = 'Project and Diagnostics'
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'QCBlender'
@@ -170,25 +172,25 @@ class QCBLENDER_PT_project(bpy.types.Panel):
     bl_order = 5
 
     def draw(self, context):
-        layout = self.layout
-        for operator, text in [('save_project', '保存自包含工程'), ('archive_project', '归档工程'),
-                               ('rebuild_cache', '重建显示缓存'), ('relocate_dataset', '重新定位数据'),
-                               ('cleanup_legacy_node_assets', '预览并整理旧 QC 节点资产'),
-                               ('check_runtime', '检查科学运行环境')]:
+        layout = ui_layout(self.layout)
+        for operator, text in [('save_project', 'Save Self-Contained Project'), ('archive_project', 'Archive Project'),
+                               ('rebuild_cache', 'Rebuild Display Cache'), ('relocate_dataset', 'Relocate Dataset'),
+                               ('cleanup_legacy_node_assets', 'Preview and Clean Up Legacy QC Node Assets'),
+                               ('check_runtime', 'Check Scientific Runtime')]:
             layout.operator('qcblender.' + operator, text=text)
         obj = context.object
         if obj is not None:
             from .source_browser import source_object
             from .data_export import export_choices
             if source_object(obj).get('qc_dataset') and export_choices(None, context):
-                layout.operator('qcblender.export_data', text='导出数据与参数摘要', icon='EXPORT')
+                layout.operator('qcblender.export_data', text='Export Data and Parameter Summary', icon='EXPORT')
             for diagnostic in json.loads(obj.get('qc_diagnostics', '[]')):
-                for line in textwrap.wrap(diagnostic, width=40):
+                for line in textwrap.wrap(error_text(diagnostic), width=40):
                     layout.label(text=line)
 
 
 class QCBLENDER_PT_object(bpy.types.Panel):
-    bl_label = 'QCBlender · 对象与量子化学'
+    bl_label = 'QCBlender · Object and Quantum Chemistry'
     bl_idname = 'QCBLENDER_PT_object'
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'
@@ -199,15 +201,15 @@ class QCBLENDER_PT_object(bpy.types.Panel):
         return is_qc(context)
 
     def draw(self, context):
-        summary(self.layout, context.object)
-        self.layout.operator('qcblender.source_details', text='来源详情', icon='INFO')
-        self.layout.operator('qcblender.refresh_sources', text='刷新来源')
-        self.layout.operator('qcblender.associate_sources', text='关联选中数据源')
-        action_button(self.layout, context, 'declare', 'qcblender.declare_field', '声明 Cube 物理量与单位')
+        summary(ui_layout(self.layout), context.object)
+        ui_layout(self.layout).operator('qcblender.source_details', text='Source Details', icon='INFO')
+        ui_layout(self.layout).operator('qcblender.refresh_sources', text='Refresh Sources')
+        ui_layout(self.layout).operator('qcblender.associate_sources', text='Associate Selected Sources')
+        action_button(ui_layout(self.layout), context, 'declare', 'qcblender.declare_field', 'Identify Cube Quantity and Unit')
 
 
 class QCBLENDER_PT_scientific(bpy.types.Panel):
-    bl_label = '科学记录与振动模式'
+    bl_label = 'Scientific Records and Vibration Modes'
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'
     bl_context = 'object'
@@ -215,32 +217,32 @@ class QCBLENDER_PT_scientific(bpy.types.Panel):
     bl_options = {'DEFAULT_CLOSED'}
 
     def draw(self, context):
-        obj, layout = context.object, self.layout
+        obj, layout = context.object, ui_layout(self.layout)
         settings = obj.qc_settings
         meta = cached_metadata(obj)
         if not meta or 'error' in meta:
-            layout.label(text=meta.get('error', '请刷新来源记录'), icon='INFO')
+            layout.label(text=error_text(meta.get('error', 'Refresh source records')), icon='INFO')
             return
-        layout.label(text='计算状态: ' + meta.get('calculation_status', '未记录'))
+        layout.label(text=iface('Calculation status: {value0}', value0=meta.get('calculation_status', iface('Not recorded'))))
         field = record(obj, 'qc_field')
         if field.get('steps'):
-            layout.label(text='源网格步矢 [Å]，只读')
+            layout.label(text='Source grid step vectors [Å], read-only')
             for axis, step in zip('ijk', field['steps']):
                 layout.label(text=axis + ': ' + ', '.join(f'{v:.6g}' for v in step))
         orbital = field.get('orbital')
         if isinstance(orbital, dict):
             for key in ('spin', 'source_number', 'occupation', 'energy_hartree'):
-                layout.label(text=f"{key}: {orbital.get(key, '未记录')}")
+                layout.label(text=f"{key}: {orbital.get(key, iface('Not recorded'))}")
         if settings.energies:
             layout.template_list('QCBLENDER_UL_energies', '', settings, 'energies', settings, 'active_energy', rows=3)
             if 0 <= settings.active_energy < len(settings.energies):
                 energy = json.loads(settings.energies[settings.active_energy].record)
-                layout.label(text=f"{energy['value_hartree']:.10f} Hartree")
+                layout.label(text=iface('{value0:.10f} Hartree', value0=energy['value_hartree']))
                 layout.label(text=f"{energy['method']} / {energy['kind']}")
         if settings.modes:
             layout.template_list('QCBLENDER_UL_modes', '', settings, 'modes', settings, 'active_mode', rows=4)
         if obj.get('qc_view_kind') == 'atoms':
-            action_button(layout, context, 'charge', 'qcblender.color_charge', '设置原子电荷着色')
+            action_button(layout, context, 'charge', 'qcblender.color_charge', 'Set Atomic Charge Colors')
 
 
 class _ObjectSection:
@@ -255,45 +257,50 @@ class _ObjectSection:
         if not is_qc(context):
             return False
         from .ui import parameter_section_available
-        return parameter_section_available(context.object, cls.bl_label)
+        return parameter_section_available(context.object, cls.section_key)
 
     def draw(self, context):
         from .ui import draw_view_parameters
-        draw_view_parameters(self.layout, context.object, self.bl_label)
+        draw_view_parameters(ui_layout(self.layout), context.object, self.section_key)
 
 
 class QCBLENDER_PT_geometry(_ObjectSection, bpy.types.Panel):
-    bl_label = '几何表示'
+    section_key = 'geometry'
+    bl_label = 'Geometry Representation'
 
 
 class QCBLENDER_PT_mapping(_ObjectSection, bpy.types.Panel):
-    bl_label = '颜色映射'
+    section_key = 'color'
+    bl_label = 'Color Mapping'
 
 
 class QCBLENDER_PT_legend(_ObjectSection, bpy.types.Panel):
-    bl_label = '图例排版'
+    section_key = 'legend'
+    bl_label = 'Legend Layout'
 
 
 class QCBLENDER_PT_spatial(_ObjectSection, bpy.types.Panel):
-    bl_label = '空间观察'
+    section_key = 'spatial'
+    bl_label = 'Spatial View'
 
     def draw(self, context):
         super().draw(context)
         if context.object.get('qc_view_kind') == 'slice':
             from .interaction import _plane_record
             plane = _plane_record(context.object)
-            self.layout.label(text='平面定义: ' + plane.get('mode', 'FREE'))
-            self.layout.operator('qcblender.define_slice_plane', text='按源网格或三个原子定平面')
-            self.layout.label(text='三维视图工具栏：QC Slice Gizmo')
-            self.layout.label(text='Resolution 为切片显示采样点数')
+            ui_layout(self.layout).label(text=iface('Plane definition: {value0}', value0=plane.get('mode', 'FREE')))
+            ui_layout(self.layout).operator('qcblender.define_slice_plane', text='Define Plane from Source Grid or Three Atoms')
+            ui_layout(self.layout).label(text='3D View Toolbar: QC Slice Gizmo')
+            ui_layout(self.layout).label(text='Resolution controls the slice display sample count')
 
 
 class QCBLENDER_PT_advanced(_ObjectSection, bpy.types.Panel):
-    bl_label = '高级参数'
+    section_key = 'advanced'
+    bl_label = 'Advanced Parameters'
 
 
 class QCBLENDER_PT_selection(bpy.types.Panel):
-    bl_label = '局部选择与标注'
+    bl_label = 'Local Selection and Annotations'
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'
     bl_context = 'object'
@@ -305,22 +312,22 @@ class QCBLENDER_PT_selection(bpy.types.Panel):
         return context.object is not None and context.object.get('qc_view_kind') == 'atoms'
 
     def draw(self, context):
-        layout, obj = self.layout, context.object
-        layout.operator('qcblender.local_selection', text='设置局部选择').mode = 'REPLACE'
+        layout, obj = ui_layout(self.layout), context.object
+        layout.operator('qcblender.local_selection', text='Set Local Selection').mode = 'REPLACE'
         selected = record(obj, 'qc_local_selection_record')
         if selected:
-            layout.label(text='固定源编号: ' + ','.join(map(str, selected.get('fixed_numbers', []))))
-            layout.operator('qcblender.local_selection', text='按当前步重新计算').mode = 'RECOMPUTE'
-            layout.operator('qcblender.local_selection', text='清除局部限制').mode = 'CLEAR'
+            layout.label(text=iface('Fixed source numbers: {value0}', value0=','.join(map(str, selected.get('fixed_numbers', [])))))
+            layout.operator('qcblender.local_selection', text='Recompute for Current Step').mode = 'RECOMPUTE'
+            layout.operator('qcblender.local_selection', text='Clear Local Restriction').mode = 'CLEAR'
         row = layout.row(align=True)
-        for mode, label in [('HIDE', '隐藏氢'), ('KEEP', '保留指定氢'), ('RESTORE', '显示全部氢')]:
+        for mode, label in [('HIDE', 'Hide Hydrogen'), ('KEEP', 'Keep Specified Hydrogen'), ('RESTORE', 'Show All Hydrogen')]:
             row.operator('qcblender.hydrogen_visibility', text=label).mode = mode
         from .annotations import draw_annotations
         draw_annotations(layout, context)
 
 
 class QCBLENDER_PT_material(bpy.types.Panel):
-    bl_label = 'QCBlender · 节点材质'
+    bl_label = 'QCBlender · Node Materials'
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'
     bl_context = 'material'
@@ -329,12 +336,12 @@ class QCBLENDER_PT_material(bpy.types.Panel):
     @classmethod
     def poll(cls, context):
         from .ui import parameter_section_available
-        return is_qc(context) and parameter_section_available(context.object, '材质')
+        return is_qc(context) and parameter_section_available(context.object, 'material')
 
     def draw(self, context):
         from .ui import draw_view_parameters
-        self.layout.label(text='材质节点可在着色器编辑器中独立修改')
-        draw_view_parameters(self.layout, context.object, '材质')
+        ui_layout(self.layout).label(text='Edit material nodes independently in the Shader Editor')
+        draw_view_parameters(ui_layout(self.layout), context.object, 'material')
 
 
 class QCBLENDER_MT_object(bpy.types.Menu):
@@ -343,34 +350,35 @@ class QCBLENDER_MT_object(bpy.types.Menu):
     def draw(self, context):
         if not is_qc(context):
             return
-        layout = self.layout
-        layout.operator('qcblender.source_details', text='来源详情')
-        layout.operator('qcblender.open_properties', text='对象属性').editor = 'OBJECT'
-        action_button(layout, context, 'slice', 'qcblender.create_slice', '创建切片')
-        action_button(layout, context, 'probe', 'qcblender.probe_field', '读取游标处场值')
+        layout = ui_layout(self.layout)
+        layout.operator('qcblender.source_details', text='Source Details')
+        layout.operator('qcblender.open_properties', text='Object Properties').editor = 'OBJECT'
+        action_button(layout, context, 'slice', 'qcblender.create_slice', 'Create Slice')
+        action_button(layout, context, 'probe', 'qcblender.probe_field', 'Read Field Value at Cursor')
         draw_probe_actions(layout, context)
         if (context.object.get('qc_view_kind') in ('field', 'slice', 'atoms')
                 and len(context.selected_objects) == 2):
             layout.operator('qcblender.map_scalar', text='Map Selected Field to Active Surface')
-        layout.operator('qcblender.create_framed_camera', text='创建取景相机')
+        layout.operator('qcblender.create_framed_camera', text='Create Framed Camera')
         if context.object.get('qc_view_kind') in ('atoms', 'field', 'slice', 'fog'):
-            layout.operator('qcblender.copy_display_parameters', text='复制显示参数到选中视图')
+            layout.operator('qcblender.copy_display_parameters', text='Copy Display Parameters to Selected Views')
 
 
 def object_context_menu(self, context):
     if is_qc(context):
-        self.layout.menu('QCBLENDER_MT_object')
+        ui_layout(self.layout).menu('QCBLENDER_MT_object')
 
 
 def draw_probe_actions(layout, context):
+    layout = ui_layout(layout)
     relevant, enabled, reason = capability(context, 'probe_click')
     if not relevant:
         return
     row = layout.row()
     row.enabled = enabled
-    row.operator('qcblender.click_probe', text='点击探针 · 几何场').role = 'GEOMETRY'
+    row.operator('qcblender.click_probe', text='Click Probe · Geometry Field').role = 'GEOMETRY'
     row = layout.row()
     row.enabled = enabled and bool(context.object.get('qc_color_source'))
-    row.operator('qcblender.click_probe', text='点击探针 · 绑定色场').role = 'COLOR'
+    row.operator('qcblender.click_probe', text='Click Probe · Bound Color Field').role = 'COLOR'
     if reason:
-        layout.label(text=reason, icon='INFO')
+        layout.label(text=error_text(reason), icon='INFO')

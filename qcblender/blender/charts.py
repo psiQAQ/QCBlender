@@ -1,4 +1,6 @@
 """Editable spatial contour overlays and material palettes."""
+from ..i18n import error_text, iface, ui_layout
+from .node_identity import node_socket, socket_name
 
 import hashlib
 import json
@@ -30,7 +32,7 @@ def _mapped_material(obj):
              and node.node_tree and node.node_tree.get('qc_asset_id') == 'qc.color_scalar.v2']
     if len(nodes) != 1 or not tree.get('qc_color_mapping'):
         raise ValueError('View has no unique QC scalar color mapping')
-    mat = nodes[0].inputs['Material'].default_value
+    mat = node_socket(nodes[0].inputs, 'Material').default_value
     if mat is None or not mat.use_nodes:
         raise ValueError('QC scalar material is missing')
     ramps = [node for node in mat.node_tree.nodes if node.bl_idname == 'ShaderNodeValToRGB'
@@ -61,13 +63,13 @@ class QCBLENDER_OT_color_palette(bpy.types.Operator):
                 element.position, element.color = position, color
             mat['qc_palette'] = self.palette
         except (ValueError, KeyError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
 
 class QCBLENDER_PT_palette(bpy.types.Panel):
-    bl_label = 'QCBlender · 色谱预设'
+    bl_label = 'QCBlender · Scalar Palettes'
     bl_idname = 'QCBLENDER_PT_palette'
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'
@@ -86,13 +88,13 @@ class QCBLENDER_PT_palette(bpy.types.Panel):
 
     def draw(self, context):
         mat, ramp = _mapped_material(context.object)
-        self.layout.label(text=mat.name)
-        grid = self.layout.grid_flow(columns=2, align=True)
-        for key, title in (('RWB', '红白蓝'), ('BWR', '蓝白红'),
-                           ('BCY', '蓝青黄'), ('GRAY', '灰度')):
+        ui_layout(self.layout).label(text=mat.name, translate=False)
+        grid = ui_layout(self.layout).grid_flow(columns=2, align=True)
+        for key, title in (('RWB', 'Red White Blue'), ('BWR', 'Blue White Red'),
+                           ('BCY', 'Blue Cyan Yellow'), ('GRAY', 'Grayscale')):
             grid.operator('qcblender.color_palette', text=title,
                          depress=mat.get('qc_palette', 'RWB') == key).palette = key
-        self.layout.label(text='色带细节在节点材质中编辑')
+        ui_layout(self.layout).label(text='Edit color ramp details in the node material')
 
 
 def _contour_defaults(obj):
@@ -215,7 +217,7 @@ def _state(obj):
         from .source_browser import color_mapping
         if not obj.get('qc_color_source'):
             raise ValueError('This slice has no bound color field')
-        source = color_mapping(obj)[0].inputs['Object'].default_value
+        source = node_socket(color_mapping(obj)[0].inputs, 'Object').default_value
         recorded = json.loads(obj['qc_color_source'])
         field = json.loads(source.get('qc_field') or '{}') if source is not None else {}
         if not isinstance(recorded, dict) or not isinstance(field, dict):
@@ -238,7 +240,7 @@ def _state(obj):
     if source is None or not source.get('qc_field') or not source.get('qc_dataset_sha256'):
         raise ValueError('Contour field binding is missing')
     modifier = view_modifier(obj)
-    items = {item.name: item.identifier for item in modifier.node_group.interface.items_tree
+    items = {socket_name(item): item.identifier for item in modifier.node_group.interface.items_tree
              if item.item_type == 'SOCKET' and item.in_out == 'INPUT'}
     controls = {name: modifier[items[name]] for name in ('Center', 'Rotation', 'Width', 'Height', 'Resolution')}
     center = Vector(controls['Center'])
@@ -260,7 +262,7 @@ def _state(obj):
     if not levels.strip():
         from .source_browser import color_mapping
         try:
-            mapped_source = color_mapping(obj)[0].inputs['Object'].default_value
+            mapped_source = node_socket(color_mapping(obj)[0].inputs, 'Object').default_value
         except (ValueError, KeyError, TypeError) as error:
             raise ValueError('Automatic contours need a supported scalar display range') from error
         if mapped_source != source:
@@ -442,7 +444,7 @@ class QCBLENDER_OT_update_contours(AsyncOperation, bpy.types.Operator):
         _restore_contours(target, self._identity)
         target['qc_contour_status'] = (
             f"{len(report['levels'])} levels; {report['valid_count']}/{report['sample_count']} valid samples")
-        self.report({'INFO'}, f"Updated {len(report['levels'])} contour levels")
+        self.report({'INFO'}, iface('Updated {value0} contour levels', value0=len(report['levels'])))
 
     def cancel(self, context):
         if hasattr(self, '_target_pointer'):
@@ -456,7 +458,7 @@ class QCBLENDER_OT_update_contours(AsyncOperation, bpy.types.Operator):
 
 
 class QCBLENDER_PT_contours(bpy.types.Panel):
-    bl_label = '切片等值线'
+    bl_label = 'Slice Contours'
     bl_idname = 'QCBLENDER_PT_contours'
     bl_parent_id = 'QCBLENDER_PT_object'
     bl_space_type = 'PROPERTIES'
@@ -470,25 +472,25 @@ class QCBLENDER_PT_contours(bpy.types.Panel):
 
     def draw(self, context):
         obj = context.object
-        layout = self.layout
+        layout = ui_layout(self.layout)
         layout.operator('qcblender.toggle_contours',
-                        text='关闭等值线' if obj.get('qc_contour_enabled') else '开启等值线')
+                        text='Disable Contours' if obj.get('qc_contour_enabled') else 'Enable Contours')
         if not obj.get('qc_contour_enabled'):
             return
-        for key, label in (('qc_contour_levels', '阈值列表（空白：自动 9 条）'),
-                           ('qc_contour_width', '线宽 [布局单位]'), ('qc_contour_color', '线颜色'),
-                           ('qc_contour_labels', '数值标签')):
+        for key, label in (('qc_contour_levels', 'Levels (empty: 9 automatic levels)'),
+                           ('qc_contour_width', 'Line Width [layout units]'), ('qc_contour_color', 'Line Color'),
+                           ('qc_contour_labels', 'Value Labels')):
             layout.prop(obj, f'["{key}"]', text=label)
         row = layout.row(align=True)
-        for role, title in (('COLOR', '绑定色场'), ('GEOMETRY', '几何场')):
+        for role, title in (('COLOR', 'Bound Color Field'), ('GEOMETRY', 'Geometry Field')):
             sub = row.row(align=True)
             sub.enabled = role != 'COLOR' or bool(obj.get('qc_color_source'))
             button = sub.operator('qcblender.contour_source', text=title,
                                   depress=obj.get('qc_contour_source') == role)
             button.role = role
-        layout.operator('qcblender.update_contours', text='更新等值线')
+        layout.operator('qcblender.update_contours', text='Update Contours')
         if obj.get('qc_contour_status'):
-            layout.label(text=obj['qc_contour_status'])
+            layout.label(text=error_text(obj['qc_contour_status']))
 
 
 class QCBLENDER_OT_contour_source(bpy.types.Operator):
@@ -504,7 +506,7 @@ class QCBLENDER_OT_contour_source(bpy.types.Operator):
 
     def execute(self, context):
         if self.role == 'COLOR' and not context.object.get('qc_color_source'):
-            self.report({'ERROR'}, 'No bound color field is available')
+            self.report({'ERROR'}, error_text('No bound color field is available'))
             return {'CANCELLED'}
         context.object['qc_contour_source'] = self.role
         _hide_contours(context.object)

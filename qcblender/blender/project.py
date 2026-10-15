@@ -1,3 +1,4 @@
+from ..i18n import error_text
 import json
 import os
 from pathlib import Path
@@ -64,7 +65,7 @@ class QCBLENDER_OT_rebuild_cache(AsyncOperation, bpy.types.Operator):
         if hashlib.sha256((self._original / 'manifest.json').read_bytes()).hexdigest() != self._digest:
             raise ValueError('Dataset changed during recovery; result retained without attaching')
         rebind_dataset(self._original, self._job.directory / 'dataset')
-        self.report({'INFO'}, 'Rebuilt display cache from the saved scientific arrays')
+        self.report({'INFO'}, error_text('Rebuilt display cache from the saved scientific arrays'))
 
 
 class QCBLENDER_OT_relocate_dataset(bpy.types.Operator, ImportHelper):
@@ -84,7 +85,7 @@ class QCBLENDER_OT_relocate_dataset(bpy.types.Operator, ImportHelper):
                 raise ValueError('Select the manifest of the identical dataset; scientific content must match')
             rebind_dataset(bpy.path.abspath(context.object['qc_dataset']), manifest.parent)
         except (ValueError, OSError, KeyError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -169,9 +170,9 @@ class QCBLENDER_OT_save_project(bpy.types.Operator, ExportHelper):
         try:
             save_project(self.filepath)
         except (ValueError, OSError, RuntimeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
-        self.report({'INFO'}, 'Saved .blend and matching .qcdata directory')
+        self.report({'INFO'}, error_text('Saved .blend and matching .qcdata directory'))
         return {'FINISHED'}
 
 
@@ -189,7 +190,7 @@ class QCBLENDER_OT_archive_project(bpy.types.Operator, ExportHelper):
         try:
             archive_project(bpy.data.filepath, self.filepath)
         except (ValueError, OSError, KeyError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
-        self.report({'INFO'}, 'Packaged the saved .blend and scientific data')
+        self.report({'INFO'}, error_text('Packaged the saved .blend and scientific data'))
         return {'FINISHED'}

@@ -1,4 +1,6 @@
 """Native Blender views for imported ESP, AIM, and ETS-NOCV records."""
+from ..i18n import error_text, iface, ui_layout
+from .node_identity import node_socket
 import json
 from pathlib import Path
 import uuid
@@ -40,12 +42,12 @@ def point_view(directory, data, parent, points, name, color, role):
     inputs, output = nodes.new('NodeGroupInput'), nodes.new('NodeGroupOutput')
     dots = nodes.new('GeometryNodeMeshToPoints')
     dots.mode = 'VERTICES'
-    dots.inputs['Radius'].default_value = .065
+    node_socket(dots.inputs, 'Radius').default_value = .065
     assign = nodes.new('GeometryNodeSetMaterial')
-    assign.inputs['Material'].default_value = material(name, color)
-    links.new(inputs.outputs['Geometry'], dots.inputs['Mesh'])
-    links.new(dots.outputs['Points'], assign.inputs['Geometry'])
-    links.new(assign.outputs['Geometry'], output.inputs['Geometry'])
+    node_socket(assign.inputs, 'Material').default_value = material(name, color)
+    links.new(node_socket(inputs.outputs, 'Geometry'), node_socket(dots.inputs, 'Mesh'))
+    links.new(node_socket(dots.outputs, 'Points'), node_socket(assign.inputs, 'Geometry'))
+    links.new(node_socket(assign.outputs, 'Geometry'), node_socket(output.inputs, 'Geometry'))
     obj.modifiers.new('QC Point Markers', 'NODES').node_group = tree
     return obj
 
@@ -116,9 +118,9 @@ class QCBLENDER_OT_import_esp(bpy.types.Operator):
 
     def draw(self, context):
         for name in ('extrema_path', 'area_path', 'surface_definition', 'extrema_unit', 'center_unit', 'area_unit'):
-            self.layout.prop(self, name)
-        self.layout.label(text='ESP values: a.u., eV or kcal/mol; area: angstrom^2 or bohr^2')
-        self.layout.label(text='Center unit is always user assigned; source declarations are checked on import')
+            ui_layout(self.layout).prop(self, name)
+        ui_layout(self.layout).label(text='ESP values: a.u., eV or kcal/mol; area: angstrom^2 or bohr^2')
+        ui_layout(self.layout).label(text='Center unit is always user assigned; source declarations are checked on import')
 
     def execute(self, context):
         from ..analysis_data import import_esp
@@ -139,7 +141,7 @@ class QCBLENDER_OT_import_esp(bpy.types.Operator):
                     point_view(directory, data, parent, selected, 'QC ESP ' + kind, color, 'esp_' + kind)
             area_view(directory, data, parent)
         except (ValueError, OSError, KeyError, MemoryError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -163,7 +165,7 @@ class QCBLENDER_OT_import_aim(bpy.types.Operator):
 
     def draw(self, context):
         for name in ('cps_path', 'paths_path', 'properties_path'):
-            self.layout.prop(self, name)
+            ui_layout(self.layout).prop(self, name)
 
     def execute(self, context):
         from ..analysis_data import import_aim
@@ -184,7 +186,7 @@ class QCBLENDER_OT_import_aim(bpy.types.Operator):
                     point_view(directory, data, parent, selected, 'QC AIM CP ' + kind, color, 'aim_' + kind)
             path_view(directory, data, parent)
         except (ValueError, OSError, KeyError, MemoryError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -206,8 +208,8 @@ class QCBLENDER_OT_import_ets(bpy.types.Operator):
         return context.window_manager.invoke_props_dialog(self)
 
     def draw(self, context):
-        self.layout.prop(self, 'output_path')
-        self.layout.prop(self, 'energy_unit')
+        ui_layout(self.layout).prop(self, 'output_path')
+        ui_layout(self.layout).prop(self, 'energy_unit')
 
     def execute(self, context):
         from ..analysis_data import import_ets
@@ -221,7 +223,7 @@ class QCBLENDER_OT_import_ets(bpy.types.Operator):
             directory = store_analysis(data)
             table_view(directory, data, parent, 'QC ETS-NOCV pairs', 'ets_nocv')
         except (ValueError, OSError, KeyError, MemoryError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -246,11 +248,11 @@ class QCBLENDER_PT_external_results(bpy.types.Panel):
         obj = context.object
         analysis = cached_metadata(obj).get('analysis')
         if not analysis:
-            self.layout.label(text='来源未读取或关联断裂，请刷新来源', icon='INFO')
-            self.layout.operator('qcblender.refresh_sources')
+            ui_layout(self.layout).label(text='Source records are not loaded or the binding is broken; refresh sources', icon='INFO')
+            ui_layout(self.layout).operator('qcblender.refresh_sources')
             return
         role = obj['qc_analysis_role']
-        layout = self.layout
+        layout = ui_layout(self.layout)
         layout.label(text=analysis['kind'] + ': ' + role)
         index = int(obj['qc_analysis_index']) - 1
         if role.startswith('esp_') and role != 'esp_area':
@@ -258,8 +260,8 @@ class QCBLENDER_PT_external_results(bpy.types.Panel):
             unit = analysis['extrema_unit']
         elif role == 'esp_area':
             records, unit = analysis['area_bins'], analysis['area_unit']
-            layout.label(text='Surface: ' + analysis['surface_definition'])
-            layout.label(text=f"Total area: {analysis['area_sum']:.6g} {unit}")
+            layout.label(text=iface('Surface: {value0}', value0=analysis['surface_definition']))
+            layout.label(text=iface('Total area: {value0:.6g} {value1}', value0=analysis['area_sum'], value1=unit))
         elif role.startswith('aim_') and role != 'aim_paths':
             records = [row for row in analysis['critical_points'] if row['type'] == role[4:]]
             unit = 'angstrom'
@@ -267,7 +269,7 @@ class QCBLENDER_PT_external_results(bpy.types.Panel):
             records, unit = analysis['paths'], 'angstrom'
         else:
             records, unit = analysis['pairs'], analysis['energy_unit']
-        layout.label(text=f'{len(records)} records | {unit}')
+        layout.label(text=iface('{value0} records | {value1}', value0=len(records), value1=unit))
         row = layout.row()
         row.enabled = bool(records)
         row.prop(obj, '["qc_analysis_index"]', text='Record (1-based)')

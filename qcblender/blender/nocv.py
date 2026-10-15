@@ -1,4 +1,5 @@
 """Explicit ETS-NOCV pair Cube import into native signed isosurfaces."""
+from ..i18n import enum_items, error_text, ui_layout
 import hashlib
 from pathlib import Path
 from functools import lru_cache
@@ -28,11 +29,11 @@ def _pairs(context):
 
 
 def spin_choices(self, context):
-    return _spin_items(_pairs(context))
+    return enum_items(_spin_items(_pairs(context)))
 
 
 def pair_choices(self, context):
-    return _pair_items(_pairs(context), self.spin)
+    return enum_items(_pair_items(_pairs(context), self.spin))
 
 
 def limit_nocv_pair(self, context):
@@ -73,8 +74,8 @@ class QCBLENDER_OT_import_nocv(AsyncOperation, bpy.types.Operator):
 
     def draw(self, context):
         for name in ('cube_path', 'spin', 'pair_choice', 'unit'):
-            self.layout.prop(self, name)
-        self.layout.label(text='Pair and spin must match one row in the active ETS-NOCV table')
+            ui_layout(self.layout).prop(self, name)
+        ui_layout(self.layout).label(text='Pair and spin must match one row in the active ETS-NOCV table')
 
     def begin(self, context):
         from .jobs import Job
@@ -133,4 +134,4 @@ class QCBLENDER_OT_import_nocv(AsyncOperation, bpy.types.Operator):
         obj['qc_analysis_role'] = 'nocv_field'
         obj['qc_ets_table_source'] = table['qc_source_sha256']
         obj['qc_ets_table_dataset_sha256'] = self._digest
-        self.report({'INFO'}, 'Signed deformation density imported for the selected ETS-NOCV pair')
+        self.report({'INFO'}, error_text('Signed deformation density imported for the selected ETS-NOCV pair'))

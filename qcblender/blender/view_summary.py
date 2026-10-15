@@ -1,4 +1,5 @@
 """Capture live QC configuration inputs without evaluating display geometry."""
+from .node_identity import node_socket
 from datetime import datetime, timezone
 import math
 
@@ -33,7 +34,7 @@ def _material_snapshot(mat, role):
     if len(terminals) != 1 or len(outputs) != 1:
         result['reasons'].append('Material output or shader is missing/ambiguous; custom graph is unverified')
     else:
-        item = outputs[0].inputs['Volume' if mat.get('qc_fog') else 'Surface']
+        item = node_socket(outputs[0].inputs, 'Volume' if mat.get('qc_fog') else 'Surface')
         if len(item.links) != 1 or item.links[0].from_node != terminals[0]:
             result['reasons'].append('Material output uses a custom shader connection; graph is unverified')
     if len(shaders) > 1:
@@ -41,7 +42,7 @@ def _material_snapshot(mat, role):
     elif shaders:
         shader = shaders[0]
         for name in ('Base Color', 'Alpha', 'Roughness'):
-            item = shader.inputs[name]
+            item = node_socket(shader.inputs, name)
             if item.is_linked:
                 result['reasons'].append(name + ': incoming node link is not evaluated')
             else:
@@ -60,7 +61,7 @@ def _material_snapshot(mat, role):
                 raise ValueError(location + ': control uses a custom incoming link')
             value = [_value(item.default_value) for item in node.inputs]
         else:
-            value = _value(node.outputs[0].default_value)
+            value = _value(node_socket(node.outputs, 0).default_value)
         result['controls'].append({'name': name, 'value': value, 'location': location})
     return result
 

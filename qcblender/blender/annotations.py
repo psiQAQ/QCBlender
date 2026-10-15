@@ -1,4 +1,6 @@
 """Native scene annotations attached to source-ordered atom views."""
+from ..i18n import error_text, iface, ui_layout
+from .node_identity import node_socket
 
 import json
 from uuid import uuid4
@@ -69,7 +71,7 @@ def _apply(label, entry, anchor, body, leader=None):
     label.data.materials[0].diffuse_color = (*entry['color'], 1)
     shader = next(node for node in label.data.materials[0].node_tree.nodes
                   if node.bl_idname == 'ShaderNodeBsdfPrincipled')
-    shader.inputs['Base Color'].default_value = (*entry['color'], 1)
+    node_socket(shader.inputs, 'Base Color').default_value = (*entry['color'], 1)
     label.hide_viewport = label.hide_render = not entry['visible']
     label['qc_annotation'] = json.dumps(entry, ensure_ascii=False)
     if leader is not None:
@@ -81,7 +83,7 @@ def _apply(label, entry, anchor, body, leader=None):
         line.data.materials[0].diffuse_color = (*entry['color'], 1)
         line_shader = next(node for node in line.data.materials[0].node_tree.nodes
                            if node.bl_idname == 'ShaderNodeBsdfPrincipled')
-        line_shader.inputs['Base Color'].default_value = (*entry['color'], 1)
+        node_socket(line_shader.inputs, 'Base Color').default_value = (*entry['color'], 1)
         line_entry.update(geometry=entry['geometry'], value=entry['value'],
                           undefined_reason=entry['undefined_reason'])
         if entry['kind'] == 'DIHEDRAL':
@@ -256,7 +258,7 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
         return context.window_manager.invoke_props_dialog(self, width=460)
 
     def draw(self, context):
-        layout = self.layout
+        layout = ui_layout(self.layout)
         layout.prop(self, 'atoms')
         row = layout.row()
         left, right = row.column(), row.column()
@@ -296,7 +298,7 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
                          'symbols': [symbols[numbers.index(atom)]] if atom is not None else symbols}
                 _create(owner, collection, entry, positions, record)
         except (ValueError, KeyError, OSError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -324,14 +326,14 @@ class QCBLENDER_OT_edit_annotation(bpy.types.Operator):
         entry = next((entry for _, entry in _entries(owner, 'LABEL')
                       if entry['id'] == self.annotation_id), None)
         if entry is None:
-            self.report({'ERROR'}, 'Annotation no longer exists')
+            self.report({'ERROR'}, error_text('Annotation no longer exists'))
             return {'CANCELLED'}
         for name in ('size', 'color', 'offset', 'decimals', 'show_leader', 'line_width', 'visible'):
             setattr(self, name, entry[name])
         return context.window_manager.invoke_props_dialog(self, width=460)
 
     def draw(self, context):
-        row = self.layout.row()
+        row = ui_layout(self.layout).row()
         left, right = row.column(), row.column()
         for name in ('size', 'offset'):
             left.prop(self, name)
@@ -354,7 +356,7 @@ class QCBLENDER_OT_edit_annotation(bpy.types.Operator):
             entry, anchor, body = _prepare(entry, positions, record)
             _apply(child, entry, anchor, body, leader)
         except (ValueError, KeyError, OSError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -373,7 +375,7 @@ class QCBLENDER_OT_face_annotations(bpy.types.Operator):
     def execute(self, context):
         camera = context.scene.camera
         if camera is None:
-            self.report({'ERROR'}, 'Set an active scene camera first')
+            self.report({'ERROR'}, error_text('Set an active scene camera first'))
             return {'CANCELLED'}
         owner = _atom_view(context)
         rotation = owner.matrix_world.to_quaternion().inverted() @ camera.matrix_world.to_quaternion()
@@ -404,6 +406,7 @@ class QCBLENDER_OT_remove_annotation(bpy.types.Operator):
 
 def draw_annotations(layout, context):
     """Draw controls from stored records only; never load source arrays in draw."""
+    layout = ui_layout(layout)
     owner = _atom_view(context)
     if owner is None:
         return
@@ -415,8 +418,8 @@ def draw_annotations(layout, context):
     box.operator('qcblender.face_annotations', text='Face All to Camera', icon='CAMERA_DATA')
     for _, entry in _entries(owner, 'LABEL'):
         row = box.row(align=True)
-        status = 'undefined' if entry.get('undefined_reason') else entry['kind'].title()
-        row.label(text=f"{','.join(map(str, entry['source_atom_numbers']))}: {status}")
+        status = iface('Undefined' if entry.get('undefined_reason') else entry['kind'].title())
+        row.label(text=f"{','.join(map(str, entry['source_atom_numbers']))}: {status}", translate=False)
         row.operator('qcblender.edit_annotation', text='', icon='PREFERENCES').annotation_id = entry['id']
         row.operator('qcblender.face_annotations', text='', icon='CAMERA_DATA').annotation_id = entry['id']
         row.operator('qcblender.remove_annotation', text='', icon='X').annotation_id = entry['id']

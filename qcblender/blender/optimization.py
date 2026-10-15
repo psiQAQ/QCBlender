@@ -1,4 +1,6 @@
 """Discrete optimization views keep final-geometry properties on their source view."""
+from .node_identity import socket_name
+from ..i18n import error_text, iface, ui_layout
 import copy
 import json
 import textwrap
@@ -74,7 +76,7 @@ class QCBLENDER_OT_optimization_view(bpy.types.Operator):
             trajectory = data.metadata['optimization']
             metadata = {key: copy.deepcopy(data.metadata[key]) for key in
                         ('source', 'coordinate_unit', 'selected_job', 'jobs', 'method', 'calculation_status', 'optimization')}
-            metadata.update(title=data.metadata['title'] + ' / Optimization', fields=[], charges=[], energies=[],
+            metadata.update(title=iface('{value0} / Optimization', value0=data.metadata['title']), fields=[], charges=[], energies=[],
                             diagnostics=['Discrete optimization steps; bonds inferred from step 1; no per-step charges, modes or fields'])
             arrays = {'atomic_numbers': data.arrays['atomic_numbers'],
                       'positions': data.arrays[trajectory['array']][0],
@@ -88,12 +90,12 @@ class QCBLENDER_OT_optimization_view(bpy.types.Operator):
                                     data.arrays[trajectory['array']][:, :, 0].min()) + 3
             modifier = view_modifier(obj)
             style = next(item for item in modifier.node_group.interface.items_tree
-                         if item.item_type == 'SOCKET' and item.name == 'Style (0 ball-stick, 1 space-fill, 2 bonds)')
+                         if item.item_type == 'SOCKET' and socket_name(item) == 'Style (0 ball-stick, 1 space-fill, 2 bonds)')
             modifier[style.identifier] = 1
             set_step(obj, view_data, 1)
             activate(context, obj)
         except (ValueError, OSError, KeyError, TypeError, MemoryError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -116,8 +118,8 @@ class QCBLENDER_OT_optimization_step(bpy.types.Operator):
         return context.window_manager.invoke_props_dialog(self)
 
     def draw(self, context):
-        self.layout.label(text=f'Steps 1-{context.object["qc_optimization_count"]}')
-        self.layout.prop(self, 'step')
+        ui_layout(self.layout).label(text=iface('Steps 1-{value0}', value0=context.object["qc_optimization_count"]))
+        ui_layout(self.layout).prop(self, 'step')
 
     def execute(self, context):
         obj = context.object
@@ -126,7 +128,7 @@ class QCBLENDER_OT_optimization_step(bpy.types.Operator):
             step = self.step if self.direction == 'GOTO' else obj['qc_optimization_step'] + (1 if self.direction == 'NEXT' else -1)
             set_step(obj, data, step)
         except (ValueError, OSError, KeyError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -146,10 +148,10 @@ class QCBLENDER_PT_optimization(bpy.types.Panel):
         return obj is not None and bool(obj.get('qc_optimization_status'))
 
     def draw(self, context):
-        obj, layout = context.object, self.layout
+        obj, layout = context.object, ui_layout(self.layout)
 
         def label(text):
-            for line in textwrap.wrap(text, width=max(20, int(context.region.width / 8))):
+            for line in textwrap.wrap(error_text(text), width=max(20, int(context.region.width / 8))):
                 layout.label(text=line)
 
         if not obj.get('qc_optimization_available'):
@@ -160,11 +162,11 @@ class QCBLENDER_PT_optimization(bpy.types.Panel):
         else:
             record = json.loads(obj['qc_optimization_record'])
             step, count = obj['qc_optimization_step'], obj['qc_optimization_count']
-            layout.label(text=f'Step {step} / {count} | {record["status"]}')
-            layout.label(text='Calculation: ' + record['calculation_status'])
+            layout.label(text=iface('Step {value0} / {value1} | {value2}', value0=step, value1=count, value2=record["status"]))
+            layout.label(text=iface('Calculation: {value0}', value0=record['calculation_status']))
             energy = record['energy']
-            layout.label(text=f'{energy["method"]}: {energy["value_hartree"]:.10f} Hartree' if energy else 'Energy: ' + record['energy_status'])
-            layout.label(text=f'Geometry lines {record["geometry_line_start"]}-{record["geometry_line_end"]}')
+            layout.label(text=f'{energy["method"]}: {energy["value_hartree"]:.10f} Hartree' if energy else iface('Energy: {status}', status=iface(record['energy_status'])), translate=False)
+            layout.label(text=iface('Geometry lines {value0}-{value1}', value0=record["geometry_line_start"], value1=record["geometry_line_end"]))
             row = layout.row(align=True)
             previous, following = row.row(), row.row()
             previous.enabled, following.enabled = step > 1, step < count
@@ -173,7 +175,7 @@ class QCBLENDER_PT_optimization(bpy.types.Panel):
             layout.operator('qcblender.optimization_step', text='Choose Step').direction = 'GOTO'
             for criterion in record['convergence']:
                 layout.label(text=criterion['quantity'])
-                layout.label(text=f'{criterion["value"]:g} / {criterion["threshold"]:g} | ' + ('YES' if criterion['converged'] else 'NO'))
+                layout.label(text=f'{criterion["value"]:g} / {criterion["threshold"]:g} | ' + iface('YES' if criterion['converged'] else 'NO'), translate=False)
             units = record['convergence_unit_system']
             label(units['text'] if units else 'Convergence units: not recorded')
             if not record['convergence']:

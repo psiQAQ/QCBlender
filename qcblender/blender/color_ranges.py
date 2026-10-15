@@ -1,4 +1,6 @@
 """One-shot color ranges on the existing scalar mapping inputs."""
+from ..i18n import error_text, iface, ui_layout
+from .node_identity import node_socket, socket_name
 import json
 import math
 
@@ -22,8 +24,8 @@ def range_inputs(obj):
     identifiers = []
     for name in RANGE_NAMES:
         inputs = [s for s in tree.interface.items_tree if s.item_type == 'SOCKET'
-                  and s.in_out == 'INPUT' and s.name == name and s.socket_type == 'NodeSocketFloat']
-        links = color.inputs[name].links
+                  and s.in_out == 'INPUT' and socket_name(s) == name and s.socket_type == 'NodeSocketFloat']
+        links = node_socket(color.inputs, name).links
         if (len(inputs) != 1 or inputs[0].identifier not in modifier or len(links) != 1
                 or links[0].from_node.type != 'GROUP_INPUT'
                 or links[0].from_socket.identifier != inputs[0].identifier):
@@ -68,20 +70,20 @@ class QCBLENDER_OT_symmetric_color_range(bpy.types.Operator):
             modifier, keys = range_inputs(context.object)
             self.radius = max(abs(float(modifier[keys[0]])), abs(float(modifier[keys[2]])))
         except (ValueError, KeyError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return context.window_manager.invoke_props_dialog(self)
 
     def draw(self, context):
-        self.layout.prop(self, 'radius')
+        ui_layout(self.layout).prop(self, 'radius')
         unit = json.loads(context.object['qc_color_source']).get('unit', 'unknown')
-        self.layout.label(text='−R / 0 / +R [' + unit + ']')
+        ui_layout(self.layout).label(text=iface('−R / 0 / +R [{value0}]', value0=unit))
 
     def execute(self, context):
         try:
             apply_range(context.object, (-self.radius, 0., self.radius))
         except (ValueError, KeyError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -117,4 +119,4 @@ class QCBLENDER_OT_read_color_range(AsyncOperation, bpy.types.Operator):
                 or report.get('field_array') != field['array']):
             raise ValueError('Color source or range changed during reading; result was not applied')
         apply_range(self._target, [report[key] for key in ('minimum', 'center', 'maximum')])
-        self.report({'INFO'}, f"Read {report['valid_count']} valid grid points [{field['unit']}]")
+        self.report({'INFO'}, iface('Read {value0} valid grid points [{value1}]', value0=report['valid_count'], value1=field['unit']))

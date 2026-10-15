@@ -1,4 +1,5 @@
 """User assigned roles for externally calculated paired Cube fields."""
+from ..i18n import error_text, iface, ui_layout
 import json
 from pathlib import Path
 
@@ -25,10 +26,10 @@ class QCBLENDER_OT_import_paired_field(AsyncOperation, bpy.types.Operator):
     color_unit: StringProperty(name='Color value unit', default='')
     iri_exponent: FloatProperty(name='IRI density exponent a', default=0.0, min=0.0)
     igmh_component: EnumProperty(name='IGMH component', items=[
-        ('unknown', '未声明 / unknown', '分量身份未核实'),
-        ('inter', 'inter', '用户声明为片段间分量'),
-        ('intra', 'intra', '用户声明为片段内分量'),
-        ('total', 'total', '用户声明为总分量')], default='unknown')
+        ('unknown', 'Undeclared / unknown', 'Component identity is unverified'),
+        ('inter', 'inter', 'User declares the interfragment component'),
+        ('intra', 'intra', 'User declares the intrafragment component'),
+        ('total', 'total', 'User declares the total component')], default='unknown')
     igmh_fragments: StringProperty(name='Fragment atoms (JSON)', default='')
     igmh_declaration_source: StringProperty(name='Declaration source (optional)', default='', maxlen=500)
     color_minimum: FloatProperty(name='Color minimum', default=-.05)
@@ -45,21 +46,21 @@ class QCBLENDER_OT_import_paired_field(AsyncOperation, bpy.types.Operator):
     def draw(self, context):
         for name in ('method', 'geometry_source', 'color_source', 'geometry_unit',
                      'color_unit'):
-            self.layout.prop(self, name)
+            ui_layout(self.layout).prop(self, name)
         if self.method == 'IRI':
-            self.layout.prop(self, 'iri_exponent')
-            self.layout.label(text='Typical IRI: |grad rho| / rho^1.1; declare the exponent used')
+            ui_layout(self.layout).prop(self, 'iri_exponent')
+            ui_layout(self.layout).label(text='Typical IRI: |grad rho| / rho^1.1; declare the exponent used')
         else:
-            self.layout.label(text='Typical IGMH delta-g: electron/bohr^4')
-            self.layout.prop(self, 'igmh_component')
-            self.layout.prop(self, 'igmh_fragments')
-            self.layout.prop(self, 'igmh_declaration_source')
-            self.layout.label(text='源 Cube 原子顺序，1基整数，例如 [[1,2,3],[4,5,6]]；片段可选')
-            self.layout.label(text='分量与片段均为用户声明（user_assigned）')
-        self.layout.label(text='Typical sign(lambda2)rho: electron/bohr^3; Cube units are not declared')
+            ui_layout(self.layout).label(text='Typical IGMH delta-g: electron/bohr^4')
+            ui_layout(self.layout).prop(self, 'igmh_component')
+            ui_layout(self.layout).prop(self, 'igmh_fragments')
+            ui_layout(self.layout).prop(self, 'igmh_declaration_source')
+            ui_layout(self.layout).label(text='Source Cube atom order, 1-based integers, e.g. [[1,2,3],[4,5,6]]; fragments are optional')
+            ui_layout(self.layout).label(text='Component and fragments are user-assigned (user_assigned)')
+        ui_layout(self.layout).label(text='Typical sign(lambda2)rho: electron/bohr^3; Cube units are not declared')
         for name in ('color_minimum', 'color_maximum'):
-            self.layout.prop(self, name)
-        self.layout.label(text='Active QC view supplies the calculation and geometry association')
+            ui_layout(self.layout).prop(self, name)
+        ui_layout(self.layout).label(text='Active QC view supplies the calculation and geometry association')
 
     def begin(self, context):
         import hashlib
@@ -80,7 +81,7 @@ class QCBLENDER_OT_import_paired_field(AsyncOperation, bpy.types.Operator):
             try:
                 fragments = json.loads(self.igmh_fragments)
             except ValueError as error:
-                raise ValueError('片段成员需要 JSON 二维列表，例如 [[1,2,3],[4,5,6]]') from error
+                raise ValueError('Fragment members require a JSON list of lists, e.g. [[1,2,3],[4,5,6]]') from error
         if paths[0] == paths[1]:
             raise ValueError('Choose two distinct Cube files for geometry and color')
         self._reference = context.object
@@ -118,12 +119,12 @@ class QCBLENDER_OT_import_paired_field(AsyncOperation, bpy.types.Operator):
         add_mapping(geometry, color, self.color_minimum, self.color_maximum)
         paired_record(directory, data, parent)
         for warning in data.metadata['analysis'].get('igmh_declaration', {}).get('warnings', []):
-            self.report({'WARNING'}, warning)
-        self.report({'INFO'}, 'Imported paired external Cube fields and data records')
+            self.report({'WARNING'}, error_text(warning))
+        self.report({'INFO'}, error_text('Imported paired external Cube fields and data records'))
 
 
 class QCBLENDER_PT_igmh_declaration(bpy.types.Panel):
-    bl_label = 'IGMH 来源声明'
+    bl_label = 'IGMH Source Declaration'
     bl_idname = 'QCBLENDER_PT_igmh_declaration'
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'
@@ -143,21 +144,21 @@ class QCBLENDER_PT_igmh_declaration(bpy.types.Panel):
         from .source_browser import cached_metadata
         analysis = cached_metadata(context.object).get('analysis')
         if not analysis:
-            self.layout.label(text='请刷新来源以读取 IGMH 声明', icon='INFO')
-            self.layout.operator('qcblender.refresh_sources')
+            ui_layout(self.layout).label(text='Refresh sources to read the IGMH declaration', icon='INFO')
+            ui_layout(self.layout).operator('qcblender.refresh_sources')
             return
         declaration = igmh_declaration_record(analysis)
         component = declaration.get('component', 'unknown')
-        self.layout.label(text='分量：' + (component if component != 'unknown' else '未声明 / unknown'))
-        self.layout.label(text='声明状态：' + declaration.get('status', 'unverified'))
-        self.layout.label(text='声明性质：' + declaration.get('interpretation', 'unverified'))
-        self.layout.label(text='声明来源：' + (declaration.get('source') or '未填写'))
+        ui_layout(self.layout).label(text=iface('Component: {value0}', value0=component if component != 'unknown' else 'Undeclared / unknown'))
+        ui_layout(self.layout).label(text=iface('Declaration status: {value0}', value0=declaration.get('status', 'unverified')))
+        ui_layout(self.layout).label(text=iface('Declaration interpretation: {value0}', value0=declaration.get('interpretation', 'unverified')))
+        ui_layout(self.layout).label(text=iface('Declaration source: {value0}', value0=declaration.get('source') or 'Not provided'))
         fragments = declaration.get('fragments', [])
         if fragments:
-            self.layout.label(text='成员索引：源 Cube 原子顺序，1基整数')
+            ui_layout(self.layout).label(text='Member indices: source Cube atom order, 1-based integers')
             for index, fragment in enumerate(fragments, 1):
-                self.layout.label(text=f'片段 {index}：' + json.dumps(fragment))
+                ui_layout(self.layout).label(text=iface('Fragment {value0}：{value1}', value0=index, value1=json.dumps(fragment)))
         else:
-            self.layout.label(text='片段成员：未声明')
+            ui_layout(self.layout).label(text='Fragment members: undeclared')
         for warning in declaration.get('warnings', []):
-            self.layout.label(text=warning, icon='INFO')
+            ui_layout(self.layout).label(text=warning, icon='INFO')

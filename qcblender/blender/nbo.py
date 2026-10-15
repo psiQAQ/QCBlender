@@ -1,4 +1,5 @@
 """NBO records from a selected Gaussian Log calculation."""
+from ..i18n import error_text, iface, ui_layout
 import hashlib
 import json
 from functools import lru_cache
@@ -55,18 +56,18 @@ class QCBLENDER_OT_import_nbo(AsyncOperation, bpy.types.Operator):
         return context.window_manager.invoke_props_dialog(self, width=520)
 
     def draw(self, context):
-        self.layout.prop(self, 'filepath')
+        ui_layout(self.layout).prop(self, 'filepath')
         if self.summary:
-            self.layout.prop(self, 'job_number')
-            self.layout.label(text=f'Jobs 1-{job_bounds(self, context)[1]}')
-            row = self.layout.row()
+            ui_layout(self.layout).prop(self, 'job_number')
+            ui_layout(self.layout).label(text=iface('Jobs 1-{value0}', value0=job_bounds(self, context)[1]))
+            row = ui_layout(self.layout).row()
             count = block_bounds(self, context)[1]
             row.enabled = bool(count)
             row.prop(self, 'block_number')
-            self.layout.label(text=f'NBO blocks 1-{count}' if count else 'This job has no NBO summary')
+            ui_layout(self.layout).label(text=iface('NBO blocks 1-{count}', count=count) if count else iface('This job has no NBO summary'))
         else:
-            self.layout.label(text='Confirm to inspect available Gaussian jobs and NBO blocks')
-        self.layout.label(text='Active QC view supplies the reference geometry')
+            ui_layout(self.layout).label(text='Confirm to inspect available Gaussian jobs and NBO blocks')
+        ui_layout(self.layout).label(text='Active QC view supplies the reference geometry')
 
     def begin(self, context):
         from .jobs import Job
@@ -115,7 +116,7 @@ class QCBLENDER_OT_import_nbo(AsyncOperation, bpy.types.Operator):
         for selected in context.selected_objects:
             selected.select_set(False)
         obj.select_set(True)
-        self.report({'INFO'}, 'NBO and E(2) records imported; no canonical MO mapping inferred')
+        self.report({'INFO'}, error_text('NBO and E(2) records imported; no canonical MO mapping inferred'))
 
 
 class QCBLENDER_PT_nbo(bpy.types.Panel):
@@ -136,12 +137,12 @@ class QCBLENDER_PT_nbo(bpy.types.Panel):
         obj = context.object
         result = cached_metadata(obj).get('analysis')
         if not result:
-            self.layout.label(text='来源未读取或关联断裂，请刷新来源', icon='INFO')
-            self.layout.operator('qcblender.refresh_sources')
+            ui_layout(self.layout).label(text='Source records are not loaded or the binding is broken; refresh sources', icon='INFO')
+            ui_layout(self.layout).operator('qcblender.refresh_sources')
             return
-        layout = self.layout
-        layout.label(text=f"Job {result['job_number']}, NBO block {result['block_number']}")
-        layout.label(text=f"{len(result['orbitals'])} orbitals; {len(result['interactions'])} E(2) records")
+        layout = ui_layout(self.layout)
+        layout.label(text=iface('Job {value0}, NBO block {value1}', value0=result['job_number'], value1=result['block_number']))
+        layout.label(text=iface('{value0} orbitals; {value1} E(2) records', value0=len(result['orbitals']), value1=len(result['interactions'])))
         layout.label(text='NBOs are not mapped to canonical MOs')
         row = layout.row()
         row.enabled = bool(result['orbitals'])
@@ -152,9 +153,9 @@ class QCBLENDER_PT_nbo(bpy.types.Panel):
             box = layout.box()
             box.label(text=f"{orbital['number']} {orbital['type']} ({orbital['subindex']})")
             box.label(text=', '.join(f"{atom['symbol']}{atom['number']}" for atom in orbital['atoms']))
-            box.label(text=f"Occupancy {orbital['occupancy']:.6g}")
-            box.label(text=f"Energy {orbital['energy_hartree']:.6g} hartree")
-            box.label(text=f"Source line {orbital['source_line']}")
+            box.label(text=iface('Occupancy {value0:.6g}', value0=orbital['occupancy']))
+            box.label(text=iface('Energy {value0:.6g} hartree', value0=orbital['energy_hartree']))
+            box.label(text=iface('Source line {value0}', value0=orbital['source_line']))
         if result['interactions']:
             layout.prop(obj, '["qc_e2_index"]', text='E(2) row (1-based)')
             index = int(obj['qc_e2_index']) - 1
@@ -162,7 +163,7 @@ class QCBLENDER_PT_nbo(bpy.types.Panel):
                 interaction = result['interactions'][index]
                 box = layout.box()
                 box.label(text=f"{interaction['donor']} → {interaction['acceptor']}")
-                box.label(text=f"E(2) {interaction['e2_kcal_mol']:.6g} kcal/mol")
-                box.label(text=f"ΔE {interaction['delta_e_hartree']:.6g} hartree")
-                box.label(text=f"F(i,j) {interaction['fij_hartree']:.6g} hartree")
-                box.label(text=f"Source line {interaction['source_line']}")
+                box.label(text=iface('E(2) {value0:.6g} kcal/mol', value0=interaction['e2_kcal_mol']))
+                box.label(text=iface('ΔE {value0:.6g} hartree', value0=interaction['delta_e_hartree']))
+                box.label(text=iface('F(i,j) {value0:.6g} hartree', value0=interaction['fij_hartree']))
+                box.label(text=iface('Source line {value0}', value0=interaction['source_line']))

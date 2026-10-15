@@ -1,4 +1,5 @@
 """Discrete XYZ frame navigation with stable atoms and inferred connections."""
+from ..i18n import error_text, iface, ui_layout
 import json
 
 import bpy
@@ -85,8 +86,8 @@ class QCBLENDER_OT_trajectory_frame(bpy.types.Operator):
         return context.window_manager.invoke_props_dialog(self)
 
     def draw(self, context):
-        self.layout.label(text=f'Frames 1-{context.object["qc_trajectory_count"]}')
-        self.layout.prop(self, 'frame')
+        ui_layout(self.layout).label(text=iface('Frames 1-{value0}', value0=context.object["qc_trajectory_count"]))
+        ui_layout(self.layout).prop(self, 'frame')
 
     def execute(self, context):
         from ..data import load_dataset
@@ -96,7 +97,7 @@ class QCBLENDER_OT_trajectory_frame(bpy.types.Operator):
             frame = self.frame if self.direction == 'GOTO' else obj['qc_trajectory_frame'] + (1 if self.direction == 'NEXT' else -1)
             set_frame(obj, data, frame)
         except (ValueError, OSError, KeyError, TypeError, MemoryError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -114,12 +115,12 @@ class QCBLENDER_PT_trajectory(bpy.types.Panel):
         return context.object is not None and bool(context.object.get('qc_trajectory_frame'))
 
     def draw(self, context):
-        obj, layout = context.object, self.layout
+        obj, layout = context.object, ui_layout(self.layout)
         frame, count = obj['qc_trajectory_frame'], obj['qc_trajectory_count']
         record = json.loads(obj['qc_trajectory_record'])
-        layout.label(text=f'Frame {frame} / {count} | angstrom')
-        layout.label(text=record['comment'])
-        layout.label(text=f'Source lines {record["line_start"]}-{record["line_end"]}')
+        layout.label(text=iface('Frame {value0} / {value1} | angstrom', value0=frame, value1=count))
+        layout.label(text=record['comment'], translate=False)
+        layout.label(text=iface('Source lines {value0}-{value1}', value0=record["line_start"], value1=record["line_end"]))
         layout.label(text='Connections inferred by distance per frame')
         row = layout.row(align=True)
         previous, following = row.row(), row.row()

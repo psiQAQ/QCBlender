@@ -1,4 +1,6 @@
 """Viewport probe and native slice controls; scientific arrays remain source data."""
+from .node_identity import socket_name
+from ..i18n import error_text, iface, prepare_class, ui_layout
 import hashlib
 import json
 
@@ -24,7 +26,7 @@ def slice_controls(obj):
     if obj is None or obj.get('qc_view_kind') != 'slice':
         raise ValueError('Choose an active QC scalar slice')
     modifier = view_modifier(obj)
-    sockets = {item.name: item.identifier for item in modifier.node_group.interface.items_tree
+    sockets = {socket_name(item): item.identifier for item in modifier.node_group.interface.items_tree
                if item.item_type == 'SOCKET' and item.in_out == 'INPUT'}
     if any(name not in sockets or sockets[name] not in modifier for name in ('Center', 'Rotation', 'Width', 'Height')):
         raise ValueError('Slice controls are missing from the QC modifier')
@@ -225,17 +227,17 @@ class QCBLENDER_OT_define_plane(bpy.types.Operator):
         return context.window_manager.invoke_props_dialog(self)
 
     def draw(self, context):
-        self.layout.prop(self, 'mode')
+        ui_layout(self.layout).prop(self, 'mode')
         if self.mode in ('ij', 'jk', 'ki'):
-            self.layout.prop(self, 'position')
+            ui_layout(self.layout).prop(self, 'position')
         elif self.mode == 'atoms':
-            self.layout.prop_search(self, 'configuration', bpy.data, 'objects')
+            ui_layout(self.layout).prop_search(self, 'configuration', bpy.data, 'objects')
             count = plane_atom_bounds(self, context)[1] or 0
-            column = self.layout.column()
+            column = ui_layout(self.layout).column()
             column.enabled = count >= 3
             for name in ('atom_1', 'atom_2', 'atom_3'):
                 column.prop(self, name)
-            self.layout.label(text=f'Atoms 1-{count}' if count >= 3 else 'Choose a view with at least three atoms')
+            ui_layout(self.layout).label(text=iface('Atoms 1-{count}', count=count) if count >= 3 else iface('Choose a view with at least three atoms'))
 
     def execute(self, context):
         obj = context.object
@@ -278,7 +280,7 @@ class QCBLENDER_OT_define_plane(bpy.types.Operator):
             obj.data.update()
             obj.update_tag()
         except (ValueError, OSError, KeyError, TypeError, np.linalg.LinAlgError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -286,7 +288,7 @@ class QCBLENDER_OT_define_plane(bpy.types.Operator):
 def _probe_draw(operator):
     font = __import__('blf')
     font.size(0, 15)
-    for index, line in enumerate(operator._hud.splitlines()):
+    for index, line in enumerate(error_text(operator._hud).splitlines()):
         font.position(0, 28, 46 + 20 * index, 0)
         font.draw(0, line)
 
@@ -331,7 +333,7 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
             if self._data.metadata != sample_meta or binding_key(self._source) != self._source_binding:
                 raise ValueError('Sampled field Dataset changed while the probe started')
         except (ValueError, OSError, KeyError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         self._old_probe = self._target.get('qc_probe')
         if 'qc_probe' in self._target:
@@ -344,7 +346,7 @@ class QCBLENDER_OT_click_probe(bpy.types.Operator):
         if self._region is None or self._view is None:
             if self._old_probe is not None:
                 self._target['qc_probe'] = self._old_probe
-            self.report({'ERROR'}, '3D viewport window is unavailable')
+            self.report({'ERROR'}, error_text('3D viewport window is unavailable'))
             return {'CANCELLED'}
         self._hud = 'QC probe: click active surface; Enter saves; Esc restores'
         self._handle = bpy.types.SpaceView3D.draw_handler_add(_probe_draw, (self,), 'WINDOW', 'POST_PIXEL')
@@ -494,6 +496,8 @@ def register_tool():
             return
         raise RuntimeError('QC viewport tools are only partly registered')
     try:
+        for cls in (QCBLENDER_GGT_slice, QCBLENDER_WST_probe, QCBLENDER_WST_slice):
+            prepare_class(cls)
         bpy.utils.register_class(QCBLENDER_GGT_slice)
         _registered_tools.append('gizmo')
         bpy.utils.register_tool(QCBLENDER_WST_probe, after={'builtin.cursor'}, separator=True)

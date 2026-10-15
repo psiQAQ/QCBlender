@@ -1,4 +1,5 @@
 """Create a new orthographic camera around selected QC display views."""
+from ..i18n import error_text
 
 import bpy
 from bpy.props import FloatProperty
@@ -97,7 +98,7 @@ class QCBLENDER_OT_create_framed_camera(bpy.types.Operator):
             points = [point for obj in selected for point in _view_points(obj, depsgraph)]
             location, scale, clip_end = fit_orthographic(points, basis, aspect, self.margin)
         except (ValueError, ZeroDivisionError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
 
         camera_data = bpy.data.cameras.new('QC Framed Camera')

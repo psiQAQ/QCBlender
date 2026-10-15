@@ -1,3 +1,5 @@
+from ..i18n import enum_items, error_text, iface, tip, ui_layout
+from .node_identity import node_socket, socket_name
 import json
 import hashlib
 import textwrap
@@ -27,15 +29,15 @@ def clear_qualification_handoffs(*args):
 
 
 def _handoff_diagnostic(error):
-    message = 'Scientific qualification handoff: ' + str(error)
+    message = iface('Scientific qualification handoff: {error}', error=error_text(error))
     print('QCBlender ' + message)
 
     def draw(menu, context):
         for line in textwrap.wrap(message, width=75):
-            menu.layout.label(text=line)
+            ui_layout(menu.layout).label(text=line)
 
     try:
-        bpy.context.window_manager.popup_menu(draw, title='Scientific qualification', icon='ERROR')
+        bpy.context.window_manager.popup_menu(draw, title=iface('Scientific qualification'), icon='ERROR')
     except (RuntimeError, ReferenceError, AttributeError) as popup_error:
         print('QCBlender qualification diagnostic popup: ' + str(popup_error))
 
@@ -119,30 +121,31 @@ def same_science_source(context, source, directory, digest, fingerprint):
 def _material_section(node):
     role = node.get('qc_role')
     if role in ('color_ramp', 'color_invert'):
-        return '材质'
+        return 'material'
     if role == 'opacity_ramp':
-        return '材质'
+        return 'material'
     control = node.get('qc_control', '')
     if control.startswith(('Plane ', 'Box ')):
-        return '空间观察'
+        return 'spatial'
     if control.startswith('Color '):
-        return '颜色映射'
+        return 'color'
     if control == 'Display Threshold':
-        return '几何表示'
-    return '材质' if control else None
+        return 'geometry'
+    return 'material' if control else None
 
 
-def draw_material_controls(layout, mat, section='材质', unit='', preset_role=''):
+def draw_material_controls(layout, mat, section='material', unit='', preset_role=''):
+    layout = ui_layout(layout)
     if not mat or not mat.use_nodes:
         return
     nodes = mat.node_tree.nodes
     from .views import node_by_type
 
     shader = node_by_type(nodes, 'ShaderNodeBsdfPrincipled')
-    if shader and section == '材质':
+    if shader and section == 'material':
         for name in ('Base Color', 'Alpha', 'Roughness'):
-            if not shader.inputs[name].is_linked:
-                layout.prop(shader.inputs[name], 'default_value', text=name)
+            if not node_socket(shader.inputs, name).is_linked:
+                layout.prop(node_socket(shader.inputs, name), 'default_value', text=name)
     for node in nodes:
         if node.get('qc_role') in ('color_ramp', 'opacity_ramp') and section == _material_section(node):
             layout.label(text='Opacity multiplier' if node['qc_role'] == 'opacity_ramp' else 'Color map')
@@ -150,30 +153,31 @@ def draw_material_controls(layout, mat, section='材质', unit='', preset_role='
             if node['qc_role'] == 'color_ramp' and preset_role:
                 row = layout.row()
                 row.operator_context = 'INVOKE_DEFAULT'
-                operator = row.operator('qcblender.apply_color_preset', text='应用色带预设…')
+                operator = row.operator('qcblender.apply_color_preset', text='Apply Color Ramp Preset…')
                 operator.material_role = preset_role
-        elif node.get('qc_role') == 'color_invert' and section == '材质':
-            layout.prop(node.outputs[0], 'default_value', text='Reverse (0 or 1)')
+        elif node.get('qc_role') == 'color_invert' and section == 'material':
+            layout.prop(node_socket(node.outputs, 0), 'default_value', text='Reverse (0 or 1)')
         elif node.get('qc_control') and section == _material_section(node):
             if node['qc_control'] in ('Plane Origin', 'Plane Normal') and not next(
-                    (other.outputs[0].default_value for other in nodes if other.get('qc_control') == 'Plane Enabled'), False):
+                    (node_socket(other.outputs, 0).default_value for other in nodes if other.get('qc_control') == 'Plane Enabled'), False):
                 continue
             if node['qc_control'] in ('Box Minimum', 'Box Maximum') and not next(
-                    (other.outputs[0].default_value for other in nodes if other.get('qc_control') == 'Box Enabled'), False):
+                    (node_socket(other.outputs, 0).default_value for other in nodes if other.get('qc_control') == 'Box Enabled'), False):
                 continue
             if node.bl_idname == 'ShaderNodeCombineXYZ':
-                label = (' [视图局部方向，无量纲]' if node['qc_control'] == 'Plane Normal'
-                         else ' [视图局部 Å]')
-                layout.label(text=node['qc_control'] + label)
+                label = (iface('{control} [view-local direction, dimensionless]', control=iface(node['qc_control']))
+                         if node['qc_control'] == 'Plane Normal' else
+                         iface('{control} [view-local Å]', control=iface(node['qc_control'])))
+                layout.label(text=label, translate=False)
                 row = layout.row(align=True)
                 for item in node.inputs:
-                    row.prop(item, 'default_value', text=item.name)
+                    row.prop(item, 'default_value', text=socket_name(item))
             else:
                 label = node['qc_control']
                 if label in ('Color Minimum', 'Color Maximum', 'Display Threshold', 'Opacity Range'):
-                    label += f' [{unit or "单位未知"}]'
-                layout.prop(node.outputs[0], 'default_value', text=label)
-    if mat.get('qc_fog') and section == '材质':
+                    label = iface('{control} [{unit}]', control=iface(label), unit=unit or iface('Unit unknown'))
+                layout.prop(node_socket(node.outputs, 0), 'default_value', text=label)
+    if mat.get('qc_fog') and section == 'material':
         layout.label(text='Optical display; source values unchanged')
 
 
@@ -213,7 +217,7 @@ class AsyncOperation:
         try:
             self._job = self.begin(context)
         except (ValueError, OSError, KeyError, MemoryError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         self._timer = context.window_manager.event_timer_add(0.25, window=context.window)
         _operations[id(self)] = (self, context.window_manager)
@@ -238,11 +242,11 @@ class AsyncOperation:
                 raise RuntimeError(report.get('error', 'Scientific worker failed; inspect runtime report'))
             self.accept(context, report)
         except (RuntimeError, ValueError, OSError, KeyError, ReferenceError, MemoryError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             self.cancel(context)
             return {'CANCELLED'}
         for error in finish_operation(self):
-            self.report({'ERROR'}, error)
+            self.report({'ERROR'}, error_text(error))
         return {'FINISHED'}
 
     def cancel(self, context):
@@ -250,32 +254,31 @@ class AsyncOperation:
         job = getattr(self, '_job', None)
         if job is None:
             for error in timer_errors:
-                self.report({'ERROR'}, error)
+                self.report({'ERROR'}, error_text(error))
             return None
         report = job.cancel()
         messages = timer_errors + report['errors']
         if messages or report['status'] != 'exited':
             details = '; '.join(messages) or 'Worker exit has not been confirmed'
-            self.report({'ERROR'}, f'Cancellation {report["status"]}; PID {report["pid"]}; '
-                        f'{report["directory"]}: {details}')
+            self.report({'ERROR'}, iface('Cancellation {value0}; PID {value1}; {value2}: {value3}', value0=report["status"], value1=report["pid"], value2=report["directory"], value3=details))
         # Blender's Operator.cancel callback must return None.
 
 
 class QCBlenderPreferences(bpy.types.AddonPreferences):
     bl_idname = ADDON_ID
     runtime_report: StringProperty(name='Runtime report', default='')
-    data_output_directory: StringProperty(name='数据导出目录', subtype='DIR_PATH', default='')
+    data_output_directory: StringProperty(name='Data Export Directory', subtype='DIR_PATH', default='')
 
     def draw(self, context):
-        self.layout.prop(self, 'data_output_directory')
-        self.layout.label(text='留空：已保存工程的目录；未保存工程使用系统文档目录')
-        self.layout.operator('qcblender.check_runtime', icon='CHECKMARK')
+        ui_layout(self.layout).prop(self, 'data_output_directory')
+        ui_layout(self.layout).label(text='Empty: saved project directory; unsaved projects use the system Documents directory')
+        ui_layout(self.layout).operator('qcblender.check_runtime', icon='CHECKMARK')
         if self.runtime_report:
             report = json.loads(self.runtime_report)
             for entry in report.get('modules', []):
-                self.layout.label(text=f"{entry['module']}: {entry['status']}")
+                ui_layout(self.layout).label(text=f"{entry['module']}: {entry['status']}")
             if report.get('error'):
-                self.layout.label(text=report['error'], icon='ERROR')
+                ui_layout(self.layout).label(text=error_text(report['error']), icon='ERROR')
 
 
 class QCBLENDER_OT_check_runtime(AsyncOperation, bpy.types.Operator):
@@ -288,7 +291,7 @@ class QCBLENDER_OT_check_runtime(AsyncOperation, bpy.types.Operator):
 
     def accept(self, context, report):
         context.preferences.addons[ADDON_ID].preferences.runtime_report = json.dumps(report)
-        self.report({'INFO'}, 'Scientific runtime checks passed')
+        self.report({'INFO'}, error_text('Scientific runtime checks passed'))
 
 
 class QCBLENDER_OT_import(AsyncOperation, bpy.types.Operator, ImportHelper):
@@ -330,19 +333,24 @@ class QCBLENDER_OT_import(AsyncOperation, bpy.types.Operator, ImportHelper):
         initialize_trajectory(obj, data)
         for index in range(len(data.metadata.get('fields', []))):
             field_view(directory, obj, index)
-        self.report({'INFO'}, 'Imported scientific data; 1 Blender unit = 1 angstrom')
+        self.report({'INFO'}, error_text('Imported scientific data; 1 Blender unit = 1 angstrom'))
 
 
 @lru_cache(maxsize=16)
 def cached_job_choices(summary):
     # Blender retains references to dynamic enum strings beyond the callback.
     jobs = json.loads(summary)['jobs'] if summary else []
-    return [(str(i), f"{i+1}: {job['status']} | {job['route'] or '未记录'}",
+    return [(str(i), f"{i+1}: {job['status']} | {job['route'] or 'Not recorded'}",
              f"Lines {job['line_start']}–{job['line_end']}") for i, job in enumerate(jobs)]
 
 
 def job_choices(self, context):
-    return cached_job_choices(self.summary)
+    jobs = json.loads(self.summary).get('jobs', []) if self.summary else []
+    return enum_items([(identifier,
+        iface('{number}: {status} | {route}', number=index + 1,
+              status=iface(jobs[index]['status']), route=jobs[index]['route'] or iface('Not recorded')),
+        tip('Lines {start}–{end}', start=jobs[index]['line_start'], end=jobs[index]['line_end']))
+        for index, (identifier, label, description) in enumerate(cached_job_choices(self.summary))])
 
 
 class QCBLENDER_OT_choose_log_job(bpy.types.Operator):
@@ -357,20 +365,20 @@ class QCBLENDER_OT_choose_log_job(bpy.types.Operator):
         return context.window_manager.invoke_props_dialog(self, width=640)
 
     def draw(self, context):
-        layout = self.layout
+        layout = ui_layout(self.layout)
         layout.prop(self, 'job')
         record = json.loads(self.summary)['jobs'][int(self.job)]
-        layout.label(text=f"Lines {record['line_start']}–{record['line_end']} | {record['status']}")
-        for line in textwrap.wrap(record['route'] or '未记录', width=85):
+        layout.label(text=iface('Lines {value0}–{value1} | {value2}', value0=record['line_start'], value1=record['line_end'], value2=record['status']))
+        for line in textwrap.wrap(record['route'] or 'Not recorded', width=85):
             layout.label(text=line)
-        layout.label(text='Explicit geometry: ' + ('detected; validated on import' if record['explicit_geometry'] else 'not detected'))
+        layout.label(text=iface('Explicit geometry: {value0}', value0='detected; validated on import' if record['explicit_geometry'] else 'not detected'))
         selection = record['energy_selection']
         energy = next((e for e in record['energies'] if e['id'] == selection.get('record_id')), None)
-        layout.label(text=f"Energy: {energy['value_hartree']} Hartree" if energy else 'Energy: ' + selection['status'])
+        layout.label(text=iface('Energy: {value0} Hartree', value0=energy['value_hartree']) if energy else iface('Energy: {status}', status=iface(selection['status'])))
         if not energy and record['energies']:
-            layout.label(text=f"Last records ({len(record['energies'])} total; not a selected final energy):")
+            layout.label(text=iface('Last records ({value0} total; not a selected final energy):', value0=len(record['energies'])))
             for item in record['energies'][-3:]:
-                layout.label(text=f"L{item['line_start']} {item['method']} / {item['kind']}: {item['value_hartree']} Hartree")
+                layout.label(text=iface('L{value0} {value1} / {value2}: {value3} Hartree', value0=item['line_start'], value1=item['method'], value2=item['kind'], value3=item['value_hartree']))
         layout.label(text='Import keeps this calculation status; no geometry inheritance')
 
     def execute(self, context):
@@ -394,15 +402,15 @@ class QCBLENDER_OT_qualify_science(AsyncOperation, bpy.types.Operator):
         try:
             self._retry_binding = science_binding(context)
         except (ValueError, OSError, KeyError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return context.window_manager.invoke_props_dialog(self, width=600)
 
     def draw(self, context):
-        for line in textwrap.wrap(self.reason, width=85):
-            self.layout.label(text=line)
-        self.layout.prop(self, 'memory_mb')
-        self.layout.label(text='Retry source qualification before opening field parameters')
+        for line in textwrap.wrap(error_text(self.reason), width=85):
+            ui_layout(self.layout).label(text=line)
+        ui_layout(self.layout).prop(self, 'memory_mb')
+        ui_layout(self.layout).label(text='Retry source qualification before opening field parameters')
 
     def begin(self, context):
         from .jobs import Job
@@ -469,13 +477,13 @@ class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
                 # owns its modal handler and schedules the generation dialog later.
                 return {'CANCELLED'}
         except (RuntimeError, ValueError, OSError, KeyError, MemoryError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         limit_orbital(self, context)
         return context.window_manager.invoke_props_dialog(self, width=600)
 
     def draw(self, context):
-        layout = self.layout
+        layout = ui_layout(self.layout)
         layout.prop(self, 'quantity')
         if self.quantity == 'orbital_amplitude':
             layout.prop(self, 'spin')
@@ -486,15 +494,15 @@ class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
                 row.enabled = bool(count)
                 row.prop(self, 'orbital')
                 if count:
-                    layout.label(text=f'Orbitals 1-{count}')
+                    layout.label(text=iface('Orbitals 1-{value0}', value0=count))
             if hasattr(self, '_preview'):
                 from ..science_preflight import preview_orbital
                 try:
                     selected = preview_orbital(self._preview, self.spin, self.orbital_choice, self.orbital)
-                    layout.label(text=f"Source MO {selected['source_number']} | occupation {selected['occupation']:.6g}")
-                    layout.label(text=f"Energy: {selected['energy_hartree']} Hartree")
+                    layout.label(text=iface('Source MO {value0} | occupation {value1:.6g}', value0=selected['source_number'], value1=selected['occupation']))
+                    layout.label(text=iface('Energy: {value0} Hartree', value0=selected['energy_hartree']))
                 except ValueError as error:
-                    layout.label(text=str(error), icon='ERROR')
+                    layout.label(text=error_text(error), icon='ERROR')
         layout.prop(self, 'spacing')
         layout.prop(self, 'padding')
         layout.prop(self, 'memory_mb')
@@ -503,16 +511,16 @@ class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
             import math
             try:
                 grid = preview_grid(self._preview, self.spacing, self.padding)
-                layout.label(text='Grid: ' + ' × '.join(map(str, grid['shape'])) + f" | {math.prod(grid['shape']):,} voxels")
+                layout.label(text=iface('Grid: {value0} | {value1:,} voxels', value0=' × '.join(map(str, grid['shape'])), value1=math.prod(grid['shape'])))
                 resources = preview_resources(self._preview, grid, self.quantity, self.memory_mb, validate=False)
-                layout.label(text=f"Dataset: {resources['dataset_bytes'] / 1024**2:.2f} MiB / 1024 MiB")
-                layout.label(text=f"Evaluation estimate: {resources['minimum_working_bytes'] / 1024**2:.2f} MiB / {self.memory_mb} MiB")
+                layout.label(text=iface('Dataset: {value0:.2f} MiB / 1024 MiB', value0=resources['dataset_bytes'] / 1024**2))
+                layout.label(text=iface('Evaluation estimate: {value0:.2f} MiB / {value1} MiB', value0=resources['minimum_working_bytes'] / 1024**2, value1=self.memory_mb))
                 if resources['refusal_reason']:
-                    for line in textwrap.wrap(resources['refusal_reason'], width=75):
+                    for line in textwrap.wrap(error_text(resources['refusal_reason']), width=75):
                         layout.label(text=line, icon='ERROR')
             except (ValueError, MemoryError) as error:
-                layout.label(text=str(error), icon='ERROR')
-        for line in textwrap.wrap('Grid limits require convergence checks for quantitative use', width=75):
+                layout.label(text=error_text(error), icon='ERROR')
+        for line in textwrap.wrap(iface('Grid limits require convergence checks for quantitative use'), width=75):
             layout.label(text=line)
 
     def begin(self, context):
@@ -537,7 +545,7 @@ class QCBLENDER_OT_generate(AsyncOperation, bpy.types.Operator):
         if hashlib.sha256((Path(self._dataset) / 'manifest.json').read_bytes()).hexdigest() != self._input_digest:
             raise ValueError('Source dataset changed during calculation; stale result was not attached')
         field_view(self._job.directory / 'dataset', self._source)
-        self.report({'INFO'}, 'Quantum field ready; adjust isovalue in the geometry node modifier')
+        self.report({'INFO'}, error_text('Quantum field ready; adjust isovalue in the geometry node modifier'))
 
 
 class QCBLENDER_OT_declare_field(AsyncOperation, bpy.types.Operator):
@@ -561,11 +569,11 @@ class QCBLENDER_OT_declare_field(AsyncOperation, bpy.types.Operator):
         return context.window_manager.invoke_props_dialog(self)
 
     def draw(self, context):
-        self.layout.prop(self, 'quantity')
+        ui_layout(self.layout).prop(self, 'quantity')
         if self.quantity == 'custom':
-            self.layout.prop(self, 'custom_quantity')
-            self.layout.prop(self, 'custom_unit')
-        self.layout.label(text='Confirm against the generating calculation; values are not converted.')
+            ui_layout(self.layout).prop(self, 'custom_quantity')
+            ui_layout(self.layout).prop(self, 'custom_unit')
+        ui_layout(self.layout).label(text='Confirm against the generating calculation; values are not converted.')
 
     def begin(self, context):
         from .jobs import Job
@@ -581,7 +589,7 @@ class QCBLENDER_OT_declare_field(AsyncOperation, bpy.types.Operator):
         if hashlib.sha256((Path(self._directory) / 'manifest.json').read_bytes()).hexdigest() != self._digest:
             raise ValueError('Dataset changed during interpretation')
         rebind_dataset(self._directory, self._job.directory / 'dataset')
-        self.report({'INFO'}, 'Saved explicit user-assigned quantity and units; array values unchanged')
+        self.report({'INFO'}, error_text('Saved explicit user-assigned quantity and units; array values unchanged'))
 
 
 class QCBLENDER_OT_set_view_style(bpy.types.Operator):
@@ -603,7 +611,7 @@ class QCBLENDER_OT_set_view_style(bpy.types.Operator):
         try:
             modifier = view_modifier(context.object)
             valid = any(item.item_type == 'SOCKET' and item.in_out == 'INPUT'
-                        and item.name == STYLE_SOCKETS[context.object['qc_view_kind']]
+                        and socket_name(item) == STYLE_SOCKETS[context.object['qc_view_kind']]
                         and item.identifier == self.socket_id
                         for item in modifier.node_group.interface.items_tree)
             if not valid or self.socket_id not in modifier:
@@ -612,7 +620,7 @@ class QCBLENDER_OT_set_view_style(bpy.types.Operator):
             context.object.update_tag()
             context.object.data.update()
         except ValueError as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -626,12 +634,12 @@ def view_parameter_state(obj):
     modifier = view_modifier(obj)
     items = [item for item in modifier.node_group.interface.items_tree
              if item.item_type == 'SOCKET' and item.in_out == 'INPUT' and item.identifier in modifier]
-    values = {item.name: modifier.get(item.identifier) for item in items}
+    values = {socket_name(item): modifier.get(item.identifier) for item in items}
     quantity = field.get('quantity', '')
     color_unit = record(obj, 'qc_color_source').get('unit', field.get('unit', ''))
     materials = [modifier.get(item.identifier) for item in items
                  if item.socket_type == 'NodeSocketMaterial'
-                 and socket_group(item.name, item.socket_type, values, quantity)]
+                 and socket_group(socket_name(item), item.socket_type, values, quantity)]
     for node in modifier.node_group.nodes:
         for control in node.inputs:
             if control.type == 'MATERIAL' and not control.is_linked and control.default_value and control.default_value not in materials:
@@ -645,26 +653,27 @@ def parameter_section_available(obj, group):
         modifier, items, values, quantity, unit, materials = view_parameter_state(obj)
     except ValueError:
         return False
-    return (any(socket_group(item.name, item.socket_type, values, quantity) == group for item in items)
-            or (group == '材质' and any(materials))
+    return (any(socket_group(socket_name(item), item.socket_type, values, quantity) == group for item in items)
+            or (group == 'material' and any(materials))
             or any(_material_section(node) == group for mat in materials if mat and mat.use_nodes
                    for node in mat.node_tree.nodes)
-            or (group == '颜色映射' and obj.get('qc_view_kind') in ('atoms', 'field', 'slice')))
+            or (group == 'color' and obj.get('qc_view_kind') in ('atoms', 'field', 'slice')))
 
 
 def draw_view_parameters(layout, obj, section=None):
     """Edit the existing node controls in their native Properties sections."""
-    from .parameters import GROUPS, STYLES, STYLE_SOCKETS, socket_group, socket_label
+    layout = ui_layout(layout)
+    from .parameters import GROUPS, GROUP_LABELS, STYLES, STYLE_SOCKETS, socket_group, socket_label
     from .capabilities import record
     field = record(obj, 'qc_field')
     try:
         modifier, items, values, quantity, color_unit, materials = view_parameter_state(obj)
     except ValueError as error:
-        layout.label(text=str(error), icon='INFO')
+        layout.label(text=error_text(error), icon='INFO')
         return
 
     preset_materials = {}
-    if section in (None, '材质'):
+    if section in (None, 'material'):
         from .copy_display import _state
         try:
             preset_materials = {role: mat for role, (mat, _) in _state(obj)['materials'].items()
@@ -676,45 +685,45 @@ def draw_view_parameters(layout, obj, section=None):
     for group in GROUPS:
         if section is not None and group != section:
             continue
-        grouped = [item for item in items if socket_group(item.name, item.socket_type, values, quantity) == group]
-        material_controls = (group == '材质' and any(materials)) or any(
+        grouped = [item for item in items if socket_group(socket_name(item), item.socket_type, values, quantity) == group]
+        material_controls = (group == 'material' and any(materials)) or any(
             _material_section(node) == group
             for mat in materials if mat and mat.use_nodes for node in mat.node_tree.nodes)
-        color_binding = group == '颜色映射' and obj.get('qc_view_kind') in ('atoms', 'field', 'slice')
+        color_binding = group == 'color' and obj.get('qc_view_kind') in ('atoms', 'field', 'slice')
         if not grouped and not material_controls and not color_binding:
             continue
         box = layout if section else layout.box()
         if section is None:
-            box.label(text=group)
-        if group == '图例排版':
-            box.label(text='尺寸属于视图本地布局单位')
+            box.label(text=GROUP_LABELS[group])
+        if group == 'legend':
+            box.label(text='Dimensions use view-local layout units')
             if not modifier.node_group.get('qc_legend_layout'):
-                box.operator('qcblender.upgrade_legend', text='升级为可调图例')
-        if group == '空间观察' and (any(item.name.startswith(('Plane ', 'Box ')) for item in grouped)
+                box.operator('qcblender.upgrade_legend', text='Upgrade to Adjustable Legend')
+        if group == 'spatial' and (any(socket_name(item).startswith(('Plane ', 'Box ')) for item in grouped)
                                   or any(mat and mat.get('qc_fog') for mat in materials)):
-            box.label(text='裁剪坐标：视图局部坐标；位置与范围单位为 Å')
-        if group == '颜色映射':
+            box.label(text='Clipping uses view-local coordinates; positions and bounds are in Å')
+        if group == 'color':
             if color_binding:
-                box.operator('qcblender.select_color_field', text='选择／替换着色场')
+                box.operator('qcblender.select_color_field', text='Select / Replace Color Field')
             if obj.get('qc_color_source'):
                 row = box.row(align=True)
-                row.operator('qcblender.symmetric_color_range', text='零中心对称')
-                row.operator('qcblender.read_color_range', text='读取有效范围')
-                box.label(text='超范围：端点颜色；无效采样：洋红色')
+                row.operator('qcblender.symmetric_color_range', text='Zero-Centered Symmetry')
+                row.operator('qcblender.read_color_range', text='Read Valid Range')
+                box.label(text='Out of range: endpoint colors; invalid samples: magenta')
             for prefix in ('Color', 'Charge'):
                 if prefix + ' Center' in values and not values[prefix + ' Minimum'] < values[prefix + ' Center'] < values[prefix + ' Maximum']:
-                    box.label(text=prefix + ': 最小值 < 中心值 < 最大值', icon='ERROR')
+                    box.label(text=iface('{value0}: minimum < center < maximum', value0=prefix), icon='ERROR')
         for item in grouped:
-            if item.name == STYLE_SOCKETS.get(obj.get('qc_view_kind')):
+            if socket_name(item) == STYLE_SOCKETS.get(obj.get('qc_view_kind')):
                 row = box.row(align=True)
-                row.label(text='样式')
+                row.label(text='Style')
                 for value, label in enumerate(STYLES[obj['qc_view_kind']]):
                     button = row.operator('qcblender.set_view_style', text=label,
                                           depress=modifier.get(item.identifier) == value)
                     button.socket_id, button.style = item.identifier, value
             else:
                 box.prop(modifier, '["' + item.identifier + '"]',
-                         text=socket_label(item.name, quantity, color_unit if item.name.startswith('Color ') else field.get('unit', '')))
+                         text=socket_label(socket_name(item), quantity, color_unit if socket_name(item).startswith('Color ') else field.get('unit', '')))
         for mat in materials:
             if mat:
                 role = next((name for name, target in preset_materials.items() if target == mat), '')

@@ -1,4 +1,6 @@
 """Native grid sampling, signed color maps and planar scalar slices."""
+from ..i18n import enum_items, error_text, iface, ui_layout
+from .node_identity import node_socket, socket_name
 import json
 from functools import lru_cache
 
@@ -21,7 +23,7 @@ def scalar_material(opacity_attribute=False):
     if opacity_attribute:
         opacity = nodes.new('ShaderNodeAttribute')
         opacity.attribute_name = 'qc_opacity'
-        links.new(opacity.outputs['Fac'], shader.inputs['Alpha'])
+        links.new(node_socket(opacity.outputs, 'Fac'), node_socket(shader.inputs, 'Alpha'))
     value = nodes.new('ShaderNodeAttribute')
     value.attribute_name = 'qc_color_fraction'
     valid = nodes.new('ShaderNodeAttribute')
@@ -36,26 +38,26 @@ def scalar_material(opacity_attribute=False):
     invert.label = 'Reverse color map (0 or 1)'
     reverse = nodes.new('ShaderNodeMath')
     reverse.operation = 'SUBTRACT'
-    links.new(invert.outputs[0], reverse.inputs[0])
-    links.new(value.outputs['Fac'], reverse.inputs[1])
+    links.new(node_socket(invert.outputs, 0), node_socket(reverse.inputs, 0))
+    links.new(node_socket(value.outputs, 'Fac'), node_socket(reverse.inputs, 1))
     absolute = nodes.new('ShaderNodeMath')
     absolute.operation = 'ABSOLUTE'
-    links.new(reverse.outputs[0], absolute.inputs[0])
-    links.new(absolute.outputs[0], ramp.inputs['Fac'])
+    links.new(node_socket(reverse.outputs, 0), node_socket(absolute.inputs, 0))
+    links.new(node_socket(absolute.outputs, 0), node_socket(ramp.inputs, 'Fac'))
     missing = nodes.new('ShaderNodeMixRGB')
-    missing.inputs[1].default_value = (1, 0, 1, 1)
-    links.new(valid.outputs['Fac'], missing.inputs[0])
-    links.new(ramp.outputs['Color'], missing.inputs[2])
-    links.new(missing.outputs[0], shader.inputs['Base Color'])
+    node_socket(missing.inputs, 1).default_value = (1, 0, 1, 1)
+    links.new(node_socket(valid.outputs, 'Fac'), node_socket(missing.inputs, 0))
+    links.new(node_socket(ramp.outputs, 'Color'), node_socket(missing.inputs, 2))
+    links.new(node_socket(missing.outputs, 0), node_socket(shader.inputs, 'Base Color'))
     legend = nodes.new('ShaderNodeAttribute')
     legend.attribute_name = 'qc_legend'
     emission = nodes.new('ShaderNodeEmission')
-    links.new(missing.outputs[0], emission.inputs['Color'])
+    links.new(node_socket(missing.outputs, 0), node_socket(emission.inputs, 'Color'))
     mix = nodes.new('ShaderNodeMixShader')
-    links.new(legend.outputs['Fac'], mix.inputs[0])
-    links.new(shader.outputs['BSDF'], mix.inputs[1])
-    links.new(emission.outputs['Emission'], mix.inputs[2])
-    links.new(mix.outputs[0], output.inputs['Surface'])
+    links.new(node_socket(legend.outputs, 'Fac'), node_socket(mix.inputs, 0))
+    links.new(node_socket(shader.outputs, 'BSDF'), node_socket(mix.inputs, 1))
+    links.new(node_socket(emission.outputs, 'Emission'), node_socket(mix.inputs, 2))
+    links.new(node_socket(mix.outputs, 0), node_socket(output.inputs, 'Surface'))
     return mat
 
 
@@ -64,20 +66,20 @@ def color_fraction(tree, inputs, value, minimum, center, maximum):
     lower, upper = nodes.new('ShaderNodeMapRange'), nodes.new('ShaderNodeMapRange')
     for mapping, start, end, low, high in [(lower, minimum, center, 0, .5), (upper, center, maximum, .5, 1)]:
         mapping.clamp = True
-        links.new(value, mapping.inputs['Value'])
-        links.new(inputs.outputs[start], mapping.inputs['From Min'])
-        links.new(inputs.outputs[end], mapping.inputs['From Max'])
-        mapping.inputs['To Min'].default_value, mapping.inputs['To Max'].default_value = low, high
+        links.new(value, node_socket(mapping.inputs, 'Value'))
+        links.new(node_socket(inputs.outputs, start), node_socket(mapping.inputs, 'From Min'))
+        links.new(node_socket(inputs.outputs, end), node_socket(mapping.inputs, 'From Max'))
+        node_socket(mapping.inputs, 'To Min').default_value, node_socket(mapping.inputs, 'To Max').default_value = low, high
     below = nodes.new('ShaderNodeMath')
     below.operation = 'LESS_THAN'
-    links.new(value, below.inputs[0])
-    links.new(inputs.outputs[center], below.inputs[1])
+    links.new(value, node_socket(below.inputs, 0))
+    links.new(node_socket(inputs.outputs, center), node_socket(below.inputs, 1))
     choose = nodes.new('GeometryNodeSwitch')
     choose.input_type = 'FLOAT'
-    links.new(below.outputs[0], choose.inputs['Switch'])
-    links.new(lower.outputs['Result'], choose.inputs['True'])
-    links.new(upper.outputs['Result'], choose.inputs['False'])
-    return choose.outputs['Output']
+    links.new(node_socket(below.outputs, 0), node_socket(choose.inputs, 'Switch'))
+    links.new(node_socket(lower.outputs, 'Result'), node_socket(choose.inputs, 'True'))
+    links.new(node_socket(upper.outputs, 'Result'), node_socket(choose.inputs, 'False'))
+    return node_socket(choose.outputs, 'Output')
 
 
 def add_legend(obj, color_material, minimum, center, maximum, title, *, tree=None, text_material=None,
@@ -97,7 +99,7 @@ def add_legend(obj, color_material, minimum, center, maximum, title, *, tree=Non
                               ('Legend Vertical', 'NodeSocketBool', False),
                               ('Legend Rotation', 'NodeSocketVector', (0., 0., 0.))]:
         existing = [entry for entry in tree.interface.items_tree
-                    if entry.item_type == 'SOCKET' and entry.in_out == 'INPUT' and entry.name == name]
+                    if entry.item_type == 'SOCKET' and entry.in_out == 'INPUT' and socket_name(entry) == name]
         if existing:
             if len(existing) != 1 or existing[0].socket_type != kind:
                 raise ValueError('Existing legend input is ambiguous: ' + name)
@@ -110,11 +112,11 @@ def add_legend(obj, color_material, minimum, center, maximum, title, *, tree=Non
             modifier[item.identifier] = value
     inputs = next(n for n in nodes if n.type == 'GROUP_INPUT')
     output = next(n for n in nodes if n.type == 'GROUP_OUTPUT')
-    destination = output.inputs['Geometry'] if destination is None else destination
+    destination = node_socket(output.inputs, 'Geometry') if destination is None else destination
     original = destination.links[0].from_socket
 
     def component(coefficients):
-        parts = [math(tree, 'MULTIPLY', inputs.outputs[name], factor)
+        parts = [math(tree, 'MULTIPLY', node_socket(inputs.outputs, name), factor)
                  for name, factor in zip(('Legend Length', 'Legend Width', 'Legend Text Size'), coefficients[:3])
                  if factor]
         if coefficients[3]:
@@ -129,95 +131,95 @@ def add_legend(obj, color_material, minimum, center, maximum, title, *, tree=Non
         for orientation in ('horizontal', 'vertical'):
             vector = nodes.new('ShaderNodeCombineXYZ')
             for axis, coefficients in zip(('X', 'Y'), LAYOUT[orientation][label]):
-                links.new(component(coefficients), vector.inputs[axis])
-            vectors.append(vector.outputs['Vector'])
+                links.new(component(coefficients), node_socket(vector.inputs, axis))
+            vectors.append(node_socket(vector.outputs, 'Vector'))
         choice = nodes.new('GeometryNodeSwitch')
         choice.input_type = 'VECTOR'
-        links.new(inputs.outputs['Legend Vertical'], choice.inputs['Switch'])
-        links.new(vectors[0], choice.inputs['False'])
-        links.new(vectors[1], choice.inputs['True'])
-        return choice.outputs['Output']
+        links.new(node_socket(inputs.outputs, 'Legend Vertical'), node_socket(choice.inputs, 'Switch'))
+        links.new(vectors[0], node_socket(choice.inputs, 'False'))
+        links.new(vectors[1], node_socket(choice.inputs, 'True'))
+        return node_socket(choice.outputs, 'Output')
     grid = nodes.new('GeometryNodeMeshGrid')
-    links.new(inputs.outputs['Legend Length'], grid.inputs['Size X'])
-    links.new(inputs.outputs['Legend Width'], grid.inputs['Size Y'])
-    grid.inputs['Vertices X'].default_value = 65
-    grid.inputs['Vertices Y'].default_value = 2
+    links.new(node_socket(inputs.outputs, 'Legend Length'), node_socket(grid.inputs, 'Size X'))
+    links.new(node_socket(inputs.outputs, 'Legend Width'), node_socket(grid.inputs, 'Size Y'))
+    node_socket(grid.inputs, 'Vertices X').default_value = 65
+    node_socket(grid.inputs, 'Vertices Y').default_value = 2
     position = nodes.new('GeometryNodeInputPosition')
     xyz = nodes.new('ShaderNodeSeparateXYZ')
-    links.new(position.outputs['Position'], xyz.inputs['Vector'])
+    links.new(node_socket(position.outputs, 'Position'), node_socket(xyz.inputs, 'Vector'))
     fraction = nodes.new('ShaderNodeMapRange')
-    links.new(math(tree, 'MULTIPLY', inputs.outputs['Legend Length'], -.5), fraction.inputs['From Min'])
-    links.new(math(tree, 'MULTIPLY', inputs.outputs['Legend Length'], .5), fraction.inputs['From Max'])
-    links.new(xyz.outputs['X'], fraction.inputs['Value'])
-    geometry = grid.outputs['Mesh']
-    for name, kind, value in [('qc_color_fraction', 'FLOAT', fraction.outputs['Result']),
+    links.new(math(tree, 'MULTIPLY', node_socket(inputs.outputs, 'Legend Length'), -.5), node_socket(fraction.inputs, 'From Min'))
+    links.new(math(tree, 'MULTIPLY', node_socket(inputs.outputs, 'Legend Length'), .5), node_socket(fraction.inputs, 'From Max'))
+    links.new(node_socket(xyz.outputs, 'X'), node_socket(fraction.inputs, 'Value'))
+    geometry = node_socket(grid.outputs, 'Mesh')
+    for name, kind, value in [('qc_color_fraction', 'FLOAT', node_socket(fraction.outputs, 'Result')),
                                ('qc_sample_valid', 'BOOLEAN', True), ('qc_legend', 'BOOLEAN', True)]:
         store = nodes.new('GeometryNodeStoreNamedAttribute')
         store.data_type, store.domain = kind, 'POINT'
-        store.inputs['Name'].default_value = name
-        links.new(geometry, store.inputs['Geometry'])
+        node_socket(store.inputs, 'Name').default_value = name
+        links.new(geometry, node_socket(store.inputs, 'Geometry'))
         if value is True:
-            store.inputs['Value'].default_value = True
+            node_socket(store.inputs, 'Value').default_value = True
         else:
-            links.new(value, store.inputs['Value'])
-        geometry = store.outputs['Geometry']
+            links.new(value, node_socket(store.inputs, 'Value'))
+        geometry = node_socket(store.outputs, 'Geometry')
     assign = nodes.new('GeometryNodeSetMaterial')
-    assign.inputs['Material'].default_value = color_material
-    links.new(geometry, assign.inputs['Geometry'])
+    node_socket(assign.inputs, 'Material').default_value = color_material
+    links.new(geometry, node_socket(assign.inputs, 'Geometry'))
     vertical = nodes.new('GeometryNodeTransform')
-    vertical.inputs['Rotation'].default_value = (0, 0, 1.5707963267948966)
-    links.new(assign.outputs['Geometry'], vertical.inputs['Geometry'])
+    node_socket(vertical.inputs, 'Rotation').default_value = (0, 0, 1.5707963267948966)
+    links.new(node_socket(assign.outputs, 'Geometry'), node_socket(vertical.inputs, 'Geometry'))
     bar = nodes.new('GeometryNodeSwitch')
     bar.input_type = 'GEOMETRY'
-    links.new(inputs.outputs['Legend Vertical'], bar.inputs['Switch'])
-    links.new(assign.outputs['Geometry'], bar.inputs['False'])
-    links.new(vertical.outputs['Geometry'], bar.inputs['True'])
+    links.new(node_socket(inputs.outputs, 'Legend Vertical'), node_socket(bar.inputs, 'Switch'))
+    links.new(node_socket(assign.outputs, 'Geometry'), node_socket(bar.inputs, 'False'))
+    links.new(node_socket(vertical.outputs, 'Geometry'), node_socket(bar.inputs, 'True'))
     legend = nodes.new('GeometryNodeJoinGeometry')
-    links.new(bar.outputs['Output'], legend.inputs['Geometry'])
+    links.new(node_socket(bar.outputs, 'Output'), node_socket(legend.inputs, 'Geometry'))
     if text_material is None:
         text_material = material('QC legend text', (.015, .015, .015, 1))
         emission = text_material.node_tree.nodes.new('ShaderNodeEmission')
-        emission.inputs['Color'].default_value = (.015, .015, .015, 1)
+        node_socket(emission.inputs, 'Color').default_value = (.015, .015, .015, 1)
         material_output = node_by_type(text_material.node_tree.nodes, 'ShaderNodeOutputMaterial')
-        text_material.node_tree.links.new(emission.outputs[0], material_output.inputs['Surface'])
+        text_material.node_tree.links.new(node_socket(emission.outputs, 0), node_socket(material_output.inputs, 'Surface'))
     title_node = None
     for label, role in [(minimum, 'minimum'), (center, 'center'),
                         (maximum, 'maximum'), (None, 'title')]:
         text = nodes.new('GeometryNodeStringToCurves')
-        links.new(inputs.outputs['Legend Text Size'], text.inputs['Size'])
+        links.new(node_socket(inputs.outputs, 'Legend Text Size'), node_socket(text.inputs, 'Size'))
         if label:
             number = nodes.new('FunctionNodeValueToString')
             number.label = label
-            links.new(inputs.outputs['Legend Decimals'], number.inputs['Decimals'])
-            links.new(inputs.outputs[label], number.inputs['Value'])
-            links.new(number.outputs['String'], text.inputs['String'])
+            links.new(node_socket(inputs.outputs, 'Legend Decimals'), node_socket(number.inputs, 'Decimals'))
+            links.new(node_socket(inputs.outputs, label), node_socket(number.inputs, 'Value'))
+            links.new(node_socket(number.outputs, 'String'), node_socket(text.inputs, 'String'))
         else:
             text.label = 'QC Legend Title'
-            text.inputs['String'].default_value = title
+            node_socket(text.inputs, 'String').default_value = title
             title_node = text
         realize = nodes.new('GeometryNodeRealizeInstances')
-        links.new(text.outputs['Curve Instances'], realize.inputs['Geometry'])
+        links.new(node_socket(text.outputs, 'Curve Instances'), node_socket(realize.inputs, 'Geometry'))
         fill = nodes.new('GeometryNodeFillCurve')
-        links.new(realize.outputs['Geometry'], fill.inputs['Curve'])
+        links.new(node_socket(realize.outputs, 'Geometry'), node_socket(fill.inputs, 'Curve'))
         transform = nodes.new('GeometryNodeTransform')
-        links.new(offset(role), transform.inputs['Translation'])
-        links.new(fill.outputs['Mesh'], transform.inputs['Geometry'])
+        links.new(offset(role), node_socket(transform.inputs, 'Translation'))
+        links.new(node_socket(fill.outputs, 'Mesh'), node_socket(transform.inputs, 'Geometry'))
         text_assign = nodes.new('GeometryNodeSetMaterial')
-        text_assign.inputs['Material'].default_value = text_material
-        links.new(transform.outputs['Geometry'], text_assign.inputs['Geometry'])
-        links.new(text_assign.outputs['Geometry'], legend.inputs['Geometry'])
+        node_socket(text_assign.inputs, 'Material').default_value = text_material
+        links.new(node_socket(transform.outputs, 'Geometry'), node_socket(text_assign.inputs, 'Geometry'))
+        links.new(node_socket(text_assign.outputs, 'Geometry'), node_socket(legend.inputs, 'Geometry'))
     transform = nodes.new('GeometryNodeTransform')
-    links.new(legend.outputs['Geometry'], transform.inputs['Geometry'])
-    links.new(inputs.outputs['Legend Position'], transform.inputs['Translation'])
-    links.new(inputs.outputs['Legend Rotation'], transform.inputs['Rotation'])
+    links.new(node_socket(legend.outputs, 'Geometry'), node_socket(transform.inputs, 'Geometry'))
+    links.new(node_socket(inputs.outputs, 'Legend Position'), node_socket(transform.inputs, 'Translation'))
+    links.new(node_socket(inputs.outputs, 'Legend Rotation'), node_socket(transform.inputs, 'Rotation'))
     show = nodes.new('GeometryNodeSwitch')
     show.input_type = 'GEOMETRY'
-    links.new(inputs.outputs['Show Legend'], show.inputs['Switch'])
-    links.new(transform.outputs['Geometry'], show.inputs['True'])
+    links.new(node_socket(inputs.outputs, 'Show Legend'), node_socket(show.inputs, 'Switch'))
+    links.new(node_socket(transform.outputs, 'Geometry'), node_socket(show.inputs, 'True'))
     join = nodes.new('GeometryNodeJoinGeometry')
-    links.new(original, join.inputs['Geometry'])
-    links.new(show.outputs['Output'], join.inputs['Geometry'])
-    links.new(join.outputs['Geometry'], destination)
+    links.new(original, node_socket(join.inputs, 'Geometry'))
+    links.new(node_socket(show.outputs, 'Output'), node_socket(join.inputs, 'Geometry'))
+    links.new(node_socket(join.outputs, 'Geometry'), destination)
     tree['qc_legend_layout'] = 1
     return title_node
 
@@ -263,23 +265,23 @@ def add_mapping(target, source, low, high):
     existing_nodes = set(nodes)
     info = nodes.new('GeometryNodeObjectInfo')
     info.transform_space = 'RELATIVE'
-    info.inputs['Object'].default_value = volume
+    node_socket(info.inputs, 'Object').default_value = volume
     position = nodes.new('GeometryNodeInputPosition')
     from .assets import sample_group, color_group
     sampler = nodes.new('GeometryNodeGroup')
     sampler.node_tree = sample_group()
-    links.new(info.outputs['Geometry'], sampler.inputs['Volume'])
-    links.new(position.outputs['Position'], sampler.inputs['Position'])
+    links.new(node_socket(info.outputs, 'Geometry'), node_socket(sampler.inputs, 'Volume'))
+    links.new(node_socket(position.outputs, 'Position'), node_socket(sampler.inputs, 'Position'))
     assign = nodes.new('GeometryNodeGroup')
     assign.node_tree = color_group()
-    links.new(sampler.outputs['Value'], assign.inputs['Value'])
-    links.new(sampler.outputs['Valid'], assign.inputs['Valid'])
+    links.new(node_socket(sampler.outputs, 'Value'), node_socket(assign.inputs, 'Value'))
+    links.new(node_socket(sampler.outputs, 'Valid'), node_socket(assign.inputs, 'Valid'))
     for name in ('Color Minimum', 'Color Center', 'Color Maximum'):
-        links.new(inputs.outputs[name], assign.inputs[name])
+        links.new(node_socket(inputs.outputs, name), node_socket(assign.inputs, name))
     color_material = scalar_material(opacity_attribute=True)
-    assign.inputs['Material'].default_value = color_material
-    links.new(geometry, assign.inputs['Geometry'])
-    links.new(assign.outputs['Geometry'], output)
+    node_socket(assign.inputs, 'Material').default_value = color_material
+    links.new(geometry, node_socket(assign.inputs, 'Geometry'))
+    links.new(node_socket(assign.outputs, 'Geometry'), output)
     frame_nodes(tree, [node for node in nodes if node not in existing_nodes], 'Scalar: sampling and colors')
     existing_nodes = set(nodes)
     add_legend(target, color_material, 'Color Minimum', 'Color Center', 'Color Maximum', color_title(field))
@@ -324,16 +326,16 @@ def replace_mapping(target, source):
     volume, field, _, new_field_source = bound_field(source)
     info, title = color_mapping(target)
     previous_volume, _, _ = mapped_field(target)
-    old_title = title.inputs['String'].default_value
+    old_title = node_socket(title.inputs, 'String').default_value
     old_binding = target['qc_color_source']
     try:
-        info.inputs['Object'].default_value = volume
-        title.inputs['String'].default_value = color_title(field)
+        node_socket(info.inputs, 'Object').default_value = volume
+        node_socket(title.inputs, 'String').default_value = color_title(field)
         target['qc_color_source'] = color_record(source, field, new_field_source)
         target.update_tag()
     except Exception:
-        info.inputs['Object'].default_value = previous_volume
-        title.inputs['String'].default_value = old_title
+        node_socket(info.inputs, 'Object').default_value = previous_volume
+        node_socket(title.inputs, 'String').default_value = old_title
         target['qc_color_source'] = old_binding
         raise
 
@@ -373,7 +375,19 @@ def cached_color_choices(summary):
 
 def color_field_choices(self, context):
     summary = self.candidate_summary or json.dumps(color_field_candidates(context))
-    return cached_color_choices(summary)
+    choices = []
+    for row, (identifier, label, description) in zip(json.loads(summary), cached_color_choices(summary)):
+        field, source = row['field'], row['source']
+        label = (f"{row['name']}: {field['quantity']} [{field['unit']}]"
+                 f" | {source.get('filename', 'unknown')} | {source['sha256'][:12]}")
+        job = row['job']
+        if type(job) is int and job >= 0:
+            label += ' | ' + iface('Job {number}', number=job + 1)
+        orbital = field.get('orbital')
+        if isinstance(orbital, dict):
+            label += f" | {orbital.get('spin', '?')} MO {orbital.get('source_number', '?')}"
+        choices.append((identifier, label, description))
+    return enum_items(choices)
 
 
 class QCBLENDER_OT_select_color_field(bpy.types.Operator):
@@ -395,7 +409,7 @@ class QCBLENDER_OT_select_color_field(bpy.types.Operator):
     def invoke(self, context, event):
         candidates = color_field_candidates(context)
         if not candidates:
-            self.report({'ERROR'}, 'No bound scalar field views are available in this scene')
+            self.report({'ERROR'}, error_text('No bound scalar field views are available in this scene'))
             return {'CANCELLED'}
         self.target_name = context.object.name
         self.target_pointer = str(context.object.as_pointer())
@@ -404,29 +418,29 @@ class QCBLENDER_OT_select_color_field(bpy.types.Operator):
         return context.window_manager.invoke_props_dialog(self, width=680)
 
     def draw(self, context):
-        layout = self.layout
+        layout = ui_layout(self.layout)
         layout.prop(self, 'source_name')
         candidates = json.loads(self.candidate_summary) if self.candidate_summary else color_field_candidates(context)
         selected = next((row for row in candidates if row['name'] == self.source_name), None)
         if selected:
             field, source_record = selected['field'], selected['source']
             box = layout.box()
-            box.label(text='Source file: ' + source_record['filename'])
-            box.label(text='SHA-256: ' + source_record['sha256'])
+            box.label(text=iface('Source file: {value0}', value0=source_record['filename']))
+            box.label(text=iface('SHA-256: {value0}', value0=source_record['sha256']))
             job = selected['job']
-            box.label(text=f'Calculation: Job {job + 1}' if type(job) is int and job >= 0
-                      else 'Calculation: not recorded')
+            box.label(text=iface('Calculation: Job {number}', number=job + 1) if type(job) is int and job >= 0
+                      else iface('Calculation: not recorded'))
             if selected['job_record']:
                 segment = selected['job_record']
-                box.label(text=f'Route: {segment.get("route", "not recorded")} | status: {segment.get("status", "unknown")}')
-                box.label(text=f'Source lines: {segment.get("line_start", "?")}–{segment.get("line_end", "?")}')
-            box.label(text=f'Field: {field["quantity"]} [{field["unit"]}] | array {field["array"]}')
+                box.label(text=iface('Route: {value0} | status: {value1}', value0=segment.get("route", "not recorded"), value1=segment.get("status", "unknown")))
+                box.label(text=iface('Source lines: {value0}–{value1}', value0=segment.get("line_start", "?"), value1=segment.get("line_end", "?")))
+            box.label(text=iface('Field: {value0} [{value1}] | array {value2}', value0=field["quantity"], value1=field["unit"], value2=field["array"]))
             orbital = field.get('orbital')
             if isinstance(orbital, dict):
-                box.label(text=f'Orbital: {orbital.get("spin", "unknown")} MO {orbital.get("source_number", "unknown")}')
-                box.label(text=f'Occupation: {orbital.get("occupation", "unknown")} | Energy: {orbital.get("energy_hartree", "unknown")} Eh')
+                box.label(text=iface('Orbital: {value0} MO {value1}', value0=orbital.get("spin", "unknown"), value1=orbital.get("source_number", "unknown")))
+                box.label(text=iface('Occupation: {value0} | Energy: {value1} Eh', value0=orbital.get("occupation", "unknown"), value1=orbital.get("energy_hartree", "unknown")))
             elif field.get('orbital_source_number') is not None:
-                box.label(text=f'Orbital source number: {field["orbital_source_number"]}')
+                box.label(text=iface('Orbital source number: {value0}', value0=field["orbital_source_number"]))
         layout.prop(self, 'minimum')
         layout.prop(self, 'maximum')
         layout.label(text='Range is used only for the first mapping; replacement keeps the current range')
@@ -457,7 +471,7 @@ class QCBLENDER_OT_select_color_field(bpy.types.Operator):
             else:
                 add_mapping(target, source, self.minimum, self.maximum)
         except (ValueError, OSError, KeyError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -486,7 +500,7 @@ class QCBLENDER_OT_map_scalar(bpy.types.Operator):
             compare_color_sources(target, source)
             add_mapping(target, source, self.minimum, self.maximum)
         except (ValueError, OSError, KeyError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -520,7 +534,7 @@ class QCBLENDER_OT_slice(bpy.types.Operator):
                 field, 'ij', np.asarray(world.inverted() @ volume.matrix_world), .5)
             rotation = Matrix(axes.tolist()).to_euler('XYZ')
         except (ValueError, OSError, KeyError, TypeError, np.linalg.LinAlgError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         mesh = bpy.data.meshes.new('QC slice carrier')
         obj = bpy.data.objects.new('QC scalar slice', mesh)
@@ -543,8 +557,8 @@ class QCBLENDER_OT_slice(bpy.types.Operator):
         slice_node = nodes.new('GeometryNodeGroup')
         slice_node.node_tree = slice_group()
         for name in ('Center', 'Rotation', 'Width', 'Height', 'Resolution'):
-            links.new(inputs.outputs[name], slice_node.inputs[name])
-        links.new(slice_node.outputs['Geometry'], output.inputs['Geometry'])
+            links.new(node_socket(inputs.outputs, name), node_socket(slice_node.inputs, name))
+        links.new(node_socket(slice_node.outputs, 'Geometry'), node_socket(output.inputs, 'Geometry'))
         frame_nodes(tree, list(nodes), 'Slice: plane placement', (0, 0))
         obj.modifiers.new('QC Slice', 'NODES').node_group = tree
         try:
@@ -553,7 +567,7 @@ class QCBLENDER_OT_slice(bpy.types.Operator):
             bpy.data.objects.remove(obj, do_unlink=True)
             bpy.data.meshes.remove(mesh)
             bpy.data.node_groups.remove(tree)
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         bpy.context.view_layer.objects.active = obj
         obj.select_set(True)

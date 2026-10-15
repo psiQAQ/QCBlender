@@ -1,4 +1,5 @@
 """Cursor-driven scalar line profile sampling and saved data records."""
+from ..i18n import error_text, ui_layout
 import json
 
 import bpy
@@ -53,7 +54,7 @@ class QCBLENDER_OT_mark_profile_start(bpy.types.Operator):
                 'dataset_sha256': obj['qc_dataset_sha256'], 'field': obj['qc_field'],
                 'color_source': obj.get('qc_color_source', '')})
         except (ValueError, OSError, KeyError, TypeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -82,10 +83,10 @@ class QCBLENDER_OT_create_line_profile(bpy.types.Operator):
         try:
             profile_source(context.object, 'COLOR')
         except (ValueError, OSError, KeyError, TypeError):
-            self.layout.label(text='Sample field: Geometry')
+            ui_layout(self.layout).label(text='Sample field: Geometry')
         else:
-            self.layout.prop(self, 'field_role')
-        self.layout.prop(self, 'samples')
+            ui_layout(self.layout).prop(self, 'field_role')
+        ui_layout(self.layout).prop(self, 'samples')
 
     def execute(self, context):
         obj = context.object
@@ -113,7 +114,7 @@ class QCBLENDER_OT_create_line_profile(bpy.types.Operator):
             chart.select_set(True)
             context.view_layer.objects.active = chart
         except (ValueError, OSError, KeyError, TypeError, np.linalg.LinAlgError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
