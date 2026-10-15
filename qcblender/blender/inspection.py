@@ -1,4 +1,6 @@
 """Display clipping and point inspection without modifying source arrays."""
+
+from .node_identity import node_socket, socket_name
 import json
 
 import bpy
@@ -26,9 +28,9 @@ def clip_mask(tree, position, controls):
     links.new(controls['Plane Origin'], offset.inputs[1])
     dot = nodes.new('ShaderNodeVectorMath')
     dot.operation = 'DOT_PRODUCT'
-    links.new(offset.outputs['Vector'], dot.inputs[0])
+    links.new(node_socket(offset.outputs, 'Vector'), dot.inputs[0])
     links.new(controls['Plane Normal'], dot.inputs[1])
-    outside = math(tree, 'MULTIPLY', controls['Plane Enabled'], math(tree, 'LESS_THAN', dot.outputs['Value'], 0))
+    outside = math(tree, 'MULTIPLY', controls['Plane Enabled'], math(tree, 'LESS_THAN', node_socket(dot.outputs, 'Value'), 0))
     xyz = []
     for vector in (position, controls['Box Minimum'], controls['Box Maximum']):
         split = nodes.new('ShaderNodeSeparateXYZ')
@@ -36,8 +38,8 @@ def clip_mask(tree, position, controls):
         xyz.append(split)
     box_outside = 0
     for axis in 'XYZ':
-        below = math(tree, 'LESS_THAN', xyz[0].outputs[axis], xyz[1].outputs[axis])
-        above = math(tree, 'GREATER_THAN', xyz[0].outputs[axis], xyz[2].outputs[axis])
+        below = math(tree, 'LESS_THAN', node_socket(xyz[0].outputs, axis), node_socket(xyz[1].outputs, axis))
+        above = math(tree, 'GREATER_THAN', node_socket(xyz[0].outputs, axis), node_socket(xyz[2].outputs, axis))
         box_outside = math(tree, 'MAXIMUM', box_outside, math(tree, 'MAXIMUM', below, above))
     outside = math(tree, 'MAXIMUM', outside, math(tree, 'MULTIPLY', controls['Box Enabled'], box_outside))
     return math(tree, 'SUBTRACT', 1, outside)
@@ -49,12 +51,12 @@ def clip_group():
     if source is None:
         return tree
     position = tree.nodes.new('GeometryNodeInputPosition')
-    keep = clip_mask(tree, position.outputs['Position'], {name: source.outputs[name] for name, _, _ in CLIP_INPUTS})
+    keep = clip_mask(tree, node_socket(position.outputs, 'Position'), {name: node_socket(source.outputs, name) for name, _, _ in CLIP_INPUTS})
     delete = tree.nodes.new('GeometryNodeDeleteGeometry')
     delete.domain = 'POINT'
-    tree.links.new(source.outputs['Geometry'], delete.inputs['Geometry'])
-    tree.links.new(math(tree, 'SUBTRACT', 1, keep), delete.inputs['Selection'])
-    tree.links.new(delete.outputs['Geometry'], output.inputs['Geometry'])
+    tree.links.new(node_socket(source.outputs, 'Geometry'), node_socket(delete.inputs, 'Geometry'))
+    tree.links.new(math(tree, 'SUBTRACT', 1, keep), node_socket(delete.inputs, 'Selection'))
+    tree.links.new(node_socket(delete.outputs, 'Geometry'), node_socket(output.inputs, 'Geometry'))
     return arrange(tree)
 
 
@@ -70,7 +72,7 @@ def add_clip(obj):
     for name, kind, default in CLIP_INPUTS:
         item = socket(tree, name, kind, default=default)
         modifier[item.identifier] = default
-        tree.links.new(inputs.outputs[item.identifier], node.inputs[name])
+        tree.links.new(node_socket(inputs.outputs, item.identifier), node_socket(node.inputs, name))
     tree['qc_clipping'] = True
     tag_view(tree)
     obj.update_tag()
@@ -87,10 +89,11 @@ class QCBLENDER_OT_clip(bpy.types.Operator):
         return poll_action(cls, context, 'clip')
 
     def execute(self, context):
+        from ..i18n import iface, error_text
         try:
             add_clip(context.object)
         except ValueError as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
 
@@ -105,6 +108,7 @@ class QCBLENDER_OT_probe(bpy.types.Operator):
         return poll_action(cls, context, 'probe')
 
     def execute(self, context):
+        from ..i18n import iface, error_text
         obj = context.object
         try:
             source = obj.qc_settings.volume
@@ -118,7 +122,7 @@ class QCBLENDER_OT_probe(bpy.types.Operator):
         except (ValueError, OSError, KeyError) as error:
             if 'qc_probe' in obj:
                 del obj['qc_probe']
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
-        self.report({'INFO'}, f"{field['quantity']}: {value:.8g} {field['unit']} (trilinear)")
+        self.report({'INFO'}, iface('{quantity}: {value:.8g} {unit} (trilinear)', quantity=iface(field['quantity']), value=value, unit=field['unit']))
         return {'FINISHED'}

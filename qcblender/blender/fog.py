@@ -1,4 +1,6 @@
 """Volume display transfers preserve the source scalar and its physical units."""
+
+from .node_identity import node_socket, socket_name
 import json
 
 import bpy
@@ -20,12 +22,12 @@ def fog_material(quantity):
     mask = nodes.new('ShaderNodeMath')
     mask.operation = 'GREATER_THAN'
     mask.inputs[1].default_value = .999999
-    links.new(valid.outputs['Fac'], mask.inputs[0])
+    links.new(node_socket(valid.outputs, 'Fac'), mask.inputs[0])
     signed = quantity not in ('electron_number_density', 'alpha_density', 'beta_density')
     magnitude = nodes.new('ShaderNodeMath')
     magnitude.operation = 'ABSOLUTE' if signed else 'MAXIMUM'
     magnitude.inputs[1].default_value = 0
-    links.new(value.outputs['Fac'], magnitude.inputs[0])
+    links.new(node_socket(value.outputs, 'Fac'), magnitude.inputs[0])
     scale = nodes.new('ShaderNodeValue')
     scale.name = 'Optical Scale'
     scale['qc_control'] = 'Opacity Scale'
@@ -59,19 +61,19 @@ def fog_material(quantity):
         controls[name] = control.outputs[0]
     normalized = nodes.new('ShaderNodeMapRange')
     normalized.clamp = True
-    links.new(value.outputs['Fac'], normalized.inputs['Value'])
-    links.new(controls['Color Minimum'], normalized.inputs['From Min'])
-    links.new(controls['Color Maximum'], normalized.inputs['From Max'])
-    links.new(normalized.outputs['Result'], color.inputs['Fac'])
+    links.new(node_socket(value.outputs, 'Fac'), node_socket(normalized.inputs, 'Value'))
+    links.new(controls['Color Minimum'], node_socket(normalized.inputs, 'From Min'))
+    links.new(controls['Color Maximum'], node_socket(normalized.inputs, 'From Max'))
+    links.new(node_socket(normalized.outputs, 'Result'), node_socket(color.inputs, 'Fac'))
     opacity_map = nodes.new('ShaderNodeValToRGB')
     opacity_map['qc_role'] = 'opacity_ramp'
     opacity_map.label = 'Opacity multiplier versus field magnitude'
     for element in opacity_map.color_ramp.elements:
         element.color = (1, 1, 1, 1)
     fraction = math(mat.node_tree, 'DIVIDE', magnitude.outputs[0], math(mat.node_tree, 'MAXIMUM', controls['Opacity Range'], 1e-12))
-    links.new(fraction, opacity_map.inputs['Fac'])
+    links.new(fraction, node_socket(opacity_map.inputs, 'Fac'))
     passed = math(mat.node_tree, 'GREATER_THAN', magnitude.outputs[0], controls['Display Threshold'])
-    opacity_factor = math(mat.node_tree, 'MULTIPLY', opacity_map.outputs['Color'], passed)
+    opacity_factor = math(mat.node_tree, 'MULTIPLY', node_socket(opacity_map.outputs, 'Color'), passed)
     from .inspection import CLIP_INPUTS, clip_mask
     clipping = {}
     for name, kind, default in CLIP_INPUTS:
@@ -80,24 +82,26 @@ def fog_material(quantity):
         control.label = name
         if kind == 'NodeSocketVector':
             for i, component in enumerate(default):
-                control.inputs[i].default_value = component
+                node_socket(control.inputs, i).default_value = component
         else:
             control.outputs[0].default_value = float(default)
         clipping[name] = control.outputs[0]
     coordinates = nodes.new('ShaderNodeTexCoord')
-    keep = clip_mask(mat.node_tree, coordinates.outputs['Object'], clipping)
+    keep = clip_mask(mat.node_tree, node_socket(coordinates.outputs, 'Object'), clipping)
     optical_density = math(mat.node_tree, 'MULTIPLY', density.outputs[0],
                            math(mat.node_tree, 'MULTIPLY', opacity_factor, keep))
     shader = nodes.new('ShaderNodeVolumePrincipled')
-    shader.inputs['Density Attribute'].default_value = ''
-    shader.inputs['Color Attribute'].default_value = ''
-    links.new(optical_density, shader.inputs['Density'])
-    links.new(color.outputs[0], shader.inputs['Color'])
+    node_socket(shader.inputs, 'Density Attribute').default_value = ''
+    node_socket(shader.inputs, 'Color Attribute').default_value = ''
+    links.new(optical_density, node_socket(shader.inputs, 'Density'))
+    links.new(color.outputs[0], node_socket(shader.inputs, 'Color'))
     output = nodes.new('ShaderNodeOutputMaterial')
-    links.new(shader.outputs['Volume'], output.inputs['Volume'])
+    links.new(node_socket(shader.outputs, 'Volume'), node_socket(output.inputs, 'Volume'))
     for index, node in enumerate(nodes):
         node.location = (index % 5 * 220, -(index // 5) * 220)
     mat['qc_transfer'] = ('scale * abs(value)' if signed else 'scale * max(value, 0)') + ' * opacity curve * threshold/clip/valid masks'
+    from .node_identity import localize_tree
+    localize_tree(mat.node_tree)
     return mat
 
 
@@ -115,10 +119,12 @@ def fog_group():
     inputs = tree.nodes.new('NodeGroupInput')
     assign = tree.nodes.new('GeometryNodeSetMaterial')
     output = tree.nodes.new('NodeGroupOutput')
-    tree.links.new(inputs.outputs['Volume'], assign.inputs['Geometry'])
-    tree.links.new(inputs.outputs['Material'], assign.inputs['Material'])
-    tree.links.new(assign.outputs['Geometry'], output.inputs['Geometry'])
+    tree.links.new(node_socket(inputs.outputs, 'Volume'), node_socket(assign.inputs, 'Geometry'))
+    tree.links.new(node_socket(inputs.outputs, 'Material'), node_socket(assign.inputs, 'Material'))
+    tree.links.new(node_socket(assign.outputs, 'Geometry'), node_socket(output.inputs, 'Geometry'))
     inputs.location, assign.location, output.location = (0, 0), (240, 0), (480, 0)
+    from .node_identity import localize_tree
+    localize_tree(tree)
     return tree
 
 
@@ -144,12 +150,12 @@ def fog_view(source):
     inputs, output = tree.nodes.new('NodeGroupInput'), tree.nodes.new('NodeGroupOutput')
     info = tree.nodes.new('GeometryNodeObjectInfo')
     info.transform_space = 'RELATIVE'
-    info.inputs['Object'].default_value = volume
+    node_socket(info.inputs, 'Object').default_value = volume
     style = tree.nodes.new('GeometryNodeGroup')
     style.node_tree = fog_group()
-    tree.links.new(info.outputs['Geometry'], style.inputs['Volume'])
-    tree.links.new(inputs.outputs['Material'], style.inputs['Material'])
-    tree.links.new(style.outputs['Geometry'], output.inputs['Geometry'])
+    tree.links.new(node_socket(info.outputs, 'Geometry'), node_socket(style.inputs, 'Volume'))
+    tree.links.new(node_socket(inputs.outputs, 'Material'), node_socket(style.inputs, 'Material'))
+    tree.links.new(node_socket(style.outputs, 'Geometry'), node_socket(output.inputs, 'Geometry'))
     for index, node in enumerate(tree.nodes):
         node.location = (index * 240, 0)
     obj.modifiers.new('QC Volume Fog', 'NODES').node_group = tree
@@ -172,7 +178,7 @@ def _ensure_fog_material_slot(obj):
     groups = [node for node in tree.nodes if node.bl_idname == 'GeometryNodeGroup'
               and node.node_tree and node.node_tree.get('qc_asset_id') == 'qc.volume_fog.v1']
     inputs = [item for item in tree.interface.items_tree if item.item_type == 'SOCKET'
-              and item.in_out == 'INPUT' and item.name == 'Material'
+              and item.in_out == 'INPUT' and socket_name(item, tree) == 'Material'
               and item.socket_type == 'NodeSocketMaterial']
     if len(groups) != 1 or len(inputs) != 1:
         return False

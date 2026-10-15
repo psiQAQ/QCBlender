@@ -22,12 +22,24 @@ ASSETS = {
     'qc.clip.v1': ('空间/裁剪', 'clip_group'),
 }
 
+ENGLISH_CATEGORIES = {
+    '数据/采样': 'Data/Sampling', '原子选择': 'Atom Selection',
+    '表示': 'Representation', '表示/原子与键': 'Representation/Atoms and Bonds',
+    '表示/表面': 'Representation/Surfaces', '表示/体积': 'Representation/Volumes',
+    '颜色映射': 'Color Mapping', '空间': 'Spatial',
+    '空间/切片': 'Spatial/Slices', '空间/裁剪': 'Spatial/Clipping',
+}
+
 
 def catalog_id(path):
     return str(uuid5(NAMESPACE, path))
 
 
-def catalog_text():
+def catalog_text(language='zh_HANS'):
+    if language not in ('en_US', 'zh_HANS'):
+        raise ValueError('Unsupported QC asset catalog language')
+    def display(path):
+        return ENGLISH_CATEGORIES[path] if language == 'en_US' else path
     return ('# Blender Asset Catalog Definition File\nVERSION 1\n\n'
-            + ''.join(f'{catalog_id(path)}:{path}:{path.rsplit("/", 1)[-1]}\n'
+            + ''.join(f'{catalog_id(path)}:{display(path)}:{display(path).rsplit("/", 1)[-1]}\n'
                       for path in CATEGORIES))

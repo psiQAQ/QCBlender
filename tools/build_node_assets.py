@@ -16,6 +16,7 @@ def main():
 
     from qcblender.asset_catalog import ASSETS, catalog_id, catalog_text
     from qcblender.blender import assets, fog, inspection, views
+    from qcblender.blender.node_identity import localize_tree
 
     factories = {'sample_group': assets.sample_group,
                  'selection_group': assets.selection_group,
@@ -33,15 +34,25 @@ def main():
             raise RuntimeError(f'Wrong node asset identity: {asset_id}')
         group.asset_mark()
         group.asset_data.catalog_id = catalog_id(category)
-        group.asset_data.description = f'{group.name}; reusable QC display node group'
+        group.asset_data.description = 'Reusable QC display node group'
         groups.add(group)
     if len(groups) != len(ASSETS):
         raise RuntimeError('Node assets must have distinct datablocks')
 
     destination = package_root / 'assets'
     destination.mkdir(exist_ok=True)
-    (destination / 'blender_assets.cats.txt').write_text(catalog_text(), encoding='utf-8')
+    # The canonical root library remains the compatibility/rebuild entry point.
+    for group in groups:
+        localize_tree(group, 'en_US')
+    (destination / 'blender_assets.cats.txt').write_text(catalog_text('en_US'), encoding='utf-8')
     bpy.data.libraries.write(str(destination / 'nodes.blend'), groups, fake_user=True)
+    for language in ('en_US', 'zh_HANS'):
+        localized = destination / language
+        localized.mkdir(exist_ok=True)
+        for group in groups:
+            localize_tree(group, language)
+        (localized / 'blender_assets.cats.txt').write_text(catalog_text(language), encoding='utf-8')
+        bpy.data.libraries.write(str(localized / 'nodes.blend'), groups, fake_user=True)
     print(f'Built {len(groups)} QC node assets in {destination}')
 
 

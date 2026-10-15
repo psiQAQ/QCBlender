@@ -1,4 +1,6 @@
 """Unbound, composable geometry assets. All coordinates are in angstrom."""
+
+from .node_identity import node_socket, socket_name
 import bpy
 
 from .views import group_sockets, socket
@@ -46,9 +48,9 @@ def math(tree, operation, *values):
     node.operation = operation
     for index, value in enumerate(values):
         if isinstance(value, (int, float)):
-            node.inputs[index].default_value = value
+            node_socket(node.inputs, index).default_value = value
         else:
-            tree.links.new(value, node.inputs[index])
+            tree.links.new(value, node_socket(node.inputs, index))
     return node.outputs[0]
 
 
@@ -60,16 +62,16 @@ def sample_group():
         return tree
     for grid_name, target in [('qc_value', 'Value'), ('qc_valid', 'Valid')]:
         grid = tree.nodes.new('GeometryNodeGetNamedGrid')
-        grid.inputs['Name'].default_value = grid_name
-        tree.links.new(source.outputs['Volume'], grid.inputs['Volume'])
+        node_socket(grid.inputs, 'Name').default_value = grid_name
+        tree.links.new(node_socket(source.outputs, 'Volume'), node_socket(grid.inputs, 'Volume'))
         sample = tree.nodes.new('GeometryNodeSampleGrid')
-        sample.inputs['Interpolation'].default_value = 'Trilinear'
-        tree.links.new(grid.outputs['Grid'], sample.inputs['Grid'])
-        tree.links.new(source.outputs['Position'], sample.inputs['Position'])
-        value = sample.outputs['Value']
+        node_socket(sample.inputs, 'Interpolation').default_value = 'Trilinear'
+        tree.links.new(node_socket(grid.outputs, 'Grid'), node_socket(sample.inputs, 'Grid'))
+        tree.links.new(node_socket(source.outputs, 'Position'), node_socket(sample.inputs, 'Position'))
+        value = node_socket(sample.outputs, 'Value')
         if target == 'Valid':
             value = math(tree, 'GREATER_THAN', value, .999999)
-        tree.links.new(value, output.inputs[target])
+        tree.links.new(value, node_socket(output.inputs, target))
     return arrange(tree)
 
 
@@ -80,7 +82,7 @@ def selection_group():
         ('First Atom (1-based)', 'NodeSocketInt', 1), ('Last Atom (0 = all)', 'NodeSocketInt', 0)],
         [('Selection', 'NodeSocketBool')])
     if source is not None:
-        tree.links.new(atom_selection(tree, source), output.inputs['Selection'])
+        tree.links.new(atom_selection(tree, source), node_socket(output.inputs, 'Selection'))
         arrange(tree)
     return tree
 
@@ -94,30 +96,30 @@ def surface_style_group():
         return tree
     nodes, links = tree.nodes, tree.links
     curves = nodes.new('GeometryNodeMeshToCurve')
-    links.new(source.outputs['Geometry'], curves.inputs['Mesh'])
+    links.new(node_socket(source.outputs, 'Geometry'), node_socket(curves.inputs, 'Mesh'))
     circle = nodes.new('GeometryNodeCurvePrimitiveCircle')
-    circle.inputs['Resolution'].default_value = 8
-    links.new(source.outputs['Wire Radius'], circle.inputs['Radius'])
+    node_socket(circle.inputs, 'Resolution').default_value = 8
+    links.new(node_socket(source.outputs, 'Wire Radius'), node_socket(circle.inputs, 'Radius'))
     tubes = nodes.new('GeometryNodeCurveToMesh')
-    links.new(curves.outputs['Curve'], tubes.inputs['Curve'])
-    links.new(circle.outputs['Curve'], tubes.inputs['Profile Curve'])
+    links.new(node_socket(curves.outputs, 'Curve'), node_socket(tubes.inputs, 'Curve'))
+    links.new(node_socket(circle.outputs, 'Curve'), node_socket(tubes.inputs, 'Profile Curve'))
     sphere = nodes.new('GeometryNodeMeshIcoSphere')
-    links.new(source.outputs['Point Radius'], sphere.inputs['Radius'])
-    links.new(source.outputs['Quality'], sphere.inputs['Subdivisions'])
+    links.new(node_socket(source.outputs, 'Point Radius'), node_socket(sphere.inputs, 'Radius'))
+    links.new(node_socket(source.outputs, 'Quality'), node_socket(sphere.inputs, 'Subdivisions'))
     instance = nodes.new('GeometryNodeInstanceOnPoints')
-    links.new(source.outputs['Geometry'], instance.inputs['Points'])
-    links.new(sphere.outputs['Mesh'], instance.inputs['Instance'])
+    links.new(node_socket(source.outputs, 'Geometry'), node_socket(instance.inputs, 'Points'))
+    links.new(node_socket(sphere.outputs, 'Mesh'), node_socket(instance.inputs, 'Instance'))
     realize = nodes.new('GeometryNodeRealizeInstances')
-    links.new(instance.outputs['Instances'], realize.inputs['Geometry'])
-    geometry = source.outputs['Geometry']
-    for number, alternative in [(1, tubes.outputs['Mesh']), (2, realize.outputs['Geometry'])]:
+    links.new(node_socket(instance.outputs, 'Instances'), node_socket(realize.inputs, 'Geometry'))
+    geometry = node_socket(source.outputs, 'Geometry')
+    for number, alternative in [(1, node_socket(tubes.outputs, 'Mesh')), (2, node_socket(realize.outputs, 'Geometry'))]:
         switch = nodes.new('GeometryNodeSwitch')
         switch.input_type = 'GEOMETRY'
-        links.new(math(tree, 'COMPARE', source.outputs['Style (0 solid, 1 wire, 2 points)'], number), switch.inputs['Switch'])
-        links.new(geometry, switch.inputs['False'])
-        links.new(alternative, switch.inputs['True'])
-        geometry = switch.outputs['Output']
-    links.new(geometry, output.inputs['Geometry'])
+        links.new(math(tree, 'COMPARE', node_socket(source.outputs, 'Style (0 solid, 1 wire, 2 points)'), number), node_socket(switch.inputs, 'Switch'))
+        links.new(geometry, node_socket(switch.inputs, 'False'))
+        links.new(alternative, node_socket(switch.inputs, 'True'))
+        geometry = node_socket(switch.outputs, 'Output')
+    links.new(geometry, node_socket(output.inputs, 'Geometry'))
     return arrange(tree)
 
 
@@ -133,48 +135,48 @@ def atom_style_group():
     nodes, links = tree.nodes, tree.links
     delete = nodes.new('GeometryNodeDeleteGeometry')
     delete.domain = 'POINT'
-    links.new(source.outputs['Geometry'], delete.inputs['Geometry'])
-    links.new(math(tree, 'SUBTRACT', 1, source.outputs['Selection']), delete.inputs['Selection'])
+    links.new(node_socket(source.outputs, 'Geometry'), node_socket(delete.inputs, 'Geometry'))
+    links.new(math(tree, 'SUBTRACT', 1, node_socket(source.outputs, 'Selection')), node_socket(delete.inputs, 'Selection'))
     sphere = nodes.new('GeometryNodeMeshIcoSphere')
-    sphere.inputs['Radius'].default_value = 1
-    links.new(source.outputs['Quality'], sphere.inputs['Subdivisions'])
+    node_socket(sphere.inputs, 'Radius').default_value = 1
+    links.new(node_socket(source.outputs, 'Quality'), node_socket(sphere.inputs, 'Subdivisions'))
     radius = nodes.new('GeometryNodeInputNamedAttribute')
     radius.data_type = 'FLOAT'
-    radius.inputs['Name'].default_value = 'qc_vdw_radius'
+    node_socket(radius.inputs, 'Name').default_value = 'qc_vdw_radius'
     choose_radius = nodes.new('GeometryNodeSwitch')
     choose_radius.input_type = 'FLOAT'
-    space = math(tree, 'COMPARE', source.outputs['Style (0 ball-stick, 1 space-fill, 2 bonds)'], 1)
-    links.new(space, choose_radius.inputs['Switch'])
-    links.new(source.outputs['Atom Radius'], choose_radius.inputs['False'])
-    links.new(math(tree, 'MULTIPLY', radius.outputs['Attribute'], source.outputs['VDW Scale']), choose_radius.inputs['True'])
+    space = math(tree, 'COMPARE', node_socket(source.outputs, 'Style (0 ball-stick, 1 space-fill, 2 bonds)'), 1)
+    links.new(space, node_socket(choose_radius.inputs, 'Switch'))
+    links.new(node_socket(source.outputs, 'Atom Radius'), node_socket(choose_radius.inputs, 'False'))
+    links.new(math(tree, 'MULTIPLY', node_socket(radius.outputs, 'Attribute'), node_socket(source.outputs, 'VDW Scale')), node_socket(choose_radius.inputs, 'True'))
     instance = nodes.new('GeometryNodeInstanceOnPoints')
-    links.new(delete.outputs['Geometry'], instance.inputs['Points'])
-    links.new(sphere.outputs['Mesh'], instance.inputs['Instance'])
-    links.new(choose_radius.outputs['Output'], instance.inputs['Scale'])
+    links.new(node_socket(delete.outputs, 'Geometry'), node_socket(instance.inputs, 'Points'))
+    links.new(node_socket(sphere.outputs, 'Mesh'), node_socket(instance.inputs, 'Instance'))
+    links.new(node_socket(choose_radius.outputs, 'Output'), node_socket(instance.inputs, 'Scale'))
     realize = nodes.new('GeometryNodeRealizeInstances')
-    links.new(instance.outputs['Instances'], realize.inputs['Geometry'])
+    links.new(node_socket(instance.outputs, 'Instances'), node_socket(realize.inputs, 'Geometry'))
     curves = nodes.new('GeometryNodeMeshToCurve')
-    links.new(delete.outputs['Geometry'], curves.inputs['Mesh'])
+    links.new(node_socket(delete.outputs, 'Geometry'), node_socket(curves.inputs, 'Mesh'))
     circle = nodes.new('GeometryNodeCurvePrimitiveCircle')
-    circle.inputs['Resolution'].default_value = 8
-    links.new(source.outputs['Bond Radius'], circle.inputs['Radius'])
+    node_socket(circle.inputs, 'Resolution').default_value = 8
+    links.new(node_socket(source.outputs, 'Bond Radius'), node_socket(circle.inputs, 'Radius'))
     tubes = nodes.new('GeometryNodeCurveToMesh')
-    links.new(curves.outputs['Curve'], tubes.inputs['Curve'])
-    links.new(circle.outputs['Curve'], tubes.inputs['Profile Curve'])
+    links.new(node_socket(curves.outputs, 'Curve'), node_socket(tubes.inputs, 'Curve'))
+    links.new(node_socket(circle.outputs, 'Curve'), node_socket(tubes.inputs, 'Profile Curve'))
     join = nodes.new('GeometryNodeJoinGeometry')
-    for geometry, hidden in [(realize.outputs['Geometry'], math(tree, 'COMPARE', source.outputs['Style (0 ball-stick, 1 space-fill, 2 bonds)'], 2)),
-                             (tubes.outputs['Mesh'], space)]:
+    for geometry, hidden in [(node_socket(realize.outputs, 'Geometry'), math(tree, 'COMPARE', node_socket(source.outputs, 'Style (0 ball-stick, 1 space-fill, 2 bonds)'), 2)),
+                             (node_socket(tubes.outputs, 'Mesh'), space)]:
         switch = nodes.new('GeometryNodeSwitch')
         switch.input_type = 'GEOMETRY'
-        links.new(hidden, switch.inputs['Switch'])
-        links.new(geometry, switch.inputs['False'])
-        links.new(switch.outputs['Output'], join.inputs['Geometry'])
+        links.new(hidden, node_socket(switch.inputs, 'Switch'))
+        links.new(geometry, node_socket(switch.inputs, 'False'))
+        links.new(node_socket(switch.outputs, 'Output'), node_socket(join.inputs, 'Geometry'))
     smooth = nodes.new('GeometryNodeSetShadeSmooth')
-    links.new(join.outputs['Geometry'], smooth.inputs['Geometry'])
+    links.new(node_socket(join.outputs, 'Geometry'), node_socket(smooth.inputs, 'Geometry'))
     assign = nodes.new('GeometryNodeSetMaterial')
-    links.new(smooth.outputs['Geometry'], assign.inputs['Geometry'])
-    links.new(source.outputs['Material'], assign.inputs['Material'])
-    links.new(assign.outputs['Geometry'], output.inputs['Geometry'])
+    links.new(node_socket(smooth.outputs, 'Geometry'), node_socket(assign.inputs, 'Geometry'))
+    links.new(node_socket(source.outputs, 'Material'), node_socket(assign.inputs, 'Material'))
+    links.new(node_socket(assign.outputs, 'Geometry'), node_socket(output.inputs, 'Geometry'))
     return arrange(tree)
 
 
@@ -187,12 +189,12 @@ def slice_group():
         return tree
     grid = tree.nodes.new('GeometryNodeMeshGrid')
     for name, target in [('Width', 'Size X'), ('Height', 'Size Y'), ('Resolution', 'Vertices X'), ('Resolution', 'Vertices Y')]:
-        tree.links.new(source.outputs[name], grid.inputs[target])
+        tree.links.new(node_socket(source.outputs, name), node_socket(grid.inputs, target))
     transform = tree.nodes.new('GeometryNodeTransform')
-    tree.links.new(grid.outputs['Mesh'], transform.inputs['Geometry'])
-    tree.links.new(source.outputs['Center'], transform.inputs['Translation'])
-    tree.links.new(source.outputs['Rotation'], transform.inputs['Rotation'])
-    tree.links.new(transform.outputs['Geometry'], output.inputs['Geometry'])
+    tree.links.new(node_socket(grid.outputs, 'Mesh'), node_socket(transform.inputs, 'Geometry'))
+    tree.links.new(node_socket(source.outputs, 'Center'), node_socket(transform.inputs, 'Translation'))
+    tree.links.new(node_socket(source.outputs, 'Rotation'), node_socket(transform.inputs, 'Rotation'))
+    tree.links.new(node_socket(transform.outputs, 'Geometry'), node_socket(output.inputs, 'Geometry'))
     return arrange(tree)
 
 
@@ -205,27 +207,27 @@ def color_group():
         ('Material', 'NodeSocketMaterial', None)])
     if source is None:
         return tree
-    fraction = color_fraction(tree, source, source.outputs['Value'], 'Color Minimum', 'Color Center', 'Color Maximum')
+    fraction = color_fraction(tree, source, node_socket(source.outputs, 'Value'), 'Color Minimum', 'Color Center', 'Color Maximum')
     opacity = tree.nodes.new('GeometryNodeInputNamedAttribute')
     opacity.data_type = 'FLOAT'
-    opacity.inputs['Name'].default_value = 'qc_opacity'
+    node_socket(opacity.inputs, 'Name').default_value = 'qc_opacity'
     alpha = tree.nodes.new('GeometryNodeSwitch')
     alpha.input_type = 'FLOAT'
-    alpha.inputs['False'].default_value = 1.
-    tree.links.new(opacity.outputs['Exists'], alpha.inputs['Switch'])
-    tree.links.new(opacity.outputs['Attribute'], alpha.inputs['True'])
-    geometry = source.outputs['Geometry']
-    for name, kind, value in [('qc_scalar_value', 'FLOAT', source.outputs['Value']),
-                              ('qc_sample_valid', 'BOOLEAN', source.outputs['Valid']),
-                              ('qc_color_fraction', 'FLOAT', fraction), ('qc_opacity', 'FLOAT', alpha.outputs['Output'])]:
+    node_socket(alpha.inputs, 'False').default_value = 1.
+    tree.links.new(node_socket(opacity.outputs, 'Exists'), node_socket(alpha.inputs, 'Switch'))
+    tree.links.new(node_socket(opacity.outputs, 'Attribute'), node_socket(alpha.inputs, 'True'))
+    geometry = node_socket(source.outputs, 'Geometry')
+    for name, kind, value in [('qc_scalar_value', 'FLOAT', node_socket(source.outputs, 'Value')),
+                              ('qc_sample_valid', 'BOOLEAN', node_socket(source.outputs, 'Valid')),
+                              ('qc_color_fraction', 'FLOAT', fraction), ('qc_opacity', 'FLOAT', node_socket(alpha.outputs, 'Output'))]:
         store = tree.nodes.new('GeometryNodeStoreNamedAttribute')
         store.data_type, store.domain = kind, 'POINT'
-        store.inputs['Name'].default_value = name
-        tree.links.new(geometry, store.inputs['Geometry'])
-        tree.links.new(value, store.inputs['Value'])
-        geometry = store.outputs['Geometry']
+        node_socket(store.inputs, 'Name').default_value = name
+        tree.links.new(geometry, node_socket(store.inputs, 'Geometry'))
+        tree.links.new(value, node_socket(store.inputs, 'Value'))
+        geometry = node_socket(store.outputs, 'Geometry')
     assign = tree.nodes.new('GeometryNodeSetMaterial')
-    tree.links.new(source.outputs['Material'], assign.inputs['Material'])
-    tree.links.new(geometry, assign.inputs['Geometry'])
-    tree.links.new(assign.outputs['Geometry'], output.inputs['Geometry'])
+    tree.links.new(node_socket(source.outputs, 'Material'), node_socket(assign.inputs, 'Material'))
+    tree.links.new(geometry, node_socket(assign.inputs, 'Geometry'))
+    tree.links.new(node_socket(assign.outputs, 'Geometry'), node_socket(output.inputs, 'Geometry'))
     return arrange(tree)

@@ -1,4 +1,6 @@
 """Editable geometry node views of normalized scientific data."""
+
+from .node_identity import node_socket, socket_name
 import json
 import hashlib
 from pathlib import Path
@@ -19,12 +21,14 @@ def socket(tree, name, kind, direction='INPUT', default=None, minimum=None, maxi
         result.min_value = minimum
     if maximum is not None:
         result.max_value = maximum
+    from .node_identity import remember_sockets
+    remember_sockets(tree)
     return result
 
 
 def group_sockets(tree, panels):
     """Move existing inputs into panels without replacing their identifiers."""
-    items = {(item.name, item.in_out): item for item in tree.interface.items_tree
+    items = {(socket_name(item, tree), item.in_out): item for item in tree.interface.items_tree
              if item.item_type == 'SOCKET'}
     for title, names in panels:
         panel = tree.interface.new_panel(title)
@@ -46,14 +50,14 @@ def material(name, color, attribute=None):
         output = node_by_type(mat.node_tree.nodes, 'ShaderNodeOutputMaterial')
         if output is None:
             output = mat.node_tree.nodes.new('ShaderNodeOutputMaterial')
-        mat.node_tree.links.new(shader.outputs['BSDF'], output.inputs['Surface'])
-    shader.inputs['Base Color'].default_value = color
-    shader.inputs['Alpha'].default_value = color[3]
-    shader.inputs['Roughness'].default_value = 0.35
+        mat.node_tree.links.new(node_socket(shader.outputs, 'BSDF'), node_socket(output.inputs, 'Surface'))
+    node_socket(shader.inputs, 'Base Color').default_value = color
+    node_socket(shader.inputs, 'Alpha').default_value = color[3]
+    node_socket(shader.inputs, 'Roughness').default_value = 0.35
     if attribute:
         node = mat.node_tree.nodes.new('ShaderNodeAttribute')
         node.attribute_name = attribute
-        mat.node_tree.links.new(node.outputs['Color'], shader.inputs['Base Color'])
+        mat.node_tree.links.new(node_socket(node.outputs, 'Color'), node_socket(shader.inputs, 'Base Color'))
     return mat
 
 
@@ -129,13 +133,13 @@ def atom_view(directory):
     selected = nodes.new('GeometryNodeGroup')
     selected.node_tree = selection_group()
     for name in ('Selection', 'Element (0 = all)', 'First Atom (1-based)', 'Last Atom (0 = all)'):
-        links.new(inputs.outputs[name], selected.inputs[name])
+        links.new(node_socket(inputs.outputs, name), node_socket(selected.inputs, name))
     style = nodes.new('GeometryNodeGroup')
     style.node_tree = atom_style_group()
     for name in ('Geometry', 'Atom Radius', 'Bond Radius', 'VDW Scale', 'Quality', 'Material', 'Style (0 ball-stick, 1 space-fill, 2 bonds)'):
-        links.new(inputs.outputs[name], style.inputs[name])
-    links.new(selected.outputs['Selection'], style.inputs['Selection'])
-    links.new(style.outputs['Geometry'], output.inputs['Geometry'])
+        links.new(node_socket(inputs.outputs, name), node_socket(style.inputs, name))
+    links.new(node_socket(selected.outputs, 'Selection'), node_socket(style.inputs, 'Selection'))
+    links.new(node_socket(style.outputs, 'Geometry'), node_socket(output.inputs, 'Geometry'))
     obj.modifiers.new('QC Atoms and Bonds', 'NODES').node_group = tree
     from .properties import setup_properties
     setup_properties(obj, data)
@@ -150,7 +154,8 @@ def atom_view(directory):
     frame_nodes(tree, [node for node in nodes if node.type not in ('FRAME', 'GROUP_INPUT', 'GROUP_OUTPUT')
                       and node.parent is None], 'Atoms: selection and representation', (300, 0))
     for node in nodes:
-        if node.type == 'FRAME' and node.label == 'Modes: displacement and animation':
+        from .node_identity import frame_role
+        if node.type == 'FRAME' and frame_role(node) == 'Modes: displacement and animation':
             node.location = (300, -1400)
     inputs.location = (-100, 0)
     output.location = (1800, 0)
@@ -174,18 +179,18 @@ def ensure_atom_visibility(obj):
               and node.node_tree.get('qc_asset_id') == 'qc.atom_style.v1']
     if len(styles) != 1:
         raise ValueError('Expected one QC atom style group in the selected view')
-    socket = styles[0].inputs['Selection']
+    socket = node_socket(styles[0].inputs, 'Selection')
     previous = socket.links[0].from_socket if socket.links else None
     attr = tree.nodes.new('GeometryNodeInputNamedAttribute')
     attr.data_type = 'BOOLEAN'
-    attr.inputs['Name'].default_value = 'qc_atom_visible'
+    node_socket(attr.inputs, 'Name').default_value = 'qc_atom_visible'
     gate = tree.nodes.new('ShaderNodeMath')
     gate.operation = 'MULTIPLY'
     if previous:
         tree.links.new(previous, gate.inputs[0])
     else:
         gate.inputs[0].default_value = float(socket.default_value)
-    tree.links.new(attr.outputs['Attribute'], gate.inputs[1])
+    tree.links.new(node_socket(attr.outputs, 'Attribute'), gate.inputs[1])
     tree.links.new(gate.outputs[0], socket)
     tree['qc_atom_visibility'] = 1
     return mesh.attributes['qc_atom_visible']
@@ -197,19 +202,19 @@ def atom_selection(tree, inputs):
 
     atomic_number = nodes.new('GeometryNodeInputNamedAttribute')
     atomic_number.data_type = 'INT'
-    atomic_number.inputs['Name'].default_value = 'qc_atomic_number'
+    node_socket(atomic_number.inputs, 'Name').default_value = 'qc_atomic_number'
     atom_id = nodes.new('GeometryNodeInputNamedAttribute')
     atom_id.data_type = 'INT'
-    atom_id.inputs['Name'].default_value = 'qc_atom_id'
-    source_number = math(tree, 'ADD', atom_id.outputs['Attribute'], 1)
-    element = inputs.outputs['Element (0 = all)']
-    last = inputs.outputs['Last Atom (0 = all)']
+    node_socket(atom_id.inputs, 'Name').default_value = 'qc_atom_id'
+    source_number = math(tree, 'ADD', node_socket(atom_id.outputs, 'Attribute'), 1)
+    element = node_socket(inputs.outputs, 'Element (0 = all)')
+    last = node_socket(inputs.outputs, 'Last Atom (0 = all)')
     matches_element = math(tree, 'MAXIMUM', math(tree, 'COMPARE', element, 0),
-                           math(tree, 'COMPARE', atomic_number.outputs['Attribute'], element))
-    after_first = math(tree, 'SUBTRACT', 1, math(tree, 'LESS_THAN', source_number, inputs.outputs['First Atom (1-based)']))
+                           math(tree, 'COMPARE', node_socket(atomic_number.outputs, 'Attribute'), element))
+    after_first = math(tree, 'SUBTRACT', 1, math(tree, 'LESS_THAN', source_number, node_socket(inputs.outputs, 'First Atom (1-based)')))
     before_last = math(tree, 'MAXIMUM', math(tree, 'COMPARE', last, 0),
                        math(tree, 'SUBTRACT', 1, math(tree, 'GREATER_THAN', source_number, last)))
-    return math(tree, 'MULTIPLY', inputs.outputs['Selection'],
+    return math(tree, 'MULTIPLY', node_socket(inputs.outputs, 'Selection'),
                 math(tree, 'MULTIPLY', matches_element, math(tree, 'MULTIPLY', after_first, before_last)))
 
 
@@ -258,23 +263,23 @@ def field_view(directory, parent=None, index=0):
     inputs, output = nodes.new('NodeGroupInput'), nodes.new('NodeGroupOutput')
     info = nodes.new('GeometryNodeObjectInfo')
     info.transform_space = 'RELATIVE'
-    info.inputs['Object'].default_value = source
+    node_socket(info.inputs, 'Object').default_value = source
     style = nodes.new('GeometryNodeGroup')
     style.node_tree = isosurface_group()
-    links.new(info.outputs['Geometry'], style.inputs['Volume'])
+    links.new(node_socket(info.outputs, 'Geometry'), node_socket(style.inputs, 'Volume'))
     for name in ('Isovalue', 'Link Thresholds', 'Negative Isovalue', 'Positive Phase', 'Negative Phase', 'Positive Opacity', 'Negative Opacity', 'Adaptivity', 'Smooth Normals',
                  'Style (0 solid, 1 wire, 2 points)', 'Wire Radius', 'Point Radius', 'Quality'):
-        links.new(inputs.outputs[name], style.inputs[name])
+        links.new(node_socket(inputs.outputs, name), node_socket(style.inputs, name))
     for label, color in [('Positive', (0.1, 0.3, 0.8, 1)), ('Negative', (0.85, 0.12, 0.08, 1))]:
         name = label + ' Material'
         mat = material('QC ' + label + ' Phase', color)
         opacity = mat.node_tree.nodes.new('ShaderNodeAttribute')
         opacity.attribute_name = 'qc_opacity'
         shader = node_by_type(mat.node_tree.nodes, 'ShaderNodeBsdfPrincipled')
-        mat.node_tree.links.new(opacity.outputs['Fac'], shader.inputs['Alpha'])
+        mat.node_tree.links.new(node_socket(opacity.outputs, 'Fac'), node_socket(shader.inputs, 'Alpha'))
         socket(tree, name, 'NodeSocketMaterial', default=mat)
-        links.new(inputs.outputs[name], style.inputs[name])
-    links.new(style.outputs['Geometry'], output.inputs['Geometry'])
+        links.new(node_socket(inputs.outputs, name), node_socket(style.inputs, name))
+    links.new(node_socket(style.outputs, 'Geometry'), node_socket(output.inputs, 'Geometry'))
     frame_nodes(tree, [info, style], 'Field: source and isosurface', (300, 0))
     inputs.location, output.location = (-100, 0), (1200, 0)
     obj.modifiers.new('QC Isosurface', 'NODES').node_group = tree
@@ -323,61 +328,63 @@ def isosurface_group():
     inputs, output = nodes.new('NodeGroupInput'), nodes.new('NodeGroupOutput')
     join = nodes.new('GeometryNodeJoinGeometry')
     smooth = nodes.new('GeometryNodeSetShadeSmooth')
-    links.new(join.outputs['Geometry'], smooth.inputs['Geometry'])
-    links.new(inputs.outputs['Smooth Normals'], smooth.inputs['Shade Smooth'])
-    links.new(smooth.outputs['Geometry'], output.inputs['Geometry'])
+    links.new(node_socket(join.outputs, 'Geometry'), node_socket(smooth.inputs, 'Geometry'))
+    links.new(node_socket(inputs.outputs, 'Smooth Normals'), node_socket(smooth.inputs, 'Shade Smooth'))
+    links.new(node_socket(smooth.outputs, 'Geometry'), node_socket(output.inputs, 'Geometry'))
     valid_grid = nodes.new('GeometryNodeGetNamedGrid')
-    valid_grid.inputs['Name'].default_value = 'qc_valid'
-    links.new(inputs.outputs['Volume'], valid_grid.inputs['Volume'])
+    node_socket(valid_grid.inputs, 'Name').default_value = 'qc_valid'
+    links.new(node_socket(inputs.outputs, 'Volume'), node_socket(valid_grid.inputs, 'Volume'))
     sample = nodes.new('GeometryNodeSampleGrid')
-    sample.inputs['Interpolation'].default_value = 'Trilinear'
-    links.new(valid_grid.outputs['Grid'], sample.inputs['Grid'])
+    node_socket(sample.inputs, 'Interpolation').default_value = 'Trilinear'
+    links.new(node_socket(valid_grid.outputs, 'Grid'), node_socket(sample.inputs, 'Grid'))
     position = nodes.new('GeometryNodeInputPosition')
-    links.new(position.outputs['Position'], sample.inputs['Position'])
+    links.new(node_socket(position.outputs, 'Position'), node_socket(sample.inputs, 'Position'))
     invalid = nodes.new('ShaderNodeMath')
     invalid.operation = 'LESS_THAN'
     invalid.inputs[1].default_value = 0.999999
-    links.new(sample.outputs['Value'], invalid.inputs[0])
+    links.new(node_socket(sample.outputs, 'Value'), invalid.inputs[0])
     for label, name in [('Positive Phase', 'qc_value'), ('Negative Phase', 'qc_negative')]:
         grid = nodes.new('GeometryNodeGetNamedGrid')
-        grid.inputs['Name'].default_value = name
-        links.new(inputs.outputs['Volume'], grid.inputs['Volume'])
+        node_socket(grid.inputs, 'Name').default_value = name
+        links.new(node_socket(inputs.outputs, 'Volume'), node_socket(grid.inputs, 'Volume'))
         surface = nodes.new('GeometryNodeGridToMesh')
-        links.new(grid.outputs['Grid'], surface.inputs['Grid'])
-        threshold = inputs.outputs['Isovalue']
+        links.new(node_socket(grid.outputs, 'Grid'), node_socket(surface.inputs, 'Grid'))
+        threshold = node_socket(inputs.outputs, 'Isovalue')
         if name == 'qc_negative':
             choose = nodes.new('GeometryNodeSwitch')
             choose.input_type = 'FLOAT'
-            links.new(inputs.outputs['Link Thresholds'], choose.inputs['Switch'])
-            links.new(inputs.outputs['Isovalue'], choose.inputs['True'])
-            links.new(inputs.outputs['Negative Isovalue'], choose.inputs['False'])
-            threshold = choose.outputs['Output']
-        links.new(threshold, surface.inputs['Threshold'])
-        links.new(inputs.outputs['Adaptivity'], surface.inputs['Adaptivity'])
+            links.new(node_socket(inputs.outputs, 'Link Thresholds'), node_socket(choose.inputs, 'Switch'))
+            links.new(node_socket(inputs.outputs, 'Isovalue'), node_socket(choose.inputs, 'True'))
+            links.new(node_socket(inputs.outputs, 'Negative Isovalue'), node_socket(choose.inputs, 'False'))
+            threshold = node_socket(choose.outputs, 'Output')
+        links.new(threshold, node_socket(surface.inputs, 'Threshold'))
+        links.new(node_socket(inputs.outputs, 'Adaptivity'), node_socket(surface.inputs, 'Adaptivity'))
         delete = nodes.new('GeometryNodeDeleteGeometry')
         delete.domain = 'POINT'
-        links.new(surface.outputs['Mesh'], delete.inputs['Geometry'])
-        links.new(invalid.outputs[0], delete.inputs['Selection'])
+        links.new(node_socket(surface.outputs, 'Mesh'), node_socket(delete.inputs, 'Geometry'))
+        links.new(invalid.outputs[0], node_socket(delete.inputs, 'Selection'))
         assign = nodes.new('GeometryNodeSetMaterial')
-        links.new(inputs.outputs[label.replace('Phase', 'Material')], assign.inputs['Material'])
+        links.new(node_socket(inputs.outputs, label.replace('Phase', 'Material')), node_socket(assign.inputs, 'Material'))
         from .assets import surface_style_group
         representation = nodes.new('GeometryNodeGroup')
         representation.node_tree = surface_style_group()
-        links.new(delete.outputs['Geometry'], representation.inputs['Geometry'])
+        links.new(node_socket(delete.outputs, 'Geometry'), node_socket(representation.inputs, 'Geometry'))
         for control in ('Style (0 solid, 1 wire, 2 points)', 'Wire Radius', 'Point Radius', 'Quality'):
-            links.new(inputs.outputs[control], representation.inputs[control])
+            links.new(node_socket(inputs.outputs, control), node_socket(representation.inputs, control))
         opacity = nodes.new('GeometryNodeStoreNamedAttribute')
         opacity.data_type, opacity.domain = 'FLOAT', 'POINT'
-        opacity.inputs['Name'].default_value = 'qc_opacity'
-        links.new(inputs.outputs[label.replace('Phase', 'Opacity')], opacity.inputs['Value'])
-        links.new(representation.outputs['Geometry'], opacity.inputs['Geometry'])
-        links.new(opacity.outputs['Geometry'], assign.inputs['Geometry'])
+        node_socket(opacity.inputs, 'Name').default_value = 'qc_opacity'
+        links.new(node_socket(inputs.outputs, label.replace('Phase', 'Opacity')), node_socket(opacity.inputs, 'Value'))
+        links.new(node_socket(representation.outputs, 'Geometry'), node_socket(opacity.inputs, 'Geometry'))
+        links.new(node_socket(opacity.outputs, 'Geometry'), node_socket(assign.inputs, 'Geometry'))
         switch = nodes.new('GeometryNodeSwitch')
         switch.input_type = 'GEOMETRY'
-        links.new(inputs.outputs[label], switch.inputs['Switch'])
-        links.new(assign.outputs['Geometry'], switch.inputs['True'])
-        links.new(switch.outputs['Output'], join.inputs['Geometry'])
-        links.new(switch.outputs['Output'], output.inputs[label.split()[0]])
+        links.new(node_socket(inputs.outputs, label), node_socket(switch.inputs, 'Switch'))
+        links.new(node_socket(assign.outputs, 'Geometry'), node_socket(switch.inputs, 'True'))
+        links.new(node_socket(switch.outputs, 'Output'), node_socket(join.inputs, 'Geometry'))
+        links.new(node_socket(switch.outputs, 'Output'), node_socket(output.inputs, label.split()[0]))
     for index, node in enumerate(nodes):
         node.location = (index % 5 * 220, -(index // 5) * 240)
+    from .node_identity import localize_tree
+    localize_tree(tree)
     return tree

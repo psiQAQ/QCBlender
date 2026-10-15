@@ -1,4 +1,6 @@
 """Mode and energy selection backed by saved scientific records."""
+
+from .node_identity import node_socket, socket_name
 import json
 import math
 
@@ -53,12 +55,16 @@ class QCViewSettings(bpy.types.PropertyGroup):
 
 class QCBLENDER_UL_modes(bpy.types.UIList):
     def draw_item(self, context, layout, data, item, icon, active_data, active_propname, index):
-        layout.label(text=item.label)
+        from ..i18n import iface
+        layout.label(text=item.label.replace('(imaginary)', iface('(imaginary)')))
 
 
 class QCBLENDER_UL_energies(bpy.types.UIList):
     def draw_item(self, context, layout, data, item, icon, active_data, active_propname, index):
-        layout.label(text=item.label)
+        from ..i18n import iface
+        record = json.loads(item.record)
+        layout.label(text=f"{record['method']} | {iface(record['kind'])} | "
+                          f"{record['value_hartree']:.10f} Eh | {iface(record['role'])}")
 
 
 def setup_properties(obj, data):
@@ -102,50 +108,50 @@ def add_animation_nodes(obj):
         view_modifier(obj)[item.identifier] = default
     nodes, links = tree.nodes, tree.links
     inputs = next(node for node in nodes if node.type == 'GROUP_INPUT')
-    consumers = [link.to_socket for link in list(inputs.outputs['Geometry'].links)]
-    for link in list(inputs.outputs['Geometry'].links):
+    consumers = [link.to_socket for link in list(node_socket(inputs.outputs, 'Geometry').links)]
+    for link in list(node_socket(inputs.outputs, 'Geometry').links):
         links.remove(link)
     equilibrium = nodes.new('GeometryNodeInputNamedAttribute')
     equilibrium.data_type = 'FLOAT_VECTOR'
-    equilibrium.inputs['Name'].default_value = 'qc_equilibrium_position'
+    node_socket(equilibrium.inputs, 'Name').default_value = 'qc_equilibrium_position'
     displacement = nodes.new('GeometryNodeInputNamedAttribute')
     displacement.data_type = 'FLOAT_VECTOR'
-    displacement.inputs['Name'].default_value = 'qc_mode_displacement'
+    node_socket(displacement.inputs, 'Name').default_value = 'qc_mode_displacement'
     time = nodes.new('GeometryNodeInputSceneTime')
     cycles = nodes.new('ShaderNodeMath')
     cycles.operation = 'MULTIPLY'
-    links.new(time.outputs['Seconds'], cycles.inputs[0])
-    links.new(inputs.outputs['Cycles per second'], cycles.inputs[1])
+    links.new(node_socket(time.outputs, 'Seconds'), cycles.inputs[0])
+    links.new(node_socket(inputs.outputs, 'Cycles per second'), cycles.inputs[1])
     radians = nodes.new('ShaderNodeMath')
     radians.operation = 'MULTIPLY'
     radians.inputs[1].default_value = math.tau
     links.new(cycles.outputs[0], radians.inputs[0])
     animate = nodes.new('GeometryNodeSwitch')
     animate.input_type = 'FLOAT'
-    links.new(inputs.outputs['Animate'], animate.inputs['Switch'])
-    links.new(radians.outputs[0], animate.inputs['True'])
+    links.new(node_socket(inputs.outputs, 'Animate'), node_socket(animate.inputs, 'Switch'))
+    links.new(radians.outputs[0], node_socket(animate.inputs, 'True'))
     phase = nodes.new('ShaderNodeMath')
     phase.operation = 'ADD'
-    links.new(animate.outputs['Output'], phase.inputs[0])
-    links.new(inputs.outputs['Phase'], phase.inputs[1])
+    links.new(node_socket(animate.outputs, 'Output'), phase.inputs[0])
+    links.new(node_socket(inputs.outputs, 'Phase'), phase.inputs[1])
     sine = nodes.new('ShaderNodeMath')
     sine.operation = 'SINE'
     links.new(phase.outputs[0], sine.inputs[0])
     amplitude = nodes.new('ShaderNodeMath')
     amplitude.operation = 'MULTIPLY'
-    links.new(inputs.outputs['Amplitude (angstrom)'], amplitude.inputs[0])
+    links.new(node_socket(inputs.outputs, 'Amplitude (angstrom)'), amplitude.inputs[0])
     links.new(sine.outputs[0], amplitude.inputs[1])
     offset = nodes.new('ShaderNodeVectorMath')
     offset.operation = 'SCALE'
-    links.new(displacement.outputs['Attribute'], offset.inputs[0])
-    links.new(amplitude.outputs[0], offset.inputs['Scale'])
+    links.new(node_socket(displacement.outputs, 'Attribute'), offset.inputs[0])
+    links.new(amplitude.outputs[0], node_socket(offset.inputs, 'Scale'))
     position = nodes.new('GeometryNodeSetPosition')
-    links.new(inputs.outputs['Geometry'], position.inputs['Geometry'])
-    links.new(equilibrium.outputs['Attribute'], position.inputs['Position'])
-    links.new(offset.outputs['Vector'], position.inputs['Offset'])
+    links.new(node_socket(inputs.outputs, 'Geometry'), node_socket(position.inputs, 'Geometry'))
+    links.new(node_socket(equilibrium.outputs, 'Attribute'), node_socket(position.inputs, 'Position'))
+    links.new(node_socket(offset.outputs, 'Vector'), node_socket(position.inputs, 'Offset'))
     for consumer in consumers:
-        links.new(position.outputs['Geometry'], consumer)
-    add_mode_vectors(obj, displacement.outputs['Attribute'], inputs)
+        links.new(node_socket(position.outputs, 'Geometry'), consumer)
+    add_mode_vectors(obj, node_socket(displacement.outputs, 'Attribute'), inputs)
     frame_nodes(tree, [node for node in nodes if node not in existing_nodes],
                 'Modes: displacement and animation')
 
@@ -162,58 +168,58 @@ def add_mode_vectors(obj, displacement, inputs):
     arrow = nodes.new('GeometryNodeJoinGeometry')
     for kind, depth, offset in [('GeometryNodeMeshCylinder', .8, .4), ('GeometryNodeMeshCone', .2, .8)]:
         primitive = nodes.new(kind)
-        primitive.inputs['Vertices'].default_value = 12
-        primitive.inputs['Depth'].default_value = depth
+        node_socket(primitive.inputs, 'Vertices').default_value = 12
+        node_socket(primitive.inputs, 'Depth').default_value = depth
         if kind.endswith('Cylinder'):
-            primitive.inputs['Radius'].default_value = 1
+            node_socket(primitive.inputs, 'Radius').default_value = 1
         else:
-            primitive.inputs['Radius Top'].default_value = 0
-            primitive.inputs['Radius Bottom'].default_value = 2.5
+            node_socket(primitive.inputs, 'Radius Top').default_value = 0
+            node_socket(primitive.inputs, 'Radius Bottom').default_value = 2.5
         transform = nodes.new('GeometryNodeTransform')
-        transform.inputs['Translation'].default_value = (0, 0, offset)
-        links.new(primitive.outputs['Mesh'], transform.inputs['Geometry'])
-        links.new(transform.outputs['Geometry'], arrow.inputs['Geometry'])
+        node_socket(transform.inputs, 'Translation').default_value = (0, 0, offset)
+        links.new(node_socket(primitive.outputs, 'Mesh'), node_socket(transform.inputs, 'Geometry'))
+        links.new(node_socket(transform.outputs, 'Geometry'), node_socket(arrow.inputs, 'Geometry'))
     assign = nodes.new('GeometryNodeSetMaterial')
-    assign.inputs['Material'].default_value = material('QC mode vectors', (.95, .6, .05, 1))
-    links.new(arrow.outputs['Geometry'], assign.inputs['Geometry'])
+    node_socket(assign.inputs, 'Material').default_value = material('QC mode vectors', (.95, .6, .05, 1))
+    links.new(node_socket(arrow.outputs, 'Geometry'), node_socket(assign.inputs, 'Geometry'))
     vector = nodes.new('ShaderNodeVectorMath')
     vector.operation = 'SCALE'
     links.new(displacement, vector.inputs[0])
-    links.new(inputs.outputs['Amplitude (angstrom)'], vector.inputs['Scale'])
+    links.new(node_socket(inputs.outputs, 'Amplitude (angstrom)'), node_socket(vector.inputs, 'Scale'))
     length = nodes.new('ShaderNodeVectorMath')
     length.operation = 'LENGTH'
-    links.new(vector.outputs['Vector'], length.inputs[0])
+    links.new(node_socket(vector.outputs, 'Vector'), length.inputs[0])
     scale = nodes.new('ShaderNodeCombineXYZ')
-    links.new(inputs.outputs['Vector Radius'], scale.inputs['X'])
-    links.new(inputs.outputs['Vector Radius'], scale.inputs['Y'])
-    links.new(length.outputs['Value'], scale.inputs['Z'])
+    links.new(node_socket(inputs.outputs, 'Vector Radius'), node_socket(scale.inputs, 'X'))
+    links.new(node_socket(inputs.outputs, 'Vector Radius'), node_socket(scale.inputs, 'Y'))
+    links.new(node_socket(length.outputs, 'Value'), node_socket(scale.inputs, 'Z'))
     align = nodes.new('FunctionNodeAlignEulerToVector')
     align.axis = 'Z'
-    links.new(vector.outputs['Vector'], align.inputs['Vector'])
+    links.new(node_socket(vector.outputs, 'Vector'), node_socket(align.inputs, 'Vector'))
     instances = nodes.new('GeometryNodeInstanceOnPoints')
     style = next(n for n in nodes if n.type == 'GROUP' and n.node_tree.get('qc_asset_id') == 'qc.atom_style.v1')
-    links.new(style.inputs['Geometry'].links[0].from_socket, instances.inputs['Points'])
-    links.new(assign.outputs['Geometry'], instances.inputs['Instance'])
-    links.new(scale.outputs['Vector'], instances.inputs['Scale'])
-    links.new(align.outputs['Rotation'], instances.inputs['Rotation'])
+    links.new(node_socket(style.inputs, 'Geometry').links[0].from_socket, node_socket(instances.inputs, 'Points'))
+    links.new(node_socket(assign.outputs, 'Geometry'), node_socket(instances.inputs, 'Instance'))
+    links.new(node_socket(scale.outputs, 'Vector'), node_socket(instances.inputs, 'Scale'))
+    links.new(node_socket(align.outputs, 'Rotation'), node_socket(instances.inputs, 'Rotation'))
     positive = nodes.new('ShaderNodeMath')
     positive.operation = 'GREATER_THAN'
     positive.inputs[1].default_value = 1e-10
-    links.new(length.outputs['Value'], positive.inputs[0])
+    links.new(node_socket(length.outputs, 'Value'), positive.inputs[0])
     selected = nodes.new('FunctionNodeBooleanMath')
     selected.operation = 'AND'
     links.new(positive.outputs[0], selected.inputs[0])
-    links.new(style.inputs['Selection'].links[0].from_socket, selected.inputs[1])
-    links.new(selected.outputs[0], instances.inputs['Selection'])
+    links.new(node_socket(style.inputs, 'Selection').links[0].from_socket, selected.inputs[1])
+    links.new(selected.outputs[0], node_socket(instances.inputs, 'Selection'))
     realize = nodes.new('GeometryNodeRealizeInstances')
-    links.new(instances.outputs['Instances'], realize.inputs['Geometry'])
+    links.new(node_socket(instances.outputs, 'Instances'), node_socket(realize.inputs, 'Geometry'))
     switch = nodes.new('GeometryNodeSwitch')
     switch.input_type = 'GEOMETRY'
-    links.new(inputs.outputs['Show Displacement Vectors'], switch.inputs['Switch'])
-    links.new(realize.outputs['Geometry'], switch.inputs['True'])
+    links.new(node_socket(inputs.outputs, 'Show Displacement Vectors'), node_socket(switch.inputs, 'Switch'))
+    links.new(node_socket(realize.outputs, 'Geometry'), node_socket(switch.inputs, 'True'))
     output = next(n for n in nodes if n.type == 'GROUP_OUTPUT')
-    original = output.inputs['Geometry'].links[0].from_socket
+    original = node_socket(output.inputs, 'Geometry').links[0].from_socket
     joined = nodes.new('GeometryNodeJoinGeometry')
-    links.new(original, joined.inputs['Geometry'])
-    links.new(switch.outputs['Output'], joined.inputs['Geometry'])
-    links.new(joined.outputs['Geometry'], output.inputs['Geometry'])
+    links.new(original, node_socket(joined.inputs, 'Geometry'))
+    links.new(node_socket(switch.outputs, 'Output'), node_socket(joined.inputs, 'Geometry'))
+    links.new(node_socket(joined.outputs, 'Geometry'), node_socket(output.inputs, 'Geometry'))

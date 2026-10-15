@@ -1,4 +1,6 @@
 """Locate QC controls without depending on modifier order or editable labels."""
+
+from .node_identity import node_socket, socket_name
 import json
 
 
@@ -16,8 +18,9 @@ def view_modifier(obj):
 
 def tag_view(tree):
     tree['qc_view_graph'] = 2
-    tree['qc_sockets'] = json.dumps({s.name: s.identifier for s in tree.interface.items_tree
-                                    if s.item_type == 'SOCKET' and s.in_out == 'INPUT'})
+    from .node_identity import remember_sockets, localize_tree
+    remember_sockets(tree)
+    localize_tree(tree)
 
 
 def geometry_output(tree):
@@ -35,9 +38,9 @@ def append_branch(tree, geometry):
     else:
         join = tree.nodes.new('GeometryNodeJoinGeometry')
         if previous:
-            tree.links.new(previous, join.inputs['Geometry'])
-        tree.links.new(join.outputs['Geometry'], output)
-    tree.links.new(geometry, join.inputs['Geometry'])
+            tree.links.new(previous, node_socket(join.inputs, 'Geometry'))
+        tree.links.new(node_socket(join.outputs, 'Geometry'), output)
+    tree.links.new(geometry, node_socket(join.inputs, 'Geometry'))
 
 
 def insert_geometry(tree, group, input_name='Geometry', output_name='Geometry'):
@@ -47,8 +50,8 @@ def insert_geometry(tree, group, input_name='Geometry', output_name='Geometry'):
     previous = output.links[0].from_socket
     node = tree.nodes.new('GeometryNodeGroup')
     node.node_tree = group
-    tree.links.new(previous, node.inputs[input_name])
-    tree.links.new(node.outputs[output_name], output)
+    tree.links.new(previous, node_socket(node.inputs, input_name))
+    tree.links.new(node_socket(node.outputs, output_name), output)
     return node
 
 
@@ -67,6 +70,8 @@ def arrange(tree):
             node.width = 190
             depths[node], counts[depth] = depth, row + 1
             pending.remove(node)
+    from .node_identity import localize_tree
+    localize_tree(tree)
     return tree
 
 
@@ -91,6 +96,7 @@ def frame_nodes(tree, nodes, title, origin=None):
         origin = (right + 320, 0)
     frame = tree.nodes.new('NodeFrame')
     frame.label = title
+    frame['qc_frame_role'] = title
     frame.location = origin
     depths, rows = {}, {}
     pending = list(nodes)
@@ -106,4 +112,6 @@ def frame_nodes(tree, nodes, title, origin=None):
             node.width = 220
             depths[node], rows[depth] = depth, row + 1
             pending.remove(node)
+    from .node_identity import localize_tree
+    localize_tree(tree)
     return frame

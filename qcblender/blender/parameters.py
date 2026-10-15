@@ -1,12 +1,15 @@
 """Classify existing view inputs for native Properties sections."""
 
-GROUPS = ('几何表示', '颜色映射', '图例排版', '材质', '空间观察', '高级参数')
+GROUP_LABELS = {'geometry': 'Geometry Representation', 'color': 'Color Mapping',
+                'legend': 'Legend Layout', 'material': 'Material',
+                'spatial': 'Spatial View', 'advanced': 'Advanced Parameters'}
+GROUPS = tuple(GROUP_LABELS)
 _LEGEND = {'Show Legend', 'Legend Position', 'Legend Length', 'Legend Width',
            'Legend Text Size', 'Legend Decimals', 'Legend Vertical', 'Legend Rotation'}
 
 STYLES = {
-    'atoms': ('球棍', '空间填充', '键线'),
-    'field': ('实面', '线框', '点'),
+    'atoms': ('Ball and Stick', 'Space Filling', 'Bonds'),
+    'field': ('Solid', 'Wireframe', 'Points'),
 }
 STYLE_SOCKETS = {
     'atoms': 'Style (0 ball-stick, 1 space-fill, 2 bonds)',
@@ -36,7 +39,7 @@ def socket_group(name, kind, values, quantity=''):
     if name == 'Geometry':
         return None
     if name in STYLE_SOCKETS.values():
-        return '几何表示'
+        return 'geometry'
     if name in ('Atom Radius',) and style != 0:
         return None
     if name in ('Bond Radius',) and style == 1:
@@ -65,45 +68,48 @@ def socket_group(name, kind, values, quantity=''):
     if name in ('Box Minimum', 'Box Maximum') and not values.get('Box Enabled', False):
         return None
     if name in _LEGEND:
-        return '图例排版' if name == 'Show Legend' or values.get('Show Legend', False) else None
+        return 'legend' if name == 'Show Legend' or values.get('Show Legend', False) else None
     if name in _GEOMETRY:
-        return '几何表示'
+        return 'geometry'
     if name in _COLOR:
-        return '颜色映射'
+        return 'color'
     if name in _MATERIAL or kind == 'NodeSocketMaterial':
-        return '材质'
+        return 'material'
     if name in _SPATIAL:
-        return '空间观察'
-    return '高级参数'
+        return 'spatial'
+    return 'advanced'
 
 
 def socket_label(name, quantity='', unit=''):
-    if name in _LEGEND:
-        return {'Show Legend': '显示图例', 'Legend Position': '位置 [布局单位]',
-                'Legend Length': '长度 [布局单位]', 'Legend Width': '宽度 [布局单位]',
-                'Legend Text Size': '字号 [布局单位]', 'Legend Decimals': '小数位数',
-                'Legend Vertical': '竖向排列', 'Legend Rotation': '旋转'}[name]
+    from ..i18n import iface
     if name == 'Quality':
-        return '显示精细度'
+        return iface('Display Detail')
     if name == 'Resolution':
-        return '显示采样数/轴'
-    if name == 'Plane Normal':
-        return 'Plane Normal [视图局部方向，无量纲]'
+        return iface('Display Samples per Axis')
     if name == 'Positive Phase':
-        return '显示正相位' if quantity == 'orbital_amplitude' else '显示正值'
+        return iface('Show Positive Phase' if quantity == 'orbital_amplitude' else 'Show Positive Values')
     if name == 'Negative Phase':
-        return '显示负相位' if quantity == 'orbital_amplitude' else '显示负值'
+        return iface('Show Negative Phase' if quantity == 'orbital_amplitude' else 'Show Negative Values')
     if name in ('Isovalue', 'Negative Isovalue'):
-        return ('正值阈值' if name == 'Isovalue' else '负值阈值') + f' [{unit or "单位未知"}]'
-    if name.endswith('Radius') or name in ('Width', 'Height', 'Vector Radius'):
-        return name + ' [Å]'
-    if name in ('Center', 'Legend Position', 'Plane Origin', 'Box Minimum', 'Box Maximum'):
-        return name + ' [视图局部 Å]'
+        return iface('Positive Isovalue' if name == 'Isovalue' else 'Negative Isovalue') + f' [{unit or iface("Unknown Unit")}]'
+    legend_labels = {'Show Legend': 'Show Legend', 'Legend Position': 'Position',
+                     'Legend Length': 'Length', 'Legend Width': 'Width',
+                     'Legend Text Size': 'Text Size', 'Legend Decimals': 'Decimal Places',
+                     'Legend Vertical': 'Vertical', 'Legend Rotation': 'Rotation'}
+    label = iface(legend_labels.get(name, name))
+    if name in ('Legend Position', 'Legend Length', 'Legend Width', 'Legend Text Size'):
+        return iface('{label} [layout units]', label=label)
+    if name == 'Plane Normal':
+        return iface('{label} [view-local direction, dimensionless]', label=label)
+    if name.endswith('Radius') or name in ('Width', 'Height'):
+        return label + ' [Å]'
+    if name in ('Center', 'Plane Origin', 'Box Minimum', 'Box Maximum'):
+        return iface('{label} [view-local Å]', label=label)
     if name in ('Color Minimum', 'Color Center', 'Color Maximum'):
-        return name + f' [{unit or "单位未知"}]'
+        return label + f' [{unit or iface("Unknown Unit")}]'
     if name in ('Charge Minimum', 'Charge Center', 'Charge Maximum'):
-        return name + ' [e]'
-    return name
+        return label + ' [e]'
+    return label
 
 
 if __name__ == '__main__':
@@ -111,13 +117,13 @@ if __name__ == '__main__':
     field = {'Style (0 solid, 1 wire, 2 points)': 2, 'Negative Phase': True,
              'Link Thresholds': False}
     assert socket_group('Atom Radius', 'NodeSocketFloat', atom) is None
-    assert socket_group('VDW Scale', 'NodeSocketFloat', atom) == '几何表示'
-    assert socket_group('Quality', 'NodeSocketInt', field) == '几何表示'
+    assert socket_group('VDW Scale', 'NodeSocketFloat', atom) == 'geometry'
+    assert socket_group('Quality', 'NodeSocketInt', field) == 'geometry'
     assert socket_group('Wire Radius', 'NodeSocketFloat', field) is None
-    assert socket_group('Negative Isovalue', 'NodeSocketFloat', field, 'orbital_amplitude') == '几何表示'
+    assert socket_group('Negative Isovalue', 'NodeSocketFloat', field, 'orbital_amplitude') == 'geometry'
     assert socket_group('Plane Origin', 'NodeSocketVector', {'Plane Enabled': False}) is None
-    assert socket_group('Center', 'NodeSocketVector', {}) == '空间观察'
-    assert socket_group('custom_input', 'NodeSocketFloat', {}) == '高级参数'
-    assert socket_group('Style (custom)', 'NodeSocketInt', {}) == '高级参数'
-    assert socket_label('Negative Phase', 'orbital_amplitude') == '显示负相位'
+    assert socket_group('Center', 'NodeSocketVector', {}) == 'spatial'
+    assert socket_group('custom_input', 'NodeSocketFloat', {}) == 'advanced'
+    assert socket_group('Style (custom)', 'NodeSocketInt', {}) == 'advanced'
+    assert socket_label('Negative Phase', 'orbital_amplitude') in ('显示负相位', 'Show Negative Phase')
     assert socket_label('Isovalue', unit='hartree/e').endswith('[hartree/e]')

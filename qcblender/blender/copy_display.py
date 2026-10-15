@@ -1,4 +1,6 @@
 """Copy selected display controls between compatible views in the current scene."""
+
+from .node_identity import node_socket, socket_name
 import json
 import math
 
@@ -114,7 +116,7 @@ def _inputs(modifier, kind):
               if node.bl_idname == 'GeometryNodeGroup' and node.node_tree}
     if tree.get('qc_view_graph') != 2 or not CORE_ASSETS[kind].issubset(assets):
         raise ValueError('Only current standard QC view graphs support parameter copying')
-    sockets = {item.name: item for item in tree.interface.items_tree
+    sockets = {socket_name(item, tree): item for item in tree.interface.items_tree
                if item.item_type == 'SOCKET' and item.in_out == 'INPUT'}
     recorded = json.loads(tree.get('qc_sockets', '{}'))
     identities = {name: item.identifier for name, item in sockets.items()}
@@ -195,60 +197,60 @@ def _display_path(obj, modifier, kind, sockets, mapping):
 
     def unclipped(socket):
         nonlocal used_clip
-        if clip and socket == clip.outputs['Geometry']:
-            if used_clip or any(linked(clip.inputs[name]) != inputs.outputs[name] for name in CLIP):
+        if clip and socket == node_socket(clip.outputs, 'Geometry'):
+            if used_clip or any(linked(node_socket(clip.inputs, name)) != node_socket(inputs.outputs, name) for name in CLIP):
                 raise ValueError('QC clipping controls have changed')
             used_clip = True
-            return linked(clip.inputs['Geometry'])
+            return linked(node_socket(clip.inputs, 'Geometry'))
         return socket
 
     if mapping[0]:
         # color_volume() already validates the scalar group, legend and final output.
-        displayed = linked(group('qc.color_scalar.v2').inputs['Geometry'])
+        displayed = linked(node_socket(group('qc.color_scalar.v2').inputs, 'Geometry'))
     else:
         displayed = linked(geometry_output(tree))
     displayed = unclipped(displayed)
 
     if mapping[1]:
         join = displayed.node
-        if join.bl_idname != 'GeometryNodeJoinGeometry' or displayed != join.outputs['Geometry']:
+        if join.bl_idname != 'GeometryNodeJoinGeometry' or displayed != node_socket(join.outputs, 'Geometry'):
             raise ValueError('QC charge display is disconnected')
-        branches = [link.from_socket for link in join.inputs['Geometry'].links]
+        branches = [link.from_socket for link in node_socket(join.inputs, 'Geometry').links]
         legends = [socket for socket in branches if socket.node.bl_idname == 'GeometryNodeSwitch'
-                   and socket == socket.node.outputs['Output']]
+                   and socket == node_socket(socket.node.outputs, 'Output')]
         assignments = [socket.node for socket in branches if socket.node.bl_idname == 'GeometryNodeSetMaterial'
-                       and socket == socket.node.outputs['Geometry']
-                       and not socket.node.inputs['Material'].is_linked
-                       and _has_role(socket.node.inputs['Material'].default_value, 'color_ramp')]
+                       and socket == node_socket(socket.node.outputs, 'Geometry')
+                       and not node_socket(socket.node.inputs, 'Material').is_linked
+                       and _has_role(node_socket(socket.node.inputs, 'Material').default_value, 'color_ramp')]
         if len(branches) != 2 or len(legends) != 1 or len(assignments) != 1:
             raise ValueError('QC charge legend has an unsupported branch')
         assign = assignments[0]
-        if linked(legends[0].node.inputs['Switch']) != inputs.outputs['Show Legend']:
+        if linked(node_socket(legends[0].node.inputs, 'Switch')) != node_socket(inputs.outputs, 'Show Legend'):
             raise ValueError('QC charge legend control is disconnected')
-        displayed = linked(assign.inputs['Geometry'])
+        displayed = linked(node_socket(assign.inputs, 'Geometry'))
         for attribute in ('qc_sample_valid', 'qc_color_fraction'):
             node = displayed.node
             if (node.bl_idname != 'GeometryNodeStoreNamedAttribute'
-                    or displayed != node.outputs['Geometry']
-                    or node.inputs['Name'].default_value != attribute):
+                    or displayed != node_socket(node.outputs, 'Geometry')
+                    or node_socket(node.inputs, 'Name').default_value != attribute):
                 raise ValueError('QC charge color branch has changed')
-            displayed = linked(node.inputs['Geometry'])
+            displayed = linked(node_socket(node.inputs, 'Geometry'))
         displayed = unclipped(displayed)
 
     if kind == 'atoms' and 'Show Displacement Vectors' in sockets:
         join = displayed.node
-        if join.bl_idname != 'GeometryNodeJoinGeometry' or displayed != join.outputs['Geometry']:
+        if join.bl_idname != 'GeometryNodeJoinGeometry' or displayed != node_socket(join.outputs, 'Geometry'):
             raise ValueError('QC displacement branch is disconnected')
-        branches = [link.from_socket for link in join.inputs['Geometry'].links]
+        branches = [link.from_socket for link in node_socket(join.inputs, 'Geometry').links]
         vectors = [socket for socket in branches if socket.node.bl_idname == 'GeometryNodeSwitch'
-                   and socket == socket.node.outputs['Output']]
-        if len(branches) != 2 or len(vectors) != 1 or style.outputs['Geometry'] not in branches:
+                   and socket == node_socket(socket.node.outputs, 'Output')]
+        if len(branches) != 2 or len(vectors) != 1 or node_socket(style.outputs, 'Geometry') not in branches:
             raise ValueError('QC displacement branch has changed')
-        if linked(vectors[0].node.inputs['Switch']) != inputs.outputs['Show Displacement Vectors']:
+        if linked(node_socket(vectors[0].node.inputs, 'Switch')) != node_socket(inputs.outputs, 'Show Displacement Vectors'):
             raise ValueError('QC displacement control is disconnected')
-        displayed = style.outputs['Geometry']
+        displayed = node_socket(style.outputs, 'Geometry')
 
-    if displayed != style.outputs['Geometry'] or (clip is not None and not used_clip and not mapping[0]):
+    if displayed != node_socket(style.outputs, 'Geometry') or (clip is not None and not used_clip and not mapping[0]):
         raise ValueError('QC style is not connected to the displayed geometry')
 
     controls = GEOMETRY[kind]
@@ -259,25 +261,25 @@ def _display_path(obj, modifier, kind, sockets, mapping):
                      'Positive Opacity', 'Negative Opacity', 'Positive Material', 'Negative Material')
     elif kind == 'fog':
         controls += ('Material',)
-    if any(linked(style.inputs[name]) != inputs.outputs[name] for name in controls):
+    if any(linked(node_socket(style.inputs, name)) != node_socket(inputs.outputs, name) for name in controls):
         raise ValueError('QC display controls are disconnected from the style')
     if kind == 'atoms':
-        geometry = linked(style.inputs['Geometry'])
+        geometry = linked(node_socket(style.inputs, 'Geometry'))
         if 'Show Displacement Vectors' in sockets:
             position = geometry.node
-            if (position.bl_idname != 'GeometryNodeSetPosition' or geometry != position.outputs['Geometry']
-                    or linked(position.inputs['Geometry']) != inputs.outputs['Geometry']):
+            if (position.bl_idname != 'GeometryNodeSetPosition' or geometry != node_socket(position.outputs, 'Geometry')
+                    or linked(node_socket(position.inputs, 'Geometry')) != node_socket(inputs.outputs, 'Geometry')):
                 raise ValueError('QC atom geometry input has changed')
-        elif geometry != inputs.outputs['Geometry']:
+        elif geometry != node_socket(inputs.outputs, 'Geometry'):
             raise ValueError('QC atom geometry input has changed')
-        if not style.inputs['Selection'].links:
+        if not node_socket(style.inputs, 'Selection').links:
             raise ValueError('QC atom selection is disconnected')
     if kind in ('field', 'fog'):
-        volume = linked(style.inputs['Volume']).node
+        volume = linked(node_socket(style.inputs, 'Volume')).node
         if (volume.bl_idname != 'GeometryNodeObjectInfo'
-                or volume.outputs['Geometry'] != linked(style.inputs['Volume'])
+                or node_socket(volume.outputs, 'Geometry') != linked(node_socket(style.inputs, 'Volume'))
                 or volume.transform_space != 'RELATIVE'
-                or volume.inputs['Object'].default_value != obj.qc_settings.volume):
+                or node_socket(volume.inputs, 'Object').default_value != obj.qc_settings.volume):
             raise ValueError('QC displayed volume differs from its bound source')
 
 
@@ -302,28 +304,28 @@ def _materials(obj, modifier, sockets, mapping):
     if mapping[0]:
         groups = [node for node in tree.nodes if node.bl_idname == 'GeometryNodeGroup'
                   and node.node_tree and node.node_tree.get('qc_asset_id') == 'qc.color_scalar.v2']
-        if len(groups) != 1 or groups[0].inputs['Material'].is_linked:
+        if len(groups) != 1 or node_socket(groups[0].inputs, 'Material').is_linked:
             raise ValueError('Scalar mapping material is ambiguous')
-        mat = groups[0].inputs['Material'].default_value
+        mat = node_socket(groups[0].inputs, 'Material').default_value
         if not _has_role(mat, 'color_ramp'):
             raise ValueError('Scalar color ramp is unavailable')
-        refs = [('node', groups[0].inputs['Material'], None)]
-        refs.extend(('node', node.inputs['Material'], None) for node in tree.nodes
-                    if node.bl_idname == 'GeometryNodeSetMaterial' and not node.inputs['Material'].is_linked
-                    and node.inputs['Material'].default_value == mat)
+        refs = [('node', node_socket(groups[0].inputs, 'Material'), None)]
+        refs.extend(('node', node_socket(node.inputs, 'Material'), None) for node in tree.nodes
+                    if node.bl_idname == 'GeometryNodeSetMaterial' and not node_socket(node.inputs, 'Material').is_linked
+                    and node_socket(node.inputs, 'Material').default_value == mat)
         roles['scalar_map'] = (mat, refs)
     if mapping[1]:
         other = roles.get('scalar_map', (None,))[0]
-        candidates = {node.inputs['Material'].default_value for node in tree.nodes
-                      if node.bl_idname == 'GeometryNodeSetMaterial' and not node.inputs['Material'].is_linked
-                      and _has_role(node.inputs['Material'].default_value, 'color_ramp')
-                      and node.inputs['Material'].default_value != other}
+        candidates = {node_socket(node.inputs, 'Material').default_value for node in tree.nodes
+                      if node.bl_idname == 'GeometryNodeSetMaterial' and not node_socket(node.inputs, 'Material').is_linked
+                      and _has_role(node_socket(node.inputs, 'Material').default_value, 'color_ramp')
+                      and node_socket(node.inputs, 'Material').default_value != other}
         if len(candidates) != 1:
             raise ValueError('Charge color ramp is missing or ambiguous')
         mat = candidates.pop()
-        refs = [('node', node.inputs['Material'], None) for node in tree.nodes
-                if node.bl_idname == 'GeometryNodeSetMaterial' and not node.inputs['Material'].is_linked
-                and node.inputs['Material'].default_value == mat]
+        refs = [('node', node_socket(node.inputs, 'Material'), None) for node in tree.nodes
+                if node.bl_idname == 'GeometryNodeSetMaterial' and not node_socket(node.inputs, 'Material').is_linked
+                and node_socket(node.inputs, 'Material').default_value == mat]
         roles['charge_map'] = (mat, refs)
     return roles
 
@@ -385,10 +387,10 @@ def _copy_material_values(source, target, appearance, numerical, role):
             raise ValueError(f'{role} has incompatible shaders')
         if left:
             for name in ('Base Color', 'Alpha', 'Roughness'):
-                if left.inputs[name].is_linked != right.inputs[name].is_linked:
+                if node_socket(left.inputs, name).is_linked != node_socket(right.inputs, name).is_linked:
                     raise ValueError(f'{role} has incompatible shader inputs')
-                if not left.inputs[name].is_linked:
-                    right.inputs[name].default_value = left.inputs[name].default_value
+                if not node_socket(left.inputs, name).is_linked:
+                    node_socket(right.inputs, name).default_value = node_socket(left.inputs, name).default_value
         for key in ('color_ramp', 'opacity_ramp'):
             if key in old:
                 _ramp(old[key], new[key])
@@ -542,9 +544,9 @@ class QCBLENDER_OT_copy_display_parameters(bpy.types.Operator):
     bl_description = 'Copy selected display groups from the active view to compatible selected QC views'
     bl_options = {'REGISTER', 'UNDO'}
 
-    geometry: BoolProperty(name='几何表示', default=True)
-    appearance: BoolProperty(name='外观', default=True)
-    numerical: BoolProperty(name='数值设置', default=True)
+    geometry: BoolProperty(name='Geometry Representation', default=True)
+    appearance: BoolProperty(name='Appearance', default=True)
+    numerical: BoolProperty(name='Numerical Settings', default=True)
 
     @classmethod
     def poll(cls, context):
@@ -558,10 +560,11 @@ class QCBLENDER_OT_copy_display_parameters(bpy.types.Operator):
             self.layout.prop(self, name)
 
     def execute(self, context):
+        from ..i18n import iface, error_text
         try:
             copy_parameters(context.object, [obj for obj in context.selected_objects if obj != context.object],
                             self.geometry, self.appearance, self.numerical)
         except (ValueError, KeyError, TypeError, AttributeError, ReferenceError, RuntimeError) as error:
-            self.report({'ERROR'}, str(error))
+            self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         return {'FINISHED'}
