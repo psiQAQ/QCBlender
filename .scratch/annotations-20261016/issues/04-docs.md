@@ -1,6 +1,6 @@
 # 人工教程
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 
 实现范围与验收见 [spec](../spec.md)。分支 `docs/annotations-sop`。
 

@@ -1,6 +1,6 @@
 # 双语按钮说明
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 
 实现范围与验收见 [spec](../spec.md)。分支 `feat/panel-tooltips`。
 

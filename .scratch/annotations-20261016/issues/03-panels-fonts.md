@@ -1,6 +1,6 @@
 # 面板分组与中文字体
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 
 实现范围与验收见 [spec](../spec.md)。主 Agent 维护。
 
