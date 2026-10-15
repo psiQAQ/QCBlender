@@ -11,12 +11,23 @@
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
 | 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；工程在 `validation/work/human/`；[当前截图](#tutorial-screenshots-20261011) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
-| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,928,777 字节，SHA-256 `c93d7a6f8d99cae19af27994b577073a85171db4c51ce3b7319086e60bd22e67` |
-| 当前候选及验证 | `outputs/candidates/current/annotations-20261016-r2/`；源码 `739c08b`，完整双语资产构建；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/annotations.md) |
+| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,940,317 字节，SHA-256 `08e53572ce691104a463a56b76d2c7c6c38d0192ff175571726cf8973b057b5b` |
+| 当前候选及验证 | `outputs/candidates/current/sidebar-20261016-r2/`；源码 `8e085f0`，完整双语资产构建；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/sidebar.md) |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
-教程现有 26 个图片引用，已提供 4 张；完整图片检查因缺少 22 张截图为 Failed。截图采用 Pxx 案例前缀，当前路径见[截图记录](#tutorial-screenshots-20261011)。完整独立用户操作、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
+教程现有 27 个图片引用，已提供 4 张；完整图片检查因缺少 23 张截图为 Failed。截图采用 Pxx 案例前缀，当前路径见[截图记录](#tutorial-screenshots-20261011)。完整独立用户操作、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
+
+<a id="sidebar-20261016"></a>
+## Sidebar 摘要与整数标注输入（2026-10-16）
+
+Sidebar 收敛到导入导出、只读对象摘要、详情、选择导航和工程维护；计算、视图、空间工具、采样和相机集中到对象属性。摘要按当前活动对象与来源缓存显示原子总数、构型、数量单位及维度，不随 Properties pin 错位。四类标注改为可键入与左右步进的独立整数输入，越界钳制、重复拒绝、批量原子与显式顺序交换均保留；编辑更新实际几何记录。
+
+266 标准库、94 公开科学、原生摘要/几何/上下文、实际 GUI、最终包安装/渲染/移动冷读、全局原工程恢复 Passed。原生非对象 pin、多视图区比较和独立人工/科研签署 Not Run；详细覆盖与测试脚本失败修订见[验收记录](../validation/agent/acceptance/sidebar.md)。十份教程已同步入口，新增一处摘要截图占位。
+
+当前保全工程为 `outputs/projects/sidebar-preserved-20261016/user-session.blend` 及同名 `.qcdata`，全局 GUI 留在此副本；原文件与内容基线不变。验收工程及旧全局插件、偏好、旧当前 ZIP、运行脚本在 `outputs/runs/sidebar-20261016/`；证据在 `validation/agent/reports/2026-10-16/sidebar/`。R1/R2 候选和失败报告均保留，未清理历史对象。重建入口为 `tools/build_extension.py`、`tools/verify_extension.py`、`tools/verify_annotation_geometry.py` 与 `tools/verify_operator_tooltips.py`。
+
+本地整合及四个工作树的保全/正常移除结果由本批 `worktree-retention.json`、`archive-local.json`、`delivery.json` 记录；注释标签采用 `archive/2026-10-16/{feat/sidebar-main,feat/sidebar-summary,fix/sidebar-context,docs/sidebar-sop}`。不 push。
 
 <a id="annotations-20261016"></a>
 ## 标注几何、材质与面板提示（2026-10-16）

@@ -1,6 +1,6 @@
 # Sidebar 职责收敛与 QC 对象信息摘要
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 
 ## 已批准目标
 
@@ -18,8 +18,6 @@ Status: claimed
 
 短摘要：对象名、视图类型、来源原子总数、源文件、计算段、当前XYZ/优化/IRC步；来源总数不得由隐藏后mesh计数冒充。详情：method/basis/status/parser/source，按类别汇总场/轨道/振动/轨迹/外部分析的数量单位及维度。只读manifest metadata/array descriptors缓存，不读数组或运行计算。绘制无磁盘IO；刷新在import/generate/associate/refresh/load生命周期。缺失明确，不沿用旧对象数据。子对象按source_object归属并明确owner；普通对象/空选择无QC摘要。长列表按类别归并、有界输出，不列数值大表。英中文翻译及独立tooltip开关。
 
-## 分工与验证
-
 ## 用户追加：标注编号输入
 
 用户明确要求直接关闭当前工程；2026-10-16 已正常关闭 PID 59380，不覆盖磁盘原件。四类标注改用可直接输入及左右步进的整数编号控件；范围1..当前来源原子总数，越界钳制到边界，钳制结果若与同组其它编号重复则保留该控件原值，不自动跳过占用编号。创建和编辑均覆盖；距离/键角/二面角固定2/3/4个独立编号，原子标注保留批量能力（数量加独立编号，单条编辑一个）。旧atoms字符串程序调用兼容，工程记录仍source_atom_numbers数组。原子不足时明确拒绝相应测量创建，不用重复默认编号。实际GUI验证直接输入、左右步进、上下界、重复拒绝及Undo/Redo。
@@ -30,3 +28,7 @@ Status: claimed
 - 02-ui: feat/sidebar-main，主Agent独占editor_ui.py/layers.py/注册/翻译入口/共享测试及验证工具，接入摘要并处理生命周期调用点。
 - 03-docs: docs/sidebar-sop，独占validation/human Markdown；主Agent维护其余共享证据索引。
 - 04-delivery: 主Agent串行Blender。空/普通/atoms/field/slice/fog/annotation/multisource/local/missing案例，维度/来源/构型/无IO/有界摘要；真实GUI迁移入口和双语窄栏。候选安装及冷读、全局更新、原工程保全、stdlib/public science/工作区必需检查。独立人工科研Not Run。
+
+## Answer
+
+2026-10-16：实施及技术验收完成。候选源码 `8e085f0`；266 标准库、94 公开科学、真实 GUI、原生几何/缓存/上下文、安装/渲染/冷读和全局原工程恢复通过。证据：`validation/agent/acceptance/sidebar.md`；独立人工/科研签署及两个原生上下文边界保持 Not Run，教程缺图仍 Failed。本地整合与归档收据由 `docs/ARTIFACTS.md` 路由。

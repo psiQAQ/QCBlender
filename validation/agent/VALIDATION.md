@@ -1,6 +1,8 @@
 # 当前校验与历史整合检查
 
-2026-10-16：当前安装来自 `annotations-20261016-r2`，源码 `739c08b`，身份见 [current-install.json](current-install.json)，技术结果见[标注与面板验收](acceptance/annotations.md)。221 项标准库、92 项公开科学、标注几何与生命周期、XYZ/优化/IRC、工具提示语言组合、真实 GUI、安装/渲染/中文路径冷重开及全局原工程恢复 Passed。旧工程对象、科学数组、材质节点和偏好不变；独立人工与科研接受 Not Run。
+2026-10-16：当前安装来自 `sidebar-20261016-r2`，源码 `8e085f0`，见 [current-install.json](current-install.json) 与 [Sidebar/整数输入验收](acceptance/sidebar.md)。266 标准库、94 公开科学、无 IO 摘要、原生几何/上下文、实际 GUI 和安装/渲染/冷读、全局原工程恢复 Passed。非对象 pin 与多视图区原生比较 Not Run，边界单测通过；独立人工/科研接受 Not Run。十份教程已同步，27 处图片引用缺 23 张，完整图片门禁仍 Failed。
+
+2026-10-16 上一批安装来自 `annotations-20261016-r2`，源码 `739c08b`，技术结果见[标注与面板验收](acceptance/annotations.md)。221 项标准库、92 项公开科学、标注几何与生命周期、XYZ/优化/IRC、工具提示语言组合、真实 GUI、安装/渲染/中文路径冷重开及全局原工程恢复 Passed。旧工程对象、科学数组、材质节点和偏好不变；独立人工与科研接受 Not Run。
 
 2026-10-11 历史安装来自 `upstream-7dc0d11`，当批技术结果见[验收](acceptance/upstream-20261011.md)。181 项基础、130 项科学、安装、节点、色带/有效域、多 Cube、原地与移动冷重开及隔离/日常 GUI Passed。用户原有两张截图与 `.blend` 原样保留；人工 SOP 新增的两处截图空位由实际操作者补入，独立用户与科研接受 Not Run。
 

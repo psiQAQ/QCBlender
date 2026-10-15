@@ -7145,6 +7145,79 @@
         "requires_current_result_assertions": true,
         "coverage": "CLI verify_annotation_geometry.py and verify_annotation_motion.py; actual UI required after related interaction changes."
       }
+    },
+    {
+      "id": "sidebar-summary-integer-annotations-20261016",
+      "title": "Sidebar摘要、Properties工具与标注整数输入",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-16",
+        "method": "Computer Use native clicks and typing; PID-guarded native result assertions",
+        "source_commit": "8e085f0f674cbebfa1f42ce7233b1632562603b1",
+        "candidate_sha256": "08e53572ce691104a463a56b76d2c7c6c38d0192ff175571726cf8973b057b5b",
+        "blender": "5.1.1",
+        "locale": "en_US / zh_HANS",
+        "visible_entry": "QC Sidebar; 对象属性 → QCBlender → 创建视图与工具 / 局部选择与标注",
+        "validated_scope": "R1: four annotation buttons, arrows/direct typing/clamp/duplicate/swap/batch, edit and menu Undo/Redo, sidebar navigation/select hidden target, Gaussian import, field calculation, slice/fog creation, summary export. R2: Properties pinned field probe click/Enter and camera creation, Chinese view labels, global restored project observation.",
+        "reports": [
+          {
+            "path": "validation/agent/reports/2026-10-16/sidebar/acceptance.json",
+            "sha256": "ed9996b8a5d70ec2fd558394fefcff4e6ac29900c0c73c1317549113bc8455f1",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "validation/agent/reports/2026-10-16/sidebar/sidebar-en.png",
+            "sha256": "7c0ce6ac265ebb8d0d7c38be73576ae935b9009281ab963b777cd7e39c07d52b"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-16/sidebar/sidebar-zh-r2.png",
+            "sha256": "830b14ddb2d389f2fbdf527b99fa290e19250cddc0e400885a6e22ca048befdd"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-16/sidebar/distance-clamp-and-duplicate.png",
+            "sha256": "0c9a6403b4eba29c194070f8cb6f0a70ba9a85493f2923245041ef4061b71966"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-16/sidebar/dihedral-inputs-en.png",
+            "sha256": "faae3f9a440bea2f9bb9c5de0a0003a3f1727da7a5850fda1eeaf77995422c15"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-16/sidebar/batch-inputs-en.png",
+            "sha256": "747bfe027cf4570f735ba9f1a547b8c309bf46c6ccc2cff15fa94f4d395d0a20"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-16/sidebar/probe-properties-r2.png",
+            "sha256": "631daf36a4ad86ad242fc5c3c31e9c3bb75932140c4e4e46342ee03fe177512a"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-16/sidebar/camera-properties-r2.png",
+            "sha256": "a3626d38d4c6dd21603989024935bfd8b6f12471e0798c10c6eddfed159259dc"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/editor_ui.py": "aca6a29d0ce1a548f36066dabd9636ee280c512aa941e60185434a35012009c4",
+        "qcblender/blender/layers.py": "9d10bbe9c50681eb4cb6653030ac55be1caae21b4e994fb28a5d58af15b35934",
+        "qcblender/blender/source_browser.py": "b4f1143f00811fa72990d21d5f9ea64ea985952723111dbc8f0aa922dd473794",
+        "qcblender/object_summary.py": "f5f385c7e09a16f1a3237a728fec6bf96cdeff87e4f22f95cda23c08a1daeb20",
+        "qcblender/blender/viewport_context.py": "e71746ce598f248ed40077c6886f28dfae7662f28868d8070b3daec2d2fb7de0",
+        "qcblender/blender/camera.py": "226729a307272db6c357b471e356745e7df357cac24fcf105343cce223c16333",
+        "qcblender/blender/interaction.py": "49837e4dcc30df8300d2cda88f056a975414af8b6344265e8d282b036b58d134",
+        "qcblender/blender/annotations.py": "73aefc7b67eb47ec587838e9168f66babcd7c6aa36de037ec4ec6e86886a3222",
+        "qcblender/annotation_inputs.py": "e7650ed77a9821acd9f4171eee876546f81cb7ba3e35a39b8502bd3c2d3c45a9"
+      },
+      "fingerprint_review": "R1/R2 source comparison retained in candidate-r2.json; new context probe and labels rechecked on R2. Include transitive i18n, registration, data lifecycle and annotation helpers before reuse.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "coverage": "Only recorded entry paths, 4-atom integer controls and single viewport; current data/results still require assertions."
+      }
     }
   ]
 }
