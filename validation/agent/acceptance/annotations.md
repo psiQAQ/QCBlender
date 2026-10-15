@@ -1,6 +1,6 @@
-# 标注几何、材质与面板验收（2026-10-16，草稿）
+# 标注几何、材质与面板验收（2026-10-16）
 
-**当前结论：r2 的公开科学测试、原生标注几何与冷重开、连续 GUI 创建精度复验已通过；最终整包安装回归、全局安装和原工程恢复仍待主 Agent 完成。本文不是最终安装或发布签署。**
+**当前结论：r2 的公开科学测试、原生标注几何与冷重开、连续 GUI 创建精度、整包安装/渲染、全局安装和原工程恢复均通过。独立人工与科研签署仍为 Not Run。** 总收据见 [acceptance.json](../reports/2026-10-16/annotations/acceptance.json)。
 
 范围依据：[已批准规格](../../../.scratch/annotations-20261016/spec.md)。环境为 Windows x64、Blender 5.1.1；使用隔离扩展配置执行候选检查，无新增依赖。原始证据根目录为 `validation/agent/reports/2026-10-16/annotations/`；表中链接均指向该批实际报告或快照。原用户工程与候选试验工程分开保留。
 
@@ -9,9 +9,9 @@
 | 候选 | 源码提交 | ZIP 字节数 | ZIP SHA-256 |
 | --- | --- | --- | --- |
 | r1，历史候选 | `69dd8ff983b84e89079a54041e5bc5f2cca43cb2` | 50,928,784 | `5f9a3b86178ff3db2d876e320cbd8f386b7dcb526e10d0959be64ec1bdc5d661` |
-| r2，当前待交付候选 | `739c08b77bf5fbf35641f310681e24eb79cdb726` | 50,928,777 | `c93d7a6f8d99cae19af27994b577073a85171db4c51ce3b7319086e60bd22e67` |
+| r2，当前交付候选 | `739c08b77bf5fbf35641f310681e24eb79cdb726` | 50,928,777 | `c93d7a6f8d99cae19af27994b577073a85171db4c51ce3b7319086e60bd22e67` |
 
-两份清单分别为 [candidate-r1.json](../reports/2026-10-16/annotations/candidate-r1.json) 与 [candidate-r2.json](../reports/2026-10-16/annotations/candidate-r2.json)，均记录 `source_dirty=false`。草稿整理时已读取实际 ZIP，重新核对以上字节数和 SHA-256。候选路径分别为 `outputs/candidates/current/annotations-20261016-r1/qcblender-0.1.0.zip` 和 `outputs/candidates/current/annotations-20261016-r2/qcblender-0.1.0.zip`，不能仅按相同版本号区分。
+两份清单分别为 [candidate-r1.json](../reports/2026-10-16/annotations/candidate-r1.json) 与 [candidate-r2.json](../reports/2026-10-16/annotations/candidate-r2.json)，均记录 `source_dirty=false`。整理时已读取实际 ZIP，重新核对以上字节数和 SHA-256。候选路径分别为 `outputs/candidates/current/annotations-20261016-r1/qcblender-0.1.0.zip` 和 `outputs/candidates/current/annotations-20261016-r2/qcblender-0.1.0.zip`，不能仅按相同版本号区分。
 
 r1 的真实 GUI 按原子编号、距离、键角、二面角顺序连续创建时，四条标注的 `decimals` 都为 4。键角文字为 `Angle(1,2,3) = 32.0524 °`，二面角文字为 `Dihedral(1,2,3,4) = 10.8606 °`，没有采用计划中的角度默认 2 位。见 [gui-created-four.json](../reports/2026-10-16/annotations/gui-created-four.json) 与 [失败弹窗截图](../reports/2026-10-16/annotations/gui-angle-default-failed.png)。科学数值本身没有变化，问题影响的是连续创建时默认显示精度。
 
@@ -42,10 +42,11 @@ r2 在独立 GUI 进程中再次按同一顺序实际点击并确认四次，快
 | Passed | r1：68 个 Operator、217 个属性/上下文变体，每变体 8 种语言/开关组合；另 2 个工作区工具各 8 组合 | [operator-tooltips-r1.json](../reports/2026-10-16/annotations/operator-tooltips-r1.json)；实际安装的 RNA、注册描述回调及 `pgettext_tip` 检查，没有执行全部 Operator。界面翻译和工具提示翻译分别开关。 |
 | Passed | r1：四类标注及中文前缀渲染、中文路径工程冷读和再渲染 | [gallery-readable-r1/render.json](../reports/2026-10-16/annotations/gallery-readable-r1/render.json)、[render-reopen.json](../reports/2026-10-16/annotations/gallery-readable-r1/render-reopen.json)、[visual-review.json](../reports/2026-10-16/annotations/gallery-readable-r1/visual-review.json)。Agent 查看了完整渲染 PNG；独立人工审阅仍为 `Not Run`。 |
 | Passed | r1：冷读前后渲染像素一致 | [gallery-readable-r1/pixel-comparison.json](../reports/2026-10-16/annotations/gallery-readable-r1/pixel-comparison.json)：5,600,000 个通道，最大差 0、变化通道 0。两张 PNG 文件 SHA-256 不同，结论是解码像素一致，不是文件字节一致。 |
-| Passed | r1：离线安装、真实 worker 导入与轨道求值、取消、缓存、相位/阈值、渲染、中文迁移冷读 | `outputs/runs/annotations-20261016/extension-r1/extension.json`；绑定 r1 ZIP 的 SHA-256。最终 r2 整包检查待完成。 |
+| Passed | r1：离线安装、真实 worker 导入与轨道求值、取消、缓存、相位/阈值、渲染、中文迁移冷读 | `outputs/runs/annotations-20261016/extension-r1/extension.json`；绑定 r1 ZIP 的 SHA-256。r2 独立重跑结果见下行。 |
 | Passed | r1：旧工程冷载入保留对象、字体和材质；共享自定义材质可编辑；原磁盘文件未改 | [legacy-project-r1.json](../reports/2026-10-16/annotations/legacy-project-r1.json)，`material_users=2`；保全文件清单见 [preservation-files.json](../reports/2026-10-16/annotations/preservation-files.json)。 |
-| Not Run（pending） | r2 最终整包安装、worker、重建资产渲染及中文路径冷读 | 主 Agent 正在执行；完成前不沿用 r1 的整包 `Passed`。 |
-| Not Run（pending） | 用户全局插件、当前安装 ZIP 的最终更新与逐成员核对，以及原工程/语言恢复 | 主 Agent 正在执行；当前草稿不声明全局环境已经完成更新或恢复。 |
+| Passed | r2 最终整包安装、worker、重建资产渲染及中文路径冷读 | `outputs/runs/annotations-20261016/extension-r2/extension.json`；候选 SHA-256 与 r2 一致，所有检查及 `cold_open` 均 Passed，两个进程均退出 0。 |
+| Passed | r2 四类标注渲染、中文路径冷读与解码像素一致 | [gallery-r2/render.json](../reports/2026-10-16/annotations/gallery-r2/render.json)、[render-reopen.json](../reports/2026-10-16/annotations/gallery-r2/render-reopen.json)、[pixel-comparison.json](../reports/2026-10-16/annotations/gallery-r2/pixel-comparison.json)、[视觉检查](../reports/2026-10-16/annotations/gallery-r2/visual-review.json)；两图已由 Agent 查看，像素最大差 0。 |
+| Passed | 用户全局插件、当前安装 ZIP 更新与逐成员核对，以及原工程/语言恢复 | [global-install.json](../reports/2026-10-16/annotations/global-install.json)、[current-install-receipt.json](../reports/2026-10-16/annotations/current-install-receipt.json)、[global-cold-background.json](../reports/2026-10-16/annotations/global-cold-background.json)、[global-cold-gui.json](../reports/2026-10-16/annotations/global-cold-gui.json)；对象、数组、节点、父子关系、字体、材质、偏好和原文件共 10 项核对全通过，GUI PID 59380 留开。 |
 | Not Run | 独立人工操作、独立科研判断、远端 CI 和公开发布 | 自动化、Agent GUI 与渲染检查不替代这些验收。 |
 
 `geometry-r2` 报告中的 GUI/Undo/Redo 和轨迹切换仍为 `Not Run`：这表示该脚本没有执行这些动作。本报告分别引用真实 GUI 快照和 `motion-r1` 支持对应结论，没有改写原报告的检查边界。全量工具提示的元数据检查也不等于逐个按钮真实悬停；实际 GUI 只进行了代表性的面板与悬停检查，截图为 `gui-panels-zh.png`、`gui-tooltip-zh.png`。
@@ -61,7 +62,7 @@ r2 在独立 GUI 进程中再次按同一顺序实际点击并确认四次，快
 
 因此，r1 的数值定义、已有标注随步更新、工具提示文本、原工程保全等可作为未变实现的既有证据。标注模块的更新、材质、复制、删除和朝向逻辑在上述源码 diff 中未变；r2 仍重新执行了原生几何及冷读，受精度历史影响的 GUI 创建路径也单独重新执行。r1 的 GUI 材质统一及 Undo/Redo、中文编辑记录保留其 r1 身份，不表述成 r2 又完成了同一轮 GUI。
 
-此外，两包各 119 个 ZIP 成员中 **115 个成员内容哈希相同**；除了标注 Python 模块，`assets/nodes.blend`、`assets/en_US/nodes.blend`、`assets/zh_HANS/nodes.blend` 的文件哈希也不同。源生成代码相同不证明这三个重建资产逐字节相同，r1 的资产或整包渲染结果不能直接当成 r2 整包通过证据。这也是待补 r2 最终安装、worker、资产渲染与中文冷读的原因。
+此外，两包各 119 个 ZIP 成员中 **115 个成员内容哈希相同**；除了标注 Python 模块，`assets/nodes.blend`、`assets/en_US/nodes.blend`、`assets/zh_HANS/nodes.blend` 的文件哈希也不同。源生成代码相同不证明这三个重建资产逐字节相同。因此 r2 独立重跑最终安装、worker、资产渲染与中文冷读，并重新渲染四类标注；结果见上表。
 
 ## GUI、保全及失败记录
 
@@ -75,12 +76,10 @@ r1 实际 GUI 完成四类创建、二面角自定义前缀改为 `二面角：`
 
 早期 `render-r1.log` 曾因验证场景缺少 XYZ 当前帧身份而失败，错误为 `XYZ atom view is missing its current frame identity`。补齐验收脚本的轨迹初始化后再执行成功；最终可读图使用 `gallery-readable-r1`，没有将失败运行或较早的图替换为最终成功证据。所有原始失败日志、r1 候选及修复前精度截图继续保留。
 
-原工程保全副本位于 `outputs/projects/annotations-preserved-20261016/user-session.blend` 及同名 `.qcdata/`；`preservation-files.json` 记录 6 个文件的大小与 SHA-256，`preserved-baseline.json`、`preserved-extra-baseline.json` 保存对象、字体及材质基线。原工程冷载入与磁盘原件未变已由 `legacy-project-r1.json` 支持，最终全局安装后的恢复仍待主 Agent 补状态。可继续 GUI/渲染检查的自包含工程为 `validation/agent/reports/2026-10-16/annotations/geometry-r2/annotations.blend` 与 `validation/agent/reports/2026-10-16/annotations/gallery-readable-r1/标注与中文.blend`；各自同名 `.qcdata/` 一起保留。
+原工程保全副本位于 `outputs/projects/annotations-preserved-20261016/user-session.blend` 及同名 `.qcdata/`；`preservation-files.json` 记录 6 个文件的大小与 SHA-256，`preserved-baseline.json`、`preserved-extra-baseline.json` 保存对象、字体及材质基线。原工程冷载入与磁盘原件未变已由 `legacy-project-r1.json` 支持，最终全局安装后的后台与 GUI 冷读也已通过上述 10 项核对。可继续 GUI/渲染检查的自包含工程为 `validation/agent/reports/2026-10-16/annotations/geometry-r2/annotations.blend` 与 `validation/agent/reports/2026-10-16/annotations/gallery-r2/标注与中文.blend`；各自同名 `.qcdata/` 一起保留。
 
-## 待主 Agent 收尾
+## 最终交付与 GUI 补充
 
-1. 补入 r2 最终整包安装/worker/资产渲染/中文迁移冷读报告，核对实际安装来源和 r2 ZIP 身份，再更新上表 pending 项。
-2. 补全用户全局插件和当前安装 ZIP 的备份、逐成员一致性检查、冷启动、原工程/语言恢复结果；不以隔离安装成功替代。
-3. 核对最终产品树与候选来源，更新获授权的共享入口及本地归档记录；独立人工与科研签署继续如实标记。
+r2 的原子、距离、键角编辑弹窗由原生 `INVOKE_DEFAULT` 打开，随后通过 Computer Use 实际点击显示开关及确定。分别关闭原子引线、距离虚线、键角引线；距离引线与键角圆弧仍保留。`gui-edits-r2.json` 记录实际结果，`gui-edit-undo-r2.json` 和 `gui-edit-redo-r2.json` 证明编辑可撤销、菜单重做后完整恢复。二面角中文编辑的完整 GUI 入口验证保留在 r1。
 
-本文整理阶段仅只读核对既有证据和候选文件，没有启动或操作 Blender，也没有执行全局安装。
+原工程的全局 GUI 已恢复，[截图](../reports/2026-10-16/annotations/final-user-gui.png)与冷读快照对应同一进程；磁盘原件未修改。当前安装身份、可重建入口、备份和本地归档由 [ARTIFACTS](../../../docs/ARTIFACTS.md#annotations-20261016)统一定位。旧候选及失败日志保留，未 push 或发布。

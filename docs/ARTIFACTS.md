@@ -1,6 +1,6 @@
 # 产物查找入口
 
-更新：2026-10-15。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
+更新：2026-10-16。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
 
 ## 当前交付
 
@@ -11,12 +11,21 @@
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
 | 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；工程在 `validation/work/human/`；[当前截图](#tutorial-screenshots-20261011) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
-| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,902,330 字节，SHA-256 `6ee61570a1319d6c236fab30bbdbffdfc6f2480f5ee0330a0f9f004509f4b8e3` |
-| 当前候选及验证 | `outputs/candidates/current/i18n-20261015-r2/`；源码 `6c06ad4`，完整双语资产构建；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/i18n.md) |
+| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,928,777 字节，SHA-256 `c93d7a6f8d99cae19af27994b577073a85171db4c51ce3b7319086e60bd22e67` |
+| 当前候选及验证 | `outputs/candidates/current/annotations-20261016-r2/`；源码 `739c08b`，完整双语资产构建；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/annotations.md) |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
 教程现有 26 个图片引用，已提供 4 张；完整图片检查因缺少 22 张截图为 Failed。截图采用 Pxx 案例前缀，当前路径见[截图记录](#tutorial-screenshots-20261011)。完整独立用户操作、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
+
+<a id="annotations-20261016"></a>
+## 标注几何、材质与面板提示（2026-10-16）
+
+四类标注支持固定或自定义前缀、中文字体、距离虚线、键角圆弧、二面角投影弧与原子三角面；新建主材质黑色 Metallic=1，平面另用 Alpha=.2 材质。编辑保留用户材质节点，旧标注仅在显式操作时统一材质。“全部朝向相机”限制当前原子视图，面板按用途分组并补齐中英文工具提示。
+
+221 项标准库、92 项公开科学、原生几何与生命周期、XYZ/优化/IRC 更新、工具提示语言组合、真实 GUI、最终候选安装/渲染/冷重开及全局原工程恢复 Passed。Agent 检查不替代独立人工和科研签署。证据位于 `validation/agent/reports/2026-10-16/annotations/`；[验收记录](../validation/agent/acceptance/annotations.md)区分 r1 与 r2，以及每项实际覆盖范围。
+
+用户最新工程与配套数据保存在 `outputs/projects/annotations-preserved-20261016/user-session.blend` 及同名 `.qcdata`，原件摘要未变。四类标注渲染与自包含示例在本批报告的 `gallery-r2/`；界面测试工程在 `outputs/runs/annotations-20261016/gui-evidence-r1/`、`gui-evidence-r2/`，安装与迁移工程在同目录 `extension-r2/`。旧全局插件、偏好、旧当前 ZIP 和本批维护脚本均留在该 runs 目录；两个候选及失败复现记录保留，不执行历史产物清理。重建入口为 `tools/build_extension.py`、`tools/verify_annotation_geometry.py`、`tools/verify_annotation_motion.py`、`tools/render_annotation_gallery.py` 与 `tools/verify_extension.py`。
 
 <a id="i18n-20261015"></a>
 ## 全界面双语与全局冷重开（2026-10-15）

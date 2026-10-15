@@ -4,6 +4,8 @@
 
 ## 持续使用的方法与登记
 
+当前专题：[标注几何、材质与面板提示验收](annotations.md)（2026-10-16）；历史双语实现见 [i18n](i18n.md)。
+
 | 内容 | 入口 |
 | --- | --- |
 | 已确认 GUI 操作及复用条件 | [操作登记表](blender-operations.json)、[交互规则](../../../docs/agents/blender-interaction.md) |

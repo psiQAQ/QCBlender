@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-10-15",
+  "updated": "2026-10-16",
   "rules": "docs/agents/blender-interaction.md",
   "operation_ids_are_stable": true,
   "history_is_not_current_batch_pass": true,
@@ -7088,6 +7088,62 @@
         "coverage": "Use verify_i18n.py and verify_node_assets.py for native assertions; changed visual behavior requires Computer Use.",
         "current_batch_replay_status": "Passed",
         "requires_current_result_assertions": true
+      }
+    },
+    {
+      "id": "annotation-geometry-materials-20261016",
+      "title": "四类标注几何、材质、前缀与相机朝向",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-16",
+        "method": "Computer Use native clicks and popup edits, PID-guarded read-only assertions; three edit dialogs opened by native INVOKE_DEFAULT",
+        "source_commit": "739c08b77bf5fbf35641f310681e24eb79cdb726",
+        "candidate_sha256": "c93d7a6f8d99cae19af27994b577073a85171db4c51ce3b7319086e60bd22e67",
+        "blender": "5.1.1",
+        "locale": "en_US / zh_HANS",
+        "visible_entry": "QCBlender → 创建视图与检查工具 → 原子与几何标注；对象属性 → 局部选择与标注",
+        "validated_scope": "Four kinds creation; defaults 4/2; independent geometry visibility; Chinese prefix; current-owner Face All after single; explicit material unification and undo/redo. Face/unify/Chinese edit captured on r1; only creation precision changed for r2.",
+        "reports": [
+          {
+            "path": "validation/agent/reports/2026-10-16/annotations/acceptance.json",
+            "sha256": "8ff6095b2ae15908f259fefb944d7e472e03a306e0405cc350e1c3ffe532c810",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "validation/agent/reports/2026-10-16/annotations/gui-angle-default-r2-passed.png",
+            "sha256": "98ae7a2a977e5fb455d1596458fe73c34590a11637c9945c0e97a7a3bcc448c8"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-16/annotations/gui-face-all.png",
+            "sha256": "af07b7f231eeed5568c38fc4c5a3b198e9d89c6477eb524b622f7d69a1d0eb8d"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-16/annotations/gui-unify-preview.png",
+            "sha256": "c32b720042dd08ac30944359f0e32b05e8b59470a2886fefe7fcd7471ad97183"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-16/annotations/gui-tooltip-zh.png",
+            "sha256": "f35bcf99cb761e4fba254a1ffe4f113fd12d7420ab82b25cb85b724209723020"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/annotations.py": "c2afe94ab2f2c9843c868ff91a7be27adb647b296efba7eb7350353327cb49f5",
+        "qcblender/annotation_geometry.py": "f7512062f237c564013a536ee1d4ed7261f426442bcb973290ab21289ed5e56f",
+        "qcblender/blender/annotation_fonts.py": "d1791154eae5c94156a0f01c02e91a5b4ce0cd2f7735bc13edf6206c28e13e7a",
+        "qcblender/blender/editor_ui.py": "3f7e1d525ff84ac4007e6eb33c5f83b4b0a98b975720b20f607b3977030013f5"
+      },
+      "fingerprint_review": "Review transitive geometry, fonts, registration, translation and data updates before reuse.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "coverage": "CLI verify_annotation_geometry.py and verify_annotation_motion.py; actual UI required after related interaction changes."
       }
     }
   ]

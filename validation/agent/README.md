@@ -21,6 +21,8 @@
 | XYZ 与科学 CSV | `tools/verify_xyz_export_blender.py` | 离散帧、显式数据导出与对应输入/单位 |
 | 构型关联与共享对象 | `tools/verify_audit_p1_association.py`、`tools/verify_audit_p1_shared_mesh.py` | 有效/失效关联、共享 mesh 拒绝与独立对象恢复；需要 P02 本地输入 |
 | 视觉回归 | `tools/render_visual_baseline.py` | 已有六种视觉场景的自动比较；不能代替人眼验收 |
+| 标注几何、材质与轨迹 | `tools/verify_annotation_geometry.py`、`tools/verify_annotation_motion.py`、`tools/render_annotation_gallery.py` | 四类标注、组内材质、中文前缀、构型更新、原生渲染与保存重开；GUI 和独立人工另记 |
+| 按钮工具提示 | `tools/verify_operator_tooltips.py` | 已注册 operator/tool 清单与界面/工具提示独立翻译开关组合；不代表逐按钮穷尽 GUI 点击 |
 | 历史压缩包盘点 | [inventory_cleanup.py](tools/inventory_cleanup.py)、[CLEANUP](CLEANUP.md) | 逐文件用途、身份、建议和未检查范围；没有删除入口 |
 
 > public-core：仅依赖可公开样本的指定科学测试集合，不包含全部本地科研案例。
