@@ -6964,6 +6964,131 @@
         "requires_current_result_assertions": true
       },
       "limitations": "Current session fixed without restart; cold reopen and independent human acceptance Not Run."
+    },
+    {
+      "id": "bilingual-ui-native-properties-assets",
+      "title": "中英文切换、原生 QC 属性与节点资产",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-15",
+        "method": "Agent Computer Use native clicks and process-bound Python assertions",
+        "source_commit": "6c06ad4bc3032c9669c50b1bc386776d131e0814",
+        "candidate_sha256": "6ee61570a1319d6c236fab30bbdbffdfc6f2480f5ee0330a0f9f004509f4b8e3",
+        "blender": "5.1.1",
+        "locale": "en_US / zh_HANS",
+        "objects_and_order": "Preserved P06-single; en_US -> zh_HANS -> en_US; global cold reopen zh_HANS",
+        "visible_entry": "Preferences > Interface > Language; Object Properties; Geometry Nodes; Asset Browser",
+        "validated_scope": "English to Simplified Chinese to English preferences; QC object controls; seven selection modes; known property labels and tooltips with developer extras off; unknown property preserved; native node interfaces and asset catalog; final global Chinese cold-open",
+        "reports": [
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/stdlib-r2.json",
+            "sha256": "ad83d55bf3b192d66b9ca0cd05d98fc57a4b4b0d79fdee6d9f2e0913e41fc798",
+            "status": "Passed"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/science-public-r2.json",
+            "sha256": "0313eda1a8718bc5bf4421a96e88a4275e52b88fe0a73ca239412ab843b94308",
+            "status": "Passed"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/node-assets-r2.json",
+            "sha256": "4601025c93b5fbe95c00e0a56c7d02a2a2e4bfdb551af463665cb1236139ed5f",
+            "status": "Passed"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/i18n-native-r2-check.json",
+            "sha256": "883fbd400c9a7acf2c6498a82207ae901072f774374eff1dba210eb71886a110",
+            "status": "Passed"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/gui-preservation.json",
+            "sha256": "37d5abedf3a927ed61d1c62cc16ddb47e73bc5b27dcf38258b8681fa9875c4c3",
+            "status": "Passed"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/global-install.json",
+            "sha256": "c743ff236923d6f4dc4552fe7c8c2bc78612184583ca187f3ea38834e7c162fd",
+            "status": "Passed"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/global-cold.json",
+            "sha256": "2e4e00a852dd589521125f9e98784e2dff5a87bc77fcf469bc8bc5dd89a036c4",
+            "status": "Passed"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/dialog-zh/dialog.json",
+            "sha256": "3a237b6d2d101f72b75fb392817321d2229464e7b00d2343861407d5d4761e33",
+            "status": "Passed"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/dialog-en/dialog.json",
+            "sha256": "f1d0f7c1bbfb3386ae164df094139106e3b79559ce64e2172a03f2bbee6731e4",
+            "status": "Passed"
+          },
+          {
+            "path": "outputs/runs/i18n-20261015/acceptance-r2/extension.json",
+            "sha256": "ea0bb6787a07355b80d779173499211d22d1849df4104cee0ba6c5b53fb3ce19",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/gui-en-overview.jpg",
+            "sha256": "58172d3153d6052105834822e23a9b1a492799a8d2874a2f6cd81b1110160bc6"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/gui-zh-overview.jpg",
+            "sha256": "97b2e5c7292822127d98484a201e913105a45a0e34fa4b4aaf56ae601e33fd3f"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/gui-zh-selection-modes.jpg",
+            "sha256": "d1bbe38c0e9a47c4c797e43dce9765a7512069811734e48705c6ae545a88da90"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/gui-en-selection-modes.jpg",
+            "sha256": "071c7de280e7e035492c0bd580e95daa275904b61d3706240461e7b39530a96d"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/gui-zh-property-tooltip.jpg",
+            "sha256": "a6b04005cecea0bf0a610b65e51612b75f4ba74e9677de9c2b86d83466685171"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/gui-en-property-tooltip.jpg",
+            "sha256": "3d0b849c6309b35cc265418d1b6058ea1d44e61677ec06dd7a7c39f1b2c74584"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/gui-zh-assets.jpg",
+            "sha256": "4f03fc1ff37388bfd081437a994b513a723135b5a8eb1ceb1a35ac2fa04d5523"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/gui-en-assets-properties.jpg",
+            "sha256": "af6eea45316adbe13b904c783f788a1c019cd9ab51ab6e4252bf6ab6a1166b93"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-15/i18n/global-final.jpg",
+            "sha256": "f5b855882de9a0759d03952cca683d6acd21f4c68d66f005d1e9fdb46a29c062"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/i18n.py": "9fe5ef77eee09151ebf454c1d296989a930dd910c4febdd7bb2b0ce693b31a7a",
+        "qcblender/blender/localization.py": "98706a89d4806c2bdb7699a774b69ab6195d236810423b9cfc165a624f1de747",
+        "qcblender/blender/custom_properties.py": "a1109ac6ee03def334e3faceb42c81208e47b7080dc255fae78d86282b892dec",
+        "qcblender/blender/node_identity.py": "a3ad576ae37855331e4d23d9f0216289c7a0701be33bd6cb6256fb479b662c67",
+        "qcblender/blender/asset_library.py": "023d6d2d67e1014dba37d90159eb23f15f1d61fe0f8ff61cb94fc93c5943f7ed",
+        "qcblender/blender/atom_selection.py": "a81f12b9c0e687a1cbb9dd2c0a60b8cbb25f092b67c0580d9065f7b261329180"
+      },
+      "fingerprint_review": "Translation catalogs, registration, UI draw helpers and native node identity are also part of the reuse boundary.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "Use verify_i18n.py and verify_node_assets.py for native assertions; changed visual behavior requires Computer Use.",
+        "current_batch_replay_status": "Passed",
+        "requires_current_result_assertions": true
+      }
     }
   ]
 }

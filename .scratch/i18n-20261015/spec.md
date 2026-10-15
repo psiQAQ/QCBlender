@@ -1,6 +1,6 @@
 # QCBlender 全界面双语与全局安装
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 
 ## 目标
 按 Blender 界面与工具提示翻译设置显示简体中文或英文，覆盖全部插件界面、原生对象自定义属性中的已知 QC 行、节点接口与资产目录。统一 SOP 数学术语：并集、交集、差集。
@@ -20,3 +20,7 @@ Status: claimed
 - [03 界面与动态文案](issues/03-ui.md)
 - [04 教程同步](issues/04-docs.md)
 - [05 整合与全局安装](issues/05-integration.md)
+
+## Answer
+
+实现与本批验收完成；证据与边界见 [双语验收](../../validation/agent/acceptance/i18n.md)。独立人工及科研签署 Not Run。

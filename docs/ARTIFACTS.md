@@ -11,12 +11,21 @@
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
 | 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；工程在 `validation/work/human/`；[当前截图](#tutorial-screenshots-20261011) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
-| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,666,870 字节，SHA-256 `58db0ade27053e9e22387e6c92de1acbe6bdfc35ff368244082eab33a3c8f590` |
-| 当前候选及验证 | `outputs/candidates/current/local-selection-dialog-20261014/`；源码基线 `7b98127` 加局部选择界面修复；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/local-selection-dialog.md) |
+| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,902,330 字节，SHA-256 `6ee61570a1319d6c236fab30bbdbffdfc6f2480f5ee0330a0f9f004509f4b8e3` |
+| 当前候选及验证 | `outputs/candidates/current/i18n-20261015-r2/`；源码 `6c06ad4`，完整双语资产构建；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/i18n.md) |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
 教程现有 26 个图片引用，已提供 4 张；完整图片检查因缺少 22 张截图为 Failed。截图采用 Pxx 案例前缀，当前路径见[截图记录](#tutorial-screenshots-20261011)。完整独立用户操作、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
+
+<a id="i18n-20261015"></a>
+## 全界面双语与全局冷重开（2026-10-15）
+
+界面、提示、原生 QC 自定义属性、节点接口和资产目录随 Blender 偏好切换中英文；用户命名、属性键与科学身份保持。SOP 和九专题使用中文（English）及并集、交集、差集术语。
+
+216 项标准库、67 项公开科学、原生双语与生命周期、资产几何、真实 GUI、渲染、中文路径迁移冷读和全局安装冷重开 Passed。逐弹窗穷尽 GUI、独立人工与科研签署 Not Run。详见[验收](../validation/agent/acceptance/i18n.md)及 validation/agent/reports/2026-10-15/i18n/。
+
+用户原会话在 outputs/projects/i18n-preserved-20261015/user-session.blend 及同名 .qcdata；双语测试副本为 user-session-bilingual.blend。旧全局插件、偏好和旧当前 ZIP 备份位于 outputs/runs/i18n-20261015/；两个候选及原报告保留。最终候选渲染/可迁移工程位于该目录 acceptance-r2/，重建入口 tools/build_extension.py 与 tools/verify_extension.py。源码由 archive/2026-10-15/feat/i18n-main 定位，本地整合，不 push 或发布。
 
 <a id="local-selection-dialog-20261014"></a>
 ## 局部选择弹窗与全局安装（2026-10-15）
