@@ -4,6 +4,8 @@
 
 ## 当前交付
 
+开发流程工具正在验收：[入口](agents/development-workflow.md)、[当前结果](../validation/agent/acceptance/dev-workflow.md)，日志与全局规则备份在 `outputs/runs/dev-workflow-20261016/`。真实 MCP、构建安装和原工程恢复尚未执行；当前有效插件仍为下列圆弧批候选。
+
 从 [validation](../validation/README.md) 查找当前教程、输入和校验材料；人工入口为 [SOP](../validation/human/SOP.md)。主线 15 步、9 个按需专题，截图由实际操作者按名称补入。
 
 | 内容 | 当前入口 |
