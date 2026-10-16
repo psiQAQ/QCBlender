@@ -71,7 +71,8 @@ def native(run, binary, request, project=None, global_profile=False, gui=False):
     args += [str(Path(project).resolve())] if project else []
     args += ['--python-exit-code','1','--python',str(run.repo/'tools/dev_workflow/blender_entry.py'),
              '--','--request',str(req),'--report',str(report),'--owned-process']
-    process=launch_blender(binary,args,profile=None if global_profile else run.directory/'profile',outputdir=folder,wait=not gui)
+    process=launch_blender(binary,args,profile=None if global_profile else run.directory/'profile',outputdir=folder,wait=not gui,
+                           working_directory=Path(project).resolve().parent if gui and project else None)
     if gui:
         deadline=time.monotonic()+30
         while not report.exists() and time.monotonic()<deadline:
