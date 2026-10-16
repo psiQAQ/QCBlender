@@ -14,3 +14,4 @@ Status: resolved
 
 - 2026-10-17：main 起点 8fd2452，工作区干净，Blender 无运行进程。全局安装和远端操作不在本次批准方案中。
 - 2026-10-17：用户另行批准本地提交、ff-only 合入 main 及注释标签归档。源码提交 2bb5f72；266 标准库、100 公开科学、65 定向、完整构建/隔离安装、原生行为、四类新建弹窗和原子编辑/批量/编号实时预览、菜单撤销重做、保存冷读 Passed；Standards/Spec 各 0 发现。日常安装与独立人工/科研接受 Not Run。验收入口 `validation/agent/acceptance/annotation-ui.md`，产物由 `docs/ARTIFACTS.md` 路由。
+- 2026-10-17：本地已快进整合；候选、报告和旧当前 ZIP 已保全到主仓库。归档清单遇到四个测试 Dataset 目录读取 Permission denied，未形成完整保全，工作树和分支保留，未修改 ACL 或强制删除。此项不改变标注实现验收；最终身份及注释标签由 `outputs/runs/annotation-ui-20261017/delivery.json` 定位。

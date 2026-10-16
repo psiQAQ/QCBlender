@@ -25,7 +25,7 @@
 
 四类新建字号 0.5、原子文字纯元素、XYZ 偏移横排及来源编号同行实时全局坐标。266 标准库、100 公开科学、65 定向、完整构建/隔离安装、实际 GUI、原生结果及保存冷读 Passed；Standards/Spec 各 0 发现，详见[验收](../validation/agent/acceptance/annotation-ui.md)。日常安装、独立人工/科研接受及未执行的测量编辑 GUI/渲染范围分别保留 Not Run。
 
-稳定候选及旧包保全见当前交付表；报告/截图在 `validation/agent/reports/2026-10-17/annotation-ui/`。运行数据、科学工程、配置及诊断位于任务工作树保全归档 `outputs/runs/annotation-ui-20261017/annotation-ui-ignored.zip`；原路径及逐文件摘要由 `annotation-ui-retention.json` 定位，`annotation-ui-archive.json` 记录注释标签与正常移除结果。重建调用统一入口及 `tools/verify_annotation_dialog.py`。本地合并、归档不包含 push 或全局安装。
+稳定候选及旧包保全见当前交付表；报告/截图在 `validation/agent/reports/2026-10-17/annotation-ui/`。运行数据、科学工程、配置及诊断保留在 `.worktrees/annotation-ui/outputs/runs/au/`。统一归档清单遇到四个测试 Dataset 目录的 Permission denied，完整保全与移除未执行，任务工作树及分支原位保留；未修改 ACL 或强制删除。失败和最终身份由 `outputs/runs/annotation-ui-20261017/finish-plan-failed.json`、`delivery.json` 记录。本地注释标签为 `archive/2026-10-17/feat/annotation-ui`；重建调用统一入口及 `tools/verify_annotation_dialog.py`。未 push 或全局安装。
 
 <a id="annotation-anchor-20261016"></a>
 ## 圆弧中点引线与创建朝向（2026-10-16）

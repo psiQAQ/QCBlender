@@ -30,6 +30,6 @@
 
 默认沙箱读取桌面 GUI 进程保存的 Dataset 目录被拒绝，失败记录保留为 [gui-reopen-sandbox-failed.json](../reports/2026-10-17/annotation-ui/gui-reopen-sandbox-failed.json)。在同一保存进程权限环境中冷读相同工程通过，未修改 ACL、取得所有权或强制删除。首次 GUI 脚本的属性页初始化错误、来源副本的读取失败及重试日志均保留于归档；这是本批验证环境诊断，不作为本次标注实现根因结论。
 
-当前安装包在 `validation/shared/install/qcblender-0.1.0.zip`，稳定候选在 `outputs/candidates/current/annotation-ui-20261017/`；旧当前包保全为 `outputs/runs/annotation-ui-20261017/previous-current.zip`。任务工作树的输入、脚本、工程、配置、日志及旧诊断由该目录的保全清单和归档收据定位。重建使用 `python -m tools.dev_workflow build`，原生复验工具为 `tools/verify_annotation_dialog.py`；GUI 工程在归档中的 `outputs/runs/au/2/gui/g.blend` 及同名 `.qcdata/`。
+当前安装包在 `validation/shared/install/qcblender-0.1.0.zip`，稳定候选在 `outputs/candidates/current/annotation-ui-20261017/`；旧当前包保全为 `outputs/runs/annotation-ui-20261017/previous-current.zip`。输入、脚本、工程、配置、日志及旧诊断仍在 `.worktrees/annotation-ui/outputs/runs/au/`。统一归档清单遇到四个 Dataset 目录读取权限拒绝，完整保全和工作树移除未执行，工作树/分支保留，未修改 ACL。失败记录为 `outputs/runs/annotation-ui-20261017/finish-plan-failed.json`。重建使用 `python -m tools.dev_workflow build`，原生复验工具为 `tools/verify_annotation_dialog.py`；GUI 工程为工作树内的 `outputs/runs/au/2/gui/g.blend` 及同名 `.qcdata/`。
 
 本地 ff-only、注释标签和工作树收尾结果见[产物入口](../../../docs/ARTIFACTS.md#annotation-ui-20261017)，不 push。
