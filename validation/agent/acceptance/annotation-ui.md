@@ -13,7 +13,8 @@
 | Computer Use | Passed：实际点击四类新建弹窗，原子新建/编辑、编号步进/直接输入/交换、八项列表及末尾滚动、编辑撤销与菜单重做；[原子新建](../reports/2026-10-17/annotation-ui/gui-new-atom.png)、[批量末尾](../reports/2026-10-17/annotation-ui/gui-batch-last.png)、[编辑实时预览](../reports/2026-10-17/annotation-ui/gui-edit-live.png)、[二面角直接输入](../reports/2026-10-17/annotation-ui/gui-dihedral-typed.png) |
 | GUI 工程及冷读 | Passed：[gui-native.json](../reports/2026-10-17/annotation-ui/gui-native.json)、[gui-reopen.json](../reports/2026-10-17/annotation-ui/gui-reopen.json)；8 条实际 GUI 生成的文字均为 O/H，字号 0.5，编辑/菜单重做后编号与保存状态核对通过 |
 | 当前教程材料 | Passed：公开样本、参数及文档链接；保留历史缺图占位，不代表完整截图或独立教程验收完成 |
-| 日常安装、独立人工/科研接受 | Not Run：本批只更新候选 ZIP 并隔离安装，日常插件保持此前候选 |
+| 日常安装和原生冒烟/冷读 | Passed：用户追加授权后更新 Blender 5.1 日常配置，123 个成员与同一 ZIP 逐字节相同；[全局安装报告](../reports/2026-10-17/annotation-ui-global/acceptance.json)、[原生检查](../reports/2026-10-17/annotation-ui-global/native.json)、[冷读](../reports/2026-10-17/annotation-ui-global/native-reopen.json) |
+| 日常配置 GUI 点击、独立人工/科研接受 | Not Run：GUI 证据仍属于相同候选的隔离配置；独立接受未签署 |
 | 本批全部测量编辑弹窗、测量 GUI 确认创建、渲染 | Not Run：测量新建窗口观察后取消；四类创建通过原生 CLI 验证，编辑公共布局通过原子窗口验证 |
 
 ## Standards
@@ -33,3 +34,7 @@
 当前安装包在 `validation/shared/install/qcblender-0.1.0.zip`，稳定候选在 `outputs/candidates/current/annotation-ui-20261017/`；旧当前包保全为 `outputs/runs/annotation-ui-20261017/previous-current.zip`。输入、脚本、工程、配置、日志及旧诊断仍在 `.worktrees/annotation-ui/outputs/runs/au/`。统一归档清单遇到四个 Dataset 目录读取权限拒绝，完整保全和工作树移除未执行，工作树/分支保留，未修改 ACL。失败记录为 `outputs/runs/annotation-ui-20261017/finish-plan-failed.json`。重建使用 `python -m tools.dev_workflow build`，原生复验工具为 `tools/verify_annotation_dialog.py`；GUI 工程为工作树内的 `outputs/runs/au/2/gui/g.blend` 及同名 `.qcdata/`。
 
 本地 ff-only、注释标签和工作树收尾结果见[产物入口](../../../docs/ARTIFACTS.md#annotation-ui-20261017)，不 push。
+
+## 日常配置更新补充
+
+2026-10-17 用户明确要求更新日常 Blender 插件。安装位置为 `%APPDATA%/Blender Foundation/Blender/5.1/extensions/user_default/qcblender`，候选 SHA-256 与本页开头相同。旧插件完整 ZIP 和安装前偏好分别保留在 `outputs/runs/annotation-ui-global-20261017/global-before-1792173950064288300.zip`、`userpref-before-1792173951422216100.blend`，摘要见全局安装报告。日常配置在新进程执行四类字号、元素文字、自定义前缀、旧字号、全局坐标和 XYZ 换帧检查，再保存并冷重开成功。开始时无用户 Blender 进程，本批进程均已退出，没有原用户工程需要恢复；未修改用户工程。

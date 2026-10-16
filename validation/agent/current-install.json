@@ -14,12 +14,17 @@
   "isolated_install": "Passed",
   "computer_use_click": "Passed",
   "cold_restart": "Passed",
-  "daily_install": "Not Run",
+  "daily_install": "Passed",
   "daily_gui_smoke": "Not Run",
   "previous_daily_install_candidate_sha256": "ca3a92f5caf9a35d4bc70c80c81fa3eebeb9b7d4bbf0e0eaf0e75960bf063aeb",
   "previous_candidate_sha256": "ca3a92f5caf9a35d4bc70c80c81fa3eebeb9b7d4bbf0e0eaf0e75960bf063aeb",
   "independent_human_review": "Not Run",
   "license_review": "Not Run",
   "public_release_approval": "Not Run",
-  "computer_use_scope": "Four creation dialogs, atom editing, typed/stepped/swapped previews, 8-item list and menu Undo/Redo; native GUI state assertions and cold read"
+  "computer_use_scope": "Four creation dialogs, atom editing, typed/stepped/swapped previews, 8-item list and menu Undo/Redo; native GUI state assertions and cold read",
+  "daily_native_smoke": "Passed",
+  "daily_cold_restart": "Passed",
+  "global_installation": "%APPDATA%/Blender Foundation/Blender/5.1/extensions/user_default/qcblender",
+  "daily_install_report": "validation/agent/reports/2026-10-17/annotation-ui-global/acceptance.json",
+  "daily_install_date": "2026-10-17"
 }
