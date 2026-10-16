@@ -184,13 +184,13 @@ def verify_geometry(owner):
             np.testing.assert_allclose(spline_points(leader)[0][0], anchor, atol=3e-6)
         np.testing.assert_allclose(leader.data.bevel_depth, entry['line_width'] / 2, atol=1e-8)
         if kind == 'ATOM':
-            tail = entry['symbols'][0] + str(numbers[0])
+            tail = entry['symbols'][0]
         else:
             value = independent_value(kind, points)
             np.testing.assert_allclose(entry['value'], value, atol=1e-9, rtol=0)
             tail = f"{value:.{entry['decimals']}f} {'Å' if kind == 'DISTANCE' else '°'}"
         prefix = entry['prefix'] if entry['prefix_mode'] == 'CUSTOM' else (
-            'Atom: ' if kind == 'ATOM' else f"{kind.title()}({','.join(map(str, numbers))}) = ")
+            '' if kind == 'ATOM' else f"{kind.title()}({','.join(map(str, numbers))}) = ")
         expected_bodies = {prefix + tail}
         if kind != 'ATOM' and abs(value) < .5 * 10 ** -entry['decimals']:
             # Numerically planar coordinates can produce either signed zero;

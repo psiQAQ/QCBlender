@@ -54,7 +54,7 @@ class Points(list):
 
 class InputSlots(list):
     def add(self):
-        item = types.SimpleNamespace(number=1)
+        item = types.SimpleNamespace(number=1, preview='')
         self.append(item)
         return item
 
@@ -172,9 +172,20 @@ class Object(dict):
 
 def owner(parts):
     result = types.SimpleNamespace(children=list(parts), positions=POSITIONS.copy(), record=RECORD.copy())
+    result.data = types.SimpleNamespace(attributes={'qc_atomic_number': types.SimpleNamespace(
+        data=[types.SimpleNamespace(value=n) for n in (8, 1, 1, 8)])})
+    result.matrix_world = AffineTransform(np.eye(4))
     for part in parts:
         part.parent = result
     return result
+
+
+class AffineTransform:
+    def __init__(self, matrix):
+        self.matrix = np.asarray(matrix)
+
+    def __matmul__(self, point):
+        return (self.matrix @ np.append(point, 1))[:3]
 
 
 class AnnotationUpdates(unittest.TestCase):
@@ -445,20 +456,21 @@ class FaceAll(unittest.TestCase):
 
 class CreationPrecision(unittest.TestCase):
     """Run the real invoke with the observed last-operator RNA property boundary."""
-    def decimal_options(self):
+    def property_options(self, name):
         path = Path(__file__).resolve().parents[1] / 'qcblender/blender/annotations.py'
         tree = ast.parse(path.read_text(encoding='utf-8'))
         operator = next(node for node in tree.body if isinstance(node, ast.ClassDef)
                         and node.name == 'QCBLENDER_OT_add_annotation')
         prop = next(node for node in operator.body if isinstance(node, ast.AnnAssign)
-                    and node.target.id == 'decimals')
+                    and node.target.id == name)
         return next((ast.literal_eval(keyword.value) for keyword in prop.annotation.keywords
                      if keyword.arg == 'options'), set())
 
     def invoke(self, kind, remembered, explicit=None):
         # Blender's observed inherited value is set even with ghost=False.
         # SKIP_SAVE excludes it at the operator-history boundary, not at invoke.
-        supplied = {} if 'SKIP_SAVE' in self.decimal_options() else dict(remembered)
+        supplied = {key: value for key, value in remembered.items()
+                    if 'SKIP_SAVE' not in self.property_options(key)}
         supplied.update(explicit or {})
         class Operator:
             def __init__(self):
@@ -467,6 +479,7 @@ class CreationPrecision(unittest.TestCase):
                     object.__setattr__(self, key, value)
                 object.__setattr__(self, 'kind', kind)
                 object.__setattr__(self, 'decimals', supplied.get('decimals', 4))
+                object.__setattr__(self, 'size', supplied.get('size', .5))
                 object.__setattr__(self, 'report', lambda *args: None)
                 object.__setattr__(self, 'properties', types.SimpleNamespace(
                     is_property_set=lambda key, **kwargs: key in self._set))
@@ -488,12 +501,18 @@ class CreationPrecision(unittest.TestCase):
             with self.subTest(kind=kind):
                 operator = self.invoke(kind, remembered)
                 self.assertEqual(operator.decimals, expected)
-                if 'SKIP_SAVE' not in self.decimal_options():
+                if 'SKIP_SAVE' not in self.property_options('decimals'):
                     remembered['decimals'] = operator.decimals
 
     def test_previous_custom_precision_does_not_replace_next_kind_default(self):
         self.assertEqual(self.invoke('ANGLE', {'decimals': 7}).decimals, 2)
         self.assertEqual(self.invoke('DISTANCE', {'decimals': 1}).decimals, 4)
+
+    def test_default_size_is_half_and_explicit_size_is_preserved(self):
+        for kind in ('ATOM', 'DISTANCE', 'ANGLE', 'DIHEDRAL'):
+            with self.subTest(kind=kind):
+                self.assertEqual(self.invoke(kind, {'size': .9}).size, .5)
+                self.assertEqual(self.invoke(kind, {}, {'size': .75}).size, .75)
 
     def test_creation_faces_only_new_labels_once_when_camera_exists(self):
         for kind in ('ATOM', 'DISTANCE', 'ANGLE', 'DIHEDRAL'):
@@ -542,6 +561,58 @@ class CreationPrecision(unittest.TestCase):
                                      {'FINISHED'})
                 self.assertTrue(created)
                 self.assertEqual(set(created), {3})
+
+
+class AtomPreview(unittest.TestCase):
+    def operator(self, numbers, target=None):
+        operator = types.SimpleNamespace(atom_inputs=InputSlots(), accepted_atoms='')
+        target = target or owner([])
+        annotations._init_atom_inputs(operator, numbers, len(target.positions))
+        annotations._init_atom_preview(operator, target, target.positions)
+        return operator
+
+    def test_world_transform_and_number_edits_update_the_matching_element(self):
+        target = owner([])
+        target.matrix_world = AffineTransform([[0, -3, 0, 10], [2, 0, 0, 20], [0, 0, 4, 30], [0, 0, 0, 1]])
+        operator = self.operator([1, 3], target)
+        self.assertEqual(operator.atom_inputs[0].preview, 'Element: O World coordinates: (7.00, 20.00, 30.00)')
+        operator.atom_inputs[0].number = 4
+        with patch.object(annotations, 'current_geometry', side_effect=AssertionError('Preview must not reload datasets')):
+            self.assertTrue(annotations._check_atom_inputs(operator))
+        self.assertEqual(operator.atom_inputs[0].preview, 'Element: O World coordinates: (10.00, 22.00, 34.00)')
+        operator.atom_inputs[0].number = 2
+        self.assertTrue(annotations._check_atom_inputs(operator))
+        self.assertEqual(operator.atom_inputs[0].preview, 'Element: H World coordinates: (10.00, 20.00, 30.00)')
+        self.assertFalse(annotations._check_atom_inputs(operator))
+
+    def test_rejected_duplicate_swap_and_batch_growth_keep_previews_in_sync(self):
+        operator = self.operator([1, 2])
+        original = operator.atom_inputs[0].preview
+        operator.atom_inputs[0].number = 2
+        self.assertTrue(annotations._check_atom_inputs(operator))
+        self.assertEqual(operator.atom_inputs[0].number, 1)
+        self.assertEqual(operator.atom_inputs[0].preview, original)
+        operator.swap_pair = '1'
+        self.assertTrue(annotations._check_atom_inputs(operator))
+        self.assertIn('Element: H ', operator.atom_inputs[0].preview)
+        self.assertEqual(operator.atom_inputs[1].preview, original)
+        operator.input_count = 4
+        self.assertTrue(annotations._check_atom_inputs(operator, batch=True))
+        self.assertEqual([item.number for item in operator.atom_inputs], [2, 1, 3, 4])
+        self.assertTrue(all(item.preview for item in operator.atom_inputs))
+        operator.input_count = 1
+        self.assertTrue(annotations._check_atom_inputs(operator, batch=True))
+        self.assertEqual(len(operator.atom_inputs), 1)
+        self.assertIn('Element: H ', operator.atom_inputs[0].preview)
+
+    def test_atom_refresh_changes_text_and_preserves_saved_size_and_custom_prefix(self):
+        for mode, prefix, expected in [('DEFAULT', '', 'O'), ('CUSTOM', '氧：', '氧：O')]:
+            saved = {**entry(kind='ATOM'), 'source_atom_numbers': [1], 'symbols': ['O'],
+                     'prefix_mode': mode, 'prefix': prefix, 'size': .16}
+            updated, anchor, body = annotations._prepare(saved, POSITIONS, RECORD)
+            self.assertEqual(body, expected)
+            self.assertEqual(updated['size'], .16)
+            self.assertEqual(updated['source_atom_numbers'], [1])
 
 
 if __name__ == '__main__':

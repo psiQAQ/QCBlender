@@ -42,7 +42,7 @@ def annotation_prefix(kind, numbers, mode='DEFAULT', custom=''):
     if mode == 'CUSTOM':
         return custom
     if kind == 'ATOM':
-        return 'Atom: '
+        return ''
     if kind not in ATOM_COUNTS:
         raise ValueError('Unknown annotation measurement kind')
     return f"{kind.title()}({','.join(map(str, numbers))}) = "

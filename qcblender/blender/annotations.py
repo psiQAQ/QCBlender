@@ -78,7 +78,7 @@ def _prepare(entry, positions, record):
     anchor = np.asarray(positions, dtype=float)[np.array(atoms) - 1].mean(axis=0)
     if entry['kind'] == 'ATOM':
         value, reason = None, None
-        body = annotation_prefix('ATOM', atoms, entry['prefix_mode'], entry['prefix']) + f"{entry['symbols'][0]}{atoms[0]}"
+        body = annotation_prefix('ATOM', atoms, entry['prefix_mode'], entry['prefix']) + entry['symbols'][0]
     else:
         try:
             value, reason = measure(entry['kind'], positions, atoms), None
@@ -450,11 +450,42 @@ def _atom_view(context):
 class QCAnnotationAtomInput(bpy.types.PropertyGroup):
     number: IntProperty(name='Source atom number', min=1, default=1,
                         description='Type or step through source atom numbers; clamp to the source range and keep the previous number if another input already uses it')
+    preview: StringProperty(options={'HIDDEN', 'SKIP_SAVE'})
 
 
 class QCBLENDER_UL_annotation_atoms(bpy.types.UIList):
     def draw_item(self, context, layout, data, item, icon, active_data, active_propname, index=0):
-        ui_layout(layout).prop(item, 'number', text=iface('Atom {value0}', value0=index + 1))
+        _draw_atom_input(layout, item, index)
+
+
+def _draw_atom_input(layout, item, index):
+    row = ui_layout(layout).split(factor=.3, align=True)
+    row.prop(item, 'number', text=iface('Atom {value0}', value0=index + 1))
+    row.label(text=item.preview, translate=False)
+
+
+def _init_atom_preview(operator, owner, positions):
+    operator._preview_owner = owner
+    operator._preview_positions = positions
+    operator._preview_atomic_numbers = tuple(value.value for value in owner.data.attributes['qc_atomic_number'].data)
+    _refresh_atom_previews(operator)
+
+
+def _refresh_atom_previews(operator):
+    if not hasattr(operator, '_preview_positions'):
+        return False
+    owner = operator._preview_owner
+    changed = False
+    for item in operator.atom_inputs:
+        index = item.number - 1
+        world = owner.matrix_world @ Vector(operator._preview_positions[index])
+        preview = iface('Element: {symbol} World coordinates: ({x}, {y}, {z})',
+                        symbol=_symbol(operator._preview_atomic_numbers[index]),
+                        x=f'{world[0]:.2f}', y=f'{world[1]:.2f}', z=f'{world[2]:.2f}')
+        if item.preview != preview:
+            item.preview = preview
+            changed = True
+    return changed
 
 
 def _init_atom_inputs(operator, numbers, atom_count):
@@ -482,7 +513,7 @@ def _check_atom_inputs(operator, *, batch=False):
         if 0 <= index < len(accepted) - 1:
             accepted[index], accepted[index + 1] = accepted[index + 1], accepted[index]
         operator.swap_pair = 'NONE'
-    changed = proposed != accepted or operator.input_count != len(accepted)
+    changed = previous != accepted or proposed != accepted or operator.input_count != len(accepted)
     while len(operator.atom_inputs) > len(accepted):
         operator.atom_inputs.remove(len(operator.atom_inputs) - 1)
     while len(operator.atom_inputs) < len(accepted):
@@ -492,7 +523,8 @@ def _check_atom_inputs(operator, *, batch=False):
     operator.input_count = len(accepted)
     operator.active_input = min(operator.active_input, len(accepted) - 1)
     operator.accepted_atoms = json.dumps(accepted)
-    return changed
+    preview_changed = _refresh_atom_previews(operator)
+    return changed or preview_changed
 
 
 def _draw_atom_inputs(layout, operator, *, batch=False):
@@ -506,7 +538,7 @@ def _draw_atom_inputs(layout, operator, *, batch=False):
                           operator, 'active_input', rows=6)
     else:
         for index, item in enumerate(operator.atom_inputs):
-            box.prop(item, 'number', text=iface('Atom {value0}', value0=index + 1))
+            _draw_atom_input(box, item, index)
     if not batch and len(operator.atom_inputs) > 1:
         box.label(text='Swap positions')
         swaps = box.row(align=True)
@@ -531,7 +563,11 @@ def _draw_style(layout, operator, kind, creating=False):
     if operator.prefix_mode == 'CUSTOM':
         box.prop(operator, 'prefix')
     box.prop(operator, 'size')
-    box.prop(operator, 'offset')
+    box.label(text='Offset (local scene units)')
+    offsets = box.grid_flow(columns=3, even_columns=True, align=True)
+    offsets.use_property_split = False
+    for index, axis in enumerate('XYZ'):
+        offsets.prop(operator, 'offset', index=index, text=axis)
     if kind != 'ATOM':
         box.prop(operator, 'decimals')
     box.prop(operator, 'show_leader')
@@ -579,13 +615,13 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
     @classmethod
     def description(cls, context, properties):
         return tip({
-            'ATOM': 'Select an atom view; create source-symbol and atom-number labels for the entered atoms',
+            'ATOM': 'Select an atom view; create element-symbol labels for the entered source atoms',
             'DISTANCE': 'Select an atom view; label the distance and symmetric dashed line between two source atoms',
             'ANGLE': 'Select an atom view; label the ordered three-atom angle and its circular arc',
             'DIHEDRAL': 'Select an atom view; label the signed four-atom dihedral, projected arc and two atom triangles',
         }.get(properties.kind, 'Create a source atom or geometry annotation on the active atom view'))
 
-    kind: EnumProperty(name='Annotation', items=[('ATOM', 'Atom numbers', ''),
+    kind: EnumProperty(name='Annotation', items=[('ATOM', 'Atom labels', ''),
                        ('DISTANCE', 'Distance', ''), ('ANGLE', 'Angle', ''), ('DIHEDRAL', 'Dihedral', '')])
     atoms: StringProperty(name='Source atom numbers', description='Enter one-based source atom numbers in measurement order; the source atoms are unchanged', default='1,2', options={'HIDDEN', 'SKIP_SAVE'})
     atom_inputs: CollectionProperty(type=QCAnnotationAtomInput, options={'HIDDEN', 'SKIP_SAVE'})
@@ -596,7 +632,7 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
     swap_pair: EnumProperty(name='Swap positions', description='Explicitly exchange adjacent atom positions without allowing duplicate numbers',
                            items=[('NONE', 'No swap', ''), ('1', '1 ↔ 2', ''), ('2', '2 ↔ 3', ''), ('3', '3 ↔ 4', '')],
                            default='NONE', options={'HIDDEN', 'SKIP_SAVE'})
-    size: FloatProperty(name='Text size (local scene units)', description='Size of the annotation text in atom-view local scene units', default=.16, min=.001)
+    size: FloatProperty(name='Text size (local scene units)', description='Size of the annotation text in atom-view local scene units', default=.5, min=.001, options={'SKIP_SAVE'})
     color: FloatVectorProperty(name='Color', description='Initial material color; later edits belong to the material nodes',
                                subtype='COLOR', size=3, default=(0., 0., 0.), min=0, max=1)
     offset: FloatVectorProperty(name='Offset (local scene units)', description='Move text from its atom-centroid anchor without moving source atoms', size=3, default=(.2, .2, .2))
@@ -619,6 +655,8 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
         return _atom_view(context) is not None
 
     def invoke(self, context, event):
+        if not self.properties.is_property_set('size', ghost=False):
+            self.size = .5
         if not self.properties.is_property_set('decimals', ghost=False):
             self.decimals = 4 if self.kind in ('ATOM', 'DISTANCE') else 2
         try:
@@ -632,10 +670,11 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
                 raise ValueError(f'{self.kind} needs {required} ordered source atom numbers')
             self.atoms = ','.join(map(str, numbers))
             _init_atom_inputs(self, numbers, len(positions))
+            _init_atom_preview(self, _atom_view(context), positions)
         except (ValueError, KeyError, OSError, TypeError) as error:
             self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
-        return context.window_manager.invoke_props_dialog(self, width=460)
+        return context.window_manager.invoke_props_dialog(self, width=760)
 
     def check(self, context):
         return _check_atom_inputs(self, batch=self.kind == 'ATOM')
@@ -654,6 +693,7 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
                 raise ValueError(f'{self.kind} needs {ATOM_COUNTS[self.kind]} ordered source atom numbers')
             self.atoms = ','.join(map(str, numbers))
             _init_atom_inputs(self, numbers, len(positions))
+            _init_atom_preview(self, owner, positions)
             symbols = [_symbol(int(owner.data.attributes['qc_atomic_number'].data[n - 1].value))
                        for n in numbers]
             decimals = self.decimals if self.properties.is_property_set('decimals', ghost=False) else (
@@ -693,7 +733,7 @@ class QCBLENDER_OT_edit_annotation(bpy.types.Operator):
     swap_pair: EnumProperty(name='Swap positions', description='Explicitly exchange adjacent atom positions without allowing duplicate numbers',
                            items=[('NONE', 'No swap', ''), ('1', '1 ↔ 2', ''), ('2', '2 ↔ 3', ''), ('3', '3 ↔ 4', '')],
                            default='NONE', options={'HIDDEN', 'SKIP_SAVE'})
-    size: FloatProperty(name='Text size (local scene units)', description='Size of the annotation text in atom-view local scene units', default=.16, min=.001)
+    size: FloatProperty(name='Text size (local scene units)', description='Size of the annotation text in atom-view local scene units', default=.5, min=.001)
     offset: FloatVectorProperty(name='Offset (local scene units)', description='Move text from its atom-centroid anchor without moving source atoms', size=3)
     decimals: IntProperty(name='Decimal places', description='Displayed decimal places; the saved scientific value is unchanged', default=4, min=0, max=10)
     show_leader: BoolProperty(name='Show leader', description='Show the line from the annotation anchor to its text', default=True)
@@ -725,12 +765,13 @@ class QCBLENDER_OT_edit_annotation(bpy.types.Operator):
             positions, _ = current_geometry(owner)
             numbers = parse_source_atom_numbers(','.join(map(str, entry['source_atom_numbers'])), len(positions))
             _init_atom_inputs(self, numbers, len(positions))
+            _init_atom_preview(self, owner, positions)
         except (ValueError, KeyError, OSError, TypeError) as error:
             self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
         for name in ('size', 'offset', 'decimals', 'show_leader', 'line_width', 'visible', *STYLE_DEFAULTS):
             setattr(self, name, entry.get(name, STYLE_DEFAULTS.get(name)))
-        return context.window_manager.invoke_props_dialog(self, width=460)
+        return context.window_manager.invoke_props_dialog(self, width=760)
 
     def check(self, context):
         return _check_atom_inputs(self)
@@ -752,6 +793,7 @@ class QCBLENDER_OT_edit_annotation(bpy.types.Operator):
             numbers = _input_numbers(self, len(positions), ','.join(map(str, entry['source_atom_numbers'])))
             self.atoms = ','.join(map(str, numbers))
             _init_atom_inputs(self, numbers, len(positions))
+            _init_atom_preview(self, owner, positions)
             if numbers != entry['source_atom_numbers']:
                 entry['source_atom_numbers'] = numbers
                 entry['symbols'] = [_symbol(int(owner.data.attributes['qc_atomic_number'].data[n - 1].value)) for n in numbers]

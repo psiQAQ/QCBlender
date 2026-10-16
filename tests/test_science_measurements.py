@@ -11,7 +11,7 @@ from qcblender.geometry import scientific_geometry
 class MeasurementTests(unittest.TestCase):
     def test_default_and_exact_custom_prefixes_keep_value_and_unit(self):
         record = {'kind': 'irc', 'step': 2}
-        self.assertEqual(annotation_prefix('ATOM', [3]), 'Atom: ')
+        self.assertEqual(annotation_prefix('ATOM', [3]), '')
         self.assertEqual(measurement_text('DISTANCE', [1, 2], 1.23456, record, 4,
                          prefix_mode='DEFAULT'), 'Distance(1,2) = 1.2346 Å')
         self.assertEqual(measurement_text('ANGLE', [1, 2, 3], 90., record, 2,
