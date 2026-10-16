@@ -589,8 +589,10 @@
           "assert"
         ],
         "required_write_identity": "expected_pid from current identity response",
-        "current_adapter_validation": "Not Run",
-        "scope": "Reuse underlying data and operator behavior; this adapter does not reproduce historical UI clicks."
+        "current_adapter_validation": "Passed",
+        "scope": "Reuse underlying data and operator behavior; this adapter does not reproduce historical UI clicks.",
+        "current_adapter_evidence": "validation/agent/reports/2026-10-16/dev-workflow/acceptance.json",
+        "current_adapter_scope": "P06 p04-three-frames.xyz; actual HTTP MCP add/edit/trajectory/assert/render/save; new-process CLI cold read. Historical GUI scope remains unchanged."
       }
     },
     {
@@ -711,8 +713,10 @@
           "render"
         ],
         "required_write_identity": "expected_pid from current identity response",
-        "current_adapter_validation": "Not Run",
-        "scope": "Reuse underlying data and operator behavior; this adapter does not reproduce historical UI clicks."
+        "current_adapter_validation": "Passed",
+        "scope": "Reuse underlying data and operator behavior; this adapter does not reproduce historical UI clicks.",
+        "current_adapter_evidence": "validation/agent/reports/2026-10-16/dev-workflow/acceptance.json",
+        "current_adapter_scope": "P06 p04-three-frames.xyz; actual HTTP MCP add/edit/trajectory/assert/render/save; new-process CLI cold read. Historical GUI scope remains unchanged."
       }
     },
     {
@@ -7304,8 +7308,50 @@
           "save"
         ],
         "required_write_identity": "expected_pid from current identity response",
-        "current_adapter_validation": "Not Run",
-        "scope": "Reuse underlying data and operator behavior; this adapter does not reproduce historical UI clicks."
+        "current_adapter_validation": "Passed",
+        "scope": "Reuse underlying data and operator behavior; this adapter does not reproduce historical UI clicks.",
+        "current_adapter_evidence": "validation/agent/reports/2026-10-16/dev-workflow/acceptance.json",
+        "current_adapter_scope": "P06 p04-three-frames.xyz; actual HTTP MCP add/edit/trajectory/assert/render/save; new-process CLI cold read. Historical GUI scope remains unchanged."
+      }
+    },
+    {
+      "id": "blender-mcp-start-existing-service-20261016",
+      "title": "恢复窗口中启动现有 Blender MCP 服务",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-16",
+        "method": "Computer Use Start MCP button followed by real HTTP MCP identity and saved-scene assertion",
+        "source_commit": "06459869132b2f8ee4f32fd738f89f1820fe626f",
+        "candidate_sha256": "ca3a92f5caf9a35d4bc70c80c81fa3eebeb9b7d4bbf0e0eaf0e75960bf063aeb",
+        "blender": "5.1.1",
+        "integration": "Blender MCP Integrated 1.0.3+integration.2",
+        "visible_entry": "偏好设置 > 插件 > Blender MCP Integrated > Start MCP",
+        "validated_scope": "Existing enabled integration in original saved-project window; no preference changes; PID 66808 and full persistent scene baseline confirmed via MCP after closing preferences.",
+        "reports": [
+          {
+            "path": "validation/agent/reports/2026-10-16/dev-workflow/acceptance.json",
+            "sha256": "70766372415a7d7b44421bc875d3f6ef2add4dee226d189c1d563184e276f74c",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "validation/agent/reports/2026-10-16/dev-workflow/mcp-start-button.png",
+            "sha256": "ec74003a195e49fa0444e51de3dd550c6f181d97a5c28a9afad8838d47144c9b"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-16/dev-workflow/restored-original.png",
+            "sha256": "13c84cb2d9055686973d8dbef76e5acba197750c8c739560146d262e887680cc"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "tools/dev_workflow/mcp_start.py": "592f55024320b6ce26fb210fa867cc32a609495fd79fa22084e57469e22ff81b"
+      },
+      "execution": {
+        "entry": "python -m tools.dev_workflow --run-dir <run> session start --blender <binary> --global-profile --project <saved-project> --script tools/dev_workflow/mcp_start.py",
+        "current_adapter_validation": "Passed",
+        "current_adapter_scope": "Existing running service reuse function verified via real MCP. Fresh-launch helper branch is documented from the existing integration API; readiness still requires mcp tools discovery."
       }
     }
   ]

@@ -1,15 +1,26 @@
 # 开发流程与 MCP 复用验收
 
-2026-10-16，任务仍在进行；未完成真实 Blender 验收，不更新当前安装身份。
+2026-10-16，技术验收 `Passed`。统一入口为 `python -m tools.dev_workflow`，步骤见 [开发流程](../../../docs/agents/development-workflow.md)，四批观察见 [复盘](../../../docs/agents/development-retrospective.md)。
 
-- `Passed`：统一入口的 6 项定向测试，0 failures/errors/skips；覆盖错误 PID 拒绝写入、失败命令及失败报告不能记成功、失败不自动重试、相同输入直接复用。执行源码 `2804bb5a8dba6e071ea4a946fdfd42fe8820a154`，收据 `outputs/runs/dev-workflow-20261016/checks-final2/checks.json`，原始结果 `checks-tests.json`。重复调用引用同一收据，未重复执行测试。
-- `Passed`：操作登记表查询、检查选择与 diff 检查；39 个文档链接/锚点由文档任务核对。登记表沿用历史记录，只补固定操作入口，适配器实测状态仍为 `Not Run`。
-- `Passed`：全局规则已追加通用复用原则及本仓库入口，原文件和摘要保存在 `outputs/runs/dev-workflow-20261016/global-policy/`。
-- `Not Run`：真实 HTTP MCP 工具发现及身份核对、标注创建/修改/断言、保存冷读、整包重建、隔离冒烟、全局安装与原工程恢复。当前 Blender PID 71804 尚在运行，等待用户按已确认流程保存关闭；本批尚未连接或操作该会话。
-- `Not Run`：本地任务归档；仍需完成上述实际验收。独立人工与科研验收不由本批脚本代签。
+## 验证对象与结果
 
-当前合并版定向检查实际执行一次，耗时 0.640 秒，日志 1150 字节；随后一次调用命中复用。此统计只覆盖该收据，不代表整项开发耗时。本批实际 MCP 调用 0、Computer Use 截图 0；无可靠 token 对比数据，不报告节省比例。早期开发测试保留在任务工作树 outputs 和本批 checks 目录中；修正仓库内输入路径后重新执行本收据，首次主检出复用因锁文件换行格式不同被拒绝，改为解析后比较依赖锁内容并复验；当前 main 已实际命中跨工作树复用，未重跑测试。候选与显式输入继续逐字节核对。
+- `Passed`：6 项定向测试，0 failures/errors/skips；错误 PID 拒绝写入，失败命令或报告不会记成功，失败不自动重试，相同身份直接复用。最新执行源码 `06a8859`，收据 `outputs/runs/dev-workflow-20261016/checks-adapters/checks.json`。后加启动辅助脚本单独经真实 MCP 验证，不扩大重跑既有检查。
+- `Passed`：完整重建产品及双语节点资产、隔离安装逐成员比对、11 次固定原生操作、保存冷读、全局安装逐成员比对。产品源码 `6700920`，后续只改开发工具和记录；新 ZIP 为 50,940,475 字节，SHA-256 `ca3a92f5caf9a35d4bc70c80c81fa3eebeb9b7d4bbf0e0eaf0e75960bf063aeb`。
+- `Passed`：现有 SDK 通过真实 Streamable HTTP MCP 的 `execute_blender_code` 执行身份、导入、键角/二面角创建与编辑、三帧 XYZ 切换、独立半角与相机朝向断言、渲染、自包含保存和正常退出；随后新进程冷读快照一致。未用 `execute_blender_code_for_cli` 冒充交互 MCP，也不宣称宿主原生工具列表已重载。
+- `Passed`：原保存工程 `outputs/projects/sidebar-preserved-20261016/user-session.blend` 已打开，当前 PID 66808；原 `.blend` 和五个配套文件摘要不变，持久场景、科学数组、节点、材质、偏好与布局基线一致。开始时按用户本次明确授权直接关闭 PID 71804，未保存其未保存改动。
+- `Passed`：全局规则追加通用复用原则及本仓库入口。HTTP 401 经内存比较确认为旧令牌；获用户明确授权后仅替换 Blender MCP 的 Authorization，备份在 `%USERPROFILE%/.codex/config.before-blender-token-20261016.toml`，令牌未进入 Git 或报告。
+- `Not Run`：独立人工、独立科研验收和远端 CI。本批没有产品界面变更，历史产品 GUI 证据保留原身份；Computer Use 只用于恢复窗口的观察与现有 MCP 服务启动。
 
-后续依次确认 Blender 退出、保全原保存工程、完成统一入口的整包构建与隔离安装、执行真实 MCP 标注案例和冷读、完成全局安装及原工程恢复，再更新本记录和当前安装入口。未变的六项定向结果按文件及环境身份复用。
+完整证据与摘要见 `validation/agent/reports/2026-10-16/dev-workflow/acceptance.json`。当前安装身份见 [current-install.json](../current-install.json)，本地提交、保全及归档由同目录 `delivery.json` 和 `outputs/runs/dev-workflow-20261016/archive/` 收据记录。不 push。
 
-实现入口见 [开发流程](../../../docs/agents/development-workflow.md)；本地任务见 [规格](../../../.scratch/dev-workflow-20261016/spec.md)。
+## 实际故障及复验
+
+会话启动后重复填入 `status` 导致包装器报错，实际子进程已执行，未重复启动。冷读差异来自无引用、无 fake user 的启动材质，快照改为持久材质范围；原快照与失败结果保留，科学数据及实际使用材质仍完整比较。主检出锁文件换行差异曾阻止复用，依赖锁改为解析内容比较，候选及显式输入仍按原字节核对。
+
+恢复窗口的现有 MCP 集成保持 `Stopped`，实际点击“偏好设置 → 插件 → Blender MCP Integrated → Start MCP”后，MCP 身份和原工程基线再次通过。已记录稳定操作 ID `blender-mcp-start-existing-service-20261016`。通用 `mcp_start.py` 的已运行服务复用分支通过真实 MCP；新会话的启动仍须以工具发现结果判断就绪。
+
+## 计量与保留
+
+本批成功执行 16 次实际 MCP 工具调用：14 次固定操作、1 次案例场景设置、1 次启动辅助脚本复用。结果收据共 121,040 字节；核心 MCP 案例耗时 24.498 秒，其 CLI 摘要输出 1,776 字节。这不是整项开发耗时或网络字节数。Computer Use 共 14 次截图调用、返回 18 帧，保存 2 帧；没有重复点击产品标注入口。另有两张实际渲染。无可靠 token 对比数据，不报告节省比例。
+
+旧安装、偏好、旧当前 ZIP、原保存工程备份、运行脚本、失败及成功结果均保留于 `outputs/runs/dev-workflow-20261016/`；新候选保留于 `outputs/candidates/current/dev-workflow-20261016-r1/`。任务工作树的忽略文件逐项保全后正常归档，历史材料不清理。
