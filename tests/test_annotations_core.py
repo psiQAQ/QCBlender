@@ -178,6 +178,30 @@ def owner(parts):
 
 
 class AnnotationUpdates(unittest.TestCase):
+    def test_angular_leader_starts_at_exact_arc_midpoint_and_keeps_text_offset(self):
+        for kind in ('ANGLE', 'DIHEDRAL'):
+            for degrees in (47., -73., 180.):
+                if kind == 'ANGLE' and degrees < 0:
+                    continue
+                theta = np.radians(degrees)
+                positions = (np.array([[1., 0., 0.], [0., 0., 0.], [np.cos(theta), np.sin(theta), 0.]])
+                             if kind == 'ANGLE' else
+                             np.array([[0., 1., 0.], [0., 0., 0.], [2., 0., 0.], [2., np.cos(theta), np.sin(theta)]]))
+                saved = {**entry(kind=kind, version=2), 'arc_radius': .73}
+                roles = ('LABEL', 'LEADER', 'ARC') + (('PLANE_A', 'PLANE_B') if kind == 'DIHEDRAL' else ())
+                parts = [Object(role, saved, inaccessible_materials=True) for role in roles]
+                target = owner(parts)
+                annotations.update_annotations(target, positions, RECORD)
+                center = np.zeros(3) if kind == 'ANGLE' else np.array([1., 0., 0.])
+                radial = (np.array([np.cos(theta / 2), np.sin(theta / 2), 0.]) if kind == 'ANGLE'
+                          else np.array([0., np.cos(theta / 2), np.sin(theta / 2)]))
+                expected = center + .73 * radial
+                with self.subTest(kind=kind, degrees=degrees):
+                    np.testing.assert_allclose(parts[1].data.splines[0].points[0].co[:3], expected, atol=1e-12)
+                    arc = parts[2].data.splines[0].points
+                    np.testing.assert_allclose(arc[len(arc)//2].co[:3], expected, atol=1e-12)
+                    np.testing.assert_allclose(parts[0].location, positions.mean(axis=0) + saved['offset'])
+
     def test_regular_edit_does_not_read_material_slots_or_nodes(self):
         saved = entry(version=2)
         parts = [Object(role, saved, inaccessible_materials=True) for role in ('LABEL', 'LEADER', 'DASH')]
@@ -471,6 +495,33 @@ class CreationPrecision(unittest.TestCase):
         self.assertEqual(self.invoke('ANGLE', {'decimals': 7}).decimals, 2)
         self.assertEqual(self.invoke('DISTANCE', {'decimals': 1}).decimals, 4)
 
+    def test_creation_faces_only_new_labels_once_when_camera_exists(self):
+        for kind in ('ATOM', 'DISTANCE', 'ANGLE', 'DIHEDRAL'):
+            for camera in (None, object()):
+                operator = self.invoke(kind, {})
+                if kind == 'ATOM':
+                    annotations._init_atom_inputs(operator, [1, 2, 3, 4], 4)
+                target = owner([])
+                target.data = types.SimpleNamespace(attributes={'qc_atomic_number': types.SimpleNamespace(
+                    data=[types.SimpleNamespace(value=1) for _ in POSITIONS])})
+                target.users_collection = [object()]
+                created = []
+                def capture(owner, collection, record, positions, geometry):
+                    label = Object('LABEL', record)
+                    label.parent = owner
+                    created.append(label)
+                    return label
+                with patch.object(annotations, '_atom_view', return_value=target), patch.object(
+                        annotations, '_symbol', return_value='H'), patch.object(annotations, '_create', side_effect=capture), patch.object(
+                        annotations, '_face_label_to_camera', create=True) as face:
+                    result = annotations.QCBLENDER_OT_add_annotation.execute(operator,
+                        types.SimpleNamespace(scene=types.SimpleNamespace(camera=camera)))
+                    self.assertEqual(result, {'FINISHED'})
+                    self.assertEqual(len(created), 4 if kind == 'ATOM' else 1)
+                    self.assertEqual(face.call_count, len(created) if camera is not None else 0)
+                    if camera is not None:
+                        self.assertEqual([call.args for call in face.call_args_list], [(label, camera) for label in created])
+
     def test_explicit_precision_and_current_dialog_edits_remain_set(self):
         for kind in ('ATOM', 'DISTANCE', 'ANGLE', 'DIHEDRAL'):
             with self.subTest(kind=kind):
@@ -487,7 +538,7 @@ class CreationPrecision(unittest.TestCase):
                     created.append(annotations._prepare(record, positions, geometry)[0]['decimals'])
                 with patch.object(annotations, '_atom_view', return_value=target), patch.object(
                         annotations, '_symbol', return_value='H'), patch.object(annotations, '_create', side_effect=capture):
-                    self.assertEqual(annotations.QCBLENDER_OT_add_annotation.execute(operator, types.SimpleNamespace()),
+                    self.assertEqual(annotations.QCBLENDER_OT_add_annotation.execute(operator, types.SimpleNamespace(scene=types.SimpleNamespace(camera=None))),
                                      {'FINISHED'})
                 self.assertTrue(created)
                 self.assertEqual(set(created), {3})

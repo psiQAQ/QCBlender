@@ -104,13 +104,14 @@ def _apply(label, entry, anchor, body, leader=None):
     label.data.size = entry['size']
     _visible(label, entry['visible'])
     label['qc_annotation'] = json.dumps(entry, ensure_ascii=False)
+    geometry = parts.geometry or {'dashes': [], 'arc': [], 'planes': []}
     if 'LEADER' in parts:
         line, line_entry = parts['LEADER']
-        line.data.splines[0].points[0].co = (*anchor, 1)
+        start = geometry['arc'][len(geometry['arc']) // 2] if 'ARC' in parts and len(geometry['arc']) else anchor
+        line.data.splines[0].points[0].co = (*start, 1)
         line.data.splines[0].points[1].co = (*label.location, 1)
         line.data.bevel_depth = entry['line_width'] / 2
         _visible(line, entry['visible'] and entry['show_leader'])
-    geometry = parts.geometry or {'dashes': [], 'arc': [], 'planes': []}
     for role in ('DASH', 'ARC'):
         if role not in parts:
             continue
@@ -350,6 +351,11 @@ def _create(owner, collection, entry, positions, record):
             if mat is not None and mat.users == 0:
                 bpy.data.materials.remove(mat)
         raise
+
+
+def _face_label_to_camera(label, camera):
+    label.rotation_mode = 'QUATERNION'
+    label.rotation_quaternion = label.parent.matrix_world.to_quaternion().inverted() @ camera.matrix_world.to_quaternion()
 
 
 def _upgrade_parts(label, entry, parts, collection):
@@ -662,7 +668,9 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
                 entry = {**settings, 'role': 'LABEL', 'id': uuid4().hex,
                          'source_atom_numbers': chosen,
                          'symbols': [symbols[numbers.index(atom)]] if atom is not None else symbols}
-                _create(owner, collection, entry, positions, record)
+                label = _create(owner, collection, entry, positions, record)
+                if context.scene.camera is not None:
+                    _face_label_to_camera(label, context.scene.camera)
         except (ValueError, KeyError, OSError, TypeError) as error:
             self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
@@ -831,12 +839,10 @@ class QCBLENDER_OT_face_annotations(bpy.types.Operator):
             return {'CANCELLED'}
         owner = _atom_view(context)
         identifier = self.annotation_id if self.properties.is_property_set('annotation_id', ghost=False) else ''
-        rotation = owner.matrix_world.to_quaternion().inverted() @ camera.matrix_world.to_quaternion()
         matched = False
         for child, entry in _entries(owner, 'LABEL'):
             if not identifier or entry['id'] == identifier:
-                child.rotation_mode = 'QUATERNION'
-                child.rotation_quaternion = rotation
+                _face_label_to_camera(child, camera)
                 matched = True
         if identifier and not matched:
             self.report({'ERROR'}, error_text('Annotation no longer exists'))

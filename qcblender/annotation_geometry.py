@@ -38,7 +38,9 @@ def _arc(center, first, normal, angle, radius, resolution):
     if abs(angle) <= _EPSILON:
         return np.empty((0, 3), dtype=float)
     # A rigid transform may move an exact step boundary by floating-point noise.
-    count = max(2, int(math.ceil(abs(angle) / math.pi * resolution - 1e-12)) + 1)
+    segments = max(2, int(math.ceil(abs(angle) / math.pi * resolution - 1e-12)))
+    # Include the exact angular midpoint as a vertex for the annotation leader.
+    count = segments + segments % 2 + 1
     steps = np.linspace(0., angle, count)
     tangent = np.cross(normal, first)
     return (np.asarray(center)[None, :] + radius *

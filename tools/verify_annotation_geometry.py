@@ -179,7 +179,9 @@ def verify_geometry(owner):
             expected = 'FONT' if role == 'LABEL' else 'MESH' if role.startswith('PLANE_') else 'CURVE'
             require(part.type == expected, 'Wrong native Blender data type')
         leader = members['LEADER'][0]
-        np.testing.assert_allclose(spline_points(leader)[0], [anchor, list(label.location)], atol=3e-6)
+        np.testing.assert_allclose(spline_points(leader)[0][-1], label.location, atol=3e-6)
+        if kind not in ('ANGLE', 'DIHEDRAL'):
+            np.testing.assert_allclose(spline_points(leader)[0][0], anchor, atol=3e-6)
         np.testing.assert_allclose(leader.data.bevel_depth, entry['line_width'] / 2, atol=1e-8)
         if kind == 'ATOM':
             tail = entry['symbols'][0] + str(numbers[0])
@@ -214,6 +216,7 @@ def verify_geometry(owner):
             paths = spline_points(arc)
             if abs(value) < 1e-10:
                 require(not paths and arc.hide_viewport and arc.hide_render, 'Zero arc must be hidden')
+                np.testing.assert_allclose(spline_points(leader)[0][0], anchor, atol=3e-6)
             else:
                 require(len(paths) == 1, 'Angle needs exactly one circular arc')
                 vertices = paths[0]
@@ -236,6 +239,9 @@ def verify_geometry(owner):
                 np.testing.assert_allclose(vertices[[0, -1]], center + entry['arc_radius'] * np.array([first, last]), atol=3e-6)
                 angles = np.unwrap(np.arctan2(np.cross(first, vectors) @ normal, vectors @ first))
                 np.testing.assert_allclose(angles[-1], math.radians(value), atol=3e-6)
+                require(len(vertices) % 2 == 1, 'Arc must contain its exact midpoint vertex')
+                np.testing.assert_allclose(angles[len(vertices)//2], math.radians(value) / 2, atol=3e-6)
+                np.testing.assert_allclose(spline_points(leader)[0][0], vertices[len(vertices)//2], atol=3e-6)
                 require(np.all(np.diff(angles) * value >= -1e-7), 'Arc turns against the scientific signed angle')
             np.testing.assert_allclose(arc.data.bevel_depth, entry['measurement_width'] / 2, atol=1e-8)
         if kind == 'DIHEDRAL':
@@ -334,6 +340,11 @@ def run(args, report):
     positions, record = module('blender.geometry').current_geometry(original)
     before_science = science(original)
     choices = select_numbers(positions)
+    original.rotation_euler = Euler((.2, -.4, .1))
+    initial_camera = bpy.context.scene.camera
+    require(initial_camera is not None, 'Factory scene must supply the creation camera')
+    initial_camera.rotation_euler = Euler((.5, .3, -.7))
+    bpy.context.view_layer.update()
     identifiers = {}
     for kind, numbers in choices.items():
         activate(original)
@@ -342,13 +353,27 @@ def run(args, report):
         created = set(groups(original)) - before
         require(len(created) == 1, 'Expected one annotation group')
         identifiers[kind] = created.pop()
+    bpy.context.view_layer.update()
+    creation_rotations = {}
+    for members in groups(original).values():
+        label, entry = members['LABEL']
+        require(label.matrix_world.to_quaternion().rotation_difference(initial_camera.matrix_world.to_quaternion()).angle < 1e-5,
+                'New label did not face the scene camera under a rotated parent: ' + entry['kind'])
+        require(len(label.constraints) == 0, 'Creation added continuous camera tracking')
+        creation_rotations[entry['id']] = tuple(label.rotation_quaternion)
+    initial_camera.rotation_euler = Euler((-.2, .6, .4))
+    bpy.context.view_layer.update()
+    report['creation_faces_camera_once_rotated_parent'] = 'Passed'
     report['geometry'] = verify_geometry(original)
     initial_material_checks(original)
     report['native_geometry_and_default_materials'] = 'Passed'
 
     activate(untouched)
+    bpy.context.scene.camera = None
     require(bpy.ops.qcblender.add_annotation(kind='ATOM', atoms='1', color=(.4, .7, .1)) == {'FINISHED'},
             'Creation-time color selection failed')
+    bpy.context.scene.camera = initial_camera
+    report['creation_without_camera'] = 'Passed'
     colored = next(iter(groups(untouched).values()))['LABEL'][0].data.materials[0]
     shader = next(node for node in colored.node_tree.nodes if node.bl_idname == 'ShaderNodeBsdfPrincipled')
     np.testing.assert_allclose(shader_socket(shader, 'Base Color').default_value, (.4, .7, .1, 1), atol=1e-7)
@@ -360,6 +385,10 @@ def run(args, report):
         edit(original, identifiers['DISTANCE'], prefix_mode='CUSTOM', prefix=prefix)
         verify_geometry(original)
     edit(original, identifiers['DISTANCE'], prefix_mode='DEFAULT', prefix='')
+    for members in groups(original).values():
+        label, entry = members['LABEL']
+        np.testing.assert_allclose(label.rotation_quaternion, creation_rotations[entry['id']], atol=1e-7)
+    report['camera_motion_and_edit_preserve_existing_orientation'] = 'Passed'
     report['custom_prefix_chinese_empty_spaces'] = 'Passed'
 
     # Share the actual material with an unrelated native object and customize its
