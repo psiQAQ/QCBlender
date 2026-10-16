@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-10-16",
+  "updated": "2026-10-17",
   "rules": "docs/agents/blender-interaction.md",
   "operation_ids_are_stable": true,
   "history_is_not_current_batch_pass": true,
@@ -7352,6 +7352,95 @@
         "entry": "python -m tools.dev_workflow --run-dir <run> session start --blender <binary> --global-profile --project <saved-project> --script tools/dev_workflow/mcp_start.py",
         "current_adapter_validation": "Passed",
         "current_adapter_scope": "Existing running service reuse function verified via real MCP. Fresh-launch helper branch is documented from the existing integration API; readiness still requires mcp tools discovery."
+      }
+    },
+    {
+      "id": "annotation-dialog-element-preview-20261017",
+      "title": "元素标注、横排偏移与来源编号全局坐标预览",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-17",
+        "method": "Computer Use native clicks, typing and menu Undo/Redo; native Blender assertions",
+        "source_commit": "2bb5f72f813a9f4424cdf5bb01be5ffae47fc7f7",
+        "candidate_sha256": "cd2f8d6c98c949468b74063f25670afb06975594bd385316da7a054c4976c224",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "visible_entry": "Object Properties > QCBlender > Local Selection and Annotations",
+        "validated_scope": "Four creation dialogs, atom editing, typed/stepped/swapped previews, 8-item list and menu Undo/Redo; native GUI state assertions and cold read",
+        "reports": [
+          {
+            "path": "validation/agent/reports/2026-10-17/annotation-ui/acceptance.json",
+            "sha256": "77318227f1ff5cddd3ad74b77b0ddaf0a4fae732b573546be441539d38d501c5",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "validation/agent/reports/2026-10-17/annotation-ui/gui-angle.png",
+            "sha256": "22e5d9d3bb0b37ec00fbddca285bcb55814f72eb1c5eea21a0ddfab25a8fa67c"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-17/annotation-ui/gui-batch-eight.png",
+            "sha256": "f99a2d158a1c0200399ca460a3d45e78af0a3ac01b1369c7efe0407402e13d4a"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-17/annotation-ui/gui-batch-last.png",
+            "sha256": "0f65a3237e81dfbe79d12c3a6e19e8b964a55c5fe4871aa70cc8c4e034c47a3d"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-17/annotation-ui/gui-dihedral-typed.png",
+            "sha256": "9ef61e771ab77fed3f0cd0ee938c28e9c1374edcc32ef820f3f248b585248b8c"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-17/annotation-ui/gui-dihedral.png",
+            "sha256": "41224791c269c50319643925804d8fb8edb51c1889e4fcfd0eaa60addeb90d1c"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-17/annotation-ui/gui-distance-swap.png",
+            "sha256": "af0d3a62ea8a79dfa22cb4015268a34f97be10e4d0c3232337af6389f90ed45b"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-17/annotation-ui/gui-distance.png",
+            "sha256": "5c204e066e0e85db3f5f4083a29444d3009dd689f7c8dd550d8db8794dd01249"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-17/annotation-ui/gui-edit-atom.png",
+            "sha256": "ff5f1aec045ef0ca1231bfa31c635ba391fa4293c8e5f8beb65d7b820688d994"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-17/annotation-ui/gui-edit-live.png",
+            "sha256": "d276e2258a4bbe5199325ef8f09630c667f24d0095372f744ec05eadb139aa02"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-17/annotation-ui/gui-new-atom.png",
+            "sha256": "76dda7511b7b63332f22ee5a2f276b1adbd9118391cac96cd6eb4583bd688ab6"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-17/annotation-ui/gui-redo-menu.png",
+            "sha256": "93deb752d0543ba255588b1a719e6ba54e8a8b95f7f3e6fb7e5eec4b6c70853d"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-17/annotation-ui/gui-undo.png",
+            "sha256": "77e801b2f35428af86efe107ef12daffeaa3c2079f08577950e37fa9b0013de7"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/annotations.py": "a1adc19067fb7a3ad5c9d485ffe76f505e96852f117d0349853adb5067768d08",
+        "qcblender/measurements.py": "0fa5030b461d14b01b75e7120f6232b5b40a1d858c119b7ae68fe2ea1bd61981",
+        "qcblender/annotation_inputs.py": "e7650ed77a9821acd9f4171eee876546f81cb7ba3e35a39b8502bd3c2d3c45a9",
+        "qcblender/i18n.py": "b44f79fbc4c794186151e6d467ece8d702ed03d6f4a32dd944c08c5015c793c6",
+        "qcblender/translations_annotations.py": "7e7eb67d2ab9a645493f104734100269c0319dfe88cf9fbd4407c378cf500e70"
+      },
+      "fingerprint_review": "Shared row/style rendering and accepted-number checks cover both operators and UIList. Read source geometry on invoke/execute, cache previews, no Dataset IO in draw.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "coverage": "Chinese four-kind creation dialog layout and atom edit/batch preview. Measurement creation and all measurement edit dialogs were not clicked to completion in this GUI batch."
       }
     }
   ]

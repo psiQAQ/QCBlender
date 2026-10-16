@@ -1,6 +1,6 @@
 # 产物查找入口
 
-更新：2026-10-16。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
+更新：2026-10-17。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
 
 ## 当前交付
 
@@ -13,12 +13,19 @@
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
 | 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；工程在 `validation/work/human/`；[当前截图](#tutorial-screenshots-20261011) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
-| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,940,475 字节，SHA-256 `ca3a92f5caf9a35d4bc70c80c81fa3eebeb9b7d4bbf0e0eaf0e75960bf063aeb` |
-| 当前候选及验证 | `outputs/candidates/current/dev-workflow-20261016-r1/`；源码 `6700920`，完整双语资产构建，产品实现未变；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/dev-workflow.md) |
+| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,940,853 字节，SHA-256 `cd2f8d6c98c949468b74063f25670afb06975594bd385316da7a054c4976c224` |
+| 当前候选及验证 | `outputs/candidates/current/annotation-ui-20261017/`；源码 `2bb5f72`，完整资产构建及隔离安装通过；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/annotation-ui.md)。日常插件未更新，仍为此前候选 |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
 教程现有 27 个图片引用，已提供 4 张；完整图片检查因缺少 23 张截图为 Failed。截图采用 Pxx 案例前缀，当前路径见[截图记录](#tutorial-screenshots-20261011)。完整独立用户操作、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
+
+<a id="annotation-ui-20261017"></a>
+## 标注字号、元素文字与坐标预览（2026-10-17）
+
+四类新建字号 0.5、原子文字纯元素、XYZ 偏移横排及来源编号同行实时全局坐标。266 标准库、100 公开科学、65 定向、完整构建/隔离安装、实际 GUI、原生结果及保存冷读 Passed；Standards/Spec 各 0 发现，详见[验收](../validation/agent/acceptance/annotation-ui.md)。日常安装、独立人工/科研接受及未执行的测量编辑 GUI/渲染范围分别保留 Not Run。
+
+稳定候选及旧包保全见当前交付表；报告/截图在 `validation/agent/reports/2026-10-17/annotation-ui/`。运行数据、科学工程、配置及诊断位于任务工作树保全归档 `outputs/runs/annotation-ui-20261017/annotation-ui-ignored.zip`；原路径及逐文件摘要由 `annotation-ui-retention.json` 定位，`annotation-ui-archive.json` 记录注释标签与正常移除结果。重建调用统一入口及 `tools/verify_annotation_dialog.py`。本地合并、归档不包含 push 或全局安装。
 
 <a id="annotation-anchor-20261016"></a>
 ## 圆弧中点引线与创建朝向（2026-10-16）
