@@ -66,6 +66,8 @@ python -m tools.dev_workflow session wait --help
 
 主 Agent 独占 Blender，后台、GUI 与冷重开串行。MCP 接入现有 HTTP 服务，先只读核对 PID、版本、工程和未保存状态；调用入口为 `op --request <请求文件> --transport mcp`，接入方法查 `mcp --help`。服务不可用时明确记录原因，选择 `--transport cli` 调用真实 CLI/Blender 工具；报告如实记录执行工具。
 
+当前集成在直接带工程启动时可能保持 `Stopped`。新建本批 GUI 会话时可加 `--script tools/dev_workflow/mcp_start.py`，复用已启用集成启动服务，不改偏好或令牌；随后仍用 `mcp` 核实工具发现。已打开的窗口可从“偏好设置 → 插件 → Blender MCP Integrated → Start MCP”启动。HTTP 401 先核对客户端与服务令牌是否一致，获授权后只同步对应鉴权项，不打印令牌或整份配置。本批真实验收使用现有 SDK 的 HTTP MCP 工具调用；宿主当前会话的原生 MCP 工具列表是否重载需另行核对。
+
 完成验证、保存本批工程并关闭本批 PID 后，打开原保存工程：
 
 ```powershell
