@@ -58,7 +58,8 @@ def main():
                  'show_measurement', 'measurement_width', 'arc_radius', 'show_planes')})
             edit['offset'] = offset
             assert bpy.ops.qcblender.edit_annotation(**edit) == {'FINISHED'}
-            assert bpy.ops.qcblender.face_annotations(annotation_id='') == {'FINISHED'}
+            bpy.context.view_layer.update()
+            assert label.matrix_world.to_quaternion().rotation_difference(camera.matrix_world.to_quaternion()).angle < 1e-5
         light_data = bpy.data.lights.new('Gallery softbox', 'AREA')
         light = bpy.data.objects.new('Gallery softbox', light_data)
         scene.collection.objects.link(light)

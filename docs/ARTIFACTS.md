@@ -11,12 +11,21 @@
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
 | 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；工程在 `validation/work/human/`；[当前截图](#tutorial-screenshots-20261011) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
-| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,940,317 字节，SHA-256 `08e53572ce691104a463a56b76d2c7c6c38d0192ff175571726cf8973b057b5b` |
-| 当前候选及验证 | `outputs/candidates/current/sidebar-20261016-r2/`；源码 `8e085f0`，完整双语资产构建；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/sidebar.md) |
+| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,940,463 字节，SHA-256 `b134cc2f5faaf367a193dbfbc93f801d6b748d27fbdc6b27a186c27530ed6775` |
+| 当前候选及验证 | `outputs/candidates/current/annotation-anchor-20261016-r1/`；源码 `b02c9fa`，完整双语资产构建；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/annotation-anchor.md) |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
 教程现有 27 个图片引用，已提供 4 张；完整图片检查因缺少 23 张截图为 Failed。截图采用 Pxx 案例前缀，当前路径见[截图记录](#tutorial-screenshots-20261011)。完整独立用户操作、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
+
+<a id="annotation-anchor-20261016"></a>
+## 圆弧中点引线与创建朝向（2026-10-16）
+
+键角和二面角引线从圆弧精确半角顶点出发，四类标注创建时默认一次朝向场景相机。266 标准库、96 公开科学、真实 GUI、原生几何、渲染、冷读和日常安装/原工程恢复 Passed，独立人工接受 Not Run；详见[验收](../validation/agent/acceptance/annotation-anchor.md)。
+
+最终打开原保存工程 `outputs/projects/sidebar-preserved-20261016/user-session.blend`；原件、配套数据与新增保全副本不变，恢复草稿不作为恢复目标。运行脚本、旧插件/偏好/旧当前 ZIP 和 GUI 工程保留于 `outputs/runs/annotation-anchor-20261016/`；报告及渲染工程位于 `validation/agent/reports/2026-10-16/annotation-anchor/`。候选由上表定位，使用 `tools/build_extension.py` 重建。历史对象未清理。
+
+本地快进、忽略文件保全、正常移除工作树及标签 `archive/2026-10-16/fix/annotation-anchor` 由本批 `worktree-retention.json`、`archive-local.json`、`delivery.json` 定位。不 push。
 
 <a id="sidebar-20261016"></a>
 ## Sidebar 摘要与整数标注输入（2026-10-16）

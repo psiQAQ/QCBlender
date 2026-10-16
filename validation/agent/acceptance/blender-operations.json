@@ -7218,6 +7218,47 @@
         "requires_current_result_assertions": true,
         "coverage": "Only recorded entry paths, 4-atom integer controls and single viewport; current data/results still require assertions."
       }
+    },
+    {
+      "id": "annotation-arc-anchor-camera-20261016",
+      "title": "圆弧半角引线与新文字一次朝向相机",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-16",
+        "method": "Computer Use clicks; PID-guarded native assertions",
+        "source_commit": "b02c9fac2bfbee90d1d7d761246032c29b5d3c3b",
+        "candidate_sha256": "b134cc2f5faaf367a193dbfbc93f801d6b748d27fbdc6b27a186c27530ed6775",
+        "blender": "5.1.1",
+        "locale": "en_US",
+        "visible_entry": "Properties > Object > QCBlender > Local Selection and Annotations > Angle / Dihedral",
+        "validated_scope": "Actual Properties Angle and Dihedral button/dialog creation with a rotated owner; native half-angle, arc-vertex and world camera quaternion assertions; portable save and new-process reopen.",
+        "reports": [
+          {
+            "path": "validation/agent/reports/2026-10-16/annotation-anchor/acceptance.json",
+            "sha256": "437a1435c01b18b71e3fd25370aed5a39d9786d01d81729823b3a1e88c3f5556",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "validation/agent/reports/2026-10-16/annotation-anchor/gui-created-angle-dihedral.png",
+            "sha256": "5547190775dcc9b34dccad5898d13afe1c9a27acdae8fe28e06609028f7adc72"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/annotations.py": "ec2f92462ca550183bfdd781fbd7c2916674112197b7e72e4f73ef26273f5359",
+        "qcblender/annotation_geometry.py": "d0e237aa6e8cdde166965f22de55f58808abcde14a53a84271587b6bb819e456"
+      },
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "coverage": "Recorded creation paths and candidate only; verify transitive helper changes before reuse."
+      }
     }
   ]
 }
