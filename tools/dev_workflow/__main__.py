@@ -100,11 +100,11 @@ def main():
     if args.command=='check':
         report=run.directory/(args.name+'-tests.json')
         inputs=args.input
-        for name in ('dependencies.lock.json','science-sources.lock.json'):
-            if (repo/name).exists(): inputs.append(repo/name)
         env=dict(python=sys.version,executable=str(Path(sys.executable).resolve()),
                  executable_sha256=digest(sys.executable),platform=platform.platform(),
                  site=str(args.site.resolve()) if args.site else None,modules=args.module)
+        env['dependency_locks']={name:read(repo/name) for name in
+            ('dependencies.lock.json','science-sources.lock.json') if (repo/name).exists()}
         if args.site:
             env['installed_records']={str(p.relative_to(args.site)):digest(p) for p in sorted(args.site.glob('*.dist-info/RECORD'))}
         key=identity(repo,args.scope or ['qcblender','tools','tests'],inputs,env)
