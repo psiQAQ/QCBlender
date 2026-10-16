@@ -29,7 +29,12 @@ def identity(repo, scopes, inputs=(), environment=None):
              for name in sorted(filter(None, names))}
     if not files:
         raise ValueError('No tracked implementation files matched the check scope')
-    return dict(files=files, inputs={str(Path(p).resolve()): digest(p) for p in inputs}, environment=environment or {})
+    input_hashes = {}
+    for value in inputs:
+        path = Path(value).resolve()
+        name = path.relative_to(repo).as_posix() if path.is_relative_to(repo) else str(path)
+        input_hashes[name] = digest(path)
+    return dict(files=files, inputs=input_hashes, environment=environment or {})
 
 
 class Run:
