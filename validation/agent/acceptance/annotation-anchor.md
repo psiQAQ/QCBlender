@@ -14,7 +14,7 @@
 | --- | --- | --- |
 | 标准库与公开科学 | Passed | [stdlib.json](../reports/2026-10-16/annotation-anchor/stdlib.json) 266 项；[science.json](../reports/2026-10-16/annotation-anchor/science.json) 96 项；无失败、错误或跳过。半角回归先在旧代码观察到 5 个子案例失败 |
 | 安装后原生几何 | Passed | [annotation-geometry.json](../reports/2026-10-16/annotation-anchor/geometry/annotation-geometry.json) 与 [冷读](../reports/2026-10-16/annotation-anchor/geometry/annotation-geometry-reopen.json)：半角、引线、半径修改、文字位置、四类创建朝向、无相机、一次性语义、旧版兼容 |
-| Computer Use 创建 | Passed | 实际点击 Properties 的 Angle、Dihedral；[gui-native.json](../reports/2026-10-16/annotation-anchor/gui-native.json) 核对 32.05° 与 10.36°、旋转父对象、世界朝向误差为零；[截图](../reports/2026-10-16/annotation-anchor/gui-created-angle-dihedral.png) |
+| Computer Use 创建 | Passed | 实际点击 Properties 的 Angle、Dihedral；[gui-native.json](../reports/2026-10-16/annotation-anchor/gui-native.json) 核对 32.05° 与 10.86°、旋转父对象、世界朝向误差为零；[截图](../reports/2026-10-16/annotation-anchor/gui-created-angle-dihedral.png) |
 | GUI 工程保存与冷读 | Passed | 自包含工程 `outputs/runs/annotation-anchor-20261016/gui-evidence/annotations.blend`；关闭原 PID 后新进程 [核对](../reports/2026-10-16/annotation-anchor/gui-native-cold.json) |
 | 四类渲染与中文字体 | Passed | [render.json](../reports/2026-10-16/annotation-anchor/gallery/render.json)、[冷读渲染](../reports/2026-10-16/annotation-anchor/gallery/render-reopen.json)；没有额外调用朝向操作。Agent 检视初次与冷读图片，不代替独立人工接受 |
 | 完整安装、计算、移动冷读 | Passed | `outputs/runs/annotation-anchor-20261016/extension/extension.json`；重建 9 个节点资产、复用原有 11 个锁定 wheel，安装文件与 ZIP 逐字节一致 |
