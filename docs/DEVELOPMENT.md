@@ -1,16 +1,18 @@
-# Windows 构建与验收
+# 开发入口与 Windows 完整构建
 
-在仓库根目录 PowerShell 执行，目标 Windows x64、Blender 5.1.1 / CPython 3.13.9。首次检出先走“首次环境准备”，已有环境走“增量构建准备”，随后进入共同验收流程。当前结果见 [VALIDATION](VALIDATION.md)。最终用户只安装合格扩展 ZIP。
+日常修改先读 [开发流程](agents/development-workflow.md)，通过 `python -m tools.dev_workflow` 查询操作、选择定向测试和一个实际相关案例，再构建最终候选并执行安装冒烟。参数以 `python -m tools.dev_workflow --help` 为准；流程取舍见 [近期复盘](agents/development-retrospective.md)。
+
+本页保留环境准备、完整构建及发布级验收命令，供首次准备、发布资格或改动需要扩大覆盖时查阅。命令在仓库根目录 PowerShell 执行，目标 Windows x64、Blender 5.1.1 / CPython 3.13.9。首次检出先走“首次环境准备”，已有环境走“增量构建准备”，再按任务范围选择后续检查；发布使用文末候选 CI 门禁。当前结果见 [VALIDATION](VALIDATION.md)。最终用户只安装合格扩展 ZIP。
 
 ## 工作树与产物收尾
 
-在主仓库 `.worktrees/<任务名>/` 使用独立分支开发，复验后 ff-only 合并本地 main；为任务最终提交创建带注释的 `archive/YYYY-MM-DD/<完整分支名>` 标签，核对保留产物及提交可达性后移除工作树，再删除已合并分支。main 推进时先更新分支并复验。该流程不包含 push。
+在主仓库 `.worktrees/<任务名>/` 使用独立分支开发，复验后 ff-only 合并本地 main；为任务最终提交创建带注释的 `archive/YYYY-MM-DD/<完整分支名>` 标签，核对保留产物及提交可达性后移除工作树，再删除已合并分支。源码、测试/输入、环境和候选身份相同时引用原结果；main 推进带入相关改动时才复验受影响内容。该流程不包含 push。
 
 [产物路由](ARTIFACTS.md) 是现存证据、用户工程、候选及重建方法的唯一查找入口。任务结束后保留最新待验收候选、共用环境及锁定 wheels，迁移必要日志和数据后清理独立测试配置及旧候选，执行边界见[维护规则](agents/storage-maintenance.md)。
 
 ## Blender 操作复用
 
-维护者遵守 [单进程与操作复用规则](agents/blender-interaction.md)。先查询 [登记表](../validation/agent/acceptance/blender-operations.json)：已通过真实 GUI 确认且功能未变的操作，优先 MCP、其次已有命令行，Computer Use 用于首次或变更后确认及兜底。相关功能变更后重新做 Computer Use 验证并更新登记表；切换工程或重连 MCP 时重新核对 PID。按工程保存、关闭、确认退出后再切换；每批结果与历史 GUI 证据分开记录。
+维护者遵守 [单进程与操作复用规则](agents/blender-interaction.md)。先请用户保存关闭 Blender，确认退出后开始，结束打开原保存工程。用 `python -m tools.dev_workflow query "<关键词>"` 定位登记表的操作 ID 与证据；已确认入口优先真实 MCP、其次已有 CLI，Computer Use 按首次入口及 UI 输入/弹窗/布局/交互变化复验。纯内部实现通过定向检查和实际相关案例核验。切换工程或重连时重新核对 PID，每批结果与历史 GUI 证据分别记录。
 
 ## 本批目录与命令记录
 
@@ -129,7 +131,7 @@ print('BUILD_ENVIRONMENT_PASSED')
 Invoke-QCCheck 'environment' $blenderPython @('-I', '-c', $checkEnvironment)
 ~~~
 
-环境核对通过后，增量与首次路径均执行以下流程。产品源码变化必须构建新候选并复验；已有环境不意味着旧测试报告可沿用。
+环境核对通过后，增量与首次路径均可执行以下流程。产品源码变化后完整构建最终候选，并重验受影响行为及最终安装冒烟；相同身份的检查按开发流程引用原报告。已有环境本身不证明旧报告适用于新候选。
 
 共用构建环境按 `tools/build-requirements.txt` 保留五个锁定包及其 RECORD 文件；科学环境保留完整的 `outputs/science/`。本地解释器使用已安装的 Blender Python。GBasis 固定原始 ZIP 保留在 `outputs/build-sources/`，后端构建不需要历史 qcint 编译环境。保留当前构建工具、锁定运行 wheels 和 GBasis 原始 ZIP 后，可以离线构建；从空环境重新安装构建工具还需要相应的离线 wheel 或已获授权的下载。
 

@@ -21,15 +21,17 @@
 
 ## 开发与本地归档
 
+日常开发、定向验证、候选安装和任务收尾先读 [开发流程](docs/agents/development-workflow.md)，统一使用 `python -m tools.dev_workflow` 查询和调用已有工具；发布级资格按 [DEVELOPMENT](docs/DEVELOPMENT.md) 执行。理由：减少每批临时脚本和重复检查，保留实际行为及最终安装验证。
+
 - 新任务在主仓库 `.worktrees/<任务名>/` 创建独立分支；规格与编号任务沿用 `.scratch/`。理由：工作树归属可查，主检出修改不会被开发任务覆盖。
 - 多个互不依赖且可分离文件范围的任务优先交给不同子 Agent，在独立工作树和分支并行完成；子 Agent 默认统一使用 gpt-6.1-sol（GPT-6.1 Sol），推理强度为 high；仅在用户明确指定其他模型时覆盖该默认模型。主 Agent 提前约定文件归属与交接输入，串行更新任务分支并以 `git merge --ff-only` 合入 main，随后进行综合验证。共享界面、Blender 窗口和最终证据索引由主 Agent 串行维护。理由：隔离并行修改，避免共享文件与界面竞争，并统一最终验证对象。
-- 验证并提交后复核 main，使用 `git merge --ff-only` 合并；main 推进时先更新任务分支并复验受影响内容。理由：合并身份与验证对象必须一致。
+- 验证并提交后复核 main，使用 `git merge --ff-only` 合并；源码、输入、环境和候选身份相同的结果引用原报告，不因合并重复执行；main 推进带入相关改动时复验受影响内容。理由：验证跟随实际变化，合并身份仍可核对。
 - 为已合并任务的最终提交创建带注释的 `archive/YYYY-MM-DD/<完整分支名>` 标签，注明任务及证据入口；同名标签核对身份，不覆盖。保全产物并验证提交可达后，正常移除工作树，再以 `git branch -d` 删除已合并分支。理由：标签保留可复核历史，工作树与分支不长期堆积。
 - 上述本地流程适用于用户已授权实施的任务；不包含 push、远端标签或发布。权限拒绝、占用或未保全对象保留并记录，不修改 ACL、取得所有权或强制删除。
 
 ## Blender 交互
 
-遵守 [Blender 交互与操作复用规则](docs/agents/blender-interaction.md)，使用 [操作登记表](validation/agent/acceptance/blender-operations.json) 跨历史复用已成功确认的 Computer Use 操作。对应功能未变时优先 MCP，能力不足时用命令行，Computer Use 用于首次确认、变更后复验和兜底；仅操作一个 Blender 进程，完成工程及时保存自包含数据并正常关闭。每次交互前查询登记表并核对连接 PID；相关功能修改后重新通过 Computer Use 确认，再更新记录；确认当前工程已保存且进程退出后才启动下一工程。理由：减少重复点击，并避免 MCP 连接到错误进程；复用入口证据仍须核对本批实际结果。
+涉及 Blender 会话、安装或工程验证时读取 [交互规则](docs/agents/blender-interaction.md)。先请用户保存并关闭 Blender，确认退出后开始，结束打开原保存工程。用统一入口按关键词查询 [操作登记表](validation/agent/acceptance/blender-operations.json)；已确认入口优先真实 MCP，其次已有 CLI，Computer Use 按首次入口及 UI 输入、弹窗、布局、交互变化复验。理由：保护原工程，减少整表加载与重复点击；实际结果仍按本批记录。
 
 ## 阶段产物维护
 
