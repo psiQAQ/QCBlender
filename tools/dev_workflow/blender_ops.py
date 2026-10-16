@@ -118,7 +118,7 @@ def _snapshot():
         'materials': {mat.name: {'color': list(mat.diffuse_color), 'use_nodes': mat.use_nodes,
                                 'fake_user': mat.use_fake_user,
                                 'tree': _tree(mat.node_tree) if mat.node_tree else None}
-                      for mat in bpy.data.materials},
+                      for mat in bpy.data.materials if mat.users or mat.use_fake_user},
         'fonts': {font.name: {'packed_sha256': _digest(bytes(font.packed_file.data)) if font.packed_file else None}
                   for font in bpy.data.fonts},
         'preferences': {'language': view.language, 'translate_interface': view.use_translate_interface,
@@ -206,7 +206,10 @@ def _assert(args):
         actual = _snapshot()
         # JSON roundtrip also normalizes tuples from RNA to saved JSON lists.
         if json.loads(json.dumps(expected['state'])) != json.loads(json.dumps(actual['state'])):
-            raise AssertionError('Scene snapshot differs from the expected state')
+            changed = [key for key in expected['state'] if expected['state'][key] != actual['state'].get(key)]
+            detail = ('; expected/actual materials: ' + repr((sorted(expected['state']['materials']),
+                      sorted(actual['state']['materials'])))) if 'materials' in changed else ''
+            raise AssertionError('Scene snapshot differs in ' + ', '.join(changed) + detail)
         return {'snapshot_matches': True}
     bpy = _bpy()
     owner = bpy.data.objects[args['object']]

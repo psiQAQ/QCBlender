@@ -95,7 +95,15 @@ def _run(coroutine):
         raise
     except Exception as error:
         # SDK transport exceptions can contain request headers. Do not print their text.
-        raise RuntimeError(f'Blender MCP request failed ({type(error).__name__}); '
+        pending, kinds = [error], []
+        while pending:
+            item = pending.pop()
+            if isinstance(item, BaseExceptionGroup):
+                pending.extend(item.exceptions)
+                continue
+            status = getattr(getattr(item, 'response', None), 'status_code', None)
+            kinds.append(type(item).__name__ + (f' HTTP {status}' if status else ''))
+        raise RuntimeError(f'Blender MCP request failed ({", ".join(kinds)}); '
                            'check that the configured service is running and authenticated') from None
 
 

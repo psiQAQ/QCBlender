@@ -169,7 +169,7 @@ def main():
         cmd=[str(args.project.resolve())] if args.project else []
         if args.script:cmd+=['--python',str(args.script.resolve())]
         result=launch_blender(args.blender,cmd,profile=None if args.global_profile else run.directory/'profile',outputdir=run.directory/('session-'+str(time.time_ns())))
-        return dict(status='Passed',**result)
+        return result
     if args.command=='restore':
         request=dict(action='snapshot',args={})
         if args.baseline:
