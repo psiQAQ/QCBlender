@@ -11,7 +11,7 @@ python -m tools.dev_workflow query "annotation"
 python -m tools.dev_workflow plan --kind geometry --base main --module test_annotation_geometry
 ```
 
-`query` 按关键词返回操作 ID、适用身份及证据指针，再按需读取命中的记录；不全文加载约 414 KB 的登记表。`plan` 按改动类型生成建议，人工结合 diff 确认影响范围。类型为 `docs / logic / geometry / ui / install`；参数及实际工具映射以各子命令 `--help` 为准。
+`query` 按关键词返回操作 ID、适用身份及证据指针，再按需读取命中的记录；不把登记表全文输出到对话，脚本本地读取并筛选。`plan` 按改动类型生成建议，人工结合 diff 确认影响范围。类型为 `docs / logic / geometry / ui / install`；参数及实际工具映射以各子命令 `--help` 为准。
 
 只改文档时检查受影响链接、材料与 diff。产品改动先选已有定向测试及一个实际相关案例；新增测试用于原缺陷或新的行为边界。修改通用接口、依赖或科学定义时才扩大到受影响集合。已有测试和历史验收资产继续保留。
 
@@ -50,7 +50,7 @@ python -m tools.dev_workflow --run-dir $run install --candidate $candidate --ble
 
 核对候选身份与安装文件，运行实际插件冒烟案例。保存、持久化、数据引用或工程兼容性受影响时执行必要冷读；最终整包冒烟仍核对所生成工程能在新进程读取。源码不变但重建的 `.blend` 资产内容改变时，新包需要自己的安装/资产结果；旧实现测试保持其原身份。
 
-安装到用户日常配置前核对授权、原保存工程及旧安装保全。全局安装使用 `install --global-profile`，与隔离安装结果分别记录。安装细节与完整发布级构建见 [DEVELOPMENT](../DEVELOPMENT.md)。
+安装到用户日常配置前核对授权、原保存工程及旧安装保全。全局安装使用 `install --global-profile --installed-dir <旧安装目录>`，必须提供旧安装目录用于备份，并与隔离安装结果分别记录。全局配置和隔离配置均加载各自已保存的偏好。安装细节与完整发布级构建见 [DEVELOPMENT](../DEVELOPMENT.md)。
 
 完成条件：最终包已完整重建，隔离安装和必要冷读实际执行；任务要求的日常安装已核对，失败候选不会覆盖当前有效入口。
 
