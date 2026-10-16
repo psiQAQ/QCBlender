@@ -65,6 +65,16 @@
             "scope": "MCP reuse of cube-cub-import, cube-quantity-declaration and field-geometry-controls"
           }
         ]
+      },
+      "execution": {
+        "entry": "python -m tools.dev_workflow --run-dir <run> op --request <json> --transport mcp",
+        "dispatcher": "tools/dev_workflow/blender_ops.py",
+        "actions": [
+          "import"
+        ],
+        "required_write_identity": "expected_pid from current identity response",
+        "current_adapter_validation": "Not Run",
+        "scope": "Reuse underlying data and operator behavior; this adapter does not reproduce historical UI clicks."
       }
     },
     {
@@ -569,7 +579,19 @@
             ]
           }
         }
-      ]
+      ],
+      "execution": {
+        "entry": "python -m tools.dev_workflow --run-dir <run> op --request <json> --transport mcp",
+        "dispatcher": "tools/dev_workflow/blender_ops.py",
+        "actions": [
+          "save",
+          "snapshot",
+          "assert"
+        ],
+        "required_write_identity": "expected_pid from current identity response",
+        "current_adapter_validation": "Not Run",
+        "scope": "Reuse underlying data and operator behavior; this adapter does not reproduce historical UI clicks."
+      }
     },
     {
       "id": "cold-open-and-render",
@@ -679,6 +701,18 @@
             "scope": "MCP native visible render after cold reopen; exact pixel comparison with saved render"
           }
         ]
+      },
+      "execution": {
+        "entry": "python -m tools.dev_workflow --run-dir <run> op --request <json> --transport mcp",
+        "dispatcher": "tools/dev_workflow/blender_ops.py",
+        "actions": [
+          "snapshot",
+          "assert",
+          "render"
+        ],
+        "required_write_identity": "expected_pid from current identity response",
+        "current_adapter_validation": "Not Run",
+        "scope": "Reuse underlying data and operator behavior; this adapter does not reproduce historical UI clicks."
       }
     },
     {
@@ -7258,6 +7292,20 @@
         ],
         "requires_current_result_assertions": true,
         "coverage": "Recorded creation paths and candidate only; verify transitive helper changes before reuse."
+      },
+      "execution": {
+        "entry": "python -m tools.dev_workflow --run-dir <run> op --request <json> --transport mcp",
+        "dispatcher": "tools/dev_workflow/blender_ops.py",
+        "actions": [
+          "annotation.add",
+          "annotation.edit",
+          "trajectory.set",
+          "assert",
+          "save"
+        ],
+        "required_write_identity": "expected_pid from current identity response",
+        "current_adapter_validation": "Not Run",
+        "scope": "Reuse underlying data and operator behavior; this adapter does not reproduce historical UI clicks."
       }
     }
   ]
