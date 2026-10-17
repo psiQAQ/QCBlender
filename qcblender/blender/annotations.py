@@ -674,7 +674,7 @@ class QCBLENDER_OT_add_annotation(bpy.types.Operator):
         except (ValueError, KeyError, OSError, TypeError) as error:
             self.report({'ERROR'}, error_text(error))
             return {'CANCELLED'}
-        return context.window_manager.invoke_props_dialog(self, width=760)
+        return context.window_manager.invoke_props_dialog(self, width=380)
 
     def check(self, context):
         return _check_atom_inputs(self, batch=self.kind == 'ATOM')
@@ -771,7 +771,7 @@ class QCBLENDER_OT_edit_annotation(bpy.types.Operator):
             return {'CANCELLED'}
         for name in ('size', 'offset', 'decimals', 'show_leader', 'line_width', 'visible', *STYLE_DEFAULTS):
             setattr(self, name, entry.get(name, STYLE_DEFAULTS.get(name)))
-        return context.window_manager.invoke_props_dialog(self, width=760)
+        return context.window_manager.invoke_props_dialog(self, width=380)
 
     def check(self, context):
         return _check_atom_inputs(self)
