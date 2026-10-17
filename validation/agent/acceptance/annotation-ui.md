@@ -31,7 +31,7 @@
 
 默认沙箱读取桌面 GUI 进程保存的 Dataset 目录被拒绝，失败记录保留为 [gui-reopen-sandbox-failed.json](../reports/2026-10-17/annotation-ui/gui-reopen-sandbox-failed.json)。在同一保存进程权限环境中冷读相同工程通过，未修改 ACL、取得所有权或强制删除。首次 GUI 脚本的属性页初始化错误、来源副本的读取失败及重试日志均保留于归档；这是本批验证环境诊断，不作为本次标注实现根因结论。
 
-当前安装包在 `validation/shared/install/qcblender-0.1.0.zip`，稳定候选在 `outputs/candidates/current/annotation-ui-20261017/`；旧当前包保全为 `outputs/runs/annotation-ui-20261017/previous-current.zip`。输入、脚本、工程、配置、日志及旧诊断仍在 `.worktrees/annotation-ui/outputs/runs/au/`。统一归档清单遇到四个 Dataset 目录读取权限拒绝，完整保全和工作树移除未执行，工作树/分支保留，未修改 ACL。失败记录为 `outputs/runs/annotation-ui-20261017/finish-plan-failed.json`。重建使用 `python -m tools.dev_workflow build`，原生复验工具为 `tools/verify_annotation_dialog.py`；GUI 工程为工作树内的 `outputs/runs/au/2/gui/g.blend` 及同名 `.qcdata/`。
+当前安装包在 `validation/shared/install/qcblender-0.1.0.zip`，稳定候选在 `outputs/candidates/current/annotation-ui-20261017/`；旧当前包仍为 `outputs/runs/annotation-ui-20261017/previous-current.zip`。后续按用户要求完成权限诊断和正常清理：创建账户保全并正常移除四个专属 Dataset 目录，日常账户通过统一 `finish` 归档剩余文件并正常移除工作树及已合并分支，原标签不变。输入、脚本、配置、日志与诊断由 `outputs/runs/annotation-ui-cleanup-20261017/sandbox-datasets.zip` 和 `finish/annotation-ui-ignored.zip` 共同保留，逐文件清单及收据在同批目录。三套工程副本位于该批 `projects/{source-native,native,gui}/`，均通过新进程冷读；GUI 工程为 `projects/gui/g.blend` 及同名 `.qcdata/`。当前候选、旧包、日常安装备份及偏好备份摘要不变。原失败记录保留，详情见[权限与清理验收](annotation-ui-cleanup.md)。重建使用 `python -m tools.dev_workflow build`，原生复验工具仍为 `tools/verify_annotation_dialog.py`。
 
 本地 ff-only、注释标签和工作树收尾结果见[产物入口](../../../docs/ARTIFACTS.md#annotation-ui-20261017)，不 push。
 

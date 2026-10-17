@@ -16,3 +16,5 @@ Status: resolved
 - 2026-10-17：用户另行批准本地提交、ff-only 合入 main 及注释标签归档。源码提交 2bb5f72；266 标准库、100 公开科学、65 定向、完整构建/隔离安装、原生行为、四类新建弹窗和原子编辑/批量/编号实时预览、菜单撤销重做、保存冷读 Passed；Standards/Spec 各 0 发现。日常安装与独立人工/科研接受 Not Run。验收入口 `validation/agent/acceptance/annotation-ui.md`，产物由 `docs/ARTIFACTS.md` 路由。
 - 2026-10-17：本地已快进整合；候选、报告和旧当前 ZIP 已保全到主仓库。归档清单遇到四个测试 Dataset 目录读取 Permission denied，未形成完整保全，工作树和分支保留，未修改 ACL 或强制删除。此项不改变标注实现验收；最终身份及注释标签由 `outputs/runs/annotation-ui-20261017/delivery.json` 定位。
 - 2026-10-17：用户追加授权更新日常 Blender 插件。沿用同一候选 `cd2f8d6c…`，旧插件及偏好已备份，123 个安装成员与 ZIP 一致，日常配置真实四类标注和新进程冷读 Passed。日常配置 GUI 点击与独立人工/科研接受 Not Run；产品代码及依赖版本未改变。报告 `validation/agent/reports/2026-10-17/annotation-ui-global/acceptance.json`，本地记录分支 `chore/annotation-ui-global`。
+
+- 2026-10-17：用户批准保存关闭 Blender 后，三套保全工程新进程冷读 Passed。四个创建账户专属目录和其余 8,851 个忽略文件已分账户归档，原工作树及已合并分支正常移除；标签身份不变，当前候选和备份摘要复核 Passed。未修改 ACL、取得所有权或强制删除。清理报告 `validation/agent/acceptance/annotation-ui-cleanup.md`，完整收据 `outputs/runs/annotation-ui-cleanup-20261017/acceptance.json`。

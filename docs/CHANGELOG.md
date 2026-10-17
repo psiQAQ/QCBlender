@@ -1,5 +1,7 @@
 # 开发演进
 
+- 2026-10-17：完成标注工作树权限重试。四个 Dataset 目录仅原创建账户可读，分别在现有账户权限下保全和正常清理；8,869 个忽略文件 / 671,480,500 字节已归档，三套保全工程的日常配置冷读 Passed。原工作树及分支正常移除、原标签身份不变；当前候选和旧安装/偏好备份摘要不变。未修改 ACL、取得所有权或强制删除，产品测试复跑与独立人工/科研接受 Not Run。本地记录归档，不 push；见[清理验收](../validation/agent/acceptance/annotation-ui-cleanup.md)与[产物入口](ARTIFACTS.md#annotation-ui-20261017)。
+
 - 2026-10-17：按用户追加要求将标注候选更新到 Blender 5.1 日常配置。123 个安装成员逐字节核对、真实四类标注与坐标/换帧检查、保存冷重开 Passed；旧插件和偏好已备份。日常配置 GUI 点击与独立人工/科研接受 Not Run，原隔离 GUI 结果保持原身份。源码和依赖未变，记录分支 `chore/annotation-ui-global` 本地快进及归档，不 push。见[验收补充](../validation/agent/acceptance/annotation-ui.md#日常配置更新补充)。
 
 - 2026-10-17：四类标注新建默认字号 0.5，原子文字默认仅元素符号；旧字号保留，旧文字编辑或构型刷新时应用。新建/编辑偏移 XYZ 横排等宽，编号同行实时预览元素及 Blender 全局坐标，批量滚动一致。源码 2bb5f72，266 标准库、100 公开科学、完整构建/隔离安装、真实 GUI/菜单撤销重做、原生结果和冷读 Passed；Standards/Spec 各 0 发现。当前 ZIP 已更新，日常安装与独立人工/科研接受 Not Run；旧包及本批诊断保留。归档清单因测试 Dataset 权限拒绝 Failed，工作树/分支保留，未改 ACL 或强制删除。见[验收](../validation/agent/acceptance/annotation-ui.md)与[产物入口](ARTIFACTS.md#annotation-ui-20261017)。
