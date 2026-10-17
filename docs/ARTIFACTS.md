@@ -13,12 +13,19 @@
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
 | 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；工程在 `validation/work/human/`；[当前截图](#tutorial-screenshots-20261011) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
-| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,940,853 字节，SHA-256 `cd2f8d6c98c949468b74063f25670afb06975594bd385316da7a054c4976c224` |
-| 当前候选及验证 | `outputs/candidates/current/annotation-ui-20261017/`；源码 `2bb5f72`，完整资产构建、隔离及日常配置安装、原生标注和冷读通过；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/annotation-ui.md) |
+| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,940,876 字节，SHA-256 `8c23eaff5af4509b2a05ac4f45cf8a79464db06038a56fa013f7be60f48596c4` |
+| 当前候选及验证 | `outputs/candidates/current/annotation-width-20261017/`；源码 `0c08219`，弹窗宽度减半，完整构建、隔离及日常安装、实际 GUI 与冷读通过；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/annotation-width.md) |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
 教程现有 27 个图片引用，已提供 4 张；完整图片检查因缺少 23 张截图为 Failed。截图采用 Pxx 案例前缀，当前路径见[截图记录](#tutorial-screenshots-20261011)。完整独立用户操作、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
+
+<a id="annotation-width-20261017"></a>
+## 添加和编辑标注窗口宽度减半（2026-10-17）
+
+两个弹窗宽度参数从 760 改为 380，保留横排 XYZ、元素和全局坐标预览。35 项定向测试、完整构建、隔离/日常安装 123 个成员核对、原生标注和保存冷读 Passed；Computer Use 观察原子/二面角添加和原子编辑窗口，编号步进及 X 偏移可操作，四个来源原子行和底部按钮完整可见。[验收](../validation/agent/acceptance/annotation-width.md)区分原生调用、GUI 操作和日常配置覆盖。
+
+稳定候选见当前交付表；旧当前 ZIP、日常旧插件和偏好、工程、失败重试及脚本保存在 `outputs/runs/annotation-width-20261017/`，报告与两张裁剪截图在 `validation/agent/reports/2026-10-17/annotation-width/`。日常 GUI 点击、完整科学套件复跑及独立人工/科研接受 Not Run。工作树忽略文件保全和正常移除收据在本批 `finish/`，注释标签为 `archive/2026-10-17/fix/annotation-dialog-width`。不 push；重建使用统一 build/install 入口和 `tools/verify_annotation_dialog.py`。
 
 <a id="annotation-ui-20261017"></a>
 ## 标注字号、元素文字与坐标预览（2026-10-17）

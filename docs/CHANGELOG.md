@@ -1,5 +1,7 @@
 # 开发演进
 
+- 2026-10-17：添加和编辑标注弹窗宽度从 760 减至 380。35 项定向、完整构建、隔离/日常安装逐字节核对、实际窄窗口布局与编号/偏移点击、原生及 GUI 工程冷读 Passed。旧包、旧安装和偏好已保全；日常 GUI、完整科学套件复跑及独立人工/科研接受 Not Run。本地归档，不 push，见[验收](../validation/agent/acceptance/annotation-width.md)与[产物入口](ARTIFACTS.md#annotation-width-20261017)。
+
 - 2026-10-17：完成标注工作树权限重试。四个 Dataset 目录仅原创建账户可读，分别在现有账户权限下保全和正常清理；8,869 个忽略文件 / 671,480,500 字节已归档，三套保全工程的日常配置冷读 Passed。原工作树及分支正常移除、原标签身份不变；当前候选和旧安装/偏好备份摘要不变。未修改 ACL、取得所有权或强制删除，产品测试复跑与独立人工/科研接受 Not Run。本地记录归档，不 push；见[清理验收](../validation/agent/acceptance/annotation-ui-cleanup.md)与[产物入口](ARTIFACTS.md#annotation-ui-20261017)。
 
 - 2026-10-17：按用户追加要求将标注候选更新到 Blender 5.1 日常配置。123 个安装成员逐字节核对、真实四类标注与坐标/换帧检查、保存冷重开 Passed；旧插件和偏好已备份。日常配置 GUI 点击与独立人工/科研接受 Not Run，原隔离 GUI 结果保持原身份。源码和依赖未变，记录分支 `chore/annotation-ui-global` 本地快进及归档，不 push。见[验收补充](../validation/agent/acceptance/annotation-ui.md#日常配置更新补充)。

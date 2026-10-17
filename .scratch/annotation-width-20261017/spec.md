@@ -1,6 +1,6 @@
 # 添加和编辑标注弹窗宽度减半
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 
 ## 目标与验收
 
@@ -11,3 +11,5 @@ Status: claimed
 ## Comments
 
 - 2026-10-17：main 干净，Blender 无进程。沿用用户已保存关闭且无需恢复工程的确认，本次无用户工程需要恢复。产品仅修改两个弹窗宽度参数。
+
+- 2026-10-17：源码 `0c08219`，35 项定向、构建、隔离/日常安装、原生/GUI/日常冷读和窄窗口实际操作 Passed；候选 `8c23eaff…`，原失败与输入来源保留。详细证据见 `validation/agent/acceptance/annotation-width.md`，收尾走本地 ff-only 与统一 finish。

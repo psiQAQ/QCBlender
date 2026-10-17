@@ -7442,6 +7442,51 @@
         "requires_current_result_assertions": true,
         "coverage": "Chinese four-kind creation dialog layout and atom edit/batch preview. Measurement creation and all measurement edit dialogs were not clicked to completion in this GUI batch."
       }
+    },
+    {
+      "id": "annotation-dialog-half-width-20261017",
+      "title": "添加与编辑标注弹窗宽度减半",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-17",
+        "method": "Native installed operator invoke; Computer Use layout observation and numeric clicks; CLI cold read",
+        "source_commit": "0c082190be0b79255a751e41133fb206fa28460e",
+        "candidate_sha256": "8c23eaff5af4509b2a05ac4f45cf8a79464db06038a56fa013f7be60f48596c4",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "visible_entry": "Object Properties > QCBlender > Local Selection and Annotations",
+        "validated_scope": "Native invoke opened installed Atom/Dihedral add and Atom edit dialogs; Computer Use observed layouts, clicked atom step and X offset, then cancelled; cropped dialog-only evidence",
+        "reports": [
+          {
+            "path": "validation/agent/reports/2026-10-17/annotation-width/acceptance.json",
+            "sha256": "1d39581a5ec2cdb3a0a27586e2327045db90ad45c09881d565a958df26924740",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "validation/agent/reports/2026-10-17/annotation-width/add-380.png",
+            "sha256": "e4121e25fa595b1e57d62254e4e13aaaa9844288dea07b97844a43bd6c92ea77"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-17/annotation-width/edit-380.png",
+            "sha256": "7fa8ca329179564ee2dd6acebe78c74a8e87cfe061997a9beac0fc0c53617aed"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/annotations.py": "fc2eccdac543d903b3ca27f319581d847fff29a5723073b6de174eaf1a117c70"
+      },
+      "fingerprint_review": "Only add/edit invoke_props_dialog width changed from 760 to 380; same draw and source-number callbacks.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "coverage": "Creation width shared by four kinds; visual Atom/Dihedral add and Atom edit. Daily GUI and other edit kinds not run."
+      }
     }
   ]
 }
