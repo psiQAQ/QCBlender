@@ -1,5 +1,5 @@
-Triage: ready-for-agent
-Status: pending
+Triage: needs-info
+Status: claimed
 Blocked by: 01
 
 # 02 按教程实操、截图与保存工程
@@ -7,3 +7,9 @@ Blocked by: 01
 主线与九专题按当前参数和输入执行，真实 MCP 与 CU 范围分别记录。27 张图片就地引用；保留每个独立案例最终工程和关键截图状态检查点。发现真实缺陷时修复并复验。
 
 ## Comments
+
+2026-10-21：领取。主线步骤 1 复用已验证且当前成员一致的安装，CU 确认启用；步骤 2 已真实点击并核对 7 模块通过。实操发现侧栏只弹出短暂成功提示，详细结果位于插件偏好设置；已补充 SOP 的查看路径。首图 `P01-install.png` 取自本次真实 CU 图像，裁剪区域为原图的 `(170,250,930,566)`，无缩放、无内容补绘，目视确认模块名称和状态完整。
+
+步骤 3 已通过原生 MCP 删除本批默认 Cube，保留 Camera/Light；材质预览、导入及后续步骤尚未执行。随后 CU 报窗口最小化；按提示重绑、激活时触发用户输入保护，捕获仍不可用。已异步请求用户恢复 Blender 到前台并保持展开，等待后继续，未使用过期坐标。
+
+本次 SOP 新增说明后的检查：`outputs/runs/sop-20261021/docs-runtime/checks-tests.json`，10 项 Passed，0 失败、错误或跳过。当前执行与图片索引仍由主仓库 `validation/agent/reports/2026-10-21/sop-completion/step-image-index.json` 维护；前两步及首图已更新，其他项不借用旧图或旧工程充当本批通过。

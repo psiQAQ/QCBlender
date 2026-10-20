@@ -51,9 +51,9 @@
 
 > 检查科学运行环境（Check Scientific Runtime）检查插件执行量子化学数值计算所需的运行环境是否可用。
 
-在 3D 视图按 `N` 打开 **QCBlender** 页，展开 **工程与维护（Project and Maintenance） → 诊断信息（Diagnostics）**，点击 **检查科学运行环境（Check Scientific Runtime）**。等待检查完成，应显示科学运行环境可用。截图保存为 `human/screenshots/P01-install.png`。
+在 3D 视图按 `N` 打开 **QCBlender** 页，展开 **工程与维护（Project and Maintenance）**，在 **诊断信息（Diagnostics）** 下点击 **检查科学运行环境（Check Scientific Runtime）**。检查完成时，底部会短暂提示科学运行环境检查通过。要查看完整结果，打开 **编辑（Edit） → 偏好设置（Preferences） → 插件（Add-ons）**，搜索并展开 **QCBlender**；检查按钮下的各模块应均显示通过状态。截图保存为 `human/screenshots/P01-install.png`。
 
-![插件已启用，科学运行环境检查完成](screenshots/P01-install.png)
+![QCBlender 偏好设置中的科学运行环境检查结果](screenshots/P01-install.png)
 
 <a id="new-scene"></a>
 <a id="step-03"></a>

@@ -1,5 +1,5 @@
-Triage: needs-info
-Status: claimed
+Triage: ready-for-agent
+Status: resolved
 
 # 01 会话、候选与材料
 
@@ -16,3 +16,5 @@ Computer Use 初始化及窗口枚举成功，目标窗口 ID 655772；首次捕
 离线准备已保全：`validation/agent/reports/2026-10-21/sop-completion/step-image-index.json` 列出 79 步与 27 图位，全部实操状态为 Not Run；`offline-checks-preservation.json` 核对保存的 6 个报告/日志文件及当前测试源码身份。`tutorial-docs/checks-tests.json` 为 10 项 Passed，`project-check-offline/sop-project-tests.json` 为 8 项 Passed。
 
 当前任务分支已快进整合教程修正 `fd28207` 和工程检查工具 `b1ed4ec`。工具尚未在 Blender 实际工程上运行；完整材料目录只是预备副本，没有本批工程、截图或最终 ZIP，不作为已完成交付。等待用户确认桌面状态后，先重新选择并捕获当前 Blender 窗口，再继续本项和任务 02。
+
+用户确认桌面就绪后，重新绑定原窗口成功。原生 MCP 重新核对仍为 PID 24872、5.1.1、未保存且未修改的启动场景；CU 实际打开偏好设置确认插件启用，并从 N 侧栏点击检查科学运行环境，7 个模块全部通过。证据：`mcp/002-runtime-after-cu.json`、`cu/002-enabled-addon.jpg`、`cu/003-runtime-results.jpg`。环境准备完成，任务 02 接续；后续窗口最小化发生在实操阶段，另记任务 02。
