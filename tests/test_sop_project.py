@@ -126,6 +126,19 @@ class SOPProjectTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'schema'):
             checker.compare_snapshots(baseline, actual)
 
+    def test_saved_node_attribute_flags_keep_boolean_meaning(self):
+        def snapshot(flag, radius=0.25):
+            raw = {'state': {'objects': {'atoms': {'modifiers': [{
+                'type': 'NODES', 'properties': {'Socket_1': radius,
+                    'Socket_1_use_attribute': flag, 'Socket_1_attribute_name': ''}}]}}}}
+            return checker.canonical_snapshot(raw, {}, {}, {})
+        self.assertEqual(checker.compare_snapshots(snapshot(False), snapshot(0))['status'], 'Passed')
+        self.assertEqual(checker.compare_snapshots(snapshot(True), snapshot(1))['status'], 'Passed')
+        self.assertEqual(checker.compare_snapshots(snapshot(False), snapshot(1))['status'], 'Failed')
+        self.assertEqual(checker.compare_snapshots(snapshot(False), snapshot(0, 0.5))['status'], 'Failed')
+        with self.assertRaisesRegex(ValueError, 'attribute flag'):
+            snapshot(2)
+
     def test_existing_collector_receives_only_used_real_datablocks(self):
         used, orphan = object(), object()
         bpy = SimpleNamespace(data=SimpleNamespace(objects=[used, orphan],

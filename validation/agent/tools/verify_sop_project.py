@@ -44,6 +44,16 @@ def canonical_snapshot(raw, bindings, resources, persistent):
     state.pop('active', None)
     for obj in state['objects'].values():
         obj.pop('selected', None)
+        for modifier in obj.get('modifiers', []):
+            if modifier.get('type') != 'NODES':
+                continue
+            properties = modifier['properties']
+            for key, value in properties.items():
+                if key.endswith('_use_attribute') and key.removesuffix('_use_attribute') in properties:
+                    # Blender 5.1 reads saved bool ID properties back as integer flags.
+                    if type(value) not in (bool, int) or value not in (0, 1):
+                        raise ValueError(f'Invalid node attribute flag: {key}: {value!r}')
+                    properties[key] = bool(value)
     state.update(bindings=bindings, resources=resources, persistent=persistent)
     # JSON is also the on-disk representation; normalize RNA tuples to lists.
     return {'schema': SCHEMA, 'state': json.loads(json.dumps(state, allow_nan=False))}
@@ -272,7 +282,7 @@ def capture_project():
         if scene.world:
             tree_record(scene.world.node_tree)
             library(scene.world)
-        tree_record(scene.node_tree)
+        tree_record(scene.compositing_node_group)
     pending = set(materials)
     while pending:
         for name in sorted(pending):
