@@ -130,10 +130,18 @@ def _managed(owner, attribute, key, record, language, source=None, suffix=''):
         entry = entries[key] = {'source': source, 'last': current, 'suffix': suffix}
     if current != entry['last']:
         return  # Preserve an editable name/label changed by its owner.
+    if key == 'tree' and source == entry['source'] and not entry.get('suffix'):
+        # Older records kept Blender's collision suffix only in ``last``.
+        entry['suffix'] = suffix
     translated = _translate(entry['source'], language) + entry.get('suffix', '')
     if current != translated:
         setattr(owner, attribute, translated)
     entry['last'] = getattr(owner, attribute)  # Blender may append a suffix.
+    if key == 'tree':
+        generated = _translate(entry['source'], language)
+        match = re.fullmatch(re.escape(generated) + r'(\.\d{3})?', entry['last'])
+        if match:
+            entry['suffix'] = match[1] or ''
 
 
 def localize_tree(tree, language=None, _seen=None):

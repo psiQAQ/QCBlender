@@ -32,6 +32,27 @@ class Sockets(list):
         return super().__getitem__(key)
 
 
+class CollisionTree(Tree):
+    """Isolate Blender's automatic datablock-name collision suffixing."""
+    def __init__(self, name='QC Select Atoms', occupied=()):
+        self.occupied = set(occupied)
+        self._name = name
+        super().__init__(name)
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        if value != self._name and value in self.occupied:
+            index = 1
+            while f'{value}.{index:03d}' in self.occupied:
+                index += 1
+            value = f'{value}.{index:03d}'
+        self._name = value
+
+
 class NodeLocalization(unittest.TestCase):
     def test_custom_socket_display_is_preserved_even_when_it_matches_a_ui_message(self):
         from qcblender.blender.parameters import socket_label, socket_item_label
@@ -162,6 +183,46 @@ class NodeLocalization(unittest.TestCase):
         adopt_generated_copy(tree)
         localize_tree(tree, 'en_US')
         self.assertEqual(tree.name, 'My copied graph')
+
+    def test_managed_tree_keeps_actual_collision_suffix_across_refresh_and_locale(self):
+        base = 'QC 选择原子'
+        tree = CollisionTree(occupied=(base, base + '.001', base + '.002'))
+        localize_tree(tree, 'zh_HANS')
+        self.assertEqual(tree.name, base + '.003')
+        record = json.loads(tree['qc_node_locale'])['display']['tree']
+        self.assertEqual(record['suffix'], '.003')
+        tree.occupied.remove(base + '.002')
+        localize_tree(tree, 'zh_HANS')
+        self.assertEqual(tree.name, base + '.003')
+        localize_tree(tree, 'en_US')
+        self.assertEqual(tree.name, 'QC Select Atoms.003')
+        localize_tree(tree, 'zh_HANS')
+        self.assertEqual(tree.name, base + '.003')
+
+    def test_legacy_managed_tree_recovers_missing_suffix_before_refresh(self):
+        tree = Tree('QC Select Atoms.003')
+        item = tree.add_socket('Width', 'width')
+        localize_tree(tree, 'zh_HANS')
+        record = json.loads(tree['qc_node_locale'])
+        record['display']['tree']['suffix'] = ''
+        tree['qc_node_locale'] = json.dumps(record)
+        identity = socket_identity_signature(tree)
+        localize_tree(tree, 'zh_HANS')
+        self.assertEqual(tree.name, 'QC 选择原子.003')
+        self.assertEqual(json.loads(tree['qc_node_locale'])['display']['tree']['suffix'], '.003')
+        self.assertEqual(socket_identity_signature(tree), identity)
+        self.assertEqual(item.default_value, .25)
+        localize_tree(tree, 'en_US')
+        self.assertEqual(tree.name, 'QC Select Atoms.003')
+
+    def test_generated_looking_owner_rename_does_not_adopt_suffix(self):
+        tree = Tree('QC Select Atoms.003')
+        localize_tree(tree, 'zh_HANS')
+        before = json.loads(tree['qc_node_locale'])['display']['tree']
+        tree.name = 'QC 选择原子.009'
+        localize_tree(tree, 'en_US')
+        self.assertEqual(tree.name, 'QC 选择原子.009')
+        self.assertEqual(json.loads(tree['qc_node_locale'])['display']['tree'], before)
 
     def test_catalog_locale_changes_paths_but_never_uuid(self):
         lines = lambda language: [line.split(':') for line in catalog_text(language).splitlines()
