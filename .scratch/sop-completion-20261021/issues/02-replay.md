@@ -1,4 +1,4 @@
-Triage: needs-info
+Triage: ready-for-agent
 Status: claimed
 Blocked by: 01
 
@@ -23,3 +23,5 @@ Blocked by: 01
 检查工具修复后实际快照 Passed。另按 Blender 5.1 RNA 使用 `Scene.compositing_node_group`；冷重开发现 Geometry Nodes 的 `*_use_attribute` ID 属性从布尔值读回为 0/1，只规范这类开关的等价表示，仍检查开关变化、非法值和实际插口数值。定向 10 项测试 Passed，旧实现的真实红测试保留。
 
 本批旧进程 PID 24872 经只读确认 `is_dirty=False`，退出回调再次检查准确工程路径和干净状态后正常退出；进程查询确认无 Blender，再串行打开同一检查点，新 PID 96468。最初缺少退出保护的请求被自动审批拒绝，未执行；补充状态检查后的请求获准。冷重开比较 `projects/P01-import-cold-retry1.json` Passed、差异为空，覆盖科学数组、资源、节点、材质及持久显示设置。原失败报告保留；工具及红绿测试保存在稳定目录 `project-check-fixes/`。新窗口仍被管理员 cmd 遮挡且激活失败，未完成的 76 步、26 图及最终 ZIP 不标记通过。
+
+2026-10-21 04:55：用户关闭管理员 cmd 后，检查确认 Blender/CU 同在会话 5，但该会话为 Disc、本地 console 为会话 6。用户明确要求生成并运行带 UAC 的 PS1；已执行 `outputs/runs/sop-20261021/session-handoff/Keep-Desktop-Interactive.ps1`，管理员子进程运行 `tscon.exe 5 /dest:console /v` 退出码 0，之后自动结束。实际复核会话 5 为 console/Active，无遗留 PowerShell 窗口；RDP 已断开时，CU 成功激活 Blender 并点击展开“数据与来源详情”，证据 `session-handoff/click-verification.json` 及同目录原始截图。桌面阻塞解除，可从 P01 导入后的侧栏截图与来源弹窗继续；这次恢复不把其余教程步骤提前计为通过。
