@@ -15,16 +15,24 @@ import sys
 
 SCHEMA = 'qcblender.sop-project.v1'
 ROOT = Path(__file__).resolve().parents[3]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from qcblender.data import filesystem_path, unprefixed_path
 
 
 def digest(path):
-    with Path(path).open('rb') as stream:
+    with filesystem_path(path).open('rb') as stream:
         return hashlib.file_digest(stream, 'sha256').hexdigest()
+
+
+def resolved_path(path):
+    """Resolve with the Windows I/O prefix, then use ordinary syntax for identity."""
+    return unprefixed_path(filesystem_path(path).resolve(strict=True))
 
 
 def project_reference(path, root):
     """Normalize a real runtime reference, never arbitrary source/provenance strings."""
-    path, root = Path(path).resolve(strict=True), Path(root).resolve(strict=True)
+    path, root = resolved_path(path), resolved_path(root)
     if not path.is_relative_to(root):
         raise ValueError(f'Runtime resource outside saved project: {path}')
     return path.relative_to(root).as_posix()
@@ -115,7 +123,7 @@ def capture_project():
     from tools.dev_workflow import blender_ops as ops
     storage = ops._module('data')
     native = ops._module('blender.native_volume')
-    project = Path(bpy.data.filepath).resolve(strict=True)
+    project = resolved_path(bpy.data.filepath)
     if project.suffix.lower() != '.blend':
         raise ValueError('Open a saved .blend project before checking')
     root, data_root = project.parent, project.with_suffix('.qcdata')
@@ -123,7 +131,7 @@ def capture_project():
 
     def file_record(path):
         relative = project_reference(path, root)
-        path = root / relative
+        path = filesystem_path(root / relative)
         if not path.is_file():
             raise ValueError(f'Runtime resource is not a file: {path}')
         resources[relative] = {'bytes': path.stat().st_size, 'sha256': digest(path)}
@@ -145,24 +153,24 @@ def capture_project():
     for obj in objects.values():
         if not obj.get('qc_dataset'):
             continue
-        directory = Path(bpy.path.abspath(obj['qc_dataset'])).resolve(strict=True)
-        if not directory.is_relative_to(data_root.resolve(strict=True)):
+        directory = resolved_path(bpy.path.abspath(obj['qc_dataset']))
+        if not directory.is_relative_to(resolved_path(data_root)):
             raise ValueError(f'Dataset outside matching .qcdata: {obj.name}: {directory}')
         manifest = directory / 'manifest.json'
         if digest(manifest) != obj['qc_dataset_sha256']:
             raise ValueError(f'Dataset manifest differs from object binding: {obj.name}')
         bindings[obj.name] = project_reference(directory, root)
-        indexed.add(directory.relative_to(data_root.resolve()).as_posix())
+        indexed.add(directory.relative_to(resolved_path(data_root)).as_posix())
         data = storage.load_dataset(directory)
         ops._module('blender.source_browser').cache_dataset(obj, data)
         file_record(manifest)
-        manifest_data = json.loads(manifest.read_text(encoding='utf-8'))
+        manifest_data = json.loads(filesystem_path(manifest).read_text(encoding='utf-8'))
         for record in manifest_data['arrays'].values():
             file_record(storage.resolve_asset(directory, record['path']))
         for scalar in data.metadata.get('fields', []):
             file_record(native.check_field_cache(directory, scalar))
     scene_index = data_root / 'manifest.json'
-    index = json.loads(scene_index.read_text(encoding='utf-8'))
+    index = json.loads(filesystem_path(scene_index).read_text(encoding='utf-8'))
     if (index.get('format') != 'qcblender.scene' or index.get('schema') != '0.1'
             or set(index.get('datasets', [])) != indexed):
         raise ValueError('Scene dataset index differs from the bound saved datasets')
@@ -289,7 +297,7 @@ def main(argv=None):
     parser.add_argument('--expected', type=Path)
     parser.add_argument('--report', type=Path, required=True)
     args = parser.parse_args(argv)
-    if args.report.exists():
+    if filesystem_path(args.report).exists():
         raise FileExistsError(f'Choose a new report path: {args.report}')
     report = {'status': 'Failed', 'action': args.action}
     try:
@@ -298,14 +306,14 @@ def main(argv=None):
         if args.action == 'compare':
             if not args.expected:
                 raise ValueError('compare requires --expected')
-            expected = json.loads(args.expected.read_text(encoding='utf-8'))
+            expected = json.loads(filesystem_path(args.expected).read_text(encoding='utf-8'))
             report.update(compare_snapshots(expected.get('snapshot', expected), actual))
         else:
             report['status'] = 'Passed'
     except (OSError, ValueError, KeyError, RuntimeError, TypeError) as error:
         report['error'] = f'{type(error).__name__}: {error}'
-    args.report.parent.mkdir(parents=True, exist_ok=True)
-    args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False) + '\n',
+    filesystem_path(args.report.parent).mkdir(parents=True, exist_ok=True)
+    filesystem_path(args.report).write_text(json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False) + '\n',
                            encoding='utf-8', newline='\n')
     print(json.dumps({'status': report['status'], 'report': str(args.report),
                       'differences': report.get('differences', []), 'error': report.get('error')}, ensure_ascii=False))

@@ -1,10 +1,14 @@
 """Offline boundaries for exact SOP project comparison and portable references."""
 from copy import deepcopy
+import hashlib
 import importlib.util
 from pathlib import Path
+import shutil
 import tempfile
 from types import SimpleNamespace
 import unittest
+
+from qcblender.data import filesystem_path, unprefixed_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -90,6 +94,29 @@ class SOPProjectTests(unittest.TestCase):
         actual = deepcopy(baseline)
         actual['state']['resources']['project.qcdata/manifest.json']['sha256'] = 'changed'
         self.assertEqual(checker.compare_snapshots(baseline, actual)['status'], 'Failed')
+
+    def test_long_runtime_file_reference_and_digest_use_real_windows_io(self):
+        (ROOT / 'outputs').mkdir(exist_ok=True)
+        folder = Path(tempfile.mkdtemp(dir=ROOT / 'outputs', prefix='sop-long-path-'))
+        self.addCleanup(shutil.rmtree, filesystem_path(folder))
+        root = folder / ('project-location-' + 'x' * 60) / ('nested-' + 'y' * 60)
+        relative = Path('project.qcdata') / 'datasets' / ('a' * 64) / 'arrays' / ('b' * 64 + '.npy')
+        resource = root / relative
+        self.assertGreater(len(str(resource)), 260)
+        filesystem_path(resource.parent).mkdir(parents=True)
+        content = b'actual long-path byte fixture'
+        filesystem_path(resource).write_bytes(content)
+        self.assertTrue(filesystem_path(resource).is_file())
+        for label, value in [('ordinary', resource), ('extended', filesystem_path(resource))]:
+            with self.subTest(operation='reference', syntax=label):
+                self.assertEqual(checker.project_reference(value, root), relative.as_posix())
+            with self.subTest(operation='digest', syntax=label):
+                self.assertEqual(checker.digest(value), hashlib.sha256(content).hexdigest())
+        other_root = folder / 'different-root'
+        other_root.mkdir()
+        with self.assertRaisesRegex(ValueError, 'outside saved project'):
+            checker.project_reference(filesystem_path(resource), other_root)
+        self.assertEqual(unprefixed_path(filesystem_path(root)), root)
 
     def test_schema_and_removed_objects_cannot_silently_pass(self):
         baseline, actual = self.fixture(), self.fixture()
