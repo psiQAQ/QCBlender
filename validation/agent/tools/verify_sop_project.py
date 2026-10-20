@@ -9,6 +9,7 @@ import argparse
 from copy import deepcopy
 import hashlib
 import json
+import math
 from pathlib import Path
 import sys
 
@@ -85,6 +86,20 @@ def compare_snapshots(expected, actual):
     return {'status': 'Failed' if changed else 'Passed', 'differences': changed}
 
 
+def _rna_json_value(value, property_path):
+    """Retain signed RNA infinities (e.g. empty-curve bounds), never erase them."""
+    if isinstance(value, float):
+        if math.isnan(value):
+            raise ValueError(f'NaN RNA property: {property_path}')
+        if math.isinf(value):
+            return {'$qcblender.rna_float': '-Infinity' if value < 0 else '+Infinity'}
+    if isinstance(value, (list, tuple)):
+        return [_rna_json_value(item, f'{property_path}[{index}]') for index, item in enumerate(value)]
+    if isinstance(value, dict):
+        return {key: _rna_json_value(item, f'{property_path}.{key}') for key, item in value.items()}
+    return value
+
+
 def _rna(value, plain, excluded=()):
     result = {}
     for prop in value.bl_rna.properties:
@@ -95,7 +110,7 @@ def _rna(value, plain, excluded=()):
         if prop.type == 'POINTER':
             if item is None or not hasattr(item, 'name'):
                 continue
-        result[key] = sorted(item) if isinstance(item, set) else plain(item)
+        result[key] = _rna_json_value(sorted(item) if isinstance(item, set) else plain(item), key)
     return result
 
 

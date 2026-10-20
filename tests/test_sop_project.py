@@ -2,6 +2,7 @@
 from copy import deepcopy
 import hashlib
 import importlib.util
+import json
 from pathlib import Path
 import shutil
 import tempfile
@@ -162,6 +163,33 @@ class SOPProjectTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'unreadable real dataset'):
             checker._used_snapshot(ops, bpy, {}, {}, {}, {})
         self.assertIs(ops._bpy, original)
+
+    def rna_record(self, values):
+        prop = SimpleNamespace(identifier='texspace_location', is_readonly=False, type='FLOAT')
+        curve = SimpleNamespace(bl_rna=SimpleNamespace(properties=[prop]), texspace_location=values)
+        return checker._rna(curve, lambda value: list(value))
+
+    def test_empty_arc_infinite_rna_bounds_roundtrip_and_remain_comparable(self):
+        def snapshot(values):
+            actual = self.fixture()
+            actual['state']['persistent'] = {'objects': {'arc': {'data': self.rna_record(values)}}}
+            return json.loads(json.dumps(actual, allow_nan=False))
+        expected = snapshot([float('-inf')] * 3)
+        self.assertEqual(checker.compare_snapshots(expected, snapshot([float('-inf')] * 3))['status'], 'Passed')
+        for changed in ([float('inf')] * 3, [0., 0., 0.], ['-Infinity'] * 3):
+            result = checker.compare_snapshots(expected, snapshot(changed))
+            self.assertEqual(result['status'], 'Failed')
+            self.assertTrue(any('texspace_location' in item for item in result['differences']))
+        finite = self.rna_record([1., 2., 3.])
+        self.assertEqual(finite, {'texspace_location': [1., 2., 3.]})
+
+    def test_nan_rna_and_nonfinite_non_rna_scientific_state_still_fail(self):
+        with self.assertRaisesRegex(ValueError, 'NaN.*texspace_location'):
+            self.rna_record([float('nan'), 0., 0.])
+        raw = {'state': self.fixture()['state']}
+        raw['state']['objects']['atoms']['properties']['scientific_value'] = float('inf')
+        with self.assertRaisesRegex(ValueError, 'Out of range float'):
+            checker.canonical_snapshot(raw, {}, {}, {})
 
 
 if __name__ == '__main__':
