@@ -129,3 +129,5 @@
 选 **QC AIM bond paths**，重新点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，在 **外部结果浏览器（External Result Browser）** 应看到 **10 条已记录的 AIM 路径（10 recorded AIM paths）**。将 **路径（从1开始）（Path (1-based)）** 从 **1** 改为 **2**，面板应分别显示 **9 个点（9 points） / 47 个点（47 points）**。在视口旋转观察路径；如果原子球遮挡路径，可临时隐藏 **P03-atoms**。截图保存为 `human/screenshots/P03-aim-paths.png`。
 
 ![水二聚体的 AIM 路径及所选路径点数](../screenshots/P03-aim-paths.png)
+
+如果为观察路径临时隐藏了 **P03-atoms**，截图后恢复它的视口可见性，再按[共同保存方法](../SOP.md#save)保留本专题工程。
