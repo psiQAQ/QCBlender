@@ -45,7 +45,7 @@
 - **几何场（Geometry Field）**：读取切片自身的场；本例是 ESP，线值单位为 hartree/e。
 - **绑定色场（Bound Color Field）**：读取另外绑定的着色场，适合切片自身的场与着色量不同时使用；需要先有色场绑定。
 
-在切片的 **切片等值线（Slice Contours）** 面板点击 **开启等值线（Enable Contours）**，选择 **几何场（Geometry Field）**，在 **阈值列表（Isovalue List）** 输入 **−0.02,0,0.02**，勾选 **数值标签（Value Labels）**，点击 **更新等值线（Update Contours）**。应在有效区域看到曲线和数值标签（Value Labels）。截图保存为 `human/screenshots/P03-slice.png`。
+在切片的 **切片等值线（Slice Contours）** 面板点击 **开启等值线（Enable Contours）**，选择 **几何场（Geometry Field）**，在 **阈值列表（空白：自动 9 条）（Levels (empty: 9 automatic levels)）** 输入 **−0.02,0,0.02**，勾选 **数值标签（Value Labels）**，点击 **更新等值线（Update Contours）**。应在有效区域看到曲线和数值标签（Value Labels）。截图保存为 `human/screenshots/P03-slice.png`。
 
 ![ESP 平面切片与三组等值线](../screenshots/P03-slice.png)
 
