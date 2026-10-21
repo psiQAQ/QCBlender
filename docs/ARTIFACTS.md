@@ -10,13 +10,21 @@
 
 | 内容 | 当前入口 |
 | --- | --- |
+| 当前完整教程包 | `outputs/deliveries/checkpoint-rebuild-20261021/QCBlender-tutorial.zip`；[两个检查点补验](#checkpoint-rebuild-20261021) |
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
-| 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；本批工程在 `outputs/deliveries/sop-20261021/QCBlender-tutorial/work/human/`；[当前截图与工程](#sop-completion-20261021) |
+| 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；当前工程在 `outputs/deliveries/checkpoint-rebuild-20261021/QCBlender-tutorial/work/human/`；[当前截图与工程](#checkpoint-rebuild-20261021) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
 | 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,941,014 字节，SHA-256 `06b46875482a4ee377180717551457f9b74019f01c6c3f3221754119f75ff052` |
 | 当前候选及验证 | `outputs/candidates/current/sop-completion-20261021/`；源码 `1f7d537`，保留生成节点树碰撞后缀，完整构建、隔离及日常安装、实际 GUI 与冷读通过；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/sop-completion.md) |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
+
+<a id="checkpoint-rebuild-20261021"></a>
+## 两个检查点从原始输入重建并补齐保存前验证（2026-10-21）
+
+新完整教程包在 `outputs/deliveries/checkpoint-rebuild-20261021/QCBlender-tutorial.zip`，296,596,161 字节，SHA-256 `f885589e4e6237cd3ca4dddc6de12ea57a976f9e973fd685556067cdb524f4fb`。P01-orbital 与 P06-annotations 从原始输入重建，真实保存前快照、保存后、原位及中文路径解包冷读均 Passed、零差异；旧两个检查点的快照缺口在新交付物中已补齐。
+
+其余 34 个工程及其全部配套文件逐字节未变，复用有效报告；仍为 79 步、27 图、36 工程。完整索引在新展开目录 `工程索引.md`，证据在 `validation/agent/reports/2026-10-21/checkpoint-rebuild/`，详细边界见[补验](../validation/agent/acceptance/checkpoint-rebuild.md)。原 ZIP、工程及失败报告均保留；原 P01 窗口已恢复。独立人工/科研验收 Not Run。脚本及本地归档收据在 `outputs/runs/checkpoint-rebuild-20261021/`。
 
 <a id="sop-completion-20261021"></a>
 ## SOP 全步骤、截图与工程材料（2026-10-21）

@@ -2,7 +2,7 @@
 
 人工操作从 [SOP](human/SOP.md) 开始，按目录选择需要学习的专题。完整材料包含安装包和案例输入，适用 Windows x64、Blender 5.1.1、QCBlender 0.1.0。
 
-2026-10-21 完整实操材料：主仓库 `outputs/deliveries/sop-20261021/QCBlender-tutorial.zip`，包含 27 张截图及 36 个最终工程/检查点；展开目录的 `工程索引.md` 按步骤导航。验证范围见 [本批验收](agent/acceptance/sop-completion.md)，独立人工和科研验收尚未执行。
+2026-10-21 完整实操材料：主仓库 `outputs/deliveries/checkpoint-rebuild-20261021/QCBlender-tutorial.zip`，包含 27 张截图及 36 个最终工程/检查点；展开目录的 `工程索引.md` 按步骤导航。验证范围见 [本批验收](agent/acceptance/checkpoint-rebuild.md)，独立人工和科研验收尚未执行。
 
 ## 入口
 

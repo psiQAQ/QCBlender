@@ -1,5 +1,7 @@
 # 开发演进
 
+- 2026-10-21：从原始输入重建 P01 轨道及 P06 标注检查点，补齐真实保存前完整快照；保存后、冷重开及中文路径解包严格比较 Passed。新完整教程包更新两个检查点，旧包保留，其他 34 工程复用相同字节证据；独立人工/科研验收 Not Run，见[补验](../validation/agent/acceptance/checkpoint-rebuild.md)。
+
 - 2026-10-21：完成 SOP 79 步、27 张实操截图、36 个工程及检查点和完整教程 ZIP；所有工程中文路径解包新进程核对 Passed。修复生成节点树碰撞后缀在冷重开时变化，15 项定向测试、完整构建和隔离/日常安装 Passed，P01 已恢复。独立人工/科研验收 Not Run，缺失原快照及旧失败边界保留；材料和本地归档见[产物入口](ARTIFACTS.md#sop-completion-20261021)。不 push 或公开发布。
 
 - 2026-10-17：添加和编辑标注弹窗宽度从 760 减至 380。35 项定向、完整构建、隔离/日常安装逐字节核对、实际窄窗口布局与编号/偏移点击、原生及 GUI 工程冷读 Passed。旧包、旧安装和偏好已保全；日常 GUI、完整科学套件复跑及独立人工/科研接受 Not Run。本地归档，不 push，见[验收](../validation/agent/acceptance/annotation-width.md)与[产物入口](ARTIFACTS.md#annotation-width-20261017)。
