@@ -27,7 +27,7 @@ def ordinary_files(directory, errors):
 
 def build_file_sets(root):
     root = Path(root).resolve()
-    site = root / 'outputs/build-site'
+    site = root / 'modules/build-site'
     expected = dict(line.split('==') for line in (root / 'tools/build-requirements.txt').read_text(encoding='utf-8').splitlines() if line)
     normalize = lambda name: name.lower().replace('_', '-')
     expected = {normalize(name): value for name, value in expected.items()}
@@ -60,13 +60,13 @@ def build_file_sets(root):
 def verify_canonical_wheels(root):
     root = Path(root).resolve()
     lock = json.loads((root / 'dependencies.lock.json').read_text(encoding='utf-8'))
-    backend = json.loads((root / 'outputs/backend-wheel.json').read_text(encoding='utf-8'))
+    backend = json.loads((root / 'modules/backend-wheel.json').read_text(encoding='utf-8'))
     records = []
     for package in lock['packages'] + [backend]:
         filename = package['filename']
         if Path(filename).name != filename or ':' in filename or '\\' in filename:
             raise ValueError('Expected a wheel filename: ' + filename)
-        path = root / 'outputs/wheels' / filename
+        path = root / 'modules/wheels' / filename
         if any(component.is_symlink() or component.is_junction() for component in (path, *path.parents) if component != root and component.is_relative_to(root)):
             raise ValueError('Linked canonical wheel path: ' + str(path))
         if not path.is_file():
@@ -86,10 +86,10 @@ def plan(root):
     root = Path(root).resolve()
     wheels = verify_canonical_wheels(root)
     requirements, keep, retired, errors = build_file_sets(root)
-    source_paths = ['outputs/build-sources/gbasis-071969c900d6d7a9fbbdfe193c65ba3be177fbdf.zip',
-                    'outputs/m0-research/iodata.zip',
-                    'outputs/build-sources/qcint-48f138c28bb72cf7b4350224152e407fe9e88b39.zip']
-    license_root = root / 'outputs/native-backend-licenses'
+    source_paths = ['modules/sources/gbasis/gbasis-071969c900d6d7a9fbbdfe193c65ba3be177fbdf.zip',
+                    'modules/sources/iodata/iodata.zip',
+                    'modules/sources/qcint/qcint-48f138c28bb72cf7b4350224152e407fe9e88b39.zip']
+    license_root = root / 'modules/licenses'
     source_paths += [path.relative_to(root).as_posix() for path in ordinary_files(license_root, errors)]
     sources = []
     source_urls = {
@@ -107,12 +107,13 @@ def plan(root):
     return {'schema': 'qcblender.outputs-runtime-plan.v1', 'root': str(root),
             'canonical_wheels_status': 'Passed', 'canonical_wheels': wheels,
             'build_requirements': requirements, 'build_keep_files': keep, 'build_retire_files': retired,
-            'protected_paths': ['outputs/science', 'outputs/backend-wheel.json', 'outputs/blender-runtime.json'] + [row['path'] for row in wheels] + source_paths,
+            'protected_paths': ['modules/build-site', 'modules/science', 'modules/wheels', 'modules/backend-wheel.json',
+                                'modules/licenses', 'modules/sources', '.local/blender/runtime.json'] + [row['path'] for row in wheels] + source_paths,
             'source_originals': sources,
             'retired_task_roots': ['build-python', 'wheels/qualified', 'repaired-wheels', 'unrepaired-wheels',
                                    'gbasis-build', 'build-sources/gbasis-071969c900d6d7a9fbbdfe193c65ba3be177fbdf',
                                    'build-sources/qcint-48f138c28bb72cf7b4350224152e407fe9e88b39'],
-            'conditions': ['build_keep_files/build_retire_files are relative to outputs/build-site',
+            'conditions': ['build_keep_files/build_retire_files are relative to modules/build-site',
                            'Keep science in full; do not change package versions',
                            'Retirement requires a separate identity-checked deletion manifest',
                            'All root wheels must match the dependency lock and backend record before retiring qualified copies',

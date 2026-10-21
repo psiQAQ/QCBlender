@@ -17,7 +17,7 @@ from tools.package_identity import extension_filename, extension_manifest, file_
 def validate_archive(candidate, installed_dir, root=ROOT):
     root, installed_dir = Path(root), Path(installed_dir)
     lock = json.loads((root / 'dependencies.lock.json').read_text(encoding='utf-8'))
-    backend = json.loads((root / 'outputs/backend-wheel.json').read_text(encoding='utf-8'))
+    backend = json.loads((root / 'modules/backend-wheel.json').read_text(encoding='utf-8'))
     packages = lock['packages'] + [backend]
     with zipfile.ZipFile(candidate) as archive:
         names = archive.namelist()

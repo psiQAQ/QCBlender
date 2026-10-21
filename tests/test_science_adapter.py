@@ -3,6 +3,7 @@ import hashlib
 from pathlib import Path
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 
 import numpy as np
 
@@ -22,7 +23,7 @@ class ScientificAdapter(unittest.TestCase):
         cls.data = read_source(DATA / 'ch4_uhf_ccpvdz.fchk')
 
     def test_normalized_roundtrip_matches_independent_fields(self):
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             save_dataset(self.data, directory)
             loaded = load_dataset(directory)
             for name, array in self.data.arrays.items():
@@ -81,7 +82,7 @@ class ScientificAdapter(unittest.TestCase):
                     self.assertEqual(data.metadata['spin_polarization'], 1)
 
     def test_checksum_and_path_traversal_fail(self):
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             path = save_dataset(self.data, directory)
             manifest = json.loads(path.read_text(encoding='utf-8'))
             manifest['arrays']['positions']['path'] = '../outside.npy'

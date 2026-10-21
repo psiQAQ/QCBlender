@@ -321,7 +321,7 @@ if __name__ == '__main__':
     args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
     out = args.out.resolve()
     assert out.is_relative_to((ROOT / 'outputs').resolve()), 'Use a task directory under outputs/'
-    assert Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to((ROOT / 'outputs').resolve()), 'Use an isolated Blender profile under outputs/'
+    assert any(Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to((ROOT / directory).resolve()) for directory in ('.tmp/runs', '.local/blender/dev-profile', 'outputs')), 'Use an isolated Blender profile under .tmp/runs/'
     assert bpy.ops.preferences.addon_enable(module=evidence.MODULE) == {'FINISHED'}
     installed = Path(module('blender.interaction').__file__).resolve()
     assert 'extensions' in installed.parts and installed != ROOT / 'qcblender/blender/interaction.py'

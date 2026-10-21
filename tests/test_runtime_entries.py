@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 import zipfile
 
 from tools.collect_m0_fixtures import archive_member, install_bytes, restore
@@ -15,8 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class RuntimeEntries(unittest.TestCase):
     def setUp(self):
-        (ROOT / 'outputs').mkdir(exist_ok=True)
-        self.temporary = tempfile.TemporaryDirectory(dir=ROOT / 'outputs')
+        self.temporary = tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT))
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name)
 
@@ -24,7 +24,7 @@ class RuntimeEntries(unittest.TestCase):
         tools = self.root / 'tools'
         tools.mkdir()
         (tools / 'build-requirements.txt').write_text('build==1.3.0\n', encoding='utf-8')
-        site = self.root / 'outputs/build-site'
+        site = self.root / 'modules/build-site'
         metadata = site / 'build-1.3.0.dist-info'
         metadata.mkdir(parents=True)
         (metadata / 'METADATA').write_text('Name: build\nVersion: 1.3.0\n', encoding='utf-8')
@@ -60,13 +60,13 @@ class RuntimeEntries(unittest.TestCase):
             archive_member(archive, 'LICENSE')
 
     def test_canonical_wheels_missing_mismatched_and_verified(self):
-        directory = self.root / 'outputs/wheels'
+        directory = self.root / 'modules/wheels'
         directory.mkdir(parents=True)
         records = [{'name': name, 'version': '1.0', 'filename': name + '-1.0-py3-none-any.whl',
                     'sha256': hashlib.sha256(name.encode()).hexdigest()}
                    for name in ('dependency', 'backend')]
         (self.root / 'dependencies.lock.json').write_text(json.dumps({'packages': records[:1]}), encoding='utf-8')
-        (self.root / 'outputs/backend-wheel.json').write_text(json.dumps(records[1]), encoding='utf-8')
+        (self.root / 'modules/backend-wheel.json').write_text(json.dumps(records[1]), encoding='utf-8')
         with self.assertRaisesRegex(FileNotFoundError, 'canonical wheel missing'):
             plan(self.root)
         for record in records:
@@ -83,6 +83,21 @@ class RuntimeEntries(unittest.TestCase):
         for row in actual:
             self.assertEqual(row['status'], 'Passed')
             self.assertEqual(row['expected_sha256'], row['actual_sha256'])
+        tools = self.root / 'tools'
+        tools.mkdir()
+        (tools / 'build-requirements.txt').write_text('', encoding='utf-8')
+        for relative in ('modules/sources/gbasis/gbasis-071969c900d6d7a9fbbdfe193c65ba3be177fbdf.zip',
+                         'modules/sources/iodata/iodata.zip',
+                         'modules/sources/qcint/qcint-48f138c28bb72cf7b4350224152e407fe9e88b39.zip',
+                         'modules/licenses/LICENSE'):
+            path = self.root / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(b'retained original')
+        result = plan(self.root)
+        self.assertIn('modules/wheels', result['protected_paths'])
+        self.assertIn('modules/build-site', result['protected_paths'])
+        self.assertEqual(len(result['source_originals']), 4)
+        self.assertTrue(all(row['path'].startswith('modules/') for row in result['source_originals']))
 
     def test_candidate_node_library_extract_and_reopen_identity(self):
         candidate = self.root / 'candidate.zip'

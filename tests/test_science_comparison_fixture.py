@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 
 import numpy as np
 
@@ -16,8 +17,7 @@ REFERENCE = Path(os.environ.get('QCBLENDER_REFERENCE_ROOT', ROOT))
 
 class ComparisonFixture(unittest.TestCase):
     def test_current_wavefunction_rebuilds_signed_cube_and_numeric_pair(self):
-        (ROOT / 'outputs').mkdir(exist_ok=True)
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             output = Path(directory)
             cube = prepare_comparison_cube(REFERENCE, output)
             data = read_cube(cube)

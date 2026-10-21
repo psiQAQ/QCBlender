@@ -3,6 +3,7 @@ import hashlib
 from pathlib import Path
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 
 import numpy as np
 
@@ -16,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class XYZTests(unittest.TestCase):
     def parse(self, text):
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             path = Path(directory) / '中文.xyz'
             path.write_bytes(text.encode('utf-8'))
             return read_source(path)
@@ -64,7 +65,7 @@ class XYZTests(unittest.TestCase):
         geometry.arrays['positions'] = positions
         infer_bonds(geometry)
         self.assertEqual(len(geometry.arrays['bonds']), 0)
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             save_dataset(data, directory)
             restored = load_dataset(directory)
             self.assertEqual(restored.metadata, data.metadata)

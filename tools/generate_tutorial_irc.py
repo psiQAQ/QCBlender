@@ -9,7 +9,7 @@ a=parser.parse_args(); ROOT=Path(__file__).resolve().parents[1]; REF=a.reference
 if RUN.exists(): raise FileExistsError(RUN)
 RUN.mkdir(parents=True)
 for key in ('TMP','TEMP','TMPDIR'): os.environ[key]=str(RUN)
-sys.path[:0]=[str(REF/'outputs/science'),str(ROOT)]
+sys.path[:0]=[str(REF/'modules/science'),str(ROOT)]
 import pyscf, geometric
 from pyscf import gto,scf,lib
 from pyscf.geomopt.geometric_solver import PySCFEngine

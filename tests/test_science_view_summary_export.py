@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class SummaryExport(unittest.TestCase):
     def setUp(self):
-        output = ROOT / 'outputs/runs/alpha-summary/export-tests'
+        output = ROOT / '.tmp/tests/runs/alpha-summary/export-tests'
         output.mkdir(parents=True, exist_ok=True)
         temporary = tempfile.TemporaryDirectory(dir=output)
         self.addCleanup(temporary.cleanup)

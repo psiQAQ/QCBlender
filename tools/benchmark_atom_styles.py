@@ -131,13 +131,13 @@ def verify_installed_manifest(installed, root=ROOT):
     installed, root = Path(installed), Path(root)
     for source, destination in (('dependencies.lock.json', 'dependencies.lock.json'),
                                 ('science-sources.lock.json', 'science-sources.lock.json'),
-                                ('outputs/backend-wheel.json', 'backend-wheel.json')):
+                                ('modules/backend-wheel.json', 'backend-wheel.json')):
         if bench.sha256(installed / destination) != bench.sha256(root / source):
             raise ValueError('Installed lock/backend record differs from checkout: ' + destination)
     lock_bytes = (root / 'dependencies.lock.json').read_bytes()
     science_bytes = (root / 'science-sources.lock.json').read_bytes()
     lock = json.loads(lock_bytes)
-    backend = json.loads((root / 'outputs/backend-wheel.json').read_bytes())
+    backend = json.loads((root / 'modules/backend-wheel.json').read_bytes())
     packages = lock['packages'] + [backend]
     filenames = [package['filename'] for package in packages]
     if (len(filenames) != len(set(filenames))

@@ -3,6 +3,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,8 +22,7 @@ PLACEHOLDER = 'Note: Energies of NOCV orbitals have not been evaluated, so they 
 
 class NocvEnergyStatus(unittest.TestCase):
     def setUp(self):
-        (ROOT / 'outputs').mkdir(exist_ok=True)
-        self.directory = tempfile.TemporaryDirectory(dir=ROOT / 'outputs')
+        self.directory = tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT))
         self.addCleanup(self.directory.cleanup)
 
     def parse(self, lines, unit='kcal/mol'):

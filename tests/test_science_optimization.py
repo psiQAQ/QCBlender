@@ -4,6 +4,7 @@ import logging
 from pathlib import Path
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 
 from cclib.parser import Gaussian
 import numpy as np
@@ -41,7 +42,7 @@ class Optimization(unittest.TestCase):
         np.testing.assert_array_equal(data.arrays['positions'], data.arrays['optimization_positions'][-1])
         self.assertNotIn('optimization', read_log(SOURCE, 1).metadata)
         self.assertNotIn('optimization', read_log(ROOT / 'validation/shared/data/regression/cclib/water_mp2.log').metadata)
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             save_dataset(data, directory)
             reopened = load_dataset(directory)
             self.assertEqual(reopened.metadata, data.metadata)
@@ -50,7 +51,7 @@ class Optimization(unittest.TestCase):
     def test_partial_job_keeps_observed_steps_without_convergence_claim(self):
         lines = SOURCE.read_text().splitlines(keepends=True)
         for tail, status in [('', 'incomplete'), (' Error termination\n', 'failed')]:
-            with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+            with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
                 path = Path(directory) / 'partial.log'
                 path.write_text(''.join(lines[:698]) + tail)
                 data = read_log(path)
@@ -93,7 +94,7 @@ class Optimization(unittest.TestCase):
         starts = [i for i, line in enumerate(lines) if line.strip() == 'Standard orientation:']
         for begin in reversed(starts):
             del lines[begin:begin + 9]
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             path = Path(directory) / 'input-only.log'
             path.write_text(''.join(lines))
             data = read_log(path)

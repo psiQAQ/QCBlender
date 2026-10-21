@@ -6,10 +6,11 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 
 ROOT = Path(__file__).resolve().parents[1]
 SAMPLES = Path(os.environ.get('QCBLENDER_REFERENCE_ROOT', ROOT))
-sys.path[:0] = [str(ROOT), str(SAMPLES / 'outputs/science')]
+sys.path[:0] = [str(ROOT), str(SAMPLES / 'modules/science')]
 import numpy as np
 from qcblender.data import load_dataset, save_dataset
 from qcblender.data_export import export_dataset
@@ -23,7 +24,7 @@ class IGMHDeclaration(unittest.TestCase):
         folder = input_path('public-tutorial/P03/igmh', SAMPLES)
         cls.geometry, cls.color = folder / 'dg_inter.cub', folder / 'sl2r.cub'
         cls.baseline = pair_cubes(cls.geometry, cls.color, 'IGMH', 'electron/bohr^4', 'electron/bohr^3')
-        ROOT.joinpath('outputs').mkdir(exist_ok=True)
+        ROOT.joinpath('.tmp/tests').mkdir(parents=True, exist_ok=True)
 
     def pair(self, **declaration):
         return pair_cubes(self.geometry, self.color, 'IGMH', 'electron/bohr^4', 'electron/bohr^3',
@@ -70,7 +71,7 @@ class IGMHDeclaration(unittest.TestCase):
     def test_manifest_and_csv_metadata_keep_declaration(self):
         data = self.pair(igmh_component='inter', igmh_fragments=[[1, 2, 3], [4, 5, 6]],
                          igmh_declaration_source='P03 fragment assignment')
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as tmp:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as tmp:
             directory = Path(tmp) / 'dataset'
             save_dataset(data, directory)
             reopened = load_dataset(directory)

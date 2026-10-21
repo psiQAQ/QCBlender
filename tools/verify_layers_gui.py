@@ -11,7 +11,7 @@ OUT = ROOT / 'outputs/layer-acceptance'
 MODULE = 'bl_ext.user_default.qcblender'
 bpy.ops.preferences.addon_enable(module=MODULE)
 layers = importlib.import_module(MODULE + '.blender.layers')
-assert Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to(ROOT / 'outputs')
+assert any(Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to(ROOT / directory) for directory in ('.tmp/runs', '.local/blender/dev-profile', 'outputs'))
 phase = 0
 
 

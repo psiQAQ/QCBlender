@@ -34,7 +34,7 @@ class ResultFilters(unittest.TestCase):
         data = pair_cubes(C07 / 'dg_inter.cub', C07 / 'sl2r.cub', 'IGMH',
                           'electron/bohr^4', 'electron/bohr^3')
         original = {key: value.copy() for key, value in data.arrays.items()}
-        output = ROOT / 'outputs/science-result-filters'
+        output = ROOT / '.tmp/tests/science-result-filters'
         output.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(dir=output) as temporary:
             directory = Path(temporary)

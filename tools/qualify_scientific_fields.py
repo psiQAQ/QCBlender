@@ -7,7 +7,7 @@ import sys
 import time
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path[:0] = [str(ROOT), str(ROOT / 'outputs/science')]
+sys.path[:0] = [str(ROOT), str(ROOT / 'modules/science')]
 os.environ['PATH'] = str(Path(sys.executable).parent) + os.pathsep + os.environ['SystemRoot'] + '/System32'
 
 import numpy as np

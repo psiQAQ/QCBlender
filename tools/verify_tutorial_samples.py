@@ -2,9 +2,9 @@
 import argparse,hashlib,json,sys,zipfile
 from pathlib import Path
 p=argparse.ArgumentParser();p.add_argument('--reference-root',type=Path,required=True);p.add_argument('--package',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
-p.add_argument('--site',type=Path,help='Existing science environment; defaults to reference-root/outputs/science')
+p.add_argument('--site',type=Path,help='Existing science environment; defaults to reference-root/modules/science')
 p.add_argument('--checkpoints',action='store_true',help='Also compare original PySCF checkpoints; requires the existing calculation environment')
-a=p.parse_args();ROOT=Path(__file__).resolve().parents[1];REF=a.reference_root.resolve();sys.path[:0]=[str(a.site.resolve() if a.site else REF/'outputs/science'),str(ROOT)]
+a=p.parse_args();ROOT=Path(__file__).resolve().parents[1];REF=a.reference_root.resolve();sys.path[:0]=[str(a.site.resolve() if a.site else REF/'modules/science'),str(ROOT)]
 from tools.local_inputs import input_path,public_input_path
 import numpy as np
 from qcblender.readers import read_fchk,read_source

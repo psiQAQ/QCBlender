@@ -563,6 +563,6 @@ if __name__ == '__main__':
     args.out = args.out.resolve()
     args.source_root = args.source_root.resolve()
     installed_extension()
-    assert Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to((SCRIPT_ROOT / 'outputs').resolve())
+    assert any(Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to((SCRIPT_ROOT / directory).resolve()) for directory in ('.tmp/runs', '.local/blender/dev-profile', 'outputs'))
     outcome = prepare(args.case, args.out, args.source_root, args.fixture) if args.check == 'prepare' else reopen(args.case, args.out)
     print(json.dumps(outcome, ensure_ascii=False))

@@ -101,7 +101,7 @@ class SourceSummaryCache(unittest.TestCase):
         self.assertIsNone(self.rows(result)['atom_count']['value'])
 
     def test_manifest_only_refresh_does_not_require_array_files(self):
-        output = ROOT / 'outputs/source-summary-cache'
+        output = ROOT / '.tmp/tests/source-summary-cache'
         output.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(dir=output) as directory:
             manifest = Path(directory) / 'manifest.json'

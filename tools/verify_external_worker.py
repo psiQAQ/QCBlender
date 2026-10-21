@@ -20,7 +20,7 @@ from tools.local_inputs import input_path
 from tools.comparison_fixture import comparison_source, write_comparison_cube
 MODULE = 'bl_ext.user_default.qcblender'
 config = Path(bpy.utils.user_resource('CONFIG')).resolve()
-assert any(config.is_relative_to(ROOT / directory) for directory in ('outputs', 'validation/work'))
+assert any(config.is_relative_to(ROOT / directory) for directory in ('.tmp/runs', '.local/blender/dev-profile', 'outputs', 'validation/work'))
 assert bpy.ops.extensions.package_install_files(
     filepath=str(args.candidate.resolve()), repo='user_default',
     enable_on_install=True, overwrite=True) == {'FINISHED'}

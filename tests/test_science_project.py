@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 import zipfile
 
 import numpy as np
@@ -15,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class PortableProject(unittest.TestCase):
     def test_long_cache_array_paths_remain_readable_and_archivable(self):
-        with tempfile.TemporaryDirectory(dir=filesystem_path(ROOT / 'outputs')) as temporary:
+        with tempfile.TemporaryDirectory(dir=filesystem_path(temporary_tests_root(ROOT))) as temporary:
             root = unprefixed_path(temporary)
             data = Dataset({'coordinate_unit': 'angstrom'}, {
                 'atomic_numbers': np.array([1]), 'positions': np.zeros((1, 3))})
@@ -36,7 +37,7 @@ class PortableProject(unittest.TestCase):
                 self.assertTrue(any(name.endswith('.npy') for name in package.namelist()))
 
     def test_exact_copy_archive_and_corruption_rejection(self):
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as temporary:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as temporary:
             root = Path(temporary)
             # No display field: native VDB integration is checked by Blender acceptance.
             data = Dataset({'coordinate_unit': 'angstrom'}, {

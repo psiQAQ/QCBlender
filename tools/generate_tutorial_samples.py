@@ -22,7 +22,7 @@ if any(RUN.iterdir()) if RUN.exists() else False:
 RUN.mkdir(parents=True, exist_ok=True)
 for key in ('TMP', 'TEMP', 'TMPDIR'):
     os.environ[key] = str(RUN)
-sys.path.insert(0, str(REF / 'outputs/science'))
+sys.path.insert(0, str(REF / 'modules/science'))
 sys.path.insert(0, str(ROOT))
 import numpy as np
 import pyscf

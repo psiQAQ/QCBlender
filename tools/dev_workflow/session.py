@@ -44,7 +44,7 @@ def launch_blender(binary, args=(), profile=None, outputdir=None, wait=False, ti
     if existing:
         raise RuntimeError('Blender is already running; close it normally first. '
                            f"Existing PIDs: {[item['pid'] for item in existing]}")
-    output = Path(outputdir or Path(__file__).resolve().parents[2] / 'outputs/dev-workflow/sessions').resolve()
+    output = Path(outputdir or Path(__file__).resolve().parents[2] / '.tmp/runs/dev-workflow/sessions').resolve()
     output.mkdir(parents=True, exist_ok=True)
     working_directory = Path(working_directory or output).resolve(strict=True)
     stem = f'blender-{time.time_ns()}'

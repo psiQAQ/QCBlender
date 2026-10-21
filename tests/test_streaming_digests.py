@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class StreamingDigests(unittest.TestCase):
     def setUp(self):
-        output = ROOT / 'outputs/streaming-digest-tests'
+        output = ROOT / '.tmp/tests/streaming-digest-tests'
         output.mkdir(parents=True, exist_ok=True)
         self.temporary = tempfile.TemporaryDirectory(dir=output)
         self.addCleanup(self.temporary.cleanup)

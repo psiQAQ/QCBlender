@@ -31,29 +31,30 @@ jobs:
       - name: Fetch official Blender 5.1.1 portable runtime
         shell: pwsh
         run: |
-          python -B tools/fetch_ci_blender.py --output-dir outputs/ci-blender
+          python -B tools/fetch_ci_blender.py --output-dir modules/tools/ci-blender
           if ($LASTEXITCODE -ne 0) { throw 'Portable runtime verification failed' }
-          $runtime = Get-Content outputs/ci-blender/runtime.json -Raw | ConvertFrom-Json
+          $runtime = Get-Content modules/tools/ci-blender/runtime.json -Raw | ConvertFrom-Json
           "BLENDER_BINARY=$($runtime.binary)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           "BLENDER_PYTHON=$($runtime.python)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - name: Prepare existing pinned build tools and scientific wheels
         shell: pwsh
         run: |
-          New-Item outputs/process-temp -ItemType Directory -Force | Out-Null
-          $env:TEMP = Join-Path $PWD 'outputs/process-temp'
+          New-Item .tmp/build/process-temp -ItemType Directory -Force | Out-Null
+          $env:TEMP = Join-Path $PWD '.tmp/build/process-temp'
           $env:TMP = $env:TEMP
-          python -m pip install --no-deps --target outputs/build-site -r tools/build-requirements.txt
+          $env:PIP_CACHE_DIR = Join-Path $PWD '.tmp/cache/pip'
+          python -m pip install --no-deps --target modules/build-site -r tools/build-requirements.txt
           if ($LASTEXITCODE -ne 0) { throw 'Pinned developer build tools failed' }
           & $env:BLENDER_PYTHON -B tools/fetch_dependencies.py
           if ($LASTEXITCODE -ne 0) { throw 'Locked scientific wheel download failed' }
-          $env:PYTHONPATH = Join-Path $PWD 'outputs/build-site'
+          $env:PYTHONPATH = Join-Path $PWD 'modules/build-site'
           & $env:BLENDER_PYTHON -B tools/build_science_backend.py
           if ($LASTEXITCODE -ne 0) { throw 'Locked GBasis build failed' }
           Remove-Item Env:PYTHONPATH
           $lock = Get-Content dependencies.lock.json -Raw | ConvertFrom-Json
-          $backend = Get-Content outputs/backend-wheel.json -Raw | ConvertFrom-Json
-          $wheels = @($lock.packages) + @($backend) | ForEach-Object { Join-Path "$PWD/outputs/wheels" $_.filename }
-          python -m pip install --no-index --no-deps --target outputs/science $wheels
+          $backend = Get-Content modules/backend-wheel.json -Raw | ConvertFrom-Json
+          $wheels = @($lock.packages) + @($backend) | ForEach-Object { Join-Path "$PWD/modules/wheels" $_.filename }
+          python -m pip install --no-index --no-deps --target modules/science $wheels
           if ($LASTEXITCODE -ne 0) { throw 'Isolated locked scientific wheel imports failed' }
           git diff --exit-code -- dependencies.lock.json science-sources.lock.json tools/build-requirements.txt
           if ($LASTEXITCODE -ne 0) { throw 'Source locks changed during build' }

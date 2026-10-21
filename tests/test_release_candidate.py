@@ -6,6 +6,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 from unittest import mock
 import urllib.request
 import zipfile
@@ -14,7 +15,7 @@ from tools import release_candidate as release
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TEMP_ROOT = ROOT / 'outputs' / 'release-verifier-tests'
+TEMP_ROOT = temporary_tests_root(ROOT) / 'release-verifier-tests'
 COMMIT = 'a' * 40
 TREE = 'b' * 40
 

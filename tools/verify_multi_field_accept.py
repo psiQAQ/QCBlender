@@ -25,7 +25,7 @@ parser.add_argument('--science-root', type=Path)
 parser.add_argument('--case', choices=('paired-second', 'import-second', 'import-first'), required=True)
 args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
 ROOT = args.root.resolve(strict=True)
-sys.path[:0] = [str(ROOT), str(args.science_root or ROOT / 'outputs/science')]
+sys.path[:0] = [str(ROOT), str(args.science_root or ROOT / 'modules/science')]
 import qcblender
 assert Path(qcblender.__file__).resolve().parent == ROOT / 'qcblender', 'Product checkout does not match --root'
 from qcblender.data import filesystem_path, load_dataset, save_dataset, volume_cache

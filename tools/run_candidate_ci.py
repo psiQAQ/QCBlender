@@ -15,8 +15,9 @@ from tools.package_identity import extension_filename, file_record, source_ident
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--blender', type=Path, required=True)
-    parser.add_argument('--site', type=Path, default=ROOT / 'outputs/science')
+    parser.add_argument('--site', type=Path, default=ROOT / 'modules/science')
     parser.add_argument('--output-dir', type=Path, default=ROOT / 'outputs/candidate-ci')
+    parser.add_argument('--work-dir', type=Path, help='Temporary profiles and installed environments; defaults to .tmp/runs/candidate-ci/<run-id>')
     parser.add_argument('--run-id', type=int, required=True)
     parser.add_argument('--channel', choices=('alpha', 'preview'), default='alpha')
     args = parser.parse_args()
@@ -27,15 +28,17 @@ def main():
         raise RuntimeError('Run candidate qualification with the locked Blender Python and host NumPy')
     out = args.output_dir.resolve()
     out.mkdir(parents=True, exist_ok=False)
+    work = (args.work_dir or ROOT / '.tmp/runs/candidate-ci' / str(args.run_id)).resolve()
+    work.mkdir(parents=True, exist_ok=False)
     reports, logs = out / 'reports', out / 'logs'
     reports.mkdir()
     logs.mkdir()
     env = os.environ.copy()
-    profile = out / 'profile'
+    profile = work / 'profile'
     for key, path in {
             'BLENDER_USER_RESOURCES': profile, 'BLENDER_USER_CONFIG': profile / 'config',
             'BLENDER_USER_EXTENSIONS': profile / 'extensions', 'BLENDER_USER_DATAFILES': profile / 'datafiles',
-            'BLENDER_USER_CACHE': out / 'cache', 'TEMP': out / 'process-temp', 'TMP': out / 'process-temp'}.items():
+            'BLENDER_USER_CACHE': work / 'cache', 'TEMP': work / 'process-temp', 'TMP': work / 'process-temp'}.items():
         path.mkdir(parents=True, exist_ok=True)
         env[key] = str(path)
     env.update(PYTHONNOUSERSITE='1', PYTHONUTF8='1', PYTHONDONTWRITEBYTECODE='1')
@@ -86,7 +89,7 @@ def main():
     native('node-helpers', ['verify_node_helpers.py'], ['--report', helper_report])
     fresh_report(helper_report, 'node-helpers')
     assets_report = reports / 'node-assets.json'
-    qa = out / 'installed-qualification'
+    qa = work / 'installed-qualification'
     native('extension-install', ['verify_extension.py'],
            ['--candidate', candidate, '--output-dir', qa])
     initial = fresh_report(qa / 'extension.json', 'extension-install', candidate_sha)

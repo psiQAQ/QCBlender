@@ -7,8 +7,8 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 GBASIS_COMMIT = '071969c900d6d7a9fbbdfe193c65ba3be177fbdf'
-ARCHIVES = {'iodata': 'outputs/m0-research/iodata.zip',
-            'gbasis': f'outputs/build-sources/gbasis-{GBASIS_COMMIT}.zip'}
+ARCHIVES = {'iodata': 'modules/sources/iodata/iodata.zip',
+            'gbasis': f'modules/sources/gbasis/gbasis-{GBASIS_COMMIT}.zip'}
 LICENSES = {'chemtools': 'LICENSE', 'iodata': 'LICENSE.txt', 'gbasis': 'LICENSE'}
 
 

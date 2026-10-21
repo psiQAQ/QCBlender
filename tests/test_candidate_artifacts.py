@@ -8,6 +8,7 @@ import shutil
 import tempfile
 import threading
 import unittest
+from tools.workspace_paths import temporary_tests_root
 from unittest.mock import patch
 import zipfile
 
@@ -28,8 +29,7 @@ class PortableRuntimeDownload(unittest.TestCase):
     """Exercise real HTTP requests against a local download-policy boundary."""
 
     def setUp(self):
-        (ROOT / 'outputs').mkdir(exist_ok=True)
-        self.temporary = tempfile.TemporaryDirectory(prefix='portable-tests-', dir=ROOT / 'outputs')
+        self.temporary = tempfile.TemporaryDirectory(prefix='portable-tests-', dir=temporary_tests_root(ROOT))
         self.addCleanup(self.temporary.cleanup)
         self.output = Path(self.temporary.name) / 'runtime'
         buffer = io.BytesIO()
@@ -100,8 +100,7 @@ class PortableRuntimeDownload(unittest.TestCase):
 
 class CandidateBoundaries(unittest.TestCase):
     def setUp(self):
-        (ROOT / 'outputs').mkdir(exist_ok=True)
-        self.temporary = tempfile.TemporaryDirectory(prefix='candidate-tests-', dir=ROOT / 'outputs')
+        self.temporary = tempfile.TemporaryDirectory(prefix='candidate-tests-', dir=temporary_tests_root(ROOT))
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name)
         (self.root / 'qcblender').mkdir()
@@ -321,13 +320,13 @@ class CandidateBoundaries(unittest.TestCase):
 
     def qualified_zip_fixture(self):
         (self.root / 'qcblender/__init__.py').write_text('VALUE = 1\n', encoding='utf-8')
-        (self.root / 'outputs').mkdir()
+        (self.root / 'modules').mkdir()
         wheel = io.BytesIO()
         with zipfile.ZipFile(wheel, 'w') as archive:
             archive.writestr('gbasis/__init__.py', '')
             archive.writestr('gbasis/QCBLENDER_BUILD.md', 'Synthetic packaging boundary')
         backend = dict(name='qc-gbasis', filename='qc_gbasis-0.1.0-py3-none-any.whl', sha256=hashlib.sha256(wheel.getvalue()).hexdigest())
-        (self.root / 'outputs/backend-wheel.json').write_text(json.dumps(backend), encoding='utf-8')
+        (self.root / 'modules/backend-wheel.json').write_text(json.dumps(backend), encoding='utf-8')
         (self.root / 'dependencies.lock.json').write_text('{"packages":[]}', encoding='utf-8')
         for name in ('LICENSE', 'THIRD_PARTY.md'):
             (self.root / name).write_text('Synthetic packaging boundary', encoding='utf-8')

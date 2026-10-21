@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', required=True, type=Path)
 parser.add_argument('--output', required=True, type=Path)
-parser.add_argument('--science-root', type=Path, default=ROOT / 'outputs/science')
+parser.add_argument('--science-root', type=Path, default=ROOT / 'modules/science')
 args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
 sys.path[:0] = [str(ROOT), str(args.science_root)]
 import qcblender

@@ -12,7 +12,7 @@ parser.add_argument('--reference-root', type=Path, default=ROOT)
 parser.add_argument('--reopen', action='store_true')
 args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
 import bpy
-sys.path[:0] = [str(ROOT), str(args.reference_root / 'outputs' / 'science')]
+sys.path[:0] = [str(ROOT), str(args.reference_root / 'modules' / 'science')]
 from tools.comparison_fixture import candidate_node_library, prepare_comparison_cube
 import qcblender
 from qcblender.blender import asset_library

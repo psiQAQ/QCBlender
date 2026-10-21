@@ -10,7 +10,7 @@ from urllib.request import urlopen
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'outputs'
+OUT = ROOT / 'modules'
 COMMIT = '071969c900d6d7a9fbbdfe193c65ba3be177fbdf'
 SOURCE_HASH = '42c80656a3a744ad528d69c6cb5a7c805c1278ce3d560f822f8a3ca3848e43d4'
 VERSION = '0.1.0+qcblender.071969c.pure1'
@@ -29,7 +29,7 @@ def verify_source_lock(root=ROOT):
 
 def main():
     source_record = verify_source_lock()
-    base = OUT / 'build-sources'
+    base = OUT / 'sources/gbasis'
     base.mkdir(parents=True, exist_ok=True)
     url = source_record['url']
     archive = base / f'gbasis-{COMMIT}.zip'
@@ -38,7 +38,9 @@ def main():
             archive.write_bytes(response.read())
     if hashlib.sha256(archive.read_bytes()).hexdigest() != SOURCE_HASH:
         raise ValueError('Pinned GBasis source checksum mismatch')
-    with tempfile.TemporaryDirectory(prefix='gbasis-python-', dir=OUT) as temporary:
+    build = ROOT / '.tmp/build'
+    build.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='gbasis-python-', dir=build) as temporary:
         stage = Path(temporary)
         with zipfile.ZipFile(archive) as package:
             prefix = f'gbasis-{COMMIT}/'
@@ -76,8 +78,8 @@ gbasis = ["QCBLENDER_BUILD.md"]
 ''', encoding='utf-8')
         env = os.environ.copy()
         env.update(PYTHONPATH=str(OUT / 'build-site'), PYTHONNOUSERSITE='1', PYTHONUTF8='1',
-                   TEMP=str(OUT / 'process-temp'), TMP=str(OUT / 'process-temp'))
-        (OUT / 'process-temp').mkdir(exist_ok=True)
+                   TEMP=str(build / 'process-temp'), TMP=str(build / 'process-temp'))
+        (build / 'process-temp').mkdir(exist_ok=True)
         subprocess.run([sys.executable, '-m', 'build', '--wheel', '--no-isolation',
                         '--outdir', str(OUT / 'wheels'), str(stage)], env=env, check=True)
     wheel = OUT / 'wheels' / f'qc_gbasis-{VERSION}-py3-none-any.whl'

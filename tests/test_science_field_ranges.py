@@ -58,7 +58,7 @@ class FieldRanges(unittest.TestCase):
             field_range(source, '')
 
     def test_worker_checks_identity_integrity_cancel_and_no_dataset_writes(self):
-        output = ROOT / 'outputs/science-field-ranges'
+        output = ROOT / '.tmp/tests/science-field-ranges'
         output.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(dir=output) as temporary:
             target = Path(temporary) / 'dataset'

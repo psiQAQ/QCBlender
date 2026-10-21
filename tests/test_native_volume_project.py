@@ -5,6 +5,7 @@ import sys
 import tempfile
 from types import SimpleNamespace
 import unittest
+from tools.workspace_paths import temporary_tests_root
 from unittest.mock import patch
 
 
@@ -21,8 +22,8 @@ class Volume(SimpleNamespace):
 
 class NativeVolumeProjectTests(unittest.TestCase):
     def setUp(self):
-        outputs = ROOT / 'outputs'
-        outputs.mkdir(exist_ok=True)
+        outputs = temporary_tests_root(ROOT)
+        outputs.mkdir(parents=True, exist_ok=True)
         self.temporary = tempfile.TemporaryDirectory(prefix='native-volume-unit-', dir=outputs)
         self.addCleanup(self.temporary.cleanup)
         self.directory = Path(self.temporary.name)

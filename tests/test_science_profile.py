@@ -54,7 +54,7 @@ class LineProfile(unittest.TestCase):
         data = self.profile(start, end)
         self.assertEqual(valid_runs(data.arrays['profile_valid']), [(0, 2), (3, 5)])
         self.assertEqual(data.arrays['profile_values'][2], 0.)
-        output = ROOT / 'outputs/science-profile'
+        output = ROOT / '.tmp/tests/science-profile'
         output.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(dir=output) as temporary:
             directory = Path(temporary)
@@ -103,7 +103,7 @@ class LineProfile(unittest.TestCase):
     def test_failed_csv_write_keeps_previous_file(self):
         start, end = self.positions[0, 1, 1], self.positions[4, 1, 1]
         data = self.profile(start, end)
-        output = ROOT / 'outputs/science-profile'
+        output = ROOT / '.tmp/tests/science-profile'
         output.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(dir=output) as temporary:
             target = Path(temporary) / 'profile.csv'

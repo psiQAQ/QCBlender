@@ -1,6 +1,7 @@
 from pathlib import Path
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 
 import numpy as np
 
@@ -17,7 +18,7 @@ class CubeReader(unittest.TestCase):
         text = ('Test two orbitals\nSigned anisotropic grid\n-1 1 2 3\n'
                 '2 .2 0 0\n3 .1 .3 0\n4 0 0 .4\n6 6 1 2 3\n2 7 9\n'
                 + ' '.join(map(str, values)))
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             path = Path(directory) / 'test.cube'
             path.write_text(text, encoding='ascii')
             data = read_cube(path)
@@ -33,7 +34,7 @@ class CubeReader(unittest.TestCase):
 
     def test_unknown_quantity_units_and_malformed_values(self):
         header = 'HOMO_density_ESP_filename_is_not_evidence\nComments\n1 1 2 3\n-2 1 0 0\n-2 0 1 0\n-2 0 0 1\n1 0.0 1 2 3\n'
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             path = Path(directory) / 'density.cube'
             path.write_text(header + '1 2 3 4 5 6 7 8', encoding='ascii')
             data = read_cube(path)

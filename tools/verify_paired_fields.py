@@ -9,7 +9,7 @@ import sys
 import bpy
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path[:0] = [str(ROOT), str(ROOT / 'outputs' / 'science')]
+sys.path[:0] = [str(ROOT), str(ROOT / 'modules' / 'science')]
 import qcblender
 from qcblender.data import load_dataset, save_dataset
 from qcblender.external_fields import pair_cubes

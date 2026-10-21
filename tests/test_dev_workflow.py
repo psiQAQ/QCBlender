@@ -5,6 +5,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 
 from tools.dev_workflow.records import Run, read
 from tools.dev_workflow.catalog import query
@@ -13,8 +14,7 @@ from tools.dev_workflow.catalog import query
 class WorkflowTests(unittest.TestCase):
     def setUp(self):
         root=Path(__file__).resolve().parents[1]
-        (root/'outputs').mkdir(exist_ok=True)
-        self.temp=tempfile.TemporaryDirectory(prefix='workflow-tests-',dir=root/'outputs')
+        self.temp=tempfile.TemporaryDirectory(prefix='workflow-tests-',dir=temporary_tests_root(root))
         self.addCleanup(self.temp.cleanup)
         self.path=Path(self.temp.name)
         self.run=Run(root,self.path)

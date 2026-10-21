@@ -7,6 +7,7 @@ from pathlib import Path
 import shutil
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 from unittest.mock import patch
 
 import numpy as np
@@ -23,8 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class ResourceContract(unittest.TestCase):
     def setUp(self):
-        (ROOT / 'outputs').mkdir(exist_ok=True)
-        self.temp = tempfile.TemporaryDirectory(dir=ROOT / 'outputs')
+        self.temp = tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT))
         self.addCleanup(self.temp.cleanup)
         self.directory = Path(self.temp.name)
         self.data = Dataset({'coordinate_unit': 'angstrom'}, {
@@ -120,8 +120,7 @@ class ResourceContract(unittest.TestCase):
 
 class ScientificQualification(unittest.TestCase):
     def setUp(self):
-        (ROOT / 'outputs').mkdir(exist_ok=True)
-        self.temp = tempfile.TemporaryDirectory(dir=ROOT / 'outputs')
+        self.temp = tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT))
         self.addCleanup(self.temp.cleanup)
         self.directory = Path(self.temp.name)
         self.data = read_source(ROOT / 'validation/shared/data/regression/iodata/o2_cc_pvtz_pure.fchk')

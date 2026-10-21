@@ -14,7 +14,7 @@ from .records import Run, digest, identity, read, write
 def parser():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--repo',type=Path,default=Path(__file__).resolve().parents[2])
-    p.add_argument('--run-dir',type=Path,help='New task directory under outputs; long logs and receipts stay here')
+    p.add_argument('--run-dir',type=Path,help='Task work directory under .tmp/runs; explicit paths remain supported')
     commands=p.add_subparsers(dest='command',required=True)
     q=commands.add_parser('query',help='Read only matching historical GUI operations')
     q.add_argument('query'); q.add_argument('--limit',type=int,default=5)
@@ -28,6 +28,7 @@ def parser():
     q.add_argument('--reuse',type=Path);q.add_argument('--retry',action='store_true')
     q=commands.add_parser('build',help='Full extension and node asset rebuild with existing locked wheels')
     q.add_argument('--blender',type=Path,required=True);q.add_argument('--existing-candidate',type=Path)
+    q.add_argument('--output-dir',type=Path,help='Candidate destination; defaults to outputs/candidates/<run directory name>')
     q.add_argument('--retry',action='store_true')
     q=commands.add_parser('install',help='Install and verify exact candidate bytes in a fresh Blender process')
     q.add_argument('--candidate',type=Path,required=True);q.add_argument('--blender',type=Path,required=True)
@@ -120,9 +121,9 @@ def main():
         source_identity(repo)
         if list_blender_processes(): raise ValueError('Close Blender before the serial full build')
         if args.existing_candidate:prepare_build(repo,args.existing_candidate)
+        out=(args.output_dir or repo/'outputs/candidates'/run.directory.name).resolve()
         key=identity(repo,['qcblender','tools/build_extension.py','tools/build_node_assets.py','dependencies.lock.json','science-sources.lock.json'],
-                     [args.blender,repo/'outputs/backend-wheel.json'])
-        out=run.directory/'dist'
+                     [args.blender,repo/'modules/backend-wheel.json'],environment={'candidate_directory':str(out)})
         result=run.command('build',[sys.executable,'-B',repo/'tools/build_extension.py','--blender',args.blender,'--output-dir',out],key,retry=args.retry)
         if result['status']=='Passed':
             candidate=compare_candidate(repo,out/extension_filename(repo))

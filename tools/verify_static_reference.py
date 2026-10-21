@@ -17,7 +17,7 @@ parser.add_argument('--root', type=Path, required=True)
 parser.add_argument('--sample', type=Path, required=True)
 parser.add_argument('--out', type=Path, required=True)
 args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
-sys.path[:0] = [str(args.root), str(args.sample / 'outputs/science')]
+sys.path[:0] = [str(args.root), str(args.sample / 'modules/science')]
 import qcblender
 from tools.local_inputs import input_path
 from qcblender.data import save_dataset

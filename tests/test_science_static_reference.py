@@ -4,10 +4,11 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 
 ROOT = Path(__file__).resolve().parents[1]
 SAMPLES = Path(os.environ.get('QCBLENDER_REFERENCE_ROOT', ROOT))
-sys.path[:0] = [str(ROOT), str(SAMPLES / 'outputs/science')]
+sys.path[:0] = [str(ROOT), str(SAMPLES / 'modules/science')]
 from qcblender.data import save_dataset
 from qcblender.gaussian_log import read_log
 from qcblender.irc import import_irc
@@ -24,8 +25,8 @@ class StaticReference(unittest.TestCase):
             with self.subTest(format=data.metadata['source'].get('format')):
                 with self.assertRaisesRegex(ValueError, '独立'):
                     require_static_reference(data)
-                ROOT.joinpath('outputs').mkdir(exist_ok=True)
-                with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as tmp:
+                ROOT.joinpath('.tmp/tests').mkdir(parents=True, exist_ok=True)
+                with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as tmp:
                     save_dataset(data, tmp)
                     digest = hashlib.sha256(Path(tmp, 'manifest.json').read_bytes()).hexdigest()
                     with self.assertRaisesRegex(ValueError, '独立'):
@@ -38,8 +39,8 @@ class StaticReference(unittest.TestCase):
             self.assertIs(require_static_reference(data), data)
 
     def test_multiframe_xyz_is_rejected_and_single_frame_is_static(self):
-        ROOT.joinpath('outputs').mkdir(exist_ok=True)
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as tmp:
+        ROOT.joinpath('.tmp/tests').mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as tmp:
             path = Path(tmp, 'frames.xyz')
             frame = '1\nHydrogen\nH 0 0 0\n'
             path.write_text(frame + frame.replace('0 0 0', '0 0 1'), encoding='utf-8')

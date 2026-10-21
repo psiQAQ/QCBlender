@@ -6,7 +6,7 @@ for n in ('reference-root','run','irc-run','evidence'):p.add_argument('--'+n,typ
 a=p.parse_args();ROOT=Path(__file__).resolve().parents[1];REF=a.reference_root.resolve();RUN=a.run.resolve();IRC=a.irc_run.resolve();E=a.evidence.resolve()
 if E.exists():raise FileExistsError(E)
 E.mkdir(parents=True)
-sys.path[:0]=[str(REF/'outputs/science'),str(ROOT)]
+sys.path[:0]=[str(REF/'modules/science'),str(ROOT)]
 import numpy as np
 from qcblender.readers import read_fchk,read_source
 from qcblender.evaluate import evaluate_points

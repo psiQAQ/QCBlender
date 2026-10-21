@@ -16,18 +16,20 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--blender', type=Path)
     parser.add_argument('--output-dir', type=Path, default=ROOT / 'outputs' / 'dist')
-    parser.add_argument('--wheels-dir', type=Path, default=ROOT / 'outputs' / 'wheels')
+    parser.add_argument('--wheels-dir', type=Path, default=ROOT / 'modules' / 'wheels')
     args = parser.parse_args()
-    runtime = ROOT / 'outputs' / 'blender-runtime.json'
+    runtime = ROOT / '.local' / 'blender' / 'runtime.json'
     blender = args.blender or Path(json.loads(runtime.read_text(encoding='utf-8'))['binary_path'])
     lock = json.loads((ROOT / 'dependencies.lock.json').read_text(encoding='utf-8'))
-    backend_record = ROOT / 'outputs' / 'backend-wheel.json'
+    backend_record = ROOT / 'modules' / 'backend-wheel.json'
     if not backend_record.exists():
         raise RuntimeError('Build and qualify the science backend before packaging')
     packages = lock['packages'] + [json.loads(backend_record.read_text(encoding='utf-8'))]
     output = args.output_dir.resolve()
     output.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix='extension-stage-', dir=ROOT / 'outputs') as directory:
+    build = ROOT / '.tmp/build'
+    build.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='extension-stage-', dir=build) as directory:
         stage = Path(directory) / 'qcblender'
         shutil.copytree(ROOT / 'qcblender', stage, ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
         wheels = stage / 'wheels'
@@ -48,10 +50,13 @@ def main():
         shutil.copy2(ROOT / 'dependencies.lock.json', stage / 'dependencies.lock.json')
         shutil.copy2(backend_record, stage / 'backend-wheel.json')
         env = os.environ.copy()
-        env['BLENDER_USER_RESOURCES'] = str(ROOT / 'outputs' / 'blender-build')
-        env['BLENDER_USER_CACHE'] = str(ROOT / 'outputs' / 'blender-cache')
+        env['BLENDER_USER_RESOURCES'] = str(build / 'blender')
+        env['BLENDER_USER_CACHE'] = str(ROOT / '.tmp/cache/blender-build')
+        process_temp = build / 'process-temp'
+        process_temp.mkdir(parents=True, exist_ok=True)
+        env.update(TEMP=str(process_temp), TMP=str(process_temp))
         for kind in ('CONFIG', 'EXTENSIONS', 'DATAFILES'):
-            directory = ROOT / 'outputs' / 'blender-build' / kind.lower()
+            directory = build / 'blender' / kind.lower()
             directory.mkdir(parents=True, exist_ok=True)
             env['BLENDER_USER_' + kind] = str(directory)
         subprocess.run([str(blender), '--background', '--factory-startup', '--offline-mode', '--disable-autoexec',

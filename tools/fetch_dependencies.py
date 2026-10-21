@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def fetch(info):
     package, version = info['name'], info['version']
-    path = ROOT / 'outputs' / 'wheels' / info['filename']
+    path = ROOT / 'modules' / 'wheels' / info['filename']
     path.parent.mkdir(parents=True, exist_ok=True)
     if not path.exists():
         with urlopen(info['url'], timeout=120) as response:

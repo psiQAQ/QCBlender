@@ -415,7 +415,7 @@ def main():
     args = parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
     output_dir = args.output_dir.resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
-    assert Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to((ROOT / 'outputs').resolve()), 'Use an isolated Blender profile under outputs/'
+    assert any(Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to((ROOT / directory).resolve()) for directory in ('.tmp/runs', '.local/blender/dev-profile', 'outputs')), 'Use an isolated Blender profile under .tmp/runs/'
     assert bpy.ops.preferences.addon_enable(module=MODULE) == {'FINISHED'}
     if args.fixture_blend:
         assert args.case != 'gui', 'Open the isolated GUI fixture before --case gui'

@@ -8,7 +8,7 @@ import bpy
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.local_inputs import input_path
-sys.path[:0] = [str(ROOT), str(ROOT / 'outputs' / 'science')]
+sys.path[:0] = [str(ROOT), str(ROOT / 'modules' / 'science')]
 import qcblender
 from qcblender.data import load_dataset, save_dataset
 from qcblender.gaussian_log import read_log

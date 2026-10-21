@@ -10,7 +10,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
-parser.add_argument('--site', type=Path, default=ROOT / 'outputs/science')
+parser.add_argument('--site', type=Path, default=ROOT / 'modules/science')
 parser.add_argument('--output', type=Path, default=ROOT / 'outputs/science-reference.json')
 parser.add_argument('--suite', choices=('full', 'public-core'), default='full')
 args = parser.parse_args()

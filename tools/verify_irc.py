@@ -9,7 +9,7 @@ import bpy
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path[:0] = [str(ROOT), str(ROOT / 'outputs/science')]
+sys.path[:0] = [str(ROOT), str(ROOT / 'modules/science')]
 import qcblender
 from qcblender.data import load_dataset
 from qcblender.data_export import export_dataset

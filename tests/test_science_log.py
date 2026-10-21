@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 
 import numpy as np
 
@@ -18,7 +19,7 @@ DATA = ROOT / 'validation/shared/data/regression/cclib'
 
 class GaussianLog(unittest.TestCase):
     def test_nbo_block_preview_respects_calculation_boundaries(self):
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             path = Path(directory) / 'blocks.log'
             path.write_text(' # HF/STO-3G\nNatural Bond Orbitals (Summary)\n'
                             'Natural Bond Orbitals (Summary)\n'
@@ -43,7 +44,7 @@ class GaussianLog(unittest.TestCase):
                 self.assertEqual(preview['jobs'], data.metadata['jobs'])
                 self.assertEqual(preview['source']['sha256'], data.metadata['source']['sha256'])
                 self.assertEqual(data.metadata['selected_job'], index)
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             missing = Path(directory) / 'missing.log'
             missing.write_text(' # HF/STO-3G\n\n Error termination\n', encoding='utf-8')
             job = inspect_log(missing)['jobs'][0]
@@ -55,7 +56,6 @@ class GaussianLog(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        (ROOT / 'outputs').mkdir(exist_ok=True)
         for record in json.loads((DATA / 'sources.json').read_text(encoding='utf-8')):
             assert hashlib.sha256((DATA / record['file']).read_bytes()).hexdigest() == record['sha256']
 
@@ -74,7 +74,7 @@ class GaussianLog(unittest.TestCase):
             ' Link1:  Proceeding to internal job step number 2.\n',
             ' # HF/STO-3G\n', '\n',
         ]
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             path = Path(directory) / 'segments.log'
             path.write_text(''.join(lines), encoding='utf-8')
             jobs = inspect_log(path)['jobs']
@@ -107,7 +107,7 @@ class GaussianLog(unittest.TestCase):
                                  (healthy, ['normal', 'normal']),
                                  (healthy.partition('\n')[2], ['normal', 'normal'])]:
             with self.subTest(statuses=statuses):
-                with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+                with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
                     path = Path(directory) / 'concatenated.log'
                     path.write_text(prefix + healthy, encoding='utf-8')
                     jobs = inspect_log(path)['jobs']
@@ -137,7 +137,7 @@ class GaussianLog(unittest.TestCase):
                         self.assertEqual(jobs[0]['energies'], [])
                         with self.assertRaisesRegex(ValueError, 'explicit geometry'):
                             read_log(path, 0)
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             path = Path(directory) / 'healthy-then-failed.log'
             path.write_text(healthy + failed, encoding='utf-8')
             self.assertFalse(inspect_log(path)['jobs'][1]['explicit_geometry'])
@@ -231,7 +231,7 @@ class GaussianLog(unittest.TestCase):
         self.assertEqual(data.arrays['mode_ir_intensities'].shape, (54,))
         np.testing.assert_allclose(np.linalg.norm(data.arrays['mode_display_displacements'], axis=2).max(axis=1), 1)
         self.assertEqual(data.metadata['dipole']['unit'], 'debye')
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             save_dataset(data, directory)
             restored = load_dataset(directory)
             self.assertEqual(restored.metadata, data.metadata)
@@ -253,7 +253,7 @@ class GaussianLog(unittest.TestCase):
         self.assertEqual(target['method'], 'DSDPBEP86')
         self.assertEqual(target['archive_consistency'], 'matched')
         self.assertAlmostEqual(target['value_hartree'], -852.43369150131, places=10)
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             partial = Path(directory) / 'truncated.log'
             partial.write_text(''.join(path.read_text(encoding='utf-8').splitlines(keepends=True)[:-5]), encoding='utf-8')
             incomplete = read_log(partial, 1)

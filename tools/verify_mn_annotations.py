@@ -437,6 +437,6 @@ if __name__ == '__main__':
     parser.add_argument('--check', choices=['annotations', 'reopen', 'geometry'], required=True)
     args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
     bpy.ops.preferences.addon_enable(module=evidence.MODULE)
-    assert Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to(args.out.parent.resolve())
+    assert any(Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to(path) for path in ((ROOT / '.tmp/runs').resolve(), args.out.parent.resolve()))
     result = {'annotations': check_annotations, 'reopen': check_reopen, 'geometry': check_geometry}[args.check](args.out)
     print(json.dumps(result, ensure_ascii=False))

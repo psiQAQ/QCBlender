@@ -28,7 +28,7 @@ class ProbeScientificMetadata(unittest.TestCase):
         """Use actual manifest reader, binding checks, Dataset IO and profile resolver."""
         import numpy as np
         from qcblender.data import Dataset, load_dataset, save_dataset
-        output = ROOT / 'outputs/property-viewport-context'
+        output = ROOT / '.tmp/tests/property-viewport-context'
         output.mkdir(parents=True, exist_ok=True)
         temporary = tempfile.TemporaryDirectory(dir=output)
         self.addCleanup(temporary.cleanup)

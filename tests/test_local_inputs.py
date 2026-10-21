@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 from unittest.mock import patch
 
 from tools.local_inputs import CATALOG, DATA, ROOT, input_path, public_input_path
@@ -11,7 +12,7 @@ from tools.local_inputs import CATALOG, DATA, ROOT, input_path, public_input_pat
 
 class LocalInputs(unittest.TestCase):
     def test_missing_changed_and_unindexed_input_fail(self):
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             root = Path(directory)
             data = root / 'validation/shared/data/local'
             data.mkdir(parents=True)
@@ -34,7 +35,7 @@ class LocalInputs(unittest.TestCase):
                     input_path(invalid, root)
 
     def test_shared_public_keys_and_reference_root_use_one_verified_copy(self):
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             root = Path(directory)
             public = root / DATA / 'public/P03/igmh'
             public.mkdir(parents=True)
@@ -55,7 +56,7 @@ class LocalInputs(unittest.TestCase):
                 input_path('public-tutorial/P03/igmh', root)
 
     def test_catalog_cannot_escape_data_or_merge_unrelated_directories(self):
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             root = Path(directory)
             (root / DATA).mkdir(parents=True)
             for relative in ('outside.log', DATA + '/regression/outside.log', '../outside.log'):
@@ -81,7 +82,7 @@ class LocalInputs(unittest.TestCase):
                 input_path('nested', root)
 
     def test_public_input_uses_archive_location_and_frozen_identity(self):
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             root = Path(directory)
             path = root / DATA / 'public/P01/example.fchk'
             path.parent.mkdir(parents=True)

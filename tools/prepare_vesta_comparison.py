@@ -13,7 +13,7 @@ def main():
     parser.add_argument('--output-dir', type=Path, required=True)
     parser.add_argument('--reference-root', type=Path, default=ROOT)
     args = parser.parse_args()
-    sys.path[:0] = [str(ROOT), str(args.reference_root / 'outputs/science')]
+    sys.path[:0] = [str(ROOT), str(args.reference_root / 'modules/science')]
     from tools.comparison_fixture import prepare_comparison_cube, comparison_source
     from qcblender.cube import read_cube
 

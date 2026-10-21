@@ -5,6 +5,7 @@ from pathlib import Path
 import shutil
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 
 from tools.local_inputs import CATALOG, DATA, ROOT
 from tools.prepare_validation_data import FROZEN_MANIFEST, MIGRATION, prepare
@@ -12,8 +13,7 @@ from tools.prepare_validation_data import FROZEN_MANIFEST, MIGRATION, prepare
 
 class ValidationDataPreparation(unittest.TestCase):
     def setUp(self):
-        (ROOT / 'outputs').mkdir(exist_ok=True)
-        self.temporary = tempfile.TemporaryDirectory(dir=ROOT / 'outputs')
+        self.temporary = tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT))
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name) / 'checkout'
         migration = json.loads((ROOT / MIGRATION).read_text(encoding='utf-8'))

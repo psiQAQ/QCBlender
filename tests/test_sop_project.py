@@ -8,6 +8,7 @@ import shutil
 import tempfile
 from types import SimpleNamespace
 import unittest
+from tools.workspace_paths import temporary_tests_root
 
 from qcblender.data import filesystem_path, unprefixed_path
 
@@ -73,8 +74,7 @@ class SOPProjectTests(unittest.TestCase):
         self.assertEqual(checker.compare_snapshots(baseline, actual)['status'], 'Failed')
 
     def test_moved_roots_normalize_but_external_runtime_paths_are_rejected(self):
-        (ROOT / 'outputs').mkdir(exist_ok=True)
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs', prefix='sop-project-') as folder:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT), prefix='sop-project-') as folder:
             base = Path(folder)
             normalized = []
             for name in ('original', '中文 moved'):
@@ -97,8 +97,7 @@ class SOPProjectTests(unittest.TestCase):
         self.assertEqual(checker.compare_snapshots(baseline, actual)['status'], 'Failed')
 
     def test_long_runtime_file_reference_and_digest_use_real_windows_io(self):
-        (ROOT / 'outputs').mkdir(exist_ok=True)
-        folder = Path(tempfile.mkdtemp(dir=ROOT / 'outputs', prefix='sop-long-path-'))
+        folder = Path(tempfile.mkdtemp(dir=temporary_tests_root(ROOT), prefix='sop-long-path-'))
         self.addCleanup(shutil.rmtree, filesystem_path(folder))
         root = folder / ('project-location-' + 'x' * 60) / ('nested-' + 'y' * 60)
         relative = Path('project.qcdata') / 'datasets' / ('a' * 64) / 'arrays' / ('b' * 64 + '.npy')

@@ -1,4 +1,5 @@
 """Run against the relocated acceptance .blend in an isolated Blender process."""
+import argparse
 import importlib
 import json
 from pathlib import Path
@@ -11,6 +12,10 @@ ROOT = Path(__file__).resolve().parents[1]
 import sys
 sys.path.insert(0, str(ROOT))
 from tools.local_inputs import input_path
+parser = argparse.ArgumentParser()
+parser.add_argument('--output-dir', type=Path, default=ROOT / 'outputs/recovery')
+parser.add_argument('--report', type=Path, default=ROOT / 'outputs/acceptance/recovery.json')
+args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
 MODULE = 'bl_ext.user_default.qcblender'
 bpy.ops.preferences.addon_enable(module=MODULE)
 storage = importlib.import_module(MODULE + '.data')
@@ -61,7 +66,7 @@ try:
     np.testing.assert_array_equal(vertices(surface), expected)
 finally:
     backup.rename(cache)
-relocated = copies.copy_dataset(rebuilt, ROOT / 'outputs/recovery/另一个目录')
+relocated = copies.copy_dataset(rebuilt, args.output_dir.resolve() / '另一个目录')
 bpy.context.view_layer.objects.active = surface
 assert bpy.ops.qcblender.relocate_dataset(filepath=str(relocated / 'manifest.json')) == {'FINISHED'}
 assert Path(surface['qc_dataset']) == relocated
@@ -91,5 +96,6 @@ exec(compile(script.read_text(encoding='utf-8'), str(script), 'exec'), {'__file_
 report = {'status': 'Passed', 'cache_rebuild_arrays_exact': 'Passed', 'cache_rebuild_geometry_exact': 'Passed',
           'relocate_by_manifest_identity': 'Passed', 'dipole_direction_length_zero': 'Passed',
           'atomic_charge_operator': 'Passed', 'vibration_ir': 'Passed'}
-(ROOT / 'outputs/acceptance/recovery.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
+args.report.parent.mkdir(parents=True, exist_ok=True)
+args.report.write_text(json.dumps(report, indent=2), encoding='utf-8')
 print(json.dumps(report))

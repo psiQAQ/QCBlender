@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 from unittest import mock
 
 
@@ -16,8 +17,7 @@ SPEC.loader.exec_module(workspace)
 
 class TutorialWorkspace(unittest.TestCase):
     def setUp(self):
-        (ROOT / 'outputs').mkdir(exist_ok=True)
-        self.temporary = tempfile.TemporaryDirectory(prefix='tutorial-workspace-', dir=ROOT / 'outputs')
+        self.temporary = tempfile.TemporaryDirectory(prefix='tutorial-workspace-', dir=temporary_tests_root(ROOT))
         self.addCleanup(self.temporary.cleanup)
         self.materials = Path(self.temporary.name) / 'validation'
         for part in workspace.PUBLIC_PARTS:

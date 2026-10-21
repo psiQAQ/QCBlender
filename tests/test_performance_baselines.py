@@ -4,14 +4,14 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 
 from tools import benchmark_fields as benchmark
 
 
 class PerformanceBoundaries(unittest.TestCase):
     def setUp(self):
-        (benchmark.ROOT / 'outputs').mkdir(exist_ok=True)
-        self.temporary = tempfile.TemporaryDirectory(dir=benchmark.ROOT / 'outputs', prefix='benchmark-test-')
+        self.temporary = tempfile.TemporaryDirectory(dir=temporary_tests_root(benchmark.ROOT), prefix='benchmark-test-')
         self.root = Path(self.temporary.name)
         self.addCleanup(self.temporary.cleanup)
 

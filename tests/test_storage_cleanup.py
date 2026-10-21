@@ -1,5 +1,6 @@
 """Critical boundaries of the approved output cleanup categories."""
 import unittest
+from tools.workspace_paths import temporary_tests_root
 import json
 import gzip
 import os
@@ -31,7 +32,7 @@ class CleanupBoundaries(unittest.TestCase):
 
 class PolicySafety(unittest.TestCase):
     def setUp(self):
-        base = cleanup.ROOT / 'outputs' / 'policy-tests'
+        base = temporary_tests_root(cleanup.ROOT) / 'policy-tests'
         base.mkdir(parents=True, exist_ok=True)
         self.temp = tempfile.TemporaryDirectory(dir=base)
         self.addCleanup(self.temp.cleanup)

@@ -7,7 +7,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 os.environ['PATH'] = os.pathsep.join([str(Path(sys.executable).parent),
                                      os.environ.get('SystemRoot', 'C:/Windows') + '/System32'])
-sys.path.insert(0, str(ROOT / 'outputs' / 'science'))
+sys.path.insert(0, str(ROOT / 'modules' / 'science'))
 import numpy as np
 from iodata import load_one
 from gbasis.wrappers import from_iodata

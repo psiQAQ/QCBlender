@@ -88,7 +88,7 @@ class Manager:
 
 class Cancellation(unittest.TestCase):
     def setUp(self):
-        self.directory = ROOT / 'outputs/tests/cancel-finalization' / self.id().rsplit('.', 1)[-1]
+        self.directory = ROOT / '.tmp/tests/tests/cancel-finalization' / self.id().rsplit('.', 1)[-1]
         self.directory.mkdir(parents=True, exist_ok=True)
         jobs._active.clear()
         ui._operations.clear()

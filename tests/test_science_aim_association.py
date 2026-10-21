@@ -27,7 +27,7 @@ class AimAssociation(unittest.TestCase):
         cls.source = (C09 / 'CPprop.txt').read_text(encoding='utf-8')
 
     def import_properties(self, text):
-        output = ROOT / 'outputs/science-aim-association'
+        output = ROOT / '.tmp/tests/science-aim-association'
         output.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(dir=output) as temporary:
             path = Path(temporary) / 'CPprop.txt'

@@ -19,7 +19,7 @@ OUT = args.out.resolve()
 if args.phase == 'baseline' and OUT.exists():
     raise FileExistsError('Choose an unused baseline directory: ' + str(OUT))
 OUT.mkdir(parents=True, exist_ok=True)
-sys.path[:0] = [str(ROOT), str(args.reference_root / 'outputs/science')]
+sys.path[:0] = [str(ROOT), str(args.reference_root / 'modules/science')]
 import qcblender
 from qcblender.blender import asset_library, assets, views, scalars, properties, atomic_properties, fog, inspection
 from qcblender.blender.graph import view_modifier

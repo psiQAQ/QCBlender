@@ -8,7 +8,7 @@ from .records import digest, read, write
 
 def prepare_build(repo, candidate):
     """Copy already installed locked wheels into this checkout's build directory."""
-    wheels = repo/'outputs/wheels'
+    wheels = repo/'modules/wheels'
     wheels.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(candidate) as archive:
         backend = archive.read('backend-wheel.json')
@@ -22,7 +22,7 @@ def prepare_build(repo, candidate):
             target = wheels/package['filename']
             if not target.exists() or digest(target) != package['sha256']:
                 target.write_bytes(content)
-        (repo/'outputs/backend-wheel.json').write_bytes(backend)
+        (repo/'modules/backend-wheel.json').write_bytes(backend)
     return len(packages)
 
 

@@ -6,6 +6,7 @@ from pathlib import Path
 import tempfile
 import sys
 import unittest
+from tools.workspace_paths import temporary_tests_root
 from unittest.mock import Mock, patch
 
 from test_cancel_finalization import ui, ROOT
@@ -269,10 +270,9 @@ class QualificationHandoff(unittest.TestCase):
 
 class ScienceBinding(unittest.TestCase):
     def test_missing_or_stale_saved_digest_stops_before_qualification(self):
-        (ROOT / 'outputs').mkdir(exist_ok=True)
         identity = types.ModuleType('qcblender.science_identity')
         identity.scientific_identity = Mock(return_value={'sha256': 'science-sha'})
-        with tempfile.TemporaryDirectory(dir=ROOT / 'outputs') as directory:
+        with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             manifest = Path(directory) / 'manifest.json'
             manifest.write_bytes(b'{"identity":"original"}')
             digest = hashlib.sha256(manifest.read_bytes()).hexdigest()

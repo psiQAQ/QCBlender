@@ -6,6 +6,7 @@ from pathlib import Path
 import shutil
 import tempfile
 import unittest
+from tools.workspace_paths import temporary_tests_root
 
 from tools import benchmark_atom_styles as atoms
 
@@ -85,8 +86,7 @@ class BenchmarkBoundaries(unittest.TestCase):
             atoms.bench.integers('32,32')
 
     def test_existing_evidence_directory_and_files_are_never_overwritten(self):
-        (ROOT / 'outputs').mkdir(exist_ok=True)
-        with tempfile.TemporaryDirectory(prefix='atom-benchmark-tests-', dir=ROOT / 'outputs') as temporary:
+        with tempfile.TemporaryDirectory(prefix='atom-benchmark-tests-', dir=temporary_tests_root(ROOT)) as temporary:
             directory = Path(temporary)
             previous = directory / 'report.json'
             previous.write_bytes(b'preserved evidence')
@@ -97,8 +97,7 @@ class BenchmarkBoundaries(unittest.TestCase):
             self.assertEqual(previous.read_bytes(), b'preserved evidence')
 
     def test_dataset_identity_detects_changed_bytes_and_extra_files(self):
-        (ROOT / 'outputs').mkdir(exist_ok=True)
-        with tempfile.TemporaryDirectory(prefix='atom-benchmark-tests-', dir=ROOT / 'outputs') as temporary:
+        with tempfile.TemporaryDirectory(prefix='atom-benchmark-tests-', dir=temporary_tests_root(ROOT)) as temporary:
             directory = Path(temporary)
             (directory / 'manifest.json').write_bytes(b'original')
             first = atoms.file_identity(directory)
@@ -111,13 +110,12 @@ class BenchmarkBoundaries(unittest.TestCase):
 
 class InstalledPackageIdentity(unittest.TestCase):
     def setUp(self):
-        (ROOT / 'outputs').mkdir(exist_ok=True)
-        self.temporary = tempfile.TemporaryDirectory(prefix='atom-manifest-tests-', dir=ROOT / 'outputs')
+        self.temporary = tempfile.TemporaryDirectory(prefix='atom-manifest-tests-', dir=temporary_tests_root(ROOT))
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name) / 'source'
         self.installed = Path(self.temporary.name) / 'installed'
         (self.root / 'qcblender').mkdir(parents=True)
-        (self.root / 'outputs').mkdir()
+        (self.root / 'modules').mkdir()
         (self.installed / 'wheels').mkdir(parents=True)
         self.wheels = [('test_dependency-1-py3-none-any.whl', b'locked dependency bytes'),
                        ('qc_gbasis-1-py3-none-any.whl', b'locked backend bytes')]
@@ -134,7 +132,7 @@ class InstalledPackageIdentity(unittest.TestCase):
         for source, destination, value in (
             ('dependencies.lock.json', 'dependencies.lock.json', {'packages': records[:1], 'host_provided': {}}),
             ('science-sources.lock.json', 'science-sources.lock.json', {'locked_science_source': 'fixture'}),
-            ('outputs/backend-wheel.json', 'backend-wheel.json', records[1]),
+            ('modules/backend-wheel.json', 'backend-wheel.json', records[1]),
         ):
             path = self.root / source
             path.write_text(json.dumps(value), encoding='utf-8')

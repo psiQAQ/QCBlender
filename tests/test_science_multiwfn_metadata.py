@@ -22,7 +22,7 @@ FCHK = input_path('complex-examples/Trp_polar.fchk', Path(os.environ.get('QCBLEN
 
 class MultiwfnMetadata(unittest.TestCase):
     def setUp(self):
-        output = ROOT / 'outputs/science-multiwfn-metadata'
+        output = ROOT / '.tmp/tests/science-multiwfn-metadata'
         output.mkdir(parents=True, exist_ok=True)
         self.temporary = tempfile.TemporaryDirectory(dir=output)
         self.addCleanup(self.temporary.cleanup)

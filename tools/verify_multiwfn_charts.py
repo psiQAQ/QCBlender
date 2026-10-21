@@ -318,7 +318,7 @@ if __name__ == '__main__':
     args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
     out = args.out.resolve()
     assert out.is_relative_to((ROOT / 'outputs').resolve()), 'Use an output directory inside the repository'
-    assert Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to((ROOT / 'outputs').resolve())
+    assert any(Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to((ROOT / directory).resolve()) for directory in ('.tmp/runs', '.local/blender/dev-profile', 'outputs'))
     assert bpy.ops.preferences.addon_enable(module=evidence.MODULE) == {'FINISHED'}
     installed = Path(module('blender.charts').__file__).resolve()
     assert 'extensions' in installed.parts and installed != ROOT / 'qcblender/blender/charts.py'

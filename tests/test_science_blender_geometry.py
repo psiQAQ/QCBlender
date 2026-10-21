@@ -51,7 +51,7 @@ class CurrentBlenderGeometry(unittest.TestCase):
         cls.browser, cls.geometry = real_blender_modules()
 
     def setUp(self):
-        output = ROOT / 'outputs/science-blender-geometry'
+        output = ROOT / '.tmp/tests/science-blender-geometry'
         output.mkdir(parents=True, exist_ok=True)
         temporary = tempfile.TemporaryDirectory(dir=output)
         self.addCleanup(temporary.cleanup)

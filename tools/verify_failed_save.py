@@ -12,7 +12,8 @@ bpy.ops.preferences.addon_enable(module=MODULE)
 project = importlib.import_module(MODULE + '.blender.project')
 original = {obj.name: obj['qc_dataset'] for obj in bpy.data.objects if 'qc_dataset' in obj}
 original_volumes = {v.name: v.filepath for v in bpy.data.volumes}
-with tempfile.TemporaryDirectory(prefix='failed-save-', dir=ROOT / 'outputs') as temporary:
+(ROOT / '.tmp/runs').mkdir(parents=True, exist_ok=True)
+with tempfile.TemporaryDirectory(prefix='failed-save-', dir=ROOT / '.tmp/runs') as temporary:
     target = Path(temporary) / 'previous.blend'
     # An existing directory at the file path forces Blender's real save operator to fail.
     target.mkdir()

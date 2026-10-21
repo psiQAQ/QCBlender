@@ -1,6 +1,6 @@
 """Installed-extension native import and portable P03 declaration verification.
 
-Run in an isolated Blender profile under <sample>/outputs:
+Run in an isolated Blender profile under <sample>/.tmp/runs:
   blender --background --python this_file -- --root ROOT --sample SAMPLES
           --out OUT --zip CANDIDATE.zip
 Cold read (both original and moved directory): use --factory-startup, then add
@@ -42,11 +42,11 @@ elif args.blend is not None:
 if args.out.exists() and any(args.out.iterdir()):
     raise FileExistsError(f'Validation output directory must be new or empty: {args.out}')
 args.out.mkdir(parents=True, exist_ok=True)
-sys.path[:0] = [str(args.root), str(args.sample / 'outputs/science')]
+sys.path[:0] = [str(args.root), str(args.sample / 'modules/science')]
 from tools.local_inputs import input_path
 import numpy as np
 
-assert Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to(args.sample / 'outputs'), 'Use an isolated validation profile'
+assert any(Path(bpy.utils.user_resource('CONFIG')).resolve().is_relative_to(args.sample / directory) for directory in ('.tmp/runs', '.local/blender/dev-profile', 'outputs')), 'Use an isolated validation profile'
 assert bpy.ops.extensions.package_install_files(filepath=str(args.zip), repo='user_default',
                                                  enable_on_install=True, overwrite=True) == {'FINISHED'}
 MODULE = 'bl_ext.user_default.qcblender'

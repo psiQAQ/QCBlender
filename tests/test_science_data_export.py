@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class DataExport(unittest.TestCase):
     def setUp(self):
-        output = ROOT / 'outputs/runs/display-xyz-export/export-tests'
+        output = ROOT / '.tmp/tests/runs/display-xyz-export/export-tests'
         output.mkdir(parents=True, exist_ok=True)
         self.temporary = tempfile.TemporaryDirectory(dir=output)
         self.addCleanup(self.temporary.cleanup)
