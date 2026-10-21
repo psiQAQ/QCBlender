@@ -1,4 +1,12 @@
 /outputs/
+/.tmp/
+/.local/
+/modules/build-site/
+/modules/science/
+/modules/wheels/
+/modules/sources/
+/modules/tools/
+/modules/backend-wheel.json
 __pycache__/
 .agents/skills/
 docs/GPT-Web-Chat/
