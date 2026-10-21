@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-10-17",
+  "updated": "2026-10-21",
   "rules": "docs/agents/blender-interaction.md",
   "operation_ids_are_stable": true,
   "history_is_not_current_batch_pass": true,
@@ -64,6 +64,23 @@
             "sha256": "1407e4c2e5f5eb6c8bc7fc92dc8396281a8d72cbc4237d1be3271ceb983f6303",
             "scope": "MCP reuse of cube-cub-import, cube-quantity-declaration and field-geometry-controls"
           }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:cube-cub-import",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "ESP及IGMH Cube导入及91x38x156源身份",
+            "not_run_scope": "",
+            "step_ids": [
+              "02-cube:1",
+              "02-cube:4"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "cube-cub-import"
+          }
         ]
       },
       "execution": {
@@ -75,7 +92,14 @@
         "required_write_identity": "expected_pid from current identity response",
         "current_adapter_validation": "Not Run",
         "scope": "Reuse underlying data and operator behavior; this adapter does not reproduce historical UI clicks."
-      }
+      },
+      "query_keywords": [
+        "Cube",
+        "ESP",
+        "cub",
+        "dg_inter",
+        "import_calculation"
+      ]
     },
     {
       "id": "log-job2-new-fchk",
@@ -515,7 +539,26 @@
         ],
         "coverage": "Save Portable QC Project; 13 Dataset, 10 native VDB, 38 bound objects; original and Chinese moved cold reads Passed. Archive action current GUI Not Run.",
         "requires_current_result_assertions": true,
-        "current_batch_replay_status": "Passed"
+        "current_batch_replay_status": "Passed",
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:portable-save-and-archive",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "实际自包含保存、ZIP归档/CRC；节点工程通过Make Local后保存",
+            "not_run_scope": "不等同Pack Linked Libraries成功",
+            "step_ids": [
+              "SOP:12",
+              "SOP:15",
+              "02-cube:6",
+              "09-nodes:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "portable-save-and-archive"
+          }
+        ]
       },
       "history": [
         {
@@ -593,7 +636,14 @@
         "scope": "Reuse underlying data and operator behavior; this adapter does not reproduce historical UI clicks.",
         "current_adapter_evidence": "validation/agent/reports/2026-10-16/dev-workflow/acceptance.json",
         "current_adapter_scope": "P06 p04-three-frames.xyz; actual HTTP MCP add/edit/trajectory/assert/render/save; new-process CLI cold read. Historical GUI scope remains unchanged."
-      }
+      },
+      "query_keywords": [
+        "ZIP",
+        "archive_project",
+        "qcdata",
+        "save_project",
+        "自包含"
+      ]
     },
     {
       "id": "cold-open-and-render",
@@ -702,6 +752,23 @@
             "sha256": "a10bbc6d168f7d4d8eea15397c9b3645ddbfe7b4c83f0d6a71c5277348be68a5",
             "scope": "MCP native visible render after cold reopen; exact pixel comparison with saved render"
           }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:cold-open-and-render",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "正常退出后新PID冷重开及严格快照/CU取景观察",
+            "not_run_scope": "本条仅重开显示；未重新渲染",
+            "step_ids": [
+              "SOP:13",
+              "SOP:14"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "cold-open-and-render"
+          }
         ]
       },
       "execution": {
@@ -717,7 +784,13 @@
         "scope": "Reuse underlying data and operator behavior; this adapter does not reproduce historical UI clicks.",
         "current_adapter_evidence": "validation/agent/reports/2026-10-16/dev-workflow/acceptance.json",
         "current_adapter_scope": "P06 p04-three-frames.xyz; actual HTTP MCP add/edit/trajectory/assert/render/save; new-process CLI cold read. Historical GUI scope remains unchanged."
-      }
+      },
+      "query_keywords": [
+        "cold open",
+        "snapshot",
+        "冷重开",
+        "新PID"
+      ]
     },
     {
       "id": "cube-quantity-declaration",
@@ -787,8 +860,30 @@
             "sha256": "1407e4c2e5f5eb6c8bc7fc92dc8396281a8d72cbc4237d1be3271ceb983f6303",
             "scope": "MCP reuse of cube-cub-import, cube-quantity-declaration and field-geometry-controls"
           }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:cube-quantity-declaration",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "真实物理量/单位声明，保留原数组",
+            "not_run_scope": "声明不换算；未遍历所有可选物理量",
+            "step_ids": [
+              "02-cube:1",
+              "02-cube:4"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "cube-quantity-declaration"
+          }
         ]
-      }
+      },
+      "query_keywords": [
+        "Cube物理量",
+        "declare_field",
+        "单位声明"
+      ]
     },
     {
       "id": "field-geometry-controls",
@@ -873,8 +968,40 @@
             "sha256": "1407e4c2e5f5eb6c8bc7fc92dc8396281a8d72cbc4237d1be3271ceb983f6303",
             "scope": "MCP reuse of cube-cub-import, cube-quantity-declaration and field-geometry-controls"
           }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:field-geometry-controls",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "MO阈值.045；Cube独立阈值/样式及叠加；NOCV.003双相关负再恢复",
+            "not_run_scope": "只覆盖这些样本和参数；工具范围见每步原始method",
+            "step_ids": [
+              "SOP:6",
+              "SOP:7",
+              "02-cube:2",
+              "02-cube:3",
+              "02-cube:4",
+              "02-cube:5",
+              "02-cube:6",
+              "08-ets-nocv:4",
+              "08-ets-nocv:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "field-geometry-controls"
+          }
         ]
-      }
+      },
+      "query_keywords": [
+        "Isovalue",
+        "points",
+        "solid",
+        "wire",
+        "正负相",
+        "阈值"
+      ]
     },
     {
       "id": "field-phase-opacity",
@@ -929,8 +1056,30 @@
             "sha256": "bb0df98703ffdcce9ae4acd9b8cfa9a8321e6f946a47a9f0a300de50f36773a8",
             "scope": "Identical cube/cub alias controls and evaluated mesh/opacity; mapping/render/cold reopen Not Run"
           }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:field-phase-opacity",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "MO正相Opacity.4再1及Cube两相透明度恢复",
+            "not_run_scope": "透明度由MCP修改；不追加CU输入透明度资格",
+            "step_ids": [
+              "SOP:7",
+              "02-cube:3"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "field-phase-opacity"
+          }
         ]
-      }
+      },
+      "query_keywords": [
+        "0.4",
+        "opacity",
+        "透明度"
+      ]
     },
     {
       "id": "select-replace-color-field",
@@ -1003,8 +1152,31 @@
         ],
         "coverage": "真实 P03 delta_g_inter .005 electron/bohr^4 表面，sign_lambda2_rho 色域 −.05/0/.05 electron/bohr^3；4992顶点有效，21点CPU取样误差小于1e-5；替换cub别名保留范围/图例位置/取样属性。其他输入、错误关联和图例控件需另核对。",
         "current_batch_replay_status": "Not Run",
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:select-replace-color-field",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "明确独立ESP着色场映射及图例",
+            "not_run_scope": "不含旧多选映射入口",
+            "step_ids": [
+              "02-cube:7",
+              "03-density-esp:4"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "select-replace-color-field"
+          }
+        ]
+      },
+      "query_keywords": [
+        "ESP mapping",
+        "Map Scalar Field",
+        "color binding",
+        "选择着色场"
+      ]
     },
     {
       "id": "display-layer-visibility",
@@ -1055,8 +1227,31 @@
         ],
         "coverage": "只复用所记录原子/场层的 VISIBILITY 和 RENDER；删除、排序及所属图表子对象另核对。",
         "current_batch_replay_status": "Not Run",
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:display-layer-visibility",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "保留单一原子层及两个独立场叠加/显隐",
+            "not_run_scope": "",
+            "step_ids": [
+              "02-cube:5",
+              "02-cube:6"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "display-layer-visibility"
+          }
+        ]
+      },
+      "query_keywords": [
+        "render visibility",
+        "viewport",
+        "原子层",
+        "叠加场"
+      ]
     },
     {
       "id": "generate-density-esp",
@@ -1125,6 +1320,24 @@
             "bytes": 43693,
             "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
           }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:generate-density-esp",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "真实密度、ESP和氧分子非零自旋密度计算/数组断言",
+            "not_run_scope": "Alpha/Beta解释未分别计算；异步调度CANCELLED不当计算失败",
+            "step_ids": [
+              "03-density-esp:2",
+              "03-density-esp:3",
+              "03-density-esp:11"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "generate-density-esp"
+          }
         ]
       },
       "history": [
@@ -1179,6 +1392,12 @@
             "requires_current_result_assertions": true
           }
         }
+      ],
+      "query_keywords": [
+        "ESP",
+        "generate",
+        "spin density",
+        "电子密度"
       ]
     },
     {
@@ -1238,8 +1457,30 @@
         ],
         "coverage": "仅密度绑定ESP场，R=.05；读取全有效网格范围−0.112428957..2.405981950 hartree/e后恢复±.05；不包含图例排版或色带反转",
         "current_batch_replay_status": "Not Run",
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:scalar-color-range",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "ESP对称范围与中心值设置",
+            "not_run_scope": "",
+            "step_ids": [
+              "03-density-esp:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "scalar-color-range"
+          }
+        ]
+      },
+      "query_keywords": [
+        "Color Center",
+        "Color Maximum",
+        "Color Minimum",
+        "颜色范围"
+      ]
     },
     {
       "id": "legend-layout",
@@ -1330,8 +1571,28 @@
         ],
         "coverage": "MCP可更新所登记节点socket与材质原生控件，并核对科学数组与当前求值；首次/变更后面板确认仍用Computer Use",
         "current_batch_replay_status": "Not Run",
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:legend-layout",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "位置、尺寸、精度、朝向",
+            "not_run_scope": "",
+            "step_ids": [
+              "03-density-esp:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "legend-layout"
+          }
+        ]
+      },
+      "query_keywords": [
+        "legend layout",
+        "图例排版"
+      ]
     },
     {
       "id": "scalar-material-ramp-reverse",
@@ -1437,8 +1698,30 @@
         ],
         "coverage": "MCP可更新所登记节点socket与材质原生控件，并核对科学数组与当前求值；首次/变更后面板确认仍用Computer Use",
         "current_batch_replay_status": "Not Run",
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:scalar-material-ramp-reverse",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "反转及预设后的反转保留",
+            "not_run_scope": "未遍历任意手工色带节点编辑",
+            "step_ids": [
+              "03-density-esp:5",
+              "03-density-esp:8"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "scalar-material-ramp-reverse"
+          }
+        ]
+      },
+      "query_keywords": [
+        "Reverse",
+        "ramp",
+        "颜色反转"
+      ]
     },
     {
       "id": "legacy-map-selected-field",
@@ -1576,6 +1859,23 @@
             "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/native-integration.json",
             "bytes": 43693,
             "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
+          }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:slice-plane-and-gizmo",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "101x101切片、2/1/4定平面、CU真实Gizmo拖动",
+            "not_run_scope": "创建和参数由MCP；CU拖动单列",
+            "step_ids": [
+              "04-spatial-tools:1",
+              "04-spatial-tools:3"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "slice-plane-and-gizmo"
           }
         ]
       },
@@ -1718,6 +2018,13 @@
             "requires_current_result_assertions": true
           }
         }
+      ],
+      "query_keywords": [
+        "101",
+        "Gizmo",
+        "Slice",
+        "三原子平面",
+        "切片"
       ]
     },
     {
@@ -1828,8 +2135,31 @@
         ],
         "coverage": "MCP设置本批登记属性并调用update_contours；等实际异步作业结束，再核对曲线数值与有效单元",
         "current_batch_replay_status": "Passed",
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:slice-contours",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "GEOMETRY三阈值-.02/0/.02、标签、拖动后的实际更新",
+            "not_run_scope": "",
+            "step_ids": [
+              "04-spatial-tools:2",
+              "04-spatial-tools:3"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "slice-contours"
+          }
+        ]
+      },
+      "query_keywords": [
+        "Contours",
+        "Levels",
+        "Value Labels",
+        "等值线"
+      ]
     },
     {
       "id": "cursor-and-click-probes",
@@ -1919,8 +2249,31 @@
         ],
         "coverage": "MCP读取游标和数据核对；点击射线/模态Enter-Escape若MCP/CLI无法覆盖则Computer Use兜底，不直接写qc_probe冒充取点",
         "current_batch_replay_status": "Passed",
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:cursor-and-click-probes",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "游标0/0/1.45采样；CU真实命中点击/Enter确认COLOR ESP",
+            "not_run_scope": "游标/启动为MCP；实际表面点击和Enter为CU",
+            "step_ids": [
+              "04-spatial-tools:4",
+              "04-spatial-tools:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "cursor-and-click-probes"
+          }
+        ]
+      },
+      "query_keywords": [
+        "COLOR",
+        "probe",
+        "游标探针",
+        "点击探针"
+      ]
     },
     {
       "id": "line-profile-and-layout",
@@ -1990,6 +2343,23 @@
             "bytes": 43693,
             "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
           }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:line-profile-and-layout",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "0/-2/1.45到0/2/1.45的101点剖面及CSV0..4angstrom",
+            "not_run_scope": "",
+            "step_ids": [
+              "04-spatial-tools:6",
+              "04-spatial-tools:7"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "line-profile-and-layout"
+          }
         ]
       },
       "history": [
@@ -2056,6 +2426,12 @@
             "requires_current_result_assertions": true
           }
         }
+      ],
+      "query_keywords": [
+        "101 samples",
+        "CSV",
+        "line profile",
+        "线剖面"
       ]
     },
     {
@@ -2169,7 +2545,23 @@
         ],
         "coverage": "同/异步关联、切步失效、返回原步仍stale、重新关联、关联及换步Undo/Redo；两端具体对象指针和完整数组核对。",
         "requires_current_result_assertions": true,
-        "current_batch_replay_status": "Passed"
+        "current_batch_replay_status": "Passed",
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:associate-matching-sources",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "相同水二聚体XYZ与FCHK源构型关联",
+            "not_run_scope": "未重跑动态、错配、失效拒绝",
+            "step_ids": [
+              "01-molecule-xyz:9"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "associate-matching-sources"
+          }
+        ]
       },
       "history": [
         {
@@ -2232,6 +2624,11 @@
             "current_batch_replay_status": "Not Run"
           }
         }
+      ],
+      "query_keywords": [
+        "XYZ FCHK",
+        "associate",
+        "关联"
       ]
     },
     {
@@ -2306,8 +2703,33 @@
         ],
         "coverage": "MCP调用color_charge/create_dipole并设置已覆盖输入；独立核对电荷数组/色值、Debye换算、箭头长度和科学数组",
         "requires_current_result_assertions": true,
-        "current_batch_replay_status": "Not Run"
-      }
+        "current_batch_replay_status": "Not Run",
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:atomic-charge-and-dipole",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "电荷着色、真实偶极、Scale1到3长度变化、解除图钉/关闭电荷图例恢复",
+            "not_run_scope": "",
+            "step_ids": [
+              "03-density-esp:9",
+              "03-density-esp:10"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "atomic-charge-and-dipole"
+          }
+        ]
+      },
+      "query_keywords": [
+        "Dipole",
+        "Mulliken",
+        "Scale",
+        "偶极",
+        "属性图钉",
+        "电荷"
+      ]
     },
     {
       "id": "public-scalar-sampling-node",
@@ -2643,8 +3065,31 @@
             "sha256": "591ac6083c5d8da9c8984635b1b3ca8b83eadf16ff50e22c2a4c72d8d1075b5e",
             "status": "Passed"
           }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:pack-linked-node-libraries",
+            "date": "2026-10-21",
+            "status": "Failed",
+            "status_scope": "Only the recorded sample and validated_scope; see exact tool-specific evidence",
+            "validated_scope": "Actual pack_libraries failed on absolute C-drive extension library before D-drive save. Successful correction used CU Make Local.",
+            "not_run_scope": "No successful Pack qualification; see evidence_limitation in the referenced record",
+            "step_ids": [
+              "09-nodes:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "pack-linked-node-libraries"
+          }
         ]
-      }
+      },
+      "query_keywords": [
+        "Cannot pack absolute file",
+        "Make Local",
+        "Pack Linked Libraries",
+        "打包关联库",
+        "跨盘"
+      ]
     },
     {
       "id": "atom-layer-owned-annotations",
@@ -2714,8 +3159,30 @@
             "sha256": "bc1a49db9b68fb0f548275a85159b8073107f081bfd69ed5f41db83f38d93c5a",
             "status": "Passed"
           }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:atom-layer-owned-annotations",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "原/副本视口和渲染显隐、所属标注同步与严格恢复",
+            "not_run_scope": "",
+            "step_ids": [
+              "01-molecule-xyz:7"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "atom-layer-owned-annotations"
+          }
         ]
-      }
+      },
+      "query_keywords": [
+        "copy-only",
+        "source-only",
+        "层显隐",
+        "所属标注"
+      ]
     },
     {
       "id": "atom-property-selection-controls",
@@ -2790,8 +3257,34 @@
         ],
         "coverage": "P03水二聚体副本；清除局部集合后，8/1/0→氧1、4；选中项关闭→零顶点；0/2/3→氢2、3；8/2/3→空交集。仅对象属性输入，公共资产新增接线未覆盖。 MCP可更新对应原生socket或执行已登记Operator，并逐项核对当前结果；相关变更后重新GUI确认。",
         "current_batch_replay_status": "Not Run",
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:atom-property-selection-controls",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "7种模式及静态RECOMPUTE后CLEAR，最终恢复",
+            "not_run_scope": "不覆盖所有动态源边界",
+            "step_ids": [
+              "01-molecule-xyz:4"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "atom-property-selection-controls"
+          }
+        ]
+      },
+      "query_keywords": [
+        "CLEAR",
+        "DIFFERENCE",
+        "INTERSECT",
+        "INVERT",
+        "RECOMPUTE",
+        "REPLACE",
+        "UNION",
+        "局部选择"
+      ]
     },
     {
       "id": "atom-property-geometry-controls",
@@ -2880,8 +3373,31 @@
         ],
         "coverage": "P03副本球棍/空间填充/键线；氧1、4键线无键，清除局部限制后六原子48顶点32面；键半径.07→.12，球棍原子半径.25→.35；50数组和原层控件不变。公共资产独立添加未覆盖。 MCP可更新对应原生socket或执行已登记Operator，并逐项核对当前结果；相关变更后重新GUI确认。",
         "current_batch_replay_status": "Not Run",
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:atom-property-geometry-controls",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "对象属性三样式和原子/键半径",
+            "not_run_scope": "MCP控制与CU观察分开",
+            "step_ids": [
+              "01-molecule-xyz:2"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "atom-property-geometry-controls"
+          }
+        ]
+      },
+      "query_keywords": [
+        "Atom Radius",
+        "Bond Radius",
+        "球棍",
+        "空间填充",
+        "键线"
+      ]
     },
     {
       "id": "atom-display-layer-copy-and-order",
@@ -2941,8 +3457,33 @@
         ],
         "coverage": "带8个标注对象的P03原子层复制后Mesh、外层树、8个曲线/文字数据独立；上移和下移恢复精确顺序。GUI删除未覆盖。 MCP可更新对应原生socket或执行已登记Operator，并逐项核对当前结果；相关变更后重新GUI确认。",
         "current_batch_replay_status": "Not Run",
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:atom-display-layer-copy-and-order",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "局部层、复制独立mesh/外层树/材质、原副本显隐恢复",
+            "not_run_scope": "仅本教程实际层操作，未独立重放的排序边界不继承",
+            "step_ids": [
+              "01-molecule-xyz:6",
+              "01-molecule-xyz:7",
+              "09-nodes:1"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "atom-display-layer-copy-and-order"
+          }
+        ]
+      },
+      "query_keywords": [
+        "copy_layer",
+        "outer tree",
+        "复制显示层",
+        "局部层",
+        "独立参数"
+      ]
     },
     {
       "id": "atom-copy-display-parameters",
@@ -2998,8 +3539,28 @@
         ],
         "coverage": "MCP准备选中的目标及最后活动参数源，Agent点击原生菜单和三类别对话框；目标样式/半径复制，源不变；目标局部集合、元素/编号、非默认裁剪参数、平移和8标注保留，材质独立且shader默认值一致。本图无标量数值范围，不据此声明场/雾或不相容复制通过。 MCP可更新对应原生socket或执行已登记Operator，并逐项核对当前结果；相关变更后重新GUI确认。",
         "current_batch_replay_status": "Not Run",
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:atom-copy-display-parameters",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "相容原子层真实显示参数复制",
+            "not_run_scope": "不含不相容源拒绝",
+            "step_ids": [
+              "01-molecule-xyz:8"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "atom-copy-display-parameters"
+          }
+        ]
+      },
+      "query_keywords": [
+        "copy display parameters",
+        "复制显示参数"
+      ]
     },
     {
       "id": "public-atom-selection-asset",
@@ -3110,8 +3671,31 @@
             "status": "Passed"
           }
         ],
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:public-atom-selection-asset",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "CU Add选择资产；MCP接线/Element8/关闭恢复/4..6范围恢复",
+            "not_run_scope": "新连线/参数是MCP，不借旧GUI资格",
+            "step_ids": [
+              "09-nodes:2",
+              "09-nodes:4"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "public-atom-selection-asset"
+          }
+        ]
+      },
+      "query_keywords": [
+        "Element8",
+        "QC Select Atoms",
+        "source IDs",
+        "公共选择节点"
+      ]
     },
     {
       "id": "public-atom-style-asset",
@@ -3198,8 +3782,31 @@
             "status": "Passed"
           }
         ],
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:public-atom-style-asset",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "CU Add表示资产；MCP Style1氧球与Style0球棍.25/.07",
+            "not_run_scope": "公共Style2未跑；01对象属性Style2不替代此入口",
+            "step_ids": [
+              "09-nodes:2",
+              "09-nodes:4"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "public-atom-style-asset"
+          }
+        ]
+      },
+      "query_keywords": [
+        "QC Style Atoms and Bonds",
+        "ball-stick",
+        "space-fill",
+        "公共表示节点"
+      ]
     },
     {
       "id": "public-atom-clip-asset",
@@ -3304,8 +3911,32 @@
             "status": "Passed"
           }
         ],
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:public-atom-clip-asset",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "04内部clip的平面/盒MCP参数；09 CU添加公共clip和MCP平面开关恢复",
+            "not_run_scope": "04修改器Box不冒充09公共节点Box的CU输入",
+            "step_ids": [
+              "04-spatial-tools:8",
+              "09-nodes:2",
+              "09-nodes:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "public-atom-clip-asset"
+          }
+        ]
+      },
+      "query_keywords": [
+        "Plane Origin1.45",
+        "QC Clip Geometry",
+        "平面裁剪",
+        "盒子裁剪"
+      ]
     },
     {
       "id": "source-angle-dihedral-annotations",
@@ -3371,8 +4002,32 @@
             "status": "Passed"
           }
         ],
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:source-angle-dihedral-annotations",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "Angle/Dihedral测量与实际CU原子整数输入/交换",
+            "not_run_scope": "其余显示设置由MCP，不统称CU点击",
+            "step_ids": [
+              "01-molecule-xyz:5",
+              "07-irc-mayer:2"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "source-angle-dihedral-annotations"
+          }
+        ]
+      },
+      "query_keywords": [
+        "Angle",
+        "Dihedral",
+        "二面角",
+        "整数交换",
+        "角度"
+      ]
     },
     {
       "id": "source-annotations-face-all-camera",
@@ -3430,8 +4085,29 @@
             "status": "Passed"
           }
         ],
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:source-annotations-face-all-camera",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "当前/整层源标注真实朝向相机及状态断言",
+            "not_run_scope": "MCP操作；未新增CU点击资格",
+            "step_ids": [
+              "01-molecule-xyz:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "source-annotations-face-all-camera"
+          }
+        ]
+      },
+      "query_keywords": [
+        "face camera",
+        "整层标注",
+        "朝向相机"
+      ]
     },
     {
       "id": "current-version-optimization-view",
@@ -3771,7 +4447,25 @@
         ],
         "coverage": "P03 IGMH actual worker import, inter and fragments [[1,2,3],[4,5,6]], user_assigned provenance; scientific arrays unchanged. IRI current GUI Not Run.",
         "requires_current_result_assertions": true,
-        "current_batch_replay_status": "Passed"
+        "current_batch_replay_status": "Passed",
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:paired-field-igmh-iri-import",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "IGMH inter两片段/单位、IRI a1.1、阈值.005/1.0及独立着色场隐藏",
+            "not_run_scope": "intra/total/unknown及错配拒绝未重跑",
+            "step_ids": [
+              "05-igmh-iri:2",
+              "05-igmh-iri:3",
+              "05-igmh-iri:4"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "paired-field-igmh-iri-import"
+          }
+        ]
       },
       "history": [
         {
@@ -3846,6 +4540,13 @@
             "current_batch_replay_reports": []
           }
         }
+      ],
+      "query_keywords": [
+        "IGMH",
+        "IRI",
+        "Paired Fields",
+        "inter",
+        "片段"
       ]
     },
     {
@@ -3908,6 +4609,22 @@
             "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/native-integration.json",
             "bytes": 43693,
             "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
+          }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:paired-field-scatter-ranges-swap",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "原/交换筛选导出36391同网格点、值/单位互换，恢复筛选",
+            "not_run_scope": "仅FILTERED，ALL是选项说明",
+            "step_ids": [
+              "05-igmh-iri:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "paired-field-scatter-ranges-swap"
           }
         ]
       },
@@ -3981,6 +4698,12 @@
             ]
           }
         }
+      ],
+      "query_keywords": [
+        "36391",
+        "Swap value columns",
+        "paired_voxels.csv",
+        "成对场筛选"
       ]
     },
     {
@@ -4231,8 +4954,29 @@
         "coverage": "Computer Use点击原生入口并确认；MCP准备P03两路径、rho=.001、kcal/mol/angstrom^2；4最大值/3最小值/40bin与独立原文件核对；文本填写不在点击覆盖内",
         "requires_current_result_assertions": true,
         "current_batch_replay_status": "Not Run",
-        "current_batch_replay_reports": []
-      }
+        "current_batch_replay_reports": [],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:esp-surface-analysis-import",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "rho.001匹配、PDB/log导入及kcal/mol和angstrom²声明",
+            "not_run_scope": "",
+            "step_ids": [
+              "06-esp-aim:1"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "esp-surface-analysis-import"
+          }
+        ]
+      },
+      "query_keywords": [
+        "ESP表面分析",
+        "rho0.001",
+        "surface analysis"
+      ]
     },
     {
       "id": "esp-source-record-selection",
@@ -4290,8 +5034,30 @@
         "coverage": "Computer Use选择记录2，原生界面记录1/2与独立PDB编号、坐标、36.69/57.80 kcal/mol核对；对象选择由MCP完成",
         "requires_current_result_assertions": true,
         "current_batch_replay_status": "Not Run",
-        "current_batch_replay_reports": []
-      }
+        "current_batch_replay_reports": [],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:esp-source-record-selection",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "minimum1=-25.5、maximum2=57.8、Match2聚焦；Record1到2保持焦点",
+            "not_run_scope": "未执行额外数值范围过滤",
+            "step_ids": [
+              "06-esp-aim:2"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "esp-source-record-selection"
+          }
+        ]
+      },
+      "query_keywords": [
+        "57.8",
+        "ESP极值",
+        "Match",
+        "Record"
+      ]
     },
     {
       "id": "esp-point-range-filter",
@@ -4415,6 +5181,22 @@
             "bytes": 43693,
             "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
           }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:esp-area-center-and-source-interval-filter",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "中心0..20与区间相交两口径，FILTERED6行导出，恢复40bins",
+            "not_run_scope": "ALL导出未运行",
+            "step_ids": [
+              "06-esp-aim:3"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "esp-area-center-and-source-interval-filter"
+          }
         ]
       },
       "history": [
@@ -4485,6 +5267,13 @@
             ]
           }
         }
+      ],
+      "query_keywords": [
+        "14.4784",
+        "21.2676",
+        "ESP面积",
+        "center",
+        "source_interval"
       ]
     },
     {
@@ -4547,8 +5336,30 @@
         "coverage": "Computer Use打开入口并确认导入；MCP准备三个路径。11CP、10路径408点、550已解析原文属性及关联核对；文本填写不在点击覆盖内",
         "current_batch_replay_status": "Not Run",
         "requires_current_result_assertions": true,
-        "current_batch_replay_reports": []
-      }
+        "current_batch_replay_reports": [],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:aim-topology-import",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "真实C6/N5/10路径及属性导入",
+            "not_run_scope": "",
+            "step_ids": [
+              "06-esp-aim:4"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "aim-topology-import"
+          }
+        ]
+      },
+      "query_keywords": [
+        "AIM",
+        "CPprop.txt",
+        "CPs.pdb",
+        "paths.pdb"
+      ]
     },
     {
       "id": "aim-immediate-properties-records",
@@ -4605,8 +5416,29 @@
         "coverage": "Computer Use展开并切换记录2，首次导入不刷新/重开显示CP_type、对应核、Bohr/Å位置和电子密度；源1/2分别核6H/5H，密度.4316646446；MCP选择对象",
         "current_batch_replay_status": "Not Run",
         "requires_current_result_assertions": true,
-        "current_batch_replay_reports": []
-      }
+        "current_batch_replay_reports": [],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:aim-immediate-properties-records",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "N Record3 serial9，Density.01088848625，Match3突出",
+            "not_run_scope": "没有数值属性范围筛选",
+            "step_ids": [
+              "06-esp-aim:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "aim-immediate-properties-records"
+          }
+        ]
+      },
+      "query_keywords": [
+        "AIM临界点",
+        "Density of all electrons",
+        "serial9"
+      ]
     },
     {
       "id": "aim-numeric-property-filter",
@@ -4723,8 +5555,30 @@
         "coverage": "Computer Use选路径层、对象属性并切换路径1→2；10组中源组1为9点、组2为47点；原生全部408点由MCP独立核对",
         "current_batch_replay_status": "Not Run",
         "requires_current_result_assertions": true,
-        "current_batch_replay_reports": []
-      }
+        "current_batch_replay_reports": [],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:aim-path-record-selection",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "Path1/2的9/47点；CU旋转观察、恢复原子显示",
+            "not_run_scope": "Path浏览器不等同源Record切换",
+            "step_ids": [
+              "06-esp-aim:6"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "aim-path-record-selection"
+          }
+        ]
+      },
+      "query_keywords": [
+        "47 points",
+        "AIM路径",
+        "Path1",
+        "Path2"
+      ]
     },
     {
       "id": "irc-path-import",
@@ -4781,8 +5635,29 @@
         "coverage": "Computer Use打开、填写P04/steps.csv并确认；真实三步H2O2、四原子[8,8,1,1]、5数组与源摘要由MCP独立核对",
         "current_batch_replay_status": "Not Run",
         "requires_current_result_assertions": true,
-        "current_batch_replay_reports": []
-      }
+        "current_batch_replay_reports": [],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:irc-path-import",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "三步manifest/FCHK导入、O/O/H/H和步1能量",
+            "not_run_scope": "不含坏manifest边界",
+            "step_ids": [
+              "07-irc-mayer:1"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "irc-path-import"
+          }
+        ]
+      },
+      "query_keywords": [
+        "H2O2",
+        "IRC",
+        "steps.csv"
+      ]
     },
     {
       "id": "irc-step-navigation",
@@ -4906,7 +5781,23 @@
         ],
         "coverage": "共享时拒绝无变化；Object & Data单用户后独立换步；原件不变，标注、Undo/Redo及冷读。",
         "requires_current_result_assertions": true,
-        "current_batch_replay_status": "Passed"
+        "current_batch_replay_status": "Passed",
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:irc-step-navigation",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "1到2到3到2，能量/坐标/标注同步",
+            "not_run_scope": "未跑共享mesh拒绝",
+            "step_ids": [
+              "07-irc-mayer:3"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "irc-step-navigation"
+          }
+        ]
       },
       "history": [
         {
@@ -5007,6 +5898,12 @@
             ]
           }
         }
+      ],
+      "query_keywords": [
+        "IRC切步",
+        "Next",
+        "Previous",
+        "二面角更新"
       ]
     },
     {
@@ -5119,8 +6016,29 @@
         "coverage": "Computer Use从真实C10三步根对象导入，自动生成6对×3步表、1,2曲线和当前步2游标；MCP核对四数组、18源值及源摘要。限定已匹配三步原子编号/构型的文本清单。",
         "current_batch_replay_status": "Not Run",
         "requires_current_result_assertions": true,
-        "current_batch_replay_reports": []
-      }
+        "current_batch_replay_reports": [],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:irc-mayer-import",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "3步6对18值真实导入",
+            "not_run_scope": "",
+            "step_ids": [
+              "07-irc-mayer:4"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "irc-mayer-import"
+          }
+        ]
+      },
+      "query_keywords": [
+        "18 values",
+        "Mayer导入",
+        "mayer-pyscf.csv"
+      ]
     },
     {
       "id": "irc-mayer-pair-plot",
@@ -5182,6 +6100,22 @@
             "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/native-integration.json",
             "bytes": 43693,
             "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
+          }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:irc-mayer-pair-plot",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "Pair1/2读值与2到3到2；两CSV和源值核验",
+            "not_run_scope": "不含其他对或外部绘图软件验证",
+            "step_ids": [
+              "07-irc-mayer:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "irc-mayer-pair-plot"
           }
         ]
       },
@@ -5250,6 +6184,13 @@
             ]
           }
         }
+      ],
+      "query_keywords": [
+        "0.987349",
+        "Mayer",
+        "Read Pair",
+        "irc_steps.csv",
+        "mayer.csv"
       ]
     },
     {
@@ -5311,8 +6252,29 @@
             "sha256": "cbee7306a5e576b991c1b075dfd836d1ae13f55fdf97d8e0b598e2e7b5a63c41",
             "status": "Passed"
           }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:ets-nocv-import",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "实际11条打印记录，不补造总24对未打印行",
+            "not_run_scope": "",
+            "step_ids": [
+              "08-ets-nocv:1"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "ets-nocv-import"
+          }
         ]
-      }
+      },
+      "query_keywords": [
+        "11 printed records",
+        "ETS-NOCV",
+        "kcal/mol"
+      ]
     },
     {
       "id": "ets-nocv-source-records",
@@ -5367,8 +6329,30 @@
         "coverage": "Computer Use查阅pair1/2全部显示字段与源行7/8；MCP独立原文核对全部11行/全部字段及来源摘要。",
         "current_batch_replay_status": "Not Run",
         "requires_current_result_assertions": true,
-        "current_batch_replay_reports": []
-      }
+        "current_batch_replay_reports": [],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:ets-nocv-source-records",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "Pair1=-57.02/±.54550，Record2=-11.91，恢复Record1",
+            "not_run_scope": "",
+            "step_ids": [
+              "08-ets-nocv:2"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "ets-nocv-source-records"
+          }
+        ]
+      },
+      "query_keywords": [
+        "0.54550",
+        "Pair1",
+        "Pair2",
+        "Record"
+      ]
     },
     {
       "id": "ets-nocv-filter",
@@ -5434,8 +6418,32 @@
             "sha256": "cbee7306a5e576b991c1b075dfd836d1ae13f55fdf97d8e0b598e2e7b5a63c41",
             "status": "Passed"
           }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:ets-nocv-filter",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "Total能量两范围与Pair2/3匹配，恢复Pair1并定位唯一场",
+            "not_run_scope": "Alpha/Beta、本征值范围、Pair编号条件、主动排序未跑",
+            "step_ids": [
+              "08-ets-nocv:3",
+              "08-ets-nocv:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "ets-nocv-filter"
+          }
         ]
-      }
+      },
+      "query_keywords": [
+        "Match",
+        "NOCV筛选",
+        "Pair energy",
+        "Total",
+        "定位场"
+      ]
     },
     {
       "id": "ets-nocv-sort",
@@ -5569,8 +6577,31 @@
             "sha256": "4f7b2fd9e288bf8fb297a516fe7adf111ff6ce6c0592ad1193a2e12098f48c6d",
             "status": "Passed"
           }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:nocv-pair-cube-import",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "Total Pair1 signed Cube，.003双相及关负相后完整几何SHA恢复",
+            "not_run_scope": "其他Pair/自旋未跑",
+            "step_ids": [
+              "08-ets-nocv:4",
+              "08-ets-nocv:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "nocv-pair-cube-import"
+          }
         ]
-      }
+      },
+      "query_keywords": [
+        "0.003",
+        "47x50x57",
+        "NOCV Cube",
+        "deformation density"
+      ]
     },
     {
       "id": "rebuild-volume-cache-from-saved-arrays",
@@ -6146,8 +7177,32 @@
             "bytes": 43693,
             "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
           }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:standard-xyz-import",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "标准及多帧XYZ真实导入，当前源身份",
+            "not_run_scope": "不含损坏XYZ拒绝边界",
+            "step_ids": [
+              "01-molecule-xyz:1",
+              "01-molecule-xyz:10",
+              "09-nodes:1"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "standard-xyz-import"
+          }
         ]
-      }
+      },
+      "query_keywords": [
+        "XYZ",
+        "import_calculation",
+        "water dimer",
+        "多帧"
+      ]
     },
     {
       "id": "xyz-discrete-frame-navigation",
@@ -6241,8 +7296,31 @@
             "bytes": 43693,
             "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
           }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:xyz-discrete-frame-navigation",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "3帧切换、随帧标注及往返恢复",
+            "not_run_scope": "",
+            "step_ids": [
+              "01-molecule-xyz:10",
+              "01-molecule-xyz:11"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "xyz-discrete-frame-navigation"
+          }
         ]
-      }
+      },
+      "query_keywords": [
+        "XYZ Frames",
+        "trajectory",
+        "多帧XYZ",
+        "随帧二面角"
+      ]
     },
     {
       "id": "explicit-csv-export-directory",
@@ -6342,8 +7420,36 @@
             "bytes": 43693,
             "sha256": "1b0f4a4b556fc72f1fbe29e1689f7fa3425eaa51b7ea85a1934ce583c13fcf39"
           }
+        ],
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:explicit-csv-export-directory",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "剖面101点、paired两次36391行、ESP_AREA6行、IRC3行/Mayer18行，真实文件及metadata核验",
+            "not_run_scope": "paired/ESP_AREA的ALL未执行",
+            "step_ids": [
+              "04-spatial-tools:7",
+              "05-igmh-iri:5",
+              "06-esp-aim:3",
+              "07-irc-mayer:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "explicit-csv-export-directory"
+          }
         ]
-      }
+      },
+      "query_keywords": [
+        "CSV",
+        "FILTERED",
+        "IRC",
+        "Mayer",
+        "metadata",
+        "导出数据",
+        "输出目录"
+      ]
     },
     {
       "id": "gaussian-pre-scf-failure-and-good-job",
@@ -6686,14 +7792,44 @@
       },
       "reuse": {
         "preferred": "MCP/CLI after matching implementation fingerprints and actual candidate identity",
-        "require_CU_after_related_change": true
+        "require_CU_after_related_change": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:alpha-preflight-summary-portable",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "复用安装身份、运行环境按钮、轨道资格预检、摘要导出及文件内容核对",
+            "not_run_scope": "本批没有重新安装；不把启用状态当安装过程复验",
+            "step_ids": [
+              "SOP:1",
+              "SOP:2",
+              "SOP:3",
+              "SOP:5",
+              "SOP:10",
+              "SOP:11"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "alpha-preflight-summary-portable"
+          }
+        ]
       },
       "independent_user_acceptance": {
         "status": "Not Run"
       },
       "independent_scientific_signoff": {
         "status": "Not Run"
-      }
+      },
+      "query_keywords": [
+        "preflight",
+        "runtime",
+        "summary",
+        "参数摘要",
+        "安装身份",
+        "资格预检",
+        "运行环境"
+      ]
     },
     {
       "id": "empty-scene-properties",
@@ -6804,10 +7940,32 @@
         ],
         "coverage": "真实 CH4 的轨道边界、Gaussian NBO 两步检查及 Job/block 联动；未执行 NBO 关联导入",
         "requires_current_result_assertions": true,
-        "current_batch_replay_status": "Passed"
+        "current_batch_replay_status": "Passed",
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:bounded-orbital-nbo-selectors",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "轨道HOMO/LUMO及源编号9选择器",
+            "not_run_scope": "NBO Job/block和其他编号边界未重跑",
+            "step_ids": [
+              "SOP:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "bounded-orbital-nbo-selectors"
+          }
+        ]
       },
       "independent_human_review": "Not Run",
-      "independent_scientific_review": "Not Run"
+      "independent_scientific_review": "Not Run",
+      "query_keywords": [
+        "HOMO",
+        "LUMO",
+        "source number",
+        "轨道编号"
+      ]
     },
     {
       "id": "scalar-charge-color-presets",
@@ -6885,8 +8043,33 @@
         ],
         "coverage": "Native checks cover all 3 presets in scalar_map and charge_map, target refusal/rollback, shared material, QC copy and new-view independence, exact summary and cold reopen.",
         "current_batch_replay_status": "Passed",
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:scalar-charge-color-presets",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "取消、应用Viridis/Cividis、Undo/Redo、反转保留和恢复",
+            "not_run_scope": "shared/read-only/copy/charge_map条件分支未重跑",
+            "step_ids": [
+              "03-density-esp:6",
+              "03-density-esp:7",
+              "03-density-esp:8"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "scalar-charge-color-presets"
+          }
+        ]
+      },
+      "query_keywords": [
+        "Cividis",
+        "Redo",
+        "Undo",
+        "Viridis",
+        "色带预设"
+      ]
     },
     {
       "id": "source-distance-annotation-metadata",
@@ -6942,8 +8125,31 @@
         ],
         "coverage": "Native checks cover source/current geometry, changed metadata/ID rejection; source POINT identities remain separate from evaluated mesh vertices.",
         "current_batch_replay_status": "Passed",
-        "requires_current_result_assertions": true
-      }
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:source-distance-annotation-metadata",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "Distance标注、来源和构型元数据、编辑/保留",
+            "not_run_scope": "",
+            "step_ids": [
+              "01-molecule-xyz:5",
+              "07-irc-mayer:2"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "source-distance-annotation-metadata"
+          }
+        ]
+      },
+      "query_keywords": [
+        "Distance",
+        "构型身份",
+        "源编号",
+        "距离"
+      ]
     },
     {
       "id": "local-selection-dialog-after-immediate-mode",
@@ -7181,8 +8387,30 @@
           "Computer Use"
         ],
         "requires_current_result_assertions": true,
-        "coverage": "CLI verify_annotation_geometry.py and verify_annotation_motion.py; actual UI required after related interaction changes."
-      }
+        "coverage": "CLI verify_annotation_geometry.py and verify_annotation_motion.py; actual UI required after related interaction changes.",
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:annotation-geometry-materials-20261016",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "前缀、引线/测量几何、大小偏移、材质编辑及重算后材质保留",
+            "not_run_scope": "旧标注迁移无旧输入，NotApplicable",
+            "step_ids": [
+              "01-molecule-xyz:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "annotation-geometry-materials-20261016"
+          }
+        ]
+      },
+      "query_keywords": [
+        "measurement geometry",
+        "prefix",
+        "材质保留",
+        "标注材质"
+      ]
     },
     {
       "id": "sidebar-summary-integer-annotations-20261016",
@@ -7486,6 +8714,379 @@
         ],
         "requires_current_result_assertions": true,
         "coverage": "Creation width shared by four kinds; visual Atom/Dihedral add and Atom edit. Daily GUI and other edit kinds not run."
+      }
+    },
+    {
+      "id": "gaussian-fchk-standard-import",
+      "title": "FCHK",
+      "gui_validation": {
+        "status": "Not Run",
+        "scope": "No standalone whole-operation GUI qualification; exact native inputs and observations are recorded in the batch replay."
+      },
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:gaussian-fchk-standard-import",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "氧分子、水二聚体及complex静态FCHK导入/来源查看",
+            "not_run_scope": "不是Gaussian Log多job选择入口",
+            "step_ids": [
+              "SOP:4",
+              "01-molecule-xyz:9",
+              "03-density-esp:1",
+              "05-igmh-iri:1",
+              "08-ets-nocv:1"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "gaussian-fchk-standard-import"
+          }
+        ]
+      },
+      "query_keywords": [
+        "FCHK",
+        "Gaussian",
+        "import_calculation",
+        "静态波函数"
+      ],
+      "execution": {
+        "batch": "sop-completion-20261021",
+        "scope": "氧分子、水二聚体及complex静态FCHK导入/来源查看",
+        "evidence": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+        "selector": "gaussian-fchk-standard-import",
+        "tool_scope": "See referenced per-step MCP/CU/CLI distinctions; no whole-operation promotion"
+      }
+    },
+    {
+      "id": "molecular-orbital-generation-grid",
+      "title": "MO",
+      "gui_validation": {
+        "status": "Not Run",
+        "scope": "No standalone whole-operation GUI qualification; exact native inputs and observations are recorded in the batch replay."
+      },
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:molecular-orbital-generation-grid",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "Alpha轨道9真实生成；grid0.2angstrom、margin3angstrom；HOMO/LUMO预览",
+            "not_run_scope": "不包括Beta生成或任意轨道计算",
+            "step_ids": [
+              "SOP:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "molecular-orbital-generation-grid"
+          }
+        ]
+      },
+      "query_keywords": [
+        "Alpha",
+        "HOMO",
+        "LUMO",
+        "MO",
+        "grid0.2",
+        "margin3",
+        "source9"
+      ],
+      "execution": {
+        "batch": "sop-completion-20261021",
+        "scope": "Alpha轨道9真实生成；grid0.2angstrom、margin3angstrom；HOMO/LUMO预览",
+        "evidence": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+        "selector": "molecular-orbital-generation-grid",
+        "tool_scope": "See referenced per-step MCP/CU/CLI distinctions; no whole-operation promotion"
+      }
+    },
+    {
+      "id": "sop-framed-camera-render",
+      "title": "取景相机",
+      "gui_validation": {
+        "status": "Not Run",
+        "scope": "No standalone whole-operation GUI qualification; exact native inputs and observations are recorded in the batch replay."
+      },
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:sop-framed-camera-render",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "真实取景相机和尺寸；CU F12渲染、MCP保存PNG及图像检查",
+            "not_run_scope": "不包含冷重开后再次渲染",
+            "step_ids": [
+              "SOP:8",
+              "SOP:9"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "sop-framed-camera-render"
+          }
+        ]
+      },
+      "query_keywords": [
+        "F12",
+        "PNG",
+        "camera",
+        "render",
+        "取景相机"
+      ],
+      "execution": {
+        "batch": "sop-completion-20261021",
+        "scope": "真实取景相机和尺寸；CU F12渲染、MCP保存PNG及图像检查",
+        "evidence": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+        "selector": "sop-framed-camera-render",
+        "tool_scope": "See referenced per-step MCP/CU/CLI distinctions; no whole-operation promotion"
+      }
+    },
+    {
+      "id": "atom-hydrogen-visibility",
+      "title": "氢显隐",
+      "gui_validation": {
+        "status": "Not Run",
+        "scope": "No standalone whole-operation GUI qualification; exact native inputs and observations are recorded in the batch replay."
+      },
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:atom-hydrogen-visibility",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "真实氢显隐和指定保留源编号练习，恢复显示",
+            "not_run_scope": "",
+            "step_ids": [
+              "01-molecule-xyz:3"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "atom-hydrogen-visibility"
+          }
+        ]
+      },
+      "query_keywords": [
+        "hydrogen_visibility",
+        "keep IDs",
+        "氢显隐"
+      ],
+      "execution": {
+        "batch": "sop-completion-20261021",
+        "scope": "真实氢显隐和指定保留源编号练习，恢复显示",
+        "evidence": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+        "selector": "atom-hydrogen-visibility",
+        "tool_scope": "See referenced per-step MCP/CU/CLI distinctions; no whole-operation promotion"
+      }
+    },
+    {
+      "id": "current-version-static-atom-view",
+      "title": "当前版本视图",
+      "gui_validation": {
+        "status": "Not Run",
+        "scope": "No standalone whole-operation GUI qualification; exact native inputs and observations are recorded in the batch replay."
+      },
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:current-version-static-atom-view",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "保留静态XYZ原层，创建当前版本视图",
+            "not_run_scope": "不是旧工程迁移或优化专门路径",
+            "step_ids": [
+              "01-molecule-xyz:8"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "current-version-static-atom-view"
+          }
+        ]
+      },
+      "query_keywords": [
+        "new_current_view",
+        "static XYZ",
+        "当前版本视图"
+      ],
+      "execution": {
+        "batch": "sop-completion-20261021",
+        "scope": "保留静态XYZ原层，创建当前版本视图",
+        "evidence": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+        "selector": "current-version-static-atom-view",
+        "tool_scope": "See referenced per-step MCP/CU/CLI distinctions; no whole-operation promotion"
+      }
+    },
+    {
+      "id": "density-volume-fog-opacity",
+      "title": "体积雾",
+      "gui_validation": {
+        "status": "Not Run",
+        "scope": "No standalone whole-operation GUI qualification; exact native inputs and observations are recorded in the batch replay."
+      },
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:density-volume-fog-opacity",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "真实fog，Rendered下40到0到40，隐藏并恢复Material Preview",
+            "not_run_scope": "不是公共fog资产CU Add/连线复验",
+            "step_ids": [
+              "04-spatial-tools:9"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "density-volume-fog-opacity"
+          }
+        ]
+      },
+      "query_keywords": [
+        "Opacity40",
+        "Rendered",
+        "fog",
+        "体积雾"
+      ],
+      "execution": {
+        "batch": "sop-completion-20261021",
+        "scope": "真实fog，Rendered下40到0到40，隐藏并恢复Material Preview",
+        "evidence": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+        "selector": "density-volume-fog-opacity",
+        "tool_scope": "See referenced per-step MCP/CU/CLI distinctions; no whole-operation promotion"
+      }
+    },
+    {
+      "id": "public-atom-selection-style-clip-composition",
+      "title": "公共节点组合",
+      "gui_validation": {
+        "status": "Not Run",
+        "scope": "No standalone whole-operation GUI qualification; exact native inputs and observations are recorded in the batch replay."
+      },
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:public-atom-selection-style-clip-composition",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "独立副本5连线；保留旧节点；源/原层不变；关闭/范围/平面均完整恢复",
+            "not_run_scope": "CU仅Add/Make Local；连线及新节点参数是MCP",
+            "step_ids": [
+              "09-nodes:1",
+              "09-nodes:2",
+              "09-nodes:3",
+              "09-nodes:4",
+              "09-nodes:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "public-atom-selection-style-clip-composition"
+          }
+        ]
+      },
+      "query_keywords": [
+        "5 links",
+        "Selection Style Clip",
+        "公共节点组合",
+        "新分支",
+        "独立外层树"
+      ],
+      "execution": {
+        "batch": "sop-completion-20261021",
+        "scope": "独立副本5连线；保留旧节点；源/原层不变；关闭/范围/平面均完整恢复",
+        "evidence": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+        "selector": "public-atom-selection-style-clip-composition",
+        "tool_scope": "See referenced per-step MCP/CU/CLI distinctions; no whole-operation promotion"
+      }
+    },
+    {
+      "id": "linked-node-groups-make-local",
+      "title": "转为本地项",
+      "gui_validation": {
+        "status": "Not Run",
+        "scope": "No standalone whole-operation GUI qualification; exact native inputs and observations are recorded in the batch replay."
+      },
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "batch_replays": [
+          {
+            "id": "sop-completion-20261021:linked-node-groups-make-local",
+            "date": "2026-10-21",
+            "status": "Passed",
+            "status_scope": "Only this exact sample and validated_scope, never all historical GUI entry/edge coverage",
+            "validated_scope": "真实CU对3节点组Make Local，library=None，连接/几何/科学数据严格不变",
+            "not_run_scope": "不是Pack成功；未改全局导入偏好",
+            "step_ids": [
+              "09-nodes:5"
+            ],
+            "path": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+            "sha256": "9007a3dde3f7f6267c6b048b550bc2316fdc6b7932c4aa0e9e39ea38c75f244d",
+            "selector": "linked-node-groups-make-local"
+          }
+        ]
+      },
+      "query_keywords": [
+        "Blender文件",
+        "Make Local",
+        "跨盘保存",
+        "转为本地项",
+        "链接资产"
+      ],
+      "execution": {
+        "batch": "sop-completion-20261021",
+        "scope": "真实CU对3节点组Make Local，library=None，连接/几何/科学数据严格不变",
+        "evidence": "validation/agent/reports/2026-10-21/sop-completion/sop_operations_replay_mapping_20261021.json",
+        "selector": "linked-node-groups-make-local",
+        "tool_scope": "See referenced per-step MCP/CU/CLI distinctions; no whole-operation promotion"
       }
     }
   ]

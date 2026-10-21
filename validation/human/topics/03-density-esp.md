@@ -130,13 +130,13 @@
 <a id="step-10"></a>
 ### 10. 创建偶极箭头并调整显示长度
 
-> 偶极矢量用大小和方向描述电荷分布；Debye 是偶极矩单位。修改器（Modifiers）是调节几何处理参数的修改器面板；每 Debye 的埃数（Angstrom per Debye）设置每 Debye 对应的箭头显示长度，单位为 Å，不改变源偶极矩。
+> 偶极矢量用大小和方向描述电荷分布；Debye 是偶极矩单位。修改器（Modifiers）是调节几何处理参数的修改器面板；每 Debye 对应的 Å（Angstrom per Debye）设置每 Debye 对应的箭头显示长度，单位为 Å，不改变源偶极矩。
 
-保持 **P03-atoms** 活动，重新打开该对象属性，点击 **对象属性（Object Properties） → 创建视图与工具（Create Views and Tools） → 空间工具（Spatial Tools） → 创建偶极矢量（Create Dipole Vector）**。在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 点击新对象 **QC dipole (Debye; physical direction)** 行最左侧的选择图标，重新点击 **打开对象属性（Open Object Properties）**，再切到 **属性（Properties） → 修改器（Modifiers）**。将 **每 Debye 的埃数（Angstrom per Debye）** 从 **0.5** 改为 **1.5**；箭头应沿 **+Z**，长度变为三倍。截图保存为 `human/screenshots/P03-charge-dipole.png`。
+保持 **P03-atoms** 活动，重新打开该对象属性，点击 **对象属性（Object Properties） → 创建视图与工具（Create Views and Tools） → 空间工具（Spatial Tools） → 创建偶极矢量（Create Dipole Vector）**。在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 点击新对象 **QC dipole (Debye; physical direction)** 行最左侧的选择图标，切到 **属性（Properties） → 修改器（Modifiers）**。如果属性编辑器顶部仍显示 **P03-atoms**，点击右上角已启用的图钉解除固定，让面板跟随当前选中的偶极对象；此处再次点击 **打开对象属性（Open Object Properties）** 会固定到来源原子对象。确认顶部显示 **QC dipole**，将 **每 Debye 对应的 Å（Angstrom per Debye）** 从 **0.5** 改为 **1.5**；箭头应沿 **+Z**，长度变为三倍。截图保存为 `human/screenshots/P03-charge-dipole.png`。
 
 ![水二聚体的原子电荷颜色和偶极箭头](../screenshots/P03-charge-dipole.png)
 
-继续空间观察前，在 Outliner 关闭偶极层的眼睛、相机图标，恢复密度表面；独立 ESP 表面保持隐藏。
+继续空间观察前，选 **P03-atoms**，重新打开该对象属性，在 **图例排版（Legend Layout）** 关闭原子电荷的 **显示图例（Show Legend）**，避免与密度表面的 ESP 图例重叠。在 Outliner 关闭偶极层的眼睛、相机图标，恢复密度表面；独立 ESP 表面保持隐藏。
 
 <a id="densities"></a>
 ## 选择其他密度

@@ -83,9 +83,7 @@
 
 再将新选择节点的 **元素（Element）=0**，新表示节点的 **样式（Style）=0、原子半径（Atom Radius）=0.25、键半径（Bond Radius）=0.07**，应恢复两个水分子的球棍。试将 **起始原子（First Atom）=4、末尾原子（Last Atom）=6**，应只显示源编号 4–6 的上方水分子；随后恢复 **起始原子（First Atom）=1、末尾原子（Last Atom）=0**，回到六原子显示。
 
-这里修改新节点的输入值；修改器上的旧样式参数仍连接原分支。截图保存为 `human/screenshots/P06-nodes.png`。
-
-![公共选择、表示和裁剪节点的新分支及分子显示](../screenshots/P06-nodes.png)
+这里修改新节点的输入值；修改器上的旧样式参数仍连接原分支。
 
 <a id="step-05"></a>
 ### 5. 裁剪上方水分子并恢复完整显示
@@ -97,9 +95,15 @@
 
 在新裁剪节点开启 **启用平面裁剪（Plane Enabled）**，设 **平面原点（Plane Origin）=(0,0,1.45)、平面法向量（Plane Normal）=(0,0,1)**。应只剩上方水分子；关闭 **启用平面裁剪（Plane Enabled）**，恢复六原子显示。
 
-> 打包关联库（Pack Linked Libraries）将工程链接的外部库打包进 `.blend`，让这里使用的节点库随工程保存，便于移动后继续使用。
+> 转为本地项（Make Local）将链接节点组保存在当前工程中，解除对插件安装目录中节点库的依赖。
 
-如果要保存这个自定义工程，在材料根目录创建 `work/human/P06/`。先选择 **文件（File） → 外部数据（External Data） → 打包关联库（Pack Linked Libraries）**，再按[保存自包含工程](../SOP.md#save)保存为 `work/human/P06/P06-nodes.blend`；保留同目录的 `P06-nodes.qcdata/`。重新打开后，选 **P06-nodes** 检查新分支和六原子显示仍在。
+如果要保存这个自定义工程，先把本页新添加的三个节点组转为本地项。在大纲视图（Outliner）左上方的 **显示模式（Display Mode）** 选择 **Blender 文件（Blender File）**，展开底部指向外部 `nodes.blend` 的库条目；若下面仍有同路径的库条目，继续展开，再展开 **节点组（Node Groups）**。逐个右键点击 **QC 选择原子**、**QC 原子与键表示**、**QC 裁剪几何**，在弹出的 **大纲 ID 数据操作** 菜单直接选择 **转为本地项（Make Local）**。完成后，这三个节点组移入 **当前文件（Current File） → 节点组（Node Groups）**，不再带外部库图标；名称可能增加 `.001` 等后缀。检查节点连接和六原子显示保持不变。
+
+截图保存为 `human/screenshots/P06-nodes.png`。
+
+![公共选择、表示和裁剪节点的新分支及恢复后的六原子显示](../screenshots/P06-nodes.png)
+
+在材料根目录创建 `work/human/P06/`，按[保存自包含工程](../SOP.md#save)保存为 `work/human/P06/P06-nodes.blend`；保留同目录的 `P06-nodes.qcdata/`。重新打开后，选 **P06-nodes** 检查新分支和六原子显示仍在。
 
 > 保存得到的 `.blend` 保留本页的节点组合与显示设置，配套 `.qcdata/` 保存该工程引用的科学数据。两者一起保留，供重新打开、继续编辑或移动工程。
 

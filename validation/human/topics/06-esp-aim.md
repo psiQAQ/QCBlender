@@ -60,6 +60,8 @@
 
 选 **QC ESP minimum**，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，展开 **外部分析记录（External Analysis Records）**，应有 **3 条记录**；设 **记录（从1开始）（Record (1-based)）=1**，值应为 **−25.5 kcal/mol**。再选 **QC ESP maximum**，重新点击该对象属性入口，应有 **4 条记录**；将 **记录（从1开始）（Record (1-based)）** 设为 **2**，应显示源编号 **2**、值 **57.8 kcal/mol**。展开 **外部结果浏览器（External Result Browser）**，使用初始默认条件，设 **匹配项（从1开始）（Match (1-based)）=2**，点击 **应用筛选（Apply Filter）**，应突出该点并显示它的标签。截图保存为 `human/screenshots/P03-esp-extrema.png`。
 
+若密度表面遮住标签，先关闭 **QC electron_number_density** 的眼睛图标，并旋转视图，让标签正面朝向观察方向。白色标签在浅色背景下不易辨认时，打开视口右上角着色选项，关闭 **场景世界（Scene World）**，使用材质预览的默认深色背景。下图采用这组观察设置；截图后恢复密度表面的可见性和原背景设置。
+
 ![ESP 最大值、最小值与所选源点标签](../screenshots/P03-esp-extrema.png)
 
 可再将 **外部分析记录（External Analysis Records） → 记录（从1开始）（Record (1-based)）** 改为 **1**：面板切到另一条源记录，视口仍保留上次应用的源点 2 高亮。将记录（Record）恢复为 **2**，即可重新查看这个高亮点的源记录。

@@ -40,7 +40,7 @@
 <a id="step-02"></a>
 ### 2. 绘制 ESP 等值线
 
-> 等值线连接平面上相同场值的位置，便于比较各区域的数值。阈值列表（Isovalue List）指定要画出的各个场值，数值标签（Value Labels）在曲线旁标出该值。
+> 等值线连接平面上相同场值的位置，便于比较各区域的数值。阈值列表（空白：自动 9 条）（Levels (empty: 9 automatic levels)）指定要画出的各个场值，数值标签（Value Labels）在曲线旁标出该值。
 
 - **几何场（Geometry Field）**：读取切片自身的场；本例是 ESP，线值单位为 hartree/e。
 - **绑定色场（Bound Color Field）**：读取另外绑定的着色场，适合切片自身的场与着色量不同时使用；需要先有色场绑定。
@@ -121,7 +121,7 @@
 - **启用包围盒裁剪（Box Enabled）**：开启盒子裁剪。**包围盒最小值（Box Minimum） / 包围盒最大值（Box Maximum）** 指定各轴的最小、最大坐标，盒外隐藏，适合保留一个有限区域。
 - 两种裁剪同时开启时，仅保留同时满足两者的部分；要比较效果，先关闭一种再开启另一种。
 
-在 Outliner 关闭其他显示层的眼睛图标，只显示并选中 **P03-atoms**，重新打开该对象属性，点击 **对象属性（Object Properties） → 创建视图与工具（Create Views and Tools） → 空间工具（Spatial Tools） → 添加裁剪控件（Add Clipping Controls）**。重新点击 **打开对象属性（Open Object Properties）**，在 **空间观察（Spatial View）** 开启 **启用平面裁剪（Plane Enabled）**，设 **平面原点（Plane Origin）=(0,0,1.45) Å、平面法向量（Plane Normal）=(0,0,1)**，应只显示上方水分子。关闭平面，开启 **启用包围盒裁剪（Box Enabled）**，设 **包围盒最小值（Box Minimum）=(−0.5,−2,−2) Å、包围盒最大值（Box Maximum）=(0.5,2,5) Å**，应看到两个氧及部分键几何。最后关闭 **启用平面裁剪（Plane Enabled）** 和 **启用包围盒裁剪（Box Enabled）**，恢复完整分子。
+在 Outliner 关闭其他显示层的眼睛图标，只显示并选中 **P03-atoms**，重新打开该对象属性，点击 **对象属性（Object Properties） → 创建视图与工具（Create Views and Tools） → 空间工具（Spatial Tools） → 添加裁剪控件（Add Clipping Controls）**。重新点击 **打开对象属性（Open Object Properties）**，在 **空间观察（Spatial View）** 开启 **启用平面裁剪（Plane Enabled）**，设 **平面原点（Plane Origin）=(0,0,1.45) Å、平面法向量（Plane Normal）=(0,0,1)**，应只显示上方水分子。关闭平面，开启 **启用包围盒裁剪（Box Enabled）**，设 **包围盒最小值（Box Minimum）=(−0.5,−2,−2) Å、包围盒最大值（Box Maximum）=(0.5,2,5) Å**，本例应只看到两个氧原子，氢原子和相连的键不再可见。最后关闭 **启用平面裁剪（Plane Enabled）** 和 **启用包围盒裁剪（Box Enabled）**，恢复完整分子。
 
 <a id="step-09"></a>
 ### 9. 创建密度体积雾并调整不透明度

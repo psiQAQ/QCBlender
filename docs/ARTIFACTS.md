@@ -1,24 +1,31 @@
 # 产物查找入口
 
-更新：2026-10-17。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
+更新：2026-10-21。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
 
 ## 当前交付
 
 开发流程工具已完成技术验收：[入口](agents/development-workflow.md)、[当前结果](../validation/agent/acceptance/dev-workflow.md)，日志与全局规则备份在 `outputs/runs/dev-workflow-20261016/`。真实 MCP、构建安装和原工程恢复 Passed；当前有效候选见下表。
 
-从 [validation](../validation/README.md) 查找当前教程、输入和校验材料；人工入口为 [SOP](../validation/human/SOP.md)。主线 15 步、9 个按需专题，截图由实际操作者按名称补入。
+从 [validation](../validation/README.md) 查找当前教程、输入和校验材料；人工入口为 [SOP](../validation/human/SOP.md)。主线 15 步、9 个按需专题，本批 79 步和 27 张实际截图均已完成。
 
 | 内容 | 当前入口 |
 | --- | --- |
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
-| 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；工程在 `validation/work/human/`；[当前截图](#tutorial-screenshots-20261011) |
+| 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；本批工程在 `outputs/deliveries/sop-20261021/QCBlender-tutorial/work/human/`；[当前截图与工程](#sop-completion-20261021) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
-| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,940,876 字节，SHA-256 `8c23eaff5af4509b2a05ac4f45cf8a79464db06038a56fa013f7be60f48596c4` |
-| 当前候选及验证 | `outputs/candidates/current/annotation-width-20261017/`；源码 `0c08219`，弹窗宽度减半，完整构建、隔离及日常安装、实际 GUI 与冷读通过；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/annotation-width.md) |
+| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,941,014 字节，SHA-256 `06b46875482a4ee377180717551457f9b74019f01c6c3f3221754119f75ff052` |
+| 当前候选及验证 | `outputs/candidates/current/sop-completion-20261021/`；源码 `1f7d537`，保留生成节点树碰撞后缀，完整构建、隔离及日常安装、实际 GUI 与冷读通过；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/sop-completion.md) |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
-教程现有 27 个图片引用，已提供 4 张；完整图片检查因缺少 23 张截图为 Failed。截图采用 Pxx 案例前缀，当前路径见[截图记录](#tutorial-screenshots-20261011)。完整独立用户操作、checkpoint 复算和科研签署保持各自的 Not Run 状态。当前产物查找以本页为准；旧文档中的 outputs 路径表示当时身份，其实际可用性由本次删除收据确定。
+<a id="sop-completion-20261021"></a>
+## SOP 全步骤、截图与工程材料（2026-10-21）
+
+79 个编号步骤及章节内演示、27 张教程图已完成；36 个最终工程和检查点原位及中文路径解包新进程比较 Passed。最终教程 ZIP 含 1,755 个文件，296,605,483 字节，SHA-256 `a567d578cf0bfb4940bc2a02b140e8d4af61016440571a84e7b81cbdfa414a9c`。P01 已恢复，原生基线比较 Passed、差异为空，CU 观察相位与相机取景正常。
+
+完整包：`outputs/deliveries/sop-20261021/QCBlender-tutorial.zip`；展开目录中的 `README.md`、`工程索引.md` 可直接导航全部教程与工程。本批使用材料从此入口读取，旧 `validation/work/human/` 工程保持原样。证据在 `validation/agent/reports/2026-10-21/sop-completion/`，详见[验收](../validation/agent/acceptance/sop-completion.md)。
+
+独立人工/科研验收和发布资格 Not Run。P01 轨道、P06 标注缺原保存前完整快照的范围单独记录。历史失败报告、旧安装和偏好、31 个未入包的自动备份原位保留。工作树脚本及忽略文件保全、归档和本地提交收据在 `outputs/runs/sop-20261021/finish/`；不 push。重建沿用统一 build/install 入口，教程打包脚本与工程检查脚本随本批保全。
 
 <a id="annotation-width-20261017"></a>
 ## 添加和编辑标注窗口宽度减半（2026-10-17）
