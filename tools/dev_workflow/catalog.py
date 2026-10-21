@@ -5,7 +5,8 @@ from .records import digest, read
 
 def query(repo, term, limit=5):
     records = read(repo / 'validation/agent/acceptance/blender-operations.json')['records']
-    matches = [r for r in records if term.lower() in (r['id']+' '+r.get('title', '')).lower()]
+    matches = [r for r in records if term.lower() in ' '.join(
+        [r['id'], r.get('title', ''), *r.get('query_keywords', [])]).lower()]
     matches.sort(key=lambda r: (r['id'] != term, r['id']))
     result = []
     for item in matches[:limit]:
@@ -15,6 +16,7 @@ def query(repo, term, limit=5):
         result.append(dict(id=item['id'], title=item.get('title'), gui_status=gui.get('status'),
             scope=gui.get('validated_scope'), entry=gui.get('visible_entry'),
             execution=item.get('execution'), changed_implementation=changed,
+            batch_replays=item.get('reuse', {}).get('batch_replays', []),
             evidence=gui.get('reports', []), requires_current_assertions=True))
     return dict(status='Passed', matches=len(matches), returned=len(result), records=result)
 

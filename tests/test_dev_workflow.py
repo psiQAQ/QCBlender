@@ -7,6 +7,7 @@ import tempfile
 import unittest
 
 from tools.dev_workflow.records import Run, read
+from tools.dev_workflow.catalog import query
 
 
 class WorkflowTests(unittest.TestCase):
@@ -17,6 +18,23 @@ class WorkflowTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.path=Path(self.temp.name)
         self.run=Run(root,self.path)
+
+    def test_operation_alias_exposes_replay_without_promoting_gui(self):
+        registry=self.path/'validation/agent/acceptance/blender-operations.json'
+        registry.parent.mkdir(parents=True)
+        replay={'status':'Passed','path':'reports/current.json','scope':'three node groups'}
+        registry.write_text(json.dumps({'records':[{
+            'id':'linked-node-groups-make-local','title':'转为本地项',
+            'query_keywords':['Make Local'],
+            'gui_validation':{'status':'Not Run'},
+            'execution':replay,
+            'reuse':{'batch_replays':[replay]},
+        }]}),encoding='utf-8')
+        result=query(self.path,'MAKE LOCAL')
+        self.assertEqual(result['matches'],1)
+        self.assertEqual(result['records'][0]['gui_status'],'Not Run')
+        self.assertEqual(result['records'][0]['execution'],replay)
+        self.assertEqual(result['records'][0]['batch_replays'],[replay])
 
     def test_failed_command_records_failure_and_does_not_retry(self):
         command=[sys.executable,'-c','raise SystemExit(7)']
