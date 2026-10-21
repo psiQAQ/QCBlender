@@ -1,6 +1,6 @@
 # 开发演进
 
-- 2026-10-22：完整教程材料统一到 `validation/`，补入工程索引和最终工程/检查点，覆盖对应旧 P01 文件并保留其余本地材料。36 个工程在新位置逐个冷重开严格比较 Passed；`outputs/deliveries/` 的逐文件退役及收据见[迁移与清理](../validation/agent/acceptance/delivery-consolidation.md)。插件、安装与依赖未变，独立人工/科研验收 Not Run。
+- 2026-10-22：完整教程材料统一到 `validation/`，补入工程索引和最终工程/检查点，覆盖对应旧 P01 文件并保留其余本地材料。36 个工程在新位置逐个冷重开严格比较 Passed；`outputs/deliveries/` 的 7,055 文件（约 1.98 GiB）及目录已清理，validation 原 P01 已恢复，收据见[迁移与清理](../validation/agent/acceptance/delivery-consolidation.md)。插件、安装与依赖未变，独立人工/科研验收 Not Run。
 
 - 2026-10-21：从原始输入重建 P01 轨道及 P06 标注检查点，补齐真实保存前完整快照；保存后、冷重开及中文路径解包严格比较 Passed。新完整教程包更新两个检查点，旧包保留，其他 34 工程复用相同字节证据；独立人工/科研验收 Not Run，见[补验](../validation/agent/acceptance/checkpoint-rebuild.md)。本地 `4959619` 已合入、三个工作树及 6 个文件保全归档，未 push。
 

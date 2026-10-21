@@ -9,8 +9,8 @@
 | 材料和导航 | Passed；公开输入、安装包、27 张图片和教程检查通过，工程索引及新增入口的链接/锚点核对通过 |
 | 候选身份 | Passed；每个冷读进程核对现有安装全部 123 个成员，安装包与插件源码未变 |
 | 既有非对应材料 | Passed；原 `validation/work/human/` 的 23 个额外文件保留；Agent、本地输入、回归数据不在覆盖范围 |
-| deliveries 清理 | Not Run；7,055 个文件、2,129,569,652 字节已生成逐文件清单，待最终迁移门禁后执行 |
-| 原 P01 窗口恢复 | Not Run；用户已保存关闭，完成清理后打开迁入 `validation/work/human/P01/P01.blend` 的同内容工程 |
+| deliveries 清理 | Passed；逐文件删除 7,055 个文件、2,129,569,652 字节，112 项保护摘要通过；无失败或残留，空目录逐层移除，deliveries 已不存在 |
+| 原 P01 窗口恢复 | Passed；真实 HTTP MCP 核对 PID 79644、validation 下工程路径、未保存状态为 false，完整基线比较零差异；窗口保留 |
 | 独立人工/科研验收 | Not Run；本批为材料迁移、真实 CLI 冷读及存储维护 |
 
 原 P01 文件摘要 `e423db84bada5e95385ff71909a20d3b285142c9e932070ef684d421fb2a1294` 与新版交付一致，迁移后仍相同。P01 轨道、P06 标注使用重建批次的真实保存前完整快照，其余 34 个工程使用既有清单明确指定的有效基线；本批重新执行新位置冷读，不把历史执行改记为本批执行。
@@ -21,6 +21,10 @@
 
 此后不另存完整教程 ZIP；本地交付需要打包时，从 `validation/` 按[材料打包说明](../../README.md#人工完成后的打包)选择教程、安装包、公开输入、工程索引和对应工程，保持相对目录。包的 ZIP 字节及 README 可能与旧包不同，新包须有自己的材料与解包验证记录。
 
-[Standards](../reports/2026-10-22/delivery-consolidation/standards-review.md) 与 [Spec](../reports/2026-10-22/delivery-consolidation/spec-review.md) 审阅均零发现；清理执行前须将工程索引合入主仓库，再核对全部保留成员。历史分发路径不再作为当前入口，原报告仍保留其实际执行身份。
+[Standards](../reports/2026-10-22/delivery-consolidation/standards-review.md) 与 [Spec](../reports/2026-10-22/delivery-consolidation/spec-review.md) 审阅均零发现；清理前已将工程索引合入主仓库，并通过全部保留成员门禁；清理后再次核对通过。历史分发路径不再作为当前入口，原报告仍保留其实际执行身份。
 
 工程索引的 CRLF→LF 由仓库 `.gitattributes` 的 Markdown 规则决定，正文、链接及顺序不变；[变换记录](../reports/2026-10-22/delivery-consolidation/index-normalization.json)保留源/目标摘要。原迁移收据对应入库前原字节副本，后续门禁使用该明确变换后的摘要；工程和科学数据未做文本转换。
+
+实际清理：[删除前门禁](../reports/2026-10-22/delivery-consolidation/cleanup-preflight.json)、[逐文件删除收据](../reports/2026-10-22/delivery-consolidation/prune-01/removed.jsonl.gz)、[工具执行收据](../reports/2026-10-22/delivery-consolidation/prune-01/applied.json)、[清理后复核](../reports/2026-10-22/delivery-consolidation/cleanup-finished.json)。逻辑删除量 2,129,569,652 字节，卷可用空间观测增加 2,133,880,832 字节；后者包含同时发生的系统活动，不视为精确净节省量。全 outputs 盘点遇到 36 个范围外不可访问项，均未进入本批删除集合；deliveries 内完整枚举且删除无失败。
+
+当前工程清单见[current-project-manifest.json](../reports/2026-10-22/delivery-consolidation/current-project-manifest.json)，原 P01 的[恢复报告](../reports/2026-10-22/delivery-consolidation/restored-P01.json)与[会话状态](../reports/2026-10-22/delivery-consolidation/restored-state.json)保留。旧报告中 deliveries 路径及旧 ZIP 已退役，依此迁移映射查找当前材料；历史执行结果和源文件身份不改写。

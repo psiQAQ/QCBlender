@@ -24,12 +24,12 @@
 
 最新版 `checkpoint-rebuild-20261021` 的材料已按原目录结构合并到 `validation/`。91 个相同文件复用，3 个旧 P01 文件覆盖，1,660 个文件补入；README 合并导航，新增[工程索引](../validation/工程索引.md)。36 个工程、27 张图片及全部配套材料保持交付内容，原 P01 也位于 `validation/work/human/P01/P01.blend`。原有 Agent 报告、本地输入、回归数据和 23 个不对应的旧工作文件保留。
 
-两批旧分发目录、ZIP、中文路径解包副本和旧批次自动备份按用户授权逐文件退役；清理范围仅限 `outputs/deliveries/`，执行状态见[迁移验收](../validation/agent/acceptance/delivery-consolidation.md)。迁移映射、冷读与清理收据位于 `validation/agent/reports/2026-10-22/delivery-consolidation/`，编排脚本位于 `outputs/runs/delivery-consolidation-20261022/`。不另存完整教程 ZIP；需要时从当前材料按[打包说明](../validation/README.md#人工完成后的打包)重建。独立人工/科研验收未由本次迁移替代。
+两批旧分发目录、ZIP、中文路径解包副本和旧批次自动备份已按用户授权逐文件清理：7,055 文件、2,129,569,652 字节，目录已移除，无失败残留。36 个迁移工程新进程比较全部 Passed，原 P01 已在 validation 路径恢复打开；清理范围仅限 `outputs/deliveries/`，收据见[迁移验收](../validation/agent/acceptance/delivery-consolidation.md)。迁移映射、冷读与清理收据位于 `validation/agent/reports/2026-10-22/delivery-consolidation/`，编排脚本位于 `outputs/runs/delivery-consolidation-20261022/`。不另存完整教程 ZIP；需要时从当前材料按[打包说明](../validation/README.md#人工完成后的打包)重建。独立人工/科研验收未由本次迁移替代。
 
 <a id="checkpoint-rebuild-20261021"></a>
 ## 两个检查点从原始输入重建并补齐保存前验证（2026-10-21）
 
-后续可用性：本节路径和 ZIP 摘要对应当时交付。2026-10-22 材料迁入 `validation/`，原分发副本进入[本次清理范围](#delivery-consolidation-20261022)；当前材料请使用上方入口。
+后续可用性：本节路径和 ZIP 摘要对应当时交付。2026-10-22 材料迁入 `validation/`，原分发副本已按清单删除，见[本次清理范围](#delivery-consolidation-20261022)；当前材料请使用上方入口。
 
 新完整教程包在 `outputs/deliveries/checkpoint-rebuild-20261021/QCBlender-tutorial.zip`，296,596,161 字节，SHA-256 `f885589e4e6237cd3ca4dddc6de12ea57a976f9e973fd685556067cdb524f4fb`。P01-orbital 与 P06-annotations 从原始输入重建，真实保存前快照、保存后、原位及中文路径解包冷读均 Passed、零差异；旧两个检查点的快照缺口在新交付物中已补齐。
 
@@ -40,7 +40,7 @@
 <a id="sop-completion-20261021"></a>
 ## SOP 全步骤、截图与工程材料（2026-10-21）
 
-后续可用性：本节保留原批次结果。2026-10-22 旧包及副本进入[本次清理范围](#delivery-consolidation-20261022)，两个旧检查点已由后续重建版本替代，当前材料位于 `validation/`。
+后续可用性：本节保留原批次结果。2026-10-22 旧包及副本已按清单删除，见[本次清理范围](#delivery-consolidation-20261022)，两个旧检查点已由后续重建版本替代，当前材料位于 `validation/`。
 
 79 个编号步骤及章节内演示、27 张教程图已完成；36 个最终工程和检查点原位及中文路径解包新进程比较 Passed。最终教程 ZIP 含 1,755 个文件，296,605,483 字节，SHA-256 `a567d578cf0bfb4940bc2a02b140e8d4af61016440571a84e7b81cbdfa414a9c`。P01 已恢复，原生基线比较 Passed、差异为空，CU 观察相位与相机取景正常。
 
