@@ -1,6 +1,6 @@
 # 产物查找入口
 
-更新：2026-10-21。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
+更新：2026-10-22。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
 
 ## 当前交付
 
@@ -10,17 +10,26 @@
 
 | 内容 | 当前入口 |
 | --- | --- |
-| 当前完整教程包 | `outputs/deliveries/checkpoint-rebuild-20261021/QCBlender-tutorial.zip`；[两个检查点补验](#checkpoint-rebuild-20261021) |
+| 当前完整教程材料 | `validation/`；[工程索引](../validation/工程索引.md)、[迁移与清理](#delivery-consolidation-20261022)；需要分发时按下行打包 |
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
-| 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；当前工程在 `outputs/deliveries/checkpoint-rebuild-20261021/QCBlender-tutorial/work/human/`；[当前截图与工程](#checkpoint-rebuild-20261021) |
+| 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；当前工程在 `validation/work/human/`；[当前截图与工程](../validation/工程索引.md) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
 | 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,941,014 字节，SHA-256 `06b46875482a4ee377180717551457f9b74019f01c6c3f3221754119f75ff052` |
 | 当前候选及验证 | `outputs/candidates/current/sop-completion-20261021/`；源码 `1f7d537`，保留生成节点树碰撞后缀，完整构建、隔离及日常安装、实际 GUI 与冷读通过；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/sop-completion.md) |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
+<a id="delivery-consolidation-20261022"></a>
+## 教程交付材料统一到 validation（2026-10-22）
+
+最新版 `checkpoint-rebuild-20261021` 的材料已按原目录结构合并到 `validation/`。91 个相同文件复用，3 个旧 P01 文件覆盖，1,660 个文件补入；README 合并导航，新增[工程索引](../validation/工程索引.md)。36 个工程、27 张图片及全部配套材料保持交付内容，原 P01 也位于 `validation/work/human/P01/P01.blend`。原有 Agent 报告、本地输入、回归数据和 23 个不对应的旧工作文件保留。
+
+两批旧分发目录、ZIP、中文路径解包副本和旧批次自动备份按用户授权逐文件退役；清理范围仅限 `outputs/deliveries/`，执行状态见[迁移验收](../validation/agent/acceptance/delivery-consolidation.md)。迁移映射、冷读与清理收据位于 `validation/agent/reports/2026-10-22/delivery-consolidation/`，编排脚本位于 `outputs/runs/delivery-consolidation-20261022/`。不另存完整教程 ZIP；需要时从当前材料按[打包说明](../validation/README.md#人工完成后的打包)重建。独立人工/科研验收未由本次迁移替代。
+
 <a id="checkpoint-rebuild-20261021"></a>
 ## 两个检查点从原始输入重建并补齐保存前验证（2026-10-21）
+
+后续可用性：本节路径和 ZIP 摘要对应当时交付。2026-10-22 材料迁入 `validation/`，原分发副本进入[本次清理范围](#delivery-consolidation-20261022)；当前材料请使用上方入口。
 
 新完整教程包在 `outputs/deliveries/checkpoint-rebuild-20261021/QCBlender-tutorial.zip`，296,596,161 字节，SHA-256 `f885589e4e6237cd3ca4dddc6de12ea57a976f9e973fd685556067cdb524f4fb`。P01-orbital 与 P06-annotations 从原始输入重建，真实保存前快照、保存后、原位及中文路径解包冷读均 Passed、零差异；旧两个检查点的快照缺口在新交付物中已补齐。
 
@@ -30,6 +39,8 @@
 
 <a id="sop-completion-20261021"></a>
 ## SOP 全步骤、截图与工程材料（2026-10-21）
+
+后续可用性：本节保留原批次结果。2026-10-22 旧包及副本进入[本次清理范围](#delivery-consolidation-20261022)，两个旧检查点已由后续重建版本替代，当前材料位于 `validation/`。
 
 79 个编号步骤及章节内演示、27 张教程图已完成；36 个最终工程和检查点原位及中文路径解包新进程比较 Passed。最终教程 ZIP 含 1,755 个文件，296,605,483 字节，SHA-256 `a567d578cf0bfb4940bc2a02b140e8d4af61016440571a84e7b81cbdfa414a9c`。P01 已恢复，原生基线比较 Passed、差异为空，CU 观察相位与相机取景正常。
 

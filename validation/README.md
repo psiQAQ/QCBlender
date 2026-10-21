@@ -2,13 +2,14 @@
 
 人工操作从 [SOP](human/SOP.md) 开始，按目录选择需要学习的专题。完整材料包含安装包和案例输入，适用 Windows x64、Blender 5.1.1、QCBlender 0.1.0。
 
-2026-10-21 完整实操材料：主仓库 `outputs/deliveries/checkpoint-rebuild-20261021/QCBlender-tutorial.zip`，包含 27 张截图及 36 个最终工程/检查点；展开目录的 `工程索引.md` 按步骤导航。验证范围见 [本批验收](agent/acceptance/checkpoint-rebuild.md)，独立人工和科研验收尚未执行。
+完整实操材料已统一到本目录：按[工程索引](工程索引.md)查找 79 个步骤、27 张截图及 36 个最终工程/检查点，工程位于 `work/human/`。2026-10-22 从最新版交付材料迁入，验证及旧副本清理状态见[迁移记录](agent/acceptance/delivery-consolidation.md)；检查点的生成与保存前验证见[补验记录](agent/acceptance/checkpoint-rebuild.md)。独立人工和科研验收尚未执行。
 
 ## 入口
 
 | 要做的事 | 位置 |
 | --- | --- |
 | 安装、生成第一张轨道图、导出和保存重开 | [人工 SOP](human/SOP.md) |
+| 按步骤或截图打开已保存工程 | [工程索引](工程索引.md)；编辑前另存自己的副本 |
 | 分子显示、XYZ、ESP、分析结果等专题 | [专题目录](human/SOP.md#topics) |
 | 保存自己的截图 | `human/screenshots/`，以 `Pxx-内容.png` 命名，具体路径写在对应步骤下 |
 | 保存教程渲染图 | `human/renders/`，教程直接引用渲染成品 |
@@ -54,7 +55,9 @@
 
 3. 用文件管理器将 `QCBlender-tutorial/` 压缩为 ZIP。用户解压后打开 `human/SOP.md`；图片、输入和安装包保持相对位置即可。P04 的整个目录随包复制，其 CSV 会读取同目录的 FCHK 和分析表。
 
-公开样本附带的 `LICENSE`、`NOTICE.md` 和来源说明一起保留。`local/`、`regression/`、`agent/` 和 `work/` 不进入教程压缩包。P02 的再分发许可未确认，仅本地案例页使用它。
+公开样本附带的 `LICENSE`、`NOTICE.md` 和来源说明一起保留。公开入门包不包含 `local/`、`regression/`、`agent/` 和 `work/`。P02 的再分发许可未确认，仅本地案例页使用它。
+
+需要连同已保存工程交给本地使用者检查时，在上述材料之外复制 `工程索引.md`，以及索引列出的 `work/human/` 工程、同名 `.qcdata/`、导出文件和工程归档；保持相对位置，排除 `.blend1` 等自动备份。不要直接打包整个 `validation/`，其中另有本地限定输入、回归数据和技术报告。分发包的 README 说明从 `human/SOP.md` 和 `工程索引.md` 开始即可；主仓库保留本页导航。
 
 ## 开发维护
 
