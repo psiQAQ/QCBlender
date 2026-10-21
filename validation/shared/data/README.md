@@ -1,6 +1,8 @@
 # 校验输入
 
-输入原件统一放在本目录。人工教程使用 `public/`；本机限定案例使用 `local/`；自动测试使用 `regression/`。生成的工程、导出表和临时文件放到 `validation/work/` 或已有的 `outputs/runs/` 批次目录。
+输入原件统一放在本目录。人工教程使用 `public/`；本机限定案例使用 `local/`；自动测试使用 `regression/`。保留的校验工程放 `validation/work/`，临时工作放 `.tmp/runs/`，正式导出放对应输出目录。
+
+2026-10-22 整理保留的历史原件位于 `local/legacy-v1/`、`local/legacy-runs/`、`local/legacy-archives/`，均保持 Git 忽略及原始字节。来源旧路径、摘要和用途统一由 [ARTIFACTS](../../../docs/ARTIFACTS.md#output-layout-20261022) 指向的迁移映射定位，不授予额外再分发许可。
 
 | 位置 | 内容 | 分发与 Git |
 | --- | --- | --- |
@@ -18,7 +20,7 @@
 在仓库根目录使用已有 Python 3.13 执行：
 
 ```powershell
-python -B tools/prepare_validation_data.py --report outputs/runs/validation-layout/public-inputs.json
+python -B tools/prepare_validation_data.py --report validation/agent/reports/2026-10-22/validation-layout/public-inputs.json
 ```
 
 命令从 `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip` 按允许成员集合恢复文件，验证 30 个输入、许可证与 P04 CSV 相对引用。已有文件必须匹配来源身份；不同内容直接失败，不覆盖用户文件。每次运行指定新的报告文件名。

@@ -20,6 +20,8 @@ validation/shared/data/complex-example-sources.json -text -diff
 validation/shared/data/local-log-downloads.json -text -diff
 # Preserve the upstream GNU license text, including its original final blank line.
 LICENSE -text whitespace=-blank-at-eof
+# Keep relocated upstream license originals byte-identical on every checkout.
+modules/licenses/** -text whitespace=-blank-at-eof
 
 # Preserve relocated frozen manifests and historical machine reports byte for byte.
 validation/agent/acceptance/*.json -text

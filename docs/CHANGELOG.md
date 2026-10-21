@@ -1,5 +1,7 @@
 # 开发演进
 
+- 2026-10-22：outputs 按用途整理；必要依赖和辅助工具迁入 `modules/`，有用缓存和任务工作迁入 `.tmp/`，本机配置迁入 `.local/`，同步构建/科学/CI 入口、项目规则及当前证据路由。迁移 10,130 个原文件，退役 58,121 文件（5,961,811,713 逻辑字节），当前验证包和用户工程保持。导入、272 标准库及 98 路径检查、5 科学/持久化回归、离线构建和代表工程删源后冷读 Passed；P01 已恢复，严格 GUI 快照失败及布局尺寸差异如实保留。35 目录、6 文件及 1 junction 受限保留，独立人工/科研和远端 CI Not Run。见[验收](../validation/agent/acceptance/output-layout.md)与[产物路由](ARTIFACTS.md#output-layout-20261022)。
+
 - 2026-10-22：完整教程材料统一到 `validation/`，补入工程索引和最终工程/检查点，覆盖对应旧 P01 文件并保留其余本地材料。36 个工程在新位置逐个冷重开严格比较 Passed；`outputs/deliveries/` 的 7,055 文件（约 1.98 GiB）及目录已清理，validation 原 P01 已恢复，收据见[迁移与清理](../validation/agent/acceptance/delivery-consolidation.md)。插件、安装与依赖未变，独立人工/科研验收 Not Run。本地 `3a1fbc7` 已合入并归档，未 push。
 
 - 2026-10-21：从原始输入重建 P01 轨道及 P06 标注检查点，补齐真实保存前完整快照；保存后、冷重开及中文路径解包严格比较 Passed。新完整教程包更新两个检查点，旧包保留，其他 34 工程复用相同字节证据；独立人工/科研验收 Not Run，见[补验](../validation/agent/acceptance/checkpoint-rebuild.md)。本地 `4959619` 已合入、三个工作树及 6 个文件保全归档，未 push。

@@ -25,7 +25,7 @@
   "daily_native_smoke": "Passed",
   "daily_cold_restart": "Passed",
   "global_installation": "%APPDATA%/Blender Foundation/Blender/5.1/extensions/user_default/qcblender",
-  "daily_install_report": "outputs/runs/sop-20261021/candidate-suffix-daily/global-install.json",
+  "daily_install_report": "validation/agent/reports/2026-10-21/sop-20261021/legacy-outputs/candidate-suffix-daily/global-install.json",
   "daily_install_date": "2026-10-21",
   "scientific_acceptance": "Not Run"
 }

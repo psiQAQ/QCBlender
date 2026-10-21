@@ -4,7 +4,9 @@
 
 ## 当前交付
 
-开发流程工具已完成技术验收：[入口](agents/development-workflow.md)、[当前结果](../validation/agent/acceptance/dev-workflow.md)，日志与全局规则备份在 `outputs/runs/dev-workflow-20261016/`。真实 MCP、构建安装和原工程恢复 Passed；当前有效候选见下表。
+本地环境与工作目录现按 [modules](../modules/README.md) 和[维护规则](agents/storage-maintenance.md#当前目录职责)分类：共用依赖在 `modules/`，缓存和临时工作在 `.tmp/`，本机 Blender 配置在 `.local/blender/`。`outputs/` 保留实际输出。2026-10-22 整理的逐文件旧/新路径、SHA-256、用途和清理状态以 `validation/agent/reports/2026-10-22/output-layout/migration.jsonl.gz` 为准；ZIP 成员保全映射在同批 `archive-members.jsonl.gz`。历史记录中的旧路径和 Passed 保持当时身份，当前位置按映射查询；实际验证和残留见[本批验收](../validation/agent/acceptance/output-layout.md)。
+
+开发流程工具已完成技术验收：[入口](agents/development-workflow.md)、[当前结果](../validation/agent/acceptance/dev-workflow.md)，日志与规则备份当前位置由本次迁移映射定位，正式记录在 `validation/agent/reports/2026-10-16/dev-workflow-20261016/legacy-outputs/`。真实 MCP、构建安装和原工程恢复 Passed；当前有效候选见下表。
 
 从 [validation](../validation/README.md) 查找当前教程、输入和校验材料；人工入口为 [SOP](../validation/human/SOP.md)。主线 15 步、9 个按需专题，本批 79 步和 27 张实际截图均已完成。
 
@@ -18,6 +20,15 @@
 | 当前候选及验证 | `outputs/candidates/current/sop-completion-20261021/`；源码 `1f7d537`，保留生成节点树碰撞后缀，完整构建、隔离及日常安装、实际 GUI 与冷读通过；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/sop-completion.md) |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
+
+<a id="output-layout-20261022"></a>
+## outputs 分类整理（2026-10-22）
+
+已迁移并核验 10,130 个原文件；退役 58,121 个缓存、旧安装副本及本批验证包，共 5,961,811,713 逻辑字节。实际删除源文件总数为 68,251，包含已迁移的旧位置，空间收益不重复计算这部分。详细数量和磁盘空间口径以同批 `cleanup.json` 为准；删除收据为 `removed.jsonl.gz`。当前已验证候选和教程安装入口保持 SHA-256 `06b46875482a4ee377180717551457f9b74019f01c6c3f3221754119f75ff052`。
+
+新位置导入、最终主检出的 272 项标准库和 98 项相关路径检查、5 项科学/持久化回归、离线构建及 11 个 wheel 核验、代表工程删源后独立冷读 Passed。P01 已恢复，科学、对象、材质及节点状态一致，GUI 区域像素尺寸有差异；严格全快照首次失败及后续实际比较均保留。独立人工/科研和远端 CI Not Run。
+
+35 个目录、6 个文件读取受限，另有 1 个 junction；9 组配套数据不完整可读的工程整组原位保护。部分已复制工程不作为完整工程验收，覆盖范围见 `protected-project-groups.json`；这些对象、`outputs/1.blend` 和原用户工程未按缓存删除。未完成项和只读核验入口见同批 `residuals.json`、`inspect-retained.ps1`。本页各历史日期章节保持当时结论，旧二进制当前可用性以本次迁移与退役收据为准。
 
 <a id="delivery-consolidation-20261022"></a>
 ## 教程交付材料统一到 validation（2026-10-22）
@@ -234,11 +245,11 @@ Passed：151 项基础测试、124 项完整科学测试、5 项重建入口测�
 
 | 位置 | 用途与保留范围 |
 | --- | --- |
-| `outputs/build-site/` | 五个锁定构建包所需的 429 个文件；离线构建验证通过 |
-| `outputs/science/` | 现用科学环境，版本不变 |
-| `outputs/wheels/`、`outputs/backend-wheel.json` | 11 个锁定且逐份核验的 wheel；统一当前打包入口 |
-| `outputs/build-sources/`、`outputs/m0-research/iodata.zip` | GBasis、IOData、历史 qcint 源码 ZIP 各保留一份；来源、版本与 SHA 见同批 `runtime/final-v2/runtime-plan.json` |
-| `outputs/native-backend-licenses/` | 六份完整历史许可文本 |
+| `modules/build-site/` | 现有锁定构建包；搬移前后的逐文件身份见本次迁移映射 |
+| `modules/science/` | 现用科学环境，版本不变 |
+| `modules/wheels/`、`modules/backend-wheel.json` | 11 个锁定且逐份核验的 wheel；统一当前打包入口 |
+| `modules/sources/gbasis/`、`modules/sources/iodata/`、`modules/sources/qcint/` | GBasis、IOData、历史 qcint 源码 ZIP 各保留一份；原来源记录沿用，本次映射保存原路径与摘要 |
+| `modules/licenses/` | 完整历史许可及退役环境、归档中需要保留的许可文本 |
 | `outputs/projects/user-session-20260930/` | 用户 `.blend + .qcdata`；新进程冷读 11 数组与原记录一致，未改写工程 |
 | `outputs/projects/human-acceptance/` | 本日人工验收工作目录 |
 | `outputs/projects/cleanup-followup-original/`、`outputs/projects/recovery/`、`outputs/recovery/` | 未知或需保留恢复对象；按原位保护，不推断可删除 |
