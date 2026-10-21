@@ -26,6 +26,8 @@
 
 其余 34 个工程及其全部配套文件逐字节未变，复用有效报告；仍为 79 步、27 图、36 工程。完整索引在新展开目录 `工程索引.md`，证据在 `validation/agent/reports/2026-10-21/checkpoint-rebuild/`，详细边界见[补验](../validation/agent/acceptance/checkpoint-rebuild.md)。原 ZIP、工程及失败报告均保留；原 P01 窗口已恢复。独立人工/科研验收 Not Run。脚本及本地归档收据在 `outputs/runs/checkpoint-rebuild-20261021/`。
 
+本地提交 `4959619` 已以 ff-only 合入 main。三个本批工作树的 6 个忽略文件已逐项保全、摘要核验后正常移除，任务分支正常删除；注释标签为 `archive/2026-10-21/task/{checkpoint-rebuild-20261021,checkpoint-p01-20261021,checkpoint-p06-20261021}`。逐文件清单、归档 ZIP 和收据位于 `outputs/runs/checkpoint-rebuild-20261021/finish/<工作树名>/`。当前工程、教程 ZIP 及验证证据均保留在主仓库稳定目录，未 push 或发布。
+
 <a id="sop-completion-20261021"></a>
 ## SOP 全步骤、截图与工程材料（2026-10-21）
 

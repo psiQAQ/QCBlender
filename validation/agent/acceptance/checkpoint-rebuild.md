@@ -20,3 +20,5 @@ P01 生成/冷读/解包进程分别为 9624/16652/32156；P06 为 46648/32336/8
 证据：[完整工程清单](../reports/2026-10-21/checkpoint-rebuild/delivery-project-manifest.json)、[包清单](../reports/2026-10-21/checkpoint-rebuild/package-manifest.json)、[P01 保存时序](../reports/2026-10-21/checkpoint-rebuild/p01-r1/generation-and-save.json)、[P06 保存时序](../reports/2026-10-21/checkpoint-rebuild/p06-r2/generation-and-save.json)。本批开始前的 P01 原工程已恢复到 PID 15760，未改写，原基线比较[Passed](../reports/2026-10-21/checkpoint-rebuild/restored-P01.json)。
 
 [Standards 审阅](../reports/2026-10-21/checkpoint-rebuild/standards-review.md)首次一项路由建议已修复并复核关闭；[Spec 审阅](../reports/2026-10-21/checkpoint-rebuild/spec-review.md)零发现。实际验证、原工程恢复及材料核对均已完成。
+
+本地提交 `4959619` 已以 ff-only 合入 main。三个本批工作树的 6 个忽略文件已逐项保全、摘要核验后正常移除，任务分支正常删除；注释标签为 `archive/2026-10-21/task/{checkpoint-rebuild-20261021,checkpoint-p01-20261021,checkpoint-p06-20261021}`。逐文件清单、归档 ZIP 和收据位于 `outputs/runs/checkpoint-rebuild-20261021/finish/<工作树名>/`。当前工程、教程 ZIP 及验证证据均保留在主仓库稳定目录，未 push 或发布。

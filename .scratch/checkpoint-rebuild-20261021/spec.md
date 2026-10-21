@@ -1,7 +1,7 @@
 # 重建两个教程检查点并补齐保存前验证
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Baseline: main@20d137057b842e99ac064121eabfbdc3878adf84
 Date: 2026-10-21
 
@@ -14,3 +14,9 @@ Date: 2026-10-21
 新教程材料及 ZIP 保存在 `outputs/deliveries/checkpoint-rebuild-20261021/`，保留旧材料和失败报告。全部未变工程复用已核对相同字节的有效冷读；两个新检查点必须原位及中文路径解包冷读 Passed。更新现有验收、工程索引、当前交付路由及任务记录；独立人工/科研验收仍 Not Run。
 
 结束恢复用户已保存的原 P01 工程，核对本批启动前身份，保留窗口；源码与安装包无需变更。
+
+## Answer
+
+两例从原始输入重建，保存前、保存后、冷读及中文路径解包比较均 Passed、零差异；完整教程 36 工程中 2 个新检查点、34 个逐字节未变工程复用有效验证。原 P01 恢复 Passed；独立人工/科研验收 Not Run。详见 `validation/agent/acceptance/checkpoint-rebuild.md`。
+
+本地提交 `4959619` 已以 ff-only 合入 main。三个本批工作树的 6 个忽略文件已逐项保全、摘要核验后正常移除，任务分支正常删除；注释标签为 `archive/2026-10-21/task/{checkpoint-rebuild-20261021,checkpoint-p01-20261021,checkpoint-p06-20261021}`。逐文件清单、归档 ZIP 和收据位于 `outputs/runs/checkpoint-rebuild-20261021/finish/<工作树名>/`。当前工程、教程 ZIP 及验证证据均保留在主仓库稳定目录，未 push 或发布。
