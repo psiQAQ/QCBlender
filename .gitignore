@@ -7,6 +7,8 @@
 /modules/sources/
 /modules/tools/
 /modules/backend-wheel.json
+/modules/licenses/retired-profiles/
+/modules/licenses/retired-archives/
 __pycache__/
 .agents/skills/
 docs/GPT-Web-Chat/
