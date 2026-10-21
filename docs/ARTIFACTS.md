@@ -26,6 +26,8 @@
 
 两批旧分发目录、ZIP、中文路径解包副本和旧批次自动备份已按用户授权逐文件清理：7,055 文件、2,129,569,652 字节，目录已移除，无失败残留。36 个迁移工程新进程比较全部 Passed，原 P01 已在 validation 路径恢复打开；清理范围仅限 `outputs/deliveries/`，收据见[迁移验收](../validation/agent/acceptance/delivery-consolidation.md)。迁移映射、冷读与清理收据位于 `validation/agent/reports/2026-10-22/delivery-consolidation/`，编排脚本位于 `outputs/runs/delivery-consolidation-20261022/`。不另存完整教程 ZIP；需要时从当前材料按[打包说明](../validation/README.md#人工完成后的打包)重建。独立人工/科研验收未由本次迁移替代。
 
+本地提交 `3a1fbc7` 已快进合入 main；任务工作树已正常移除、分支正常删除，3 个生成缓存文件经摘要核验保全。注释归档标签为 `archive/2026-10-22/task/delivery-consolidation-20261022`，清单、归档 ZIP 和收据位于 `outputs/runs/delivery-consolidation-20261022/finish/`。当前工程与证据均保留于主仓库，未 push 或发布。
+
 <a id="checkpoint-rebuild-20261021"></a>
 ## 两个检查点从原始输入重建并补齐保存前验证（2026-10-21）
 

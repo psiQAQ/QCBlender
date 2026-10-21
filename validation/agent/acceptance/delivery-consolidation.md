@@ -28,3 +28,5 @@
 实际清理：[删除前门禁](../reports/2026-10-22/delivery-consolidation/cleanup-preflight.json)、[逐文件删除收据](../reports/2026-10-22/delivery-consolidation/prune-01/removed.jsonl.gz)、[工具执行收据](../reports/2026-10-22/delivery-consolidation/prune-01/applied.json)、[清理后复核](../reports/2026-10-22/delivery-consolidation/cleanup-finished.json)。逻辑删除量 2,129,569,652 字节，卷可用空间观测增加 2,133,880,832 字节；后者包含同时发生的系统活动，不视为精确净节省量。全 outputs 盘点遇到 36 个范围外不可访问项，均未进入本批删除集合；deliveries 内完整枚举且删除无失败。
 
 当前工程清单见[current-project-manifest.json](../reports/2026-10-22/delivery-consolidation/current-project-manifest.json)，原 P01 的[恢复报告](../reports/2026-10-22/delivery-consolidation/restored-P01.json)与[会话状态](../reports/2026-10-22/delivery-consolidation/restored-state.json)保留。旧报告中 deliveries 路径及旧 ZIP 已退役，依此迁移映射查找当前材料；历史执行结果和源文件身份不改写。
+
+本地提交 `3a1fbc7` 已快进合入 main；任务工作树已正常移除、分支正常删除，3 个生成缓存文件经摘要核验保全。注释归档标签为 `archive/2026-10-22/task/delivery-consolidation-20261022`，清单、归档 ZIP 和收据位于 `outputs/runs/delivery-consolidation-20261022/finish/`。当前工程与证据均保留于主仓库，未 push 或发布。
