@@ -19,4 +19,6 @@ P01 轨道检查点和 P06 标注检查点缺少有效的原保存前完整快�
 
 材料在主仓库 `outputs/deliveries/sop-20261021/QCBlender-tutorial.zip`，同级目录提供 README、工程索引和完整展开内容。31 个自动 `.blend1` 备份只排除出 ZIP，仍留原位。既有用户工程、旧安装/偏好备份及历史报告未删除。执行脚本和工作树忽略产物按收尾清单保全；本地整合与归档收据见主仓库 `outputs/runs/sop-20261021/finish/`。
 
-收尾评审修正当前截图/工程路由，并使统一操作查询支持登记关键词、展示本批复验条目，历史 GUI 状态仍独立。查询回归先复现 Make Local 无匹配，修复后 4 项测试 Passed；[实际结果](../reports/2026-10-21/sop-completion/query-alias-final/checks-tests.json)。产品源码及候选未因该工具变更改变。
+收尾评审修正当前截图/工程路由，并使统一操作查询支持登记关键词、展示本批复验条目，历史 GUI 状态仍独立。查询回归先复现 `Make Local` 无匹配，修复后 4 项测试 Passed；[实际结果](../reports/2026-10-21/sop-completion/query-alias-final/checks-tests.json)。产品源码及候选未因该工具变更改变。
+
+本地任务提交 `0ed0fea` 已快进合入 main；[主检出材料检查](../reports/2026-10-21/sop-completion/main-docs.json)与[当前安装同步](../reports/2026-10-21/sop-completion/final-candidate/main-sync.json) Passed。[Standards](../reports/2026-10-21/sop-completion/final-standards-review.md) 首次两项发现修复后无剩余，[Spec](../reports/2026-10-21/sop-completion/final-spec-review.md) 无发现。三个本批工作树共 202 个忽略文件已保全、核验后正常移除，分支以 `git branch -d` 删除；注释标签为 `archive/2026-10-21/task/{sop-completion-20261021,sop-docs-20261021,sop-project-check-20261021}`。逐文件清单与归档 ZIP 位于 `outputs/runs/sop-20261021/finish/<工作树名>/`。所有工程及当前候选留在主仓库稳定位置。

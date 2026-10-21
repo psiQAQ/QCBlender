@@ -1,5 +1,5 @@
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Blocked by: 03
 
 # 04 本地交付与归档
@@ -9,3 +9,5 @@ Blocked by: 03
 ## Comments
 
 2026-10-21：材料、索引、候选和恢复验证已完成；用户再次明确确认本地提交、合并、归档授权。正在最终评审与本地整合，不 push。
+
+2026-10-21 收尾：Standards 首次两项发现已修复，复验后 0 剩余；Spec 0 发现。`0ed0fea` 已快进合入 main，主检出严格材料/图片检查 Passed，安装包与 100 个产品源码文件一致。三个工作树共 202 个忽略文件已保全并逐字节核对，三个注释归档标签可从 main 追溯，工作树及分支正常移除。收据在 `outputs/runs/sop-20261021/finish/`。P01 窗口 PID 1308 保留，工程无未保存修改；不 push、不发布。

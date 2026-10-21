@@ -1,7 +1,7 @@
 # SOP 实操、截图与完整工程交付
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Baseline: main@1f171db989f2c77aa907c1fcd0c6cfddfadd4bdd
 Date: 2026-10-21
 
@@ -44,4 +44,4 @@ MCP SDK 位于已安装 Blender 5.1 集成，需宿主允许读取 APPDATA；使
 
 79 个编号步骤及章节内演示、27 张教程图已完成；36 个最终工程和检查点原位及中文路径解包新进程比较 Passed。最终教程 ZIP 含 1,755 个文件，296,605,483 字节，SHA-256 `a567d578cf0bfb4940bc2a02b140e8d4af61016440571a84e7b81cbdfa414a9c`。P01 已恢复，原生基线比较 Passed、差异为空，CU 观察相位与相机取景正常。
 
-节点树后缀修复、最终候选与日常安装通过；具体边界见 `validation/agent/acceptance/sop-completion.md`。用户已再次明确授权本地提交、快进合并和归档。任务 02、03 resolved；任务 04 正在完成本地整合与归档。独立人工与科研验收 Not Run。
+节点树后缀修复、最终候选与日常安装通过；具体边界见 `validation/agent/acceptance/sop-completion.md`。用户再次明确授权后，任务提交 `0ed0fea` 已快进合入 main，三个工作树的 202 个忽略文件逐字节保全，注释标签已创建，工作树及分支正常移除。四项任务均 resolved；独立人工与科研验收 Not Run。
