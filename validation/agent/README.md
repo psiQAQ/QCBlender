@@ -31,19 +31,19 @@
 
 ## 复用已有环境
 
-以下命令在仓库根目录的 PowerShell 中运行。使用已安装的 Blender 5.1.1 和项目现有 `outputs/science/`；环境不齐时按 [开发说明](../../docs/DEVELOPMENT.md) 查明缺项，再按授权补充依赖。这里的示例不安装依赖。
+以下命令在仓库根目录的 PowerShell 中运行。使用已安装的 Blender 5.1.1 和项目现有 `modules/science/`；环境不齐时按 [开发说明](../../docs/DEVELOPMENT.md) 查明缺项，再按授权补充依赖。这里的示例不安装依赖。
 
-批次名 `a1` 必须尚未使用。原始工程写到 `validation/work/agent/a1/`，命令日志和技术报告写到 `validation/agent/reports/a1/`；两者都不进入公开教程包。既有批次及 `outputs/runs/` 内容保持原位，按 [ARTIFACTS](../../docs/ARTIFACTS.md) 查找。
+批次名 `a1` 必须尚未使用。临时工程和隔离配置写到 `.tmp/runs/a1/`，命令日志和技术报告写到 `validation/agent/reports/2026-10-22/a1/`（日期按本批修改）；两者都不进入公开教程包。需要保留的工程按用途转入 `outputs/` 并更新 [ARTIFACTS](../../docs/ARTIFACTS.md)；既有批次的位置从该入口查找。
 
 ```powershell
 $repo = (Get-Location).Path
 $blender = 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe'
 $python = 'C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe'
-$batch = Join-Path $repo 'validation/work/agent/a1'
-$reports = Join-Path $repo 'validation/agent/reports/a1'
+$batch = Join-Path $repo '.tmp/runs/a1'
+$reports = Join-Path $repo 'validation/agent/reports/2026-10-22/a1'
 $candidate = Join-Path $repo 'validation/shared/install/qcblender-0.1.0.zip'
 $samples = Join-Path $repo 'validation/agent/packages/qcblender-public-tutorial-samples-v2.zip'
-foreach ($path in @($python, $blender, $candidate, $samples, "$repo/outputs/science")) {
+foreach ($path in @($python, $blender, $candidate, $samples, "$repo/modules/science")) {
     if (-not (Test-Path -LiteralPath $path)) { throw "Required path is missing: $path" }
 }
 if ((Test-Path -LiteralPath $batch) -or (Test-Path -LiteralPath $reports)) {
@@ -71,16 +71,16 @@ function Invoke-Validation([string]$name, [string]$executable, [string[]]$argume
 在仓库根目录的 PowerShell 中，使用上文定义的 `$python`；每次换用尚不存在的报告路径和副本目录：
 
 ```powershell
-& $python -B -I validation/agent/tools/verify_workspace.py --report validation/agent/reports/tutorial-next/prepare.json --portable-dir validation/work/agent/tutorial-next/public-copy
+& $python -B -I validation/agent/tools/verify_workspace.py --report validation/agent/reports/2026-10-22/tutorial-next/prepare.json --portable-dir validation/work/agent/tutorial-next/public-copy
 if ($LASTEXITCODE -ne 0) { throw 'Tutorial material validation failed' }
 ```
 
-此检查允许尚待操作者补入的截图和渲染图，报告会列出各图片是否存在；独立副本只包含教程文档、引用的图片、公开输入和安装材料。教程目录中出现工程、科学数据或未知文件时检查失败，应先按保全流程整理对应文件。
+此检查允许尚待操作者补入的截图和渲染图，报告会列出各图片是否存在；工具限定的 `validation/work/agent/` 用于教程公开副本；独立副本只包含教程文档、引用的图片、公开输入和安装材料。教程目录中出现工程、科学数据或未知文件时检查失败，应先按保全流程整理对应文件。
 
 图片补齐后，发布前运行完整图片检查：
 
 ```powershell
-& $python -B -I validation/agent/tools/verify_workspace.py --require-images --report validation/agent/reports/tutorial-next/images.json
+& $python -B -I validation/agent/tools/verify_workspace.py --require-images --report validation/agent/reports/2026-10-22/tutorial-next/images.json
 if ($LASTEXITCODE -ne 0) { throw 'Tutorial images are incomplete' }
 ```
 
@@ -94,13 +94,13 @@ if ($LASTEXITCODE -ne 0) { throw 'Tutorial images are incomplete' }
 Invoke-Validation 'inputs' $python @('-I', 'tools/local_inputs.py')
 Invoke-Validation 'stdlib' $python @('-I', 'tools/run_stdlib_tests.py', '--output', "$reports/stdlib.json")
 Invoke-Validation 'frozen-samples' $python @('-I', 'tools/candidate_artifacts.py', 'check-samples', '--package', $samples, '--output', "$reports/frozen-samples.json")
-Invoke-Validation 'public-science' $python @('-I', 'tools/run_science_tests.py', '--site', "$repo/outputs/science", '--suite', 'public-core', '--output', "$reports/public-science.json")
+Invoke-Validation 'public-science' $python @('-I', 'tools/run_science_tests.py', '--site', "$repo/modules/science", '--suite', 'public-core', '--output', "$reports/public-science.json")
 ```
 
 本地资料齐全时补充完整检查：
 
 ```powershell
-Invoke-Validation 'local-science' $python @('-I', 'tools/run_science_tests.py', '--site', "$repo/outputs/science", '--suite', 'full', '--output', "$reports/local-science.json")
+Invoke-Validation 'local-science' $python @('-I', 'tools/run_science_tests.py', '--site', "$repo/modules/science", '--suite', 'full', '--output', "$reports/local-science.json")
 Invoke-Validation 'tutorial-samples' $python @('-I', 'tools/verify_tutorial_samples.py', '--reference-root', $repo, '--package', $samples, '--report', "$reports/tutorial-samples.json")
 ```
 
@@ -144,7 +144,7 @@ worker 检查读取集中保存的 C07 IGMH 和 Gaussian NBO 原件，另从 CH4
 
 NOCV 生成与冷重开都要求同一份 `--candidate`；节点资产从该 ZIP 提取到本批 `library/` 后再注册源码。冷重开核对提取文件仍与候选一致，缺少资产、重复资产成员或字节不同直接失败。
 
-构建和科学环境只维护 `outputs/build-site/`、`outputs/science/` 及根 `outputs/wheels/`；重建方式见[开发说明](../../docs/DEVELOPMENT.md#增量构建准备)。环境精简清单可用 `tools/runtime_cleanup_plan.py --root <参考检出> --report-dir <新目录>` 生成，工具只输出建议，不删除文件。生成前按依赖锁及 backend record 核对每份根 wheel 的实际 SHA-256，缺失或不匹配直接失败；成功报告的 `canonical_wheels` 保存期望摘要、实际摘要与 Passed。只有根 wheel 全部通过，来源副本才能进入退役建议。五个构建包文件按 distribution RECORD 归属保留，完整科学环境及原始源码/许可另列保护路径。
+构建和科学环境只维护 `modules/build-site/`、`modules/science/` 及 `modules/wheels/`，后端身份为 `modules/backend-wheel.json`；重建方式见[开发说明](../../docs/DEVELOPMENT.md#增量构建准备)。环境精简清单可用 `tools/runtime_cleanup_plan.py --root <参考检出> --report-dir <新目录>` 生成，工具只输出建议，不删除文件。生成前按依赖锁及 backend record 核对每份根 wheel 的实际 SHA-256，缺失或不匹配直接失败；成功报告的 `canonical_wheels` 保存期望摘要、实际摘要与 Passed。只有根 wheel 全部通过，来源副本才能进入退役建议。五个构建包文件按 distribution RECORD 归属保留，完整科学环境及原始源码/许可另列保护路径。
 
 Alpha 主流程和 XYZ/CSV 的明确入口如下。它们使用上一步的本批安装配置；运行前保证前一个 Blender 已退出。
 
@@ -173,10 +173,10 @@ Invoke-Validation 'shared-mesh-cold' $blender @('--background', '--offline-mode'
 先看 [CLEANUP](CLEANUP.md)。仅重新生成只读清单时，在主检出执行：
 
 ```powershell
-& $python -I validation/agent/tools/inventory_cleanup.py --root $repo --latest-candidate outputs/candidates/current/alpha-ci-0.1.0-190e11e --report-dir validation/agent/reports/cleanup-next
+& $python -I validation/agent/tools/inventory_cleanup.py --root $repo --latest-candidate outputs/candidates/current/sop-completion-20261021 --report-dir validation/agent/reports/2026-10-22/cleanup-next
 if ($LASTEXITCODE -ne 0) { throw 'Cleanup inventory failed' }
 ```
 
-新的报告目录必须不存在。工具检查被保留候选的现有文件与报告，再盘点其他压缩包和有明确映射的旧安装对象；只为拟清理文件计算身份，不遍历所有科学数组。输出 `inventory.json` 和 `inventory.md`，保留读取失败及排除范围。
+运行前从 `current-install.json` 和 [ARTIFACTS](../../docs/ARTIFACTS.md) 核对当前候选；上例保留的是当前已验证候选。新的报告目录必须不存在。工具检查被保留候选的现有文件与报告，再盘点其他压缩包和有明确映射的旧安装对象；只为拟清理文件计算身份，不遍历所有科学数组。输出 `inventory.json` 和 `inventory.md`，保留读取失败及排除范围。
 
 本批结束后，按 [存储维护规则](../../docs/agents/storage-maintenance.md) 维护 [ARTIFACTS](../../docs/ARTIFACTS.md)、任务状态与实际检查结果。清单生成不等于用户批准删除；用户工程、依赖、未知归属、链接和权限拒绝对象保留。SHA-256、技术收据及结果状态只属于 Agent 流程，不添加到人工 SOP。

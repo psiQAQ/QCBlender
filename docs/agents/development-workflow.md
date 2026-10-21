@@ -20,11 +20,11 @@ python -m tools.dev_workflow plan --kind geometry --base main --module test_anno
 ## 2. 实施并定向验证
 
 ```powershell
-$run = 'outputs/runs/my-task/1'
+$run = '.tmp/runs/my-task/1'
 python -m tools.dev_workflow --run-dir $run check --module test_annotation_geometry
 ```
 
-批次使用短且未占用的路径；同一条检查失败后根据真实错误修复，重试参数查 `check --help`。命令输出默认给出状态、关键结果和报告路径，完整日志按需读取；不为包装命令而每批复制 bootstrap、快照或安装脚本。
+批次临时工作放 `.tmp/runs/<task>/`，共用缓存放 `.tmp/cache/`，构建中间文件放 `.tmp/build/`。批次使用短且未占用的路径；同一条检查失败后根据真实错误修复，重试参数查 `check --help`。命令输出默认给出状态、关键结果和报告路径，完整日志按需读取；不为包装命令而每批复制 bootstrap、快照或安装脚本。
 
 测试结果的复用条件是：对应源码、测试/输入、运行环境和所绑定候选身份相同，原报告可读取并能核对结果。记录复用报告及依据，保留原执行提交和工具身份。仅合入 main、提交文档或整理证据不自动重跑相同检查。相关源码、输入或环境变化时，只重跑受影响检查；新 ZIP 的安装检查绑定新 ZIP。
 
@@ -34,7 +34,7 @@ Computer Use 用于首次入口确认，以及 UI 输入、弹窗、布局或交
 
 ## 3. 构建最终候选并安装冒烟
 
-产品变更收敛后完整重建产品包，包括节点资产；复用锁定环境和 wheels。中间迭代先做定向验证，避免每次小改动都重跑整套打包检查。
+产品变更收敛后完整重建产品包，包括节点资产；复用 `modules/build-site/`、`modules/science/`、`modules/wheels/` 及 `modules/backend-wheel.json` 中的锁定环境和打包输入。中间迭代先做定向验证，避免每次小改动都重跑整套打包检查。
 
 ```powershell
 $blender = 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe'
@@ -50,7 +50,7 @@ python -m tools.dev_workflow --run-dir $run install --candidate $candidate --ble
 
 核对候选身份与安装文件，运行实际插件冒烟案例。保存、持久化、数据引用或工程兼容性受影响时执行必要冷读；最终整包冒烟仍核对所生成工程能在新进程读取。源码不变但重建的 `.blend` 资产内容改变时，新包需要自己的安装/资产结果；旧实现测试保持其原身份。
 
-安装到用户日常配置前核对授权、原保存工程及旧安装保全。全局安装使用 `install --global-profile --installed-dir <旧安装目录>`，必须提供旧安装目录用于备份，并与隔离安装结果分别记录。全局配置和隔离配置均加载各自已保存的偏好。安装细节与完整发布级构建见 [DEVELOPMENT](../DEVELOPMENT.md)。
+安装到用户日常配置前核对授权、原保存工程及旧安装保全。全局安装使用 `install --global-profile --installed-dir <旧安装目录>`，必须提供旧安装目录用于备份，并与隔离安装结果分别记录。全局配置和隔离配置均加载各自已保存的偏好；本机运行配置及开发配置分别保存在 `.local/blender/runtime.json`、`.local/blender/dev-profile/`。安装细节与完整发布级构建见 [DEVELOPMENT](../DEVELOPMENT.md)。
 
 完成条件：最终包已完整重建，隔离安装和必要冷读实际执行；任务要求的日常安装已核对，失败候选不会覆盖当前有效入口。
 
@@ -81,7 +81,7 @@ python -m tools.dev_workflow --run-dir $run restore --blender $blender --project
 
 ## 5. 交付与本地归档
 
-主 Agent 复核最终 diff 及未完成项；涉及产品候选或定向验证时核对对应身份与结果，仅更新受本次改动影响的已有任务、验收记录和产物入口。`Passed / Failed / Not Run` 对应真实执行；脚本退出 0 不替代插件行为、GUI 或独立科研验收。
+需长期保留的报告、日志和命令收据按原相对关系保全到 `validation/agent/reports/<date>/<task>/`；必要工程和成品按 [ARTIFACTS](../ARTIFACTS.md) 分类定位，临时安装配置和可重建缓存留在 `.tmp/`。主 Agent 复核最终 diff 及未完成项；涉及产品候选或定向验证时核对对应身份与结果，仅更新受本次改动影响的已有任务、验收记录和产物入口。`Passed / Failed / Not Run` 对应真实执行；脚本退出 0 不替代插件行为、GUI 或独立科研验收。
 
 提交与合并按已获授权执行：使用任务分支时串行以 `git merge --ff-only` 合入 main，按第 2 节条件复用已完成结果；main 带入相关新改动时只复验受影响内容。已合并任务分支的归档清理使用 `finish`，先查其 `--help`；直接在当前检出完成的小改动不额外创建工作树或归档标签。收尾按项目 AGENTS.md 一次核对是否有已完成但遗漏归档清理的分支和工作树，复用已有清单与证据，不重复扫描或运行产品验证。遇到权限拒绝或未知文件原位保留，按 [存储维护规则](storage-maintenance.md) 报告。
 

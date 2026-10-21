@@ -37,7 +37,7 @@
 
 截图前缀沿用所在章节的案例编号：P01 轨道入门与自旋密度，P03 水二聚体场和分析，P04 IRC，P05 ETS-NOCV，P06 XYZ 与公共节点；后缀说明图片内容。截图用于展示独有的操作入口、控件或视觉结果，同一结果的重复确认保留文字说明。
 
-教程中的图片只引用 `human/` 内的图片文件。`.blend`、`.qcdata/`、CSV 导出和工程 ZIP 放在 `work/human/`；保留需要继续使用的工程及配套数据。既有 Agent 工作目录和 `outputs/runs/` 批次原位保留，由 [ARTIFACTS](../docs/ARTIFACTS.md) 定位。
+教程中的图片只引用 `human/` 内的图片文件。`.blend`、`.qcdata/`、CSV 导出和工程 ZIP 放在 `work/human/`；保留需要继续使用的工程及配套数据。Agent 临时工作放 `.tmp/runs/`，长期报告放 `validation/agent/reports/<date>/<task>/`；既有批次当前位置由 [ARTIFACTS](../docs/ARTIFACTS.md) 定位。
 
 ## 人工完成后的打包
 

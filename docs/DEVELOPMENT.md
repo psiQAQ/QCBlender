@@ -8,7 +8,7 @@
 
 在主仓库 `.worktrees/<任务名>/` 使用独立分支开发，复验后 ff-only 合并本地 main；为任务最终提交创建带注释的 `archive/YYYY-MM-DD/<完整分支名>` 标签，核对保留产物及提交可达性后移除工作树，再删除已合并分支。源码、测试/输入、环境和候选身份相同时引用原结果；main 推进带入相关改动时才复验受影响内容。该流程不包含 push。
 
-[产物路由](ARTIFACTS.md) 是现存证据、用户工程、候选及重建方法的唯一查找入口。任务结束后保留最新待验收候选、共用环境及锁定 wheels，迁移必要日志和数据后清理独立测试配置及旧候选，执行边界见[维护规则](agents/storage-maintenance.md)。
+[产物路由](ARTIFACTS.md) 是现存证据、用户工程、候选及重建方法的唯一查找入口。任务结束后保留当前完整且已验证安装包、活跃任务候选、共用环境及锁定 wheels；旧包按维护规则保留身份、验证摘要和逐文件删除收据后，按已批准清单清理。工程、配套数据和未知恢复对象继续保护，执行边界见[维护规则](agents/storage-maintenance.md)。
 
 ## Blender 操作复用
 
@@ -16,18 +16,20 @@
 
 ## 本批目录与命令记录
 
-先提交待验证的文档、测试及产品源码，记录实际提交。使用新的短任务和批次名称（示例 qc/1）；中文移动测试的完整数组路径应短于 260 字符，批次过长时先缩短路径；批次目录存在时停止，不能覆盖旧证据。以下函数保存每条命令、输出摘要与退出码，成功后才继续；命令成功不自动证明未运行的其他范围。
+先提交待验证的文档、测试及产品源码，记录实际提交。使用新的短任务和批次名称（示例 qc/1，日期按本批修改）；中文移动测试的完整数组路径应短于 260 字符，批次过长时先缩短路径；批次目录存在时停止，不能覆盖旧证据。以下函数保存每条命令、输出摘要与退出码，成功后才继续；命令成功不自动证明未运行的其他范围。
 
 ~~~powershell
 $blender = 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe'
 $blenderPython = 'C:/Program Files/Blender Foundation/Blender 5.1/5.1/python/bin/python.exe'
 $repo = (Get-Location).Path
-$batch = "$repo/outputs/runs/qc/1"
+$batch = "$repo/.tmp/runs/qc/1"
+$reports = "$repo/validation/agent/reports/2026-10-22/qc-1"
+$dist = "$repo/outputs/candidates/qc-1"
 $qa = "$batch/qa"
-$scienceSite = "$repo/outputs/science"
-$wheels = "$repo/outputs/wheels"
+$scienceSite = "$repo/modules/science"
+$wheels = "$repo/modules/wheels"
 $uv = (Get-Command uv -ErrorAction Stop).Source
-if (Test-Path -LiteralPath $batch) { throw 'Choose an unused batch directory' }
+if ((Test-Path -LiteralPath $batch) -or (Test-Path -LiteralPath $reports) -or (Test-Path -LiteralPath $dist)) { throw 'Choose unused batch, report and candidate directories' }
 $sourceCommit = git rev-parse HEAD
 if ($LASTEXITCODE -ne 0) { throw 'Cannot identify source commit' }
 $utf8 = [System.Text.UTF8Encoding]::new($false)
@@ -38,14 +40,14 @@ $env:BLENDER_USER_DATAFILES = "$env:BLENDER_USER_RESOURCES/datafiles"
 $env:BLENDER_USER_CACHE = "$batch/cache"
 $env:TEMP = "$batch/process-temp"
 $env:TMP = $env:TEMP
-$env:UV_CACHE_DIR = "$repo/outputs/uv-cache"
-New-Item -ItemType Directory -Force -Path $env:BLENDER_USER_CONFIG,$env:BLENDER_USER_EXTENSIONS,$env:BLENDER_USER_DATAFILES,$env:TEMP,"$batch/logs" | Out-Null
+$env:UV_CACHE_DIR = "$repo/.tmp/cache/uv"
+New-Item -ItemType Directory -Force -Path $env:BLENDER_USER_CONFIG,$env:BLENDER_USER_EXTENSIONS,$env:BLENDER_USER_DATAFILES,$env:TEMP,"$reports/logs" | Out-Null
 
 function Invoke-QCCheck([string]$name, [string]$executable, [string[]]$arguments) {
     Write-Output ("Running: " + $name)
     $lines = & $executable @arguments 2>&1
     $code = $LASTEXITCODE
-    $log = "$batch/logs/$name.log"
+    $log = "$reports/logs/$name.log"
     [System.IO.File]::WriteAllText($log, (($lines | ForEach-Object { $_.ToString() }) -join "`n") + "`n", $utf8)
     $record = [ordered]@{
         status = $(if ($code -eq 0) { 'Passed' } else { 'Failed' })
@@ -55,13 +57,13 @@ function Invoke-QCCheck([string]$name, [string]$executable, [string[]]$arguments
         log = "logs/$name.log"
         log_sha256 = (Get-FileHash -LiteralPath $log -Algorithm SHA256).Hash.ToLowerInvariant()
     }
-    [System.IO.File]::WriteAllText("$batch/$name-command.json", ($record | ConvertTo-Json -Depth 8) + "`n", $utf8)
+    [System.IO.File]::WriteAllText("$reports/$name-command.json", ($record | ConvertTo-Json -Depth 8) + "`n", $utf8)
     $lines | ForEach-Object { Write-Output $_ }
     if ($code -ne 0) { throw "Check failed: $name ($code)" }
 }
 ~~~
 
-Blender 路径按本机安装修改。 CONFIG、EXTENSIONS 和 DATAFILES 必须显式指定并在 Blender 启动前创建；仅设置资源根目录时，缺少子目录可能回退到用户默认配置。安装脚本先核对本批实际目录，校验通过后才安装。构建工具写入仓库的 outputs/build-site；科学测试依赖写入 outputs/science，不向 Blender Python 的安装目录写入包。部分旧工具固定写入 outputs/node-assets、outputs/acceptance 或 outputs/recovery，须在新工作树执行，或先确保没有上一批同名产物。
+Blender 路径按本机安装修改。 CONFIG、EXTENSIONS 和 DATAFILES 必须显式指定并在 Blender 启动前创建；仅设置资源根目录时，缺少子目录可能回退到用户默认配置。安装脚本先核对本批实际目录，校验通过后才安装。构建工具写入 `modules/build-site/`，科学依赖写入 `modules/science/`，锁定 wheels 和后端身份分别在 `modules/wheels/`、`modules/backend-wheel.json`；不向 Blender Python 安装目录写入包。缓存放 `.tmp/cache/`，构建中间文件放 `.tmp/build/`，临时批次放 `.tmp/runs/`。本机配置使用 `.local/blender/runtime.json` 和 `.local/blender/dev-profile/`。本例将正式日志和报告直接写入 `$reports`，成品 ZIP 写入 `$dist`；需长期保留的工程和配套数据按 [ARTIFACTS](ARTIFACTS.md) 分类保全。
 
 ## 必要输入与前置检查
 
@@ -73,7 +75,7 @@ Blender 路径按本机安装修改。 CONFIG、EXTENSIONS 和 DATAFILES 必须�
 $sourceRoot = '<已有原件的仓库绝对路径>'
 Invoke-QCCheck 'copy-inputs' $blenderPython @('-I', 'tools/prepare_validation_data.py',
     '--reference-root', $sourceRoot, '--reference-layout', 'current',
-    '--include-local', '--include-calculations', '--report', "$batch/input-preparation.json")
+    '--include-local', '--include-calculations', '--report', "$reports/input-preparation.json")
 Invoke-QCCheck 'inputs' $blenderPython @('-I', 'tools/local_inputs.py')
 ~~~
 
@@ -91,22 +93,22 @@ Invoke-QCCheck 'backend' $blenderPython @('-I', 'tools/build_science_backend.py'
 $sourceLockText = [System.IO.File]::ReadAllText("$repo/science-sources.lock.json").Replace("`r`n", "`n")
 if ($sourceLockText -ne $utf8.GetString($sourceLockBytes).Replace("`r`n", "`n")) { throw 'Science source lock changed' }
 $locked = Get-Content dependencies.lock.json -Raw | ConvertFrom-Json
-$backend = Get-Content outputs/backend-wheel.json -Raw | ConvertFrom-Json
+$backend = Get-Content modules/backend-wheel.json -Raw | ConvertFrom-Json
 $scienceWheels = @($locked.packages.filename) + @($backend.filename)
 $scienceWheels = @($scienceWheels | ForEach-Object { Join-Path $wheels $_ })
 Invoke-QCCheck 'science-install' $uv (@('pip', 'install', '--python', $blenderPython, '--target', $scienceSite, '--no-deps') + $scienceWheels)
 ~~~
 
-prepare_build 固定工具版本，fetch_dependencies 核对每个 wheel，build_science_backend 从固定 GBasis 源码生成纯 Python wheel 和 outputs/backend-wheel.json。后端构建只核验科学源码锁，不改写锁文件；内容变化直接失败。完成后检查两个锁文件没有改动。首次路径接着执行下方共同流程，不提前调用 build_extension。
+prepare_build 固定工具版本，fetch_dependencies 核对每个 wheel，build_science_backend 从固定 GBasis 源码生成纯 Python wheel 和 modules/backend-wheel.json。后端构建只核验科学源码锁，不改写锁文件；内容变化直接失败。完成后检查两个锁文件没有改动。首次路径接着执行下方共同流程，不提前调用 build_extension。
 
 ## 增量构建准备
 
-已有环境先运行输入检查，再核对已有工具、科学依赖和 wheels；缺少准备产物时回到首次路径，不隐式使用其他检出的 backend-wheel.json。首次与增量构建统一使用 `outputs/wheels/`，随后逐文件校验后端记录与 wheel。不要以文件名相同替代摘要核对。
+已有环境先运行输入检查，再核对已有工具、科学依赖和 wheels；缺少准备产物时回到首次路径，不隐式使用其他检出的 backend-wheel.json。首次与增量构建统一使用 `modules/wheels/`，随后逐文件校验后端记录与 wheel。不要以文件名相同替代摘要核对。
 
 整理已有缓存时，先按依赖锁及 backend record 核对全部根 wheel。缺失或摘要不同则停止缓存退役；只有同版本的合格内容完成迁移、根目录重新核对通过后，才能删除来源副本。保留路径的登记不代表该路径当前内容已合格。
 
 ~~~powershell
-$wheels = "$repo/outputs/wheels"
+$wheels = "$repo/modules/wheels"
 $env:QCBLENDER_WHEELS_DIR = $wheels
 ~~~
 
@@ -117,11 +119,11 @@ import hashlib, json, os
 from pathlib import Path
 root = Path.cwd()
 expected = dict(line.split('==') for line in (root / 'tools/build-requirements.txt').read_text().splitlines() if line)
-actual = {d.metadata['Name'].lower().replace('_', '-'): d.version for d in distributions(path=[str(root / 'outputs/build-site')])}
+actual = {d.metadata['Name'].lower().replace('_', '-'): d.version for d in distributions(path=[str(root / 'modules/build-site')])}
 assert all(actual.get(name.lower().replace('_', '-')) == version for name, version in expected.items())
-backend = json.loads((root / 'outputs/backend-wheel.json').read_text())
+backend = json.loads((root / 'modules/backend-wheel.json').read_text())
 packages = json.loads((root / 'dependencies.lock.json').read_text())['packages'] + [backend]
-science = {d.metadata['Name'].lower().replace('_', '-'): d.version for d in distributions(path=[str(root / 'outputs/science')])}
+science = {d.metadata['Name'].lower().replace('_', '-'): d.version for d in distributions(path=[str(root / 'modules/science')])}
 for package in packages:
     wheel = Path(os.environ['QCBLENDER_WHEELS_DIR']) / package['filename']
     assert hashlib.sha256(wheel.read_bytes()).hexdigest() == package['sha256'], wheel
@@ -133,14 +135,14 @@ Invoke-QCCheck 'environment' $blenderPython @('-I', '-c', $checkEnvironment)
 
 环境核对通过后，增量与首次路径均可执行以下流程。产品源码变化后完整构建最终候选，并重验受影响行为及最终安装冒烟；相同身份的检查按开发流程引用原报告。已有环境本身不证明旧报告适用于新候选。
 
-共用构建环境按 `tools/build-requirements.txt` 保留五个锁定包及其 RECORD 文件；科学环境保留完整的 `outputs/science/`。本地解释器使用已安装的 Blender Python。GBasis 固定原始 ZIP 保留在 `outputs/build-sources/`，后端构建不需要历史 qcint 编译环境。保留当前构建工具、锁定运行 wheels 和 GBasis 原始 ZIP 后，可以离线构建；从空环境重新安装构建工具还需要相应的离线 wheel 或已获授权的下载。
+共用构建环境按 `tools/build-requirements.txt` 保留五个锁定包及其 RECORD 文件；科学环境保留完整的 `modules/science/`。本地解释器使用已安装的 Blender Python。GBasis 固定原始 ZIP 保留在 `modules/sources/gbasis/`；IOData 和 qcint 原始 ZIP 分别在 `modules/sources/iodata/`、`modules/sources/qcint/`，完整许可在 `modules/licenses/`。后端构建不需要历史 qcint 编译环境。保留当前构建工具、锁定运行 wheels 和 GBasis 原始 ZIP 后，可以离线构建；从空环境重新安装构建工具还需要相应的离线 wheel 或已获授权的下载。
 
 回归输入的当前入口为 `validation/shared/data/regression/`。`tools/collect_m0_fixtures.py --reference-root <参考检出> --output-root <目标检出>` 优先核对或复制集中输入；缺少 IOData/GBasis fixture 时，从参考检出的唯一原始 ZIP 恢复，不依赖历史展开源树。ChemTools 输入缺失时直接给出缺失路径与固定来源 URL，不隐式下载。
 
 ## 科学与非科学检查
 
 ~~~powershell
-Invoke-QCCheck 'science' $blenderPython @('-I', 'tools/run_science_tests.py', '--site', $scienceSite, '--output', "$batch/science.json")
+Invoke-QCCheck 'science' $blenderPython @('-I', 'tools/run_science_tests.py', '--site', $scienceSite, '--output', "$reports/science.json")
 foreach ($test in @('test_copy_display.py', 'test_legend_layout.py', 'test_local_inputs.py', 'test_storage_cleanup.py')) {
     Invoke-QCCheck ($test.Replace('.py', '')) $blenderPython @('-B', '-m', 'unittest', 'discover', '-s', 'tests', '-p', $test)
 }
@@ -153,7 +155,7 @@ Invoke-QCCheck 'helpers' $blender @('--background', '--factory-startup', '--offl
 
 ~~~powershell
 $tutorialPackage = Join-Path $repo 'validation/agent/packages/qcblender-public-tutorial-samples-v2.zip'
-Invoke-QCCheck 'tutorial-samples' $blenderPython @('-I', 'tools/verify_tutorial_samples.py', '--reference-root', $repo, '--site', $scienceSite, '--package', $tutorialPackage, '--report', "$batch/tutorial-samples.json")
+Invoke-QCCheck 'tutorial-samples' $blenderPython @('-I', 'tools/verify_tutorial_samples.py', '--reference-root', $repo, '--site', $scienceSite, '--package', $tutorialPackage, '--report', "$reports/tutorial-samples.json")
 ~~~
 
 `--checkpoints`仅由已有PySCF计算环境执行，解释器/版本单列，不作为插件依赖。完整命令见本轮验证索引；缺必要checkpoint时在该检查停止，新批次不覆盖旧报告。
@@ -161,13 +163,14 @@ Invoke-QCCheck 'tutorial-samples' $blenderPython @('-I', 'tools/verify_tutorial_
 ## 打包与离线安装
 
 ~~~powershell
-Invoke-QCCheck 'build' $blenderPython @('-I', 'tools/build_extension.py', '--blender', $blender, '--wheels-dir', $wheels, '--output-dir', "$batch/dist")
+Invoke-QCCheck 'build' $blenderPython @('-I', 'tools/build_extension.py', '--blender', $blender, '--wheels-dir', $wheels, '--output-dir', $dist)
 $extensionVersion = (Select-String -Path qcblender/blender_manifest.toml -Pattern '^version = "([^"]+)"').Matches.Groups[1].Value
-$candidate = "$batch/dist/qcblender-$extensionVersion.zip"
+$candidate = "$dist/qcblender-$extensionVersion.zip"
 Get-FileHash -LiteralPath $candidate -Algorithm SHA256
-Invoke-QCCheck 'install' $blender @('--background', '--factory-startup', '--offline-mode', '--disable-autoexec', '--python-exit-code', '1', '--python', 'tools/verify_extension.py', '--python', 'tools/verify_node_assets.py', '--', '--candidate', $candidate, '--output-dir', $qa)
-Copy-Item -LiteralPath "$qa/extension.json" -Destination "$batch/extension-install.json"
-Copy-Item -LiteralPath 'outputs/node-assets/report.json' -Destination "$batch/node-assets.json"
+Invoke-QCCheck 'install' $blender @('--background', '--factory-startup', '--offline-mode', '--disable-autoexec', '--python-exit-code', '1', '--python', 'tools/verify_extension.py', '--', '--candidate', $candidate, '--output-dir', $qa)
+Copy-Item -LiteralPath "$qa/extension.json" -Destination "$reports/extension-install.json"
+Invoke-QCCheck 'node-assets' $blender @('--background', '--offline-mode', '--disable-autoexec', "$qa/mo8.blend", '--python-exit-code', '1', '--python', 'tools/verify_node_assets.py', '--', '--report', "$batch/node-assets/report.json")
+Copy-Item -LiteralPath "$batch/node-assets/report.json" -Destination "$reports/node-assets.json"
 ~~~
 
 ZIP 核对锁定 wheels 并生成节点资产；依赖及许可随包，NumPy/OpenVDB 使用 Blender 自带版本。时间戳可能使 ZIP 摘要改变，不宣称逐字节复现。verify_extension 核对科学运行库、求值、取消、缓存及注册/注销；verify_node_assets 检查公共等值面、分支保留和资产导出重载。
@@ -178,15 +181,13 @@ ZIP 核对锁定 wheels 并生成节点资产；依赖及许可随包，NumPy/Op
 
 ~~~powershell
 Invoke-QCCheck 'cold-original' $blender @('--background', '--offline-mode', '--disable-autoexec', "$qa/mo8.blend", '--python-exit-code', '1', '--python', 'tools/verify_extension.py', '--', '--reopen', '--output-dir', $qa)
-Copy-Item -LiteralPath "$qa/extension.json" -Destination "$batch/extension-cold-original.json"
+Copy-Item -LiteralPath "$qa/extension.json" -Destination "$reports/extension-cold-original.json"
 Invoke-QCCheck 'cold-moved' $blender @('--background', '--offline-mode', '--disable-autoexec', "$qa/moved 中文 path/mo8.blend", '--python-exit-code', '1', '--python', 'tools/verify_extension.py', '--', '--reopen', '--output-dir', $qa)
-Copy-Item -LiteralPath "$qa/extension.json" -Destination "$batch/extension-cold-moved.json"
-New-Item -ItemType Directory -Force -Path 'outputs/acceptance' | Out-Null
-Invoke-QCCheck 'recovery' $blender @('--background', '--offline-mode', '--disable-autoexec', "$qa/moved 中文 path/mo8.blend", '--python-exit-code', '1', '--python', 'tools/verify_project_recovery.py')
-Copy-Item -LiteralPath 'outputs/acceptance/recovery.json' -Destination "$batch/recovery.json"
+Copy-Item -LiteralPath "$qa/extension.json" -Destination "$reports/extension-cold-moved.json"
+Invoke-QCCheck 'recovery' $blender @('--background', '--offline-mode', '--disable-autoexec', "$qa/moved 中文 path/mo8.blend", '--python-exit-code', '1', '--python', 'tools/verify_project_recovery.py', '--', '--output-dir', "$batch/recovery", '--report', "$reports/recovery.json")
 ~~~
 
-恢复检查使用原始输入重建缺失 VDB，并核对来源重定位、电荷、偶极和振动。新工程、配套数据及日志保留在本批目录和上述固定工具目录。
+恢复检查使用原始输入重建缺失 VDB，并核对来源重定位、电荷、偶极和振动。检查生成的工程和数据暂存在本批目录，正式报告保存在 `$reports`；收尾时保全需要留存的工程及配套数据。
 
 ## 图例专项
 
@@ -195,11 +196,11 @@ out 必须为绝对路径；继续使用本批已安装扩展配置，配置位�
 ~~~powershell
 $legend = "$batch/legend"
 Invoke-QCCheck 'legend' $blender @('--background', '--offline-mode', '--disable-autoexec', "$qa/mo8.blend", '--python-exit-code', '1', '--python', 'tools/verify_mn_legend.py', '--', '--check', 'legend', '--out', $legend)
-Copy-Item -LiteralPath "$legend/checks.json" -Destination "$batch/legend.json"
+Copy-Item -LiteralPath "$legend/checks.json" -Destination "$reports/legend.json"
 Invoke-QCCheck 'legend-cold-original' $blender @('--background', '--offline-mode', '--disable-autoexec', "$legend/evidence.blend", '--python-exit-code', '1', '--python', 'tools/verify_mn_legend.py', '--', '--check', 'reopen', '--out', $legend)
-Copy-Item -LiteralPath "$legend/checks.json" -Destination "$batch/legend-cold-original.json"
+Copy-Item -LiteralPath "$legend/checks.json" -Destination "$reports/legend-cold-original.json"
 Invoke-QCCheck 'legend-cold-moved' $blender @('--background', '--offline-mode', '--disable-autoexec', "$legend/moved 中文 path/evidence.blend", '--python-exit-code', '1', '--python', 'tools/verify_mn_legend.py', '--', '--check', 'reopen', '--out', $legend)
-Copy-Item -LiteralPath "$legend/checks.json" -Destination "$batch/legend-cold-moved.json"
+Copy-Item -LiteralPath "$legend/checks.json" -Destination "$reports/legend-cold-moved.json"
 ~~~
 
 检查实际渲染。图例初建和第一次重开的报告 status 为 Not Run，表示完整双冷重开链尚未完成；保留这些阶段快照，用第二次重开后的完整 Passed 报告参加资格汇总。更广范围按改动选择 [Agent 检查覆盖](../validation/agent/COVERAGE.md) 和专项工具；已有工具不等于每项命令对当前候选均通过。GUI 实际点击、人工教程、性能、独立科研接受及其他平台分别记录，不由包资格推导。
@@ -220,7 +221,7 @@ reports = ['science.json', 'node-assets.json', 'extension-install.json',
            'legend-cold-moved.json']
 reports += [f'{name}-command.json' for name in
             ['test_copy_display', 'test_legend_layout', 'test_local_inputs', 'test_storage_cleanup',
-             'helpers', 'install', 'cold-original', 'cold-moved', 'recovery',
+             'helpers', 'install', 'node-assets', 'cold-original', 'cold-moved', 'recovery',
              'legend', 'legend-cold-original', 'legend-cold-moved']]
 checks = {}
 for name in reports:
@@ -236,10 +237,10 @@ for name in reports:
     json.dumps({'candidate_sha256': digest, 'source_commit': source_commit, 'checks': checks}, indent=2) + '\n', encoding='utf-8')
 print('EVIDENCE_INDEX_PASSED:', len(checks), digest)
 '@
-Invoke-QCCheck 'index' $blenderPython @('-I', '-c', $makeIndex, $batch, $candidate)
+Invoke-QCCheck 'index' $blenderPython @('-I', '-c', $makeIndex, $reports, $candidate)
 $installed = "$env:BLENDER_USER_RESOURCES/extensions/user_default/qcblender"
 if (-not (Test-Path -LiteralPath "$installed/__init__.py")) { throw 'Installed extension source directory missing; inspect the installation log' }
-Invoke-QCCheck 'qualification' $blenderPython @('-I', 'tools/qualify_package.py', '--candidate', $candidate, '--installed-dir', $installed, '--evidence-index', "$batch/evidence-index.json", '--output', "$batch/qualification.json")
+Invoke-QCCheck 'qualification' $blenderPython @('-I', 'tools/qualify_package.py', '--candidate', $candidate, '--installed-dir', $installed, '--evidence-index', "$reports/evidence-index.json", '--output', "$reports/qualification.json")
 ~~~
 
 安装目录须是本批实际扩展源码目录，可从安装日志核对。资格工具比较源码、ZIP、wheel、安装副本与报告身份，不执行 Blender 检查，也不判断覆盖是否充分。检查 qualification 的 source_commit 与本批提交一致，并保存源码文件清单、工具版本和报告摘要。修改被验证源码后必须重新构建复验。
@@ -251,7 +252,7 @@ Invoke-QCCheck 'qualification' $blenderPython @('-I', 'tools/qualify_package.py'
 准备锁定 wheels、本次 backend-wheel.json 和科学测试依赖，确保 Git 检出干净。在 Windows x64 的 Blender 5.1.1 Python 下运行：
 
 ```powershell
-& $blenderPython -I -B tools/run_candidate_ci.py --blender $blender --site $scienceSite --output-dir outputs/runs/alpha-1 --run-id 0 --channel alpha
+& $blenderPython -I -B tools/run_candidate_ci.py --blender $blender --site $scienceSite --output-dir outputs/candidates/alpha-1 --run-id 0 --channel alpha
 ```
 
 目标目录必须不存在。该入口运行显式标准库集合与公开科学集合、构建、隔离离线安装、注册/注销、原地及中文移动冷重开、P01/MO9 摘要及首次渲染。公开科学集合必须调用真实 IOData/GBasis 并通过独立 cubegen/Fortran 对照；缺必要输入或跳过即失败。完整受限样本集合继续用 `run_science_tests.py` 默认 full 入口。
