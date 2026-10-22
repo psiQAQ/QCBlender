@@ -28,7 +28,7 @@
 
 新位置导入、最终主检出的 272 项标准库和 98 项相关路径检查、5 项科学/持久化回归、离线构建及 11 个 wheel 核验、代表工程删源后独立冷读 Passed。P01 已恢复，科学、对象、材质及节点状态一致，GUI 区域像素尺寸有差异；严格全快照首次失败及后续实际比较均保留。独立人工/科研和远端 CI Not Run。
 
-35 个目录、6 个文件读取受限，另有 1 个 junction；9 组配套数据不完整可读的工程整组原位保护。部分已复制工程不作为完整工程验收，覆盖范围见 `protected-project-groups.json`；这些对象、`outputs/1.blend` 和原用户工程未按缓存删除。未完成项和只读核验入口见同批 `residuals.json`、`inspect-retained.ps1`。本页各历史日期章节保持当时结论，旧二进制当前可用性以本次迁移与退役收据为准。
+初轮的 35 个受限目录、6 个受限文件和 1 个 junction 记录保留在 `residuals.json`。继续核对时目录和文件均已可读：9 组完整工程及 5 个 portable 工程归档补齐到 `validation/work/agent/{up11,empty-properties,annotations-20261016}/`，10 个有用 worker 缓存目录归入 `.tmp/cache/blender-jobs/`；逐文件新旧路径和摘要见同批 `retained-followup/mapping.json`，复制核验见 `copy.json` 和 `destination-validation.json`。5 个恢复数据目录、`outputs/1.blend` 和原用户工程保持原位；旧 wheel 与锁定副本完全相同。后续清理结果、junction 处置及任何仍需手动处理的准确路径以 `retained-followup/README.md` 为准。本页各历史日期章节保持当时结论，旧二进制当前可用性以迁移与退役收据为准。
 
 <a id="delivery-consolidation-20261022"></a>
 ## 教程交付材料统一到 validation（2026-10-22）

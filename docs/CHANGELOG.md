@@ -2,6 +2,8 @@
 
 - 2026-10-22：SOP、九篇专题与用户指南按操作和说明分层；正文保留步骤、参数、预期效果和恢复动作，术语及功能解释置于默认收起的 details/summary，并按源码修正用户指南旧入口。79 步、27 个图片引用、原锚点及参数对照、材料与链接、86 个折叠块本地 GFM/浏览器开合检查 Passed；插件保真工具的授权说明/表格差异已逐项复核，原始提示保留。GitHub 线上、Blender 与独立人工验收 Not Run；按用户追加授权提交到本地 Git，不推送。见[本批记录](../.scratch/sop-reading-layers-20261022/spec.md)。
 
+- 2026-10-22：继续核对 outputs 的 42 个残留对象，现均可读；9 组工程及 5 个工程归档完整迁移、10 个 worker 缓存目录归入 `.tmp/`，重复 wheel 去重，空旧运行时 junction 正常解除。842 文件迁移、1 文件去重，35 Dataset / 1,591 数组、VDB、归档 CRC 和摘要检查 Passed；5 个恢复数据目录及未知工程原位保护，零权限/删除错误，无需手动处理。未修改 ACL 或强制删除，当前 P01 未操作；本轮 Blender 冷读/构建/全量回归 Not Run，复用原字节迁移已有代表证据。详见[续办验收](../validation/agent/acceptance/output-layout.md#受限残留继续核对2026-10-22)；按用户追加授权提交本地 Git，不推送。
+
 - 2026-10-22：outputs 按用途整理；必要依赖和辅助工具迁入 `modules/`，有用缓存和任务工作迁入 `.tmp/`，本机配置迁入 `.local/`，同步构建/科学/CI 入口、项目规则及当前证据路由。迁移 10,130 个原文件，退役 58,121 文件（5,961,811,713 逻辑字节），当前验证包和用户工程保持。导入、272 标准库及 98 路径检查、5 科学/持久化回归、离线构建和代表工程删源后冷读 Passed；P01 已恢复，严格 GUI 快照失败及布局尺寸差异如实保留。35 目录、6 文件及 1 junction 受限保留，独立人工/科研和远端 CI Not Run。见[验收](../validation/agent/acceptance/output-layout.md)与[产物路由](ARTIFACTS.md#output-layout-20261022)。
 
 - 2026-10-22：完整教程材料统一到 `validation/`，补入工程索引和最终工程/检查点，覆盖对应旧 P01 文件并保留其余本地材料。36 个工程在新位置逐个冷重开严格比较 Passed；`outputs/deliveries/` 的 7,055 文件（约 1.98 GiB）及目录已清理，validation 原 P01 已恢复，收据见[迁移与清理](../validation/agent/acceptance/delivery-consolidation.md)。插件、安装与依赖未变，独立人工/科研验收 Not Run。本地 `3a1fbc7` 已合入并归档，未 push。
