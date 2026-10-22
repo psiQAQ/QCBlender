@@ -18,6 +18,7 @@
 | 公开科学能力 | `tools/run_science_tests.py --suite public-core` | `tools/test_profiles.py` 中明确列出的科学测试 |
 | 完整本地科学能力 | `tools/run_science_tests.py --suite full`、`tools/verify_tutorial_samples.py` | 现有本地样本对应的科学读取与数值断言，包括 P02；原始 checkpoint 另选 `--checkpoints` |
 | 安装与可迁移工程 | `tools/verify_extension.py`、`tools/verify_alpha_workflow.py` | 当前候选的真实安装、生成、导出及新进程读回 |
+| 自动取景与场景出图 | `tools/verify_output_settings.py` | 选择 atoms/mo/esp/fog 案例，验证方向、边距、预设、渲染、数组不变及恢复；`--reopen` 在新进程核对保存结果，范围见[验收](acceptance/auto-output.md) |
 | XYZ 与科学 CSV | `tools/verify_xyz_export_blender.py` | 离散帧、显式数据导出与对应输入/单位 |
 | 构型关联与共享对象 | `tools/verify_audit_p1_association.py`、`tools/verify_audit_p1_shared_mesh.py` | 有效/失效关联、共享 mesh 拒绝与独立对象恢复；需要 P02 本地输入 |
 | 视觉回归 | `tools/render_visual_baseline.py` | 已有六种视觉场景的自动比较；不能代替人眼验收 |

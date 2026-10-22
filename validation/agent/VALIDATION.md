@@ -1,6 +1,8 @@
 # 当前校验与历史整合检查
 
-2026-10-16：当前安装来自 `annotation-anchor-20261016-r1`，源码 `b02c9fa`，见 [current-install.json](current-install.json) 与[圆弧中点/创建朝向验收](acceptance/annotation-anchor.md)。266 标准库、96 公开科学、实际 GUI 创建、原生半角/朝向、渲染、冷读及日常安装/原保存工程恢复 Passed。独立人工/科研接受 Not Run；既有教程缺图状态未变。以下保留前批历史记录。
+2026-10-23：当前完整候选源码为 `8d2f83f`，由 [current-install.json](current-install.json) 定位；[自动取景与出图验收](acceptance/auto-output.md)记录去重 61 项定向检查、四类真实渲染、GUI、完整构建/隔离安装与冷读 Passed。日常配置安装、独立人工/科研、全量回归及远端 CI Not Run。以下记录属于各自历史候选。
+
+2026-10-16：当时安装来自 `annotation-anchor-20261016-r1`，源码 `b02c9fa`，见[圆弧中点/创建朝向验收](acceptance/annotation-anchor.md)。266 标准库、96 公开科学、实际 GUI 创建、原生半角/朝向、渲染、冷读及日常安装/原保存工程恢复 Passed。独立人工/科研接受 Not Run；该批既有教程缺图状态未变。
 
 2026-10-16：上一批安装来自 `sidebar-20261016-r2`，源码 `8e085f0`，见 [current-install.json](current-install.json) 与 [Sidebar/整数输入验收](acceptance/sidebar.md)。266 标准库、94 公开科学、无 IO 摘要、原生几何/上下文、实际 GUI 和安装/渲染/冷读、全局原工程恢复 Passed。非对象 pin 与多视图区原生比较 Not Run，边界单测通过；独立人工/科研接受 Not Run。十份教程已同步，27 处图片引用缺 23 张，完整图片门禁仍 Failed。
 

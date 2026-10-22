@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-10-21",
+  "updated": "2026-10-23",
   "rules": "docs/agents/blender-interaction.md",
   "operation_ids_are_stable": true,
   "history_is_not_current_batch_pass": true,
@@ -9110,6 +9110,141 @@
         "selector": "linked-node-groups-make-local",
         "tool_scope": "See referenced per-step MCP/CU/CLI distinctions; no whole-operation promotion"
       }
+    },
+    {
+      "id": "qc-auto-output",
+      "title": "自动取景与可恢复出图方案",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-23",
+        "method": "Agent Computer Use native clicks; read-only Blender timer observations and CLI cold-read assertions",
+        "source_commit": "8d2f83f20c0eb251e10f02c81faae176c636ca46",
+        "product_tree": "93303e6128980ac4ca32354a45de006ee712b5bf",
+        "candidate_sha256": "e73797010178657da9b950817f25a79786f2251832c9d04736c56b0dc00fa590",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "P01 active QC orbital_amplitude field; Render Properties uses current 3D selection",
+        "visible_entry": "Render Properties > QC Output; F3 > Create Framed Camera for standalone dialog",
+        "validated_scope": "Actual Render Properties apply/cancel, PCA/UNOBSTRUCTED, preview/white/transparent, Undo/Redo/Restore; standalone camera dialog opened/cancelled only",
+        "reports": [
+          {
+            "path": "validation/agent/reports/2026-10-23/auto-output/acceptance.json",
+            "sha256": "0899a6c464b9fda51f7f08f20895a55e94c64fdcb86655c142be6efd5a77b6db",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "validation/agent/reports/2026-10-23/auto-output/screenshots/output-dialog.png",
+            "sha256": "b8587eecf9857eacd978927e92992e75a566267d85a422da111ccd2dbb1a3f4c"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-23/auto-output/screenshots/occlusion-transparent-dialog.png",
+            "sha256": "d2e95b233f5efddba41948d3932dcabe1ef67eb1be09a145d3f2b7e56d071a6b"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-23/auto-output/screenshots/applied.png",
+            "sha256": "37b156c81c4ba0a163ce017d502b7eb8b14307bcf29c735f22eee14f64a319ec"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-23/auto-output/screenshots/restored.png",
+            "sha256": "c0d8a19ae730216b2bff1621d6d88898adfc19d7b173fb1afc2e238a7dc6519e"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/camera.py": "4f1ca4ee4f3cc48a3d1da61083ea5d902a8dafb7280eae5bba6f7c584ee662fc",
+        "qcblender/blender/output_ui.py": "de16b6108860bff79321736d1c4135884a22706a59c88ea09f1b3c26ea07ee05",
+        "qcblender/blender/output_settings.py": "54619a53814e2d600733d0567364fa2c796299817e3da4614d5e65dec08a17bb",
+        "qcblender/viewpoint.py": "cea36994556c319b970494af665670624f2fd29b4292917286d839ec7bacfca6",
+        "qcblender/output_presets.py": "0f6fc55d0cebcd192203dc4a576b17803413c30849d2de050f1829a9891c79a3",
+        "qcblender/blender/viewport_context.py": "e71746ce598f248ed40077c6886f28dfae7662f28868d8070b3daec2d2fb7de0",
+        "qcblender/translations_output.py": "adf80e5270dbd0776928fbf7dafb604aa37c0106fc3fd5c9a42983b7817fa435",
+        "qcblender/__init__.py": "60ae1ed60a66595fed6ffe4c539af4ec7f939dbd037ba665d1f2aaefa6b3e856"
+      },
+      "fingerprint_review": "Review registration, interfaces and transitive helpers before reusing this exact scope.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "coverage": "Use tools/verify_output_settings.py for native behavior; changed dialogs or selection context require GUI recheck."
+      },
+      "execution": {
+        "tool_scope": "CLI validates three modes, fit bounds, renders, science identity, restore, sharing and cold read; GUI scope is listed separately. MCP Not Run."
+      },
+      "query_keywords": [
+        "camera",
+        "PCA",
+        "output",
+        "render",
+        "PNG",
+        "灯光",
+        "恢复",
+        "自动取景",
+        "出图"
+      ]
+    },
+    {
+      "id": "qc-framed-camera-dialog",
+      "title": "独立取景相机方向弹窗",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-23",
+        "method": "Agent Computer Use native clicks; read-only Blender timer observations and CLI cold-read assertions",
+        "source_commit": "8d2f83f20c0eb251e10f02c81faae176c636ca46",
+        "product_tree": "93303e6128980ac4ca32354a45de006ee712b5bf",
+        "candidate_sha256": "e73797010178657da9b950817f25a79786f2251832c9d04736c56b0dc00fa590",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "P01 active QC orbital_amplitude field; Render Properties uses current 3D selection",
+        "visible_entry": "Render Properties > QC Output; F3 > Create Framed Camera for standalone dialog",
+        "validated_scope": "F3 search, open direction/margin dialog with CURRENT default, cancel without scene mutation. GUI confirmation of camera creation not covered.",
+        "reports": [
+          {
+            "path": "validation/agent/reports/2026-10-23/auto-output/acceptance.json",
+            "sha256": "0899a6c464b9fda51f7f08f20895a55e94c64fdcb86655c142be6efd5a77b6db",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "validation/agent/reports/2026-10-23/auto-output/screenshots/standalone-camera-dialog.png",
+            "sha256": "8c16d42a15aecb50183fd724ea8d68413a1619ca8f8170ee156b8437c7b25c27"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/blender/camera.py": "4f1ca4ee4f3cc48a3d1da61083ea5d902a8dafb7280eae5bba6f7c584ee662fc",
+        "qcblender/blender/output_ui.py": "de16b6108860bff79321736d1c4135884a22706a59c88ea09f1b3c26ea07ee05",
+        "qcblender/blender/output_settings.py": "54619a53814e2d600733d0567364fa2c796299817e3da4614d5e65dec08a17bb",
+        "qcblender/viewpoint.py": "cea36994556c319b970494af665670624f2fd29b4292917286d839ec7bacfca6",
+        "qcblender/output_presets.py": "0f6fc55d0cebcd192203dc4a576b17803413c30849d2de050f1829a9891c79a3",
+        "qcblender/blender/viewport_context.py": "e71746ce598f248ed40077c6886f28dfae7662f28868d8070b3daec2d2fb7de0",
+        "qcblender/translations_output.py": "adf80e5270dbd0776928fbf7dafb604aa37c0106fc3fd5c9a42983b7817fa435",
+        "qcblender/__init__.py": "60ae1ed60a66595fed6ffe4c539af4ec7f939dbd037ba665d1f2aaefa6b3e856"
+      },
+      "fingerprint_review": "Review registration, interfaces and transitive helpers before reusing this exact scope.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "coverage": "Use tools/verify_output_settings.py for native behavior; changed dialogs or selection context require GUI recheck."
+      },
+      "execution": {
+        "tool_scope": "CLI validates three modes, fit bounds, renders, science identity, restore, sharing and cold read; GUI scope is listed separately. MCP Not Run."
+      },
+      "query_keywords": [
+        "camera",
+        "create_framed_camera",
+        "取景相机",
+        "观察方向"
+      ]
     }
   ]
 }
