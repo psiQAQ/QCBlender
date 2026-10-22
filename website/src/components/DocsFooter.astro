@@ -1,0 +1,13 @@
+---
+import DefaultFooter from '@astrojs/starlight/components/Footer.astro';
+import { repository, sitePath } from '../data/copy';
+---
+<DefaultFooter />
+<div class="docs-site-footer"><nav aria-label="项目导航"><a href={sitePath()}>QCBlender 首页</a><a href={sitePath('downloads/')}>安装与下载</a><a href={repository}>GitHub</a><a href={sitePath('en/')} lang="en">English overview</a></nav><p><a href={`${repository}/blob/main/LICENSE`}>插件源码：GPL-3.0-or-later</a><span aria-hidden="true"> · </span><a href="https://creativecommons.org/licenses/by/4.0/">公开教程样本：CC BY 4.0</a></p></div>
+<style>
+  .docs-site-footer { border-top: 1px solid var(--sl-color-gray-5); margin-top: 2.5rem; padding-top: 1.5rem; font-size: .75rem; line-height: 1.8; color: var(--sl-color-gray-2); }
+  nav { display: flex; flex-wrap: wrap; gap: .6rem 1.5rem; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: var(--sl-color-text-accent); text-decoration: underline; }
+  p { margin-top: .8rem; font-size: .66rem; }
+</style>

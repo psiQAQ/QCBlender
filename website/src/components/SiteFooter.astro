@@ -1,0 +1,17 @@
+---
+import Brand from './Brand.astro';
+import Arrow from './Arrow.astro';
+import { copy, repository, releases, sitePath, versionLabel, type Locale } from '../data/copy';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = copy[locale];
+---
+<footer class="site-footer">
+  <div class="container footer-main">
+    <div class="footer-brand"><Brand href={sitePath(locale === 'en' ? 'en/' : '')} /><p>{t.footerTagline}</p><span class="version-label">{versionLabel.toUpperCase()}</span></div>
+    <div class="footer-column"><h2>{t.footerProject}</h2><a href={repository}>GitHub <Arrow external /></a><a href={releases}>Releases <Arrow external /></a><a href={`${repository}/issues`}>Issues <Arrow external /></a></div>
+    <div class="footer-column"><h2>{t.footerLearn}</h2><a href={sitePath('docs/getting-started/')}>{t.tutorial}</a><a href={sitePath(locale === 'en' ? 'en/downloads/' : 'downloads/')}>{t.downloads}</a></div>
+    <div class="footer-column footer-licenses"><h2>{t.footerLicense}</h2><a href={`${repository}/blob/main/LICENSE`}>{t.pluginLicense}</a><a href="https://creativecommons.org/licenses/by/4.0/">{t.sampleLicense}</a></div>
+  </div>
+  <div class="container footer-bottom"><span>{t.footerNote}</span><span>QCBlender · Open source</span></div>
+</footer>

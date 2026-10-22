@@ -1,0 +1,82 @@
+---
+import { Image } from 'astro:assets';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Arrow from './Arrow.astro';
+import orbital from '../assets/showcase/orbital.png';
+import esp from '../assets/showcase/esp.png';
+import igmh from '../assets/showcase/igmh.png';
+import { copy, repository, sitePath, type Locale } from '../data/copy';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = copy[locale];
+const tutorial = sitePath('docs/getting-started/');
+const downloads = sitePath(locale === 'en' ? 'en/downloads/' : 'downloads/');
+const images = [orbital, esp, igmh];
+---
+<SiteLayout locale={locale}>
+  <section class="hero container" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="signal-dot" />{t.eyebrow}</p>
+      <h1 id="hero-title">{t.heroLines[0]}<br /><span>{t.heroLines[1]}</span></h1>
+      <p class="hero-description">{t.heroBody}</p>
+      <div class="button-row"><a class="button button-primary" href={tutorial}>{t.start}<Arrow /></a><a class="text-link" href={repository}>{t.source}<Arrow external /></a></div>
+      {locale === 'en' && <p class="language-note">Tutorial available in Chinese.</p>}
+      <div class="hero-bottom-note"><span class="mono">ψ(r)</span><span>FCHK → FIELD → BLENDER</span></div>
+    </div>
+    <figure class="hero-visual">
+      <div class="hero-image-stage">
+        <div class="figure-topline"><span>QC / 01</span><span>MOLECULAR ORBITAL</span><span class="figure-cross" aria-hidden="true">+</span></div>
+        <Image src={orbital} alt={t.heroImageAlt} format="webp" widths={[480, 800, 1280]} sizes="(min-width: 900px) 52vw, 100vw" loading="eager" fetchpriority="high" />
+        <div class="phase-key" aria-hidden="true"><i class="phase-blue" /><i class="phase-red" /><span>±ψ(r)</span></div>
+      </div>
+      <figcaption><span>{t.heroCaption}</span><span>{t.phaseNote}</span></figcaption>
+    </figure>
+  </section>
+
+  <div class="status-strip container" aria-label={locale === 'zh' ? '版本和兼容信息' : 'Version and compatibility'}>
+    {t.statusLabels.map((label, index) => <div><span class="status-label">{label}</span><span class="status-value">{index === 0 && <span class="signal-dot" />}{t.statusValues[index]}</span></div>)}
+  </div>
+
+  <section class="explore-section container section-space" id="explore" aria-labelledby="explore-title">
+    <div class="section-intro">
+      <div><p class="eyebrow">{t.introLabel}</p><h2 id="explore-title">{t.introTitle}</h2></div>
+      <p>{t.introBody}</p>
+    </div>
+    <div class="case-list">
+      {t.cases.map((item, index) => <article class:list={['case-story', { 'case-reverse': index === 1, 'case-orbital': index === 0 }]}>
+        <div class="case-copy">
+          <p class="case-number"><span>0{index + 1}</span><span>{item.kind}</span></p>
+          <h3>{item.title}</h3>
+          <p class="case-body">{item.body}</p>
+          <p class="scientific-note">{item.detail}</p>
+          <ul class="tags" aria-label={locale === 'zh' ? '相关功能' : 'Related features'}>{item.tags.map(tag => <li>{tag}</li>)}</ul>
+          <a class="text-link" href={tutorial}>{t.caseLink}<Arrow /></a>
+        </div>
+        <figure class:list={['case-figure', { 'orbital-figure': index === 0 }]}>
+          <div class="case-image-wrap"><Image src={images[index]!} alt={item.alt} format="webp" widths={[480, 800, 1280, ...(index > 0 ? [1600] : [])]} sizes="(min-width: 900px) 55vw, 100vw" loading="lazy" /></div>
+          <figcaption><span>{item.caption}</span><span aria-hidden="true">↗</span></figcaption>
+        </figure>
+      </article>)}
+    </div>
+    <p class="image-credit">{t.imageCredit}</p>
+  </section>
+
+  <section class="features-section container section-space" aria-labelledby="features-title">
+    <div class="features-heading"><p class="eyebrow">{t.featureLabel}</p><h2 id="features-title">{t.featureTitle}</h2><div class="field-mark" aria-hidden="true"><span>ρ(r)</span><svg viewBox="0 0 160 75" fill="none"><path d="M0 37.5h160M80 0v75"/><ellipse cx="80" cy="37.5" rx="61" ry="27"/><ellipse cx="80" cy="37.5" rx="42" ry="18"/><ellipse cx="80" cy="37.5" rx="21" ry="9"/></svg></div></div>
+    <div class="feature-list">{t.features.map((item, index) => <article><span class="feature-index">0{index + 1}</span><div><h3>{item.title}</h3><p>{item.body}</p></div></article>)}</div>
+  </section>
+
+  <section class="workflow-section" aria-labelledby="workflow-title">
+    <div class="container section-space">
+      <div class="workflow-heading"><div><p class="eyebrow">{t.workflowLabel}</p><h2 id="workflow-title">{t.workflowTitle}</h2></div><a class="text-link" href={tutorial}>{t.ctaLink}<Arrow /></a></div>
+      <ol class="workflow-steps">{t.steps.map((step, index) => <li><div class="step-track"><span>0{index + 1}</span><Arrow /></div><h3>{step.title}</h3><p>{step.body}</p><span class="step-note">{step.note}</span></li>)}</ol>
+    </div>
+  </section>
+
+  <section class="compatibility-section container section-space" aria-labelledby="compatibility-title">
+    <div><p class="eyebrow">{t.compatibilityLabel}</p><h2 id="compatibility-title">{t.compatibilityTitle}</h2><p class="section-body">{t.compatibilityBody}</p><a class="text-link" href={downloads}>{t.installLink}<Arrow /></a></div>
+    <div class="compatibility-detail"><dl>{t.compatibilityRows.map(([label, value]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}</dl><p class="scientific-note">{t.compatibilityNote}</p></div>
+  </section>
+
+  <section class="tutorial-cta container" aria-labelledby="tutorial-title"><div><p class="eyebrow">{t.ctaLabel}</p><h2 id="tutorial-title">{t.ctaTitle}</h2><p>{t.ctaBody}</p></div><a class="button button-primary" href={tutorial}>{t.ctaLink}<Arrow /></a><span class="cta-mark" aria-hidden="true">ψ</span></section>
+</SiteLayout>

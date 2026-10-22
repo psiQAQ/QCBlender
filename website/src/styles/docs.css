@@ -1,0 +1,40 @@
+:root {
+  --sl-font: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --sl-color-accent-low: #17383d;
+  --sl-color-accent: #69c2c9;
+  --sl-color-accent-high: #bde9e8;
+  --sl-color-white: #e8ede8;
+  --sl-color-gray-1: #d4ddda;
+  --sl-color-gray-2: #a4b1af;
+  --sl-color-gray-3: #7f918e;
+  --sl-color-gray-4: #4a595a;
+  --sl-color-gray-5: #354042;
+  --sl-color-gray-6: #202728;
+  --sl-color-black: #171b1c;
+  --sl-color-bg-nav: #171b1c;
+  --sl-color-bg-sidebar: #171b1c;
+  --sl-content-width: 52rem;
+}
+:root[data-theme="light"] {
+  --sl-color-accent-low: #dcece7;
+  --sl-color-accent: #087d88;
+  --sl-color-accent-high: #13545d;
+  --sl-color-white: #202829;
+  --sl-color-gray-1: #333e3f;
+  --sl-color-gray-2: #536362;
+  --sl-color-gray-3: #6b7c79;
+  --sl-color-gray-4: #93a39e;
+  --sl-color-gray-5: #d5dcd6;
+  --sl-color-gray-6: #eeefe9;
+  --sl-color-gray-7: #f3f4ee;
+  --sl-color-black: #f7f7f2;
+  --sl-color-bg-nav: #f7f7f2;
+  --sl-color-bg-sidebar: #f7f7f2;
+}
+.sl-markdown-content { line-height: 1.9; }
+.sl-markdown-content :is(h2, h3) { letter-spacing: -.02em; }
+.sl-markdown-content details { border: 1px solid var(--sl-color-gray-5); border-radius: .3rem; padding: .8rem 1rem; }
+.sl-markdown-content summary { cursor: pointer; color: var(--sl-color-text-accent); font-weight: 550; }
+.sl-markdown-content img { border-radius: .3rem; }
+.sl-markdown-content :is(td, th) { line-height: 1.7; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
