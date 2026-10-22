@@ -1,0 +1,24 @@
+{
+  "base": "/QCBlender",
+  "repository": "https://github.com/psiQAQ/QCBlender",
+  "publicSamples": {
+    "source": "validation/agent/packages/qcblender-public-tutorial-samples-v2.zip",
+    "sha256": "b4bc3e0ebbdf29ccb3905b16eeb898c94b9f16f209baae3c3ae1a8646b0348dd",
+    "members": 33,
+    "download": "qcblender-public-tutorial-samples-v2.zip"
+  },
+  "pages": [
+    { "slug": "docs", "title": "教程导航", "order": 0 },
+    { "source": "validation/human/SOP.md", "slug": "docs/getting-started", "title": "安装与第一张轨道图", "order": 1 },
+    { "source": "validation/human/topics/01-molecule-xyz.md", "slug": "docs/topics/01-molecule-xyz", "title": "分子显示与 XYZ", "order": 1 },
+    { "source": "validation/human/topics/02-cube.md", "slug": "docs/topics/02-cube", "title": "Cube 场", "order": 2 },
+    { "source": "validation/human/topics/03-density-esp.md", "slug": "docs/topics/03-density-esp", "title": "电子密度、自旋密度与 ESP", "order": 3 },
+    { "source": "validation/human/topics/04-spatial-tools.md", "slug": "docs/topics/04-spatial-tools", "title": "空间观察与数据导出", "order": 4 },
+    { "source": "validation/human/topics/05-igmh-iri.md", "slug": "docs/topics/05-igmh-iri", "title": "IGMH 与 IRI", "order": 5 },
+    { "source": "validation/human/topics/06-esp-aim.md", "slug": "docs/topics/06-esp-aim", "title": "外部 ESP 与 AIM 分析", "order": 6 },
+    { "source": "validation/human/topics/07-irc-mayer.md", "slug": "docs/topics/07-irc-mayer", "title": "IRC 与 Mayer", "order": 7 },
+    { "source": "validation/human/topics/08-ets-nocv.md", "slug": "docs/topics/08-ets-nocv", "title": "ETS-NOCV", "order": 8 },
+    { "source": "validation/human/topics/09-nodes.md", "slug": "docs/topics/09-nodes", "title": "几何节点", "order": 9 },
+    { "source": "docs/USER_GUIDE.md", "slug": "docs/reference", "title": "操作入口索引", "order": 20 }
+  ]
+}
