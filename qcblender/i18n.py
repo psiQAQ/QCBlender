@@ -14,7 +14,8 @@ def messages():
     if _messages is None:
         merged = {}
         for name in ('translations_ui', 'translations_nodes', 'translations_properties',
-                     'translations_panels', 'translations_tooltips', 'translations_annotations', 'translations_sidebar'):
+                     'translations_panels', 'translations_tooltips', 'translations_annotations', 'translations_sidebar',
+                     'translations_output'):
             module = importlib.import_module('.' + name, __package__)
             for key, value in module.MESSAGES.items():
                 if key in merged and merged[key] != value:

@@ -261,6 +261,8 @@ class QCBLENDER_PT_create(bpy.types.Panel):
         camera = layout.box()
         camera.label(text='Camera')
         camera.operator('qcblender.create_framed_camera', text='Create Framed Camera', icon='CAMERA_DATA')
+        camera.operator('qcblender.apply_output', text='Apply QC Output', icon='RENDER_STILL')
+        camera.operator('qcblender.restore_output', text='Restore Original Output', icon='LOOP_BACK')
 
 
 def _action_group(layout, context, title, actions):
@@ -503,6 +505,7 @@ class QCBLENDER_MT_object(bpy.types.Menu):
                 and len(context.selected_objects) == 2):
             layout.operator('qcblender.map_scalar', text='Map Selected Field to Active Surface')
         layout.operator('qcblender.create_framed_camera', text='Create Framed Camera')
+        layout.operator('qcblender.apply_output', text='Apply QC Output')
         if context.object.get('qc_view_kind') in ('atoms', 'field', 'slice', 'fog'):
             layout.operator('qcblender.copy_display_parameters', text='Copy Display Parameters to Selected Views')
 

@@ -13,6 +13,8 @@ def register():
     import bpy
     from .blender.properties import QCViewSettings
     bpy.types.Object.qc_settings = bpy.props.PointerProperty(type=QCViewSettings)
+    from .blender.output_settings import QCOutputState
+    bpy.types.Scene.qc_output = bpy.props.PointerProperty(type=QCOutputState)
     from .blender.source_browser import refresh_loaded_sources
     from .blender.ui import clear_qualifications, clear_qualification_handoffs
     from bpy.app.handlers import persistent
@@ -76,6 +78,8 @@ def unregister():
     clear_source_cache()
     if hasattr(bpy.types.Object, 'qc_settings'):
         del bpy.types.Object.qc_settings
+    if hasattr(bpy.types.Scene, 'qc_output'):
+        del bpy.types.Scene.qc_output
     auto_load.unregister()
     from . import i18n
     i18n.unregister()

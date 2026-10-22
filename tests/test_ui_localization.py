@@ -16,6 +16,7 @@ OWNED = (
     'color_presets', 'color_ranges', 'data_export', 'editor_ui', 'external_fields',
     'external_results', 'interaction', 'irc', 'layers', 'nbo', 'nocv', 'optimization',
     'profile', 'project', 'result_browser', 'scalars', 'source_browser', 'trajectory', 'ui',
+    'output_ui',
 )
 
 
