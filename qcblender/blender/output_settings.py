@@ -18,6 +18,7 @@ _ORIGINAL_CAMERA_UNSET = object()
 
 class QCOutputCollectionLink(bpy.types.PropertyGroup):
     collection: PointerProperty(type=bpy.types.Collection)
+    scene_root: BoolProperty(default=False)
 
 
 class QCOutputLightState(bpy.types.PropertyGroup):
@@ -215,13 +216,19 @@ def validate_output(scene, *, quality='STANDARD', background='WHITE', background
     return plan
 
 
+def _link_collection(link, scene):
+    # A Scene's master collection is an embedded ID and cannot be an RNA pointer.
+    return scene.collection if link.scene_root else link.collection
+
+
 def _state_snapshot(state):
     return {'active': state.active, 'owner': state.owner, 'baseline_json': state.baseline_json,
             'camera': state.camera,
             'original_camera': state.original_camera, 'original_world': state.original_world,
             'output_world': state.output_world, 'rig_collection': state.rig_collection,
             'lights': [(item.original, item.isolated, item.hidden,
-                        tuple(link.collection for link in item.links if link.collection is not None))
+                        tuple(collection for link in item.links
+                              if (collection := _link_collection(link, state.id_data)) is not None))
                        for item in state.lights]}
 
 
@@ -234,7 +241,10 @@ def _state_write(state, values):
         item = state.lights.add()
         item.original, item.isolated, item.hidden = original, isolated, hidden
         for collection in links:
-            item.links.add().collection = collection
+            link = item.links.add()
+            link.scene_root = collection == state.id_data.collection
+            if not link.scene_root:
+                link.collection = collection
 
 
 def _new_world(owner, created):
@@ -446,9 +456,10 @@ def restore_output(scene):
             if any(other != scene for other in item.isolated.users_scene):
                 raise ValueError('An isolated QC light is now shared with another scene')
             for link in item.links:
-                if link.collection is not None and link.collection not in _collections(scene):
+                collection = _link_collection(link, scene)
+                if collection is not None and collection not in _collections(scene):
                     raise ValueError('A saved light collection no longer belongs to this scene')
-                if link.collection in unsafe:
+                if collection in unsafe:
                     raise ValueError('A saved light collection is now shared or instanced')
         elif item.original is not None and any(other != scene for other in item.original.users_scene):
             raise ValueError('An original light is now shared; restoring it would affect another scene')
@@ -458,7 +469,7 @@ def restore_output(scene):
         original, isolated = item.original, item.isolated
         if isolated is not None:
             for link in item.links:
-                collection = link.collection
+                collection = _link_collection(link, scene)
                 if collection is not None:
                     if original is not None and original.name not in collection.objects:
                         collection.objects.link(original)
