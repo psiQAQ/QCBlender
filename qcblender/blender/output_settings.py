@@ -172,6 +172,18 @@ def _validate_owned(scene, *, require_world_graph=True):
                 raise ValueError('The QC output World has been modified; restore the original settings first')
 
 
+def _available_engines(scene):
+    # RNA's context-free enum omits Python-registered engines such as Cycles.
+    engines = {item.identifier for item in scene.render.bl_rna.properties['engine'].enum_items}
+    pending = list(bpy.types.RenderEngine.__subclasses__())
+    while pending:
+        engine = pending.pop()
+        if getattr(engine, 'is_registered', False) and getattr(engine, 'bl_idname', None):
+            engines.add(engine.bl_idname)
+        pending.extend(engine.__subclasses__())
+    return engines
+
+
 def validate_output(scene, *, quality='STANDARD', background='WHITE', background_color=(1., 1., 1.),
                     resolution_x=1920, resolution_y=1080, resolution_percentage=100, denoise=True):
     """Preflight all scene changes, without modifying scene or object data."""
@@ -182,7 +194,7 @@ def validate_output(scene, *, quality='STANDARD', background='WHITE', background
         raise ValueError('Output settings require an editable local scene')
     _validate_owned(scene)
     preset = QUALITY_PRESETS[quality]
-    engines = scene.render.bl_rna.properties['engine'].enum_items
+    engines = _available_engines(scene)
     if preset.engine not in engines:
         raise ValueError('The requested render engine is unavailable: ' + preset.engine)
     required = (['eevee.taa_render_samples'] if quality == 'PREVIEW' else

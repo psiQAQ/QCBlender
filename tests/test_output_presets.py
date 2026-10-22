@@ -1,12 +1,34 @@
 """Output contracts independent of Blender and render hardware."""
 
+import ast
 import math
+from pathlib import Path
+from types import SimpleNamespace
 import unittest
 
 from qcblender.output_presets import PRESET_VERSION, QUALITY_PRESETS, lighting_layout, output_plan
 
 
 class OutputPresets(unittest.TestCase):
+    def test_registered_python_engines_are_available_without_static_enum_items(self):
+        class Engine:
+            pass
+        class Cycles(Engine):
+            is_registered = True
+            bl_idname = 'CYCLES'
+        class Unregistered(Engine):
+            is_registered = False
+            bl_idname = 'UNREGISTERED'
+        path = Path(__file__).resolve().parents[1] / 'qcblender/blender/output_settings.py'
+        tree = ast.parse(path.read_text(encoding='utf-8'))
+        function = next(node for node in tree.body if isinstance(node, ast.FunctionDef)
+                        and node.name == '_available_engines')
+        namespace = {'bpy': SimpleNamespace(types=SimpleNamespace(RenderEngine=Engine))}
+        exec(compile(ast.Module(body=[function], type_ignores=[]), str(path), 'exec'), namespace)
+        scene = SimpleNamespace(render=SimpleNamespace(bl_rna=SimpleNamespace(properties={
+            'engine': SimpleNamespace(enum_items=[SimpleNamespace(identifier='BLENDER_EEVEE')])})))
+        self.assertEqual(namespace['_available_engines'](scene), {'BLENDER_EEVEE', 'CYCLES'})
+
     def test_quality_cost_and_noise_targets_are_explicit(self):
         self.assertEqual(PRESET_VERSION, 1)
         preview, standard, high = (QUALITY_PRESETS[name] for name in ('PREVIEW', 'STANDARD', 'HIGH'))
