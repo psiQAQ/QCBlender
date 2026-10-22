@@ -12,7 +12,7 @@
 
 | 内容 | 当前入口 |
 | --- | --- |
-| 宣传与教程网站 | [维护与预览](../website/README.md)、[本批验收](../validation/agent/acceptance/website.md)；最终本地构建、浏览器与三组 Blender 新图/冷读 Passed；工程在 `outputs/projects/website-showcase/`，图像和会话证据在 `validation/agent/reports/2026-10-23/website/`；Pages 已启用，部署状态以验收记录为准 |
+| 宣传与教程网站 | [维护与预览](../website/README.md)、[本批验收](../validation/agent/acceptance/website.md)；[线上网站](https://notes.psiqaq.cn/QCBlender/)；网站构建、浏览器、Pages 与三组 Blender 新图/冷读 Passed；插件候选 CI 的 3 项失败单独记在验收中；工程在 `outputs/projects/website-showcase/`，图像、会话与归档收据在 `validation/agent/reports/2026-10-23/website/`；本地标签 `archive/2026-10-23/feat/website`、`archive/2026-10-23/feat/website-ui`、`archive/2026-10-23/feat/website-docs`；从 `website/README.md` 重建 |
 | 当前完整教程材料 | `validation/`；[工程索引](../validation/工程索引.md)、[迁移与清理](#delivery-consolidation-20261022)；需要分发时按下行打包 |
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
 | 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；当前工程在 `validation/work/human/`；[当前截图与工程](../validation/工程索引.md) |

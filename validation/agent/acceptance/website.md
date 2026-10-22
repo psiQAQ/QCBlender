@@ -12,14 +12,24 @@
 | 实际浏览器 | Passed | Codex 内置浏览器：桌面 1265 px 内容宽度与手机 390 × 844 视口，首页/安装页无横向溢出；中文与英文宣传入口、深浅主题、主题跨页面保持、菜单、404 返回入口可用 |
 | 中文搜索与教程交互 | Passed | “轨道”返回 6 页，“IGMH”返回 5 页；中文搜索文案、具体步骤跳转、Escape 关闭及 details 展开可用；同步新版 SOP 后“自动取景”返回 2 页，第 8 步跳转及新截图加载通过 |
 | 自动主题 | Passed | 初始系统模式及从教程选择自动后返回首页均显示当前系统深色；未改变操作系统主题测试实时切换 |
-| 公开样本下载 | Passed | 从本地预览服务器实际取回 12,175,753 字节，SHA-256 与冻结包一致 |
-| 干净检出与远端网站 CI | Not Run | 待最终图片完成后推送并以精确 main HEAD 的 Website 工作流验证 |
+| 公开样本下载 | Passed | 本地预览与线上 HTTPS 均实际取回 12,175,753 字节，SHA-256 与冻结包一致 |
+| 干净检出与远端网站 CI | Passed | 源码提交 `42566fbd7e5337dec85000aba78e0ad2038203d1` 的 [Website 工作流 39851811433](https://github.com/psiQAQ/QCBlender/actions/runs/39851811433) 完成构建与部署，均为 success |
 | 新 Blender 宣传图 | Passed | 用户确认关闭后，MCP 实际渲染 MO、ESP、IGMH；三份自包含副本新进程冷读通过，科学数组和对象变换一致；详见下文 |
 | 原工程保护与恢复 | Passed | 206 个原工程及配套文件 SHA-256 未变；P01 原保存工程恢复到 PID 22344，未修改状态，3 个 Dataset 视图可读取；未宣称与接管前 GUI 布局逐像素一致 |
-| GitHub Pages 上线 | Not Run | 已启用 Actions 与 HTTPS；继承现有域名 https://notes.psiqaq.cn/QCBlender/，默认 github.io 地址实际 301 到此处；待本批推送部署 |
+| GitHub Pages 上线 | Passed | [公开网站](https://notes.psiqaq.cn/QCBlender/) 的中英首页、安装页、中文教程与样本返回 200，缺失路径返回本站 404；默认 github.io 地址重定向到现有域名，HTTPS 已启用 |
+| 线上浏览器 | Passed | 实际查看桌面首页新轨道图，从首页进入中文教程；“自动取景”返回 2 页，中文文案与结果可见；完整主题、手机与跳转矩阵沿用本地同源码验收 |
+| 插件候选 CI | Failed | 同提交的 [Qualified extension candidate 39851811354](https://github.com/psiQAQ/QCBlender/actions/runs/39851811354) 在 stdlib 273 项测试中有 3 项失败；未生成合格安装候选，见下文 |
 | 插件发布及独立科研验收 | Not Run | 本任务不发布插件安装 ZIP，不替代已有候选资格与独立签署 |
 
 构建中的一条 Starlight 提示来自自定义 `404.md` 与框架专用 `/404` 路由：框架选择专用路由，实际 `404.html` 已生成，规范地址、搜索排除及返回链接已验证。无重复的 Astro 页面文件。首次配置和路径检查的失败已修正；同步新版 SOP 后清单检查准确报告 27→28 张图片的变化，复核来源后更新基线并通过。未把中间构建当作交付通过。
+
+## 远端发布与独立 CI
+
+源码提交 `42566fbd7e5337dec85000aba78e0ad2038203d1` 已正常快进推送到 origin/main，未推送本地归档标签。Website 的 Ubuntu 干净检出实际完成锁文件安装、类型检查、6 项测试、构建、来源与部署白名单校验，并通过 Pages 部署。收尾文档提交的精确 HEAD 复核结果保存在本批 `remote/verification.json`，不以旧提交的 CI 状态代替。
+
+线上 HTTP 记录位于 `online/http-checks.json`，包含 9 个页面、重定向与下载检查及实际字节摘要。浏览器线上首页与中文搜索已留图；操作接口曾超时，后续读取实际页面与截图确认结果，没有把超时本身记为通过。
+
+插件候选 CI 的失败诊断已保留为 `remote/candidate-ci-failure-39851811354.zip`，与 GitHub 上传摘要 `c02c95c4f6dceb899c9038ad27b244ece80736c7a63d2666231f68ef9bad95c4` 一致。失败是两项 `test_operator_tooltips` 出图/恢复出图文案检查，以及 `test_empty_button_guards` 菜单断言中多出的 `qcblender.apply_output`。网站分支未修改这些插件实现与测试；本任务保留失败证据，不改插件门禁，不公开安装 ZIP。
 
 ## Blender 出图与恢复
 
@@ -37,9 +47,10 @@
 - `preview-mobile-dark.png`：手机首页；`preview-docs-details-light.png`：桌面教程折叠说明。
 - `preview-search-mobile.png`、`preview-search-igmh.png`：实际搜索结果。
 - `final-home-light.png`、`final-en-dark.png`、`final-mobile-dark.png`：替换真实新图后的最终网页；`final-search-auto-output.png`：新版教程搜索。
+- `online-home-light.png`、`online-search-auto-output.png`：GitHub Pages 线上首页与中文搜索。
 
-上述截图是 Agent 浏览器操作与观察，不是独立用户验收。生成的来源清单位于 `website/reports/tutorial-manifest.json`，由 `prepare:docs` 重建；冻结公开包身份由 `website/tutorials.json` 固定。待推送的 195 个提交历史补丁已做高信号凭据检查，未发现私钥、GitHub/AWS/OpenAI 密钥模式；该检查不等同于完整安全审计。
+上述截图是 Agent 浏览器操作与观察，不是独立用户验收。生成的来源清单位于 `website/reports/tutorial-manifest.json`，本批副本保留在 `build/tutorial-manifest.json`，可由 `prepare:docs` 重建；冻结公开包身份由 `website/tutorials.json` 固定。推送前的 195 个历史提交补丁已做高信号凭据检查，未发现私钥、GitHub/AWS/OpenAI 密钥模式；该检查不等同于完整安全审计。
 
-本次在 `website/` 执行：`npm run prepare:docs`、`npm run check`、`npm test`、`npm run build`、`npm run verify`，Astro CLI 进程使用 `ASTRO_TELEMETRY_DISABLED=1`。本地预览入口为 `npm run preview -- --port 4321`；本批实际通过同一 Astro CLI 启动，PID 23572，日志在 `.tmp/runs/website/preview/`。
+本次在 `website/` 执行：`npm run prepare:docs`、`npm run check`、`npm test`、`npm run build`、`npm run verify`，Astro CLI 进程使用 `ASTRO_TELEMETRY_DISABLED=1`。本地预览入口为 `npm run preview -- --port 4321`；本批实际通过同一 Astro CLI 启动，PID 23572 已结束，日志保留在 `runs/preview/`。Node 依赖与 npm 缓存已迁回主检出的 `website/node_modules/` 和 `.tmp/cache/npm/`，17,986 个文件的移动前后 SHA-256 一致，Astro 版本入口可运行；逐文件收据位于 `finish/runtime-move.json`。网站任务工作树按既有 `finish` 流程保全与本地归档，标签和收据从 [ARTIFACTS](../../../docs/ARTIFACTS.md) 查找。
 
 公开样本 SHA-256：`b4bc3e0ebbdf29ccb3905b16eeb898c94b9f16f209baae3c3ae1a8646b0348dd`。部署内容仅含白名单公开材料、页面和网站资源，未发现 P02、本地候选 ZIP、`.blend` 或 `.qcdata`。
