@@ -1,6 +1,6 @@
 # 自动观察方向与统一出图验收
 
-2026-10-23。新增主轴取景、可选近似减少遮挡，以及在当前场景显式应用、恢复的出图方案。用户批准实施、定向测试、实际 Blender 出图、完整包、SOP 和本地提交；不包含日常配置安装、push 或公开发布。
+2026-10-23。新增主轴取景、可选近似减少遮挡，以及在当前场景显式应用、恢复的出图方案。用户批准实施、定向测试、实际 Blender 出图、完整包、SOP 和本地提交；随后追加授权日常配置安装且不备份旧安装，再要求补做日常 GUI 点击、更新记录并提交，结果见下文。不包含 push 或公开发布。
 
 ## 当前交付与身份
 
@@ -24,7 +24,9 @@
 | 独立相机弹窗 | Passed | F3 搜索并打开“创建取景相机”，确认方向默认 CURRENT、边距可见后取消；该项不宣称 GUI 确认创建已执行 |
 | 持久化 | Passed | 最终候选新进程读取 atoms、MO、ESP、fog 和 GUI 工程，核对科学数据与出图状态；GUI 工程冷读后再执行恢复，原参数匹配 |
 | 完整包与隔离安装 | Passed | 新源码与生成资产整包构建；128 个安装成员与精确候选核对，最终安装运行实际插件 |
-| 本轮全量回归、远端 CI、日常安装 | Not Run | 按已批准范围执行定向验收；日常安装的历史身份另存于 current-install.json，不以本次隔离结果替代 |
+| 日常安装与原生冒烟 | Passed | 追加授权后覆盖安装，同一候选 128 个成员逐字节一致；日常配置重新执行三种取景、三档渲染及保存冷读，详见下文 |
+| 日常配置 GUI 点击 | Passed | 实际点击 PCA/预览/白底和减少遮挡/标准/透明，两次 1280×720 GUI 渲染、结果窗口观察及恢复原设置；另存副本后的新进程冷读 Passed，详见下文 |
+| 本轮全量回归、远端 CI | Not Run | 按已批准范围执行定向验收 |
 | 独立用户及科研验收 | Not Run | Agent 数值检查、点击和图像观察不代表独立人工签署 |
 
 测试实现入口为 [verify_output_settings.py](../../../tools/verify_output_settings.py)。运行时以已有教程工程为只读输入：`validation/work/human/P01/P01.blend`、`P03/P03-density-esp.blend`、`P03/checkpoints/P03-fog.blend`。结果保存到 `outputs/projects/auto-output/`，没有覆盖输入工程。
@@ -49,10 +51,33 @@ GUI 第一轮撤销返回载入工程的尺寸，因为测试启动脚本对 640
 
 技术截图记录实际点击；[界面观察序列](../reports/2026-10-23/auto-output/runs/gui-2/observations.json)由只读计时器采集，保存与冷读通过 CLI 完成。SOP 插图只展示操作位置，不将它当作独立人工验收。
 
+## 日常配置安装补充
+
+2026-10-23，按用户追加要求，将相同完整包覆盖安装到 `%APPDATA%/Blender Foundation/Blender/5.1/extensions/user_default/qcblender/`，未备份旧安装。通过统一入口 `op --transport cli --global-profile` 调用现有原生安装操作，按用户要求不使用强制备份的 `install --global-profile` 包装层；源码、候选包与依赖版本未变。
+
+[日常配置记录](../reports/2026-10-23/auto-output/daily/acceptance.json)确认 128 个成员与候选逐字节一致，新进程从日常配置自动启用该扩展。复用 `tools/verify_output_settings.py` 对 P01 的 MO 执行 CURRENT/PCA/UNOBSTRUCTED、5% 边距、重复应用、原设置恢复、共享场景保护，以及 EEVEE 预览、Cycles 标准透明和精细白底渲染；结果均 Passed。三张成图已由 Agent 查看，两相位可见且主体未被截断。保存为 `outputs/projects/auto-output/daily/mo/mo.blend` 和配套 `.qcdata`，新进程核对相机、灯光、出图状态、Dataset、数组摘要及对象变换 Passed。
+
+安装阶段未重复 GUI 点击，因此其原始机器记录保留当时的 Not Run；随后按追加要求执行的日常 GUI 结果见下一节。安装、原生验证和冷读三个 PID 已正常退出；沿用用户无需恢复原工程的要求。原始执行记录保全到本批 `daily/runs/`，报告内逐文件摘要对应原 `.tmp/runs/auto-output/daily/`。
+
+## 日常配置 GUI 点击补充
+
+2026-10-23，使用日常 Blender 5.1.1 配置和上述精确候选，实际通过 Computer Use 点击“渲染属性 → QC 出图”。开始前再次按原用户权限核对 128 个安装成员与候选一致，P01 作为只读输入。完整记录为[日常 GUI 验收](../reports/2026-10-23/auto-output/daily-gui/acceptance.json)，在操作登记表的 `qc-auto-output` 下追加本批记录，保留原隔离配置证据。
+
+| 实际 GUI 操作 | 状态 | 可观察结果 |
+| --- | --- | --- |
+| 主轴取景、5% 边距、预览、白底、1280×720、100% | Passed | 相机换到主轴方向，模型完整落入相机框；点击“渲染图像”后得到 EEVEE 64 采样的 RGB PNG，实际结果窗口已查看 |
+| 减少遮挡、5% 边距、标准、降噪、透明 PNG、1280×720、100% | Passed | 相机切换到新方向；F12 启动 Cycles 128 采样渲染，完成后的窗口显示透明棋盘背景，输出为 RGBA PNG |
+| 点击恢复原出图设置 | Passed | 原相机及矩阵、World、原灯光开关和全部受控出图参数与启动基线一致，新增灯光集合停止参与渲染，恢复按钮变灰；科学数组、Dataset 身份和对象变换未变 |
+| 副本保存与冷重开 | Passed | 原生脚本另存 `outputs/projects/auto-output/daily/gui-2/gui-restored.blend` 和 `.qcdata`，关闭 GUI 后新进程核对场景状态与科学数据一致；此项记录为原生脚本执行 |
+
+GUI 会话 PID 93800 完成两次渲染后正常退出；冷读 PID 92616 退出码为 0。原始 P01 的 SHA-256 未变，8 张实际界面截图和 27 份执行材料按原字节保全至 `daily-gui/runs/`，两张成图与工程保留在 `outputs/projects/auto-output/daily/gui-2/`。启动脚本预先选择 MO 对象并切到相机视图，随后采集状态、导出已完成的 Render Result、另存工程和退出；取景、应用方案、启动渲染与恢复均由 GUI 完成。
+
+首轮观察脚本在 `render_complete` 内同步导出图片后界面无响应，记录为 Failed，未确认产品缺陷。首次结束进程的请求被自动审批拒绝；用户明确批准后，核对并结束本批 PID 66112。仅把观察脚本的导出移到渲染任务结束之后，第二轮完整通过；产品代码和安装包未改动。首轮记录保留其当时状态，后续授权与恢复结果写入本批验收记录。独立用户及科研验收仍为 Not Run。
+
 ## 证据及保留
 
 正式记录在 `validation/agent/reports/2026-10-23/auto-output/`。其中 `runs/<相对路径>` 对应原 `.tmp/runs/auto-output/<相对路径>`，保全 138 个执行记录、日志及脚本；原机器记录内的执行时绝对路径未改写。逐文件原路径、当前路径、大小和 SHA-256 见机器记录的 `evidence_files`。
 
 工程、配套 `.qcdata` 与图片在 `outputs/projects/auto-output/`：最终 atoms/MO/GUI 在 `build-4/`，ESP/fog 在 `build-3/{esp-focused,fog-focused}/`，新增精细体图与教程图片分别在 `build-4/{fog-high,sop}/`。失败轮次、旧包和隔离配置均保留。前一有效包 `06b468…ff052` 已核对仍位于 `outputs/candidates/current/sop-completion-20261021/`，无需另建重复备份。
 
-本批拥有的 Blender 进程已正常退出；用户明确要求无需恢复原工程。主检出既有上游引用及调研改动保留，未纳入本批功能提交。本地分支、工作树与归档标签收尾由 [ARTIFACTS](../../../docs/ARTIFACTS.md#auto-output-20261023) 路由；不 push。
+首次功能交付及日常安装的 Blender 进程均已正常退出；日常 GUI 重试的进程处置见上文，结束时无 Blender 进程。用户明确要求无需恢复原工程。主检出既有上游引用及调研改动保留，未纳入本批提交。本地分支、工作树与归档标签收尾由 [ARTIFACTS](../../../docs/ARTIFACTS.md#auto-output-20261023) 路由；不 push。

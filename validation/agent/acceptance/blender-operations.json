@@ -9185,6 +9185,56 @@
         "恢复",
         "自动取景",
         "出图"
+      ],
+      "batch_replays": [
+        {
+          "date": "2026-10-23",
+          "status": "Passed",
+          "method": "Agent Computer Use",
+          "environment": "Daily Blender 5.1.1 user profile",
+          "candidate_sha256": "e73797010178657da9b950817f25a79786f2251832c9d04736c56b0dc00fa590",
+          "source_commit": "8d2f83f20c0eb251e10f02c81faae176c636ca46",
+          "scope": "Actual PCA and UNOBSTRUCTED apply; EEVEE white and Cycles transparent 1280x720 renders; Restore. Save and cold assertions use native Blender script.",
+          "report": {
+            "path": "validation/agent/reports/2026-10-23/auto-output/daily-gui/acceptance.json",
+            "sha256": "f16a20b515b9d1f13820b300eabcc60a61d20080ba435c5d82a7cd224ccac8ce",
+            "status": "Passed"
+          },
+          "screenshots": [
+            {
+              "path": "validation/agent/reports/2026-10-23/auto-output/daily-gui/runs/gui-2/screenshots/baseline.png",
+              "sha256": "586b90b0267298e4ee1345869f31184764cccb9b0aa90dd48f89d8ce29d13061"
+            },
+            {
+              "path": "validation/agent/reports/2026-10-23/auto-output/daily-gui/runs/gui-2/screenshots/occlusion-applied.png",
+              "sha256": "a733a300e5493cd26d6d3787b544b991c591dcabc2cb65599e4828febf1f64c5"
+            },
+            {
+              "path": "validation/agent/reports/2026-10-23/auto-output/daily-gui/runs/gui-2/screenshots/occlusion-transparent-dialog.png",
+              "sha256": "f2f4486330506f42581c0f6a6cb83652a003ca701b565a37ef9d10991f1d682c"
+            },
+            {
+              "path": "validation/agent/reports/2026-10-23/auto-output/daily-gui/runs/gui-2/screenshots/occlusion-transparent-render.png",
+              "sha256": "4ed55ad624b90418b843ea98fe7eef39c042587df7581e08b0879c59f0221824"
+            },
+            {
+              "path": "validation/agent/reports/2026-10-23/auto-output/daily-gui/runs/gui-2/screenshots/pca-applied.png",
+              "sha256": "222a68ade8fb4269d906944824d098db42e250f24d27a4d6989ae9c9bfe5929d"
+            },
+            {
+              "path": "validation/agent/reports/2026-10-23/auto-output/daily-gui/runs/gui-2/screenshots/pca-preview-dialog.png",
+              "sha256": "d23d40b40017deae75034fe4ba223d4cf06b049ba4080e33fb6469fbef158539"
+            },
+            {
+              "path": "validation/agent/reports/2026-10-23/auto-output/daily-gui/runs/gui-2/screenshots/pca-white-render.png",
+              "sha256": "09f37f197ae74745c4e59cf90f826cfd228283046757c21ae0a68b9c8efb7d11"
+            },
+            {
+              "path": "validation/agent/reports/2026-10-23/auto-output/daily-gui/runs/gui-2/screenshots/restored.png",
+              "sha256": "fa62781896bd438191edc2f668a00bff813bb3be96331bde879f515e4ea71202"
+            }
+          ]
+        }
       ]
     },
     {

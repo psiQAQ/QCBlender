@@ -1,6 +1,6 @@
 # 当前校验与历史整合检查
 
-2026-10-23：当前完整候选源码为 `8d2f83f`，由 [current-install.json](current-install.json) 定位；[自动取景与出图验收](acceptance/auto-output.md)记录去重 61 项定向检查、四类真实渲染、GUI、完整构建/隔离安装与冷读 Passed。日常配置安装、独立人工/科研、全量回归及远端 CI Not Run。以下记录属于各自历史候选。
+2026-10-23：当前完整候选源码为 `8d2f83f`，由 [current-install.json](current-install.json) 定位；[自动取景与出图验收](acceptance/auto-output.md)记录去重 61 项定向检查、四类真实渲染、GUI、完整构建/隔离安装与冷读 Passed。追加日常配置安装、128 个成员核对、原生自动取景/三档出图及新进程冷读 Passed；按用户要求未备份旧安装。随后日常 GUI 的两种自动取景、两次白底/透明渲染、恢复原设置及副本冷读 Passed，首轮观察脚本失败保留原记录。独立人工/科研、全量回归及远端 CI Not Run。以下记录属于各自历史候选。
 
 2026-10-16：当时安装来自 `annotation-anchor-20261016-r1`，源码 `b02c9fa`，见[圆弧中点/创建朝向验收](acceptance/annotation-anchor.md)。266 标准库、96 公开科学、实际 GUI 创建、原生半角/朝向、渲染、冷读及日常安装/原保存工程恢复 Passed。独立人工/科研接受 Not Run；该批既有教程缺图状态未变。
 

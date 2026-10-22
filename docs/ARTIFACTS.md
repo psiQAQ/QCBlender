@@ -17,14 +17,14 @@
 | 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；当前工程在 `validation/work/human/`；[当前截图与工程](../validation/工程索引.md) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
 | 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,960,273 字节，SHA-256 `e73797010178657da9b950817f25a79786f2251832c9d04736c56b0dc00fa590` |
-| 当前候选及验证 | `outputs/candidates/auto-output/build-4/`；源码 `8d2f83f`，自动取景与可恢复出图设置；完整构建、隔离安装、实际 GUI/渲染和冷读 Passed；日常安装 Not Run；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/auto-output.md) |
+| 当前候选及验证 | `outputs/candidates/auto-output/build-4/`；源码 `8d2f83f`，自动取景与可恢复出图设置；完整构建、隔离安装、实际 GUI/渲染和冷读 Passed；追加日常安装、原生及 GUI 出图/恢复、冷读 Passed；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/auto-output.md) |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
 <a id="auto-output-20261023"></a>
 ## 自动观察方向与统一出图（2026-10-23）
 
-提供当前视角、主轴取景和近似减少遮挡；统一色彩管理、背景、PNG、尺寸、三点柔光及 EEVEE/Cycles 档位，在当前场景应用并可恢复。SOP 的操作、参数截图和实际成图同步更新。去重 61 项定向测试、四类真实工程、GUI 与持久化、完整候选隔离安装 Passed，详见[验收](../validation/agent/acceptance/auto-output.md)。日常配置、独立人工/科研、全量回归和远端 CI Not Run。
+提供当前视角、主轴取景和近似减少遮挡；统一色彩管理、背景、PNG、尺寸、三点柔光及 EEVEE/Cycles 档位，在当前场景应用并可恢复。SOP 的操作、参数截图和实际成图同步更新。去重 61 项定向测试、四类真实工程、GUI 与持久化、完整候选隔离安装 Passed，详见[验收](../validation/agent/acceptance/auto-output.md)。日常配置已按追加授权安装，128 个成员核对、原生自动取景/三档出图和冷读 Passed，未备份旧安装；收据在同批 `daily/`，工程在 `outputs/projects/auto-output/daily/mo/`。随后补做日常 GUI 的两种自动取景、白底/透明渲染、恢复和副本冷读 Passed；[GUI 记录](../validation/agent/reports/2026-10-23/auto-output/daily-gui/acceptance.json)保留首轮观察脚本失败与重试证据，成图和工程在 `outputs/projects/auto-output/daily/gui-2/`。独立人工/科研、全量回归和远端 CI Not Run。
 
 工程、配套数据和渲染保留在 `outputs/projects/auto-output/`，各轮候选在 `outputs/candidates/auto-output/`；最终有效包为上表 build-4。前一有效包仍在 `outputs/candidates/current/sop-completion-20261021/`，失败候选和旧包未清理。正式收据、截图及执行脚本在 `validation/agent/reports/2026-10-23/auto-output/`；原 `.tmp/runs/auto-output/` 的记录对应其 `runs/` 子目录。
 
