@@ -9,7 +9,7 @@ const origin = 'https://psiqaq.github.io';
 export function deploymentViolations(files, permittedAssets) {
   const errors = [];
   for (const file of files) {
-    if (/^(tutorial-assets|downloads)\//.test(file) && !permittedAssets.has(file)) errors.push(`Unexpected file in public materials: ${file}`);
+    if (/^(tutorial-assets|downloads)\//.test(file) && file !== 'downloads/index.html' && !permittedAssets.has(file)) errors.push(`Unexpected file in public materials: ${file}`);
     if (/(?:^|\/)(?:P02|local|\.local|\.tmp|candidates|node_modules)(?:\/|$)/i.test(file)) errors.push(`Private deployment path: ${file}`);
     if (/\.(?:blend\d*|qcdata)(?:\/|$)/i.test(file)) errors.push(`Blender project in deployment: ${file}`);
     if (/\.zip$/i.test(file) && file !== `downloads/${mapping.publicSamples.download}`) errors.push(`Unpublished ZIP in deployment: ${file}`);

@@ -62,8 +62,8 @@ test('ZIP extractor rejects identity drift and traversal before writing member d
 
 test('deployment check rejects local data, projects, stale assets and install ZIPs', () => {
   const publicZip = `downloads/${mapping.publicSamples.download}`;
-  assert.deepEqual(deploymentViolations([publicZip, '_astro/app.js'], new Map([[publicZip, 'hash']])), []);
-  for (const file of ['P02/input.log', 'tutorial-assets/shared/data/local/P02.log', 'renders/current.blend', 'renders/current.blend1', 'renders/current.qcdata/data.bin', 'downloads/qcblender-0.1.0.zip', 'unexpected/candidate.zip', 'tutorial-assets/old.png']) {
+  assert.deepEqual(deploymentViolations([publicZip, 'downloads/index.html', '_astro/app.js'], new Map([[publicZip, 'hash']])), []);
+  for (const file of ['P02/input.log', 'tutorial-assets/shared/data/local/P02.log', 'renders/current.blend', 'renders/current.blend1', 'renders/current.qcdata/data.bin', 'downloads/qcblender-0.1.0.zip', 'downloads/unreviewed.html', 'unexpected/candidate.zip', 'tutorial-assets/old.png']) {
     assert.ok(deploymentViolations([file], new Map()).length, file);
   }
 });

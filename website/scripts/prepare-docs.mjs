@@ -81,6 +81,30 @@ export async function prepareDocs() {
   const links = mapping.pages.filter((page) => page.source).map((page) => `- [${page.title}](${siteUrl(routeFor(page))})`).join('\n');
   const index = `---\ntitle: ${JSON.stringify(navigation.title)}\nsidebar:\n  order: ${navigation.order}\n---\n\n从安装与第一张轨道图开始，再按当前任务选择专题。网页正文直接来自仓库中文教程；菜单路径、数值、单位、代码与操作顺序沿用原文。\n\n${links}\n\n## 准备教程材料\n\n[下载公开教程样本 ZIP](${siteUrl(`downloads/${mapping.publicSamples.download}`)})，解压后保留 P01、P03、P04、P05、P06 各组内部的相对路径。原教程中的数据路径相对材料根目录；在本机将样本放到 \`shared/data/public/\` 下。包内 NOTICE.md、LICENSE 和 tutorial-samples.json 说明计算条件、许可和文件身份。网页中的文件链接也可单独下载；含多个配套文件的案例建议下载整包。\n\n[查看插件版本与安装材料状态](${siteUrl('downloads/')})。插件安装包尚未公开发布，网站不提供本地候选 ZIP。\n\n<a id="local-data"></a>\n## 本机限定数据\n\nP02 的能量、振动、优化与 NBO 案例依赖本机限定的计算输入，网站和公开样本 ZIP 均不包含这些文件或 Blender 工程。请使用自己有权使用的等价数据；公开网页无法提供同一输入的逐步复现。[仓库中的本机限定案例说明](${mapping.repository}/blob/main/validation/agent/LOCAL-CASES.md)记录了范围与前提。\n`;
   await writeGenerated(generatedPath(navigation), index);
+  await writeGenerated(path.join(websiteRoot, 'src/content/docs/404.md'), `---
+title: 页面未找到
+template: splash
+pagefind: false
+editUrl: false
+head:
+  - tag: link
+    attrs:
+      rel: canonical
+      href: https://psiqaq.github.io${mapping.base}/404.html
+  - tag: meta
+    attrs:
+      property: og:url
+      content: https://psiqaq.github.io${mapping.base}/404.html
+  - tag: meta
+    attrs:
+      name: robots
+      content: noindex
+---
+
+地址可能已变更。你可以从[首页](${siteUrl()})或[教程导航](${siteUrl('docs/')})继续。
+
+Page not found. Continue from the [English home page](${siteUrl('en/')}).
+`);
 
   const productManifest = parse(await readFile(path.join(repositoryRoot, 'qcblender/blender_manifest.toml'), 'utf8'));
   const currentInstall = JSON.parse(await readFile(path.join(repositoryRoot, 'validation/agent/current-install.json'), 'utf8'));
