@@ -1,6 +1,6 @@
 # 开发演进
 
-- 2026-10-23：新增 Astro + Starlight 中英宣传页、双语安装说明及完整中文教程网站，正文沿用原 Markdown，提供中文静态搜索和共享深浅主题。网页构建、资源与链接、实际桌面/手机浏览器验证 Passed；新 Blender 图和 GitHub Pages 上线等待会话交接，尚未公开安装包。实际状态见[网站验收](../validation/agent/acceptance/website.md)。
+- 2026-10-23：新增 Astro + Starlight 中英宣传页、双语安装说明及完整中文教程网站，正文沿用原 Markdown，提供中文静态搜索和共享深浅主题。17 页构建、79 步/28 图/86 details 来源校验、实际桌面/手机浏览器、三组新 Blender 渲染及副本冷读 Passed；原 P01 已恢复。Pages 沿用现有 notes.psiqaq.cn 并启用 HTTPS，安装包未公开；部署状态见[网站验收](../validation/agent/acceptance/website.md)。
 
 - 2026-10-23：按追加要求将自动取景与出图候选安装到日常 Blender 5.1.1，未备份旧安装。128 个安装成员核对、自动启用、三种方向、三档实际渲染、恢复及保存冷读 Passed；随后日常 GUI 实际点击主轴/减少遮挡、EEVEE 白底/Cycles 透明出图、恢复原设置和副本冷读 Passed。首轮观察脚本无响应的失败及用户授权结束进程记录保留，调整观察脚本后重试通过；源码和完整包不变。独立人工/科研验收 Not Run；[日常验证](../validation/agent/acceptance/auto-output.md#日常配置安装补充)、[GUI 点击](../validation/agent/acceptance/auto-output.md#日常配置-gui-点击补充)。本地提交，不推送。
 

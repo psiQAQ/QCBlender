@@ -4,7 +4,7 @@ import { unified } from '@astrojs/markdown-remark';
 import { remarkTutorialLinks } from './scripts/tutorial-links.mjs';
 
 export default defineConfig({
-  site: 'https://psiQAQ.github.io',
+  site: 'https://notes.psiqaq.cn',
   base: '/QCBlender',
   trailingSlash: 'always',
   output: 'static',

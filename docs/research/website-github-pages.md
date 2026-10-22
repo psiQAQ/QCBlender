@@ -17,10 +17,10 @@
 ## 内容与发布边界
 
 - 中文正文来源为现有 SOP、9 篇专题和用户操作索引，生成内容不提交第二份可编辑副本。Markdown 链接在 AST 中映射；原行内路径、参数与代码保持。
-- 首版沿用 79 个步骤、27 个图片引用、86 个 details。Starlight 原生支持 details 内 Markdown；实际迁移仍要验证相对链接和锚点。
+- 初始来源为 79 个步骤、27 个图片引用、86 个 details；最终同步 main 的自动出图教程后图片为 28 个。Starlight 原生支持 details 内 Markdown；迁移检查逐篇比对原正文、相对链接和锚点。
 - 公开输入从冻结样本 ZIP 恢复并核对 SHA-256，保留 LICENSE、NOTICE 和来源清单。P02、本地安装候选、科研工程与配套数据不进入站点产物。
 - 2026-10-23 查询仓库为 public、默认分支 main、has_pages=false，公开 Releases 列表为空。因此网站安装页展示 Alpha 状态，不能提供未公开候选的假下载。
-- 默认项目地址 https://psiQAQ.github.io/QCBlender/，静态资源和内部导航都需要 /QCBlender/ 前缀。无需服务器、账户、统计脚本或自定义域名。
+- 启用时 Pages API 确认继承账户现有域名 `notes.psiqaq.cn`；默认项目地址 https://psiQAQ.github.io/QCBlender/ 实际返回 301 到 https://notes.psiqaq.cn/QCBlender/。沿用该域名，启用本站 HTTPS；静态资源和内部导航保留 /QCBlender/ 前缀。无需新增服务器、账户、统计脚本或 DNS 配置。
 - GitHub Actions 构建上传静态 artifact，Pages 部署 job 使用 github-pages environment、pages:write 和 id-token:write。PR 仅检查，main 才部署。
 - Pagefind 按语言建立索引；中文分词依赖 extended release，须在真实构建产物上检索中文词，不能只检查搜索框存在。
 
@@ -35,6 +35,7 @@
 | 内置静态搜索 | [Starlight search](https://starlight.astro.build/guides/site-search/) |
 | 中文分词与 extended release | [Pagefind multilingual](https://pagefind.app/docs/multilingual/) |
 | Pages 部署权限、artifact 与 environment | [GitHub custom workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages) |
+| 项目站继承用户站自定义域名 | [Using a custom domain across multiple repositories](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages#using-a-custom-domain-across-multiple-repositories) |
 | VitePress 定位与自定义主题 | [VitePress introduction](https://vitepress.dev/guide/what-is-vitepress) |
 | 固定版本与兼容范围 | [Astro npm metadata](https://registry.npmjs.org/astro/7.4.2)、[Starlight npm metadata](https://registry.npmjs.org/@astrojs/starlight/0.42.6) |
 

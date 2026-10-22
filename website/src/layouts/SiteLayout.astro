@@ -12,7 +12,7 @@ const title = page === 'home' ? t.title : `${t.downloadTitle} — QCBlender`;
 const description = page === 'home' ? t.description : t.downloadDescription;
 const chinesePath = page === 'home' ? '' : 'downloads/';
 const englishPath = page === 'home' ? 'en/' : 'en/downloads/';
-const site = Astro.site || new URL('https://psiQAQ.github.io');
+const site = Astro.site || new URL('https://notes.psiqaq.cn');
 const canonical = new URL(sitePath(locale === 'en' ? englishPath : chinesePath), site);
 const chineseUrl = new URL(sitePath(chinesePath), site);
 const englishUrl = new URL(sitePath(englishPath), site);

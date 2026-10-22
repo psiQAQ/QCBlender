@@ -90,11 +90,11 @@ head:
   - tag: link
     attrs:
       rel: canonical
-      href: https://psiqaq.github.io${mapping.base}/404.html
+      href: https://notes.psiqaq.cn${mapping.base}/404.html
   - tag: meta
     attrs:
       property: og:url
-      content: https://psiqaq.github.io${mapping.base}/404.html
+      content: https://notes.psiqaq.cn${mapping.base}/404.html
   - tag: meta
     attrs:
       name: robots

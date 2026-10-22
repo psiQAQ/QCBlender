@@ -5,7 +5,7 @@ import { parse } from 'parse5';
 import { generatedPath, mapping, repositoryRoot, websiteRoot } from './tutorial-links.mjs';
 import { sha256, sourceMetrics } from './prepare-docs.mjs';
 
-const origin = 'https://psiqaq.github.io';
+const origin = 'https://notes.psiqaq.cn';
 export function deploymentViolations(files, permittedAssets) {
   const errors = [];
   for (const file of files) {
@@ -116,7 +116,7 @@ export async function verifySite(dist = path.join(websiteRoot, 'dist')) {
     const h1Count = (document.content.match(/<h1(?:\s|>)/g) ?? []).length;
     require(h1Count === 1, `${page.slug}: expected one page H1, got ${h1Count}`);
   }
-  require(totals.steps === 79 && totals.images === 27 && totals.details === 86,
+  require(totals.steps === 79 && totals.images === 28 && totals.details === 86,
     `Tutorial inventory changed: ${JSON.stringify(totals)}`);
 
   const permittedAssets = new Map(report.images.map((entry) => [entry.path, entry.sha256]));
