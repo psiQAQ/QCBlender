@@ -19,7 +19,7 @@ import numpy as np
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--output-dir', type=Path, required=True)
-parser.add_argument('--case', choices=('mo', 'esp', 'fog'), required=True)
+parser.add_argument('--case', choices=('atoms', 'mo', 'esp', 'fog'), required=True)
 parser.add_argument('--reopen', action='store_true')
 args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
 OUT = args.output_dir.resolve()
@@ -88,17 +88,26 @@ def main():
         assert len(scene.qc_output.rig_collection.objects) == 3
         record['cold_reopen'] = 'Passed'
         return record
-    original_arrays = snapshot()
     area = next(area for area in bpy.context.screen.areas if area.type == 'VIEW_3D')
     region = next(region for region in area.regions if region.type == 'WINDOW')
-    if args.case == 'mo':
+    if args.case == 'atoms':
+        target = next(obj for obj in scene.objects if obj.get('qc_view_kind') == 'atoms')
+        for obj in scene.objects:
+            if obj.get('qc_view_kind') and obj != target:
+                obj.hide_render = True
+    elif args.case == 'mo':
         target = next(obj for obj in scene.objects if obj.get('qc_view_kind') == 'field')
     elif args.case == 'esp':
         target = next(obj for obj in scene.objects if obj.get('qc_color_source') and
                       obj.get('qc_view_kind') == 'field')
     else:
         target = next(obj for obj in scene.objects if obj.get('qc_view_kind') == 'fog')
+        # The spatial tutorial also contains slices and contours. Isolate this case's subject.
+        for obj in scene.objects:
+            if obj.get('qc_view_kind') and obj != target and obj.get('qc_view_kind') != 'atoms':
+                obj.hide_render = True
     select([target])
+    original_arrays = snapshot()
     baseline = output_api._settings(scene)
     original_camera, original_world = scene.camera, scene.world
     light_state = {obj: obj.hide_render for obj in scene.objects if obj.type == 'LIGHT'}
@@ -201,6 +210,15 @@ def main():
             bpy.data.lights.remove(data)
             bpy.data.collections.remove(collection)
     apply('PCA', 'STANDARD', 'TRANSPARENT')
+    if args.case == 'esp':
+        # Exercise the existing manual legend-rotation control after automatic orientation.
+        rotation_socket = from_socket(modifier.node_group, 'Legend Rotation')
+        local_rotation = target.matrix_world.to_quaternion().inverted() @ scene.camera.matrix_world.to_quaternion()
+        modifier[rotation_socket.identifier] = tuple(local_rotation.to_euler())
+        target.update_tag()
+        bpy.context.view_layer.update()
+        apply('PCA', 'STANDARD', 'WHITE')
+        renders.append(render('esp-readable-legend'))
     assert snapshot() == original_arrays
     importlib.import_module(MODULE + '.blender.project').save_project(OUT / (args.case + '.blend'))
     return {'status': 'Passed', 'blender': bpy.app.version_string, 'case': args.case,

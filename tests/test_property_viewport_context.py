@@ -186,6 +186,22 @@ class PropertyViewportContext(unittest.TestCase):
         self.assertEqual(len(linked), 1)
         self.assertIs(linked[0].rotation_quaternion, self.large.view.view_rotation)
 
+    def test_render_output_uses_viewport_selection_while_object_properties_keeps_pin(self):
+        path = ROOT / 'qcblender/blender/output_ui.py'
+        function = next(node for node in ast.parse(path.read_text(encoding='utf-8')).body
+                        if isinstance(node, ast.FunctionDef) and node.name == 'output_context')
+        self.namespace['contextmanager'] = contextmanager
+        exec(compile(ast.Module(body=[function], type_ignores=[]), str(path), 'exec'), self.namespace)
+        self.properties.spaces.active.context = 'RENDER'
+        with self.namespace['output_context'](self.context) as context:
+            self.assertIs(context.area, self.large)
+            self.assertIs(self.helper.target_object(context), self.active)
+            self.assertEqual(context.selected_objects, [self.active, self.pinned])
+        self.properties.spaces.active.context = 'OBJECT'
+        with self.namespace['output_context'](self.context) as context:
+            self.assertIs(context.area, self.properties)
+            self.assertIs(self.helper.target_object(context), self.pinned)
+
     def test_viewport_camera_retains_multiple_selected_views(self):
         cls, operator, fitted, _ = self.camera()
         self.context.area, self.context.region = self.small, self.small.region

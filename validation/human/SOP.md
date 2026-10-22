@@ -248,11 +248,11 @@ N 侧栏依次包含下列五区；**当前 QC 对象（Current QC Object）** �
 
 - 在文件管理器中，在材料根目录创建 `work/human/P01/` 和 `work/human/exports/`。
 - 回到 Blender，选中 **QC orbital_amplitude**，重新打开该对象属性，点击 **对象属性（Object Properties） → 创建视图与工具（Create Views and Tools） → 相机（Camera） → 应用 QC 出图方案（Apply QC Output）**。也可从 **渲染属性（Render Properties） → QC 出图（QC Output）** 打开同一操作。
-- 在弹窗中选择 **观察方向：主轴取景（Principal Axes）**、**每侧留白：0.05**、**出图质量：预览（EEVEE，64 采样）**、**宽度 1280、高度 720、分辨率百分比 100%**、**背景：白色（White）**，确认应用。
-- 应出现新的正交相机，场景切换到三盏 QC 柔光与中性环境光；原灯光、世界和输出设置保留供恢复。截取设置弹窗，保存为 `human/screenshots/P01-output.png`。
+- 在弹窗中选择 **观察方向：主轴取景（Principal Axes）**、**每侧边距：0.05**、**出图质量：预览（EEVEE，64 采样）**、**宽度 1280、高度 720、分辨率百分比 100%**、**背景：白色（White）**。截取设置弹窗，保存为 `human/screenshots/P01-output.png`。
 
 ![自动观察方向、质量和背景设置](screenshots/P01-output.png)
 
+- 确认应用，应出现新的正交相机，场景切换到三盏 QC 柔光与中性环境光；原灯光、世界和输出设置保留供恢复。
 - 在 3D 视图（3D Viewport）按小键盘 `0` 查看相机范围，整个轨道应在画面内；没有小键盘时选择 **视图（View） → 摄像机（Cameras） → 活动摄像机（Active Camera）**。
 - 若方向不合适，先转动三维视图，再次应用方案并选择 **当前视角（Current View）**；重复应用会更新同一套 QC 相机和灯光。只想创建相机时，使用 **创建取景相机（Create Framed Camera）**，它不调整灯光和输出设置。
 

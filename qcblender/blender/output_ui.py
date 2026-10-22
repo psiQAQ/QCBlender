@@ -1,12 +1,24 @@
 """Explicit, undoable output setup using native scene settings as the authority."""
+from contextlib import contextmanager
 import bpy
 from bpy.props import BoolProperty, EnumProperty, FloatProperty, FloatVectorProperty, IntProperty
 
 from ..framing import fit_orthographic
 from ..i18n import error_text, ui_layout
-from .camera import (QCBLENDER_OT_create_framed_camera, configure_camera,
-                     framing_inputs, selected_views, subject_points)
+from .camera import configure_camera, framing_inputs, selected_views, subject_points
 from .output_settings import apply_output, restore_output, validate_output
+from .viewport_context import viewport_context
+
+
+@contextmanager
+def output_context(context):
+    """Render Properties is scene-wide; Object Properties keeps its explicit pin."""
+    if context.area.type == 'PROPERTIES' and context.area.spaces.active.context == 'RENDER':
+        viewport = viewport_context(context)
+        with context.temp_override(window=viewport.window, area=viewport.area, region=viewport.region):
+            yield bpy.context
+    else:
+        yield context
 
 
 class QCBLENDER_OT_apply_output(bpy.types.Operator):
@@ -43,7 +55,14 @@ class QCBLENDER_OT_apply_output(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return QCBLENDER_OT_create_framed_camera.poll(context)
+        try:
+            with output_context(context) as inputs:
+                viewport_context(inputs)
+                selected_views(inputs)
+        except (ValueError, ReferenceError, AttributeError) as error:
+            cls.poll_message_set(error_text(error))
+            return False
+        return True
 
     def invoke(self, context, event):
         render = context.scene.render
@@ -88,9 +107,10 @@ class QCBLENDER_OT_apply_output(bpy.types.Operator):
                 previous = (camera.matrix_world.copy(), camera.rotation_mode, camera.data.type,
                             camera.data.ortho_scale, camera.data.clip_end)
             aspect = self.resolution_x * scene.render.pixel_aspect_x / (self.resolution_y * scene.render.pixel_aspect_y)
-            points, subject, basis, rotation, message = framing_inputs(context, self.direction, aspect)
-            if not len(subject):
-                subject = subject_points(context, selected_views(context))
+            with output_context(context) as inputs:
+                points, subject, basis, rotation, message = framing_inputs(inputs, self.direction, aspect)
+                if not len(subject):
+                    subject = subject_points(inputs, selected_views(inputs))
             if not len(subject):
                 subject = points
             location, scale, clip_end = fit_orthographic(points, basis, aspect, self.margin)
