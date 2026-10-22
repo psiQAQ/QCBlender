@@ -7,6 +7,7 @@
 | 要查什么 | 入口 |
 | --- | --- |
 | 界面入口与日常操作 | [用户指南](USER_GUIDE.md)；逐步操作见[人工教程](../validation/human/SOP.md) |
+| 宣传与教程网站 | [网站维护与预览](../website/README.md)、[GitHub Pages 方案](research/website-github-pages.md) |
 | 文件支持、物理量及科学限制 | [支持范围](VALIDATION.md) |
 | 外部分析文件要求 | [外部结果导入](EXTERNAL_ANALYSIS_IMPORT.md) |
 | 真实案例的计算条件与重建 | [复杂案例](COMPLEX_EXAMPLES.md) |
