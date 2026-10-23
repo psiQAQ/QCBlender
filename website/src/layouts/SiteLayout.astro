@@ -1,0 +1,57 @@
+---
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import ThemeInit from '../components/ThemeInit.astro';
+import { copy, sitePath, type Locale } from '../data/copy';
+import orbital from '../assets/showcase/orbital.png';
+import '../styles/site.css';
+interface Props { locale: Locale; page?: 'home' | 'downloads'; }
+const { locale, page = 'home' } = Astro.props;
+const t = copy[locale];
+const title = page === 'home' ? t.title : `${t.downloadTitle} — QCBlender`;
+const description = page === 'home' ? t.description : t.downloadDescription;
+const chinesePath = page === 'home' ? '' : 'downloads/';
+const englishPath = page === 'home' ? 'en/' : 'en/downloads/';
+const site = Astro.site || new URL('https://notes.psiqaq.cn');
+const canonical = new URL(sitePath(locale === 'en' ? englishPath : chinesePath), site);
+const chineseUrl = new URL(sitePath(chinesePath), site);
+const englishUrl = new URL(sitePath(englishPath), site);
+const socialImage = new URL(orbital.src, site);
+---
+<!doctype html>
+<html lang={t.lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f7f7f2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#171b1c" media="(prefers-color-scheme: dark)" />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href={sitePath('favicon.svg')} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="zh-CN" href={chineseUrl} />
+    <link rel="alternate" hreflang="en" href={englishUrl} />
+    <link rel="alternate" hreflang="x-default" href={chineseUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="QCBlender" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={locale === 'zh' ? 'zh_CN' : 'en_US'} />
+    <meta property="og:locale:alternate" content={locale === 'zh' ? 'en_US' : 'zh_CN'} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content={String(orbital.width)} />
+    <meta property="og:image:height" content={String(orbital.height)} />
+    <meta property="og:image:alt" content={t.heroImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <ThemeInit />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t.skip}</a>
+    <SiteHeader locale={locale} page={page} />
+    <main id="main"><slot /></main>
+    <SiteFooter locale={locale} />
+  </body>
+</html>

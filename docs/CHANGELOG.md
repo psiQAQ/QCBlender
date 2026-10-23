@@ -2,6 +2,8 @@
 
 - 2026-10-23：实现 IRC Mayer 独立逐键着色、整路径固定色域、手动范围及键级下限，原子筛选与切步共享来源编号校验，关闭恢复原表示；保留全部步骤 CSV。新增 P04 验证脚本与教程第 6 步。定向检查、真实 P04、渲染、完整包及 131 成员隔离安装、实际 GUI 开关/阈值/切步/撤销/菜单重做、便携工程冷读 Passed；图例补充位置/旋转控件，并从分子自动方向计算中排除。候选源码 `4b90967`；日常安装、独立人工/科研、全量回归及远端 CI Not Run。表面距离投影与 AICD 按真实参照前置保持待办。见[验收](../validation/agent/acceptance/mayer.md)和[本批规格](../.scratch/scientific-displays-20261023/spec.md)。本地合入归档，不推送。
 
+- 2026-10-23：新增 Astro + Starlight 中英宣传页、双语安装说明及完整中文教程网站，正文沿用原 Markdown，提供中文静态搜索和共享深浅主题。17 页构建、79 步/28 图/86 details 来源校验、实际桌面/手机浏览器、三组新 Blender 渲染及副本冷读 Passed；原 P01 已恢复。Pages 已在 [notes.psiqaq.cn/QCBlender](https://notes.psiqaq.cn/QCBlender/) 上线并启用 HTTPS，源码提交 `42566fb` 的 Website 构建和部署 success，线上中文搜索、404 与公开样本哈希通过。插件候选 CI 的 3 项 stdlib 失败单独保留，安装包未公开；证据与本地归档入口见[网站验收](../validation/agent/acceptance/website.md)。
+
 - 2026-10-23：按追加要求将自动取景与出图候选安装到日常 Blender 5.1.1，未备份旧安装。128 个安装成员核对、自动启用、三种方向、三档实际渲染、恢复及保存冷读 Passed；随后日常 GUI 实际点击主轴/减少遮挡、EEVEE 白底/Cycles 透明出图、恢复原设置和副本冷读 Passed。首轮观察脚本无响应的失败及用户授权结束进程记录保留，调整观察脚本后重试通过；源码和完整包不变。独立人工/科研验收 Not Run；[日常验证](../validation/agent/acceptance/auto-output.md#日常配置安装补充)、[GUI 点击](../validation/agent/acceptance/auto-output.md#日常配置-gui-点击补充)。本地提交，不推送。
 
 - 2026-10-23：新增主轴取景、近似减少遮挡和当前场景的统一出图方案，覆盖色彩、背景、PNG、尺寸、三点柔光、EEVEE/Cycles 档位及原设置恢复。修复实际运行发现的动态 Cycles 枚举、Scene 根集合灯光引用和渲染属性上下文问题。去重 61 项定向测试、四类真实取景与渲染、科学数组保护、GUI 撤销/重做/恢复、冷读、完整包与隔离安装 Passed；SOP 参数截图及 1280×720 成图已更新。源码 `8d2f83f`，日常安装、独立人工/科研和远端 CI Not Run。图例方向沿用已有控制，近似遮挡不计算透明光学效果；[验收](../validation/agent/acceptance/auto-output.md)、[产物与本地归档](ARTIFACTS.md#auto-output-20261023)。本地提交，不推送。

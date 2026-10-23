@@ -1,0 +1,43 @@
+---
+import { copy, type Locale } from '../data/copy';
+interface Props { locale?: Locale; }
+const { locale = 'zh' } = Astro.props;
+const t = copy[locale];
+---
+<label class="qc-theme">
+  <svg viewBox="0 0 20 20" width="18" height="18" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M10 1v2m0 14v2M1 10h2m14 0h2M3.6 3.6 5 5m10 10 1.4 1.4M3.6 16.4 5 15M15 5l1.4-1.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+  <span class="sr-only">{t.theme}</span>
+  <select data-qc-theme aria-label={t.theme}>
+    <option value="auto">{t.auto}</option>
+    <option value="light">{t.light}</option>
+    <option value="dark">{t.dark}</option>
+  </select>
+</label>
+<script>
+  type Theme = 'light' | 'dark' | 'auto';
+  const parseTheme = (value: unknown): Theme => value === 'dark' || value === 'light' ? value : 'auto';
+  function savedTheme(): Theme {
+    try { return parseTheme(localStorage.getItem('starlight-theme')); } catch { return 'auto'; }
+  }
+  const media = matchMedia('(prefers-color-scheme: light)');
+  function applyTheme(theme: Theme) {
+    document.documentElement.dataset.theme = theme === 'auto' ? (media.matches ? 'light' : 'dark') : theme;
+    document.querySelectorAll<HTMLSelectElement>('[data-qc-theme]').forEach(select => { select.value = theme; });
+  }
+  applyTheme(savedTheme());
+  document.querySelectorAll<HTMLSelectElement>('[data-qc-theme]').forEach(select => {
+    select.addEventListener('change', () => {
+      const theme = parseTheme(select.value);
+      try { localStorage.setItem('starlight-theme', theme === 'auto' ? '' : theme); } catch {}
+      applyTheme(theme);
+    });
+  });
+  media.addEventListener('change', () => { if (savedTheme() === 'auto') applyTheme('auto'); });
+  window.addEventListener('storage', event => { if (event.key === 'starlight-theme') applyTheme(savedTheme()); });
+</script>
+<style>
+  .qc-theme { display: inline-flex; align-items: center; gap: .3rem; color: var(--qc-muted); }
+  select { cursor: pointer; border: 0; border-radius: .3rem; color: var(--qc-text); background: var(--qc-bg); font: inherit; font-size: .78rem; padding: .45rem .15rem; max-width: 7rem; }
+  select:focus-visible { outline: 2px solid var(--qc-accent); outline-offset: 3px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+</style>

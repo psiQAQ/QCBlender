@@ -1,0 +1,10 @@
+---
+import Brand from './Brand.astro';
+import { sitePath } from '../data/copy';
+---
+<div class="docs-brand"><Brand href={sitePath()} /><span class="docs-label">中文教程</span></div>
+<style>
+  .docs-brand { display: flex; align-items: center; gap: .8rem; min-width: 0; --qc-accent: var(--sl-color-text-accent); }
+  .docs-label { font-size: .66rem; color: var(--sl-color-gray-2); border-inline-start: 1px solid var(--sl-color-gray-5); padding-inline-start: .8rem; white-space: nowrap; }
+  @media (max-width: 34rem) { .docs-label { display: none; } .docs-brand :global(.qc-brand) { font-size: 1.12rem; } }
+</style>
