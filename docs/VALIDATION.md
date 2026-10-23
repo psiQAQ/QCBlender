@@ -1,6 +1,6 @@
 # 支持范围与验证入口
 
-更新：2026-10-11。当前 0.1.0 Alpha 教程材料在 [validation](../validation/README.md)，安装候选与原始报告由 [current-install.json](../validation/agent/current-install.json) 定位。环境为 Windows x64、Blender 5.1.1、CPython 3.13.9、NumPy 2.3.4、OpenVDB 13。技术流程见 [Agent 校验](../validation/agent/README.md)；独立使用者及科研接受仍依据实际反馈确认。
+更新：2026-10-23。当前 0.1.0 Alpha 教程材料在 [validation](../validation/README.md)，安装候选与原始报告由 [current-install.json](../validation/agent/current-install.json) 定位。环境为 Windows x64、Blender 5.1.1、CPython 3.13.9、NumPy 2.3.4、OpenVDB 13。技术流程见 [Agent 校验](../validation/agent/README.md)；独立使用者及科研接受仍依据实际反馈确认。
 
 本批源码 `7dc0d11` 的技术验收见[主干维护验证](../validation/agent/acceptance/upstream-20261011.md)：181 基础、130 科学、真实节点身份、三种色带的有效域/图例/CSV、多 Cube、默认画面、隔离及日常安装与实际 GUI Passed；独立人工与科研接受 Not Run。标准标量/电荷材质支持 QC Default、Viridis、Cividis，源构型检查保留科学身份并排除 UI 派生原子计数。参考子模块更新不增加运行依赖。
 
@@ -11,6 +11,7 @@
 | FCHK | IOData 适配；坐标/原子顺序、SP、球谐/笛卡尔、Alpha/Beta、占据、轨道能量、可用 SCF 密度和性质保留。FCHK 本身不证明计算收敛 |
 | Log | cclib 性质 + 自有能量事件适配；G03/G09/G16 样本、Link1 job、正常/异常/截断状态分别处理。多构型 job 不自动把电荷/偶极/模式绑到最后构型 |
 | XYZ | 标准有限三坐标Å；单帧或同元素顺序多帧离散查看；extxyz、PBC、额外列、dummy中心及截断显式拒绝 |
+| 表面距离投影 | Multiwfn 未缩放 Å 三列结果、扫描声明/日志、生成朝向静态构型；独立二维网格及有效/未命中/未知三态。真实 vdW 数值参照、GUI、最终包及冷读见[验收](../validation/agent/acceptance/surface-projection.md)；不计算新表面，不自动证明任意来源同源，不支持动态参考 |
 | Cube | 单/多 MO、交错、非立方斜轴、坐标单位、损坏数据检查；普通标量保持未知，可显式声明内置量或外部物理量名称/单位，不做猜测或隐式换算 |
 | 内置场 | 实值、非周期、全电子 HF/DFT；RHF/UHF/ROHF、UB3LYP 实例。MO、总/Alpha/Beta/自旋密度、核与电子密度 ESP |
 | 基组 | SP、球谐/笛卡尔 d/f 和实际 nMO<nAO 回归；g 的 Python 基组不变量另行检查。h 及以上、ECP、幽灵中心、广义/复轨道显式拒绝 |

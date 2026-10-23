@@ -1,7 +1,7 @@
 # 03 表面距离投影导入与显示
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Blocked by: 02
 
 ## Delivery
@@ -14,6 +14,7 @@ Blocked by: 02
 
 ## Comments
 
+
 2026-10-23：因真实参照前置未完成，适配器尚未实施。
 
 2026-10-23：02 已 resolved，真实 Ru vdW 输出及独立点表齐备，材料阻塞解除。实现仍 pending；应显式读取 XY 模式与一次性偏移，复用本批文本精度界与三态约束，不将本例确定的未命中底值规则推广到未知来源。
@@ -21,3 +22,5 @@ Blocked by: 02
 2026-10-23：用户明确授权实现、定向测试、实际 GUI、保存冷重开及通过后本地提交，不推送；AICD 保留阻塞。使用当前检出的独立分支 `feat/surface-distance-projection`，保留既有研究和子模块改动；串行实现与 Blender 验证，不增加并行工作树。新增结果以独立二维 Dataset 保存，复用静态参考、等值线、色标、CSV 和便携工程能力。
 
 2026-10-23：实现及 21 项定向检查、真实 2,501 点/61 原子、原生渲染、GUI 导入与设置/撤销/重做/取消/点值、保存后新进程冷读 Passed。GUI 发现的点值面板刷新已修复，中文类型与即时刷新在冷重开窗口复验。为满足“验证后提交”且保留主检出其他修改，先提交已验证源码，再将任务分支移到干净工作树完成工具强制要求的完整构建、隔离安装和最终包冷读；完成后按仓库流程合入归档。证据入口为 `validation/agent/reports/2026-10-23/surface-projection/acceptance.json`。新增第 10 专题及网站映射，18 页构建、1,221 链接/资源检查 Passed；未部署。
+
+2026-10-23 最终结果：源码 `368a4ab` 已本地提交。因研究索引同文件含其他未提交修改，Git 安全拒绝切换主检出；原位保留全部其他修改，在 `build/surface-distance-projection` 干净工作树构建同一提交。完整 9 节点资产重建、134 安装成员核对、实际安装模块原生案例/渲染/CSV/便携保存和新进程冷读 Passed，最终 ZIP SHA-256 `53b412c62fda4503ad3d1054e949ee2b7238b3aaf78978cb7037d0bd6bc4f3bf`。GUI 源码摘要与 111 个包内 Python 文件一致，当前材料入口已更新；日常安装仍为 Mayer 候选。03 resolved，AICD 04 pending / 05 blocked 保持。只本地合入归档，不推送。

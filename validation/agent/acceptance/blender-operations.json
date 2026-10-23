@@ -9408,7 +9408,10 @@
             "path": "validation/agent/reports/2026-10-23/surface-projection/runs/gui/screenshots/04-cold-refresh.png",
             "sha256": "0ff9c820098f9a0610e8018d683049655edd0b940b70aac4fce4db1dca98e08e"
           }
-        ]
+        ],
+        "source_commit": "368a4ab5cec47dd2514778a2ee7babd4114f96b9",
+        "candidate_sha256": "53b412c62fda4503ad3d1054e949ee2b7238b3aaf78978cb7037d0bd6bc4f3bf",
+        "candidate_binding": "Exact source file hashes match package. Source GUI exercised new interactions; rebuilt assets exercised by final installed native case/render/cold read. No claim of a second installed GUI click run."
       },
       "implementation_fingerprints": {
         "qcblender/surface_projection.py": "8bf3d768c5499beeddc8816594d94a2557a43894fd5e1cf6b744022f1bc26023",

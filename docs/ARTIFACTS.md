@@ -17,17 +17,19 @@
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
 | 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；当前工程在 `validation/work/human/`；[当前截图与工程](../validation/工程索引.md) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
-| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,969,825 字节，SHA-256 `13febd149e43b9ba687ab1de383fb7ca2bdf3bb2c7f1b6dca3b23fa0dfb092ff` |
-| 当前候选及验证 | `outputs/candidates/mayer/build-1/`；源码 `4b90967`，增加 IRC Mayer 逐键着色；完整构建、隔离安装、实际 GUI/渲染和冷读 Passed；追加日常安装、实际 GUI 和保存冷读 Passed；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/mayer.md) |
+| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,984,291 字节，SHA-256 `53b412c62fda4503ad3d1054e949ee2b7238b3aaf78978cb7037d0bd6bc4f3bf` |
+| 当前候选及验证 | `outputs/candidates/surface-projection/build-2/`；源码 `368a4ab`，增加表面距离投影；定向检查、实际源码 GUI、完整构建及 134 成员隔离安装、最终包渲染与冷读 Passed；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/surface-projection.md)。日常安装仍为 Mayer `13febd…`，新包日常安装 Not Run |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
 <a id="surface-projection-20261023"></a>
 ## 表面距离投影适配器（2026-10-23）
 
-真实 Ru vdW 距离图的二维 Dataset、三态、原子 XY 投影、Viridis/Cividis、等值线、点值及全量 CSV 已实现。[验收](../validation/agent/acceptance/surface-projection.md)与 `validation/agent/reports/2026-10-23/surface-projection/acceptance.json` 是本批结果入口。源码定向 21 项、实际原生渲染、GUI 导入/设置/撤销重做/取消/点值及保存冷重开 Passed；最终包构建与隔离安装待补，当前安装入口仍保持上表已验证 Mayer 包。
+真实 Ru vdW 距离图的二维 Dataset、三态、原子 XY 投影、Viridis/Cividis、等值线、点值及全量 CSV 已实现。[验收](../validation/agent/acceptance/surface-projection.md)与 `validation/agent/reports/2026-10-23/surface-projection/acceptance.json` 是本批结果入口。源码定向 21 项、GUI 导入/设置/撤销重做/取消/点值及保存冷重开、最终完整包构建与 134 成员隔离安装、真实原生运行/渲染/冷读 Passed；当前安装入口已更新为上表最终包。
 
-GUI 便携工程在 `outputs/projects/surface-projection/gui/projection-gui.blend` 及配套 `.qcdata/`；本批原始收据、日志、截图和工作路径的保全映射为同批报告 `evidence-map.json`。源码验证临时工作保留在 `.tmp/runs/projection/`，最终安装案例完成后从本入口定位。复验工具为 `tools/verify_surface_projection.py`；[第 10 专题](../validation/human/topics/10-surface-projection.md)解释真实本机案例与输入契约。AICD 保持原材料阻塞，独立人工/科研、日常安装和远端发布 Not Run。
+GUI 便携工程在 `outputs/projects/surface-projection/gui/projection-gui.blend` 及配套 `.qcdata/`；最终安装案例的工程、数据、渲染 `projection.png` 和 CSV 在 `outputs/projects/surface-projection/installed/`。本批原始收据、日志、截图和工作路径的保全映射为同批报告 `evidence-map.json`。源码验证缓存保留在 `.tmp/runs/projection/`；共用 wheels 与输入保留，未执行额外旧包或历史产物清理。复验工具为 `tools/verify_surface_projection.py`；[第 10 专题](../validation/human/topics/10-surface-projection.md)解释真实本机案例与输入契约。AICD 保持原材料阻塞，独立人工/科研、日常安装和远端发布 Not Run。
+
+本地归档入口为 `archive/2026-10-23/feat/surface-distance-projection`（实现）与 `archive/2026-10-23/build/surface-distance-projection`（完整包证据）；工作树保全及正常移除收据在同批报告 `finish/`。主检出原有研究及子模块修改继续保留。
 
 <a id="projection-reference-20261023"></a>
 ## 表面距离投影真实参照（2026-10-23）
@@ -37,7 +39,7 @@ GUI 便携工程在 `outputs/projects/surface-projection/gui/projection-gui.blen
 <a id="mayer-20261023"></a>
 ## IRC Mayer 逐键着色（2026-10-23）
 
-产品源码 `4b90967`，当前完整候选为上表 Mayer build-1。P04 六原子对、三步联动、阈值/原子筛选、18 个导出数值及原数组保护、关闭恢复、实际 GUI 撤销/菜单重做、渲染和保存冷重开 Passed；[验收](../validation/agent/acceptance/mayer.md)与 `validation/agent/reports/2026-10-23/mayer/acceptance.json` 定位原始证据。复验入口为 `tools/verify_mayer_display.py`。
+产品源码 `4b90967`，当批完整候选在 `outputs/candidates/mayer/build-1/`，仍是已验证的日常安装身份。P04 六原子对、三步联动、阈值/原子筛选、18 个导出数值及原数组保护、关闭恢复、实际 GUI 撤销/菜单重做、渲染和保存冷重开 Passed；[验收](../validation/agent/acceptance/mayer.md)与 `validation/agent/reports/2026-10-23/mayer/acceptance.json` 定位原始证据。复验入口为 `tools/verify_mayer_display.py`。
 
 工程及 `.qcdata` 在 `outputs/projects/irc-mayer/installed/`、`outputs/projects/irc-mayer/gui/`；前者保留最终渲染 `mayer.png`。测试配置及可重建缓存在 `.tmp/runs/mayer/`，早期成图和失败日志保留。日常配置已按追加授权安装同一候选，实际 GUI、便携保存与冷读 Passed；补充工程位于 `outputs/projects/irc-mayer/daily/`，证据在同批报告 `daily/acceptance.json`，旧安装及偏好备份在 `.local/blender/backups/mayer-20261023/`。教程第 6 步及实际截图已更新。本地 ff-only 合入后以 `archive/2026-10-23/feat/irc-mayer-color` 归档，工作树保全及移除记录在同批 `finish/`。原调研修改和无关工作树保留，不推送。
 

@@ -1,6 +1,6 @@
 # 开发演进
 
-- 2026-10-23：实现表面距离投影适配器，以真实 Multiwfn 日志和扫描声明约束单位、网格及一次性 XY 偏移；保留有效/未命中/未知三态、原子投影、色表与等值线、逐点读取和全量 CSV。21 项定向、原生渲染、实际 GUI、便携保存冷重开 Passed；GUI 发现的点值刷新已修复并复验。完整包及隔离安装待补，日常安装未变；AICD 继续阻塞。见[验收](../validation/agent/acceptance/surface-projection.md)和[产物入口](ARTIFACTS.md#surface-projection-20261023)。
+- 2026-10-23：实现表面距离投影适配器，以真实 Multiwfn 日志和扫描声明约束单位、网格及一次性 XY 偏移；保留有效/未命中/未知三态、原子投影、色表与等值线、逐点读取和全量 CSV。21 项定向、实际 GUI、便携保存冷重开 Passed；GUI 发现的点值刷新已修复并复验。源码 `368a4ab` 的完整包、134 成员隔离安装、最终包真实案例/渲染/冷读 Passed，当前包入口已更新；日常安装未变，独立人工/科研及远端 CI Not Run，AICD 继续阻塞。新增第 10 专题并通过本地网站构建/链接检查，未部署。见[验收](../validation/agent/acceptance/surface-projection.md)和[产物入口](ARTIFACTS.md#surface-projection-20261023)。
 
 - 2026-10-23：按追加授权生成官方 Ru 构型的真实 Multiwfn vdW 距离投影，2,501 点与独立球面求交/离散采样参照核对 Passed，确认相对 XY 导出及一次性偏移；完整扫描条件、八文件及哈希已保全，距离投影材料前置解除。AICD 原始张量仍缺失；适配器、Blender 与独立人工科研验收 Not Run，安装包未变。见[参照与误差界](research/scientific-display-reference-inventory-20261023.md#本次实际运行及数值验收)及[产物入口](ARTIFACTS.md#projection-reference-20261023)。
 

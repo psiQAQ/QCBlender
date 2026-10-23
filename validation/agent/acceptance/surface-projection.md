@@ -4,6 +4,8 @@
 
 ## 条件与结果
 
+产品源码 `368a4ab5cec47dd2514778a2ee7babd4114f96b9`；完整候选为 `outputs/candidates/surface-projection/build-2/qcblender-0.1.0.zip`，50,984,291 字节，SHA-256 `53b412c62fda4503ad3d1054e949ee2b7238b3aaf78978cb7037d0bd6bc4f3bf`。当前材料入口 `validation/shared/install/qcblender-0.1.0.zip` 已核对同一摘要。GUI 在隔离源码配置实际点击，最终包的 111 个 Python 源文件与已验证快照一致；重建后的资产由最终包原生案例、渲染及冷读覆盖，不宣称另做了一轮安装后 GUI 点击。
+
 真实材料为官方 Ru 构型、Multiwfn 2026.9.20 vdW 表面、61×41 网格，负 Z 从 6 Å 扫至 −6 Å、步长 0.05 Å。源 XY 相对扫描起点，偏移为 `(−7,−6) Å`；完整输入及哈希由 `validation/shared/data/local-inputs.json` 中 `ru-vdw-20261023` 前缀定位。原始输出及独立参照的条件、连续/离散误差界见[研究记录](../../../docs/research/scientific-display-reference-inventory-20261023.md#本次实际运行及数值验收)。
 
 | 检查 | 状态 | 范围 |
@@ -13,13 +15,15 @@
 | 实际 GUI | Passed | 中文侧栏导入四个真实路径、属性设置 Cividis 与 −4/−3/−2 Å 等值线、撤销/编辑菜单重做、改动后取消；读取 `(0,0)` 未命中点。只读观察器记录实际操作后的值 |
 | GUI 保存冷重开 | Passed | 原生便携保存后退出，新进程核对所有科学数组摘要、显示设置、等值线、点值及 `.qcdata` 内部路径一致 |
 | 点值即时刷新修复 | Passed | 首轮 GUI 发现后台点值已变但面板未刷新；增加区域重绘，冷重开后实际选择 `(1,0)`，面板立即显示 X −6.766667、Y −6 Å、深度 −12 Å、未命中。侧栏视图类型中文名称同时复验 |
-| 最终完整包、隔离安装及安装后冷读 | Not Run | 源码验证通过后提交，再构建并补充精确候选结果 |
+| 最终完整包、隔离安装及安装后冷读 | Passed | 9 个节点资产完整重建，复用 11 个锁定 wheels；134 个安装成员与精确 ZIP 一致。实际安装模块的真实导入/三态/原子投影/等值线/2,501 行导出/渲染/便携保存通过，新进程冷读两张图的科学数组、显示设置、逐点几何与读取操作一致 |
 | 日常配置安装、全量回归、远端 CI | Not Run | 本批未要求；日常配置仍为此前 Mayer 候选 |
 | 独立人工/科研验收、发布 | Not Run | Agent 数值核验与 Computer Use 不代替独立签署 |
 
 原生检查脚本为 [verify_surface_projection.py](../../../tools/verify_surface_projection.py)，教程为[表面距离投影](../../human/topics/10-surface-projection.md)。本批机器结果入口为 `validation/agent/reports/2026-10-23/surface-projection/acceptance.json`，原始收据/日志/截图以同目录 `evidence-map.json` 定位；工程及 `.qcdata` 从 [ARTIFACTS](../../../docs/ARTIFACTS.md#surface-projection-20261023) 查找。
 
 ## 限制与初轮修复
+
+新增教程的本地网站构建及静态链接/资源核验 Passed：18 页、1,221 个链接/资源、85 步、30 图、87 个 details；没有部署，也未追加网站浏览器验收。原始检查快照保留实际执行时的提交与文件摘要，提交和文档更新不重复运行未变化的产品测试。
 
 本批真实科学参照覆盖上述 vdW 条件。电子密度/自由原子叠加密度声明及日志检查受支持，但未新增对应真实计算验收。任意用户结果与参考分子的同源同朝向关系须由操作者确认；轨迹、优化、IRC 动态参考明确拒绝。仅三列输入的扫描底值保持未知，不推断为未命中；等值线不跨接无效区域，原始数据不平滑或补洞。
 
