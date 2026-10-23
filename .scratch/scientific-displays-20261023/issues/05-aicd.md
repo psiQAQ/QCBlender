@@ -1,7 +1,7 @@
 # 05 AICD 原始张量导入与显示
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Blocked by: 04
 
 ## Delivery
@@ -13,6 +13,8 @@ Blocked by: 04
 04 resolved 后才领取。非对称张量、磁场反向/归一化、旋转及标量不变性；真实数值按 04 误差界核对；GUI、渲染、撤销/重做、冷重开与整包隔离安装分别验收。
 
 ## Comments
+
+2026-10-23 Answer：本地实现验收完成。源码 `79edb8d` 的完整候选构建、137 成员隔离安装、最终包 all/π 实际案例、渲染和保存冷重开均 Passed，当前候选入口已更新；完整结果及网格敏感性边界见 [AICD 验收](../../../validation/agent/acceptance/aicd.md)。日常安装、独立人工/科研验收及远端发布 Not Run。本地提交、快进合入与 `archive/2026-10-23/feat/aicd` 归档按授权流程收尾，收据由 ARTIFACTS 定位。
 
 2026-10-23：实现和源码层验收完成，结果见 [AICD 验收](../../../validation/agent/acceptance/aicd.md)。真实 all/π 原始点、独立 0.25/0.125 Å 网格、26 个相关定向测试、GUI 异步导入/磁场/箭头/撤销重做/取消/原值、渲染与便携冷读通过；按干净源码构建门禁先本地提交，再完成完整候选隔离安装及最终冷读，Status 暂保持 claimed。
 

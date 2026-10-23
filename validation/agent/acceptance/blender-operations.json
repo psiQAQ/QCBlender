@@ -9441,6 +9441,58 @@
           "scope": "Actual Computer Use: Cividis to Viridis, disable contours, inspect point (30,20); panel immediately shows X=0 A, Y=0.5 A, depth=-4.1 A and valid"
         }
       ]
+    },
+    {
+      "id": "aicd-import-display",
+      "title": "AICD 原始张量导入、磁场与原值查询",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-23",
+        "method": "Agent Computer Use native clicks; observer assertions and native portable save",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "12-atom static benzene from same-source all.fchk, then independent AICD object",
+        "visible_entry": "N 侧栏 → 导入与导出 → 导入外部结果 → 空间场分析 → AICD 张量；对象属性 → AICD",
+        "validated_scope": "Real source.json async import, Aniso 0.05, spacing 0.25 A; negative Z normalization, 250 arrows, undo/menu redo/cancel, raw point 12345, cold-read source and J labels",
+        "reports": [
+          {
+            "path": "validation/agent/reports/2026-10-23/aicd/runs/gui/result.json",
+            "sha256": "619c2d520ab672b2f890c9bdf31c24af3c0751ded0eed3f2adf9fe8a086de566",
+            "status": "Passed"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-23/aicd/runs/gui/cold.json",
+            "sha256": "54715613dd44fe5e531651caf3068e79b5e12e142dc65b3b196d323907c323df",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "validation/agent/reports/2026-10-23/aicd/runs/gui/cold-point.jpg",
+            "sha256": "bc38734a66cbd3eb8c9248b5dae8af9f4dd75aeb6b77a23dafad23f810bf3461"
+          }
+        ],
+        "source_commit": "79edb8dc50068c05c96c310c3f2258e730bdc3dd",
+        "candidate_sha256": "366e7fa61befe114a10cc9e536dc93d216477e2761a2fdeb8ab3df940ce1d91f",
+        "candidate_binding": "Final UI file hashes match the cold GUI snapshot. Core input-geometry identity checks were added after GUI and verified by focused tests, both real source imports and final installed cases. Rebuilt assets were exercised by final installed native/render/cold-read; no second installed GUI click run is claimed."
+      },
+      "implementation_fingerprints": {
+        "qcblender/aicd.py": "a6c94e76b94c621b1d99c4cf883a3c101f36413abc9afd4086953871163295af",
+        "qcblender/blender/aicd.py": "59c64a0177f008d87c107c30538e28214f5c0e261cc155f2c54483904a14838d",
+        "qcblender/blender/editor_ui.py": "7967f3f4e37e076a886148fff98b17c55fe71b17cf61b73bf5e27ff0eaf4fe93",
+        "qcblender/blender/capabilities.py": "d943dfb53934c66bd6a48b47be47e3805a320b151d0c985b278e308b011139be",
+        "qcblender/translations_aicd.py": "663933a56978eed1f258a45ea36b1ebebd4aede9341d1a6bfce87ad073db523d"
+      },
+      "fingerprint_review": "Review static reference, worker, Dataset, field surface, export and portable persistence helpers before reuse. Preserve explicit source identity and GUI/core difference above.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "tools/verify_aicd.py performs actual import, geometry, field reversal, raw CSV, render and portable cold-read; first or changed dialog inputs require GUI",
+        "requires_current_result_assertions": true
+      }
     }
   ]
 }

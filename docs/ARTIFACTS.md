@@ -4,7 +4,7 @@
 
 ## 当前交付
 
-AICD 公开资料（2026-10-23）保存在 `submodules/AICD/reference-public-20261023/`；来源、归档成员和哈希见[公开检索记录](research/aicd-public-samples-20261023.md)。后续已生成并验收同源苯 all/π 原始材料，保存在 `validation/shared/data/local/scientific-displays/aicd-benzene/`，独立提取与全部点值参照在 `validation/agent/reports/2026-10-23/aicd-reference/`；均 Git 忽略。科学条件、重算依据、格式及误差契约见[本次结果](research/scientific-display-reference-inventory-20261023.md#aicd-本次实际运行及数值契约)。原件由 `local-inputs.json` 核对，独立参照可用原 AICD 提取器及该报告目录的 C++ 入口重建；当前安装包不含 AICD 功能，05 正在实施。
+AICD 公开资料（2026-10-23）保存在 `submodules/AICD/reference-public-20261023/`；来源、归档成员和哈希见[公开检索记录](research/aicd-public-samples-20261023.md)。后续已生成并验收同源苯 all/π 原始材料，保存在 `validation/shared/data/local/scientific-displays/aicd-benzene/`，独立提取与全部点值参照在 `validation/agent/reports/2026-10-23/aicd-reference/`；均 Git 忽略。科学条件、重算依据、格式及误差契约见[本次结果](research/scientific-display-reference-inventory-20261023.md#aicd-本次实际运行及数值契约)。原件由 `local-inputs.json` 核对，独立参照可用原 AICD 提取器及该报告目录的 C++ 入口重建；04/05 均完成，当前候选已包含 AICD 功能，见下节。
 
 本地环境与工作目录现按 [modules](../modules/README.md) 和[维护规则](agents/storage-maintenance.md#当前目录职责)分类：共用依赖在 `modules/`，缓存和临时工作在 `.tmp/`，本机 Blender 配置在 `.local/blender/`。`outputs/` 保留实际输出。2026-10-22 整理的逐文件旧/新路径、SHA-256、用途和清理状态以 `validation/agent/reports/2026-10-22/output-layout/migration.jsonl.gz` 为准；ZIP 成员保全映射在同批 `archive-members.jsonl.gz`。历史记录中的旧路径和 Passed 保持当时身份，当前位置按映射查询；实际验证和残留见[本批验收](../validation/agent/acceptance/output-layout.md)。
 
@@ -19,8 +19,8 @@ AICD 公开资料（2026-10-23）保存在 `submodules/AICD/reference-public-202
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
 | 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；当前工程在 `validation/work/human/`；[当前截图与工程](../validation/工程索引.md) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
-| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,984,291 字节，SHA-256 `53b412c62fda4503ad3d1054e949ee2b7238b3aaf78978cb7037d0bd6bc4f3bf` |
-| 当前候选及验证 | `outputs/candidates/surface-projection/build-2/`；源码 `368a4ab`，增加表面距离投影；定向检查、实际源码 GUI、完整构建及 134 成员隔离安装、最终包渲染与冷读 Passed；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/surface-projection.md)。同一包的日常安装、实际 GUI、原生案例和保存冷重开 Passed，按用户要求未备份旧插件和偏好 |
+| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,998,880 字节，SHA-256 `366e7fa61befe114a10cc9e536dc93d216477e2761a2fdeb8ab3df940ce1d91f` |
+| 当前候选及验证 | `outputs/candidates/aicd/build-2/`；源码 `79edb8d`，增加 AICD；定向检查、实际源码 GUI、完整构建及 137 成员隔离安装、最终包渲染与冷读 Passed；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/aicd.md)。日常配置仍为已验收的表面距离投影候选 `53b412c6…`，本批未变更 |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
@@ -29,7 +29,9 @@ AICD 公开资料（2026-10-23）保存在 `submodules/AICD/reference-public-202
 
 原始全电子/π 张量适配器、Aniso 等值面、确定性箭头、磁场设置、来源声明、原始点及全量 CSV 已实现。[本批验收](../validation/agent/acceptance/aicd.md)与 `validation/agent/reports/2026-10-23/aicd/acceptance.json` 定位定向检查、独立网格对照、原生运行/渲染、实际 GUI 和冷读。源数据仍由上文 04 入口及 `local-inputs.json` 定位，新增同目录的 `all/source.json` 与 `pi/source.json` 供实际导入。
 
-GUI 便携工程为 `outputs/projects/aicd/gui/aicd-gui.blend` 及配套 `.qcdata/`；本批收据、日志、截图与独立网格脚本按报告 `evidence-map.json` 定位。可重建的源码验证工作保留在 `.tmp/runs/aicd/`。复验入口为 `tools/verify_aicd.py`，操作说明为[第 11 专题](../validation/human/topics/11-aicd.md)。完整候选和隔离安装尚待本地干净源码构建，当前安装入口暂不变。独立人工/科研验收、日常安装和远端发布 Not Run。
+GUI 便携工程为 `outputs/projects/aicd/gui/aicd-gui.blend` 及配套 `.qcdata/`；最终安装案例的 `aicd.blend`、数据、`aicd.png` 和两套 CSV 在 `outputs/projects/aicd/installed/`。本批收据、日志、截图与独立网格脚本按报告 `evidence-map.json` 定位。可重建的源码验证工作保留在 `.tmp/runs/aicd/`。复验入口为 `tools/verify_aicd.py`，操作说明为[第 11 专题](../validation/human/topics/11-aicd.md)。完整候选、137 成员隔离安装与最终案例冷读 Passed，当前安装包入口已更新。独立人工/科研验收、日常安装和远端发布 Not Run。
+
+本地归档入口为 `archive/2026-10-23/feat/aicd`；工作树保全及正常移除收据位于 `validation/agent/reports/2026-10-23/aicd/finish/`。主检出原有上游研究和子模块修改保留，未额外清理旧候选或历史产物。
 
 <a id="surface-projection-20261023"></a>
 ## 表面距离投影适配器（2026-10-23）
