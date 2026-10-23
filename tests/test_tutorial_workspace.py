@@ -59,6 +59,27 @@ class TutorialWorkspace(unittest.TestCase):
         self.assertEqual(report['numbered_operations'], 3)
         self.assertEqual(report['links'], 2)
 
+    def test_source_hash_fields_and_commands_are_valid_tutorial_inputs(self):
+        self.write('human/topics/01-example.md',
+                   '# Source declaration\n\n```json\n'
+                   '{"files": {"tensor": {"path": "AICD.txt", '
+                   '"sha256": "<张量文件 SHA-256>"}}}\n```\n\n'
+                   '用 `Get-FileHash -Algorithm SHA256 -LiteralPath .\\AICD.txt` '
+                   '取得哈希并填写来源声明。\n')
+        report = workspace.check_documents(self.materials)
+        self.assertEqual(report['human_execution'], 'Not Run')
+
+    def test_source_hashes_do_not_exempt_technical_acceptance_workflows(self):
+        for instruction in ('填写校验结果', '签署验收表', 'RECORD-TEMPLATE',
+                            'Passed', 'Failed', 'Not Run'):
+            with self.subTest(instruction=instruction):
+                self.write('human/topics/01-example.md',
+                           '# Source declaration\n\n`sha256` / `Get-FileHash`\n\n'
+                           '<details>\n<summary>记录</summary>\n\n'
+                           f'{instruction}\n\n</details>\n')
+                with self.assertRaisesRegex(ValueError, 'technical result workflow'):
+                    workspace.check_documents(self.materials)
+
     def test_missing_images_are_preparation_placeholders_but_fail_strict_gate(self):
         report = workspace.check_documents(self.materials)
         self.assertEqual(report['images_supplied'], 0)

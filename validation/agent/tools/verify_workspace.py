@@ -15,7 +15,8 @@ PUBLIC_PARTS = ('human', 'shared/data/public', 'shared/install')
 IMAGE_SUFFIXES = ('.png', '.jpg', '.jpeg', '.webp')
 HUMAN_DIRECTORIES = ('topics', 'screenshots', 'renders')
 LINK = re.compile(r'(!?)\[[^\]]*\]\((<[^>]*>|[^)\s]+)(?:\s+"[^"]*")?\)')
-FORBIDDEN = re.compile(r'SHA[ -]?256|Get-FileHash|RECORD-TEMPLATE|\bPassed\b|\bFailed\b|\bNot Run\b|填写[^\n。]*结果|签署', re.I)
+# Hash fields and commands can be required scientific inputs, not acceptance work.
+FORBIDDEN = re.compile(r'RECORD-TEMPLATE|\bPassed\b|\bFailed\b|\bNot Run\b|填写[^\n。]*结果|签署', re.I)
 
 
 def digest(path):
