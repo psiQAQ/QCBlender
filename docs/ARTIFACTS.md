@@ -20,7 +20,7 @@ AICD 公开资料（2026-10-23）保存在 `submodules/AICD/reference-public-202
 | 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；当前工程在 `validation/work/human/`；[当前截图与工程](../validation/工程索引.md) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
 | 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,998,880 字节，SHA-256 `366e7fa61befe114a10cc9e536dc93d216477e2761a2fdeb8ab3df940ce1d91f` |
-| 当前候选及验证 | `outputs/candidates/aicd/build-2/`；源码 `79edb8d`，增加 AICD；定向检查、实际源码 GUI、完整构建及 137 成员隔离安装、最终包渲染与冷读 Passed；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/aicd.md)。日常配置仍为已验收的表面距离投影候选 `53b412c6…`，本批未变更 |
+| 当前候选及验证 | `outputs/candidates/aicd/build-2/`；源码 `79edb8d`，增加 AICD；定向检查、实际源码 GUI、完整构建及 137 成员隔离安装、最终包渲染与冷读 Passed；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/aicd.md)。随后按追加授权完成同一包的日常安装、原生案例、实际 GUI 和保存冷读，均 Passed；旧插件与偏好已保全 |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
@@ -32,6 +32,8 @@ AICD 公开资料（2026-10-23）保存在 `submodules/AICD/reference-public-202
 GUI 便携工程为 `outputs/projects/aicd/gui/aicd-gui.blend` 及配套 `.qcdata/`；最终安装案例的 `aicd.blend`、数据、`aicd.png` 和两套 CSV 在 `outputs/projects/aicd/installed/`。本批收据、日志、截图与独立网格脚本按报告 `evidence-map.json` 定位。可重建的源码验证工作保留在 `.tmp/runs/aicd/`。复验入口为 `tools/verify_aicd.py`，操作说明为[第 11 专题](../validation/human/topics/11-aicd.md)。完整候选、137 成员隔离安装与最终案例冷读 Passed，当前安装包入口已更新。独立人工/科研验收、日常安装和远端发布 Not Run。
 
 本地归档入口为 `archive/2026-10-23/feat/aicd`；工作树保全及正常移除收据位于 `validation/agent/reports/2026-10-23/aicd/finish/`。主检出原有上游研究和子模块修改保留，未额外清理旧候选或历史产物。
+
+后续按用户追加授权完成日常安装，137 个成员、原生 all/π 案例、实际 GUI 参数/原值及便携保存冷重开 Passed，见[日常追加验收](../validation/agent/acceptance/aicd.md#日常配置追加验收)。工程和配套数据为 `outputs/projects/aicd/daily/{native,gui}/`，机器记录为 `validation/agent/reports/2026-10-23/aicd/daily/acceptance.json`；旧插件和偏好在 `.local/blender/backups/aicd-daily-20261023/`。用户同时授权提交全部未提交内容及推送，研究和三个子模块指针纳入单独提交，线上部署结果由同批 `deployment.json` 定位。
 
 <a id="surface-projection-20261023"></a>
 ## 表面距离投影适配器（2026-10-23）

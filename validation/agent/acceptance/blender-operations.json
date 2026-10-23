@@ -9492,7 +9492,18 @@
         ],
         "coverage": "tools/verify_aicd.py performs actual import, geometry, field reversal, raw CSV, render and portable cold-read; first or changed dialog inputs require GUI",
         "requires_current_result_assertions": true
-      }
+      },
+      "batch_replays": [
+        {
+          "date": "2026-10-23",
+          "status": "Passed",
+          "method": "Actual daily Computer Use, native portable save and new-process cold-read",
+          "candidate_sha256": "366e7fa61befe114a10cc9e536dc93d216477e2761a2fdeb8ab3df940ce1d91f",
+          "report": "validation/agent/reports/2026-10-23/aicd/daily/acceptance.json",
+          "sha256": "81514b4275708380fe9a2299a95f6222a927d269e201c8005d03cd9208550604",
+          "scope": "Actual Computer Use changed field from negative Z to (0,0,3), normalized to +Z; arrow limit 400; original sample 23456 immediately displayed"
+        }
+      ]
     }
   ]
 }

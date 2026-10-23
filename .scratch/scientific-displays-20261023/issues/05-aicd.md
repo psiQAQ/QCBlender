@@ -14,6 +14,8 @@ Blocked by: 04
 
 ## Comments
 
+2026-10-23 追加：用户要求安装到日常 Blender、实际 GUI、保存冷重开，通过后提交推送并监督 Pages，随后要求提交全部未提交内容。137 成员安装、两套原生实际案例、GUI 磁场/400 箭头/原值及新进程冷读 Passed；旧安装和偏好已备份。追加结果见 [日常验收](../../../validation/agent/acceptance/aicd.md#日常配置追加验收)，独立科研签署仍 Not Run。
+
 2026-10-23 Answer：本地实现验收完成。源码 `79edb8d` 的完整候选构建、137 成员隔离安装、最终包 all/π 实际案例、渲染和保存冷重开均 Passed，当前候选入口已更新；完整结果及网格敏感性边界见 [AICD 验收](../../../validation/agent/acceptance/aicd.md)。日常安装、独立人工/科研验收及远端发布 Not Run。本地提交、快进合入与 `archive/2026-10-23/feat/aicd` 归档按授权流程收尾，收据由 ARTIFACTS 定位。
 
 2026-10-23：实现和源码层验收完成，结果见 [AICD 验收](../../../validation/agent/acceptance/aicd.md)。真实 all/π 原始点、独立 0.25/0.125 Å 网格、26 个相关定向测试、GUI 异步导入/磁场/箭头/撤销重做/取消/原值、渲染与便携冷读通过；按干净源码构建门禁先本地提交，再完成完整候选隔离安装及最终冷读，Status 暂保持 claimed。
