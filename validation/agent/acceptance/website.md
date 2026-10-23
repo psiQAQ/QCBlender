@@ -54,3 +54,8 @@
 本次在 `website/` 执行：`npm run prepare:docs`、`npm run check`、`npm test`、`npm run build`、`npm run verify`，Astro CLI 进程使用 `ASTRO_TELEMETRY_DISABLED=1`。本地预览入口为 `npm run preview -- --port 4321`；本批实际通过同一 Astro CLI 启动，PID 23572 已结束，日志保留在 `runs/preview/`。Node 依赖与 npm 缓存已迁回主检出的 `website/node_modules/` 和 `.tmp/cache/npm/`，17,986 个文件的移动前后 SHA-256 一致，Astro 版本入口可运行；逐文件收据位于 `finish/runtime-move.json`。网站任务工作树按既有 `finish` 流程保全与本地归档，标签和收据从 [ARTIFACTS](../../../docs/ARTIFACTS.md) 查找。
 
 公开样本 SHA-256：`b4bc3e0ebbdf29ccb3905b16eeb898c94b9f16f209baae3c3ae1a8646b0348dd`。部署内容仅含白名单公开材料、页面和网站资源，未发现 P02、本地候选 ZIP、`.blend` 或 `.qcdata`。
+
+
+## 表格排版与 CI 跟进（2026-10-23）
+
+局部选择表格按内容分配列宽，表头英文和编号起点移到表后。桌面与手机预览、线上 HTML 和 CSS 字节核对 Passed；网站与 Mayer 提交已推送上线。原候选 CI 失败已在后续轮次修复，完整候选资格及上传 Passed。详细原因、工作流与最终状态统一见[跟进记录](../../../.scratch/website/issues/03-ci-followup.md)。此前失败轮次保留原身份。
