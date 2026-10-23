@@ -247,6 +247,8 @@ def add_mapping(target, source, low, high):
     volume, field, _, field_source = bound_field(source)
     modifier = view_modifier(target)
     tree = modifier.node_group
+    if any(node.get('qc_mayer_part') for node in tree.nodes):
+        raise ValueError('Use a separate atom view for scalar color mapping when Mayer display is configured')
     if tree.get('qc_charge_mapping'):
         raise ValueError('This view already uses atomic charge for color; use a separate atom view for scalar mapping')
     if (tree.get('qc_color_mapping') or target.get('qc_color_source')

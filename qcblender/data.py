@@ -110,6 +110,8 @@ class Dataset:
         for name, array in self.arrays.items():
             if array.dtype.kind not in 'biuf' or array.ndim > 4 or not np.isfinite(array).all():
                 raise ValueError(f'Invalid scientific array: {name}')
+        from .mayer import validate_mayer
+        validate_mayer(self)
         numbers = self.arrays['atomic_numbers']
         coords = self.arrays['positions']
         if numbers.ndim != 1 or coords.shape != (len(numbers), 3):

@@ -658,6 +658,8 @@ def view_parameter_state(obj):
     items = [item for item in modifier.node_group.interface.items_tree
              if item.item_type == 'SOCKET' and item.in_out == 'INPUT' and item.identifier in modifier]
     values = {socket_name(item): modifier.get(item.identifier) for item in items}
+    if obj.get('qc_mayer_enabled'):
+        values['Style (0 ball-stick, 1 space-fill, 2 bonds)'] = 0
     quantity = field.get('quantity', '')
     color_unit = record(obj, 'qc_color_source').get('unit', field.get('unit', ''))
     materials = [modifier.get(item.identifier) for item in items
@@ -738,6 +740,9 @@ def draw_view_parameters(layout, obj, section=None):
                     box.label(text=iface('{value0}: minimum < center < maximum', value0=prefix), icon='ERROR')
         for item in grouped:
             if socket_name(item) == STYLE_SOCKETS.get(obj.get('qc_view_kind')):
+                if obj.get('qc_mayer_enabled'):
+                    box.label(text='Mayer display uses atom balls and calculated pairs')
+                    continue
                 row = box.row(align=True)
                 row.label(text='Style')
                 for value, label in enumerate(STYLES[obj['qc_view_kind']]):

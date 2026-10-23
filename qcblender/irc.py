@@ -101,6 +101,7 @@ def import_irc_mayer(path_data, manifest):
                 'fields': [], 'charges': [], 'energies': [],
                 'analysis': {'kind': 'IRC-Mayer', 'method': 'Mayer', 'unit': 'dimensionless',
                              'path_source': path_data.metadata['source']['sha256'],
+                             'path_steps': [source['sha256'] for source in path_data.metadata['analysis']['steps']],
                              'step_sources': [source_record(path, 'multiwfn-output',
                                                             'qcblender.external_results 0.1') for path in files],
                              'association': 'user_assigned_step_and_atom_number'}}

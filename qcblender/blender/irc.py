@@ -75,6 +75,7 @@ class QCBLENDER_OT_irc_step(bpy.types.Operator):
         from .geometry import current_geometry
         from .annotations import prepare_annotations, apply_annotations
         from .association import prepare_association_invalidation, apply_association_invalidation
+        from .mayer import prepare_update, apply_update
         root = context.object if context.object.get('qc_irc') else context.object.parent
         try:
             data = load_dataset(bpy.path.abspath(root['qc_dataset']))
@@ -91,11 +92,13 @@ class QCBLENDER_OT_irc_step(bpy.types.Operator):
                 raise ValueError('IRC equilibrium positions are missing or invalid')
             prepared = prepare_annotations(root, positions, record)
             associations = prepare_association_invalidation(root, record)
+            mayer = prepare_update(root, data, step)
             root.data.vertices.foreach_set('co', positions.ravel())
             root.data.attributes['qc_equilibrium_position'].data.foreach_set('vector', positions.ravel())
             root.data.update()
             root['qc_irc_step'] = step
             cache_step(root, data, step)
+            apply_update(mayer)
             apply_annotations(prepared)
             apply_association_invalidation(associations)
         except (ValueError, OSError, KeyError, TypeError) as error:
@@ -206,6 +209,8 @@ class QCBLENDER_PT_irc(bpy.types.Panel):
         following.enabled = step < record.get('count', 0)
         previous.operator('qcblender.irc_step', text='Previous').direction = 'PREV'
         following.operator('qcblender.irc_step', text='Next').direction = 'NEXT'
+        from .mayer import draw_controls
+        draw_controls(layout, root)
         if root == obj:
             layout.operator('qcblender.import_irc_mayer', text='Import Mayer Results')
         if obj.get('qc_analysis_role') == 'irc_mayer':

@@ -104,11 +104,19 @@ def subject_points(context, objects):
         if obj.get('qc_view_kind') in {'fog', 'spectrum', 'scatter', 'profile'}:
             continue
         duplicate = obj.copy()
+        temporary_groups = []
         try:
             duplicate.hide_render = True
             duplicate.hide_viewport = False
             for modifier in duplicate.modifiers:
                 if modifier.type == 'NODES' and modifier.node_group:
+                    if any(node.get('qc_mayer_part') == 'bonds' for node in modifier.node_group.nodes):
+                        modifier.node_group = modifier.node_group.copy()
+                        temporary_groups.append(modifier.node_group)
+                        for node in modifier.node_group.nodes:
+                            if node.get('qc_mayer_part') == 'bonds':
+                                from .node_identity import node_socket
+                                node_socket(node.inputs, 'Show Legend').default_value = False
                     for item in modifier.node_group.interface.items_tree:
                         if (item.item_type == 'SOCKET' and item.in_out == 'INPUT'
                                 and socket_name(item, modifier.node_group) == 'Show Legend'):
@@ -125,6 +133,8 @@ def subject_points(context, objects):
                         arrays.append(_mesh_points(instance.object, instance.matrix_world))
         finally:
             bpy.data.objects.remove(duplicate, do_unlink=True)
+            for tree in temporary_groups:
+                bpy.data.node_groups.remove(tree)
     context.view_layer.update()
     arrays = [array for array in arrays if len(array)]
     return np.concatenate(arrays) if arrays else np.empty((0, 3))

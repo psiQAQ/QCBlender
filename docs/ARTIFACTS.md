@@ -21,6 +21,13 @@
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
+<a id="mayer-20261023"></a>
+## IRC Mayer 逐键着色（2026-10-23，开发中）
+
+源码和定向验证位于 `feat/irc-mayer-color`。测试临时收据在 `.tmp/runs/mayer/`，原生验证入口为 `tools/verify_mayer_display.py`；尚未生成新的已验证候选，当前安装入口仍采用上表版本。Blender 相关任务按用户要求集中执行，完成后在本节补充最终候选、工程与正式证据。
+
+[任务规格](../.scratch/scientific-displays-20261023/spec.md)同时维护表面距离投影和 AICD 的真实参照前置；这两项当前没有交付适配器。
+
 <a id="auto-output-20261023"></a>
 ## 自动观察方向与统一出图（2026-10-23）
 

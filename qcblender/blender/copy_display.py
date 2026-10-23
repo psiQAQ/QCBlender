@@ -188,6 +188,13 @@ def _display_path(obj, modifier, kind, sockets, mapping):
     inputs = inputs[0]
     asset = 'qc.atom_style.v1' if kind == 'atoms' else next(iter(CORE_ASSETS[kind]))
     style = group(asset)
+    mayer = {}
+    if kind == 'atoms' and 'qc_mayer_enabled' in obj:
+        from .mayer import checked_parts, original_output
+        mayer = checked_parts(obj, style)
+
+    def without_mayer(socket):
+        return original_output(mayer, socket) if mayer else socket
     clip_nodes = [node for node in tree.nodes if node.bl_idname == 'GeometryNodeGroup'
                   and node.node_tree and node.node_tree.get('qc_asset_id') == 'qc.clip.v1']
     if len(clip_nodes) != int(bool(tree.get('qc_clipping'))):
@@ -209,7 +216,7 @@ def _display_path(obj, modifier, kind, sockets, mapping):
         displayed = linked(node_socket(group('qc.color_scalar.v2').inputs, 'Geometry'))
     else:
         displayed = linked(geometry_output(tree))
-    displayed = unclipped(displayed)
+    displayed = without_mayer(unclipped(without_mayer(displayed)))
 
     if mapping[1]:
         join = displayed.node
@@ -261,10 +268,11 @@ def _display_path(obj, modifier, kind, sockets, mapping):
                      'Positive Opacity', 'Negative Opacity', 'Positive Material', 'Negative Material')
     elif kind == 'fog':
         controls += ('Material',)
-    if any(linked(node_socket(style.inputs, name)) != node_socket(inputs.outputs, name) for name in controls):
+    if any(linked(node_socket(mayer['style'].inputs, 'False') if mayer and name == STYLE_SOCKETS['atoms']
+                  else node_socket(style.inputs, name)) != node_socket(inputs.outputs, name) for name in controls):
         raise ValueError('QC display controls are disconnected from the style')
     if kind == 'atoms':
-        geometry = linked(node_socket(style.inputs, 'Geometry'))
+        geometry = linked(node_socket(mayer['edges'].inputs, 'Geometry') if mayer else node_socket(style.inputs, 'Geometry'))
         if 'Show Displacement Vectors' in sockets:
             position = geometry.node
             if (position.bl_idname != 'GeometryNodeSetPosition' or geometry != node_socket(position.outputs, 'Geometry')
