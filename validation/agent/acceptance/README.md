@@ -4,7 +4,7 @@
 
 ## 持续使用的方法与登记
 
-当前专题：[表面距离投影](surface-projection.md)与[IRC Mayer 逐键着色](mayer.md)（2026-10-23）。此前的[自动观察方向与统一出图](auto-output.md)、[Sidebar 摘要与整数标注输入](sidebar.md)、[标注几何、材质与面板提示](annotations.md)和[双语实现](i18n.md)均保留原候选身份。
+当前专题：[AICD 张量与电流响应](aicd.md)、[表面距离投影](surface-projection.md)与[IRC Mayer 逐键着色](mayer.md)（2026-10-23）。此前的[自动观察方向与统一出图](auto-output.md)、[Sidebar 摘要与整数标注输入](sidebar.md)、[标注几何、材质与面板提示](annotations.md)和[双语实现](i18n.md)均保留原候选身份。
 
 | 内容 | 入口 |
 | --- | --- |

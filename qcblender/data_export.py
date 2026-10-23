@@ -73,6 +73,8 @@ def available_exports(data):
         result.append('ESP_AREA')
     if meta.get('analysis', {}).get('kind') == 'SurfaceDistanceProjection':
         result.append('PROJECTION')
+    if meta.get('analysis', {}).get('kind') == 'AICD':
+        result.append('AICD')
     return result + ['SUMMARY']
 
 
@@ -102,6 +104,22 @@ def _tables(data, kind, filters, cancelled):
         rows = ((step + 1, int(pair[0]), int(pair[1]), float(values[step, index]))
                 for step in range(len(values)) for index, pair in enumerate(pairs))
         yield 'mayer.csv', ('step', 'atom_a_1based', 'atom_b_1based', 'mayer_order'), rows, {'mayer_order': 'dimensionless'}
+    elif kind == 'AICD':
+        from .aicd import current, field_direction
+        from .data import BOHR_ANGSTROM
+        direction = field_direction(filters.get('field', [0, 0, 1]))
+        def rows():
+            for i, (p, w, t, a, ids) in enumerate(zip(arrays['aicd_points_bohr'], arrays['aicd_weights'],
+                    arrays['aicd_tensors'], arrays['aicd_aniso'], arrays['aicd_ids'])):
+                if i % 2048 == 0 and cancelled():
+                    raise InterruptedError('Data export cancelled')
+                yield (i, *map(int, ids), *map(float, p), *map(float, p*BOHR_ANGSTROM), float(w),
+                       *map(float, t.ravel()), float(a), *map(float, current(t, direction)))
+        yield 'aicd_samples.csv', ('index_0based', 'block_1based', 'local_index_1based',
+            'x_bohr', 'y_bohr', 'z_bohr', 'x_angstrom', 'y_angstrom', 'z_angstrom', 'quadrature_weight',
+            'Txx', 'Txy', 'Txz', 'Tyx', 'Tyy', 'Tyz', 'Tzx', 'Tzy', 'Tzz', 'Aniso', 'Jx', 'Jy', 'Jz'), rows(), {
+                'position': 'bohr and angstrom', 'tensor_aniso_current': meta['analysis']['response_unit'],
+                'field_direction': direction.tolist(), 'weight': 'original Gaussian quadrature weight; unused in display remapping'}
     elif kind == 'PROJECTION':
         from .surface_projection import STATE_NAMES
         x, y = arrays['projection_x'], arrays['projection_y']
@@ -178,8 +196,8 @@ def export_dataset(dataset, output_directory, kind, scope='ALL', filters=None,
         raise ValueError('Selected export data is unavailable')
     if scope not in ('ALL', 'FILTERED') or (scope == 'FILTERED' and kind not in ('paired', 'ESP_AREA')):
         raise ValueError('Current filtering is available only for paired fields and ESP area bins')
-    filters = dict(filters or {}) if scope == 'FILTERED' else {}
-    permitted = {'x_field', 'y_field', 'x_min', 'x_max', 'y_min', 'y_max'} if kind == 'paired' else {'center_min', 'center_max', 'mode'} if kind == 'ESP_AREA' else set()
+    filters = dict(filters or {}) if scope == 'FILTERED' or kind == 'AICD' else {}
+    permitted = {'x_field', 'y_field', 'x_min', 'x_max', 'y_min', 'y_max'} if kind == 'paired' else {'center_min', 'center_max', 'mode'} if kind == 'ESP_AREA' else {'field'} if kind == 'AICD' else set()
     if set(filters) - permitted:
         raise ValueError('Unsupported export filter')
     if kind == 'SUMMARY':

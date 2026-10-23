@@ -10,7 +10,7 @@ AICD 公开资料（2026-10-23）保存在 `submodules/AICD/reference-public-202
 
 开发流程工具已完成技术验收：[入口](agents/development-workflow.md)、[当前结果](../validation/agent/acceptance/dev-workflow.md)，日志与规则备份当前位置由本次迁移映射定位，正式记录在 `validation/agent/reports/2026-10-16/dev-workflow-20261016/legacy-outputs/`。真实 MCP、构建安装和原工程恢复 Passed；当前有效候选见下表。
 
-从 [validation](../validation/README.md) 查找当前教程、输入和校验材料；人工入口为 [SOP](../validation/human/SOP.md)。主线 15 步、10 个按需专题；2026-10-21 完成的 79 步和 27 张截图保留当时身份。后续增补自动出图、Mayer 和表面距离投影，各批实际复验范围见对应验收。
+从 [validation](../validation/README.md) 查找当前教程、输入和校验材料；人工入口为 [SOP](../validation/human/SOP.md)。主线 15 步、11 个按需专题；2026-10-21 完成的 79 步和 27 张截图保留当时身份。后续增补自动出图、Mayer、表面距离投影和 AICD，各批实际复验范围见对应验收。
 
 | 内容 | 当前入口 |
 | --- | --- |
@@ -23,6 +23,13 @@ AICD 公开资料（2026-10-23）保存在 `submodules/AICD/reference-public-202
 | 当前候选及验证 | `outputs/candidates/surface-projection/build-2/`；源码 `368a4ab`，增加表面距离投影；定向检查、实际源码 GUI、完整构建及 134 成员隔离安装、最终包渲染与冷读 Passed；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/surface-projection.md)。同一包的日常安装、实际 GUI、原生案例和保存冷重开 Passed，按用户要求未备份旧插件和偏好 |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
+
+<a id="aicd-20261023"></a>
+## AICD 张量与单位磁场响应（2026-10-23）
+
+原始全电子/π 张量适配器、Aniso 等值面、确定性箭头、磁场设置、来源声明、原始点及全量 CSV 已实现。[本批验收](../validation/agent/acceptance/aicd.md)与 `validation/agent/reports/2026-10-23/aicd/acceptance.json` 定位定向检查、独立网格对照、原生运行/渲染、实际 GUI 和冷读。源数据仍由上文 04 入口及 `local-inputs.json` 定位，新增同目录的 `all/source.json` 与 `pi/source.json` 供实际导入。
+
+GUI 便携工程为 `outputs/projects/aicd/gui/aicd-gui.blend` 及配套 `.qcdata/`；本批收据、日志、截图与独立网格脚本按报告 `evidence-map.json` 定位。可重建的源码验证工作保留在 `.tmp/runs/aicd/`。复验入口为 `tools/verify_aicd.py`，操作说明为[第 11 专题](../validation/human/topics/11-aicd.md)。完整候选和隔离安装尚待本地干净源码构建，当前安装入口暂不变。独立人工/科研验收、日常安装和远端发布 Not Run。
 
 <a id="surface-projection-20261023"></a>
 ## 表面距离投影适配器（2026-10-23）

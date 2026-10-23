@@ -52,6 +52,8 @@ def export_choices(self, context):
             kinds.append('ESP_AREA')
         if analysis == 'SurfaceDistanceProjection':
             kinds.append('PROJECTION')
+        if analysis == 'AICD':
+            kinds.append('AICD')
         if context.object is not None:
             from .source_browser import source_object
             if source_object(context.object).get('qc_dataset'):
@@ -112,6 +114,9 @@ class QCBLENDER_OT_export_data(AsyncOperation, bpy.types.Operator):
         if self.kind not in [item[0] for item in export_choices(self, context)]:
             raise ValueError('Select available scientific data to export')
         filters = {}
+        if self.kind == 'AICD' and obj.get('qc_view_kind') == 'aicd':
+            from .aicd import settings
+            filters['field'] = settings(obj)['field']
         scope = self.scope if self.kind in ('paired', 'ESP_AREA') else 'ALL'
         if scope == 'FILTERED':
             from .result_browser import _scatter_parameters, _bound

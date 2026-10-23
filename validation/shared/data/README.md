@@ -52,3 +52,4 @@ python -B tools/prepare_validation_data.py `
 - P02 为 `local/log-examples/water_neutral_nbo_opt_freq.out` 和字节相同的 `.log` 别名。原数据再分发许可未确认，两者均不进入公开教程包。
 - `scientific-displays/ru-vdw-20261023` 指向真实 Multiwfn 距离投影的八文件参照包及三份适配器输入（`reference.xyz`、`scan.json`、`validity.csv`），共十一文件；含固定构型、扫描日志/设置、原始三列及独立球面求交点表。条件和误差界见[研究记录](../../../docs/research/scientific-display-reference-inventory-20261023.md#本次实际运行及数值验收)。原件及派生数据限本地使用，不进入公开教程包。
 - 人工教程不要求读者执行身份核对、填写技术报告或记录实际结果；这些步骤属于 Agent 的准备与维护工作。
+- `scientific-displays/aicd-benzene` 指向同源全电子/π 的八个 Gaussian 原件及两份 `source.json` 导入声明；各原件和声明由 `local-inputs.json` 核对。基准条件及原始点契约见[研究记录](../../../docs/research/scientific-display-reference-inventory-20261023.md#aicd-本次实际运行及数值契约)，操作见[AICD 专题](../../human/topics/11-aicd.md)。原件限本地使用，不进入公开教程包。

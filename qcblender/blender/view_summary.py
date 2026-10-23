@@ -80,6 +80,13 @@ def capture_view_summary(obj, frame):
     if owner.get('qc_source_sha256') != meta['source']['sha256']:
         raise ValueError('View summary source differs from its saved Dataset')
     reasons = snapshot['display']['reasons']
+    if obj.get('qc_view_kind') == 'aicd':
+        from .aicd import settings
+        snapshot['display']['parameters'] = [{'name': key, 'value': value, 'location': 'qc_aicd_settings'}
+                                             for key, value in settings(obj).items()]
+        snapshot['display']['status'] = 'captured'
+        snapshot['display']['coverage'] = 'Stored AICD configuration; generated geometry and rendered output require separate checks'
+        return snapshot
     if owner.get('qc_view_kind') == 'atoms':
         choices = [(kind, owner.get(key)) for kind, key in
                    (('trajectory', 'qc_trajectory_frame'), ('optimization', 'qc_optimization_step'), ('irc', 'qc_irc_step'))

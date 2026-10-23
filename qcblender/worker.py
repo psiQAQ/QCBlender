@@ -72,10 +72,16 @@ def main():
             preflight = importlib.import_module(args.module + '.science_preflight')
             report = dict(preflight.qualify_dataset(request['dataset'], request['dataset_sha256'],
                           lambda: (directory / 'cancel').exists(), request.get('memory_mb', 512)), status='succeeded')
-        elif request['action'] in ('import', 'import_pair', 'import_nbo', 'import_nocv', 'evaluate', 'rebuild_cache', 'declare_field'):
+        elif request['action'] in ('import', 'import_pair', 'import_nbo', 'import_nocv', 'import_aicd', 'evaluate', 'rebuild_cache', 'declare_field'):
             storage = importlib.import_module(args.module + '.data')
             static_reference = importlib.import_module(args.module + '.static_reference')
-            if request['action'] == 'import_nocv':
+            if request['action'] == 'import_aicd':
+                adapter = importlib.import_module(args.module + '.aicd')
+                reference = static_reference.load_static_reference(request['reference_dataset'], request['reference_sha256'])
+                data = adapter.import_aicd(reference, request['source'], request['spacing'], request['padding'],
+                                           request.get('memory_mb', 512), lambda: (directory / 'cancel').exists())
+                adapter.arrow_samples(data, request['isovalue'], (0, 0, 1), 0)
+            elif request['action'] == 'import_nocv':
                 source = Path(request['source'])
                 if source.stat().st_size > 512 * 1024**2:
                     raise MemoryError('Source exceeds 512 MiB import limit')

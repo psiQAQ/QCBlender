@@ -62,6 +62,7 @@
 | ETS-NOCV 和 pair Cube | [NOCV 专题](../validation/human/topics/08-ets-nocv.md) |
 | 公共几何节点 | [节点专题](../validation/human/topics/09-nodes.md) |
 | 表面距离图、原子投影、三态与等值线 | [距离投影专题（本机限定案例）](../validation/human/topics/10-surface-projection.md) |
+| AICD 张量、Aniso 等值面、电流响应与原始点值 | [AICD 专题（本机限定案例）](../validation/human/topics/11-aicd.md) |
 | 取景、渲染、参数摘要和保存重开 | [导出与保存](../validation/human/SOP.md#export) |
 | 错误输入、筛选/取消、关联、恢复等技术边界 | [Agent 检查覆盖](../validation/agent/COVERAGE.md) |
 

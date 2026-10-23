@@ -1626,6 +1626,28 @@
       ],
       "provenance": "Generated benchmark; scientific conditions and independent checks in scientific-display-reference-inventory-20261023.md",
       "data_license_status": "local-only; not distributed with public tutorials"
+    },
+    "scientific-displays/aicd-benzene/all/source.json": {
+      "path": "validation/shared/data/local/scientific-displays/aicd-benzene/all/source.json",
+      "sha256": "5eaeb7a116ad429cbfea8dfed5e7485b61efa45c502e797da111600c2e1a7c6f",
+      "bytes": 651,
+      "role": "Hash-bound AICD import source declaration",
+      "used_by": [
+        "scientific-displays-20261023/05"
+      ],
+      "provenance": "Derived from verified same-wavefunction benchmark originals and pi identity evidence",
+      "data_license_status": "local-only; not distributed with public tutorials"
+    },
+    "scientific-displays/aicd-benzene/pi/source.json": {
+      "path": "validation/shared/data/local/scientific-displays/aicd-benzene/pi/source.json",
+      "sha256": "c950dd0f7d6ef8ee20cde70d48c32ab716c0139b7f83e44a09da7316371c32d0",
+      "bytes": 846,
+      "role": "Hash-bound AICD import source declaration",
+      "used_by": [
+        "scientific-displays-20261023/05"
+      ],
+      "provenance": "Derived from verified same-wavefunction benchmark originals and pi identity evidence",
+      "data_license_status": "local-only; not distributed with public tutorials"
     }
   },
   "documentation": "docs/v1-acceptance/SOURCES.md"

@@ -114,6 +114,8 @@ class Dataset:
         validate_mayer(self)
         from .surface_projection import validate_projection
         validate_projection(self)
+        from .aicd import validate_aicd
+        validate_aicd(self)
         numbers = self.arrays['atomic_numbers']
         coords = self.arrays['positions']
         if numbers.ndim != 1 or coords.shape != (len(numbers), 3):
