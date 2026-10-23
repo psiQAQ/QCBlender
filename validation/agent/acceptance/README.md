@@ -4,7 +4,7 @@
 
 ## 持续使用的方法与登记
 
-当前专题：[自动观察方向与统一出图](auto-output.md)（2026-10-23）。历史专题包括 [Sidebar 摘要与整数标注输入](sidebar.md)、[标注几何、材质与面板提示](annotations.md)和[双语实现](i18n.md)，均保留原候选身份。
+当前专题：[IRC Mayer 逐键着色](mayer.md)（2026-10-23）。此前的[自动观察方向与统一出图](auto-output.md)、[Sidebar 摘要与整数标注输入](sidebar.md)、[标注几何、材质与面板提示](annotations.md)和[双语实现](i18n.md)均保留原候选身份。
 
 | 内容 | 入口 |
 | --- | --- |
@@ -25,7 +25,7 @@
 
 ## 候选和专题记录
 
-当前候选：[自动观察方向与统一出图](auto-output.md)、[当前身份](../current-install.json)。早期记录：[主干维护、色带与构型身份](upstream-20261011.md)、[机器索引](upstream-20261011.json)、[空场景按钮与编号范围](ui-bounds.md)、[空场景属性入口](empty-properties.md)。
+当前候选：[IRC Mayer 逐键着色](mayer.md)、[当前身份](../current-install.json)。早期记录：[主干维护、色带与构型身份](upstream-20261011.md)、[机器索引](upstream-20261011.json)、[空场景按钮与编号范围](ui-bounds.md)、[空场景属性入口](empty-properties.md)。
 
 | 批次或主题 | 说明与机器记录 |
 | --- | --- |

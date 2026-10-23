@@ -9295,6 +9295,65 @@
         "取景相机",
         "观察方向"
       ]
+    },
+    {
+      "id": "irc-mayer-display",
+      "title": "IRC Mayer 逐键着色与设置",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-23",
+        "method": "Agent Computer Use native clicks with read-only timer observations; CLI portable save/cold assertions",
+        "source_commit": "4b90967de748a604273df9c0a8b03b2184d0e65c",
+        "product_tree": "bf52dedd12170dea8c5bef04d0f7bbcb320254c9",
+        "candidate_sha256": "13febd149e43b9ba687ab1de383fb7ca2bdf3bb2c7f1b6dca3b23fa0dfb092ff",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "P04 IRC path active; Mayer table linked; initial step 2/3",
+        "visible_entry": "Object Properties > QCBlender > IRC path > Show Mayer bonds / Mayer display settings",
+        "validated_scope": "Actual native Chinese GUI: enable/disable, keyboard Undo, Edit-menu Redo, threshold .5 to .96 and back, next/previous IRC step. Timer only observes state; native portable save after GUI actions.",
+        "reports": [
+          {
+            "path": "validation/agent/reports/2026-10-23/mayer/acceptance.json",
+            "sha256": "6141710d3e9c468320a11c2ddaae8cf309acf40269ec4b80635ca46ec9416807",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "validation/agent/reports/2026-10-23/mayer/runs/gui/screenshots/05-final.png",
+            "sha256": "d52c6e7b949b46556983a494cf772768e4545067e4d7c31321ae38f7aa07c99e"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/mayer.py": "9d6c4bbc2e1f4caf75784392265eaacfaf0e2b2c170a961bbfdbcd0cbcdfadd9",
+        "qcblender/blender/mayer.py": "8291155d36de6171e2948fa7bb116cbb7f58500f8fd7d0d6ed24f0030279f7fa",
+        "qcblender/blender/irc.py": "084484e150b7ce300e64363406936fe733248a952d554b94aa4f7c8b2ed096ec",
+        "qcblender/blender/ui.py": "58add2a64711cfbcebd95b187e3e641c13b9c3b2124bc5a4120c581fb2c26219",
+        "qcblender/blender/copy_display.py": "71ecf6e62cb3f85aa739c196ef726ad78a32aabde5611f70f6b381c3644e4030",
+        "qcblender/blender/camera.py": "f3c391ea5ec2f4c8ff88ebd0256d8b18581ccf864d64d5c6d3275ee2d07adeea",
+        "qcblender/translations_mayer.py": "21a1d25936824d495f814f28196edff14498f863e27e696c005defd8be636dd6"
+      },
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "requires_current_result_assertions": true,
+        "coverage": "tools/verify_mayer_display.py; repeat GUI for changes to inputs, dialogs, selection context or undo/redo."
+      },
+      "execution": {
+        "tool_scope": "CLI scientific/geometry assertions and render/cold read; GUI scope listed separately. MCP Not Run."
+      },
+      "query_keywords": [
+        "IRC",
+        "Mayer",
+        "mayer_display",
+        "mayer_settings",
+        "逐键着色",
+        "键级"
+      ]
     }
   ]
 }
