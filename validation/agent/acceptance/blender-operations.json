@@ -9353,6 +9353,17 @@
         "mayer_settings",
         "逐键着色",
         "键级"
+      ],
+      "batch_replays": [
+        {
+          "date": "2026-10-23",
+          "status": "Passed",
+          "method": "Actual Computer Use in daily profile, native save and fresh-process cold assertions",
+          "candidate_sha256": "13febd149e43b9ba687ab1de383fb7ca2bdf3bb2c7f1b6dca3b23fa0dfb092ff",
+          "report": "validation/agent/reports/2026-10-23/mayer/daily/acceptance.json",
+          "sha256": "62456427aeb8cef5ba70b3619ef9973397596967b7a25c82b930545855fbf262",
+          "scope": "Actual Computer Use clicks: enable/disable, keyboard Undo, Edit-menu Redo, threshold 0.5 to 0.96 and back, next/previous IRC step; read-only timer records state"
+        }
       ]
     }
   ]

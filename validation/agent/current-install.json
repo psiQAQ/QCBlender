@@ -21,13 +21,21 @@
   "computer_use_scope": "Actual native Chinese GUI: enable/disable, keyboard Undo, Edit-menu Redo, threshold .5 to .96 and back, next/previous IRC step. Timer only observes state; native portable save after GUI actions.",
   "scientific_acceptance": "Not Run",
   "last_verified_daily_install": {
-    "candidate_sha256": "e73797010178657da9b950817f25a79786f2251832c9d04736c56b0dc00fa590",
-    "source_commit": "8d2f83f20c0eb251e10f02c81faae176c636ca46",
+    "candidate_sha256": "13febd149e43b9ba687ab1de383fb7ca2bdf3bb2c7f1b6dca3b23fa0dfb092ff",
+    "source_commit": "4b90967de748a604273df9c0a8b03b2184d0e65c",
     "date": "2026-10-23",
-    "report": "validation/agent/reports/2026-10-23/auto-output/daily/runs/install/op-install-1792697422343675800.json",
+    "report": "validation/agent/reports/2026-10-23/mayer/daily/acceptance.json",
     "status": "Passed"
   },
-  "daily_install": "Not Run",
-  "daily_gui_smoke": "Not Run",
-  "daily_install_reason": "Outside this task scope; last_verified_daily_install retains the actual daily profile identity."
+  "daily_install": "Passed",
+  "daily_gui_smoke": "Passed",
+  "daily_native_smoke": "Passed",
+  "daily_cold_restart": "Passed",
+  "daily_install_date": "2026-10-23",
+  "daily_install_report": "validation/agent/reports/2026-10-23/mayer/daily/runs/daily-install/global-install.json",
+  "daily_validation_report": "validation/agent/reports/2026-10-23/mayer/daily/acceptance.json",
+  "daily_gui_report": "validation/agent/reports/2026-10-23/mayer/daily/runs/daily-gui/result.json",
+  "daily_install_backup": ".local/blender/backups/mayer-20261023",
+  "global_installation": "%APPDATA%/Blender Foundation/Blender/5.1/extensions/user_default/qcblender",
+  "previous_daily_install_candidate_sha256": "e73797010178657da9b950817f25a79786f2251832c9d04736c56b0dc00fa590"
 }

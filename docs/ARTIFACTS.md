@@ -18,7 +18,7 @@
 | 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；当前工程在 `validation/work/human/`；[当前截图与工程](../validation/工程索引.md) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
 | 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,969,825 字节，SHA-256 `13febd149e43b9ba687ab1de383fb7ca2bdf3bb2c7f1b6dca3b23fa0dfb092ff` |
-| 当前候选及验证 | `outputs/candidates/mayer/build-1/`；源码 `4b90967`，增加 IRC Mayer 逐键着色；完整构建、隔离安装、实际 GUI/渲染和冷读 Passed；日常安装 Not Run，仍保留前一候选；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/mayer.md) |
+| 当前候选及验证 | `outputs/candidates/mayer/build-1/`；源码 `4b90967`，增加 IRC Mayer 逐键着色；完整构建、隔离安装、实际 GUI/渲染和冷读 Passed；追加日常安装、实际 GUI 和保存冷读 Passed；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/mayer.md) |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
@@ -27,7 +27,7 @@
 
 产品源码 `4b90967`，当前完整候选为上表 Mayer build-1。P04 六原子对、三步联动、阈值/原子筛选、18 个导出数值及原数组保护、关闭恢复、实际 GUI 撤销/菜单重做、渲染和保存冷重开 Passed；[验收](../validation/agent/acceptance/mayer.md)与 `validation/agent/reports/2026-10-23/mayer/acceptance.json` 定位原始证据。复验入口为 `tools/verify_mayer_display.py`。
 
-工程及 `.qcdata` 在 `outputs/projects/irc-mayer/installed/`、`outputs/projects/irc-mayer/gui/`；前者保留最终渲染 `mayer.png`。测试配置及可重建缓存在 `.tmp/runs/mayer/`，早期成图和失败日志保留。日常配置未安装本候选，仍为下节 auto-output build-4。教程第 6 步及实际截图已更新。本地 ff-only 合入后以 `archive/2026-10-23/feat/irc-mayer-color` 归档，工作树保全及移除记录在同批 `finish/`。原调研修改和无关工作树保留，不推送。
+工程及 `.qcdata` 在 `outputs/projects/irc-mayer/installed/`、`outputs/projects/irc-mayer/gui/`；前者保留最终渲染 `mayer.png`。测试配置及可重建缓存在 `.tmp/runs/mayer/`，早期成图和失败日志保留。日常配置已按追加授权安装同一候选，实际 GUI、便携保存与冷读 Passed；补充工程位于 `outputs/projects/irc-mayer/daily/`，证据在同批报告 `daily/acceptance.json`，旧安装及偏好备份在 `.local/blender/backups/mayer-20261023/`。教程第 6 步及实际截图已更新。本地 ff-only 合入后以 `archive/2026-10-23/feat/irc-mayer-color` 归档，工作树保全及移除记录在同批 `finish/`。原调研修改和无关工作树保留，不推送。
 
 [任务规格](../.scratch/scientific-displays-20261023/spec.md)同时维护表面距离投影和 AICD 的真实参照前置；这两项当前没有交付适配器。
 
@@ -36,7 +36,7 @@
 
 提供当前视角、主轴取景和近似减少遮挡；统一色彩管理、背景、PNG、尺寸、三点柔光及 EEVEE/Cycles 档位，在当前场景应用并可恢复。SOP 的操作、参数截图和实际成图同步更新。去重 61 项定向测试、四类真实工程、GUI 与持久化、完整候选隔离安装 Passed，详见[验收](../validation/agent/acceptance/auto-output.md)。日常配置已按追加授权安装，128 个成员核对、原生自动取景/三档出图和冷读 Passed，未备份旧安装；收据在同批 `daily/`，工程在 `outputs/projects/auto-output/daily/mo/`。随后补做日常 GUI 的两种自动取景、白底/透明渲染、恢复和副本冷读 Passed；[GUI 记录](../validation/agent/reports/2026-10-23/auto-output/daily-gui/acceptance.json)保留首轮观察脚本失败与重试证据，成图和工程在 `outputs/projects/auto-output/daily/gui-2/`。独立人工/科研、全量回归和远端 CI Not Run。
 
-工程、配套数据和渲染保留在 `outputs/projects/auto-output/`，各轮候选在 `outputs/candidates/auto-output/`；该批最终有效包为 build-4，也是最近一次已验证的日常安装。前一有效包仍在 `outputs/candidates/current/sop-completion-20261021/`，失败候选和旧包未清理。正式收据、截图及执行脚本在 `validation/agent/reports/2026-10-23/auto-output/`；原 `.tmp/runs/auto-output/` 的记录对应其 `runs/` 子目录。
+工程、配套数据和渲染保留在 `outputs/projects/auto-output/`，各轮候选在 `outputs/candidates/auto-output/`；该批最终有效包为 build-4，其日常安装已由上节 Mayer 候选接替。前一有效包仍在 `outputs/candidates/current/sop-completion-20261021/`，失败候选和旧包未清理。正式收据、截图及执行脚本在 `validation/agent/reports/2026-10-23/auto-output/`；原 `.tmp/runs/auto-output/` 的记录对应其 `runs/` 子目录。
 
 本地任务分支 `feat/auto-viewpoint`、`feat/output-settings`、`feat/auto-output` 按 ff-only 整合，归档标签采用 `archive/2026-10-23/<完整分支名>`；逐文件保全和实际移除结果由同批 `finish/` 收据确认。主检出原有上游引用、调研文件保留；不 push。用户明确无需恢复原工程，本批 Blender 已退出。
 
