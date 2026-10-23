@@ -1,7 +1,7 @@
 # Gaussian 样本及版本工具
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 
 ## 验收
 
@@ -14,3 +14,5 @@ P01–P05 真实计算及派生、P06 同源 XYZ、脱敏与原件映射、当�
 静态阶段：P01/P02/P03/P05 优化与频率、统一坐标系单点、P03 四类 Multiwfn 分析、P05 NOCV、P06 单帧均已实际执行。37 个静态公开文件独立科学检查通过；完整 IRC 仍待实际收敛，v3 包和活动入口尚未切换。原始计算、失败和脱敏映射仅保存在本地忽略目录。
 
 真实 P02 两段日志暴露 split_jobs 未识别正常结束后 Initial command / Entering Link 1 的缺陷。新增最小回归先失败，修复后 13 项日志测试通过，原始 P02 两段及第二段振动/NBO 可读取。样本版本与发布入口定向标准库验证 75 项通过（各检查仍按实际范围，不继承发布资格）。产品修复需完整重建和新安装验证；为绑定准确源码，先对已完成的软件修复和版本工具作本地检查点提交，后续样本与图文分别提交。
+
+完成：P01–P06 新数据 185 文件、v3 包、逐文件许可与脱敏检查通过。P04 最终为 Gaussian 实际梯度驱动的 geomeTRIC 双向路径，含全部 69 接受帧及逐帧 Mayer，原生 Gaussian IRC 失败保留；P05 保留 KS 近似。完整候选由插件源码 43125d4 重建、隔离和日常安装通过。材料工具新增普通历史图片链接回归，15 项相关测试通过。当前证据见 `validation/agent/reports/2026-10-24/gaussian-sop/science.md` 及 `acceptance.md`；独立科研签署 Not Run。

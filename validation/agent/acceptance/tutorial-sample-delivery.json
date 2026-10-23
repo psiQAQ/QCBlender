@@ -1,73 +1,37 @@
 {
-  "schema": 1,
-  "date": "2026-10-02",
+  "schema": 2,
+  "date": "2026-10-24",
   "status": "Passed",
-  "scope": "当前v2公开包身份与XYZ来源；不继承旧候选GUI/科学通过",
-  "source_commit": "9d3ff61d2e32c47357fe624cf93052bfed6dd041",
-  "product_source_commit": "9d3ff61d2e32c47357fe624cf93052bfed6dd041",
+  "dataset_id": "gaussian-v1",
+  "scope": "Current owned Gaussian scientific data; GUI and independent scientific acceptance remain separate",
   "manifest": {
-    "path": "docs/v1-acceptance/tutorial-samples.json",
-    "bytes": 161816,
-    "sha256": "3e2d87de8e6e93f72765b90027e67393e33bf007de36895b4778d5febc9ab73c"
+    "path": "validation/shared/data/public/gaussian-v1/tutorial-samples.json",
+    "bytes": 488838,
+    "sha256": "bb5ce541994bb2a617a865da857db5c564c4032c7a98ae031ce589069b2c734b"
   },
   "package": {
-    "path": "outputs/evidence/2026-10-02/display-xyz-export/final/samples/qcblender-public-tutorial-samples-v2.zip",
-    "bytes": 12175753,
-    "sha256": "b4bc3e0ebbdf29ccb3905b16eeb898c94b9f16f209baae3c3ae1a8646b0348dd",
-    "availability": "本地交付，未发布"
+    "path": "validation/agent/packages/qcblender-public-tutorial-samples-v3.zip",
+    "bytes": 13055318,
+    "sha256": "c228f414c73f9d56ba264573d8f3526c96d1ebcf340030201e5acf5020a3369b"
   },
-  "previous_package": {
-    "path": "outputs/evidence/2026-10-02/tutorial-cu/final-samples/qcblender-public-tutorial-samples-v1.zip",
-    "sha256": "56faa42ad555d1e9fce9e33bc839779ab92935a89429dcae8db29d53b92e3b4f",
-    "bytes": 12173151,
-    "availability": "本地交付，未发布"
-  },
-  "previous_delivery_source_commit": "53ed4dc2bb0f743f35b4435c79fe0b2b0b971178",
-  "c01_choices": {
-    "alpha_mo": 9,
-    "beta_mo": 7,
-    "alpha_homo": 8,
-    "beta_homo": 6
-  },
-  "xyz": {
-    "single": "P06/water-dimer.xyz",
-    "multi": "P06/p04-three-frames.xyz",
-    "coordinate_unit": "angstrom",
-    "license": "CC BY 4.0"
-  },
-  "checks": {
-    "sample_hash_license_parse": "Passed",
-    "science_regression": "Passed",
-    "xyz_native_and_gui": "Passed",
-    "user_replay": "Not Run",
-    "independent_scientific_signature": "Not Run"
-  },
-  "reports": {
-    "sample-package": {
-      "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/sample-package.json",
-      "bytes": 589,
-      "sha256": "e6765d66b3b887ec02194c77ea758599e64e22d75cd262c51c7a9968eaa571c3"
+  "legacy_dataset": {
+    "dataset_id": "legacy-v2",
+    "manifest": {
+      "path": "validation/agent/v1-acceptance/tutorial-samples.json",
+      "bytes": 161816,
+      "sha256": "3e2d87de8e6e93f72765b90027e67393e33bf007de36895b4778d5febc9ab73c"
     },
-    "sample-final": {
-      "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/sample-final.json",
-      "bytes": 1190,
-      "sha256": "72d3737d0be74b67913d7e7faf1cdf8d33cff67a0920adc17d2e329704b8790b"
-    },
-    "sample-final-command": {
-      "path": "outputs/evidence/2026-10-02/display-xyz-export/final/reports/sample-final-command.json",
-      "bytes": 1105,
-      "sha256": "9df804219462d1bd2124c2256519b58e73b8b0a8636c7ce7693d453d4ac5b838"
+    "package": {
+      "path": "validation/agent/packages/qcblender-public-tutorial-samples-v2.zip",
+      "bytes": 12175753,
+      "sha256": "b4bc3e0ebbdf29ccb3905b16eeb898c94b9f16f209baae3c3ae1a8646b0348dd",
+      "availability": "本地交付，未发布"
     }
   },
-  "rebuild": {
-    "source_checkout": "以source_commit创建主仓库内独立worktree；按docs/DEVELOPMENT.md首次/增量路径检查工具、输入摘要、后端记录和锁定wheels",
-    "inputs": "tests/data/local-inputs.json + docs/v1-acceptance/SOURCES.md + tutorial-samples.json；受限P02独立获取，缺输入在前置阶段停止",
-    "shared_environment": "沿用outputs/build-site、outputs/science和outputs/wheels/qualified；核对每个wheel摘要，临时目录使用新的outputs/runs批次",
-    "commands": "本索引各checks的*-command.json保存实际命令/退出码/日志摘要；原脚本在final/scripts和scripts/workspace",
-    "build_script": "outputs/evidence/2026-10-02/display-xyz-export/final/scripts/build_display_xyz_export_final.py",
-    "verification_script": "outputs/evidence/2026-10-02/display-xyz-export/final/scripts/run_display_xyz_checks_final.py",
-    "gui": "根据SOP关键步骤和blender-operations.json复核实现；仅操作一个PID，新功能/变更后的对话框重新通过Computer Use确认",
-    "qualification": "tools/qualify_package.py --candidate <本次ZIP> --installed-dir <本次安装目录> --evidence-index <本批索引> --output <本批qualification.json>",
-    "identity": "重建生成新ZIP摘要并重新资格验证，不保证ZIP逐字节相同；本索引在源码固定后提交，不引用自身提交"
+  "checks": {
+    "scientific_data": "Passed",
+    "sample_package": "Passed",
+    "gui": "Not Run",
+    "independent_human_review": "Not Run"
   }
 }

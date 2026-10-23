@@ -163,6 +163,7 @@ def check_documents(materials, require_images=False):
     files = [p for part in PUBLIC_PARTS for p in safe_files(materials / part) if p.suffix == '.md']
     image_roots = [(human / name).resolve() for name in ('screenshots', 'renders')]
     image_slots = {}
+    referenced_images = set()
     result = {'markdown_files': len(files), 'links': 0, 'numbered_operations': 0,
               'require_images': require_images}
     for path in files:
@@ -188,6 +189,8 @@ def check_documents(materials, require_images=False):
             if not any(target.is_relative_to(root) for root in allowed):
                 raise ValueError(f'Link leaves public package: {path}: {link}')
             result['links'] += 1
+            if target.parent in image_roots and target.suffix.lower() in IMAGE_SUFFIXES:
+                referenced_images.add(target)
             if is_image:
                 if target.parent not in image_roots or target.suffix.lower() not in IMAGE_SUFFIXES:
                     raise ValueError(f'Unsupported tutorial image path: {path}: {link}')
@@ -198,7 +201,7 @@ def check_documents(materials, require_images=False):
                 raise FileNotFoundError(f'Broken public link: {path}: {link}')
             if fragment and target.suffix == '.md' and fragment not in anchors(target):
                 raise ValueError(f'Broken anchor: {path}: {link}')
-    extra_images = supplied_images - image_slots.keys()
+    extra_images = supplied_images - referenced_images
     if extra_images:
         raise ValueError('Unreferenced human images: ' + ', '.join(
             path.relative_to(human).as_posix() for path in sorted(extra_images)))

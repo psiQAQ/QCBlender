@@ -37,6 +37,7 @@ def verify(args):
     waves={}
     source_folders={'P01-o2-uhf':'P01-final','P03-water-dimer':'P03-final',
                     'P05-complex':'P05-final','P05-co':'P05-co','P05-bh3':'P05-bh3'}
+    raw_irc_hashes={sha(path) for path in args.raw_root.glob('P04-final*/result.fchk')} if args.raw_root else set()
     for sid,record in manifest['files'].items():
         if record['distribution']!='included' or record['license']!='CC-BY-4.0':
             raise ValueError('Non-public input in Gaussian dataset: '+sid)
@@ -49,6 +50,8 @@ def verify(args):
         if path.suffix=='.fchk':
             if args.raw_root and sid in source_folders:
                 assert path.read_bytes()==(args.raw_root/source_folders[sid]/'result.fchk').read_bytes()
+            if args.raw_root and sid.startswith('P04-step-'):
+                assert sha(path) in raw_irc_hashes,'IRC FCHK differs from native Gaussian originals: '+sid
             data=read_fchk(path);io=load_one(path);overlap=compute_overlap(io.obasis,io.atcoords)
             expected=record['expected'];waves[sid]=data
             np.testing.assert_array_equal(data.arrays['atomic_numbers'],expected['atomic_numbers'])
@@ -125,8 +128,36 @@ def verify(args):
         assert report['irc_status']=='converged both directions' and report['imaginary_mode_count']==1
         assert len(irc.arrays['irc_energies'])==expected['steps']
         np.testing.assert_allclose(irc.arrays['irc_energies'],expected['energies_hartree'],atol=1e-10,rtol=0)
+        energies=np.asarray(expected['energies_hartree']);ts=report['ts_step']
+        tolerance=report['monotonic_energy_tolerance_hartree']
+        assert tolerance<=5e-9 and 1<ts<len(energies)
+        assert np.max(energies)<=energies[ts-1]+tolerance
+        assert np.all(np.diff(energies[:ts])>=-tolerance)
+        assert np.all(np.diff(energies[ts-1:])<=tolerance)
+        assert max(energies[0],energies[-1])<energies[ts-1]-tolerance
+        ts_frequencies=[float(value) for line in paths['P04-ts-log'].read_text().splitlines() if 'Frequencies --' in line
+                        for value in line.split('--',1)[1].split()]
+        np.testing.assert_allclose(ts_frequencies,report['ts_frequencies_cm_minus1'],atol=1e-8,rtol=0)
+        assert sum(value<0 for value in ts_frequencies)==1
+        from qcblender.gaussian_log import inspect_log
+        ts_data=read_source(paths['P04-ts-log'],len(inspect_log(paths['P04-ts-log'])['jobs'])-1)
+        mode=ts_data.arrays['mode_displacements'][int(np.argmin(ts_data.arrays['mode_frequencies']))]
+        positions=ts_data.arrays['positions'];normal=np.cross(positions[1]-positions[0],positions[2]-positions[0])
+        normal/=np.linalg.norm(normal);fraction=float(np.sum((mode@normal)**2)/np.sum(mode**2))
+        assert fraction>.99
+        np.testing.assert_allclose(fraction,report['ts_mode_assignment']['out_of_plane_displacement_fraction'],atol=1e-10,rtol=0)
+        for direction,index in [('reverse',0),('forward',len(energies)-1)]:
+            sid='P04-'+direction+'-endpoint-log';text=paths[sid].read_text()
+            values=[float(value) for line in text.splitlines() if 'Frequencies --' in line
+                    for value in line.split('--',1)[1].split()]
+            assert values and min(values)>0 and 'Normal termination of Gaussian' in text
+            np.testing.assert_allclose(values,report['endpoint_checks'][direction]['frequencies_cm_minus1'],atol=1e-8,rtol=0)
+            endpoint=read_source(paths[sid]);wave=waves[f'P04-step-{index+1:03d}.fchk']
+            np.testing.assert_allclose(endpoint.arrays['positions'],wave.arrays['positions'],atol=3e-6,rtol=0)
+            energy=float(re.findall(r'SCF Done:\s+E\([^)]+\)\s*=\s*([-\d.Ee+]+)',text)[-1])
+            np.testing.assert_allclose(energy,energies[index],atol=5e-8,rtol=0)
         np.testing.assert_allclose(mayer.arrays['mayer_orders'],manifest['files']['P04-mayer.csv']['expected']['orders'],atol=1e-11,rtol=0)
-        checks.append('Complete bidirectional IRC, first-order TS and all six Mayer atom pairs')
+        checks.append('Bidirectional downhill IRC, first-order TS, positive-frequency endpoints and all six Mayer atom pairs')
     if 'P06-source.json' in paths:
         source=json.loads(paths['P06-source.json'].read_text())
         for sample in source['samples']:

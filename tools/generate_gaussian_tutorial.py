@@ -89,12 +89,13 @@ class Generator:
         self.manifest = json.loads(path.read_text(encoding='utf-8')) if path.exists() else dict(
             schema=1, dataset_id=DATASET, date='2026-10-24', attribution='QCBlender contributors',
             groups={}, files={}, cases={}, checks={},
-            nodes={f'N{number:02d}':dict(case=case,status='Not Run') for number,case in enumerate(
-                ['C05','C05','C05','C01','C01','C04','C04','C04','C01','C01','C04','C02','C09','C07','C01','all','C04','all'],1)},
             tolerances=dict(coordinates_angstrom=3e-6, scalar_energy_hartree=1e-8, cube_formula_abs=3e-6),
             scientific_scope=dict(geometry='Optimized Gaussian structures; frozen complex fragment geometries',
                                   grid_convergence='Not claimed',
                                   nocv_energy='Actual complex KS reconstruction; Multiwfn approximation, not F_TS'))
+        self.manifest.setdefault('nodes', {
+            f'N{number:02d}':dict(case=case,status='Not Run') for number,case in enumerate(
+                ['C05','C05','C05','C01','C01','C04','C04','C04','C01','C01','C04','C02','C09','C07','C01','all','C04','all'],1)})
 
     def freeze(self):
         write_json(ROOT / MANIFEST_REL, self.manifest)
@@ -381,8 +382,30 @@ class Generator:
         assert sum(value<0 for value in frequencies)==1
         selected=mapping['steps'];count=len(selected);ts=int(mapping['ts_step'])
         assert count>3 and 1<ts<count
+        energies=np.asarray([item['energy_hartree'] for item in selected])
+        tolerance=5e-9
+        assert np.max(energies)<=energies[ts-1]+tolerance
+        assert np.all(np.diff(energies[:ts])>=-tolerance)
+        assert np.all(np.diff(energies[ts-1:])<=tolerance)
+        assert max(energies[0],energies[-1])<energies[ts-1]-tolerance
+        endpoint_checks={}
+        for direction,index in [('reverse',0),('forward',count-1)]:
+            log=Path(mapping['endpoint_logs'][direction])
+            text=log.read_text()
+            values=[float(value) for line in text.splitlines() if 'Frequencies --' in line
+                    for value in line.split('--',1)[1].split()]
+            assert values and min(values)>0,(direction,values)
+            assert 'Normal termination of Gaussian' in text
+            endpoint=read_source(log)
+            data=read_fchk(Path(selected[index]['fchk']))
+            np.testing.assert_allclose(endpoint.arrays['positions'],data.arrays['positions'],atol=3e-6,rtol=0)
+            energy=float(re.findall(r'SCF Done:\s+E\([^)]+\)\s*=\s*([-\d.Ee+]+)',text)[-1])
+            np.testing.assert_allclose(energy,energies[index],atol=5e-8,rtol=0)
+            endpoint_checks[direction]=dict(step=index+1,frequencies_cm_minus1=values,
+                                            energy_hartree=energy,status='Passed')
         calc=dict(method='RHF',basis='STO-3G',charge=0,spin=0,multiplicity=1,electron_count=18,
-                  geometry='Accepted Gaussian bidirectional IRC point; native canonical single-point FCHK',
+                  geometry='Accepted bidirectional IRC point; native Gaussian canonical single-point FCHK',
+                  path_integrator=mapping['path_integrator'],
                   producer='Gaussian 16 C.01')
         steps=[];mayer=[];all_orders=[];source_records=[]
         for number,item in enumerate(selected,1):
@@ -397,7 +420,8 @@ class Generator:
             expected=dict(atomic_numbers=data.arrays['atomic_numbers'].tolist(),
                           positions_angstrom=data.arrays['positions'].tolist(),energy_hartree=energy,
                           source_irc_energy_hartree=item['energy_hartree'],
-                          direction=item.get('direction'),irc_point=item.get('irc_point'))
+                          direction=item.get('direction'),irc_point=item.get('irc_point'),
+                          path_stage=item.get('path_stage','irc'))
             target=self.add(sid,source,'P04/'+name+'.fchk','Native Gaussian wavefunction at accepted IRC point',expected,calc)
             overlap=compute_overlap(io.obasis,io.atcoords);ps=io.one_rdms['scf']@overlap
             centers=[]
@@ -419,7 +443,7 @@ class Generator:
                      derivation=dict(reference=sid,formula='sum((P S)_AB * (P S)_BA)'))
             steps.append((number,name+'.fchk'));mayer.append((number,name+'-mayer.txt'));all_orders.append([value[2] for value in orders])
             source_records.append(dict(step=number,direction=item.get('direction'),irc_point=item.get('irc_point'),
-                                       energy_hartree=energy,fchk_sha256=sha(target)))
+                                       path_stage=item.get('path_stage','irc'),energy_hartree=energy,fchk_sha256=sha(target)))
         for name,column,rows in [('steps.csv','fchk',steps),('mayer.csv','mayer_output',mayer)]:
             path=self.private/name
             with path.open('w',encoding='utf-8',newline='') as stream:
@@ -427,8 +451,9 @@ class Generator:
             self.add('P04-'+name,path,'P04/'+name,'Complete Gaussian IRC step association',calculation=calc)
         report=dict(method='RHF',basis='STO-3G',charge=0,spin=0,multiplicity=1,
                     ts_step=ts,ts_frequencies_cm_minus1=frequencies,imaginary_mode_count=1,
-                    irc_direction='both',irc_status=mapping['irc_status'],accepted_frame_count=count,
-                    selected_steps=source_records)
+                    irc_direction='both',irc_status=mapping['irc_status'],path_integrator=mapping['path_integrator'],accepted_frame_count=count,
+                    selected_steps=source_records,endpoint_checks=endpoint_checks,
+                    monotonic_energy_tolerance_hartree=tolerance)
         self.manifest['files']['P04-steps.csv']['expected']=dict(steps=count,energies_hartree=[item['energy_hartree'] for item in source_records],irc_report=report)
         self.manifest['files']['P04-mayer.csv']['expected']=dict(pairs=[[a,b] for a in range(1,5) for b in range(a+1,5)],
                                                                orders=all_orders,unit='dimensionless')
@@ -442,10 +467,29 @@ class Generator:
                  'Independent Multiwfn Mayer comparison at the transition state',calculation=calc,
                  sanitize=True,producer='Multiwfn 2026.9.20')
         for label,filename in mapping.get('source_logs',{}).items():
-            self.add('P04-'+label+'-log',Path(filename),'P04/'+label+'.log','Gaussian IRC convergence evidence',
-                     calculation=calc,sanitize=True)
-        self.add('P04-ts-log',self.args.raw_root/'P04-ts/output.log','P04/ts.log','First-order saddle optimization and frequency evidence',
+            if label=='ts':
+                continue
+            self.add('P04-'+label+'-log',Path(filename),'P04/'+label+'.log','IRC integrator and Gaussian convergence evidence',
+                     calculation=calc,sanitize=True,producer=mapping.get('source_log_producers',{}).get(label,'Gaussian 16 C.01'))
+        ts_log=Path(mapping['ts_log'])
+        actual_frequencies=[float(value) for line in ts_log.read_text().splitlines() if 'Frequencies --' in line
+                            for value in line.split('--',1)[1].split()]
+        np.testing.assert_allclose(actual_frequencies,frequencies,atol=1e-8,rtol=0)
+        from qcblender.gaussian_log import inspect_log
+        ts_data=read_source(ts_log,len(inspect_log(ts_log)['jobs'])-1)
+        mode=ts_data.arrays['mode_displacements'][int(np.argmin(ts_data.arrays['mode_frequencies']))]
+        positions=ts_data.arrays['positions'];axis=positions[1]-positions[0]
+        normal=np.cross(axis,positions[2]-positions[0]);normal/=np.linalg.norm(normal)
+        out_of_plane=float(np.sum((mode@normal)**2)/np.sum(mode**2))
+        assert out_of_plane>.99,out_of_plane
+        report['ts_mode_assignment']=dict(mode='O-O torsion',out_of_plane_displacement_fraction=out_of_plane,
+                                           evidence='Unique imaginary Gaussian printed normal mode; planar H-O-O-H')
+        self.add('P04-ts-log',ts_log,'P04/ts.log','First-order saddle optimization and frequency evidence',
                  calculation=calc,sanitize=True)
+        for direction,check in endpoint_checks.items():
+            self.add('P04-'+direction+'-endpoint-log',Path(mapping['endpoint_logs'][direction]),
+                     'P04/'+direction+'-endpoint.log','Same-coordinate IRC endpoint frequency evidence',
+                     expected=check,calculation=dict(calc,geometry='Frequency at the accepted IRC endpoint'),sanitize=True)
         self.case('C10','P04',['P04-steps.csv']+[f'P04-step-{i:03d}.fchk' for i in range(1,count+1)],step_numbers=list(range(1,count+1)),ts_step=ts)
         self.case('C11','P04',['P04-mayer.csv']+[f'P04-step-{i:03d}-mayer.txt' for i in range(1,count+1)],atom_pair_1based=[1,2],unit='dimensionless')
         self.manifest['groups']['P04']=dict(local_parse_status='Passed',public_material_status='included')
@@ -460,12 +504,16 @@ class Generator:
         notice=('# Public tutorial samples\n\n'
             'Current dataset: Gaussian-v1. Owned calculation data: CC BY 4.0; attribution QCBlender contributors. '
             'P01/P03/P05 are optimized structures at the original methods/bases; P02 is an owned two-job water '
-            'optimization/frequency/NBO output. P04 contains a first-order saddle and the complete converged '
-            'bidirectional IRC. P05 fragments retain their geometries in the optimized complex. P06 contains '
+            'optimization/frequency/NBO output. P04 contains a first-order saddle and a complete bidirectional '
+            'geomeTRIC 1.1.1 IRC driven by real Gaussian energies and gradients, with Gaussian endpoint '
+            'frequency checks; Gaussian built-in IRC attempts were not accepted as complete. '
+            'P05 fragments retain their geometries in the optimized complex. P06 contains '
             'coordinate-only XYZ derivatives. Native FCHK files are produced by Gaussian formchk.\n\n'
             'Gaussian 16 Revision C.01 is the wavefunction producer. Multiwfn 2026.9.20 produces IGMH/IRI, '
             'ESP/AIM and NOCV analyses. Cite Tian Lu, Feiwu Chen, J. Comput. Chem. 33, 580 (2012), '
             'DOI:10.1002/jcc.22885; Tian Lu, J. Chem. Phys. 161, 082503 (2024), DOI:10.1063/5.0216272.\n\n'
+            'IRC integration and endpoint relaxation use geomeTRIC 1.1.1; cite L.-P. Wang and C. Song, '
+            'J. Chem. Phys. 144, 214108 (2016), DOI:10.1063/1.4952956.\n\n'
             'NOCV energies use the actual complex KS reconstruction and retain the Multiwfn approximation; '
             'they are not evaluated using F_TS. No basis-set or scientific grid-convergence claim is made. '
             'QCBlender display grids default to 0.2 angstrom; externally generated analysis grids are recorded '

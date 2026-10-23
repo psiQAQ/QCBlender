@@ -14,6 +14,8 @@ tests/data/visual-baseline/*.json text eol=lf diff
 # Keep relocated scientific inputs byte-identical on every checkout.
 validation/shared/data/public/** -text -diff
 validation/shared/data/public/README.md text eol=lf diff
+validation/shared/data/public/NOTICE.md -text diff
+validation/shared/data/public/gaussian-v1/tutorial-samples.json -text diff
 validation/shared/data/regression/** -text -diff
 validation/shared/data/regression/visual-baseline/*.json text eol=lf diff
 validation/shared/data/complex-example-sources.json -text -diff

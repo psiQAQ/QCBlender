@@ -94,6 +94,25 @@ class TutorialWorkspace(unittest.TestCase):
         self.assertEqual(report['human_execution'], 'Not Run')
         self.assertNotIn('work', workspace.PUBLIC_PARTS)
 
+    def test_linked_historical_images_are_retained_without_counting_as_current_figures(self):
+        self.supply_images()
+        self.write('human/renders/P01-final.png', 'current render fixture')
+        historical = self.write('human/screenshots/old-view.png', 'historical screenshot fixture')
+        self.write('human/SOP.md', '# Tutorial\n\n![View](screenshots/view.png)\n'
+                   '![Current render](renders/P01-final.png)\n'
+                   '[Historical render](renders/P01-mo.png)\n[Topic](topics/01-example.md)\n')
+        self.write('human/topics/01-example.md', '# Example\n\n'
+                   '[Historical view](../screenshots/old-view.png)\n')
+        report = workspace.check_documents(self.materials, require_images=True)
+        self.assertEqual(report['image_slots'], [
+            {'path': 'human/renders/P01-final.png', 'present': True},
+            {'path': 'human/screenshots/view.png', 'present': True}])
+        self.assertEqual(report['images_supplied'], 2)
+        self.assertEqual(report['screenshots_supplied'], 1)
+        self.assertEqual(historical.read_text(encoding='utf-8'), 'historical screenshot fixture')
+        self.assertEqual((self.materials / 'human/renders/P01-mo.png').read_text(encoding='utf-8'),
+                         'image fixture')
+
     def test_step_headings_and_legacy_steps_are_counted_with_toc_links(self):
         self.write('human/SOP.md', '# Tutorial\n\n[Install](#step-01)\n'
                    '[Import](#step-02)\n\n<a id="step-01"></a>\n'
