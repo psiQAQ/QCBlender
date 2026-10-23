@@ -116,7 +116,7 @@ export async function verifySite(dist = path.join(websiteRoot, 'dist')) {
     const h1Count = (document.content.match(/<h1(?:\s|>)/g) ?? []).length;
     require(h1Count === 1, `${page.slug}: expected one page H1, got ${h1Count}`);
   }
-  require(totals.steps === 79 && totals.images === 28 && totals.details === 86,
+  require(totals.steps === 80 && totals.images === 29 && totals.details === 87,
     `Tutorial inventory changed: ${JSON.stringify(totals)}`);
 
   const permittedAssets = new Map(report.images.map((entry) => [entry.path, entry.sha256]));

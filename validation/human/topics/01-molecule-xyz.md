@@ -87,13 +87,19 @@
 - 按下表从上到下连续操作；每行重新点击 **设置局部选择（Set Local Selection）**，选择对应 **显示范围更新方式（Display Range Update Mode）**，填写编号和邻域设置，再点击 **确定（OK）**。
 - 观察分子形状和面板中的 **固定源编号（Fixed source numbers）**。
 
-| 顺序与目的 | 显示范围更新方式（Display Range Update Mode） | 源原子编号（从1开始）（Source atom numbers (1-based)） | 邻域设置 | 应看到的结果 |
+<div class="local-selection-table" role="region" aria-label="局部选择操作对照表" tabindex="0">
+
+| 顺序与目的 | 显示范围更新方式 | 源原子编号 | 邻域设置 | 应看到的结果 |
 | --- | --- | --- | --- | --- |
 | A：指定一个完整水分子 | 替换（Replace） | `1` | 开启纳入距离邻域（Include distance neighborhood）；半径（Å）（Radius (Å)）=`1.0 Å`；勾选包含种子原子（Include seed atoms） | 原子 `1,2,3`：第一个水分子的氧和两个氢。 |
 | B：向已有范围添加一个原子 | 并集（Union） | `4` | 关闭纳入距离邻域（Include distance neighborhood） | 原子 `1,2,3,4`：第一个水分子与第二个水分子的氧。 |
 | C：只保留两个范围共有的原子 | 交集（Intersect） | `1,4` | 保持邻域搜索关闭 | 原子 `1,4`：两个氧。 |
 | D：从已有范围减去一个原子 | 差集（Difference） | `1` | 保持邻域搜索关闭 | 原子 `4`：只剩氧 4。 |
 | E：查看范围以外的原子 | 反选（Invert） | 无需填写 | 无需设置 | 原子 `1,2,3,5,6`：除氧 4 外的全部原子。 |
+
+</div>
+
+表头说明：显示范围更新方式对应 **Display Range Update Mode**；源原子编号对应 **Source atom numbers (1-based)**，使用源文件中**从 1 开始**的编号。
 
 演示过程中，在 **N 侧栏 → 当前 QC 对象（Current QC Object）** 核对来源原子总数仍为 **6**；例如 C 行只显示两个氧时，该总数不会变成 2，局部范围以 **固定源编号（Fixed source numbers）** 为准。
 
