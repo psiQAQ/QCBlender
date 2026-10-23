@@ -73,6 +73,7 @@ class EmptyObjectMenu(unittest.TestCase):
         buttons = self.draw(Object(qc_view_kind='atoms', qc_dataset='molecule/manifest.json'))
         self.assertEqual(buttons, ['qcblender.source_details', 'qcblender.open_properties',
                                   'qcblender.create_framed_camera',
+                                  'qcblender.apply_output',
                                   'qcblender.copy_display_parameters'])
 
 

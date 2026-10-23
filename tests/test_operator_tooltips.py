@@ -8,7 +8,6 @@ import unittest
 from unittest.mock import patch
 
 from qcblender import i18n
-from qcblender.translations_tooltips import MESSAGES
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -67,14 +66,7 @@ class OperatorTooltips(unittest.TestCase):
         self.prefs_patch = patch.dict(sys.modules, {'bpy': self.bpy})
         self.prefs_patch.start()
         self.addCleanup(self.prefs_patch.stop)
-        catalog = dict(i18n.messages())
-        for source, translation in MESSAGES.items():
-            if source in catalog:
-                self.assertEqual(catalog[source], translation)
-            catalog[source] = translation
-        self.catalog_patch = patch.object(i18n, '_messages', catalog)
-        self.catalog_patch.start()
-        self.addCleanup(self.catalog_patch.stop)
+        self.messages = i18n.messages()
 
     def test_every_owned_operator_and_workspace_tool_has_meaningful_bilingual_description(self):
         for identifier, (path, cls, attrs) in operator_sources().items():
@@ -82,8 +74,8 @@ class OperatorTooltips(unittest.TestCase):
                 description = ast.literal_eval(attrs['bl_description'])
                 self.assertGreater(len(description), 50)
                 self.assertNotEqual(description, ast.literal_eval(attrs['bl_label']))
-                self.assertIn(description, MESSAGES)
-                self.assertTrue(any('\u4e00' <= char <= '\u9fff' for char in MESSAGES[description]))
+                self.assertIn(description, self.messages)
+                self.assertTrue(any('\u4e00' <= char <= '\u9fff' for char in self.messages[description]))
 
     def test_all_action_variants_have_distinct_tooltips_and_obey_tooltip_switch(self):
         context = SimpleNamespace(object=MappingProxyType({}))
@@ -96,11 +88,11 @@ class OperatorTooltips(unittest.TestCase):
                     self.view.use_translate_interface = interface
                     self.view.use_translate_tooltips = False
                     english = cls.description(context, properties)
-                    self.assertIn(english, MESSAGES)
+                    self.assertIn(english, self.messages)
                     self.assertNotEqual(english, cls.bl_description)
                     self.view.use_translate_tooltips = True
                     chinese = cls.description(context, properties)
-                    self.assertEqual(chinese, MESSAGES[english])
+                    self.assertEqual(chinese, self.messages[english])
                 english_descriptions.append(english)
             with self.subTest(operator=operator):
                 self.assertEqual(len(set(english_descriptions)), len(variants))
@@ -120,10 +112,10 @@ class OperatorTooltips(unittest.TestCase):
                 context = SimpleNamespace(object=MappingProxyType(values))
                 self.view.use_translate_tooltips = False
                 english = cls.description(context, SimpleNamespace(**props))
-                self.assertIn(english, MESSAGES)
+                self.assertIn(english, self.messages)
                 self.assertNotEqual(english, cls.bl_description)
                 self.view.use_translate_tooltips = True
-                self.assertEqual(cls.description(context, SimpleNamespace(**props)), MESSAGES[english])
+                self.assertEqual(cls.description(context, SimpleNamespace(**props)), self.messages[english])
                 shown.append(english)
             with self.subTest(operator=operator):
                 self.assertEqual(len(shown), len(set(shown)))
@@ -134,7 +126,7 @@ class OperatorTooltips(unittest.TestCase):
                 cls = description_class(identifier)
                 with self.subTest(operator=identifier):
                     result = cls.description(None, SimpleNamespace())
-                    self.assertIn(result, MESSAGES.values())
+                    self.assertIn(result, self.messages.values())
 
     def test_charge_method_cache_keeps_identifiers_and_source_labels_when_tooltip_language_changes(self):
         path = ROOT / 'qcblender/blender/atomic_properties.py'
@@ -151,7 +143,7 @@ class OperatorTooltips(unittest.TestCase):
             actual = namespace['charge_items'](None, context)
             self.assertEqual([row[:2] for row in actual], [row[:2] for row in cached])
             self.assertEqual([row[2] for row in actual],
-                             [MESSAGES[row[2]] if translate else row[2] for row in cached])
+                             [self.messages[row[2]] if translate else row[2] for row in cached])
         self.assertEqual(namespace['_charge_items']['dataset'], cached)
 
 
