@@ -1,5 +1,9 @@
 # 开发演进
 
+- 2026-10-23：按资源评估后的授权生成苯同源全电子/π AICD 基准，保存 8 个原件与独立提取/点值参照；两套各 240,570 点，坐标、九分量和 +Z 响应逐点一致，Aniso 误差不超过 2.23e-16，04 resolved。转储重算磁化率未达到日志打印精度，差异与适用边界保留；显示/GUI/候选及独立人工科研验收尚未执行，未新增依赖。见[本次结果](research/scientific-display-reference-inventory-20261023.md#aicd-本次实际运行及数值契约)。
+
+- 2026-10-23：保全 MolStudio 与 AICD 公开资料及来源身份，完成源码、公开归档和三个运行包目录的定向查阅；按用户追加意见取消苯限定，补查其他分子公开材料。取得 AICD 提取器与部分输入/日志，仍未取得同源 all/π 原始结果。下载与目录检查 Passed，Gaussian 计算和科学验收 Not Run，04 材料前置继续 pending；见[研究记录](research/aicd-public-samples-20261023.md)。
+
 - 2026-10-23：按追加授权将表面距离投影候选 `53b412c6…` 安装到日常 Blender，未备份旧插件与偏好；134 个安装成员、原生真实案例、实际 GUI 配色/等值线/有效点查询、便携保存和新进程冷读 Passed。证据及工程见[日常追加验收](../validation/agent/acceptance/surface-projection.md#日常配置追加验收)；本地提交记录，不推送。独立人工/科研验收、全量回归和远端 CI Not Run。
 
 - 2026-10-23：实现表面距离投影适配器，以真实 Multiwfn 日志和扫描声明约束单位、网格及一次性 XY 偏移；保留有效/未命中/未知三态、原子投影、色表与等值线、逐点读取和全量 CSV。21 项定向、实际 GUI、便携保存冷重开 Passed；GUI 发现的点值刷新已修复并复验。源码 `368a4ab` 的完整包、134 成员隔离安装、最终包真实案例/渲染/冷读 Passed，当前包入口已更新；日常安装未变，独立人工/科研及远端 CI Not Run，AICD 继续阻塞。新增第 10 专题并通过本地网站构建/链接检查，未部署。见[验收](../validation/agent/acceptance/surface-projection.md)和[产物入口](ARTIFACTS.md#surface-projection-20261023)。

@@ -4,7 +4,8 @@
 
 ## 输入与科学语义
 
-- [距离投影与 AICD 真实材料盘点](scientific-display-reference-inventory-20261023.md)：官方构型与日志、真实 Multiwfn vdW 距离图及独立数值参照，附来源、误差界和 SHA-256；AICD 缺件单独列明。
+- [AICD 公开样例核查](aicd-public-samples-20261023.md)：MolStudio 源码、归档和三个运行包目录，以及 AICD 官方、教程作者和其他分子公开材料；案例不限定苯，仍以完整同源 all/π 原始结果为前置。
+- [距离投影与 AICD 真实材料盘点](scientific-display-reference-inventory-20261023.md)：真实 Multiwfn vdW 距离图、同源苯 all/π 张量及独立点值参照，附来源、误差界、SHA-256 和积分复现限制。
 - [Gaussian 输入与数值边界](gaussian-inputs.md)：2026-09-22 设计研究，保留当时的分期建议。
 - [Gaussian 方法特定能量](gaussian-energy-semantics.md)：原始输出标签、能量类别与来源约束。
 - [Gaussian 日志实现依据](gaussian-log-implementation.md)：计算段、性质和结构的关联方式。

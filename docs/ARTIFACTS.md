@@ -4,6 +4,8 @@
 
 ## 当前交付
 
+AICD 公开资料（2026-10-23）保存在 `submodules/AICD/reference-public-20261023/`；来源、归档成员和哈希见[公开检索记录](research/aicd-public-samples-20261023.md)。后续已生成并验收同源苯 all/π 原始材料，保存在 `validation/shared/data/local/scientific-displays/aicd-benzene/`，独立提取与全部点值参照在 `validation/agent/reports/2026-10-23/aicd-reference/`；均 Git 忽略。科学条件、重算依据、格式及误差契约见[本次结果](research/scientific-display-reference-inventory-20261023.md#aicd-本次实际运行及数值契约)。原件由 `local-inputs.json` 核对，独立参照可用原 AICD 提取器及该报告目录的 C++ 入口重建；当前安装包不含 AICD 功能，05 正在实施。
+
 本地环境与工作目录现按 [modules](../modules/README.md) 和[维护规则](agents/storage-maintenance.md#当前目录职责)分类：共用依赖在 `modules/`，缓存和临时工作在 `.tmp/`，本机 Blender 配置在 `.local/blender/`。`outputs/` 保留实际输出。2026-10-22 整理的逐文件旧/新路径、SHA-256、用途和清理状态以 `validation/agent/reports/2026-10-22/output-layout/migration.jsonl.gz` 为准；ZIP 成员保全映射在同批 `archive-members.jsonl.gz`。历史记录中的旧路径和 Passed 保持当时身份，当前位置按映射查询；实际验证和残留见[本批验收](../validation/agent/acceptance/output-layout.md)。
 
 开发流程工具已完成技术验收：[入口](agents/development-workflow.md)、[当前结果](../validation/agent/acceptance/dev-workflow.md)，日志与规则备份当前位置由本次迁移映射定位，正式记录在 `validation/agent/reports/2026-10-16/dev-workflow-20261016/legacy-outputs/`。真实 MCP、构建安装和原工程恢复 Passed；当前有效候选见下表。

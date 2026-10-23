@@ -1530,6 +1530,102 @@
       ],
       "provenance": "canonical grid state mask derived from independent-reference.csv; original eight-file reference identities remain unchanged",
       "data_license_status": "local use only; redistribution permission not established"
+    },
+    "scientific-displays/aicd-benzene/all/AICD.txt": {
+      "path": "validation/shared/data/local/scientific-displays/aicd-benzene/all/AICD.txt",
+      "sha256": "9a5602c495e1924ead17a3edf0e207eeccace47e29d0e13adeded995f9289eac",
+      "bytes": 55131286,
+      "role": "AICD same-wavefunction all/pi reference",
+      "used_by": [
+        "scientific-displays-20261023/04",
+        "scientific-displays-20261023/05"
+      ],
+      "provenance": "Generated benchmark; scientific conditions and independent checks in scientific-display-reference-inventory-20261023.md",
+      "data_license_status": "local-only; not distributed with public tutorials"
+    },
+    "scientific-displays/aicd-benzene/all/all.gjf": {
+      "path": "validation/shared/data/local/scientific-displays/aicd-benzene/all/all.gjf",
+      "sha256": "047465c869cc1beae90c6cd295296f0e2a88af29e72ed5c184bf84eb0897bbbe",
+      "bytes": 594,
+      "role": "AICD same-wavefunction all/pi reference",
+      "used_by": [
+        "scientific-displays-20261023/04",
+        "scientific-displays-20261023/05"
+      ],
+      "provenance": "Generated benchmark; scientific conditions and independent checks in scientific-display-reference-inventory-20261023.md",
+      "data_license_status": "local-only; not distributed with public tutorials"
+    },
+    "scientific-displays/aicd-benzene/all/all.log": {
+      "path": "validation/shared/data/local/scientific-displays/aicd-benzene/all/all.log",
+      "sha256": "82830b230978a4af46de5db6d5b83ba89ca66e072a17045f239624b5ec0bb69a",
+      "bytes": 37836,
+      "role": "AICD same-wavefunction all/pi reference",
+      "used_by": [
+        "scientific-displays-20261023/04",
+        "scientific-displays-20261023/05"
+      ],
+      "provenance": "Generated benchmark; scientific conditions and independent checks in scientific-display-reference-inventory-20261023.md",
+      "data_license_status": "local-only; not distributed with public tutorials"
+    },
+    "scientific-displays/aicd-benzene/all/all.fchk": {
+      "path": "validation/shared/data/local/scientific-displays/aicd-benzene/all/all.fchk",
+      "sha256": "8a9a2cda6973fbc4b982040490d6f4fe36b4b5000277c4dc1a472183ed6beda8",
+      "bytes": 516270,
+      "role": "AICD same-wavefunction all/pi reference",
+      "used_by": [
+        "scientific-displays-20261023/04",
+        "scientific-displays-20261023/05"
+      ],
+      "provenance": "Generated benchmark; scientific conditions and independent checks in scientific-display-reference-inventory-20261023.md",
+      "data_license_status": "local-only; not distributed with public tutorials"
+    },
+    "scientific-displays/aicd-benzene/pi/AICD.txt": {
+      "path": "validation/shared/data/local/scientific-displays/aicd-benzene/pi/AICD.txt",
+      "sha256": "78fd75c4ed6bd00231a759c966fb981baeaa5e4215e4dfab127134fe3642dcc0",
+      "bytes": 55131286,
+      "role": "AICD same-wavefunction all/pi reference",
+      "used_by": [
+        "scientific-displays-20261023/04",
+        "scientific-displays-20261023/05"
+      ],
+      "provenance": "Generated benchmark; scientific conditions and independent checks in scientific-display-reference-inventory-20261023.md",
+      "data_license_status": "local-only; not distributed with public tutorials"
+    },
+    "scientific-displays/aicd-benzene/pi/pi.gjf": {
+      "path": "validation/shared/data/local/scientific-displays/aicd-benzene/pi/pi.gjf",
+      "sha256": "4612683ae69fb19b6c288476bd8f01febcf0dcb4a3a7f6ccdabec0e233700d45",
+      "bytes": 630,
+      "role": "AICD same-wavefunction all/pi reference",
+      "used_by": [
+        "scientific-displays-20261023/04",
+        "scientific-displays-20261023/05"
+      ],
+      "provenance": "Generated benchmark; scientific conditions and independent checks in scientific-display-reference-inventory-20261023.md",
+      "data_license_status": "local-only; not distributed with public tutorials"
+    },
+    "scientific-displays/aicd-benzene/pi/pi.log": {
+      "path": "validation/shared/data/local/scientific-displays/aicd-benzene/pi/pi.log",
+      "sha256": "94bebb1f1883a74eb969e04ff62b935aad0804fc9167fd2acb3b8d4eb36ae031",
+      "bytes": 33004,
+      "role": "AICD same-wavefunction all/pi reference",
+      "used_by": [
+        "scientific-displays-20261023/04",
+        "scientific-displays-20261023/05"
+      ],
+      "provenance": "Generated benchmark; scientific conditions and independent checks in scientific-display-reference-inventory-20261023.md",
+      "data_license_status": "local-only; not distributed with public tutorials"
+    },
+    "scientific-displays/aicd-benzene/pi/pi.fchk": {
+      "path": "validation/shared/data/local/scientific-displays/aicd-benzene/pi/pi.fchk",
+      "sha256": "35bd4b7be6a6d941b60f7eee08cb86c4de236d798f5bf2251ea3d831f134d4fc",
+      "bytes": 516294,
+      "role": "AICD same-wavefunction all/pi reference",
+      "used_by": [
+        "scientific-displays-20261023/04",
+        "scientific-displays-20261023/05"
+      ],
+      "provenance": "Generated benchmark; scientific conditions and independent checks in scientific-display-reference-inventory-20261023.md",
+      "data_license_status": "local-only; not distributed with public tutorials"
     }
   },
   "documentation": "docs/v1-acceptance/SOURCES.md"
