@@ -19,6 +19,7 @@
 
 ## 参考软件与设计取舍
 
+- 2026-10-23 主干增量：[子模块更新与采用建议](upstream-20261023-review.md)；三个参考子模块已更新，记录完整提交范围、自动观察方向/出图设置/逐键着色建议及暂缓的科学功能，本批未改插件功能。
 - 2026-10-11 主干增量：[MolecularNodes](upstream-20261011-molecularnodes.md)、[GXNU-MolStudio](upstream-20261011-molstudio.md)、[VTK](upstream-20261011-vtk.md)；记录最近实际参考提交、完整增量范围和本批采用边界。
 - [原子样式性能基准](upstream-20261011-atom-performance.md)：32/128/512 原子、三种样式和两档 Quality 的创建、求值、提取及内存实测，区分预热和正式结果。
 
