@@ -11,7 +11,8 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from tools.package_identity import extension_filename, extension_manifest, file_record, source_identity
+from tools.package_identity import (GENERATED_NODE_ASSET_MEMBERS, extension_filename,
+                                    extension_manifest, file_record, source_identity)
 
 
 def validate_archive(candidate, installed_dir, root=ROOT):
@@ -27,10 +28,13 @@ def validate_archive(candidate, installed_dir, root=ROOT):
                           for path in (root / 'qcblender').rglob('*')
                           if path.is_file() and '__pycache__' not in path.parts and path.suffix != '.pyc'}
         expected_members = source_members | {'LICENSE', 'THIRD_PARTY.md', 'science-sources.lock.json',
-            'dependencies.lock.json', 'backend-wheel.json', 'assets/nodes.blend', 'assets/blender_assets.cats.txt'}
+            'dependencies.lock.json', 'backend-wheel.json'} | GENERATED_NODE_ASSET_MEMBERS
         expected_members |= {'wheels/' + package['filename'] for package in packages}
-        if {name for name in names if not name.endswith('/')} != expected_members:
-            raise ValueError('Candidate ZIP contains missing or unexpected members')
+        actual_members = {name for name in names if not name.endswith('/')}
+        if actual_members != expected_members:
+            raise ValueError('Candidate ZIP contains missing or unexpected members: '
+                             f'missing={sorted(expected_members - actual_members)}, '
+                             f'unexpected={sorted(actual_members - expected_members)}')
         for name in names:
             target = (installed_dir / name).resolve()
             if not target.is_relative_to(installed_dir.resolve()) or name.startswith(('/', '\\')) or '\\' in name:

@@ -339,6 +339,9 @@ class CandidateBoundaries(unittest.TestCase):
                     'wheels/' + backend['filename']: wheel.getvalue()}
         for name in ('LICENSE', 'THIRD_PARTY.md', 'science-sources.lock.json', 'dependencies.lock.json'):
             contents[name] = (self.root / name).read_bytes()
+        for language in ('en_US', 'zh_HANS'):
+            contents[f'assets/{language}/nodes.blend'] = b'synthetic localized node bytes'
+            contents[f'assets/{language}/blender_assets.cats.txt'] = b'synthetic localized catalog'
         installed = self.root / 'installed'
         with zipfile.ZipFile(self.candidate, 'w') as archive:
             for name, raw in contents.items():
@@ -352,6 +355,23 @@ class CandidateBoundaries(unittest.TestCase):
         installed = self.qualified_zip_fixture()
         self.assertEqual(validate_archive(self.candidate, installed, self.root)['name'], 'qc-gbasis')
         (installed / 'assets/nodes.blend').write_bytes(b'changed node asset')
+        with self.assertRaisesRegex(ValueError, 'Installed file differs'):
+            validate_archive(self.candidate, installed, self.root)
+
+    def test_archive_qualification_rejects_missing_localized_library(self):
+        installed = self.qualified_zip_fixture()
+        with zipfile.ZipFile(self.candidate) as archive:
+            contents = {name: archive.read(name) for name in archive.namelist()}
+        del contents['assets/zh_HANS/nodes.blend']
+        with zipfile.ZipFile(self.candidate, 'w') as archive:
+            for name, raw in contents.items():
+                archive.writestr(name, raw)
+        with self.assertRaisesRegex(ValueError, 'missing.*assets/zh_HANS/nodes.blend'):
+            validate_archive(self.candidate, installed, self.root)
+
+    def test_archive_qualification_checks_installed_localized_library_bytes(self):
+        installed = self.qualified_zip_fixture()
+        (installed / 'assets/en_US/nodes.blend').write_bytes(b'changed localized asset')
         with self.assertRaisesRegex(ValueError, 'Installed file differs'):
             validate_archive(self.candidate, installed, self.root)
 

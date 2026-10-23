@@ -52,6 +52,9 @@ def fixture():
                               'wheels/qc_gbasis-fixture.whl': backend_bytes,
                               'assets/nodes.blend': b'Synthetic generated node asset',
                               'assets/blender_assets.cats.txt': b'Synthetic generated catalog'})
+    for language in ('en_US', 'zh_HANS'):
+        extension_entries[f'assets/{language}/nodes.blend'] = b'Synthetic localized asset'
+        extension_entries[f'assets/{language}/blender_assets.cats.txt'] = b'Synthetic localized catalog'
     public_input = b'public scientific fixture'
     samples = {'files': {'P01-o2-uhf': {'archive_path': 'P01/fixture.fchk', 'distribution': 'included',
                                       'license': 'CC-BY-4.0', 'bytes': len(public_input),

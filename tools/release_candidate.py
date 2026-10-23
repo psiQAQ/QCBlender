@@ -19,7 +19,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.public_reproduction import reproduction_members
-from tools.package_identity import dependency_identity
+from tools.package_identity import GENERATED_NODE_ASSET_MEMBERS, dependency_identity
 
 
 REQUIRED_REPORTS = frozenset({
@@ -222,7 +222,7 @@ def verify_extension(path, source, dependencies):
         expected_wheels = {'wheels/' + entry['filename'] for entry in wheels}
         expected_members = {name.removeprefix('qcblender/') for name in source if name.startswith('qcblender/')}
         expected_members |= {'dependencies.lock.json', 'science-sources.lock.json', 'LICENSE', 'THIRD_PARTY.md',
-                             'backend-wheel.json', 'assets/nodes.blend', 'assets/blender_assets.cats.txt'} | expected_wheels
+                             'backend-wheel.json'} | GENERATED_NODE_ASSET_MEMBERS | expected_wheels
         require(set(members) == expected_members, 'Extension contains missing or unexpected members')
         for name in source:
             if name.startswith('qcblender/') and not name.endswith(('.py', '/blender_manifest.toml')):
