@@ -108,7 +108,8 @@ class SidebarLayout(unittest.TestCase):
         allowed = {'import_calculation', 'import_irc_path', 'import_paired_field', 'import_esp_analysis',
                    'import_nbo', 'import_aim_analysis', 'import_ets_nocv', 'import_nocv_field',
                    'export_data', 'open_properties', 'save_project', 'archive_project', 'rebuild_cache',
-                   'relocate_dataset', 'cleanup_legacy_node_assets', 'check_runtime', 'layer_action'}
+                   'relocate_dataset', 'cleanup_legacy_node_assets', 'check_runtime', 'layer_action',
+                   'import_surface_projection'}
         self.assertEqual({item.name.removeprefix('qcblender.') for item in calls}, allowed)
         self.assertEqual(sum(item.name == 'qcblender.open_properties' for item in calls), 1)
         self.assertEqual([item.action for item in calls if item.name == 'qcblender.layer_action'], ['SELECT'])

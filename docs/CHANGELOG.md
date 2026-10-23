@@ -1,5 +1,9 @@
 # 开发演进
 
+- 2026-10-23：实现表面距离投影适配器，以真实 Multiwfn 日志和扫描声明约束单位、网格及一次性 XY 偏移；保留有效/未命中/未知三态、原子投影、色表与等值线、逐点读取和全量 CSV。21 项定向、原生渲染、实际 GUI、便携保存冷重开 Passed；GUI 发现的点值刷新已修复并复验。完整包及隔离安装待补，日常安装未变；AICD 继续阻塞。见[验收](../validation/agent/acceptance/surface-projection.md)和[产物入口](ARTIFACTS.md#surface-projection-20261023)。
+
+- 2026-10-23：按追加授权生成官方 Ru 构型的真实 Multiwfn vdW 距离投影，2,501 点与独立球面求交/离散采样参照核对 Passed，确认相对 XY 导出及一次性偏移；完整扫描条件、八文件及哈希已保全，距离投影材料前置解除。AICD 原始张量仍缺失；适配器、Blender 与独立人工科研验收 Not Run，安装包未变。见[参照与误差界](research/scientific-display-reference-inventory-20261023.md#本次实际运行及数值验收)及[产物入口](ARTIFACTS.md#projection-reference-20261023)。
+
 - 2026-10-23：调整分子教程局部选择表格列宽，表头补充说明移至表后，桌面与手机滚动验收通过；同步 Mayer 教程计数。候选 CI 的翻译覆盖测试改为检查实际合并目录，菜单预期补齐已存在的出图操作，273 项标准库测试通过。后续补齐候选/发布核验的中英文节点资产清单，完整远端候选资格与上传通过；网站已部署。证据见[跟进记录](../.scratch/website/issues/03-ci-followup.md)。
 
 - 2026-10-23：按追加授权将 Mayer 候选安装至日常 Blender 5.1.1，保全旧插件与偏好。131 成员一致性、P04 原生行为、实际 GUI 开关/阈值/切步/撤销/菜单重做、便携保存及新进程冷读 Passed；科学数组未变。源码和 ZIP 保持不变，未重复渲染；独立人工/科研、全量回归与远端 CI Not Run。见[Mayer 日常验证](../validation/agent/acceptance/mayer.md#日常配置补充验证)。本地提交，不推送。

@@ -61,6 +61,15 @@ class StaticReferenceCapabilities(unittest.TestCase):
                 with self.subTest(metadata=metadata, action=action):
                     self.assertTrue(self.capability(SimpleNamespace(object=obj), action)[1])
 
+    def test_projection_requires_static_atom_reference(self):
+        obj = self.view({})
+        self.assertFalse(self.capability(SimpleNamespace(object=obj), 'projection')[0])
+        obj['qc_view_kind'] = 'atoms'
+        self.assertTrue(self.capability(SimpleNamespace(object=obj), 'projection')[1])
+        parent = self.view({'trajectory': {'frames': [1, 2]}})
+        obj.parent = parent
+        self.assertFalse(self.capability(SimpleNamespace(object=obj), 'projection')[1])
+
 
 if __name__ == '__main__':
     unittest.main()

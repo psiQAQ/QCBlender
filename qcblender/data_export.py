@@ -71,6 +71,8 @@ def available_exports(data):
         result.append('paired')
     if meta.get('analysis', {}).get('kind') == 'ESP':
         result.append('ESP_AREA')
+    if meta.get('analysis', {}).get('kind') == 'SurfaceDistanceProjection':
+        result.append('PROJECTION')
     return result + ['SUMMARY']
 
 
@@ -100,6 +102,18 @@ def _tables(data, kind, filters, cancelled):
         rows = ((step + 1, int(pair[0]), int(pair[1]), float(values[step, index]))
                 for step in range(len(values)) for index, pair in enumerate(pairs))
         yield 'mayer.csv', ('step', 'atom_a_1based', 'atom_b_1based', 'mayer_order'), rows, {'mayer_order': 'dimensionless'}
+    elif kind == 'PROJECTION':
+        from .surface_projection import STATE_NAMES
+        x, y = arrays['projection_x'], arrays['projection_y']
+        sx, sy = arrays['projection_source_x'], arrays['projection_source_y']
+        values, states = arrays['projection_depth'], arrays['projection_state']
+        rows = ((i, j, float(sx[i]), float(sy[j]), float(x[i]), float(y[j]),
+                 float(values[i, j]), int(states[i, j]), STATE_NAMES[int(states[i, j])])
+                for i in range(len(x)) for j in range(len(y)))
+        yield 'surface_projection.csv', ('ix', 'iy', 'source_x_angstrom', 'source_y_angstrom',
+               'x_angstrom', 'y_angstrom', 'depth_angstrom', 'state', 'validity'), rows, {
+                   'coordinate': 'angstrom', 'depth': 'angstrom; z_hit-z_start',
+                   'state': '0=missed, 1=valid, 2=unknown; original depths retained for all states'}
     elif kind == 'profile':
         rows = ((float(d), *map(float, p), float(v) if valid else '', meta['profile']['field']['unit'], int(valid))
                 for d, p, v, valid in zip(arrays['profile_distance'], arrays['profile_positions'], arrays['profile_values'], arrays['profile_valid'], strict=True))

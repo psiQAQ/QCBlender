@@ -64,6 +64,7 @@ def draw_sidebar_summary(layout, context, *, details):
                 'atoms': 'Atoms', 'field': 'Scalar Field', 'slice': 'Slice', 'fog': 'Volume Fog',
                 'dipole': 'Dipole', 'spectrum': 'Spectrum', 'scatter': 'Scatter', 'nbo': 'NBO',
                 'analysis': 'Analysis', 'profile': 'Line Profile', 'annotation': 'Annotation',
+                'projection': 'Surface Distance Projection',
             }.get(value, value))
         text = f"{iface(entry['label'])}: {value}"
         if entry.get('unit'):
@@ -294,6 +295,7 @@ class QCBLENDER_PT_external_import(bpy.types.Panel):
         _action_group(layout, context, 'Spatial Field Analysis', [
             ('paired', 'qcblender.import_paired_field', 'IGMH / IRI Paired Fields'),
             ('esp', 'qcblender.import_esp_analysis', 'ESP Surface Analysis'),
+            ('projection', 'qcblender.import_surface_projection', 'Surface Distance Projection'),
         ])
         _action_group(layout, context, 'Atom and Bond Analysis', [
             ('nbo', 'qcblender.import_nbo', 'NBO Records'),

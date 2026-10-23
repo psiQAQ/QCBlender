@@ -50,4 +50,5 @@ python -B tools/prepare_validation_data.py `
 - `public-tutorial/P03/igmh` 等旧稳定 key 指向 `public/` 的同一份数据，不在 `local/` 重复保存公开原件。
 - `QCBLENDER_REFERENCE_ROOT` 可指向已经准备好资料的参考检出；公开解析使用冻结清单中的 `archive_path`。
 - P02 为 `local/log-examples/water_neutral_nbo_opt_freq.out` 和字节相同的 `.log` 别名。原数据再分发许可未确认，两者均不进入公开教程包。
+- `scientific-displays/ru-vdw-20261023` 指向真实 Multiwfn 距离投影的八文件参照包，含固定构型、扫描日志/设置、原始三列及独立球面求交点表；条件和误差界见[研究记录](../../../docs/research/scientific-display-reference-inventory-20261023.md#本次实际运行及数值验收)。原件及派生数据限本地使用，不进入公开教程包。
 - 人工教程不要求读者执行身份核对、填写技术报告或记录实际结果；这些步骤属于 Agent 的准备与维护工作。

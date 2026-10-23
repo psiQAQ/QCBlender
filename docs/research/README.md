@@ -4,6 +4,7 @@
 
 ## 输入与科学语义
 
+- [距离投影与 AICD 真实材料盘点](scientific-display-reference-inventory-20261023.md)：官方构型与日志、真实 Multiwfn vdW 距离图及独立数值参照，附来源、误差界和 SHA-256；AICD 缺件单独列明。
 - [Gaussian 输入与数值边界](gaussian-inputs.md)：2026-09-22 设计研究，保留当时的分期建议。
 - [Gaussian 方法特定能量](gaussian-energy-semantics.md)：原始输出标签、能量类别与来源约束。
 - [Gaussian 日志实现依据](gaussian-log-implementation.md)：计算段、性质和结构的关联方式。

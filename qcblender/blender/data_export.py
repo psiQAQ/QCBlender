@@ -50,6 +50,8 @@ def export_choices(self, context):
             kinds.append('paired')
         if analysis == 'ESP':
             kinds.append('ESP_AREA')
+        if analysis == 'SurfaceDistanceProjection':
+            kinds.append('PROJECTION')
         if context.object is not None:
             from .source_browser import source_object
             if source_object(context.object).get('qc_dataset'):

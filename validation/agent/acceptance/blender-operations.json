@@ -9365,6 +9365,68 @@
           "scope": "Actual Computer Use clicks: enable/disable, keyboard Undo, Edit-menu Redo, threshold 0.5 to 0.96 and back, next/previous IRC step; read-only timer records state"
         }
       ]
+    },
+    {
+      "id": "surface-distance-projection",
+      "title": "表面距离投影导入、显示与读值",
+      "gui_validation": {
+        "status": "Passed",
+        "date": "2026-10-23",
+        "method": "Agent Computer Use native clicks; read-only observer and native portable save",
+        "blender": "5.1.1",
+        "locale": "zh_HANS",
+        "objects_and_order": "61-atom static Ru reference in generating orientation; then independent projection object",
+        "visible_entry": "N 侧栏 → 导入与导出 → 导入外部结果 → 空间场分析 → 表面距离投影；对象属性 → 表面距离投影",
+        "validated_scope": "61x41 real vdW map, 1406 valid/1095 missed; four input paths; Cividis, contours -4,-3,-2; undo/menu redo/cancel; point 0,0 and cold point 1,0 with immediate redraw",
+        "reports": [
+          {
+            "path": "validation/agent/reports/2026-10-23/surface-projection/runs/gui/result.json",
+            "sha256": "6364d40e243049941b7794284b0580601bb356c5af82de4791cbe98d878a00ab",
+            "status": "Passed"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-23/surface-projection/runs/gui/cold.json",
+            "sha256": "9426b89f33a1e3f8cfe7cb84d642fb9c9769b0c8c92265bab8faa6b903430fec",
+            "status": "Passed"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-23/surface-projection/runs/gui/refresh.json",
+            "sha256": "1c681a259b4426e43fc367e8605eefe1190d02b1bc71e96452770238654c6ace",
+            "status": "Passed"
+          }
+        ],
+        "screenshots": [
+          {
+            "path": "validation/agent/reports/2026-10-23/surface-projection/runs/gui/screenshots/01-import.png",
+            "sha256": "6291b415c854fc82d3ae5328f866882086eabbb21501522bc15634a75ab1a698"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-23/surface-projection/runs/gui/screenshots/02-settings.png",
+            "sha256": "897274dba21beb209005bf25cfa47dee6f8df56e9bfc9735c60c065e9805c6ac"
+          },
+          {
+            "path": "validation/agent/reports/2026-10-23/surface-projection/runs/gui/screenshots/04-cold-refresh.png",
+            "sha256": "0ff9c820098f9a0610e8018d683049655edd0b940b70aac4fce4db1dca98e08e"
+          }
+        ]
+      },
+      "implementation_fingerprints": {
+        "qcblender/surface_projection.py": "8bf3d768c5499beeddc8816594d94a2557a43894fd5e1cf6b744022f1bc26023",
+        "qcblender/blender/surface_projection.py": "42dc48119cd6007c1343c7656acba2c264f9d69a269f7fa2ed0afe068c055a62",
+        "qcblender/blender/editor_ui.py": "4eb4905dd8eee5cb420719c93c0d04d3699e0cee5bbc3824bfd85327cb2f70b1",
+        "qcblender/blender/capabilities.py": "fa33a6ec8298c21f923e2c73b20e11bccb57ea8651aa2e3b19a408ac3aae09e2",
+        "qcblender/translations_projection.py": "8df7bb1529979ed47ee52880d322d309236664eb48236fd22946cb7c9f67cc47"
+      },
+      "fingerprint_review": "Import and settings GUI preceded only explicit redraw and summary-label fixes; affected point/label behavior rechecked in cold GUI. Review shared static-reference, geometry, legend, contour, export and persistence helpers before reuse.",
+      "reuse": {
+        "preferred_order": [
+          "MCP",
+          "CLI",
+          "Computer Use"
+        ],
+        "coverage": "CLI native import/geometry/export/render and portable cold-read via tools/verify_surface_projection.py; first or changed dialog inputs require GUI",
+        "requires_current_result_assertions": true
+      }
     }
   ]
 }

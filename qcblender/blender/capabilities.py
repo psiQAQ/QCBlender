@@ -57,6 +57,8 @@ def capability(context, action):
                 reason = 'Clipping already exists; adjust Spatial View in Object Properties'
             except ValueError as error:
                 ready, reason = False, str(error)
+    elif action == 'projection':
+        relevant, ready, reason = atoms, bool(meta.get('source')), 'Refresh source records first'
     elif action == 'esp':
         relevant = field.get('quantity') == 'electrostatic_potential' or record(obj, 'qc_color_source').get('quantity') == 'electrostatic_potential'
         ready = field.get('quantity') == 'electrostatic_potential'
@@ -77,7 +79,7 @@ def capability(context, action):
         ready, reason = bool(meta.get('analysis')), 'Analysis records are missing; refresh sources'
     else:
         raise ValueError('Unknown QC action: ' + action)
-    if relevant and action in ('aim', 'paired', 'nbo', 'nocv_table', 'esp', 'nocv_field'):
+    if relevant and action in ('aim', 'paired', 'nbo', 'nocv_table', 'esp', 'nocv_field', 'projection'):
         from .static_reference import cached_reference_reason
         static_reason = cached_reference_reason(obj, cached_metadata)
         if static_reason:

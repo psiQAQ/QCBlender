@@ -26,6 +26,7 @@
 | 导出科学记录或当前视图摘要 | 含相应数据的原子、场或分析记录 | N 侧栏 → 导入与导出 → 导出 | 导出数据与参数摘要；数据（Data）选择当前视图参数摘要或IR/optimization/IRC/Mayer/profile/paired/ESP_AREA |
 | 查看XYZ多帧 | XYZ多帧原子对象 | 对象属性 → XYZ Frames | Previous、Next、Choose XYZ Frame |
 | Mayer 逐键着色 | 已导入 Mayer 结果的 IRC path 或其 Mayer 记录 | 对象属性 → IRC 路径 | 显示 Mayer 连线、Mayer 显示设置；整路径色域、手动范围、键级下限 |
+| 表面距离投影 | 生成时同朝向的静态原子视图 | N 侧栏 → 导入与导出 → 导入外部结果 → 空间场分析 | 表面距离投影；生成后在对象属性中设置色表、等值线并读取网格点；CSV 类型 PROJECTION |
 | 局部选择、氢显隐 | 原子视图 | 对象属性 → 局部选择与标注 | 设置局部选择、隐藏氢等 |
 | 创建标注、优化视图 | 原子视图；优化需有逐步数据 | 对象属性 → 局部选择与标注（标注）／Optimization Trajectory（优化视图） | 原子（Atoms）、距离（Distance）、角度（Angle）、二面角（Dihedral）；创建优化轨迹视图（Create Optimization View） |
 | 查看来源 | 对应 QC 视图 | 对象属性的 QCBlender 主面板 | 来源详情、刷新来源、关联选中数据源 |
@@ -60,6 +61,7 @@
 | IRC/Mayer | [反应路径专题](../validation/human/topics/07-irc-mayer.md) |
 | ETS-NOCV 和 pair Cube | [NOCV 专题](../validation/human/topics/08-ets-nocv.md) |
 | 公共几何节点 | [节点专题](../validation/human/topics/09-nodes.md) |
+| 表面距离图、原子投影、三态与等值线 | [距离投影专题（本机限定案例）](../validation/human/topics/10-surface-projection.md) |
 | 取景、渲染、参数摘要和保存重开 | [导出与保存](../validation/human/SOP.md#export) |
 | 错误输入、筛选/取消、关联、恢复等技术边界 | [Agent 检查覆盖](../validation/agent/COVERAGE.md) |
 

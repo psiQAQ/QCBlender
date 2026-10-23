@@ -423,5 +423,6 @@ N 侧栏依次包含下列五区；**当前 QC 对象（Current QC Object）** �
 | IRC 路径、随步标注和 Mayer 键级 | [IRC 与 Mayer](topics/07-irc-mayer.md) |
 | ETS-NOCV 表（ETS-NOCV Table）和正负变形密度 | [ETS-NOCV](topics/08-ets-nocv.md) |
 | 用公共节点组合自己的显示流程 | [几何节点](topics/09-nodes.md) |
+| 导入表面距离图、区分三态、显示原子投影和等值线（本机限定案例） | [表面距离投影](topics/10-surface-projection.md) |
 
 公开样本的计算条件和许可见 [shared/data/public/NOTICE.md](../shared/data/public/NOTICE.md) 与 [LICENSE](../shared/data/public/LICENSE)。

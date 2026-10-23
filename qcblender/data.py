@@ -112,6 +112,8 @@ class Dataset:
                 raise ValueError(f'Invalid scientific array: {name}')
         from .mayer import validate_mayer
         validate_mayer(self)
+        from .surface_projection import validate_projection
+        validate_projection(self)
         numbers = self.arrays['atomic_numbers']
         coords = self.arrays['positions']
         if numbers.ndim != 1 or coords.shape != (len(numbers), 3):

@@ -31,7 +31,7 @@ npm run preview
 
 宣传文案在 `src/data/`，宣传页在 `src/pages/`，共享样式在 `src/styles/`。科学图位于 `src/assets/showcase/`，真实渲染条件和来源见[图片说明](src/assets/showcase/README.md)。调整主题不会改变科学图片中的色标。
 
-教程映射在 `tutorials.json`。正文只维护仓库原有 SOP、9 篇专题和 `docs/USER_GUIDE.md`；`prepare:docs` 生成的 Starlight 内容、复制资源和站点产物已忽略。修改教程后重新构建；不要手工编辑生成内容。
+教程映射在 `tutorials.json`。正文只维护仓库原有 SOP、10 篇专题和 `docs/USER_GUIDE.md`；`prepare:docs` 生成的 Starlight 内容、复制资源和站点产物已忽略。修改教程后重新构建；不要手工编辑生成内容。
 
 公开样本来自仓库冻结 ZIP，保留原包身份和许可。安装 ZIP、P02 本地材料、`.blend` 和 `.qcdata` 不在网站部署范围。公开 Release 尚不可用时，安装页提供状态说明和 Releases 入口，不能把源码 ZIP 当扩展安装包。
 

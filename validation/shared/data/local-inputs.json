@@ -1382,6 +1382,154 @@
       "source_url": "https://raw.githubusercontent.com/cclib/cclib-data/a16cc80ea29e8baec60abd0df346ce6862f52531/Gaussian/Gaussian16/water_neutral_nbo_opt_freq.out",
       "license": "not confirmed; local use only",
       "alias_of": "log-examples/water_neutral_nbo_opt_freq.out"
+    },
+    "scientific-displays/ru-vdw-20261023/distmap.txt": {
+      "id": "projection-ru-vdw-distmap.txt",
+      "path": "validation/shared/data/local/scientific-displays/ru-vdw-20261023/distmap.txt",
+      "bytes": 105042,
+      "sha256": "e74206aa452ceda9607c7401a4221ebe7978aacbc823070b0d0260c637ac84d3",
+      "role": "unscaled Multiwfn surface distance in angstrom; relative XY",
+      "used_by": [
+        "scientific-displays-20261023/02",
+        "scientific-displays-20261023/03"
+      ],
+      "source_url": "http://sobereva.com/multiwfn/",
+      "provenance": "Official Ru geometry; local Multiwfn 2026.9.20 run and independent analytic reference; see parameters.json",
+      "data_license_status": "local use only; redistribution permission not established"
+    },
+    "scientific-displays/ru-vdw-20261023/execution.json": {
+      "id": "projection-ru-vdw-execution.json",
+      "path": "validation/shared/data/local/scientific-displays/ru-vdw-20261023/execution.json",
+      "bytes": 642,
+      "sha256": "b14c53785707feddd761d053668b549dd5dd2c551a266311596a547e2334d26c",
+      "role": "actual process identity and execution receipt",
+      "used_by": [
+        "scientific-displays-20261023/02",
+        "scientific-displays-20261023/03"
+      ],
+      "source_url": "http://sobereva.com/multiwfn/",
+      "provenance": "Official Ru geometry; local Multiwfn 2026.9.20 run and independent analytic reference; see parameters.json",
+      "data_license_status": "local use only; redistribution permission not established"
+    },
+    "scientific-displays/ru-vdw-20261023/independent-reference.csv": {
+      "id": "projection-ru-vdw-independent-reference.csv",
+      "path": "validation/shared/data/local/scientific-displays/ru-vdw-20261023/independent-reference.csv",
+      "bytes": 157290,
+      "sha256": "4b6a76fae67114be54b9d539d38ec1d04dae57b5d714a158fcc77b7ff32306f6",
+      "role": "analytic ray-sphere reference and independent validity mask",
+      "used_by": [
+        "scientific-displays-20261023/02",
+        "scientific-displays-20261023/03"
+      ],
+      "source_url": "http://sobereva.com/multiwfn/",
+      "provenance": "Official Ru geometry; local Multiwfn 2026.9.20 run and independent analytic reference; see parameters.json",
+      "data_license_status": "local use only; redistribution permission not established"
+    },
+    "scientific-displays/ru-vdw-20261023/input.gjf": {
+      "id": "projection-ru-vdw-input.gjf",
+      "path": "validation/shared/data/local/scientific-displays/ru-vdw-20261023/input.gjf",
+      "bytes": 3848,
+      "sha256": "14301ca8539eec56dd179a153027ba7b14a7f4628714b049d7340af4c3baea06",
+      "role": "unchanged official geometry; no Gaussian calculation",
+      "used_by": [
+        "scientific-displays-20261023/02",
+        "scientific-displays-20261023/03"
+      ],
+      "source_url": "http://sobereva.com/multiwfn/",
+      "provenance": "Official Ru geometry; local Multiwfn 2026.9.20 run and independent analytic reference; see parameters.json",
+      "data_license_status": "local use only; redistribution permission not established"
+    },
+    "scientific-displays/ru-vdw-20261023/mwfn_commands.txt": {
+      "id": "projection-ru-vdw-mwfn_commands.txt",
+      "path": "validation/shared/data/local/scientific-displays/ru-vdw-20261023/mwfn_commands.txt",
+      "bytes": 104,
+      "sha256": "8d003e10fc778ccced7d56496c99714c7466c1d00ea97a0114b4afaf144539fa",
+      "role": "actual Multiwfn stdin",
+      "used_by": [
+        "scientific-displays-20261023/02",
+        "scientific-displays-20261023/03"
+      ],
+      "source_url": "http://sobereva.com/multiwfn/",
+      "provenance": "Official Ru geometry; local Multiwfn 2026.9.20 run and independent analytic reference; see parameters.json",
+      "data_license_status": "local use only; redistribution permission not established"
+    },
+    "scientific-displays/ru-vdw-20261023/mwfn_log.txt": {
+      "id": "projection-ru-vdw-mwfn_log.txt",
+      "path": "validation/shared/data/local/scientific-displays/ru-vdw-20261023/mwfn_log.txt",
+      "bytes": 19936,
+      "sha256": "45bcdc046b80ced08bdd6b6cb4085e85c703d61d8454124fbe4ed1260370089c",
+      "role": "actual Multiwfn stdout and stderr",
+      "used_by": [
+        "scientific-displays-20261023/02",
+        "scientific-displays-20261023/03"
+      ],
+      "source_url": "http://sobereva.com/multiwfn/",
+      "provenance": "Official Ru geometry; local Multiwfn 2026.9.20 run and independent analytic reference; see parameters.json",
+      "data_license_status": "local use only; redistribution permission not established"
+    },
+    "scientific-displays/ru-vdw-20261023/parameters.json": {
+      "id": "projection-ru-vdw-parameters.json",
+      "path": "validation/shared/data/local/scientific-displays/ru-vdw-20261023/parameters.json",
+      "bytes": 2406,
+      "sha256": "fdb3bcc238f67ea6995a3167bda869ed20612b942f0c94597bfde9602d04e749",
+      "role": "surface definition, scan parameters, source identities",
+      "used_by": [
+        "scientific-displays-20261023/02",
+        "scientific-displays-20261023/03"
+      ],
+      "source_url": "http://sobereva.com/multiwfn/",
+      "provenance": "Official Ru geometry; local Multiwfn 2026.9.20 run and independent analytic reference; see parameters.json",
+      "data_license_status": "local use only; redistribution permission not established"
+    },
+    "scientific-displays/ru-vdw-20261023/settings.ini": {
+      "id": "projection-ru-vdw-settings.ini",
+      "path": "validation/shared/data/local/scientific-displays/ru-vdw-20261023/settings.ini",
+      "bytes": 21478,
+      "sha256": "bbfc4f49a32a473ca381868d8ac7067667ed91374afdba516c16f9c79cf9cbe0",
+      "role": "actual local settings; only isilent changed to 1",
+      "used_by": [
+        "scientific-displays-20261023/02",
+        "scientific-displays-20261023/03"
+      ],
+      "source_url": "http://sobereva.com/multiwfn/",
+      "provenance": "Official Ru geometry; local Multiwfn 2026.9.20 run and independent analytic reference; see parameters.json",
+      "data_license_status": "local use only; redistribution permission not established"
+    },
+    "scientific-displays/ru-vdw-20261023/reference.xyz": {
+      "id": "projection-ru-vdw-reference.xyz",
+      "path": "validation/shared/data/local/scientific-displays/ru-vdw-20261023/reference.xyz",
+      "bytes": 2364,
+      "sha256": "5e1db3d93b708c6ce2678692e0f927f05f59ae71a61f08dbed00d8756923bebb",
+      "role": "unchanged geometry extracted from input.gjf for native QC import",
+      "used_by": [
+        "scientific-displays-20261023/03"
+      ],
+      "provenance": "unchanged geometry extracted from input.gjf for native QC import; original eight-file reference identities remain unchanged",
+      "data_license_status": "local use only; redistribution permission not established"
+    },
+    "scientific-displays/ru-vdw-20261023/scan.json": {
+      "id": "projection-ru-vdw-scan.json",
+      "path": "validation/shared/data/local/scientific-displays/ru-vdw-20261023/scan.json",
+      "bytes": 759,
+      "sha256": "dd935a7b78167c0921b383bcbe0ff514f7b497c74c628a1126b22c8ede985df1",
+      "role": "explicit adapter scan contract derived from verified parameters.json",
+      "used_by": [
+        "scientific-displays-20261023/03"
+      ],
+      "provenance": "explicit adapter scan contract derived from verified parameters.json; original eight-file reference identities remain unchanged",
+      "data_license_status": "local use only; redistribution permission not established"
+    },
+    "scientific-displays/ru-vdw-20261023/validity.csv": {
+      "id": "projection-ru-vdw-validity.csv",
+      "path": "validation/shared/data/local/scientific-displays/ru-vdw-20261023/validity.csv",
+      "bytes": 21502,
+      "sha256": "78e5f4e96cd828cf34e877d12071ffd293e2a4cec1c31c33a772efb9812132b7",
+      "role": "canonical grid state mask derived from independent-reference.csv",
+      "used_by": [
+        "scientific-displays-20261023/03"
+      ],
+      "provenance": "canonical grid state mask derived from independent-reference.csv; original eight-file reference identities remain unchanged",
+      "data_license_status": "local use only; redistribution permission not established"
     }
   },
   "documentation": "docs/v1-acceptance/SOURCES.md"

@@ -8,7 +8,7 @@
 
 开发流程工具已完成技术验收：[入口](agents/development-workflow.md)、[当前结果](../validation/agent/acceptance/dev-workflow.md)，日志与规则备份当前位置由本次迁移映射定位，正式记录在 `validation/agent/reports/2026-10-16/dev-workflow-20261016/legacy-outputs/`。真实 MCP、构建安装和原工程恢复 Passed；当前有效候选见下表。
 
-从 [validation](../validation/README.md) 查找当前教程、输入和校验材料；人工入口为 [SOP](../validation/human/SOP.md)。主线 15 步、9 个按需专题；2026-10-21 完成的 79 步和 27 张截图保留当时身份。本批更新第 8 步自动出图说明、设置截图及第 9 步成图，具体复验范围见[自动出图验收](../validation/agent/acceptance/auto-output.md)。
+从 [validation](../validation/README.md) 查找当前教程、输入和校验材料；人工入口为 [SOP](../validation/human/SOP.md)。主线 15 步、10 个按需专题；2026-10-21 完成的 79 步和 27 张截图保留当时身份。后续增补自动出图、Mayer 和表面距离投影，各批实际复验范围见对应验收。
 
 | 内容 | 当前入口 |
 | --- | --- |
@@ -21,6 +21,18 @@
 | 当前候选及验证 | `outputs/candidates/mayer/build-1/`；源码 `4b90967`，增加 IRC Mayer 逐键着色；完整构建、隔离安装、实际 GUI/渲染和冷读 Passed；追加日常安装、实际 GUI 和保存冷读 Passed；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/mayer.md) |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
+
+<a id="surface-projection-20261023"></a>
+## 表面距离投影适配器（2026-10-23）
+
+真实 Ru vdW 距离图的二维 Dataset、三态、原子 XY 投影、Viridis/Cividis、等值线、点值及全量 CSV 已实现。[验收](../validation/agent/acceptance/surface-projection.md)与 `validation/agent/reports/2026-10-23/surface-projection/acceptance.json` 是本批结果入口。源码定向 21 项、实际原生渲染、GUI 导入/设置/撤销重做/取消/点值及保存冷重开 Passed；最终包构建与隔离安装待补，当前安装入口仍保持上表已验证 Mayer 包。
+
+GUI 便携工程在 `outputs/projects/surface-projection/gui/projection-gui.blend` 及配套 `.qcdata/`；本批原始收据、日志、截图和工作路径的保全映射为同批报告 `evidence-map.json`。源码验证临时工作保留在 `.tmp/runs/projection/`，最终安装案例完成后从本入口定位。复验工具为 `tools/verify_surface_projection.py`；[第 10 专题](../validation/human/topics/10-surface-projection.md)解释真实本机案例与输入契约。AICD 保持原材料阻塞，独立人工/科研、日常安装和远端发布 Not Run。
+
+<a id="projection-reference-20261023"></a>
+## 表面距离投影真实参照（2026-10-23）
+
+官方 Ru 构型的 Multiwfn 2026.9.20 vdW 实际输出及独立球面求交参照，集中在 `validation/shared/data/local/scientific-displays/ru-vdw-20261023/`，八文件均由 `local-inputs.json` 的同名 key 前缀定位并核对哈希。输入、设置、命令、运行日志、扫描参数及完整 2,501 点参考均保留；原件和工作副本未删除。数值和有效域核对 Passed，02 前置解除；适配器、Blender 与独立人工科研验收 Not Run，当前安装包未改变。详细条件与误差界见[研究记录](research/scientific-display-reference-inventory-20261023.md#本次实际运行及数值验收)，机器验收及标准库复现脚本位于 `validation/agent/reports/2026-10-23/projection-reference/`；脚本的 prepare/run 在新工作目录生成输入与实际结果，verify 更新同批验收 JSON，复验前保全旧记录。AICD 仍缺同源 all/π转储，缺件清单沿用同一研究记录。
 
 <a id="mayer-20261023"></a>
 ## IRC Mayer 逐键着色（2026-10-23）

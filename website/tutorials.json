@@ -19,6 +19,7 @@
     { "source": "validation/human/topics/07-irc-mayer.md", "slug": "docs/topics/07-irc-mayer", "title": "IRC 与 Mayer", "order": 7 },
     { "source": "validation/human/topics/08-ets-nocv.md", "slug": "docs/topics/08-ets-nocv", "title": "ETS-NOCV", "order": 8 },
     { "source": "validation/human/topics/09-nodes.md", "slug": "docs/topics/09-nodes", "title": "几何节点", "order": 9 },
+    { "source": "validation/human/topics/10-surface-projection.md", "slug": "docs/topics/10-surface-projection", "title": "表面距离投影", "order": 10 },
     { "source": "docs/USER_GUIDE.md", "slug": "docs/reference", "title": "操作入口索引", "order": 20 }
   ]
 }
