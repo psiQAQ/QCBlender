@@ -18,7 +18,7 @@
 | 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；当前工程在 `validation/work/human/`；[当前截图与工程](../validation/工程索引.md) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
 | 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,984,291 字节，SHA-256 `53b412c62fda4503ad3d1054e949ee2b7238b3aaf78978cb7037d0bd6bc4f3bf` |
-| 当前候选及验证 | `outputs/candidates/surface-projection/build-2/`；源码 `368a4ab`，增加表面距离投影；定向检查、实际源码 GUI、完整构建及 134 成员隔离安装、最终包渲染与冷读 Passed；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/surface-projection.md)。日常安装仍为 Mayer `13febd…`，新包日常安装 Not Run |
+| 当前候选及验证 | `outputs/candidates/surface-projection/build-2/`；源码 `368a4ab`，增加表面距离投影；定向检查、实际源码 GUI、完整构建及 134 成员隔离安装、最终包渲染与冷读 Passed；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/surface-projection.md)。同一包的日常安装、实际 GUI、原生案例和保存冷重开 Passed，按用户要求未备份旧插件和偏好 |
 | 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
 
@@ -28,6 +28,8 @@
 真实 Ru vdW 距离图的二维 Dataset、三态、原子 XY 投影、Viridis/Cividis、等值线、点值及全量 CSV 已实现。[验收](../validation/agent/acceptance/surface-projection.md)与 `validation/agent/reports/2026-10-23/surface-projection/acceptance.json` 是本批结果入口。源码定向 21 项、GUI 导入/设置/撤销重做/取消/点值及保存冷重开、最终完整包构建与 134 成员隔离安装、真实原生运行/渲染/冷读 Passed；当前安装入口已更新为上表最终包。
 
 GUI 便携工程在 `outputs/projects/surface-projection/gui/projection-gui.blend` 及配套 `.qcdata/`；最终安装案例的工程、数据、渲染 `projection.png` 和 CSV 在 `outputs/projects/surface-projection/installed/`。本批原始收据、日志、截图和工作路径的保全映射为同批报告 `evidence-map.json`。源码验证缓存保留在 `.tmp/runs/projection/`；共用 wheels 与输入保留，未执行额外旧包或历史产物清理。复验工具为 `tools/verify_surface_projection.py`；[第 10 专题](../validation/human/topics/10-surface-projection.md)解释真实本机案例与输入契约。AICD 保持原材料阻塞，独立人工/科研、日常安装和远端发布 Not Run。
+
+随后按用户追加授权完成同一候选的日常安装、实际 GUI、原生案例和保存冷重开，均 Passed；按要求未备份旧插件与偏好。日常工程和配套数据在 `outputs/projects/surface-projection/daily/`，本批证据由 `validation/agent/reports/2026-10-23/surface-projection/daily/acceptance.json` 定位。独立人工/科研及远端发布仍 Not Run。
 
 本地归档入口为 `archive/2026-10-23/feat/surface-distance-projection`（实现）与 `archive/2026-10-23/build/surface-distance-projection`（完整包证据）；工作树保全及正常移除收据在同批报告 `finish/`。主检出原有研究及子模块修改继续保留。
 

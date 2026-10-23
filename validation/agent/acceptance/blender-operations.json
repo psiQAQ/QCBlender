@@ -9429,7 +9429,18 @@
         ],
         "coverage": "CLI native import/geometry/export/render and portable cold-read via tools/verify_surface_projection.py; first or changed dialog inputs require GUI",
         "requires_current_result_assertions": true
-      }
+      },
+      "batch_replays": [
+        {
+          "date": "2026-10-23",
+          "status": "Passed",
+          "method": "Actual Computer Use in daily profile, native save and fresh-process cold assertions",
+          "candidate_sha256": "53b412c62fda4503ad3d1054e949ee2b7238b3aaf78978cb7037d0bd6bc4f3bf",
+          "report": "validation/agent/reports/2026-10-23/surface-projection/daily/acceptance.json",
+          "sha256": "6ecfe1d9d63078bc4a1eeaf7ac150da9e4f3bbec0fe82ed9d0fdecb203ba5347",
+          "scope": "Actual Computer Use: Cividis to Viridis, disable contours, inspect point (30,20); panel immediately shows X=0 A, Y=0.5 A, depth=-4.1 A and valid"
+        }
+      ]
     }
   ]
 }

@@ -14,6 +14,8 @@ Blocked by: 02
 
 ## Comments
 
+2026-10-23 追加日常安装：用户明确要求不备份旧插件及偏好。精确包 `53b412c6…` 的 134 成员、实际安装模块原生案例、日常 Computer Use 配色/等值线/点查询、便携保存和新进程冷读全部 Passed；当前日常安装已接替 Mayer 候选。详见[日常追加验收](../../../validation/agent/acceptance/surface-projection.md#日常配置追加验收)，机器证据在该批 `daily/acceptance.json`。仅提交本次记录，不推送。
+
 
 2026-10-23：因真实参照前置未完成，适配器尚未实施。
 

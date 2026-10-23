@@ -21,27 +21,22 @@
   "computer_use_scope": "Exact source file hashes match package. Source GUI exercised new interactions; rebuilt assets exercised by final installed native case/render/cold read. No claim of a second installed GUI click run. Actual Chinese GUI import paths, Cividis/contours, Undo/menu Redo/cancel, point reads and immediate panel redraw; native portable save and fresh-process cold read.",
   "scientific_acceptance": "Not Run",
   "last_verified_daily_install": {
-    "candidate_sha256": "13febd149e43b9ba687ab1de383fb7ca2bdf3bb2c7f1b6dca3b23fa0dfb092ff",
-    "source_commit": "4b90967de748a604273df9c0a8b03b2184d0e65c",
+    "candidate_sha256": "53b412c62fda4503ad3d1054e949ee2b7238b3aaf78978cb7037d0bd6bc4f3bf",
+    "source_commit": "368a4ab5cec47dd2514778a2ee7babd4114f96b9",
     "date": "2026-10-23",
-    "report": "validation/agent/reports/2026-10-23/mayer/daily/acceptance.json",
-    "status": "Passed",
-    "details": {
-      "daily_install": "Passed",
-      "daily_gui_smoke": "Passed",
-      "daily_native_smoke": "Passed",
-      "daily_cold_restart": "Passed",
-      "daily_install_date": "2026-10-23",
-      "daily_install_report": "validation/agent/reports/2026-10-23/mayer/daily/runs/daily-install/global-install.json",
-      "daily_validation_report": "validation/agent/reports/2026-10-23/mayer/daily/acceptance.json",
-      "daily_gui_report": "validation/agent/reports/2026-10-23/mayer/daily/runs/daily-gui/result.json",
-      "daily_install_backup": ".local/blender/backups/mayer-20261023",
-      "global_installation": "%APPDATA%/Blender Foundation/Blender/5.1/extensions/user_default/qcblender",
-      "previous_daily_install_candidate_sha256": "e73797010178657da9b950817f25a79786f2251832c9d04736c56b0dc00fa590"
-    }
+    "report": "validation/agent/reports/2026-10-23/surface-projection/daily/acceptance.json",
+    "status": "Passed"
   },
-  "daily_install": "Not Run",
-  "daily_gui_smoke": "Not Run",
-  "daily_native_smoke": "Not Run",
-  "daily_cold_restart": "Not Run"
+  "daily_install": "Passed",
+  "daily_gui_smoke": "Passed",
+  "daily_native_smoke": "Passed",
+  "daily_cold_restart": "Passed",
+  "daily_install_date": "2026-10-23",
+  "daily_install_report": "validation/agent/reports/2026-10-23/surface-projection/daily/runs/daily-install/global-install.json",
+  "daily_validation_report": "validation/agent/reports/2026-10-23/surface-projection/daily/acceptance.json",
+  "daily_gui_report": "validation/agent/reports/2026-10-23/surface-projection/daily/runs/daily-gui/result.json",
+  "daily_install_backup": null,
+  "daily_install_backup_policy": "Explicit user request: no old plugin or preferences backup",
+  "global_installation": "%APPDATA%/Blender Foundation/Blender/5.1/extensions/user_default/qcblender",
+  "previous_daily_install_candidate_sha256": "13febd149e43b9ba687ab1de383fb7ca2bdf3bb2c7f1b6dca3b23fa0dfb092ff"
 }
