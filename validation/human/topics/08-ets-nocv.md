@@ -19,13 +19,17 @@
 
 轨道对能量单位按原始输出选择；单位选项不执行换算。
 
-- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/P05/complex.fchk](../../shared/data/public/P05/complex.fchk)。
-- 只选新原子对象，点击 **导入与导出（Import and Export） → 导入外部结果（Import External Results） → 能量分解（Energy Decomposition） → ETS-NOCV 表（ETS-NOCV Table）**，选 **ETS-NOCV 输出文本（ETS-NOCV output text）=[shared/data/public/P05/nocv/ets-nocv.txt](../../shared/data/public/P05/nocv/ets-nocv.txt)**、**轨道对能量单位（Pair energy unit）=kcal/mol** 并确认。应保留 **C/O/B/H/H/H** 六原子分子，并新增 **QC ETS-NOCV pairs**。
+- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/gaussian-v1/P05/complex.fchk](../../shared/data/public/gaussian-v1/P05/complex.fchk)。
+- 只选新原子对象，点击 **导入与导出（Import and Export） → 导入外部结果（Import External Results） → 能量分解（Energy Decomposition） → ETS-NOCV 表（ETS-NOCV Table）**，选 **ETS-NOCV 输出文本（ETS-NOCV output text）=[shared/data/public/gaussian-v1/P05/nocv/ets-nocv.txt](../../shared/data/public/gaussian-v1/P05/nocv/ets-nocv.txt)**、**轨道对能量单位（Pair energy unit）=kcal/mol** 并确认。应保留 **C/O/B/H/H/H** 六原子分子，并新增 **QC ETS-NOCV pairs**。
+
+- 截图保存为 `human/screenshots/P05-nocv-table-import.png`。
+
+![ETS-NOCV表的同源参考分子、输出文本和源能量单位](../screenshots/P05-nocv-table-import.png)
 
 <details>
 <summary>了解 ETS-NOCV、轨道对与能量单位</summary>
 
-> NOCV（自然化学价轨道）将片段组合时的电子密度变化分成配对贡献；ETS-NOCV 将这些贡献与相互作用能量分析结合，表中列出各对的数值与能量。本例能量由 Multiwfn 的近似方法计算，详细条件见[样本说明](../../shared/data/public/NOTICE.md)。
+> NOCV（自然化学价轨道）将片段组合时的电子密度变化分成配对贡献；ETS-NOCV 将这些贡献与相互作用能量分析结合，表中列出各对的数值与能量。本例使用 CO→BH₃ 的同源计算；CO 片段为14电子，BH₃片段为8电子，两片段保持复合物中的构型。能量由 Multiwfn 基于实际复合物 KS 矩阵重建的近似方法计算，不等同于 F_TS 过渡态算符法，详细条件见[样本说明](../../shared/data/public/NOTICE.md)。
 
 > 轨道对能量单位（Pair energy unit）声明源表中每对贡献的能量单位。这里导入源表数值，单位选项不执行换算。
 
@@ -39,12 +43,12 @@
 <a id="step-02"></a>
 ### 2. 读取源表中的 Pair 记录
 
-- 在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 点击 **QC ETS-NOCV pairs** 行最左侧的选择图标，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，展开 **外部分析记录（External Analysis Records）**。应有 **11 条实际打印的记录**；**记录（从1开始）（Record (1-based)）=1** 应为 **Pair1 / 总计（Total）**、**pair_energy=−57.02 kcal/mol**，正负本征值为 **+0.54550/−0.54550**。
+- 在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 点击 **QC ETS-NOCV pairs** 行最左侧的选择图标，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，展开 **外部分析记录（External Analysis Records）**。应有 **11 条实际打印的记录**；**记录（从1开始）（Record (1-based)）=1** 应为 **Pair1 / 总计（Total）**、**pair_energy=−77.32 kcal/mol**，正负本征值为 **+0.56371/−0.56371**。
 - 截图保存为 `human/screenshots/P05-nocv-table.png`。
 
 ![ETS-NOCV 的 Pair1 数值、单位和源记录](../screenshots/P05-nocv-table.png)
 
-- 把 **记录（Record）=2**，应读到 **Pair2 / 总计（Total）**、**pair_energy=−11.91 kcal/mol**；再恢复 **记录（Record）=1**。
+- 把 **记录（Record）=2**，应读到 **Pair2 / 总计（Total）**、**pair_energy=−15.81 kcal/mol**；再恢复 **记录（Record）=1**。
 - 这一步便于熟悉逐行读取，筛选较多记录时则使用下面的浏览器。
 
 <details>
@@ -67,16 +71,20 @@
 <a id="step-03"></a>
 ### 3. 按自旋和能量范围筛选贡献
 
-- 在表对象的 **外部结果浏览器（External Result Browser）** 中选 **自旋（Spin）=总计（Total）**，在 **轨道对能量（Pair energy） [kcal/mol]** 一行开启两端范围，填 **从（From）=−60、至（To）=−50**，设 **匹配项（从1开始）（Match (1-based)）=1**，点击 **应用筛选（Apply Filter）**。应显示 **匹配记录：（Matching records:） 1**，匹配 **Pair1**。
+- 在表对象的 **外部结果浏览器（External Result Browser）** 中选 **自旋（Spin）=总计（Total）**，在 **轨道对能量（Pair energy） [kcal/mol]** 一行开启两端范围，填 **从（From）=−80、至（To）=−70**，设 **匹配项（从1开始）（Match (1-based)）=1**，点击 **应用筛选（Apply Filter）**。应显示 **匹配记录：（Matching records:） 1**，匹配 **Pair1**。
 - 此时尚未导入该轨道对（Pair）的场，视口中还没有对应变形密度表面。
 
-- 可将范围临时改为 **从（From）=−12、至（To）=−11** 并点击 **应用筛选（Apply Filter）**：应有 **匹配记录：（Matching records:） 2**，在默认 **排序（Sort）=轨道对（Pair）** 下，**匹配项（Match）=1** 对应 Pair2，**匹配项（Match）=2** 对应 Pair3；改变匹配项（Match）后再次点击 **应用筛选（Apply Filter）** 查看记录。
-- 完成后恢复 **从（From）=−60、至（To）=−50、匹配项（Match）=1** 并应用，供后续定位 Pair1 使用。
+- 截图保存为 `human/screenshots/P05-nocv-filter.png`。
+
+![按Total和−80至−70 kcal/mol筛选，仅匹配Pair1的浏览器](../screenshots/P05-nocv-filter.png)
+
+- 可将范围临时改为 **从（From）=−16、至（To）=−15** 并点击 **应用筛选（Apply Filter）**：应有 **匹配记录：（Matching records:） 2**，在默认 **排序（Sort）=轨道对（Pair）** 下，**匹配项（Match）=1** 对应 Pair2，**匹配项（Match）=2** 对应 Pair3；改变匹配项（Match）后再次点击 **应用筛选（Apply Filter）** 查看记录。
+- 完成后恢复 **从（From）=−80、至（To）=−70、匹配项（Match）=1** 并应用，供后续定位 Pair1 使用。
 
 <details>
 <summary>了解自旋、能量范围与排序条件</summary>
 
-**外部结果浏览器（External Result Browser）** 用多个条件共同筛选记录，再按 **排序（Sort）** 排序。能量范围使用源表声明的单位，负值按通常数值大小比较，例如 −60 小于 −50。
+**外部结果浏览器（External Result Browser）** 用多个条件共同筛选记录，再按 **排序（Sort）** 排序。能量范围使用源表声明的单位，负值按通常数值大小比较，例如 −80 小于 −70。
 
 - **自旋（Spin）**：**全部（All）** 包含表内所有通道；**总计（Total）**、**Alpha**、**Beta** 分别限定一个通道。本例打印的是总计（Total）记录。
 - **轨道对能量（Pair energy） → 从（From） / 至（To）**：启用左侧勾选框后，对应端点才参与筛选；可只设下限、只设上限或同时设置两端。范围包含端点，从（From）应小于或等于至（To）。
@@ -88,8 +96,13 @@
 <a id="step-04"></a>
 ### 4. 导入 Pair1 的变形密度场
 
-- 保持表对象活动，点击 **N 侧栏 → 导入与导出（Import and Export） → 导入外部结果（Import External Results） → 能量分解（Energy Decomposition） → NOCV 贡献对 Cube（NOCV pair Cube）**，选择 **带符号的轨道对 Cube（Signed pair Cube）=[shared/data/public/P05/nocv/nocv-pair1.cub](../../shared/data/public/P05/nocv/nocv-pair1.cub)**，设 **自旋（Spin）=总计（Total）**，从 **轨道对编号（Pair number）** 的实际源编号列表选择 **1**，并设 **形变密度单位（Deformation density unit）=electron/bohr^3**。
-- 完成后在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 选 **QC nocv_deformation_density**，重新点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，其网格应为 **47×50×57**。
+- 保持表对象活动，点击 **N 侧栏 → 导入与导出（Import and Export） → 导入外部结果（Import External Results） → 能量分解（Energy Decomposition） → NOCV 贡献对 Cube（NOCV pair Cube）**，选择 **带符号的轨道对 Cube（Signed pair Cube）=[shared/data/public/gaussian-v1/P05/nocv/nocv-pair1.cub](../../shared/data/public/gaussian-v1/P05/nocv/nocv-pair1.cub)**，设 **自旋（Spin）=总计（Total）**，从 **轨道对编号（Pair number）** 的实际源编号列表选择 **1**，并设 **形变密度单位（Deformation density unit）=electron/bohr^3**。
+
+- 截图保存为 `human/screenshots/P05-nocv-pair-import.png`。
+
+![Pair1 Cube与Total通道、实际源Pair编号及形变密度单位的绑定](../screenshots/P05-nocv-pair-import.png)
+
+- 完成后在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 选 **QC nocv_deformation_density**，重新点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，其网格应为 **47×49×58**。
 
 - 在 **几何表示（Geometry Representation）** 设 **正值阈值（Positive Isovalue）=0.003**，保持 **联动正负阈值（Link Thresholds）、显示正值（Show Positive Values）、显示负值（Show Negative Values）** 开启。应看到两种颜色的变形密度。
 - 截图保存为 `human/screenshots/P05-nocv-density.png`。

@@ -6,7 +6,8 @@ on:
     paths:
       - 'website/**'
       - 'validation/human/**'
-      - 'validation/agent/packages/qcblender-public-tutorial-samples-v2.zip'
+      - 'validation/agent/packages/qcblender-public-tutorial-samples-v*.zip'
+      - 'validation/agent/acceptance/tutorial-sample-delivery.json'
       - 'validation/agent/current-install.json'
       - 'validation/shared/data/public/**'
       - 'docs/USER_GUIDE.md'
@@ -16,7 +17,8 @@ on:
     paths:
       - 'website/**'
       - 'validation/human/**'
-      - 'validation/agent/packages/qcblender-public-tutorial-samples-v2.zip'
+      - 'validation/agent/packages/qcblender-public-tutorial-samples-v*.zip'
+      - 'validation/agent/acceptance/tutorial-sample-delivery.json'
       - 'validation/agent/current-install.json'
       - 'validation/shared/data/public/**'
       - 'docs/USER_GUIDE.md'

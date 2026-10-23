@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { loadPublicSamples } from './public-samples.mjs';
 
 export const websiteRoot = fileURLToPath(new URL('../', import.meta.url));
 export const repositoryRoot = path.resolve(websiteRoot, '..');
@@ -22,6 +23,13 @@ export function walk(tree, callback) {
   for (const child of tree.children ?? []) walk(child, callback);
 }
 
+export function tutorialImageSource(url, source) {
+  if (!url || /^(?:[a-z][a-z\d+.-]*:|\/)/i.test(url)) return null;
+  const target = decodeURIComponent(url.split(/[?#]/, 1)[0]);
+  const resolved = path.posix.normalize(path.posix.join(path.posix.dirname(source), target));
+  return /^validation\/human\/(screenshots|renders)\/[^/]+\.(?:png|jpe?g|webp)$/i.test(resolved) ? resolved : null;
+}
+
 export function rewriteTutorialUrl(url, source, { tracked = trackedFiles(), members } = {}) {
   if (/^(?:file:|[a-z]:[\\/])/i.test(url)) return siteUrl('docs/#local-data');
   if (!url || url.startsWith('#') || /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(url)) return url;
@@ -40,8 +48,11 @@ export function rewriteTutorialUrl(url, source, { tracked = trackedFiles(), memb
   }
   const publicPrefix = 'validation/shared/data/public/';
   if (resolved.startsWith(publicPrefix)) {
-    const member = resolved.slice(publicPrefix.length);
-    if (members && !members.has(member)) throw new Error(`Public tutorial input is absent from frozen ZIP: ${member}`);
+    const selected = loadPublicSamples();
+    let member = resolved.slice(publicPrefix.length);
+    if (member === selected.manifest_member) member = 'tutorial-samples.json';
+    const allowed = new Set(selected.samples.map((entry) => entry.path));
+    if (!allowed.has(member) || (members && !members.has(member))) throw new Error(`Public tutorial input is absent from licensed ZIP allowlist: ${member}`);
     return siteUrl(`tutorial-assets/shared/data/public/${member}`) + suffix;
   }
   if (/^validation\/human\/(screenshots|renders)\//.test(resolved)) {

@@ -1,6 +1,6 @@
 # 产物查找入口
 
-更新：2026-10-23。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
+更新：2026-10-24。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
 
 ## 当前交付
 
@@ -10,19 +10,27 @@ AICD 公开资料（2026-10-23）保存在 `submodules/AICD/reference-public-202
 
 开发流程工具已完成技术验收：[入口](agents/development-workflow.md)、[当前结果](../validation/agent/acceptance/dev-workflow.md)，日志与规则备份当前位置由本次迁移映射定位，正式记录在 `validation/agent/reports/2026-10-16/dev-workflow-20261016/legacy-outputs/`。真实 MCP、构建安装和原工程恢复 Passed；当前有效候选见下表。
 
-从 [validation](../validation/README.md) 查找当前教程、输入和校验材料；人工入口为 [SOP](../validation/human/SOP.md)。主线 15 步、11 个按需专题；2026-10-21 完成的 79 步和 27 张截图保留当时身份。后续增补自动出图、Mayer、表面距离投影和 AICD，各批实际复验范围见对应验收。
+从 [validation](../validation/README.md) 查找当前教程、输入和校验材料；人工入口为 [SOP](../validation/human/SOP.md)。当前主线及 12 个按需专题共 98 步、75 个展示图片引用；2026-10-21 完成的 79 步和 27 张截图保留当时身份。Gaussian 换代及各批实际复验范围见对应验收。
 
 | 内容 | 当前入口 |
 | --- | --- |
-| 宣传与教程网站 | [维护与预览](../website/README.md)、[本批验收](../validation/agent/acceptance/website.md)；[线上网站](https://notes.psiqaq.cn/QCBlender/)；网站构建、浏览器、Pages 与三组 Blender 新图/冷读 Passed；插件候选 CI 的 3 项失败单独记在验收中；工程在 `outputs/projects/website-showcase/`，图像、会话与归档收据在 `validation/agent/reports/2026-10-23/website/`；本地标签 `archive/2026-10-23/feat/website`、`archive/2026-10-23/feat/website-ui`、`archive/2026-10-23/feat/website-docs`；从 `website/README.md` 重建 |
+| 宣传与教程网站 | [维护与预览](../website/README.md)、[线上网站](https://notes.psiqaq.cn/QCBlender/)；本批已同步当前 v3 样本与第 12 专题，20 页本地构建及链接/公开文件摘要检查 Passed，浏览器交互与发布 Not Run，见[本批验收](../validation/agent/reports/2026-10-24/gaussian-sop/acceptance.md)。既有线上部署、浏览器及三组 Blender 展示图身份见[原建站验收](../validation/agent/acceptance/website.md)，工程在 `outputs/projects/website-showcase/`，原收据在 `validation/agent/reports/2026-10-23/website/`；从 `website/README.md` 重建 |
 | 当前完整教程材料 | `validation/`；[工程索引](../validation/工程索引.md)、[迁移与清理](#delivery-consolidation-20261022)；需要分发时按下行打包 |
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
 | 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；当前工程在 `validation/work/human/`；[当前截图与工程](../validation/工程索引.md) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
-| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,998,880 字节，SHA-256 `366e7fa61befe114a10cc9e536dc93d216477e2761a2fdeb8ab3df940ce1d91f` |
-| 当前候选及验证 | `outputs/candidates/aicd/build-2/`；源码 `79edb8d`，增加 AICD；定向检查、实际源码 GUI、完整构建及 137 成员隔离安装、最终包渲染与冷读 Passed；[身份记录](../validation/agent/current-install.json)、[本次验证](../validation/agent/acceptance/aicd.md)。随后按追加授权完成同一包的日常安装、原生案例、实际 GUI 和保存冷读，均 Passed；旧插件与偏好已保全 |
-| 冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单位于 `validation/agent/v1-acceptance/tutorial-samples.json` |
+| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,998,929 字节，SHA-256 `0c72a26488417b6969ea3f8645339fc9218be17aa8d381d5e1f4b77fb7782e1b` |
+| 当前候选及验证 | `outputs/candidates/sop-gaussian-20261024/build-1/`；插件源码 `43125d4`，修复真实 Gaussian 多计算段识别；完整构建、137 成员隔离安装、日常安装、真实 MCP/GUI、21 新工程冷读及代表性移动/归档 Passed；[身份记录](../validation/agent/current-install.json)、[本批验证](../validation/agent/reports/2026-10-24/gaussian-sop/acceptance.md)。旧插件及偏好已保全 |
+| 当前公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v3.zip`；185 个 Gaussian-v1 数据文件，含自有 P02 与完整 69 帧路径；[交付索引](../validation/agent/acceptance/tutorial-sample-delivery.json) |
+| 历史冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单 `validation/agent/v1-acceptance/tutorial-samples.json` 保持原身份，显式 `--dataset legacy-v2` 恢复 |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |
+
+<a id="gaussian-sop-20261024"></a>
+## Gaussian 样本换代与 SOP 图片（2026-10-24）
+
+当前科学输入为 `validation/shared/data/public/gaussian-v1/`，可从 v3 包及当前交付索引用 `python tools/prepare_validation_data.py --dataset current --report .tmp/runs/restore-gaussian-data.json` 恢复（报告路径需尚不存在）；保留显式历史恢复入口。[科学摘要](../validation/agent/reports/2026-10-24/gaussian-sop/science.md)记录优化、频率、基函数表示、统一构型、完整路径、Mayer、NOCV 及同源 XYZ。P04 使用 geomeTRIC 积分与实际 Gaussian 能量/梯度，原生 IRC 失败尝试保留；NOCV 仍为实际复合物 KS 近似，未宣称严格 `F_TS`。
+
+公开 P02 第 12 专题、44 张新增 PNG、27 张重拍图及新渲染已完成。21 份自包含工程在 `validation/work/human/gaussian-v1/`，步骤与图片逐项见[工程索引](../validation/工程索引.md)。保存基线、MCP 收据、冷读及代表移动/解包的原始记录在 `.tmp/runs/sop-gaussian-20261024/`；科学原件由摘要中的忽略目录入口定位。[本批验收](../validation/agent/reports/2026-10-24/gaussian-sop/acceptance.md)区分实际运行、GUI 观察及独立验收。旧输入、v2 包、历史工程及原始截图记录保留；独立人工/科研签署及发布 Not Run。本地归档标签为 `archive/2026-10-24/sop-gaussian-20261024`，不 push。
 
 <a id="aicd-20261023"></a>
 ## AICD 张量与单位磁场响应（2026-10-23）

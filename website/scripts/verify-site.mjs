@@ -4,18 +4,10 @@ import { fileURLToPath } from 'node:url';
 import { parse } from 'parse5';
 import { generatedPath, mapping, repositoryRoot, websiteRoot } from './tutorial-links.mjs';
 import { sha256, sourceMetrics } from './prepare-docs.mjs';
+import { deploymentViolations, loadPublicSamples } from './public-samples.mjs';
+export { deploymentViolations } from './public-samples.mjs';
 
 const origin = 'https://notes.psiqaq.cn';
-export function deploymentViolations(files, permittedAssets) {
-  const errors = [];
-  for (const file of files) {
-    if (/^(tutorial-assets|downloads)\//.test(file) && file !== 'downloads/index.html' && !permittedAssets.has(file)) errors.push(`Unexpected file in public materials: ${file}`);
-    if (/(?:^|\/)(?:P02|local|\.local|\.tmp|candidates|node_modules)(?:\/|$)/i.test(file)) errors.push(`Private deployment path: ${file}`);
-    if (/\.(?:blend\d*|qcdata)(?:\/|$)/i.test(file)) errors.push(`Blender project in deployment: ${file}`);
-    if (/\.zip$/i.test(file) && file !== `downloads/${mapping.publicSamples.download}`) errors.push(`Unpublished ZIP in deployment: ${file}`);
-  }
-  return errors;
-}
 export function internalTarget(value, fromRoute) {
   if (!value || /^(?:data:|mailto:|tel:|javascript:)/i.test(value)) return null;
   const url = new URL(value, origin + fromRoute);
@@ -53,6 +45,8 @@ export async function verifySite(dist = path.join(websiteRoot, 'dist')) {
   const files = await filesBelow(dist);
   const fileSet = new Set(files);
   const report = JSON.parse(await readFile(path.join(websiteRoot, 'reports/tutorial-manifest.json'), 'utf8'));
+  const selected = loadPublicSamples();
+  const publicSamples = selected.archive;
   const errors = [];
   const require = (condition, message) => { if (!condition) errors.push(message); };
   const html = new Map();
@@ -87,6 +81,10 @@ export async function verifySite(dist = path.join(websiteRoot, 'dist')) {
       } catch (error) { errors.push(`${file}: ${error.message}`); }
     }
   }
+  require(JSON.stringify(report.samples) === JSON.stringify(selected.samples), 'Prepared sample allowlist differs from the active licensed package');
+  require(JSON.stringify(report.archive) === JSON.stringify(publicSamples), 'Prepared archive differs from the active delivery');
+  const expectedSources = mapping.pages.filter((page) => page.source).map((page) => page.source).sort();
+  require(JSON.stringify(report.pages.map((page) => page.source).sort()) === JSON.stringify(expectedSources), 'Prepared tutorial page inventory differs from mapping');
   const totals = { steps: 0, details: 0, images: 0 };
   for (const page of report.pages) {
     const source = await readFile(path.join(repositoryRoot, page.source));
@@ -116,20 +114,21 @@ export async function verifySite(dist = path.join(websiteRoot, 'dist')) {
     const h1Count = (document.content.match(/<h1(?:\s|>)/g) ?? []).length;
     require(h1Count === 1, `${page.slug}: expected one page H1, got ${h1Count}`);
   }
-  require(totals.steps === 90 && totals.images === 31 && totals.details === 103,
+  require(totals.steps === 98 && totals.images === 75 && totals.details === 110,
     `Tutorial inventory changed: ${JSON.stringify(totals)}`);
 
   const permittedAssets = new Map(report.images.map((entry) => [entry.path, entry.sha256]));
   for (const sample of report.samples) permittedAssets.set(`tutorial-assets/shared/data/public/${sample.path}`, sample.sha256);
-  permittedAssets.set(`downloads/${mapping.publicSamples.download}`, mapping.publicSamples.sha256);
+  permittedAssets.set(`downloads/${publicSamples.download}`, publicSamples.sha256);
   for (const [relative, expectedHash] of permittedAssets) {
     require(fileSet.has(relative), `Missing reviewed public asset ${relative}`);
     if (fileSet.has(relative)) require(sha256(await readFile(path.join(dist, relative))) === expectedHash, `Public asset bytes changed: ${relative}`);
   }
-  errors.push(...deploymentViolations(files, permittedAssets));
+  errors.push(...deploymentViolations(files, permittedAssets, selected));
   const product = JSON.parse(await readFile(path.join(websiteRoot, 'src/data/generated-product.json'), 'utf8'));
   require(product.public_release === false && product.install_download === null, 'Local install candidate must not become a public download');
-  require(product.samples_sha256 === mapping.publicSamples.sha256, 'Public samples identity drift');
+  require(product.samples_sha256 === publicSamples.sha256 && product.samples_name === publicSamples.download
+    && product.samples_bytes === publicSamples.bytes && product.samples_dataset_id === publicSamples.dataset_id, 'Public samples identity drift');
   for (const route of ['downloads/index.html', 'en/downloads/index.html']) {
     require(html.has(route), `Missing download status page: ${route}`);
   }

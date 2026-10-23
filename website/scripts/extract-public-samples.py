@@ -1,32 +1,58 @@
-"""Extract only the reviewed frozen public archive, preserving relative references."""
+"""Inspect or extract the active, licensed tutorial package without historical inputs."""
+import argparse
 import hashlib
 import json
-import pathlib
+from pathlib import Path, PurePosixPath
 import sys
 import zipfile
 
-archive, destination, expected_hash, expected_members = sys.argv[1:]
-archive = pathlib.Path(archive)
-destination = pathlib.Path(destination)
-if hashlib.sha256(archive.read_bytes()).hexdigest() != expected_hash:
-    raise ValueError("Frozen public tutorial ZIP identity mismatch")
-with zipfile.ZipFile(archive) as bundle:
-    entries = bundle.infolist()
-    if len(entries) != int(expected_members):
-        raise ValueError("Frozen public tutorial ZIP member count mismatch")
-    names = [entry.filename for entry in entries]
-    if len(set(names)) != len(names):
-        raise ValueError("Duplicate ZIP members")
-    records = []
-    for entry in entries:
-        name = pathlib.PurePosixPath(entry.filename)
-        if (name.is_absolute() or ".." in name.parts or "\\" in entry.filename
-                or name.parts[0] not in {"P01", "P03", "P04", "P05", "P06", "LICENSE", "NOTICE.md", "tutorial-samples.json"}
-                or entry.is_dir() or (entry.external_attr >> 16) & 0o170000 == 0o120000):
-            raise ValueError(f"Forbidden public ZIP member: {entry.filename}")
-        data = bundle.read(entry)
-        target = destination.joinpath(*name.parts)
+REPOSITORY = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(REPOSITORY))
+from tools.candidate_artifacts import verify_samples
+from tools.local_inputs import checked_path
+from tools.tutorial_dataset import DELIVERY, load_dataset
+
+
+def public_samples(root, destination=None):
+    selected = load_dataset(root)
+    verify_samples(root=root)
+    records, payloads = [], []
+    with zipfile.ZipFile(selected['package_path']) as bundle:
+        for entry in bundle.infolist():
+            name = PurePosixPath(entry.filename)
+            if (not name.parts or name.is_absolute() or '\\' in entry.filename
+                    or any(part in ('', '.', '..') for part in entry.filename.split('/'))
+                    or entry.is_dir() or (entry.external_attr >> 16) & 0o170000 == 0o120000):
+                raise ValueError('Forbidden public ZIP member: ' + entry.filename)
+            data = bundle.read(entry)
+            records.append(dict(path=entry.filename, bytes=len(data), sha256=hashlib.sha256(data).hexdigest()))
+            if destination is not None:
+                payloads.append((checked_path(destination, entry.filename), data))
+    # Verify every member and output path before creating any extracted data.
+    for target, data in payloads:
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(data)
-        records.append({"path": entry.filename, "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()})
-print(json.dumps(records))
+    archive = dict(source=selected['package_record']['path'],
+                   bytes=selected['package_record']['bytes'], sha256=selected['package_record']['sha256'],
+                   download=selected['package_path'].name, members=len(records),
+                   dataset_id=selected['dataset_id'])
+    return dict(delivery=DELIVERY, archive=archive, samples=records,
+                manifest_member='tutorial-samples.json' if selected['legacy'] else
+                selected['manifest_record']['path'].split('/public/', 1)[1])
+
+
+def main():
+    parser = argparse.ArgumentParser(__doc__)
+    parser.add_argument('--root', type=Path, default=REPOSITORY)
+    parser.add_argument('--destination', type=Path)
+    parser.add_argument('--inspect', action='store_true')
+    args = parser.parse_args()
+    if not args.inspect and args.destination is None:
+        parser.error('Choose --inspect or --destination')
+    if args.inspect and args.destination is not None:
+        parser.error('--inspect does not write a destination')
+    print(json.dumps(public_samples(args.root, args.destination)))
+
+
+if __name__ == '__main__':
+    main()

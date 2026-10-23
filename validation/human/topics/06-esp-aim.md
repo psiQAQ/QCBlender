@@ -13,7 +13,7 @@
   - [5. 查看并高亮分子间的 AIM 临界点](#step-05)
   - [6. 浏览 AIM 路径记录并观察曲线](#step-06)
 
-路径相对材料根目录。先完成[密度与 ESP](03-density-esp.md#mapping)步骤 1–5，或打开保留了这三层的工程：**P03-atoms**、**QC electron_number_density** 和 **QC electrostatic_potential**。在 Outliner 显示原子与映射后的密度表面，独立 ESP 表面保持隐藏；若已练习其他专题，隐藏切片、雾、偶极及其他案例对象。切到 **材质预览（Material Preview）**。
+路径相对材料根目录。先完成[密度与 ESP](03-density-esp.md#mapping)步骤 1–5，或打开保留了该页步骤 2、3 所用稳定名称的三层工程：**P03-atoms**、**P03-density** 和 **P03-esp**。在 Outliner 显示原子与映射后的密度表面，独立 ESP 表面保持隐藏；若已练习其他专题，隐藏切片、雾、偶极及其他案例对象。切到 **材质预览（Material Preview）**。
 
 本页截图使用案例 `P03-` 前缀。
 
@@ -23,17 +23,21 @@
 <a id="step-01"></a>
 ### 1. 匹配密度等值面并导入 ESP 分析
 
-- 在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 点击 **QC electron_number_density** 行最左侧的选择图标，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，将 **几何表示（Geometry Representation） → 正值阈值（Positive Isovalue）** 改为 **0.001**。
-- 再用列表的选择图标选 **QC electrostatic_potential**，点击 **N 侧栏 → 导入与导出（Import and Export） → 导入外部结果（Import External Results） → 空间场分析（Spatial Field Analysis） → ESP 表面分析（ESP Surface Analysis）**，按下表输入并确认。应新增 **QC ESP maximum、QC ESP minimum、QC ESP area data**；导航选中 ESP 表面不会改变其隐藏状态，导入后保持该表面隐藏。
+- 在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 点击 **P03-density** 行最左侧的选择图标，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，将 **几何表示（Geometry Representation） → 正值阈值（Positive Isovalue）** 改为 **0.001**。
+- 再用列表的选择图标选 **P03-esp**，点击 **N 侧栏 → 导入与导出（Import and Export） → 导入外部结果（Import External Results） → 空间场分析（Spatial Field Analysis） → ESP 表面分析（ESP Surface Analysis）**，按下表输入并确认。应新增 **QC ESP maximum、QC ESP minimum、QC ESP area data**；导航选中 ESP 表面不会改变其隐藏状态，导入后保持该表面隐藏。
 
 | 控件 | 输入值 |
 | --- | --- |
-| 极值点 PDB（Extrema PDB） | [shared/data/public/P03/esp/surfanalysis.pdb](../../shared/data/public/P03/esp/surfanalysis.pdb) |
-| 面积分布文本（Area distribution text） | [shared/data/public/P03/esp/stdout.log](../../shared/data/public/P03/esp/stdout.log) |
+| 极值点 PDB（Extrema PDB） | [shared/data/public/gaussian-v1/P03/esp/surfanalysis.pdb](../../shared/data/public/gaussian-v1/P03/esp/surfanalysis.pdb) |
+| 面积分布文本（Area distribution text） | [shared/data/public/gaussian-v1/P03/esp/stdout.log](../../shared/data/public/gaussian-v1/P03/esp/stdout.log) |
 | 表面定义（Surface definition） | rho=0.001 electron/bohr^3 |
 | 极值单位（Extrema value unit） | kcal/mol |
 | 分布中心值单位（Distribution center unit） | kcal/mol |
 | 面积单位（Area unit） | angstrom^2 |
+
+- 截图保存为 `human/screenshots/P03-esp-analysis-import.png`。
+
+![ESP极值和面积输入、rho表面定义及各自单位](../screenshots/P03-esp-analysis-import.png)
 
 <details>
 <summary>了解 ESP 表面分析、输入文件与单位</summary>
@@ -56,12 +60,12 @@
 <a id="step-02"></a>
 ### 2. 浏览 ESP 极值并高亮指定源点
 
-- 选 **QC ESP minimum**，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，展开 **外部分析记录（External Analysis Records）**，应有 **3 条记录**；设 **记录（从1开始）（Record (1-based)）=1**，值应为 **−25.5 kcal/mol**。
-- 再选 **QC ESP maximum**，重新点击该对象属性入口，应有 **4 条记录**；将 **记录（从1开始）（Record (1-based)）** 设为 **2**，应显示源编号 **2**、值 **57.8 kcal/mol**。
+- 选 **QC ESP minimum**，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，展开 **外部分析记录（External Analysis Records）**，应有 **2 条记录**；设 **记录（从1开始）（Record (1-based)）=1**，值应为 **−48.88 kcal/mol**。
+- 再选 **QC ESP maximum**，重新点击该对象属性入口，应有 **3 条记录**；将 **记录（从1开始）（Record (1-based)）** 设为 **2**，应显示源编号 **2**、值 **57.88 kcal/mol**。
 - 展开 **外部结果浏览器（External Result Browser）**，使用初始默认条件，设 **匹配项（从1开始）（Match (1-based)）=2**，点击 **应用筛选（Apply Filter）**，应突出该点并显示它的标签。
 - 截图保存为 `human/screenshots/P03-esp-extrema.png`。
 
-- 若密度表面遮住标签，先关闭 **QC electron_number_density** 的眼睛图标，并旋转视图，让标签正面朝向观察方向。
+- 若密度表面遮住标签，先关闭 **P03-density** 的眼睛图标，并旋转视图，让标签正面朝向观察方向。
 - 白色标签在浅色背景下不易辨认时，打开视口右上角着色选项，关闭 **场景世界（Scene World）**，使用材质预览的默认深色背景。
 - 下图采用这组观察设置；截图后恢复密度表面的可见性和原背景设置。
 
@@ -85,14 +89,14 @@
 <a id="step-03"></a>
 ### 3. 按 ESP 范围筛选表面积
 
-- 选 **QC ESP area data**，重新点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，在 **外部分析记录（External Analysis Records）** 应看到 **40 条记录**、总面积 **73.1833 angstrom^2**。
-- 在 **外部结果浏览器（External Result Browser）** 选 **面积分箱选择（Area bin selection）=中心值在范围内（Center in range）**，开启 **中心（Center） [kcal/mol]** 两端范围，填 **从（From）=0、至（To）=20**，点击 **应用筛选（Apply Filter）**。应显示面积 **14.4784 angstrom^2**、源百分比约 **19.7838%**。
+- 选 **QC ESP area data**，重新点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，在 **外部分析记录（External Analysis Records）** 应看到 **40 条记录**、总面积 **74.6808 angstrom^2**。
+- 在 **外部结果浏览器（External Result Browser）** 选 **面积分箱选择（Area bin selection）=中心值在范围内（Center in range）**，开启 **中心（Center） [kcal/mol]** 两端范围，填 **从（From）=0、至（To）=20**，点击 **应用筛选（Apply Filter）**。应显示面积 **15.0671 angstrom^2**、源百分比约 **20.1752%**。
 - 截图保存为 `human/screenshots/P03-esp-area.png`。
 
 ![ESP 面积分布的源总面积和范围内面积](../screenshots/P03-esp-area.png)
 
 - 保持 **从（From）=0、至（To）=20**，改选 **记录区间与范围重叠（Recorded interval overlaps range）** 并应用筛选（Apply Filter）。
-- 此时范围行显示为 **记录区间重叠（Recorded interval overlap） [kcal/mol]**；本例还会选入与边界相接的 **−5 到 0**、**20 到 25 kcal/mol** 两个完整区间，面积应为 **21.2676 angstrom^2**、源百分比约 **29.0608%**。
+- 此时范围行显示为 **记录区间重叠（Recorded interval overlap） [kcal/mol]**；本例还会选入与边界相接的 **−5 到 0**、**20 到 25 kcal/mol** 两个完整区间，面积应为 **22.9027 angstrom^2**、源百分比约 **30.6673%**。
 
 - 若需保留筛选表，按[共同导出方法](../SOP.md#export)选择 **数据（Data）=ESP_AREA、行（Rows）=当前筛选（Current filter）**，可导出选中区间的 `esp_area.csv` 和 `metadata.json`；**行（Rows）=全部来源记录（All source records）** 导出完整面积表。
 - 完成比较后，恢复 **面积分箱选择（Area bin selection）=中心值在范围内（Center in range）**，关闭两端范围并重新应用，恢复全表。
@@ -124,9 +128,13 @@
 
 | 控件 | 输入文件 |
 | --- | --- |
-| 临界点 PDB（CPs PDB） | [shared/data/public/P03/aim/CPs.pdb](../../shared/data/public/P03/aim/CPs.pdb) |
-| 路径 PDB（Paths PDB） | [shared/data/public/P03/aim/paths.pdb](../../shared/data/public/P03/aim/paths.pdb) |
-| 临界点属性文本（可选）（CP properties text (optional)） | [shared/data/public/P03/aim/CPprop.txt](../../shared/data/public/P03/aim/CPprop.txt) |
+| 临界点 PDB（CPs PDB） | [shared/data/public/gaussian-v1/P03/aim/CPs.pdb](../../shared/data/public/gaussian-v1/P03/aim/CPs.pdb) |
+| 路径 PDB（Paths PDB） | [shared/data/public/gaussian-v1/P03/aim/paths.pdb](../../shared/data/public/gaussian-v1/P03/aim/paths.pdb) |
+| 临界点属性文本（可选）（CP properties text (optional)） | [shared/data/public/gaussian-v1/P03/aim/CPprop.txt](../../shared/data/public/gaussian-v1/P03/aim/CPprop.txt) |
+
+- 截图保存为 `human/screenshots/P03-aim-import.png`。
+
+![同源AIM临界点、路径和临界点属性三份输入](../screenshots/P03-aim-import.png)
 
 <details>
 <summary>了解 AIM 临界点与路径输入</summary>
@@ -144,11 +152,11 @@
 <a id="step-05"></a>
 ### 5. 查看并高亮分子间的 AIM 临界点
 
-- 选 **QC AIM CP N**，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，在 **外部分析记录（External Analysis Records）** 将 **记录（从1开始）（Record (1-based)）** 设为 **3**。应显示源编号 **9**，位置约 **(0,0,1.451) Å**，`Density of all electrons` 为 **0.01088848625**。
-- 在 **外部结果浏览器（External Result Browser）** 使用初始默认条件，设 **匹配项（从1开始）（Match (1-based)）=3**，点击 **应用筛选（Apply Filter）**，应突出两个水分子之间的该点。
+- 选 **QC AIM CP N**，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，在 **外部分析记录（External Analysis Records）** 将 **记录（从1开始）（Record (1-based)）** 设为 **2**。应显示源编号 **8**，位置约 **(0.037,0,1.670) Å**，`Density of all electrons` 为 **0.02243675042**。
+- 在 **外部结果浏览器（External Result Browser）** 使用初始默认条件，设 **匹配项（从1开始）（Match (1-based)）=2**，点击 **应用筛选（Apply Filter）**，应突出两个水分子之间的该点。
 - 截图保存为 `human/screenshots/P03-aim-point.png`。
 
-![AIM 源点 9 的位置及电子密度属性](../screenshots/P03-aim-point.png)
+![AIM 源点 8 的位置及电子密度属性](../screenshots/P03-aim-point.png)
 
 <details>
 <summary>了解临界点密度与记录编号</summary>
@@ -163,7 +171,7 @@
 ### 6. 浏览 AIM 路径记录并观察曲线
 
 - 选 **QC AIM bond paths**，重新点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，在 **外部结果浏览器（External Result Browser）** 应看到 **10 条已记录的 AIM 路径（10 recorded AIM paths）**。
-- 将 **路径（从1开始）（Path (1-based)）** 从 **1** 改为 **2**，面板应分别显示 **9 个点（9 points） / 47 个点（47 points）**。
+- 将 **路径（从1开始）（Path (1-based)）** 从 **1** 改为 **2**，面板应分别显示 **10 个点（10 points） / 49 个点（49 points）**。
 - 在视口旋转观察路径；如果原子球遮挡路径，可临时隐藏 **P03-atoms**。
 - 截图保存为 `human/screenshots/P03-aim-paths.png`。
 

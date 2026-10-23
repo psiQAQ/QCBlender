@@ -50,6 +50,10 @@
 | AICD 边界外扩（Å）（AICD grid padding (Å)） | `2.5` |
 | 内存预算（MiB）（Memory budget (MiB)） | `512` |
 
+- 截图保存为 `human/screenshots/AICD01-import-dialog.png`。
+
+![全电子AICD来源声明、正Aniso等值值、网格及内存参数](../screenshots/AICD01-import-dialog.png)
+
 - 等待后台导入完成，应生成独立的 **QC AICD all** 对象，原分子仍保留。黄色等值面和电流响应箭头应围绕同一个苯环，蓝色箭头及文字标明单位磁场。
 - 选中 **QC AICD all**，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，展开 **AICD 来源与响应（AICD Source and Response）**，应看到全电子贡献、程序版本、**240570 个原始点**和最多 **1000 个显示箭头**。
 - 为清楚观察，可隐藏第 1 步的原分子副本，并关闭视口的 **显示叠加层（Show Overlays）**。保留原分子对象，第 5 步还需选中它。
@@ -78,6 +82,10 @@
 | 磁场方向（生成坐标系）（Field direction in generating coordinates） | `(0,0,-3)` |
 | AICD 箭头数上限（Maximum AICD arrows） | `250` |
 
+- 截图保存为 `human/screenshots/AICD01-display-dialog.png`。
+
+![生成坐标系中的磁场方向0、0、−3与250个箭头上限](../screenshots/AICD01-display-dialog.png)
+
 - 面板中的单位磁场应变为 **(0,0,-1)**，视口中的响应箭头反向并减少，等值面保持不变。磁场不能设为零向量。
 - 可重新打开显示设置，关闭 **显示电流响应箭头（Show current response arrows）** 后取消，箭头应保持可见；确认后的修改可用 **编辑 → 撤销 / 重做**恢复。继续下一步前，保持负 Z 单位场和 **250** 个箭头上限。
 
@@ -103,7 +111,7 @@
 
 ![真实全电子 AICD 的来源、250 个箭头与原始点 12345 读值](../screenshots/AICD01-source-response.jpg)
 
-- 点击 **导出科学数据（Export Scientific Data）**，按[公共导出步骤](../SOP.md#export)选择 **数据（Data）=AICD**，保存到 `work/human/AICD01-export/`，应得到 `aicd_samples.csv` 和随附元数据。
+- 点击 **导出科学数据（Export Scientific Data）**，按[公共导出步骤](../SOP.md#export)选择 **数据（Data）=AICD**，保存到 `work/human/gaussian-v1/AICD01-export/`，应得到 `aicd_samples.csv` 和随附元数据。
 
 <details>
 <summary>区分原始采样点、显示箭头与导出数值</summary>
@@ -119,9 +127,14 @@
 
 - 在 Outliner 恢复第 1 步原分子的可见性并选中它，重复第 2 步导入，将 **AICD 来源 JSON（AICD source JSON）** 改为 `shared/data/local/scientific-displays/aicd-benzene/pi/source.json`。保留相同的 **0.05、0.25 Å、2.5 Å、512 MiB**。
 - 生成 **QC AICD pi** 后，选中它并打开对象属性，在 **AICD 来源与响应（AICD Source and Response）** 中应看到 **π**、轨道 **17,20,21**、**240570 个原始点**，以及“轨道号已核对；π/σ 归属由使用者声明”。
-- 点击 **AICD 显示设置（AICD Display）**，将 π 对象的磁场方向也设为 **(0,0,-3)**、箭头数上限设为 **250**，并与全电子对象使用相同的箭头缩放后确认。此时两个对象的单位磁场都应为 **(0,0,-1)**。
-- 隐藏原分子副本，将两个 **AICD 根对象**移到左右并列位置，不单独移动其子对象。本例相同等值值下，全电子表面更接近六边形环，π 表面更接近连续圆环。
-- 若前面关闭了视口叠加层，恢复原设置，再按[保存与重开](../SOP.md#save)保存为 `work/human/AICD01-benzene.blend`，保留同名 `.qcdata/`。
+- 分别打开两份对象的 **AICD 显示设置（AICD Display）**，将磁场方向都设为 **(0,0,-1)**、箭头数上限设为 **250**、**箭头缩放（Å/响应原子单位）（Arrow scale (Å per response a.u.)）=3**、**Aniso 表面不透明度（Aniso surface opacity）=0.45** 后确认。两份对象的单位磁场均为 **(0,0,-1)**。
+- 隐藏原分子副本，整体平移两个 **AICD 根对象**分开展示：全电子放左侧，根对象位置 **X=−4 Å**；π 放右侧，根对象位置 **X=+4 Å**。子对象随根对象一起移动，原始坐标和源张量保持不变。本例相同等值值下，全电子表面更接近六边形环，π 表面更接近连续圆环。
+
+- 截图保存为 `human/screenshots/AICD01-all-pi.png`。
+
+![全电子在左、π在右的AICD比较；相同等值值、负Z单位场、250个箭头、缩放3和不透明度0.45](../screenshots/AICD01-all-pi.png)
+
+- 若前面关闭了视口叠加层，恢复原设置，再按[保存与重开](../SOP.md#save)保存为 `work/human/gaussian-v1/AICD01.blend`，保留同名 `.qcdata/`。
 - 重开后分别选中两个对象，查看贡献身份、等值值、磁场、箭头数及最后读取的点；选中 **QC AICD all** 再读取 **12345**，应与第 4 步一致。移动工程时将 `.blend` 与 `.qcdata/` 成套移动。
 
 <details>

@@ -5,7 +5,8 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createMarkdownProcessor } from '@astrojs/markdown-remark';
 import { parse } from 'smol-toml';
-import { generatedPath, mapping, repositoryRoot, rewriteTutorialUrl, routeFor, siteUrl, trackedFiles, walk, websiteRoot } from './tutorial-links.mjs';
+import { generatedPath, mapping, repositoryRoot, rewriteTutorialUrl, routeFor, siteUrl, trackedFiles, tutorialImageSource, walk, websiteRoot } from './tutorial-links.mjs';
+import { loadPublicSamples } from './public-samples.mjs';
 
 export const sha256 = (data) => createHash('sha256').update(data).digest('hex');
 export async function writeGenerated(target, value) {
@@ -24,24 +25,26 @@ export function sourceMetrics(text) {
 
 export async function prepareDocs() {
   const tracked = trackedFiles();
-  const archive = path.join(repositoryRoot, mapping.publicSamples.source);
-  if (!tracked.has(mapping.publicSamples.source)) throw new Error('Public samples ZIP must be tracked');
+  const selected = loadPublicSamples();
+  const publicSamples = selected.archive;
+  if (selected.delivery !== mapping.publicSamples.delivery) throw new Error('Tutorial delivery entry differs from the dataset reader');
+  const archive = path.join(repositoryRoot, publicSamples.source);
+  if (!tracked.has(publicSamples.source) || !tracked.has(selected.delivery)) throw new Error('Public samples ZIP and delivery record must be tracked');
   const zipBytes = await readFile(archive);
-  if (sha256(zipBytes) !== mapping.publicSamples.sha256) throw new Error('Frozen public tutorial ZIP identity mismatch');
+  if (sha256(zipBytes) !== publicSamples.sha256) throw new Error('Current public tutorial ZIP identity mismatch');
   const extraction = spawnSync(process.env.PYTHON ?? 'python', [
-    path.join(websiteRoot, 'scripts/extract-public-samples.py'), archive,
-    path.join(websiteRoot, 'public/tutorial-assets/shared/data/public'),
-    mapping.publicSamples.sha256, String(mapping.publicSamples.members),
+    path.join(websiteRoot, 'scripts/extract-public-samples.py'), '--root', repositoryRoot,
+    '--destination', path.join(websiteRoot, 'public/tutorial-assets/shared/data/public'),
   ], { encoding: 'utf8' });
   if (extraction.error) throw extraction.error;
   if (extraction.status !== 0) throw new Error(extraction.stderr || 'Public samples extraction failed');
-  const samples = JSON.parse(extraction.stdout);
+  const samples = JSON.parse(extraction.stdout).samples;
   const members = new Set(samples.map((entry) => entry.path));
-  const download = path.join(websiteRoot, 'public/downloads', mapping.publicSamples.download);
+  const download = path.join(websiteRoot, 'public/downloads', publicSamples.download);
   await mkdir(path.dirname(download), { recursive: true });
   await copyFile(archive, download);
 
-  const manifest = { pages: [], images: [], samples, archive: mapping.publicSamples };
+  const manifest = { pages: [], images: [], samples, archive: publicSamples };
   const copiedImages = new Set();
   for (const page of mapping.pages.filter((entry) => entry.source)) {
     const bytes = await readFile(path.join(repositoryRoot, page.source));
@@ -54,7 +57,8 @@ export async function prepareDocs() {
       walk(tree, (node) => {
         if (['link', 'image', 'definition'].includes(node.type)) {
           rewriteTutorialUrl(node.url, page.source, { tracked, members });
-          if (node.type === 'image') imageSources.push(node.url);
+          const image = tutorialImageSource(node.url, page.source);
+          if (image) imageSources.push(image);
         }
       });
     };
@@ -65,8 +69,7 @@ export async function prepareDocs() {
     const body = text.slice(firstHeading.position.end.offset).replace(/^\r?\n/, '');
     const frontmatter = `---\ntitle: ${JSON.stringify(page.title)}\nsidebar:\n  order: ${page.order}\neditUrl: ${JSON.stringify(`${mapping.repository}/edit/main/${page.source}`)}\n---\n`;
     await writeGenerated(generatedPath(page), `${frontmatter}\n<a id="${originalTitleAnchor}"></a>\n${body}`);
-    for (const image of imageSources) {
-      const source = path.posix.normalize(path.posix.join(path.posix.dirname(page.source), image));
+    for (const source of imageSources) {
       if (copiedImages.has(source)) continue;
       const target = path.join(websiteRoot, 'public/tutorial-assets', source.slice('validation/'.length));
       await mkdir(path.dirname(target), { recursive: true });
@@ -79,7 +82,7 @@ export async function prepareDocs() {
   }
   const navigation = mapping.pages.find((page) => page.slug === 'docs');
   const links = mapping.pages.filter((page) => page.source).map((page) => `- [${page.title}](${siteUrl(routeFor(page))})`).join('\n');
-  const index = `---\ntitle: ${JSON.stringify(navigation.title)}\nsidebar:\n  order: ${navigation.order}\n---\n\n从安装与第一张轨道图开始，再按当前任务选择专题。网页正文直接来自仓库中文教程；菜单路径、数值、单位、代码与操作顺序沿用原文。\n\n${links}\n\n## 准备教程材料\n\n[下载公开教程样本 ZIP](${siteUrl(`downloads/${mapping.publicSamples.download}`)})，解压后保留 P01、P03、P04、P05、P06 各组内部的相对路径。原教程中的数据路径相对材料根目录；在本机将样本放到 \`shared/data/public/\` 下。包内 NOTICE.md、LICENSE 和 tutorial-samples.json 说明计算条件、许可和文件身份。网页中的文件链接也可单独下载；含多个配套文件的案例建议下载整包。\n\n[查看插件版本与安装材料状态](${siteUrl('downloads/')})。插件安装包尚未公开发布，网站不提供本地候选 ZIP。\n\n<a id="local-data"></a>\n## 本机限定数据\n\nP02 的能量、振动、优化与 NBO 案例依赖本机限定的计算输入，网站和公开样本 ZIP 均不包含这些文件或 Blender 工程。请使用自己有权使用的等价数据；公开网页无法提供同一输入的逐步复现。[仓库中的本机限定案例说明](${mapping.repository}/blob/main/validation/agent/LOCAL-CASES.md)记录了范围与前提。\n`;
+  const index = `---\ntitle: ${JSON.stringify(navigation.title)}\nsidebar:\n  order: ${navigation.order}\n---\n\n从安装与第一张轨道图开始，再按当前任务选择专题。网页正文直接来自仓库中文教程；菜单路径、数值、单位、代码与操作顺序沿用原文。\n\n${links}\n\n## 准备教程材料\n\n[下载公开教程样本 ZIP](${siteUrl(`downloads/${publicSamples.download}`)})，解压后保留版本目录及 P01–P06 各组内部的相对路径。原教程中的数据路径相对材料根目录；在本机将样本放到 \`shared/data/public/\` 下。包内 NOTICE.md、LICENSE 和 tutorial-samples.json 说明计算条件、许可和文件身份。网页中的文件链接也可单独下载；含多个配套文件的案例建议下载整包。\n\n[查看插件版本与安装材料状态](${siteUrl('downloads/')})。插件安装包尚未公开发布，网站不提供本地候选 ZIP。\n\n<a id="local-data"></a>\n## 本机限定数据\n\n当前包按逐文件许可清单包含自有 P02 优化、频率与 NBO 日志，对应 Gaussian 日志专题。历史受限 P02 与其他本机限定输入仍不在网站或公开包中；Blender 工程也不部署。案例编号本身不授予再分发许可。[仓库中的本机限定案例说明](${mapping.repository}/blob/main/validation/agent/LOCAL-CASES.md)记录了范围与前提。\n`;
   await writeGenerated(generatedPath(navigation), index);
   await writeGenerated(path.join(websiteRoot, 'src/content/docs/404.md'), `---
 title: 页面未找到
@@ -120,13 +123,16 @@ Page not found. Continue from the [English home page](${siteUrl('en/')}).
     independent_human_review: currentInstall.independent_human_review,
     license_review: currentInstall.license_review,
     scientific_acceptance: currentInstall.scientific_acceptance,
-    samples_download: siteUrl(`downloads/${mapping.publicSamples.download}`),
-    samples_sha256: mapping.publicSamples.sha256,
+    samples_download: siteUrl(`downloads/${publicSamples.download}`),
+    samples_name: publicSamples.download,
+    samples_bytes: publicSamples.bytes,
+    samples_dataset_id: publicSamples.dataset_id,
+    samples_sha256: publicSamples.sha256,
   };
   await writeGenerated(path.join(websiteRoot, 'src/data/generated-product.json'), JSON.stringify(product, null, 2) + '\n');
   await writeGenerated(path.join(websiteRoot, 'reports/tutorial-manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
   const totals = manifest.pages.reduce((sum, page) => ({ steps: sum.steps + page.steps, details: sum.details + page.details, images: sum.images + page.images }), { steps: 0, details: 0, images: 0 });
-  console.log(`Prepared ${manifest.pages.length} source pages: ${totals.steps} steps, ${totals.images} images, ${totals.details} details; ${samples.length} frozen public sample members.`);
+  console.log(`Prepared ${manifest.pages.length} source pages: ${totals.steps} steps, ${totals.images} images, ${totals.details} details; ${samples.length} licensed current sample members.`);
   return manifest;
 }
 

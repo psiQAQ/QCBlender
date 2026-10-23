@@ -2,10 +2,7 @@
   "base": "/QCBlender",
   "repository": "https://github.com/psiQAQ/QCBlender",
   "publicSamples": {
-    "source": "validation/agent/packages/qcblender-public-tutorial-samples-v2.zip",
-    "sha256": "b4bc3e0ebbdf29ccb3905b16eeb898c94b9f16f209baae3c3ae1a8646b0348dd",
-    "members": 33,
-    "download": "qcblender-public-tutorial-samples-v2.zip"
+    "delivery": "validation/agent/acceptance/tutorial-sample-delivery.json"
   },
   "pages": [
     { "slug": "docs", "title": "教程导航", "order": 0 },
@@ -21,6 +18,7 @@
     { "source": "validation/human/topics/09-nodes.md", "slug": "docs/topics/09-nodes", "title": "几何节点", "order": 9 },
     { "source": "validation/human/topics/10-surface-projection.md", "slug": "docs/topics/10-surface-projection", "title": "表面距离投影", "order": 10 },
     { "source": "validation/human/topics/11-aicd.md", "slug": "docs/topics/11-aicd", "title": "AICD 张量与电流响应", "order": 11 },
+    { "source": "validation/human/topics/12-gaussian-log.md", "slug": "docs/topics/12-gaussian-log", "title": "Gaussian 日志、频率与 NBO", "order": 12 },
     { "source": "docs/USER_GUIDE.md", "slug": "docs/reference", "title": "操作入口索引", "order": 20 }
   ]
 }

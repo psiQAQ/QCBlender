@@ -4,7 +4,7 @@ export type Locale = 'zh' | 'en';
 
 export const repository = 'https://github.com/psiQAQ/QCBlender';
 export const releases = `${repository}/releases`;
-export const publicSamples = 'downloads/qcblender-public-tutorial-samples-v2.zip';
+export const publicSamples = `downloads/${product.samples_name}`;
 const channel = product.channel.charAt(0).toUpperCase() + product.channel.slice(1);
 export const versionLabel = `${product.version} ${channel}`;
 
@@ -125,9 +125,9 @@ export const copy = {
     buildLink: '开发与构建说明',
     samplesLabel: '02 / 公开教程样本',
     samplesTitle: '跟随教程，使用同一份输入。',
-    samplesBody: 'P01、P03、P04、P05、P06 的公开科学输入与许可文件，用于中文教程中的对应案例。',
-    samplesName: 'qcblender-public-tutorial-samples-v2.zip',
-    samplesSize: '12,175,753 字节 · ZIP · CC BY 4.0',
+    samplesBody: 'P01–P06 的公开科学输入与许可文件，包含自有 P02 日志，用于中文教程中的对应案例。',
+    samplesName: product.samples_name,
+    samplesSize: `${product.samples_bytes.toLocaleString('en-US')} 字节 · ZIP · CC BY 4.0`,
     samplesLink: '下载公开样本',
     samplesNote: '这是科学输入数据包，不含扩展安装包。使用与再分发请保留来源及归属声明。',
     installTitle: '取得合格扩展包后，按这三步安装。',
@@ -249,9 +249,9 @@ export const copy = {
     buildLink: 'Development & build instructions',
     samplesLabel: '02 / Public tutorial samples',
     samplesTitle: 'Follow the tutorial\nwith the same inputs.',
-    samplesBody: 'Public scientific inputs and license files for the P01, P03, P04, P05 and P06 examples in the Chinese tutorial.',
-    samplesName: 'qcblender-public-tutorial-samples-v2.zip',
-    samplesSize: '12,175,753 bytes · ZIP · CC BY 4.0',
+    samplesBody: 'Licensed public scientific inputs for P01–P06, including the owned P02 Gaussian log used in the Chinese tutorial.',
+    samplesName: product.samples_name,
+    samplesSize: `${product.samples_bytes.toLocaleString('en-US')} bytes · ZIP · CC BY 4.0`,
     samplesLink: 'Download public samples',
     samplesNote: 'This archive contains scientific input data, not the extension. Retain source and attribution notices when using or redistributing it.',
     installTitle: 'Once you have a validated extension ZIP, install in three steps.',

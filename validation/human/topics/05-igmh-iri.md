@@ -17,7 +17,7 @@
 <a id="step-01"></a>
 ### 1. 导入水二聚体作为共同参考
 
-点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/P03/water-dimer.fchk](../../shared/data/public/P03/water-dimer.fchk)，将原子对象命名为 **P03-atoms**。应看到两个水分子，共六个原子。
+点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/gaussian-v1/P03/water-dimer.fchk](../../shared/data/public/gaussian-v1/P03/water-dimer.fchk)，将原子对象命名为 **P03-atoms**。应看到两个水分子，共六个原子。
 
 <details>
 <summary>了解 IGMH 与 IRI</summary>
@@ -37,14 +37,18 @@
 | 控件 | 输入值 |
 | --- | --- |
 | 分析（Analysis） | IGMH |
-| 几何场 Cube（Geometry Cube） | [shared/data/public/P03/igmh/dg_inter.cub](../../shared/data/public/P03/igmh/dg_inter.cub) |
-| sign(lambda2)rho Cube | [shared/data/public/P03/igmh/sl2r.cub](../../shared/data/public/P03/igmh/sl2r.cub) |
+| 几何场 Cube（Geometry Cube） | [shared/data/public/gaussian-v1/P03/igmh/dg_inter.cub](../../shared/data/public/gaussian-v1/P03/igmh/dg_inter.cub) |
+| sign(lambda2)rho Cube | [shared/data/public/gaussian-v1/P03/igmh/sl2r.cub](../../shared/data/public/gaussian-v1/P03/igmh/sl2r.cub) |
 | 几何场值单位（Geometry value unit） | electron/bohr^4 |
 | 着色场值单位（Color value unit） | electron/bohr^3 |
 | IGMH 分量（IGMH component） | inter |
 | 片段原子（JSON）（Fragment atoms (JSON)） | `[[1,2,3],[4,5,6]]` |
 | 声明来源（可选）（Declaration source (optional)） | P03 Multiwfn fragment setup |
 | 颜色最小值（Color minimum） / 颜色最大值（Color maximum） | −0.04 / 0.04 |
+
+- 截图保存为 `human/screenshots/P03-igmh-import.png`。
+
+![同网格IGMH成对场、物理量单位、inter分量与两个水分子片段声明](../screenshots/P03-igmh-import.png)
 
 <details>
 <summary>了解成对场、IGMH 分量与片段声明</summary>
@@ -97,8 +101,8 @@
 | 控件 | 输入值 |
 | --- | --- |
 | 分析（Analysis） | IRI |
-| 几何场 Cube（Geometry Cube） | [shared/data/public/P03/iri/func2.cub](../../shared/data/public/P03/iri/func2.cub) |
-| sign(lambda2)rho Cube | [shared/data/public/P03/iri/func1.cub](../../shared/data/public/P03/iri/func1.cub) |
+| 几何场 Cube（Geometry Cube） | [shared/data/public/gaussian-v1/P03/iri/func2.cub](../../shared/data/public/gaussian-v1/P03/iri/func2.cub) |
+| sign(lambda2)rho Cube | [shared/data/public/gaussian-v1/P03/iri/func1.cub](../../shared/data/public/gaussian-v1/P03/iri/func1.cub) |
 | 几何场值单位（Geometry value unit） | a.u. (electron^-0.1 bohr^-0.7) |
 | 着色场值单位（Color value unit） | electron/bohr^3 |
 | IRI 密度指数 a（IRI density exponent a） | 1.1 |
@@ -126,10 +130,20 @@
 - 选 **IGMH-data**，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，展开 **外部结果浏览器（External Result Browser）**。
 - 保持 **交换数值列（Swap value columns）** 关闭，打开 X、Y 两行的全部范围开关，填 **X 从（From）=−0.04、至（To）=0.04；Y 从（From）=0.001、至（To）=0.02**，点击 **应用筛选（Apply Filter）**。应提示 **已保存成对场筛选以供数据导出（Paired field filter saved for data export）**。
 - X 对应 `sign_lambda2_rho [electron/bohr^3]`，Y 对应 `delta_g [electron/bohr^4]`。
+
+- 截图保存为 `human/screenshots/P03-paired-filter.png`。
+
+![成对场浏览器中未交换的X/Y物理量、单位、四个范围开关及筛选条件](../screenshots/P03-paired-filter.png)
+
 - 保持 **IGMH-data** 活动，按[数据导出](../SOP.md#export)选择 **数据（Data）=成对场（paired）、行（Rows）=当前筛选（Current filter）** 并设置输出目录，导出后应得到 `paired_voxels.csv` 与 `metadata.json`。
 
 - 要练习交换两列，可保持 **IGMH-data** 活动，开启 **交换数值列（Swap value columns）**，同时将范围改为 **X 从（From）=0.001、至（To）=0.02；Y 从（From）=−0.04、至（To）=0.04**，点击 **应用筛选（Apply Filter）** 后再次按 **行（Rows）=当前筛选（Current filter）** 导出。
 - 两次 CSV 应选中相同的网格点，`x_value`、`y_value` 的内容及配套元数据中的单位互换。
+
+- 截图保存为 `human/screenshots/P03-paired-filter-swapped.png`。
+
+![交换数值列后的X/Y物理量、单位和对应互换的范围](../screenshots/P03-paired-filter-swapped.png)
+
 - 完成后关闭 **交换数值列（Swap value columns）**，将 X、Y 范围恢复为本步最初的值，并再次点击 **应用筛选（Apply Filter）**。
 
 <details>

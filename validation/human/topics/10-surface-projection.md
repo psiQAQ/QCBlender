@@ -41,6 +41,10 @@
 | Multiwfn 生成日志（Multiwfn generation log） | `shared/data/local/scientific-displays/ru-vdw-20261023/mwfn_log.txt` |
 | 有效性 CSV（可选）（Validity CSV (optional)） | `shared/data/local/scientific-displays/ru-vdw-20261023/validity.csv` |
 
+- 截图保存为 `human/screenshots/SD01-import-dialog.png`。
+
+![表面距离投影导入的距离图、扫描声明、生成日志与有效性CSV](../screenshots/SD01-import-dialog.png)
+
 - 分子旁应出现独立二维投影图。选中图，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，展开 **表面距离投影（Surface Distance Projection）**，应显示网格 **61 × 41**、有效 **1406**、未命中 **1095**、未知 **0**。
 - 保持选中图，按小键盘 `.` 居中观察。需要清楚查看图表时，关闭视口的 **显示叠加层（Show Overlays）**，隐藏网格和父子关系辅助线。
 
@@ -76,6 +80,10 @@
 | 显示投影等值线（Show projection contours） | 开启 |
 | 深度等值值（Å；留空则自动）（Depth levels (Å; blank = automatic)） | `-4,-3,-2` |
 
+- 截图保存为 `human/screenshots/SD01-display-dialog.png`。
+
+![投影Cividis色表、原子投影、深度色标与三组等值线设置](../screenshots/SD01-display-dialog.png)
+
 - 图中应出现对应的三组等值线，并保留原子投影和色标；未命中和未知区域保持空缺，不跨接或填洞。
 - 截图保存为 `human/screenshots/SD01-surface-projection.png`。
 
@@ -97,7 +105,12 @@ Viridis 和 Cividis 只改变配色。自动色域取有效点的深度范围；
 
 - 在 **表面距离投影（Surface Distance Projection）** 面板点击 **读取投影网格点（Inspect Projection Point）**，设 **X 索引（从 0 开始）（X index (0-based)）=30**、**Y 索引（从 0 开始）（Y index (0-based)）=20** 并确认。面板应显示 **X 0、Y 0.5 Å、深度 −4.1 Å、有效**。
 - 再次读取，将 X、Y 索引都设为 **0**，应显示 **X −7、Y −6 Å、深度 −12 Å、未命中**。这里的 `-12` 是保留的扫描底值，不是已测得的表面深度。
-- 点击面板中的 **导出科学数据（Export Scientific Data）**，按[公共导出步骤](../SOP.md#export)选择 **数据（Data）=PROJECTION**，保存到 `work/human/SD01-export/`，应得到 `surface_projection.csv` 和随附元数据。
+
+- 截图保存为 `human/screenshots/SD01-point-miss.png`。
+
+![索引0、0的扫描底值−12 Å及明确的未命中状态](../screenshots/SD01-point-miss.png)
+
+- 点击面板中的 **导出科学数据（Export Scientific Data）**，按[公共导出步骤](../SOP.md#export)选择 **数据（Data）=PROJECTION**，保存到 `work/human/gaussian-v1/SD01-export/`，应得到 `surface_projection.csv` 和随附元数据。
 
 <details>
 <summary>了解网格索引和导出范围</summary>
@@ -111,7 +124,7 @@ Viridis 和 Cividis 只改变配色。自动色域取有效点的深度范围；
 <a id="step-05"></a>
 ### 5. 保存并重新打开工程
 
-- 若第 2 步为观察图表关闭了视口叠加层，先恢复原设置，再按[保存与重开](../SOP.md#save)保存为 `work/human/SD01-projection.blend`，保留同名 `.qcdata/`。
+- 若第 2 步为观察图表关闭了视口叠加层，先恢复原设置，再按[保存与重开](../SOP.md#save)保存为 `work/human/gaussian-v1/SD01-projection.blend`，保留同名 `.qcdata/`。
 - 重开后选中投影图，查看点数、Cividis 色表、等值线、原子投影与最后读取的网格点；再次读取 **(30,20)**，应仍显示 **深度 −4.1 Å、有效**。
 - 移动工程时，同时移动 `.blend` 和 `.qcdata/`。
 

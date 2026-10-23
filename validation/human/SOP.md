@@ -30,7 +30,9 @@
 
 本文的文件路径均相对**材料根目录**，即解压后同时含有 `human/` 和 `shared/` 的文件夹。保留这两个目录的相对位置；无需安装 Gaussian、Multiwfn 或 PySCF。
 
-教程截图保存在 `human/screenshots/`，以案例编号和内容命名，如 `P01-orbital.png`；本页使用 P01 前缀。渲染图保存在 `human/renders/`，工程和导出文件保存在 `work/human/`。按步骤保存图片后，下方引用便会显示对应图片。
+教程截图保存在 `human/screenshots/`，以案例编号和内容命名，如 `P01-orbital.png`；本页使用 P01 前缀。渲染图保存在 `human/renders/`，当前工程和导出文件保存在 `work/human/gaussian-v1/`，在仓库中对应 `validation/work/human/gaussian-v1/`。当前公开实践输入统一取自 `shared/data/public/gaussian-v1/`。按步骤保存图片后，下方引用便会显示对应图片。
+
+旧的 `work/human/P01/` 等工程与未替换的历史截图保留原批次身份；其科学输入和数值不能用来证明本轮 Gaussian 案例。下文以当前输入路径、对象名和数值核对结果。
 
 <a id="install"></a>
 ## 安装并找到插件
@@ -129,7 +131,7 @@ N 侧栏依次包含下列五区；**当前 QC 对象（Current QC Object）** �
 <a id="step-04"></a>
 ### 4. 导入氧分子并查看来源
 
-- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/P01/o2-uhf.fchk](../shared/data/public/P01/o2-uhf.fchk)。应出现两个氧原子，它们属于同一个原子对象。
+- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/gaussian-v1/P01/o2-uhf.fchk](../shared/data/public/gaussian-v1/P01/o2-uhf.fchk)。应出现两个氧原子，它们属于同一个原子对象。
 - 在大纲视图（Outliner）选中这个原子对象，按 `F2` 命名为 **P01-atoms**；在 **当前 QC 对象（Current QC Object）** 核对对象名与来源原子总数 **2**，展开 **数据与来源详情（Data and Source Details）** 查看计算信息，同时核对 **打开对象属性（Open Object Properties）** 旁的目标名。
 - 截图保存为 `human/screenshots/P01-sidebar-summary.png`。
 
@@ -153,7 +155,7 @@ N 侧栏依次包含下列五区；**当前 QC 对象（Current QC Object）** �
 - 保持 **P01-atoms** 活动，点击 **对象属性（Object Properties） → 创建视图与工具（Create Views and Tools） → 计算（Compute） → 生成量子化学场（Generate Quantum Field）**。
 - 首次使用时先等待自动检查。
 - 在 **生成量子化学场（Generate Quantum Field）** 对话框中，先选 **物理量（Quantity）=分子轨道（Molecular orbital）、自旋（Spin）=Alpha**，将 **轨道（Orbital）** 依次切到 **HOMO** 和 **LUMO**，观察预览中的 **源轨道（Source MO）**、占据数和能量；本例应分别显示源轨道 **8（占据数 1）** 和 **10（占据数 0）**，即一个已占据轨道和一个未占据轨道。
-- 此时还没有生成场。
+- 此时还没有生成场。需要比较另一自旋通道时，切到 **Beta → HOMO**，本例源轨道为 **6**；随后切回 **Alpha**，继续下面的固定源编号练习。
 - 再切到 **源编号（Source number）**，输入 **9**，按下表补齐网格参数。
 
 | 控件 | 输入值 |
@@ -165,6 +167,10 @@ N 侧栏依次包含下列五区；**当前 QC 对象（Current QC Object）** �
 | 网格间距（Å）（Grid spacing (angstrom)） | 0.2 |
 | 网格边距（Å）（Grid margin (angstrom)） | 3 |
 | 内存预算（MiB）（Memory budget (MiB)） | 512 |
+
+- 截图保存为 `human/screenshots/P01-orbital-dialog.png`，图中应同时显示 **Alpha、源编号 9、占据数 1、能量约 −0.415470439 hartree** 和上表网格参数。
+
+![Alpha源轨道9的占据数、能量与生成网格参数](screenshots/P01-orbital-dialog.png)
 
 点击 **确定（OK）**，等待生成完成。
 
@@ -206,7 +212,7 @@ N 侧栏依次包含下列五区；**当前 QC 对象（Current QC Object）** �
 <a id="step-06"></a>
 ### 6. 调整轨道表面阈值
 
-- 完成后选中 **QC orbital_amplitude**，重新点击 **打开对象属性（Open Object Properties）**，核对目标名。
+- 完成后选中新生成的 **QC orbital_amplitude**，按 `F2` 命名为 **P01-alpha-MO9**，重新点击 **打开对象属性（Open Object Properties）**，核对目标名。
 - 在 **对象属性（Object Properties） → 几何表示（Geometry Representation）** 将 **正值阈值（Positive Isovalue）** 设为 **0.045**，保持 **联动正负阈值（Link Thresholds）**、**显示正相位（Show Positive Phase）**、**显示负相位（Show Negative Phase）** 开启。应看到两种颜色的轨道表面；在 **科学记录与振动模式（Scientific Records and Vibration Modes）** 中应看到 `spin: alpha`、`source_number: 9`，单位为 `bohr^-3/2`。
 - 截图保存为 `human/screenshots/P01-orbital.png`。
 
@@ -231,7 +237,12 @@ N 侧栏依次包含下列五区；**当前 QC 对象（Current QC Object）** �
 ### 7. 切换相位显示和透明度
 
 - 关闭再开启 **显示负相位（Show Negative Phase）**，应只有一种相位的表面消失后恢复。
-- 打开 **属性（Properties） → 材质（Material） → QCBlender · 节点材质（QCBlender · Node Materials）**，将 **正值不透明度（Positive Opacity）** 设为 **0.4**，正相位应变透明；最后恢复 **1**，保留两种相位。
+- 打开 **属性（Properties） → 材质（Material） → QCBlender · 节点材质（QCBlender · Node Materials）**，将 **正值不透明度（Positive Opacity）** 设为 **0.4**，正相位应变透明，负相位仍显示。
+- 截图保存为 `human/screenshots/P01-phase-opacity.png`。
+
+![正相位不透明度0.4与保留的负相位](screenshots/P01-phase-opacity.png)
+
+- 截图后将正值不透明度恢复 **1**，保留两种相位，再继续渲染。
 
 <details>
 <summary>了解材质与不透明度</summary>
@@ -246,8 +257,8 @@ N 侧栏依次包含下列五区；**当前 QC 对象（Current QC Object）** �
 <a id="step-08"></a>
 ### 8. 自动取景并应用出图方案
 
-- 在文件管理器中，在材料根目录创建 `work/human/P01/` 和 `work/human/exports/`。
-- 回到 Blender，选中 **QC orbital_amplitude**，重新打开该对象属性，点击 **对象属性（Object Properties） → 创建视图与工具（Create Views and Tools） → 相机（Camera） → 应用 QC 出图方案（Apply QC Output）**。也可从 **渲染属性（Render Properties） → QC 出图（QC Output）** 打开同一操作。
+- 在文件管理器中，在材料根目录创建 `work/human/gaussian-v1/P01/` 和 `work/human/gaussian-v1/P01/exports/`。
+- 回到 Blender，选中 **P01-alpha-MO9**，重新打开该对象属性，点击 **对象属性（Object Properties） → 创建视图与工具（Create Views and Tools） → 相机（Camera） → 应用 QC 出图方案（Apply QC Output）**。也可从 **渲染属性（Render Properties） → QC 出图（QC Output）** 打开同一操作。
 - 在弹窗中选择 **观察方向：主轴取景（Principal Axes）**、**每侧边距：0.05**、**出图质量：预览（EEVEE，64 采样）**、**宽度 1280、高度 720、分辨率百分比 100%**、**背景：白色（White）**。截取设置弹窗，保存为 `human/screenshots/P01-output.png`。
 
 ![自动观察方向、质量和背景设置](screenshots/P01-output.png)
@@ -284,14 +295,14 @@ N 侧栏依次包含下列五区；**当前 QC 对象（Current QC Object）** �
 <a id="step-09"></a>
 ### 9. 渲染并保存图片
 
-按 `F12` 渲染，在结果窗口选择 **图像（Image） → 另存为（Save As）**，保存到 `human/renders/P01-mo.png`。应看到完整的两种相位表面，构图与相机视图一致。
+按 `F12` 渲染，在结果窗口选择 **图像（Image） → 另存为（Save As）**，保存到 `human/renders/P01-final.png`。应看到完整的两种相位表面，构图与相机视图一致。
 
-![第一张轨道渲染图](renders/P01-mo.png)
+![第一张轨道渲染图](renders/P01-final.png)
 
 <details>
 <summary>了解 PNG 与可编辑工程的用途</summary>
 
-这张 PNG 是可直接用于教程、报告或演示的静态图片。需要调整视角、表面或材质时，使用后面保存的工程继续编辑，再重新渲染。
+这张 PNG 是可直接用于教程、报告或演示的静态图片。需要调整视角、表面或材质时，使用后面保存的工程继续编辑，再重新渲染。原有 [P01-mo.png](renders/P01-mo.png) 保留为历史渲染，本轮 Gaussian 输入对应 `P01-final.png`。
 
 </details>
 
@@ -301,8 +312,8 @@ N 侧栏依次包含下列五区；**当前 QC 对象（Current QC Object）** �
 <a id="step-10"></a>
 ### 10. 选择参数摘要并导出
 
-- 在渲染结果窗口按 `F11` 返回主窗口，选中 **QC orbital_amplitude**，点击 **N 侧栏 → 导入与导出（Import and Export） → 导出（Export） → 导出数据与参数摘要（Export Data and Parameter Summary）**。
-- 将 **数据（Data）** 设为 **当前视图参数摘要（Current View Parameter Summary）**；在 **输出目录（Output directory）** 选择材料根目录下的 `work/human/exports/`，让文件浏览器填入它的实际绝对路径。
+- 在渲染结果窗口按 `F11` 返回主窗口，选中 **P01-alpha-MO9**，点击 **N 侧栏 → 导入与导出（Import and Export） → 导出（Export） → 导出数据与参数摘要（Export Data and Parameter Summary）**。
+- 将 **数据（Data）** 设为 **当前视图参数摘要（Current View Parameter Summary）**；在 **输出目录（Output directory）** 选择材料根目录下的 `work/human/gaussian-v1/P01/exports/`，让文件浏览器填入它的实际绝对路径。
 - 截图保存为 `human/screenshots/P01-summary.png`，然后确认导出。
 
 ![当前视图参数摘要的导出选项与保存目录](screenshots/P01-summary.png)
@@ -325,14 +336,19 @@ N 侧栏依次包含下列五区；**当前 QC 对象（Current QC Object）** �
 <a id="step-11"></a>
 ### 11. 打开摘要并核对参数
 
-按 **数据已导出：（Data exported:）** 提示中的完整路径打开新生成的子目录；若提示已消失，到 `work/human/exports/` 查找刚生成的目录。应有 **view-summary.md** 和 **metadata.json**；打开前者，检查其中有 **Alpha、源轨道 9、0.2 Å 网格、0.045 阈值**。
+按 **数据已导出：（Data exported:）** 提示中的完整路径打开新生成的子目录；若提示已消失，到 `work/human/gaussian-v1/P01/exports/` 查找刚生成的目录。应有 **view-summary.md** 和 **metadata.json**；打开前者，检查其中有 **Alpha、源轨道 9、0.2 Å 网格、0.045 阈值**。
+
+- 将 Blender 的一个编辑区切换为 **文本编辑器（Text Editor）**，点击 **打开（Open）**，选择刚导出的实际 `view-summary.md`；文本应显示当前对象 **P01-alpha-MO9** 的来源和参数。
+- 截图保存为 `human/screenshots/P01-summary-preview.png`。
+
+![Blender文本编辑器中打开的实际view-summary.md导出文件](screenshots/P01-summary-preview.png)
 
 - 查看 `view-summary.md`，同时保留 `metadata.json`，通常不需要手动编辑。
 - 修改参数后重新导出，将图片与对应摘要一起保存。
 - 继续编辑工程时，保留 `.blend` 与配套 `.qcdata/`。
 
 - 专题中导出 CSV 时，先选专题指定的记录对象，再使用步骤 10 的入口，将 **数据（Data）** 改为该专题指定的类型。
-- 若尚未创建 `work/human/exports/`，先在文件管理器中创建它；只有支持筛选的类型才显示 **行（Rows）**，按专题要求选择导出范围。
+- 专题导出时，在 `work/human/gaussian-v1/` 下使用对应案例目录的 `exports/`，如 `work/human/gaussian-v1/P03/exports/`，尚未创建时先在文件管理器中创建；只有支持筛选的类型才显示 **行（Rows）**，按专题要求选择导出范围。
 - 需要分析或分享数据时，将 CSV 和该文件一起保留。
 
 <details>
@@ -360,13 +376,16 @@ N 侧栏依次包含下列五区；**当前 QC 对象（Current QC Object）** �
 <a id="save"></a>
 ## 保存、重新打开和归档工程
 
-下面的文件名用于 P01 主线。保存专题工程时，先创建对应案例目录，并换成有区别的名称，例如 `work/human/P03/P03-density-esp.blend`；重新打开和归档时沿用自己的工程名。
+下面的文件名用于 P01 主线。保存专题工程时，先创建对应案例目录，并换成有区别的名称，例如 `work/human/gaussian-v1/P03/P03-density-esp.blend`；重新打开和归档时沿用自己的工程名。
 
 <a id="step-12"></a>
 ### 12. 保存自包含工程
 
-- 点击 **N 侧栏 → 工程与维护（Project and Maintenance） → 保存与归档（Save and Archive） → 保存自包含工程（Save Self-Contained Project）**，保存为 `work/human/P01/P01.blend`。
-- 在文件管理器中应同时看到 `work/human/P01/P01.qcdata/`。
+- 点击 **N 侧栏 → 工程与维护（Project and Maintenance） → 保存与归档（Save and Archive） → 保存自包含工程（Save Self-Contained Project）**，保存为 `work/human/gaussian-v1/P01/P01.blend`。
+- 在 Blender 文件浏览器进入同一目录，核对同时存在 **P01.blend** 和 **P01.qcdata/**；该目录在仓库中的完整位置为 `validation/work/human/gaussian-v1/P01/`。
+- 截图保存为 `human/screenshots/P01-project-sidecar.png`，然后取消文件浏览，返回当前工程。
+
+![Blender文件浏览器中的P01.blend与同名P01.qcdata配套目录](screenshots/P01-project-sidecar.png)
 
 <details>
 <summary>了解自包含工程与配套数据</summary>
@@ -382,18 +401,23 @@ N 侧栏依次包含下列五区；**当前 QC 对象（Current QC Object）** �
 <a id="step-13"></a>
 ### 13. 关闭并重新打开工程
 
-选择 **文件（File） → 退出（Quit）** 正常关闭 Blender，再启动 Blender，用 **文件（File） → 打开（Open）** 打开 `work/human/P01/P01.blend`。
+选择 **文件（File） → 退出（Quit）** 正常关闭 Blender，再启动 Blender，用 **文件（File） → 打开（Open）** 打开 `work/human/gaussian-v1/P01/P01.blend`。
 
 <a id="step-14"></a>
 ### 14. 检查重开后的显示和取景
 
-选中 **QC orbital_amplitude**，切到 **材质预览（Material Preview）**。两种相位仍应完整显示，阈值仍为 **0.045**；按小键盘 `0`（或 **视图（View） → 摄像机（Cameras） → 活动摄像机（Active Camera）**）应能恢复刚才的取景。
+选中 **P01-alpha-MO9**，切到 **材质预览（Material Preview）**。两种相位仍应完整显示，阈值仍为 **0.045**；按小键盘 `0`（或 **视图（View） → 摄像机（Cameras） → 活动摄像机（Active Camera）**）应能恢复刚才的取景。
 
 <a id="step-15"></a>
 ### 15. 归档工程及配套数据
 
-- 点击 **工程与维护（Project and Maintenance） → 保存与归档（Save and Archive） → 归档工程（Archive Project）**，保存为 `work/human/P01/P01-project.zip`。
-- 在文件管理器中打开 ZIP，应能找到 `.blend` 与配套科学数据目录。
+- 点击 **工程与维护（Project and Maintenance） → 保存与归档（Save and Archive） → 归档工程（Archive Project）**，保存为 `work/human/gaussian-v1/P01/P01-project.zip`。
+- 用 Blender 文件浏览器进入 `work/human/gaussian-v1/P01/`，核对归档 **P01-project.zip**、工程 **P01.blend** 和配套 **P01.qcdata/** 均在目录中；若 ZIP 未显示，检查文件类型过滤。
+- 截图保存为 `human/screenshots/P01-project-archive.png`，然后取消文件浏览。
+
+![Blender文件浏览器中的P01-project.zip及相邻的工程与配套数据目录](screenshots/P01-project-archive.png)
+
+- 这张截图展示目录中的归档文件，不展示 ZIP 内部。需要核对归档内容时，在系统文件管理器中打开 ZIP，检查 `.blend` 与配套科学数据目录。
 - 接收者解压后保持目录结构，再打开其中的 `.blend`。
 
 - 归档使用磁盘上已保存的工程。
@@ -425,5 +449,6 @@ N 侧栏依次包含下列五区；**当前 QC 对象（Current QC Object）** �
 | 用公共节点组合自己的显示流程 | [几何节点](topics/09-nodes.md) |
 | 导入表面距离图、区分三态、显示原子投影和等值线（本机限定案例） | [表面距离投影](topics/10-surface-projection.md) |
 | 导入同源 AICD 张量、切换磁场、比较全电子与 π、读取原始点（本机限定案例） | [AICD 张量与电流响应](topics/11-aicd.md) |
+| 选择 Gaussian 计算段、浏览优化步和收敛记录、显示振动模式、导出 IR、浏览 NBO 与 E(2) | [Gaussian 日志：优化、振动与 NBO](topics/12-gaussian-log.md) |
 
 公开样本的计算条件和许可见 [shared/data/public/NOTICE.md](../shared/data/public/NOTICE.md) 与 [LICENSE](../shared/data/public/LICENSE)。

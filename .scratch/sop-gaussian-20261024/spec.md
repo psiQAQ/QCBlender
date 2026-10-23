@@ -1,7 +1,7 @@
 # Gaussian 案例重算与 SOP 截图补全
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 Date: 2026-10-24
 Baseline: 72457731d30a030edf399af6f88d5a374353cac5
 

@@ -27,6 +27,7 @@
 | 查看XYZ多帧 | XYZ多帧原子对象 | 对象属性 → XYZ Frames | Previous、Next、Choose XYZ Frame |
 | Mayer 逐键着色 | 已导入 Mayer 结果的 IRC path 或其 Mayer 记录 | 对象属性 → IRC 路径 | 显示 Mayer 连线、Mayer 显示设置；整路径色域、手动范围、键级下限 |
 | 表面距离投影 | 生成时同朝向的静态原子视图 | N 侧栏 → 导入与导出 → 导入外部结果 → 空间场分析 | 表面距离投影；生成后在对象属性中设置色表、等值线并读取网格点；CSV 类型 PROJECTION |
+| AICD张量与电流响应 | 同原子顺序、同生成坐标的静态原子视图 | N 侧栏 → 导入与导出 → 导入外部结果 → 空间场分析 | AICD张量；生成后在对象属性设置磁场、箭头和Aniso等值面，读取原始采样点；CSV类型AICD |
 | 局部选择、氢显隐 | 原子视图 | 对象属性 → 局部选择与标注 | 设置局部选择、隐藏氢等 |
 | 创建标注、优化视图 | 原子视图；优化需有逐步数据 | 对象属性 → 局部选择与标注（标注）／Optimization Trajectory（优化视图） | 原子（Atoms）、距离（Distance）、角度（Angle）、二面角（Dihedral）；创建优化轨迹视图（Create Optimization View） |
 | 查看来源 | 对应 QC 视图 | 对象属性的 QCBlender 主面板 | 来源详情、刷新来源、关联选中数据源 |
@@ -51,7 +52,7 @@
 | 任务 | 教程位置 |
 | --- | --- |
 | 安装、对象/编辑器选择、第一张 MO 图 | [入门主流程](../validation/human/SOP.md) |
-| 能量、振动、优化与 NBO | [本机限定案例](../validation/agent/LOCAL-CASES.md) |
+| Gaussian计算段、能量、优化、振动与 NBO | [公开Gaussian日志专题](../validation/human/topics/12-gaussian-log.md) |
 | Cube 单位、双符号、多场叠加与跨场着色 | [Cube 专题](../validation/human/topics/02-cube.md) |
 | 密度、ESP、电荷/偶极、图例和色带预设 | [电子分布专题](../validation/human/topics/03-density-esp.md) |
 | 切片、探针、剖面 CSV、裁剪和体积雾 | [空间观察专题](../validation/human/topics/04-spatial-tools.md) |
@@ -107,7 +108,7 @@ IRC和优化关联比较双方当前步骤的源Å坐标。最后选择的对象
 
 ## Gaussian 优化轨迹浏览
 
-按 [本机限定案例](../validation/agent/LOCAL-CASES.md)导入 P02 的 Job1，在 **对象属性 → Optimization Trajectory** 点击 **创建优化轨迹视图（Create Optimization View）**。选中新轨迹对象并重新打开对象属性，使用 **Previous / Next / Choose Step** 切步。Job2 的模式和能量在 **科学记录与振动模式**。
+按 [公开Gaussian日志专题](../validation/human/topics/12-gaussian-log.md)导入 `shared/data/public/gaussian-v1/P02/water_neutral_nbo_opt_freq.out` 的 Job1，在 **对象属性 → Optimization Trajectory** 点击 **创建优化轨迹视图（Create Optimization View）**。选中新轨迹对象并重新打开对象属性，使用 **Previous / Next / Choose Step** 切步。本例优化共5步。Job2 的三个模式和能量在 **科学记录与振动模式**；IR数值通过数据导出取得。旧的本机限定日志仍由[历史本机案例](../validation/agent/LOCAL-CASES.md)定位，其数值不用于本专题。
 
 <details>
 <summary>查阅新建视图默认值与导出目录规则</summary>

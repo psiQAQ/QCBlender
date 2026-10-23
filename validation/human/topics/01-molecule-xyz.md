@@ -29,7 +29,7 @@
 <a id="step-01"></a>
 ### 1. 导入水二聚体并命名原子层
 
-- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/P06/water-dimer.xyz](../../shared/data/public/P06/water-dimer.xyz)。
+- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/gaussian-v1/P06/water-dimer.xyz](../../shared/data/public/gaussian-v1/P06/water-dimer.xyz)。
 - 选中导入的原子对象，按 `F2` 命名为 **P06-single**。应出现两个水分子，共 **6 个原子，顺序 O/H/H/O/H/H**。
 - 切到 **材质预览（Material Preview）**。
 
@@ -84,22 +84,40 @@
 编号使用源文件中从 1 开始的原子编号；隐藏原子不改变编号。
 
 - 保持 **P06-single** 活动，保持全部氢可见。
-- 按下表从上到下连续操作；每行重新点击 **设置局部选择（Set Local Selection）**，选择对应 **显示范围更新方式（Display Range Update Mode）**，填写编号和邻域设置，再点击 **确定（OK）**。
+- 按下面 A–E 从上到下连续操作；每行重新点击 **设置局部选择（Set Local Selection）**，选择对应 **显示范围更新方式（Display Range Update Mode）**，填写编号和邻域设置，再点击 **确定（OK）**。
 - 观察分子形状和面板中的 **固定源编号（Fixed source numbers）**。
 
-<div class="local-selection-table" role="region" aria-label="局部选择操作对照表" tabindex="0">
+- **A：指定一个完整水分子**：重新打开 **设置局部选择（Set Local Selection）**，选择 **替换（Replace）**，**源原子编号=1**；开启 **纳入距离邻域（Include distance neighborhood）**，设 **半径（Å）（Radius (Å)）=1.0 Å**，勾选 **包含种子原子（Include seed atoms）**。确认后应显示 **1,2,3**，即第一个水分子的氧和两个氢。
 
-| 顺序与目的 | 显示范围更新方式 | 源原子编号 | 邻域设置 | 应看到的结果 |
-| --- | --- | --- | --- | --- |
-| A：指定一个完整水分子 | 替换（Replace） | `1` | 开启纳入距离邻域（Include distance neighborhood）；半径（Å）（Radius (Å)）=`1.0 Å`；勾选包含种子原子（Include seed atoms） | 原子 `1,2,3`：第一个水分子的氧和两个氢。 |
-| B：向已有范围添加一个原子 | 并集（Union） | `4` | 关闭纳入距离邻域（Include distance neighborhood） | 原子 `1,2,3,4`：第一个水分子与第二个水分子的氧。 |
-| C：只保留两个范围共有的原子 | 交集（Intersect） | `1,4` | 保持邻域搜索关闭 | 原子 `1,4`：两个氧。 |
-| D：从已有范围减去一个原子 | 差集（Difference） | `1` | 保持邻域搜索关闭 | 原子 `4`：只剩氧 4。 |
-| E：查看范围以外的原子 | 反选（Invert） | 无需填写 | 无需设置 | 原子 `1,2,3,5,6`：除氧 4 外的全部原子。 |
+- 截图保存为 `human/screenshots/P06-selection-replace.png`。
 
-</div>
+![Replace完成后的固定源编号1、2、3及第一个水分子；源原子总数仍为6](../screenshots/P06-selection-replace.png)
 
-表头说明：显示范围更新方式对应 **Display Range Update Mode**；源原子编号对应 **Source atom numbers (1-based)**，使用源文件中**从 1 开始**的编号。
+- **B：向已有范围添加一个原子**：重新打开 **设置局部选择（Set Local Selection）**，选择 **并集（Union）**，**源原子编号=4**，关闭 **纳入距离邻域（Include distance neighborhood）**。确认后固定编号应为 **1,2,3,4**，显示第一个水分子和第二个氧。
+
+- 截图保存为 `human/screenshots/P06-selection-union.png`。
+
+![Union 将氧4加入已有水分子范围](../screenshots/P06-selection-union.png)
+
+- **C：只保留两个范围共有的原子**：重新打开 **设置局部选择（Set Local Selection）**，选择 **交集（Intersect）**，**源原子编号=1,4**，保持邻域搜索关闭。确认后固定编号应为 **1,4**，只显示两个氧；侧栏的来源原子总数仍为 **6**。
+
+- 截图保存为 `human/screenshots/P06-selection-intersect.png`。
+
+![Intersect 只保留氧1和氧4，来源总数仍为6](../screenshots/P06-selection-intersect.png)
+
+- **D：从已有范围减去一个原子**：重新打开 **设置局部选择（Set Local Selection）**，选择 **差集（Difference）**，**源原子编号=1**，保持邻域搜索关闭。确认后固定编号应为 **4**，只剩氧4。
+
+- 截图保存为 `human/screenshots/P06-selection-difference.png`。
+
+![Difference 从两个氧中排除氧1](../screenshots/P06-selection-difference.png)
+
+- **E：查看范围以外的原子**：重新打开 **设置局部选择（Set Local Selection）**，选择 **反选（Invert）**，无需填写编号或设置邻域。确认后固定编号应为 **1,2,3,5,6**，显示除氧4之外的五个原子。
+
+- 截图保存为 `human/screenshots/P06-selection-invert.png`。
+
+![Invert 显示氧4之外的五个源原子](../screenshots/P06-selection-invert.png)
+
+控件对照：显示范围更新方式对应 **Display Range Update Mode**；源原子编号对应 **Source atom numbers (1-based)**，使用源文件中**从 1 开始**的编号。
 
 演示过程中，在 **N 侧栏 → 当前 QC 对象（Current QC Object）** 核对来源原子总数仍为 **6**；例如 C 行只显示两个氧时，该总数不会变成 2，局部范围以 **固定源编号（Fixed source numbers）** 为准。
 
@@ -139,9 +157,9 @@
 | 按钮 | 独立编号控件与填写顺序 | 应看到的内容 |
 | --- | --- | --- |
 | 原子（Atoms） | **原子标注数量（Number of atom labels）=1**，**原子 1（Atom 1）=1** | `O`，文字可用引线指向源编号为 1 的氧原子 |
-| 距离（Distance） | **原子 1（Atom 1）=1**，**原子 2（Atom 2）=4** | `Distance(1,4) = 2.900 Å`，两氧之间出现虚线 |
-| 角度（Angle） | 初始为 1/2/3，点击 **1 ↔ 2**，得到 2/1/3 | `Angle(2,1,3) = 112.770 °`，以氧 1 为圆心画内角圆弧 |
-| 二面角（Dihedral） | 初始为 1/2/3/4，先点 **1 ↔ 2**，再将 **原子 4（Atom 4）=5**、**原子 3（Atom 3）=4**，得到 2/1/4/5 | `Dihedral(2,1,4,5) = 0.000 °`，圆弧位于氧 1 与氧 4 的中点，两个三角面对应 H2–O1–O4 与 O1–O4–H5 |
+| 距离（Distance） | **原子 1（Atom 1）=1**，**原子 2（Atom 2）=4** | `Distance(1,4) = 2.964 Å`，两氧之间出现虚线 |
+| 角度（Angle） | 初始为 1/2/3，点击 **1 ↔ 2**，得到 2/1/3 | `Angle(2,1,3) = 105.514 °`，以氧 1 为圆心画内角圆弧 |
+| 二面角（Dihedral） | 初始为 1/2/3/4，先点 **1 ↔ 2**，再将 **原子 4（Atom 4）=5**、**原子 3（Atom 3）=4**，得到 2/1/4/5 | `Dihedral(2,1,4,5) = −123.860 °`，圆弧位于氧 1 与氧 4 的中点，两个三角面对应 H2–O1–O4 与 O1–O4–H5 |
 
 - 每组填写 **1–6** 内互不重复的整数编号。
 - 需要调整测量顺序时，使用 **1 ↔ 2**、**2 ↔ 3**、**3 ↔ 4** 等相邻交换按钮，确认前核对最终顺序。
@@ -180,10 +198,10 @@
 截图后点击 **取消（Cancel）**，保留当前设置。
 
 - 练习改测量对象时，打开距离标注的设置，将 **原子 2（Atom 2）** 从 **4** 改为 **5** 并确认；文字中的编号及虚线端点应随之更新，源原子坐标保持不变。
-- 再打开设置恢复 **原子 2（Atom 2）=4**，确认回到两氧之间的 **2.900 Å**。
+- 再打开设置恢复 **原子 2（Atom 2）=4**，确认回到两氧之间的 **2.964 Å**。
 - 标注重选原子和局部选择范围是两项不同操作。
 
-- 需要自己的说明文字时，在设置中将 **前缀模式（Prefix mode）** 改为 **自定义（Custom）**，例如将距离标注的 **前缀（Prefix）** 填为 `氧间距：`，应显示 `氧间距：2.900 Å`。
+- 需要自己的说明文字时，在设置中将 **前缀模式（Prefix mode）** 改为 **自定义（Custom）**，例如将距离标注的 **前缀（Prefix）** 填为 `氧间距：`，应显示 `氧间距：2.964 Å`。
 - 练习后改回 **默认（Default）**，方便继续对照本页。
 
 <details>
@@ -297,10 +315,15 @@
 <a id="step-09"></a>
 ### 9. 关联 XYZ 与 FCHK 数据源
 
-- 通过 **导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）** 导入 [shared/data/public/P03/water-dimer.fchk](../../shared/data/public/P03/water-dimer.fchk)，将新原子对象命名为 **P03-atoms**。
+- 通过 **导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）** 导入 [shared/data/public/gaussian-v1/P03/water-dimer.fchk](../../shared/data/public/gaussian-v1/P03/water-dimer.fchk)，将新原子对象命名为 **P03-atoms**。
 - 在大纲视图（Outliner）单击 **P06-single**，再按住 `Ctrl` 单击 **P03-atoms**，只选这两层，并使 **P03-atoms** 活动。
 - 点击 **打开对象属性（Open Object Properties）**，在对象属性点击 **关联选中数据源（Associate Selected Sources）**，保持 **最大原子偏差（Å）（Maximum atom deviation (angstrom)）=0.001**、关闭 **对齐刚体旋转与平移（Align rigid rotation/translation）**，点击 **确定（OK）**。应提示原子顺序和构型匹配。
 - 关联与刷新按钮只在对象属性提供，侧栏详情用于查看汇总。
+
+- 截图保存为 `human/screenshots/P06-source-association.png`。
+
+![XYZ与同源Gaussian FCHK的多选顺序、关联容差和刚体对齐选项](../screenshots/P06-source-association.png)
+
 - 在 Outliner 隐藏本页已有的全部原子层，方便继续看多帧。
 
 <details>
@@ -316,14 +339,15 @@
 <a id="step-10"></a>
 ### 10. 导入并切换多帧 XYZ
 
-- 导入 [shared/data/public/P06/p04-three-frames.xyz](../../shared/data/public/P06/p04-three-frames.xyz)，选中新原子对象，命名为 **P06-frames**。
+- 导入 [shared/data/public/gaussian-v1/P06/p04-three-frames.xyz](../../shared/data/public/gaussian-v1/P06/p04-three-frames.xyz)，选中新原子对象，命名为 **P06-frames**。
 - 点击 **打开对象属性（Open Object Properties）**，在 **XYZ 帧（XYZ Frames）** 点击 **下一步（Next） → 下一步（Next） → 上一步（Previous）**，应按 **1→2→3→2** 切换；每帧都是 **O/O/H/H** 四个原子。
 - 展开原注释与 **来源行（Source lines）** 可看到当前帧来源。
+- 本 XYZ 的三帧分别取自完整 P04 路径的第 **1、35、69** 步，即反向末端、过渡态、正向末端；对应源文件为 `shared/data/public/gaussian-v1/P04/step-001.fchk`、`shared/data/public/gaussian-v1/P04/step-035.fchk` 和 `shared/data/public/gaussian-v1/P04/step-069.fchk`。来源映射保存在 [shared/data/public/gaussian-v1/P06/source.json](../../shared/data/public/gaussian-v1/P06/source.json)。
 
 <details>
 <summary>了解 XYZ 帧与来源行</summary>
 
-> XYZ 帧是同一原子顺序的一组坐标，下一步（Next）/上一步（Previous）逐帧切换；来源行（Source lines）标示该帧在原文件中的行区间。帧序本身不提供物理时间。
+> XYZ 帧是同一原子顺序的一组坐标，下一步（Next）/上一步（Previous）逐帧切换；来源行（Source lines）标示该帧在原文件中的行区间。帧序本身不提供物理时间。本例只抽取三个代表构型练习 XYZ 切帧，完整69步路径及电子能量请看 [IRC专题](07-irc-mayer.md#step-01)；XYZ 不包含这些波函数和能量。
 
 </details>
 
@@ -331,7 +355,7 @@
 ### 11. 观察随帧更新的二面角
 
 - 保持 **P06-frames** 活动，重新打开该对象属性，点击 **对象属性（Object Properties） → 局部选择与标注（Local Selection and Annotations） → 二面角（Dihedral）**，在四个编号控件初始为 1/2/3/4 时，先点击 **2 ↔ 3**，再点击 **1 ↔ 2**，核对 **原子 1/2/3/4（Atom 1/2/3/4）** 依次为 **3/1/2/4**；设 **小数位数（Decimal places）=3**，保持默认前缀和测量几何可见，点击 **确定（OK）**。
-- 当前已在第 2 帧，先点击 **上一步（Previous）** 回第 1 帧，再点击 **下一步（Next） → 下一步（Next）** 观察三帧；应依次看到约 **171.761°、−180.000°、−171.761°**，文字读数、圆弧和三角面随当前构型更新。
+- 当前已在第 2 帧，先点击 **上一步（Previous）** 回第 1 帧，再点击 **下一步（Next） → 下一步（Next）** 观察三帧；应依次看到约 **−124.991°、+180.000°、+124.991°**，文字读数、圆弧和三角面随当前构型更新。
 - 当前帧号在 **XYZ 帧（XYZ Frames）** 面板核对，来源构型保留在科学记录中，不额外拼入默认标注文字。
 - 最后点击 **上一步（Previous）** 回第 2 帧。
 - 截图保存为 `human/screenshots/P06-xyz-frames.png`。

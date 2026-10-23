@@ -27,10 +27,14 @@
 
 量名与单位按生成 Cube 的原计算填写；声明不会换算网格数值。
 
-- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/P03/color.cube](../../shared/data/public/P03/color.cube)并完成导入。
-- 会新增六原子水二聚体和一个场表面；选中场表面，按 `F2` 命名为 **P03-color-surface**。
+- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/gaussian-v1/P03/color.cube](../../shared/data/public/gaussian-v1/P03/color.cube)并完成导入。
+- 会新增六原子水二聚体和一个场表面；选中场表面，按 `F2` 命名为 **P03-cube-field**。
 - 点击 **打开对象属性（Open Object Properties）**，在对象属性点击 **声明 Cube 物理量与单位（Identify Cube Quantity and Unit）**，选择 **其他外部计算的标量场（Other externally computed scalar field）**，填 **物理量（Physical quantity）=sign_lambda2_rho**、**单位（无法确定时填 unknown）（Unit (use unknown if unavailable)）=electron/bohr^3**，点击 **确定（OK）** 并等待完成。
-- 对象属性应显示 **91×38×156 网格**与上述量、单位。
+- 对象属性应显示 **65×68×121 网格**与上述量、单位。
+
+- 截图保存为 `human/screenshots/P03-cube-quantity-dialog.png`。
+
+![Cube物理量声明中的外部标量场、sign_lambda2_rho与单位](../screenshots/P03-cube-quantity-dialog.png)
 
 <details>
 <summary>了解 Cube 物理量、自旋与单位声明</summary>
@@ -95,7 +99,7 @@
 <a id="step-04"></a>
 ### 4. 导入第二个 Cube 并设置等值表面
 
-- 再导入 [shared/data/public/P03/igmh/dg_inter.cub](../../shared/data/public/P03/igmh/dg_inter.cub)。
+- 再导入 [shared/data/public/gaussian-v1/P03/igmh/dg_inter.cub](../../shared/data/public/gaussian-v1/P03/igmh/dg_inter.cub)。
 - 这次也会新增一份原子层和一个场表面。
 - 选中新场表面，命名为 **P03-igmh-surface**，重新点击 **打开对象属性（Open Object Properties）**，使用同一声明按钮，选择 **其他外部计算的标量场（Other externally computed scalar field）**，填写 **物理量（Physical quantity）=delta_g_inter、单位（无法确定时填 unknown）（Unit (use unknown if unavailable)）=electron/bohr^4**，点击 **确定（OK）** 并等待完成。
 - 设 **正值阈值（Positive Isovalue）=0.005**，开启 **显示正值（Show Positive Values）**、关闭 **显示负值（Show Negative Values）**。
@@ -110,8 +114,8 @@
 <a id="step-05"></a>
 ### 5. 保留一份原子层并核对两场的独立阈值
 
-- 在 Outliner 保持 **P03-color-surface** 与 **P03-igmh-surface** 的眼睛、相机图标开启；保留 **color.cube** 来源分组的原子层，关闭另一份原子层的眼睛、相机图标，避免重叠。
-- 在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 用选择图标切换表面，每次重新点击 **打开对象属性（Open Object Properties）**：先将 **P03-color-surface** 的正值阈值（Positive Isovalue）暂改为 **0.02**，再选 **P03-igmh-surface**，它的阈值应仍为 **0.005**；将后者暂改为 **0.008**，返回前者确认仍为 **0.02**。
+- 在 Outliner 保持 **P03-cube-field** 与 **P03-igmh-surface** 的眼睛、相机图标开启；保留 **color.cube** 来源分组的原子层，关闭另一份原子层的眼睛、相机图标，避免重叠。
+- 在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 用选择图标切换表面，每次重新点击 **打开对象属性（Open Object Properties）**：先将 **P03-cube-field** 的正值阈值（Positive Isovalue）暂改为 **0.02**，再选 **P03-igmh-surface**，它的阈值应仍为 **0.005**；将后者暂改为 **0.008**，返回前者确认仍为 **0.02**。
 - 最后分别恢复 **0.03 / 0.005**。
 
 <a id="step-06"></a>
@@ -123,8 +127,8 @@
 
 ![同构型的两份 Cube 表面叠加及独立显示层](../screenshots/P03-cube-overlay.png)
 
-- 在材料根目录创建 `work/human/P03/`，按[保存自包含工程](../SOP.md#save)保存为 `work/human/P03/P03-overlay.blend`，连同 `work/human/P03/P03-overlay.qcdata/` 一起保留。
-- 需要移动时，创建 `work/human/移动案例/`，将两者一起复制到该目录，重新打开其中的 `P03-overlay.blend`，两层应保留各自阈值与可见性。
+- 在材料根目录创建 `work/human/gaussian-v1/P03/`，按[保存自包含工程](../SOP.md#save)保存为 `work/human/gaussian-v1/P03/P03-overlay.blend`，连同 `work/human/gaussian-v1/P03/P03-overlay.qcdata/` 一起保留。
+- 需要移动时，创建 `work/human/gaussian-v1/移动案例/`，将两者一起复制到该目录，重新打开其中的 `P03-overlay.blend`，两层应保留各自阈值与可见性。
 
 <a id="mapping"></a>
 ## 用另一个场着色
@@ -132,8 +136,17 @@
 <a id="step-07"></a>
 ### 7. 选择着色场并显示图例
 
-- 选 **P03-igmh-surface**，重新打开该对象属性，点击 **对象属性（Object Properties） → 颜色映射（Color Mapping） → 选择／替换着色场（Select / Replace Color Field）**，在 **场（Field）** 选择步骤 1 的 **P03-color-surface**，填 **颜色最小值（Color minimum）=−0.05、颜色最大值（Color maximum）=0.05**，点击 **确定（OK）**。
-- 在 Outliner 关闭 **P03-color-surface** 的眼睛和相机图标，保留映射后的 **P03-igmh-surface** 及步骤 5 的一份原子层。应看到 `delta_g_inter` 表面按 `sign_lambda2_rho` 场着色；开启 **图例排版（Legend Layout） → 显示图例（Show Legend）**，图例单位应为 **electron/bohr^3**。
+- 选 **P03-igmh-surface**，重新打开该对象属性，点击 **对象属性（Object Properties） → 颜色映射（Color Mapping） → 选择／替换着色场（Select / Replace Color Field）**，在 **场（Field）** 选择步骤 1 的 **P03-cube-field**，填 **颜色最小值（Color minimum）=−0.05、颜色最大值（Color maximum）=0.05**，点击 **确定（OK）**。
+
+- 截图保存为 `human/screenshots/P03-cube-color-binding.png`。
+
+![选择为delta-g表面着色的sign_lambda2_rho场及颜色范围](../screenshots/P03-cube-color-binding.png)
+
+- 在 Outliner 关闭 **P03-cube-field** 的眼睛和相机图标，保留映射后的 **P03-igmh-surface** 及步骤 5 的一份原子层。应看到 `delta_g_inter` 表面按 `sign_lambda2_rho` 场着色；开启 **图例排版（Legend Layout） → 显示图例（Show Legend）**，图例单位应为 **electron/bohr^3**。
+
+- 截图保存为 `human/screenshots/P03-cube-mapped.png`。
+
+![独立着色场表面隐藏后，delta-g表面仍按sign_lambda2_rho着色](../screenshots/P03-cube-mapped.png)
 
 <details>
 <summary>了解几何场、着色场与色带范围</summary>
