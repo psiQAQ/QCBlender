@@ -6,6 +6,7 @@ import shutil
 import tempfile
 import unittest
 from tools.workspace_paths import temporary_tests_root
+from tools.tutorial_dataset import DELIVERY, load_dataset
 
 from tools.local_inputs import CATALOG, DATA, ROOT
 from tools.prepare_validation_data import FROZEN_MANIFEST, MIGRATION, prepare
@@ -25,9 +26,12 @@ class ValidationDataPreparation(unittest.TestCase):
             destination = self.root / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, destination)
+        legacy = load_dataset(ROOT, 'legacy-v2')
+        (self.root / DELIVERY).write_text(json.dumps(dict(schema=1,
+            manifest=legacy['manifest_record'], package=legacy['package_record'])), encoding='utf-8')
 
     def test_public_archive_prepares_portable_inputs_without_overwriting_changes(self):
-        report = prepare(self.root)
+        report = prepare(self.root, dataset='legacy-v2')
         self.assertEqual(report['public_package']['included_files'], 30)
         self.assertEqual(len(report['public_files']), 33)
         self.assertEqual(report['local_input_count'], 0)
@@ -35,12 +39,12 @@ class ValidationDataPreparation(unittest.TestCase):
         self.assertFalse((self.root / DATA / 'local').exists())
         self.assertEqual((self.root / DATA / 'public/tutorial-samples.json').read_bytes(),
                          (self.root / FROZEN_MANIFEST).read_bytes())
-        repeat = prepare(self.root)
+        repeat = prepare(self.root, dataset='legacy-v2')
         self.assertEqual({row['action'] for row in repeat['public_files']}, {'verified'})
         changed = self.root / DATA / 'public/P01/o2-uhf.fchk'
         changed.write_bytes(b'user changed file')
         with self.assertRaisesRegex(ValueError, 'mismatch'):
-            prepare(self.root)
+            prepare(self.root, dataset='legacy-v2')
         self.assertEqual(changed.read_bytes(), b'user changed file')
 
     def test_local_layout_is_explicit_and_missing_source_fails_before_copying(self):
@@ -57,26 +61,26 @@ class ValidationDataPreparation(unittest.TestCase):
                                        group='local', **identity))
         (self.root / MIGRATION).write_text(json.dumps(migration), encoding='utf-8')
         with self.assertRaises(FileNotFoundError):
-            prepare(self.root, reference, 'legacy', include_local=True)
+            prepare(self.root, reference, 'legacy', include_local=True, dataset='legacy-v2')
         self.assertFalse((self.root / DATA / 'public').exists())
         legacy = reference / 'legacy/example.log'
         legacy.parent.mkdir()
         legacy.write_bytes(raw)
         with self.assertRaises(FileNotFoundError):
-            prepare(self.root, reference, 'current', include_local=True)
-        report = prepare(self.root, reference, 'legacy', include_local=True)
+            prepare(self.root, reference, 'current', include_local=True, dataset='legacy-v2')
+        report = prepare(self.root, reference, 'legacy', include_local=True, dataset='legacy-v2')
         self.assertEqual(report['local_input_count'], 1)
         self.assertEqual((self.root / relative).read_bytes(), raw)
         self.assertEqual(legacy.read_bytes(), raw)
         legacy.write_bytes(b'changed source')
         with self.assertRaises(ValueError):
-            prepare(self.root, reference, 'legacy', include_local=True)
+            prepare(self.root, reference, 'legacy', include_local=True, dataset='legacy-v2')
         self.assertEqual((self.root / relative).read_bytes(), raw)
         current = reference / relative
         current.parent.mkdir(parents=True)
         current.write_bytes(raw)
         (self.root / relative).unlink()
-        repeated = prepare(self.root, reference, 'current', include_local=True)
+        repeated = prepare(self.root, reference, 'current', include_local=True, dataset='legacy-v2')
         self.assertEqual(repeated['local_input_count'], 1)
         self.assertEqual((self.root / relative).read_bytes(), raw)
 

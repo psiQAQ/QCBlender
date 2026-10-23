@@ -39,3 +39,7 @@ submodules/MolecularNodes/reference-docs/
 /validation/shared/data/public/P03/iri/func1.cub
 /validation/shared/data/public/P03/iri/func2.cub
 /validation/shared/data/public/P05/nocv/nocv-pair1.cub
+
+# Versioned tutorial data is restored from its checked sample package.
+# The current manifest is explicitly tracked when the complete package is frozen.
+/validation/shared/data/public/gaussian-v1/

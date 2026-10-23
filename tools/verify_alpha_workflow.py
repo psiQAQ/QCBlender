@@ -1,4 +1,4 @@
-"""Installed Alpha: public P01 MO9, live summaries and portable cold reopening."""
+"""Installed Alpha: active public P01, live summaries and portable cold reopening."""
 import argparse
 from copy import deepcopy
 import hashlib
@@ -14,6 +14,10 @@ import uuid
 import bpy
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import public_input_path
+from tools.tutorial_dataset import load_dataset
+
 MODULE = 'bl_ext.user_default.qcblender'
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--candidate', type=Path, required=True)
@@ -111,12 +115,22 @@ try:
                 assert digest(directory / 'manifest.json') == obj['qc_dataset_sha256']
         snapshot = summary(surface)
         isovalue = next(entry['value'] for entry in snapshot['display']['parameters'] if entry['name'] == 'Isovalue')
-        assert abs(isovalue - .045) < 1e-7
+        assert abs(isovalue - report['isovalue']) < 1e-7
         assert not module('blender.ui')._qualifications
         report.update(status='Passed', cold_open='Passed')
     else:
-        source = ROOT / 'validation/shared/data/public/P01/o2-uhf.fchk'
-        source_record = json.loads((ROOT / 'validation/agent/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'))['files']['P01-o2-uhf']
+        selected = load_dataset(ROOT)
+        case = selected['manifest']['cases']['C01']
+        source_id = next(sid for sid in case['files']
+                         if selected['manifest']['files'][sid]['archive_path'].endswith('.fchk'))
+        source_record = selected['manifest']['files'][source_id]
+        assert source_record['distribution'] == 'included'
+        source = public_input_path(source_record, ROOT)
+        gui = case['gui']
+        defaults = case['grid_defaults']
+        threshold = float(gui['isovalue'])
+        report.update(dataset_id=selected['dataset_id'], source_id=source_id,
+                      sample_manifest_sha256=digest(selected['manifest_path']))
         assert digest(source) == source_record['sha256']
         report['source_sha256'] = digest(source)
         importer = jobs.Job('import', source=str(source))
@@ -128,8 +142,8 @@ try:
         assert qualified['eligible'] and not (qualification.directory / 'dataset').exists()
         preview = qualified['preview']
         preflight = module('science_preflight')
-        grid = preflight.preview_grid(preview, .2, 3)
-        parameters = {'quantity': 'orbital_amplitude', 'spin': 'alpha', 'orbital': 9, 'memory_mb': 512}
+        grid = preflight.preview_grid(preview, defaults['spacing_angstrom'], defaults['margin_angstrom'])
+        parameters = {'quantity': 'orbital_amplitude', 'spin': 'alpha', 'orbital': gui['alpha_mo'], 'memory_mb': defaults['memory_mb']}
         request = {'dataset': str(directory), 'dataset_sha256': manifest_sha,
                    'science_sha256': qualified['science_sha256'], 'grid': grid, 'parameters': parameters}
         generator = jobs.Job('evaluate', **request)
@@ -154,9 +168,9 @@ try:
         modifier = module('blender.graph').view_modifier(surface)
         sockets = {item.name: item.identifier for item in modifier.node_group.interface.items_tree
                    if item.item_type == 'SOCKET' and item.in_out == 'INPUT'}
-        modifier[sockets['Isovalue']] = .03
+        modifier[sockets['Isovalue']] = threshold * (2 / 3)
         low = mesh_counts(surface)
-        modifier[sockets['Isovalue']] = .045
+        modifier[sockets['Isovalue']] = threshold
         high = mesh_counts(surface)
         assert low != high and high[0] > 0
         first = summary(surface)
@@ -164,7 +178,7 @@ try:
         assert first['display'] == second['display']
         assert report['summaries'][-1]['directory'] != report['summaries'][-2]['directory']
         value = next(entry['value'] for entry in second['display']['parameters'] if entry['name'] == 'Isovalue')
-        assert abs(value - .045) < 1e-7
+        assert abs(value - threshold) < 1e-7
         summary(atoms)
         atom_modifier = module('blender.graph').view_modifier(atoms)
         material_socket = next(item for item in atom_modifier.node_group.interface.items_tree
@@ -246,14 +260,16 @@ try:
         moved.mkdir(exist_ok=True)
         shutil.copy2(OUT / 'example.blend', moved / 'example.blend')
         shutil.copytree(OUT / 'example.qcdata', moved / 'example.qcdata', dirs_exist_ok=True)
-        (OUT / 'README.md').write_text('# QCBlender Alpha P01 MO9\n\nBlender 5.1.1 / Windows x64.\n'
-            'P01 o2-uhf.fchk, Alpha source MO9, spacing 0.2 Å, margin 3 Å, budget 512 MiB, '
-            'isovalue 0.045 bohr^-3/2.\nKeep example.blend and example.qcdata together.\n'
+        (OUT / 'README.md').write_text('# QCBlender Alpha P01\n\nBlender 5.1.1 / Windows x64.\n'
+            f"Dataset {selected['dataset_id']}, {source.name}, Alpha source MO{parameters['orbital']}, "
+            f"spacing {defaults['spacing_angstrom']} Å, margin {defaults['margin_angstrom']} Å, "
+            f"budget {parameters['memory_mb']} MiB, isovalue {threshold} bohr^-3/2.\n"
+            'Keep example.blend and example.qcdata together.\n'
             'Input attribution: QCBlender contributors, CC BY 4.0; retain sample ZIP LICENSE and NOTICE.\n'
             'Technical automation only; independent user/scientific acceptance remains Not Run.\n', encoding='utf-8')
         report.update(status='Passed', portable_saved=True, cold_open='Not Run',
             moved_blend=str(moved / 'example.blend'), surface_name=surface.name, surface_counts=high,
-            grid=grid, parameters=parameters, isovalue=.045)
+            grid=grid, parameters=parameters, isovalue=threshold)
         report['checks'].update({name: 'Passed' for name in ('qualification', 'unsupported_science',
             'cache_hit', 'early_dataset_limit', 'live_isovalue', 'live_color_ramp',
             'standard_view_summaries', 'missing_input', 'missing_material', 'custom_material', 'stale_source_binding',

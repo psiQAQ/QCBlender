@@ -25,17 +25,23 @@ def number(value):
 def split_jobs(lines):
     starts = [0]
     has_calculation = False
+    terminated = False
     for index, line in enumerate(lines):
         internal = 'Link1:  Proceeding to internal job step number' in line
         run_start = 'Entering Gaussian System, Link 0=' in line
         concatenated = run_start and has_calculation
-        if index > starts[-1] and (internal or concatenated):
+        restart = terminated and (line.strip() == 'Initial command:'
+                                 or re.match(r'\s*Entering Link 1\s*=', line))
+        if index > starts[-1] and (internal or concatenated or restart):
             starts.append(index)
             has_calculation = False
+            terminated = False
         if (line.lstrip().startswith('#') or 'SCF Done:' in line
                 or 'Error termination' in line or 'Normal termination of Gaussian' in line
                 or 'orientation:' in line.lower()):
             has_calculation = True
+        if 'Normal termination of Gaussian' in line or 'Error termination' in line:
+            terminated = True
     return [(start, end) for start, end in zip(starts, starts[1:] + [len(lines)])]
 
 

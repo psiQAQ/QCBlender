@@ -77,7 +77,7 @@ def fixture():
             'samples-v2.zip': samples_bytes, 'reproduction.zip': reproduction_bytes}
     source['validation/agent/v1-acceptance/tutorial-samples.json'] = json.dumps(samples).encode()
     source['validation/agent/acceptance/tutorial-sample-delivery.json'] = json.dumps({
-        'package': {'bytes': len(samples_bytes), 'sha256': sha(samples_bytes)}}).encode()
+        'schema': 1, 'package': {'bytes': len(samples_bytes), 'sha256': sha(samples_bytes)}}).encode()
     manifest = {'schema': 'qcblender.release-candidate.v1', 'version': '0.1.0', 'channel': 'alpha',
                 'source_commit': COMMIT, 'product_tree': TREE, 'candidate_run_id': 42,
                 'workflow': 'extension-package.yml',
@@ -109,6 +109,40 @@ def fixture():
                                      'status': 'Passed'}
     for gate in release.GATES:
         manifest[gate] = {'status': 'Not Run', 'blocker': 'Actual review is pending'}
+    return manifest, data, source
+
+
+def versioned_fixture():
+    manifest, data, source = fixture()
+    historical = json.loads(source[release.FROZEN_MANIFEST])
+    historical['files']['restricted'] = dict(distribution='external-acquisition', license='unverified',
+                                             sha256=sha(b'Private historical NBO data'))
+    old_raw = json.dumps(historical).encode()
+    source[release.FROZEN_MANIFEST] = old_raw
+    with zipfile.ZipFile(io.BytesIO(data['samples-v2.zip'])) as archive:
+        public_input = archive.read('P01/fixture.fchk')
+    name = 'gaussian-v1/P01/fixture.fchk'
+    water_name = 'gaussian-v1/P02/water.out'
+    water = b'Owned Gaussian NBO fixture'
+    samples = dict(dataset_id='gaussian-v1', cases={'C01': {'files': ['new-P01']}}, files={
+        'new-P01': dict(id='new-P01', archive_path=name, path='validation/shared/data/public/' + name,
+                         distribution='included', license='CC-BY-4.0', bytes=len(public_input), sha256=sha(public_input)),
+        'owned-P02': dict(id='owned-P02', archive_path=water_name, path='validation/shared/data/public/' + water_name,
+                         distribution='included', license='CC-BY-4.0', bytes=len(water), sha256=sha(water))})
+    raw = json.dumps(samples).encode()
+    path = 'validation/shared/data/public/gaussian-v1/tutorial-samples.json'
+    source[path] = raw
+    package = zipped({name: public_input, water_name: water, 'tutorial-samples.json': raw,
+                      'LICENSE': b'CC BY fixture', 'NOTICE.md': b'Owned data attribution'})
+    data.pop('samples-v2.zip')
+    data['samples-v3.zip'] = package
+    manifest['files']['samples'] = dict(path='samples-v3.zip', bytes=len(package), sha256=sha(package))
+    source[release.DELIVERY] = json.dumps(dict(schema=2, dataset_id='gaussian-v1',
+        manifest=dict(path=path, bytes=len(raw), sha256=sha(raw)),
+        package=dict(path='validation/agent/packages/samples-v3.zip', bytes=len(package), sha256=sha(package)),
+        legacy_dataset=dict(dataset_id='legacy-v2',
+            manifest=dict(path=release.FROZEN_MANIFEST, bytes=len(old_raw), sha256=sha(old_raw)),
+            package=dict(bytes=0, sha256=sha(b''))))).encode()
     return manifest, data, source
 
 
@@ -144,6 +178,51 @@ class ReleaseTests(unittest.TestCase):
         self.assertEqual(target.read_bytes(), self.data['qcblender-0.1.0.zip'])
         release.verify_extension(target, self.source, result['dependencies'])
         release.verify_public_materials(result, self.root / 'candidate', self.source)
+
+    def test_current_tag_manifest_allows_owned_p02_and_versioned_p01(self):
+        self.manifest, self.data, self.source = versioned_fixture()
+        result = self.unpack()
+        release.verify_public_materials(result, self.root / 'candidate', self.source)
+        selected, _, _, dataset = release.tutorial_source(self.source)
+        self.assertEqual(dataset['dataset_id'], 'gaussian-v1')
+        self.assertIn('owned-P02', selected['files'])
+
+    def test_current_reproduction_must_use_the_c01_wavefunction(self):
+        self.manifest, self.data, self.source = versioned_fixture()
+        self.unpack()
+        path = self.root / 'candidate' / self.manifest['reports']['reproduction']['path']
+        report = json.loads(path.read_bytes())
+        report['source_sha256'] = sha(b'Owned Gaussian NBO fixture')
+        path.write_text(json.dumps(report), encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'P01 identity'):
+            release.verify_public_materials(self.manifest, self.root / 'candidate', self.source)
+
+    def test_current_manifest_identity_and_legacy_restricted_identity_are_required(self):
+        self.manifest, self.data, self.source = versioned_fixture()
+        self.unpack()
+        delivery = json.loads(self.source[release.DELIVERY])
+        path = delivery['manifest']['path']
+        self.source[path] += b'\n'
+        with self.assertRaisesRegex(ValueError, 'Current tutorial manifest identity'):
+            release.verify_public_materials(self.manifest, self.root / 'candidate', self.source)
+        self.source[path] = self.source[path][:-1]
+        self.source[release.FROZEN_MANIFEST] += b'\n'
+        with self.assertRaisesRegex(ValueError, 'Legacy tutorial manifest identity'):
+            release.verify_public_materials(self.manifest, self.root / 'candidate', self.source)
+
+    def test_relabelled_private_legacy_bytes_are_rejected_in_current_release(self):
+        self.manifest, self.data, self.source = versioned_fixture()
+        self.unpack()
+        delivery = json.loads(self.source[release.DELIVERY])
+        path = delivery['manifest']['path']
+        selected = json.loads(self.source[path])
+        selected['files']['owned-P02']['sha256'] = sha(b'Private historical NBO data')
+        raw = json.dumps(selected).encode()
+        self.source[path] = raw
+        delivery['manifest'].update(bytes=len(raw), sha256=sha(raw))
+        self.source[release.DELIVERY] = json.dumps(delivery).encode()
+        with self.assertRaisesRegex(ValueError, 'Unlicensed tutorial input'):
+            release.verify_public_materials(self.manifest, self.root / 'candidate', self.source)
 
     def test_wrong_candidate_identity_and_incomplete_reports_are_rejected(self):
         for key, value in [('version', '0.1.1'), ('source_commit', 'c' * 40), ('product_tree', 'c' * 40),
@@ -460,22 +539,23 @@ class ReleaseTests(unittest.TestCase):
 class GitTagTests(unittest.TestCase):
     def test_real_git_tag_reads_historical_layout_and_rejects_missing_records(self):
         TEMP_ROOT.mkdir(parents=True, exist_ok=True)
-        for layout in ('historical', 'missing'):
+        for layout in ('historical', 'versioned', 'missing'):
             with self.subTest(layout=layout), tempfile.TemporaryDirectory(dir=TEMP_ROOT) as directory:
                 root = Path(directory)
                 def git(*args):
                     return subprocess.check_output(['git', *args], cwd=root, stderr=subprocess.STDOUT)
                 git('init', '-b', 'main')
-                _, _, expected_source = fixture()
+                _, _, expected_source = versioned_fixture() if layout == 'versioned' else fixture()
                 source = dict(expected_source)
                 for current, original in (
                         ('validation/agent/v1-acceptance/tutorial-samples.json',
                          'docs/v1-acceptance/tutorial-samples.json'),
                         ('validation/agent/acceptance/tutorial-sample-delivery.json',
                          'docs/acceptance/tutorial-sample-delivery.json')):
-                    raw = source.pop(current)
-                    if layout == 'historical':
-                        source[original] = raw
+                    if layout != 'versioned':
+                        raw = source.pop(current)
+                        if layout == 'historical':
+                            source[original] = raw
                 for name, data in source.items():
                     target = root / name
                     target.parent.mkdir(parents=True, exist_ok=True)

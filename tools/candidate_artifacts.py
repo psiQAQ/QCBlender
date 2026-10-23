@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT))
 from tools.package_identity import dependency_identity, extension_filename, extension_manifest, file_record, source_identity
 from tools.public_reproduction import reproduction_members
 from tools.test_profiles import PUBLIC_SCIENCE, STDLIB
+from tools.tutorial_dataset import included_files, load_dataset
 
 REQUIRED_REPORTS = ('stdlib', 'public-science', 'node-helpers', 'extension-install',
                     'node-assets', 'cold-original', 'cold-moved', 'qualification',
@@ -18,22 +19,26 @@ REQUIRED_REPORTS = ('stdlib', 'public-science', 'node-helpers', 'extension-insta
 SAMPLE_NAME = 'qcblender-public-tutorial-samples-v2.zip'
 
 
-def verify_samples(package, root=ROOT):
+def verify_samples(package=None, root=ROOT, dataset='current'):
     root = Path(root)
-    manifest = json.loads((root / 'validation/agent/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'))
-    delivery = json.loads((root / 'validation/agent/acceptance/tutorial-sample-delivery.json').read_text(encoding='utf-8'))
+    selected = load_dataset(root, dataset)
+    manifest = selected['manifest']
+    package = selected['package_path'] if package is None else Path(package)
     actual = file_record(package)
-    if any(actual[key] != delivery['package'][key] for key in ('bytes', 'sha256')):
-        raise ValueError('Frozen v2 sample ZIP identity differs from delivery record')
+    if any(actual[key] != selected['package_record'][key] for key in ('bytes', 'sha256')):
+        raise ValueError('Tutorial sample ZIP identity differs from delivery record')
     import hashlib
     with zipfile.ZipFile(package) as archive:
-        expected = {f['archive_path'] for f in manifest['files'].values() if f['distribution'] == 'included'}
+        expected = set(included_files(selected, root))
         names = archive.namelist()
         if len(names) != len(set(names)) or set(names) != expected | {'LICENSE', 'NOTICE.md', 'tutorial-samples.json'}:
             raise ValueError('Public sample membership differs from the included-file allowlist')
-        if any(name.startswith('P02/') for name in names):
+        if selected['legacy'] and any(name.startswith('P02/') for name in names):
             raise ValueError('Unverified P02 data cannot be included')
-        if json.loads(archive.read('tutorial-samples.json')) != manifest:
+        raw_manifest = archive.read('tutorial-samples.json')
+        if (len(raw_manifest) != selected['manifest_record']['bytes']
+                or hashlib.sha256(raw_manifest).hexdigest() != selected['manifest_record']['sha256']
+                or json.loads(raw_manifest) != manifest):
             raise ValueError('Public sample manifest differs from source')
         for record in manifest['files'].values():
             if record['distribution'] != 'included':
@@ -43,7 +48,10 @@ def verify_samples(package, root=ROOT):
                 raise ValueError('Public sample license or checksum differs: ' + record['id'])
         if archive.testzip() is not None:
             raise ValueError('Public sample ZIP CRC failed')
-    return dict(status='Passed', package=actual, included_files=len(expected), excluded_groups=['P02'],
+    excluded = sorted({row['calculation_group'] for row in manifest['files'].values()
+                       if row['distribution'] != 'included'})
+    return dict(status='Passed', dataset_id=selected['dataset_id'], package=actual,
+                included_files=len(expected), excluded_groups=excluded,
                 license_scope='Recorded CC BY 4.0 included files; no independent license determination')
 
 
@@ -75,7 +83,7 @@ def validate_reports(directory, commit, candidate_sha256):
 
 def reproduction_zip(directory, destination, root=ROOT):
     directory, destination, root = Path(directory), Path(destination), Path(root)
-    inputs = json.loads((root / 'validation/agent/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'))['files']
+    inputs = load_dataset(root)['manifest']['files']
     owned = {item['sha256'] for item in inputs.values() if item['distribution'] == 'included'}
     for name in ('example.blend', 'example.png', 'README.md'):
         if not (directory / name).is_file():
@@ -97,6 +105,8 @@ def reproduction_zip(directory, destination, root=ROOT):
 
 def assemble(candidate, samples, reproduction, reports_dir, output, run_id, channel='alpha', root=ROOT):
     root, output = Path(root), Path(output)
+    selected = load_dataset(root)
+    samples = selected['package_path'] if samples is None else Path(samples)
     commit, tree = source_identity(root)
     manifest = extension_manifest(root)
     if channel not in ('alpha', 'preview') or type(run_id) is not int or run_id < 0:
@@ -110,7 +120,7 @@ def assemble(candidate, samples, reproduction, reports_dir, output, run_id, chan
     dependencies = dependency_identity((root / 'dependencies.lock.json').read_bytes(),
                                        (root / 'science-sources.lock.json').read_bytes(), qualification['backend'])
     reproduction_report = json.loads((Path(reports_dir) / 'reproduction.json').read_text(encoding='utf-8'))
-    public_inputs = json.loads((root / 'validation/agent/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'))['files']
+    public_inputs = selected['manifest']['files']
     if reproduction_report.get('source_sha256') not in {p['sha256'] for p in public_inputs.values() if p['distribution'] == 'included' and p['id'].startswith('P01')}:
         raise ValueError('Reproduction report does not use a verified public P01 input')
     if json.loads((Path(reports_dir) / 'sample-package.json').read_text())['package']['sha256'] != sample_report['package']['sha256']:
@@ -145,17 +155,18 @@ def main():
     parser = argparse.ArgumentParser()
     commands = parser.add_subparsers(dest='command', required=True)
     check = commands.add_parser('check-samples')
-    check.add_argument('--package', type=Path, default=ROOT / 'validation/agent/packages' / SAMPLE_NAME)
+    check.add_argument('--package', type=Path)
+    check.add_argument('--dataset', choices=('current', 'legacy-v2'), default='current')
     check.add_argument('--output', type=Path, required=True)
     build = commands.add_parser('assemble')
     for name in ('candidate', 'reproduction', 'reports', 'output'):
         build.add_argument('--' + name, type=Path, required=True)
-    build.add_argument('--samples', type=Path, default=ROOT / 'validation/agent/packages' / SAMPLE_NAME)
+    build.add_argument('--samples', type=Path)
     build.add_argument('--run-id', type=int, required=True)
     build.add_argument('--channel', choices=('alpha', 'preview'), default='alpha')
     args = parser.parse_args()
     if args.command == 'check-samples':
-        report = verify_samples(args.package)
+        report = verify_samples(args.package, dataset=args.dataset)
         import subprocess
         report['source_commit'] = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
         args.output.parent.mkdir(parents=True, exist_ok=True)

@@ -1,6 +1,5 @@
 """Prepare the frozen public samples and explicitly selected local input copies."""
 import argparse
-import csv
 import hashlib
 import json
 from pathlib import Path
@@ -12,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.candidate_artifacts import SAMPLE_NAME, verify_samples
 from tools.local_inputs import DATA, checked_path, input_path, verify_file
+from tools.tutorial_dataset import included_files, load_dataset, verify_csv_inputs as check_dataset_csv
 
 PACKAGE = 'validation/agent/packages/' + SAMPLE_NAME
 MIGRATION = DATA + '/migration-map.json'
@@ -41,21 +41,12 @@ def copy_record(source, destination, record):
     return 'copied'
 
 
-def verify_csv_inputs(root):
-    base = checked_path(root, DATA + '/public/P04')
-    for name, column in (('steps.csv', 'fchk'), ('mayer-pyscf.csv', 'mayer_output')):
-        with (base / name).open(encoding='utf-8', newline='') as stream:
-            rows = list(csv.DictReader(stream))
-        if [row['step'] for row in rows] != ['1', '2', '3']:
-            raise ValueError('P04 input steps differ: ' + name)
-        for row in rows:
-            path = checked_path(base, row[column])
-            if not path.is_file():
-                raise FileNotFoundError('P04 relative input missing: ' + str(path))
+def verify_csv_inputs(root, dataset='current'):
+    check_dataset_csv(checked_path(root, DATA + '/public'), load_dataset(root, dataset))
 
 
-def prepare(root=ROOT, reference_root=None, reference_layout='current',
-            include_local=False, include_calculations=False):
+def _prepare_legacy(root=ROOT, reference_root=None, reference_layout='current',
+                    include_local=False, include_calculations=False):
     root = Path(root).resolve()
     if reference_layout not in ('legacy', 'current'):
         raise ValueError('Reference layout must be legacy or current')
@@ -63,7 +54,7 @@ def prepare(root=ROOT, reference_root=None, reference_layout='current',
         raise ValueError('Local inputs require an explicit --reference-root')
     reference = Path(reference_root).resolve() if reference_root is not None else None
     package = checked_path(root, PACKAGE)
-    sample_report = verify_samples(package, root)
+    sample_report = verify_samples(package, root, dataset='legacy-v2')
     manifest = json.loads(checked_path(root, FROZEN_MANIFEST).read_text(encoding='utf-8'))
     migration = json.loads(checked_path(root, MIGRATION).read_text(encoding='utf-8'))
     if migration['schema'] != 'qcblender.validation-data-migration.v1':
@@ -118,7 +109,7 @@ def prepare(root=ROOT, reference_root=None, reference_layout='current',
         action = copy_record(source, target, row)
         local_files.append(dict(source=str(source), path=row['path'], group=row['group'],
                                 action=action, bytes=row['bytes'], sha256=row['sha256']))
-    verify_csv_inputs(root)
+    verify_csv_inputs(root, 'legacy-v2')
     local_count = 0
     if include_local:
         catalog = json.loads((root / DATA / 'local-inputs.json').read_text(encoding='utf-8'))
@@ -135,9 +126,49 @@ def prepare(root=ROOT, reference_root=None, reference_layout='current',
                 deletion='Not Run; this command only creates or verifies files')
 
 
+def prepare_current(root=ROOT):
+    """Restore only the selected public version; never replace a different existing file."""
+    root = Path(root).resolve()
+    selected = load_dataset(root)
+    report = verify_samples(root=root)
+    public = checked_path(root, DATA + '/public')
+    planned = []
+    with zipfile.ZipFile(selected['package_path']) as archive:
+        for name in sorted(included_files(selected, root)):
+            planned.append((checked_path(public, name), archive.read(name)))
+        planned.append((selected['manifest_path'], archive.read('tutorial-samples.json')))
+        for name in ('LICENSE', 'NOTICE.md'):
+            path = checked_path(public, name)
+            # Existing root notices describe the complete material set, including history.
+            if not path.exists():
+                planned.append((path, archive.read(name)))
+    for path, raw in planned:
+        if path.exists():
+            verify_file(path, dict(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest()))
+    files = [dict(path=path.relative_to(root).as_posix(), action=write_public(path, raw))
+             for path, raw in planned]
+    verify_csv_inputs(root)
+    return dict(schema='qcblender.validation-data-preparation.v2', status='Passed',
+                dataset_id=selected['dataset_id'], public_package=report, public_files=files,
+                copies=[], verified_paths=[], local_input_count=0,
+                scientific_regression='Not Run', gui='Not Run', independent_human_review='Not Run',
+                deletion='Not Run; this command only creates or verifies files')
+
+
+def prepare(root=ROOT, reference_root=None, reference_layout='current',
+            include_local=False, include_calculations=False, dataset='current'):
+    selected = load_dataset(root, dataset)
+    if selected['legacy']:
+        return _prepare_legacy(root, reference_root, reference_layout, include_local, include_calculations)
+    if include_local or include_calculations:
+        raise ValueError('Historical local migration requires --dataset legacy-v2')
+    return prepare_current(root)
+
+
 def main():
     parser = argparse.ArgumentParser(__doc__)
     parser.add_argument('--reference-root', type=Path)
+    parser.add_argument('--dataset', choices=('current', 'legacy-v2'), default='current')
     parser.add_argument('--reference-layout', choices=('legacy', 'current'), default='current',
                         help='Use legacy source paths only for the reviewed first migration')
     parser.add_argument('--include-local', action='store_true')
@@ -152,7 +183,7 @@ def main():
     if report.exists():
         raise FileExistsError('Choose a new report path: ' + str(report))
     result = prepare(ROOT, args.reference_root, args.reference_layout,
-                     args.include_local, args.include_calculations)
+                     args.include_local, args.include_calculations, args.dataset)
     report.parent.mkdir(parents=True, exist_ok=True)
     with report.open('x', encoding='utf-8', newline='\n') as stream:
         json.dump(result, stream, ensure_ascii=False, indent=2)

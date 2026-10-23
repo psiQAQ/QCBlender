@@ -1,16 +1,19 @@
 """Check tutorial resources and links, optionally in a detached public copy."""
 import argparse
-import csv
 import hashlib
 import json
 from pathlib import Path
 import re
 import shutil
 import subprocess
+import sys
 import zipfile
 
 
 ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT))
+from tools.local_inputs import checked_path, verify_file
+from tools.tutorial_dataset import included_files, load_dataset, verify_csv_inputs
 PUBLIC_PARTS = ('human', 'shared/data/public', 'shared/install')
 IMAGE_SUFFIXES = ('.png', '.jpg', '.jpeg', '.webp')
 HUMAN_DIRECTORIES = ('topics', 'screenshots', 'renders')
@@ -64,36 +67,38 @@ def require_plain_path(path, boundary):
     return absolute.resolve()
 
 
-def check_materials(materials, install):
+def check_materials(materials, install, dataset=None, legacy=None):
     public = materials / 'shared/data/public'
-    manifest = json.loads((public / 'tutorial-samples.json').read_text(encoding='utf-8'))
+    if dataset is None:
+        dataset = load_dataset(materials.parent)
+        if not dataset['legacy']:
+            legacy = load_dataset(materials.parent, 'legacy-v2')
+    records = included_files(dataset, materials.parent)
     expected = set()
-    for row in manifest['files'].values():
-        if row['distribution'] != 'included':
-            continue
-        path = public / row['archive_path']
-        if not path.resolve().is_relative_to(public.resolve()):
-            raise ValueError(f'Public input escapes directory: {row["archive_path"]}')
-        if row['license'] != 'CC-BY-4.0' or digest(path) != row['sha256']:
-            raise ValueError(f'Public input identity or license differs: {path}')
-        if path.stat().st_size != row['bytes']:
-            raise ValueError(f'Public input size differs: {path}')
-        expected.add(path.relative_to(public).as_posix())
-    support = {'LICENSE', 'NOTICE.md', 'README.md', 'tutorial-samples.json', 'source.json'}
+    for name, row in records.items():
+        verify_file(checked_path(public, name), row)
+        expected.add(name)
+    manifest_name = ('tutorial-samples.json' if dataset['legacy'] else
+                     dataset['dataset_id'] + '/tutorial-samples.json')
+    verify_file(checked_path(public, manifest_name), dataset['manifest_record'])
+    support = {'LICENSE', 'NOTICE.md', 'README.md', 'source.json', manifest_name}
     actual = {path.relative_to(public).as_posix() for path in safe_files(public)}
-    extras = actual - expected - support
+    historical = set()
+    if legacy is not None and not dataset['legacy']:
+        for name, row in included_files(legacy, materials.parent).items():
+            if name in actual:
+                verify_file(checked_path(public, name), row)
+                historical.add(name)
+        if 'tutorial-samples.json' in actual:
+            verify_file(public / 'tutorial-samples.json', legacy['manifest_record'])
+            historical.add('tutorial-samples.json')
+    extras = actual - expected - support - historical
     if extras:
         raise ValueError(f'Unexpected public resources: {sorted(extras)}')
     for name in ('LICENSE', 'NOTICE.md'):
         if not (public / name).is_file():
             raise FileNotFoundError(public / name)
-    for name, column in (('steps.csv', 'fchk'), ('mayer-pyscf.csv', 'mayer_output')):
-        path = public / 'P04' / name
-        with path.open(encoding='utf-8', newline='') as stream:
-            for row in csv.DictReader(stream):
-                target = (path.parent / row[column]).resolve()
-                if not target.is_relative_to(path.parent.resolve()) or not target.is_file():
-                    raise ValueError(f'Broken P04 relative input: {path}: {row[column]}')
+    verify_csv_inputs(public, dataset)
     candidate = materials / 'shared/install' / Path(install['path']).name
     if candidate.stat().st_size != install['bytes'] or digest(candidate) != install['sha256']:
         raise ValueError(f'Installer differs from selected candidate: {candidate}')
@@ -105,8 +110,28 @@ def check_materials(materials, install):
     installers = sorted(path.name for path in candidate.parent.glob('*.zip'))
     if installers != [candidate.name]:
         raise ValueError(f'Installation directory must contain one current ZIP: {installers}')
-    return {'public_inputs': len(expected), 'p04_relative_files': 'Passed',
+    return {'dataset_id': dataset['dataset_id'], 'public_inputs': len(expected),
+            'historical_inputs': len(historical), 'p04_relative_files': 'Passed',
             'public_members': sorted(actual), 'installer': candidate.name}
+
+
+def copy_public_materials(materials, detached, install, dataset):
+    """Copy only active public inputs and human resources, excluding historical data."""
+    public = materials / 'shared/data/public'
+    names = set(included_files(dataset, materials.parent))
+    names.add('tutorial-samples.json' if dataset['legacy'] else
+              dataset['dataset_id'] + '/tutorial-samples.json')
+    names.update(name for name in ('LICENSE', 'NOTICE.md', 'README.md')
+                 if (public / name).is_file())
+    for name in sorted(names):
+        source = checked_path(public, name)
+        destination = checked_path(detached / 'shared/data/public', name)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, destination)
+    shutil.copytree(materials / 'human', detached / 'human')
+    target = detached / 'shared/install' / Path(install['path']).name
+    target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(materials / 'shared/install' / target.name, target)
 
 
 def human_resources(human):
@@ -212,17 +237,14 @@ def main():
     try:
         report['resources'] = check_materials(materials, install)
         report['documents'] = check_documents(materials, require_images=args.require_images)
-        frozen = root / 'validation/agent/v1-acceptance/tutorial-samples.json'
-        if (materials / 'shared/data/public/tutorial-samples.json').read_bytes() != frozen.read_bytes():
-            raise ValueError('Public source manifest differs from the frozen original')
+        selected = load_dataset(root)
         if args.portable_dir is not None:
             detached = require_plain_path(args.portable_dir, materials / 'work')
             work = (materials / 'work').resolve()
             if not detached.is_relative_to(work) or detached == work or detached.exists():
                 raise ValueError('Portable verification requires a new directory under validation/work')
-            for part in PUBLIC_PARTS:
-                shutil.copytree(materials / part, detached / part)
-            report['portable'] = {'root': str(detached), 'resources': check_materials(detached, install),
+            copy_public_materials(materials, detached, install, selected)
+            report['portable'] = {'root': str(detached), 'resources': check_materials(detached, install, selected),
                                   'documents': check_documents(detached, require_images=args.require_images)}
         report['status'] = 'Passed'
     except (OSError, ValueError, KeyError, zipfile.BadZipFile) as error:

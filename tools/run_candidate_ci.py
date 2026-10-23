@@ -122,7 +122,7 @@ def main():
     run('qualification', [sys.executable, '-B', ROOT / 'tools/qualify_package.py', '--candidate', candidate,
                           '--evidence-index', index_path, '--installed-dir', installed,
                           '--output', reports / 'qualification.json'])
-    result = assemble(candidate, ROOT / 'validation/agent/packages/qcblender-public-tutorial-samples-v2.zip',
+    result = assemble(candidate, None,
                       reproduction, reports, out / 'artifact', args.run_id, args.channel)
     print(result['artifact_name'])
 

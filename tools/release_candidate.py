@@ -19,6 +19,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.public_reproduction import reproduction_members
+from tools.tutorial_dataset import DELIVERY, FROZEN_MANIFEST, included_files
 from tools.package_identity import GENERATED_NODE_ASSET_MEMBERS, dependency_identity
 
 
@@ -271,28 +272,63 @@ def verify_release_gates(record, manifest, artifact_id, evidence_root):
     return {key: record[key] for key in GATES}
 
 
+def tutorial_source(source):
+    """Select tag-owned sample records; never substitute the working checkout."""
+    delivery = json.loads(source[DELIVERY])
+    schema = delivery.get('schema', 1)
+    require(schema in (1, 2), 'Unknown tutorial delivery schema')
+    if schema == 1:
+        return json.loads(source[FROZEN_MANIFEST]), source[FROZEN_MANIFEST], delivery['package'], None
+    dataset_id = delivery['dataset_id']
+    name = safe_name(delivery['manifest']['path'])
+    require(dataset_id != 'legacy-v2' and name.startswith(
+        'validation/shared/data/public/' + dataset_id + '/'),
+        'Current tutorial manifest is outside its versioned public directory')
+    raw = source[name]
+    require(len(raw) == delivery['manifest']['bytes'] and
+            hashlib.sha256(raw).hexdigest() == delivery['manifest']['sha256'],
+            'Current tutorial manifest identity differs from tag delivery record')
+    legacy = delivery['legacy_dataset']
+    require(legacy['dataset_id'] == 'legacy-v2' and legacy['manifest']['path'] == FROZEN_MANIFEST,
+            'Legacy tutorial dataset must retain its frozen identity')
+    old_raw = source[FROZEN_MANIFEST]
+    require(len(old_raw) == legacy['manifest']['bytes'] and
+            hashlib.sha256(old_raw).hexdigest() == legacy['manifest']['sha256'],
+            'Legacy tutorial manifest identity differs from tag delivery record')
+    historical = json.loads(old_raw)
+    samples = json.loads(raw)
+    restricted = {row['sha256'] for records in (historical['files'], samples['files'])
+                  for row in records.values() if row['distribution'] != 'included'}
+    selected = dict(dataset_id=dataset_id, legacy=False, manifest=samples, restricted_sha256=restricted)
+    return samples, raw, delivery['package'], selected
+
+
 def verify_public_materials(manifest, root, source):
-    samples = json.loads(source['validation/agent/v1-acceptance/tutorial-samples.json'])
-    delivery = json.loads(source['validation/agent/acceptance/tutorial-sample-delivery.json'])['package']
+    samples, raw_manifest, delivery, selected = tutorial_source(source)
     sample_entry = manifest['files']['samples']
     require(all(sample_entry[key] == delivery[key] for key in ('bytes', 'sha256')),
             'Public sample package differs from tag delivery record')
-    included = {entry['archive_path']: entry for entry in samples['files'].values()
-                if entry['distribution'] == 'included'}
+    included = (included_files(selected, root) if selected else
+                {entry['archive_path']: entry for entry in samples['files'].values()
+                 if entry['distribution'] == 'included'})
     with zipfile.ZipFile(root / sample_entry['path']) as archive:
         members = zip_members(archive)
         require(set(members) == set(included) | {'LICENSE', 'NOTICE.md', 'tutorial-samples.json'},
                 'Public sample ZIP has unlisted inputs')
-        require(json.loads(archive.read('tutorial-samples.json')) == samples,
+        require(archive.read('tutorial-samples.json') == raw_manifest,
                 'Public sample source manifest differs from tag')
         for name, entry in included.items():
             raw = archive.read(name)
             require(entry['license'] == 'CC-BY-4.0' and len(raw) == entry['bytes'] and
                     hashlib.sha256(raw).hexdigest() == entry['sha256'],
                     'Public input license or digest mismatch: ' + name)
+    p01_sources = ({samples['files'][sid]['sha256'] for sid in samples['cases']['C01']['files']
+                    if samples['files'][sid]['archive_path'].endswith('.fchk')
+                    and samples['files'][sid]['archive_path'] in included} if selected else
+                   {samples['files']['P01-o2-uhf']['sha256']})
     reproduction = json.loads((root / manifest['reports']['reproduction']['path']).read_text(encoding='utf-8'))
     require(reproduction.get('cold_open') == 'Passed' and reproduction.get('portable_saved') is True and
-            reproduction.get('source_sha256') == samples['files']['P01-o2-uhf']['sha256'],
+            reproduction.get('source_sha256') in p01_sources,
             'Public reproduction lacks its P01 identity or portable cold-open check')
     allowed_sources = {entry['sha256'] for entry in included.values()}
     with zipfile.ZipFile(root / manifest['files']['reproduction']['path']) as archive:
@@ -343,6 +379,14 @@ class GitSource:
                 if path not in recorded:
                     original = migrated[path]
             source[path] = self.read(commit, original)
+        delivery = json.loads(source[DELIVERY])
+        if delivery.get('schema', 1) == 2:
+            manifest_path = safe_name(delivery['manifest']['path'])
+            dataset_id = delivery['dataset_id']
+            require(manifest_path.startswith('validation/shared/data/public/' + dataset_id + '/'),
+                    'Current tutorial manifest is outside its versioned public directory')
+            source[manifest_path] = self.read(commit, manifest_path)
+        tutorial_source(source)
         version = tomllib.loads(source['qcblender/blender_manifest.toml'].decode('utf-8'))['version']
         require(tag == 'v' + version, 'Release tag does not match manifest version')
         return version, commit, product_tree, source

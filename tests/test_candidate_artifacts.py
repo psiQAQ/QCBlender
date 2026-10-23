@@ -9,6 +9,7 @@ import tempfile
 import threading
 import unittest
 from tools.workspace_paths import temporary_tests_root
+from tools.tutorial_dataset import DELIVERY, load_dataset
 from unittest.mock import patch
 import zipfile
 
@@ -110,7 +111,10 @@ class CandidateBoundaries(unittest.TestCase):
             path = self.root / relative
             path.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, path)
-        self.samples = ROOT / 'validation/agent/packages' / artifacts.SAMPLE_NAME
+        legacy = load_dataset(ROOT, 'legacy-v2')
+        (self.root / DELIVERY).write_text(json.dumps(dict(schema=1,
+            manifest=legacy['manifest_record'], package=legacy['package_record'])), encoding='utf-8')
+        self.samples = legacy['package_path']
         self.candidate = self.root / extension_filename(self.root)
         self.candidate.write_bytes(b'exact original candidate bytes')
         self.digest = file_record(self.candidate)['sha256']
@@ -164,7 +168,7 @@ class CandidateBoundaries(unittest.TestCase):
         self.write_report(name, report)
 
     def test_real_frozen_sample_zip_matches_delivery_and_excludes_p02(self):
-        report = artifacts.verify_samples(self.samples)
+        report = artifacts.verify_samples(self.samples, root=self.root, dataset='legacy-v2')
         self.assertEqual(report['included_files'], 30)
         self.assertEqual(report['excluded_groups'], ['P02'])
         self.assertEqual(report['package']['sha256'], 'b4bc3e0ebbdf29ccb3905b16eeb898c94b9f16f209baae3c3ae1a8646b0348dd')
@@ -173,7 +177,7 @@ class CandidateBoundaries(unittest.TestCase):
         changed = self.root / 'changed.zip'
         changed.write_bytes(self.samples.read_bytes() + b'changed')
         with self.assertRaisesRegex(ValueError, 'identity differs'):
-            artifacts.verify_samples(changed)
+            artifacts.verify_samples(changed, root=self.root, dataset='legacy-v2')
 
     def test_version_and_filename_follow_manifest(self):
         manifest = self.root / 'qcblender/blender_manifest.toml'

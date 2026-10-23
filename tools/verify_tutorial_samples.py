@@ -1,11 +1,23 @@
-"""Verify the frozen tutorial files, scientific interfaces and public ZIP."""
+"""Verify the active tutorial dataset or explicitly selected historical samples."""
 import argparse,hashlib,json,sys,zipfile
 from pathlib import Path
-p=argparse.ArgumentParser();p.add_argument('--reference-root',type=Path,required=True);p.add_argument('--package',type=Path,required=True);p.add_argument('--report',type=Path,required=True)
+p=argparse.ArgumentParser();p.add_argument('--reference-root',type=Path,required=True);p.add_argument('--package',type=Path);p.add_argument('--report',type=Path,required=True)
 p.add_argument('--site',type=Path,help='Existing science environment; defaults to reference-root/modules/science')
-p.add_argument('--checkpoints',action='store_true',help='Also compare original PySCF checkpoints; requires the existing calculation environment')
+p.add_argument('--checkpoints',action='store_true',help='Legacy only: compare original PySCF checkpoints in the existing calculation environment')
+p.add_argument('--dataset',choices=('current','legacy-v2'),default='current')
 a=p.parse_args();ROOT=Path(__file__).resolve().parents[1];REF=a.reference_root.resolve();sys.path[:0]=[str(a.site.resolve() if a.site else REF/'modules/science'),str(ROOT)]
 from tools.local_inputs import input_path,public_input_path
+from tools.tutorial_dataset import load_dataset
+selected=load_dataset(ROOT,a.dataset)
+a.package=a.package or selected['package_path']
+if not selected['legacy']:
+ if selected['dataset_id']!='gaussian-v1':raise ValueError('Unsupported scientific tutorial dataset: '+selected['dataset_id'])
+ if a.checkpoints:raise ValueError('--checkpoints only applies to the legacy-v2 PySCF dataset')
+ from tools.verify_gaussian_tutorial import verify
+ args=argparse.Namespace(reference_root=REF,manifest=selected['manifest_path'],derived_root=None,raw_root=None,package=a.package,require_complete=True)
+ report=verify(args)
+ a.report.parent.mkdir(parents=True,exist_ok=True);a.report.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8');print(json.dumps(report))
+ raise SystemExit(0)
 import numpy as np
 from qcblender.readers import read_fchk,read_source
 from qcblender.evaluate import evaluate_points
@@ -16,7 +28,7 @@ from qcblender.nbo import parse_nbo
 from qcblender.irc import import_irc,import_irc_mayer
 from qcblender.cube import read_cube
 from qcblender.data import orbital_selection
-manifest=json.loads((ROOT/'validation/agent/v1-acceptance/tutorial-samples.json').read_text(encoding='utf-8'));paths={};sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+manifest=selected['manifest'];paths={};sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 for sid,f in manifest['files'].items():
  path=public_input_path(f,ROOT) if f['distribution']=='included' else input_path(f['local_key'],REF);assert path.stat().st_size==f['bytes'] and sha(path)==f['sha256'],sid;paths[sid]=path
 for sid in ('P01-o2-uhf','P03-water-dimer','P05-complex','P04-step-001.fchk','P04-step-002.fchk','P04-step-003.fchk'):
@@ -56,4 +68,4 @@ with zipfile.ZipFile(a.package) as z:
  assert json.loads(z.read('tutorial-samples.json'))==manifest
  for f in manifest['files'].values():
   if f['distribution']=='included':assert f['license']=='CC-BY-4.0' and hashlib.sha256(z.read(f['archive_path'])).hexdigest()==f['sha256']
-report=dict(status='Passed',file_count=len(paths),included_files=sum(f['distribution']=='included' for f in manifest['files'].values()),package_sha256=sha(a.package),c01_orbital_choices=orbital_choices,checks=['SHA-256','C01 fixed MO and automatic HOMO source numbers','real field spin identities','IGMH/IRI grids','ESP/AIM association','NBO multijob/optimization','genuine bidirectional IRC/TS','Mayer','ETS/NOCV','ZIP per-file license exclusion'],original_checkpoint_density=checkpoint_density,gui='Not Run',independent_human_review='Not Run');a.report.parent.mkdir(parents=True,exist_ok=True);a.report.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8');print(json.dumps(report))
+report=dict(status='Passed',dataset_id=selected['dataset_id'],file_count=len(paths),included_files=sum(f['distribution']=='included' for f in manifest['files'].values()),package_sha256=sha(a.package),c01_orbital_choices=orbital_choices,checks=['SHA-256','C01 fixed MO and automatic HOMO source numbers','real field spin identities','IGMH/IRI grids','ESP/AIM association','NBO multijob/optimization','genuine bidirectional IRC/TS','Mayer','ETS/NOCV','ZIP per-file license exclusion'],original_checkpoint_density=checkpoint_density,gui='Not Run',independent_human_review='Not Run');a.report.parent.mkdir(parents=True,exist_ok=True);a.report.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8');print(json.dumps(report))

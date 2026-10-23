@@ -4,8 +4,12 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+import zipfile
 from tools.workspace_paths import temporary_tests_root
 from unittest import mock
+from test_tutorial_dataset import identity, write_fixture
+from tools.prepare_validation_data import prepare
+from tools.tutorial_dataset import load_dataset
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,6 +40,47 @@ class TutorialWorkspace(unittest.TestCase):
         # The checker verifies package paths and file presence, not image pixels.
         self.write('human/screenshots/view.png', 'image fixture')
         self.write('human/renders/P01-mo.png', 'image fixture')
+
+    def versioned_materials(self):
+        write_fixture(self.materials.parent)
+        prepare(self.materials.parent)
+        candidate = self.materials / 'shared/install/current.zip'
+        with zipfile.ZipFile(candidate, 'w') as archive:
+            archive.writestr('blender_manifest.toml', 'id="fixture"\n')
+        return dict(path='validation/shared/install/current.zip', **identity(candidate.read_bytes()))
+
+    def test_versioned_current_inputs_allow_owned_p02_and_verified_history(self):
+        install = self.versioned_materials()
+        report = workspace.check_materials(self.materials, install)
+        self.assertEqual(report['dataset_id'], 'gaussian-v1')
+        self.assertEqual(report['historical_inputs'], 2)
+        self.assertIn('gaussian-v1/P02/water.out', report['public_members'])
+        old = self.materials / 'shared/data/public/P01/old.fchk'
+        old.write_bytes(b'User-modified historical input')
+        with self.assertRaisesRegex(ValueError, 'mismatch'):
+            workspace.check_materials(self.materials, install)
+        self.assertEqual(old.read_bytes(), b'User-modified historical input')
+
+    def test_portable_copy_contains_only_current_inputs_documents_and_installer(self):
+        install = self.versioned_materials()
+        self.supply_images()
+        self.write('agent/private.json', 'Agent receipt')
+        self.write('shared/data/local/private.out', 'Restricted input')
+        self.write('work/human/user.blend', 'User project')
+        selected = load_dataset(self.materials.parent)
+        workspace.check_materials(self.materials, install)
+        detached = self.materials / 'work/portable'
+        workspace.copy_public_materials(self.materials, detached, install, selected)
+        report = workspace.check_materials(detached, install, selected)
+        self.assertEqual(report['historical_inputs'], 0)
+        self.assertTrue((detached / 'shared/data/public/gaussian-v1/P02/water.out').is_file())
+        self.assertTrue((detached / 'shared/data/public/gaussian-v1/tutorial-samples.json').is_file())
+        self.assertFalse((detached / 'shared/data/public/P01').exists())
+        self.assertFalse((detached / 'shared/data/public/tutorial-samples.json').exists())
+        self.assertFalse((detached / 'shared/data/local').exists())
+        self.assertFalse((detached / 'agent').exists())
+        self.assertFalse((detached / 'work').exists())
+        self.assertEqual(workspace.check_documents(detached, require_images=True)['images_supplied'], 2)
 
     def test_screenshots_and_renders_are_counted_once_with_compatible_fields(self):
         self.supply_images()

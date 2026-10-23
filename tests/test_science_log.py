@@ -18,6 +18,31 @@ DATA = ROOT / 'validation/shared/data/regression/cclib'
 
 
 class GaussianLog(unittest.TestCase):
+    def test_link1_restart_after_termination_without_system_banner(self):
+        # Minimal startup sequence emitted by the owned G16 C.01 Opt/Freq job.
+        first = (' # RHF/STO-3G Opt\n\n'
+                 ' SCF Done: E(RHF) = -74.96 A.U.\n'
+                 ' Normal termination of Gaussian 16\n')
+        restart = (' Initial command:\n Gaussian/l1.exe\n'
+                   ' Entering Link 1 = Gaussian/l1.exe\n')
+        second = (' # RHF/STO-3G Freq Pop=NBO\n\n'
+                  ' SCF Done: E(RHF) = -74.97 A.U.\n'
+                  ' Normal termination of Gaussian 16\n')
+        for banner in (restart, ' Entering Link 1 = Gaussian/l1.exe\n'):
+            with self.subTest(banner=banner):
+                jobs = summarize_jobs((first + banner + second).splitlines(keepends=True))
+                self.assertEqual(len(jobs), 2)
+                self.assertEqual([job['status'] for job in jobs], ['normal', 'normal'])
+                self.assertEqual(jobs[0]['line_end'], len(first.splitlines()))
+                self.assertEqual(jobs[1]['route'], '# RHF/STO-3G Freq Pop=NBO')
+                self.assertEqual(jobs[1]['energies'][0]['value_hartree'], -74.97)
+
+    def test_initial_link1_startup_does_not_split_empty_job(self):
+        lines = (' Initial command:\n Gaussian/l1.exe\n'
+                 ' Entering Link 1 = Gaussian/l1.exe\n'
+                 ' # RHF/STO-3G\n\n Normal termination of Gaussian 16\n')
+        self.assertEqual(len(summarize_jobs(lines.splitlines(keepends=True))), 1)
+
     def test_nbo_block_preview_respects_calculation_boundaries(self):
         with tempfile.TemporaryDirectory(dir=temporary_tests_root(ROOT)) as directory:
             path = Path(directory) / 'blocks.log'
