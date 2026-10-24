@@ -2,7 +2,7 @@
 
 人工操作从 [SOP](human/SOP.md) 开始，按目录选择需要学习的专题。完整材料包含安装包和案例输入，适用 Windows x64、Blender 5.1.1、QCBlender 0.1.0。
 
-当前教程包含主线及 12 个专题，共 **98 个编号步骤、75 个展示图片引用**。按[工程索引](工程索引.md)查找步骤、图片与工程；当前 Gaussian 工程位于 `work/human/gaussian-v1/`，科学输入位于 `shared/data/public/gaussian-v1/`。21 份新工程均已保存并冷读通过，0 差异。44 张新增截图及 27 张重拍图已转为 PNG 并落盘；材料和独立公开副本检查通过，独立人工和科研验收 Not Run。详见[本批验收](agent/reports/2026-10-24/gaussian-sop/acceptance.md)。
+当前教程包含主线及 12 个专题，共 **98 个编号步骤、79 个展示图片引用**。按[工程索引](工程索引.md)查找步骤、图片与工程；当前 Gaussian 工程位于 `work/human/gaussian-v1/`，科学输入位于 `shared/data/public/gaussian-v1/`。21 份新工程均已保存并冷读通过，0 差异。首轮新增 44 张截图，原目标复查另补 4 张，并重拍 IRC 总览；当前共 48 张新增图及 27 张重拍图，均已转为 PNG。材料和独立公开副本检查通过，独立人工和科研验收 Not Run。详见[本批验收](agent/reports/2026-10-24/gaussian-sop/acceptance.md)。
 
 旧 `work/human/P01/` 等目录及其 36 份工程保留历史身份。2026-10-22 的迁移与旧副本清理见[迁移记录](agent/acceptance/delivery-consolidation.md)，当时检查点的生成与保存前验证见[补验记录](agent/acceptance/checkpoint-rebuild.md)；这些旧记录不代表当前 Gaussian 案例已完成验证。
 
@@ -65,4 +65,4 @@
 
 ## 开发维护
 
-当前整理规格与执行状态见[教程截图任务](../.scratch/tutorial-screenshots-20261011/spec.md)。新检出准备数据的方法见[数据目录](shared/data/README.md)；技术核对和清理收据与人工教程分开维护。发布前通过 [Agent 文档检查](agent/README.md#教程材料与完整图片检查)确认图片已补齐。全仓工程及历史证据仍由 [ARTIFACTS](../docs/ARTIFACTS.md) 路由。
+当前整理规格与执行状态见[Gaussian 教程任务](../.scratch/sop-gaussian-20261024/spec.md)及[原目标复查](../.scratch/sop-gaussian-20261024/issues/05-original-goal-audit.md)。新检出准备数据的方法见[数据目录](shared/data/README.md)；技术核对和清理收据与人工教程分开维护。发布前通过 [Agent 文档检查](agent/README.md#教程材料与完整图片检查)确认图片已补齐。全仓工程及历史证据仍由 [ARTIFACTS](../docs/ARTIFACTS.md) 路由。

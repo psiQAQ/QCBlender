@@ -1,6 +1,6 @@
 {
   "schema": "qcblender.tutorial-captures.v1",
-  "new": 44,
+  "new": 48,
   "reshoot": 27,
   "format": "PNG",
   "conversion": "JPEG decode to PNG without resizing or enhancement",
@@ -241,6 +241,25 @@
       ]
     },
     {
+      "path": "validation/human/screenshots/P02-frequency-job-selection.png",
+      "change": "new",
+      "sha256": "67df19337c2b569ee2685b05fd0fb069975815cd72481a2ed05d45f98844ec52",
+      "bytes": 484071,
+      "original_capture_sha256": "a060112c9f39cada3fc7804bf03c79e09124a8df1d430fd09e424e185cf3ce86",
+      "captured_at": "2026-10-24T03:34:19.802Z",
+      "width": 1920,
+      "height": 1033,
+      "redactions": [
+        [
+          1550,
+          16,
+          1918,
+          34
+        ]
+      ],
+      "batch": "original-goal-audit"
+    },
+    {
       "path": "validation/human/screenshots/P02-gaussian-job-selection.png",
       "change": "new",
       "sha256": "d3be5702efccd8a12ad2a9bf3b3b33af9d70076fe7edd0eb1b9670b5c85f04d7",
@@ -257,6 +276,25 @@
           34
         ]
       ]
+    },
+    {
+      "path": "validation/human/screenshots/P02-nbo-block-selection.png",
+      "change": "new",
+      "sha256": "d729d771b035e5b22899ddcfa6e6da39c3f3eda66fd5ce6d0b25742cc7f22c2c",
+      "bytes": 497006,
+      "original_capture_sha256": "1e4f3017964c90699f6ba425853d96e01f25340575408dffc8b98217644e854f",
+      "captured_at": "2026-10-24T03:35:01.936Z",
+      "width": 1920,
+      "height": 1033,
+      "redactions": [
+        [
+          1550,
+          16,
+          1918,
+          34
+        ]
+      ],
+      "batch": "original-goal-audit"
     },
     {
       "path": "validation/human/screenshots/P02-nbo-browser.png",
@@ -835,14 +873,14 @@
       ]
     },
     {
-      "path": "validation/human/screenshots/P04-irc.png",
-      "change": "reshoot",
-      "sha256": "41572363849ad5ca895c72af3fe5c746632a95c4b4d08c2367288d48e2e64a04",
-      "bytes": 657513,
-      "original_capture_sha256": "351810215dd8c7011e7e5ecc5cd530f48d5bce2576865f8d32af1d0588adcd39",
-      "captured_at": "2026-10-23T18:41:02.797Z",
+      "path": "validation/human/screenshots/P04-irc-end.png",
+      "change": "new",
+      "sha256": "16f43357c05b1010812c9e33b4169e83809d6dee40984fff8043846b592bffe5",
+      "bytes": 653782,
+      "original_capture_sha256": "3abe0f8acd89a467ff652957f4e5e543057953ab276e9bb574c273d21afb7961",
+      "captured_at": "2026-10-24T03:40:29.321Z",
       "width": 1920,
-      "height": 1032,
+      "height": 1033,
       "redactions": [
         [
           1550,
@@ -850,6 +888,65 @@
           1918,
           34
         ]
+      ],
+      "batch": "original-goal-audit"
+    },
+    {
+      "path": "validation/human/screenshots/P04-irc-start.png",
+      "change": "new",
+      "sha256": "ff23ce30cc17d4611ce2ffdb853c8d01e65f50f075eefeba44a004d9df213bca",
+      "bytes": 689600,
+      "original_capture_sha256": "04c7e6c2016fb308fe22395faed59926f42def375d6ad058f2387713d25b838d",
+      "captured_at": "2026-10-24T03:40:03.431Z",
+      "width": 1920,
+      "height": 1033,
+      "redactions": [
+        [
+          1550,
+          16,
+          1918,
+          34
+        ]
+      ],
+      "batch": "original-goal-audit"
+    },
+    {
+      "path": "validation/human/screenshots/P04-irc.png",
+      "change": "reshoot",
+      "sha256": "20a23150b1d17da6a8b7aae9265cecc73707b08ccc467b4727da0742818a9fe8",
+      "bytes": 702559,
+      "original_capture_sha256": "0bbf04e095ba157eaccbb790770a4267e64e7668f100cbba99630ccd65d53321",
+      "captured_at": "2026-10-24T03:39:33.786Z",
+      "width": 1920,
+      "height": 1033,
+      "redactions": [
+        [
+          1550,
+          16,
+          1918,
+          34
+        ]
+      ],
+      "batch": "original-goal-audit",
+      "previous_captures": [
+        {
+          "path": "validation/human/screenshots/P04-irc.png",
+          "change": "reshoot",
+          "sha256": "41572363849ad5ca895c72af3fe5c746632a95c4b4d08c2367288d48e2e64a04",
+          "bytes": 657513,
+          "original_capture_sha256": "351810215dd8c7011e7e5ecc5cd530f48d5bce2576865f8d32af1d0588adcd39",
+          "captured_at": "2026-10-23T18:41:02.797Z",
+          "width": 1920,
+          "height": 1032,
+          "redactions": [
+            [
+              1550,
+              16,
+              1918,
+              34
+            ]
+          ]
+        }
       ]
     },
     {
@@ -1290,5 +1387,13 @@
         ]
       ]
     }
-  ]
+  ],
+  "additional_original_mapping": ".tmp/runs/sop-scope-audit-20261024/screenshot-conversion.json",
+  "followup": {
+    "date": "2026-10-24",
+    "base_commit": "732e23d",
+    "added": 4,
+    "replaced_existing": 1,
+    "previous_manifest_sha256": "a14591ad6164926a531bca6c1909f10eb0f57af9ac5e71cc010f6e44f9e15074"
+  }
 }

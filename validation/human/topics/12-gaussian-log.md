@@ -88,7 +88,12 @@
 ### 4. 导入频率计算段
 
 - 再次使用 **导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择同一输入 `shared/data/public/gaussian-v1/P02/water_neutral_nbo_opt_freq.out`，这次在 **选择 Gaussian 计算段（Choose Gaussian Calculation）** 选择第 **2** 段。
-- 核对 route 含 **Freq** 和 **Pop=NBO** 后确认，将新原子对象命名为 **P02-frequency**。在 Outliner 隐藏优化轨迹，保留本频率对象可见。
+- 核对 route 含 **Freq** 和 **Pop=NBO**、状态为正常结束，电子能量约为 **−74.9659012171 hartree**。
+- 截图保存为 `human/screenshots/P02-frequency-job-selection.png`。
+
+![第2计算段的Freq和Pop=NBO任务、正常结束及可用电子能量](../screenshots/P02-frequency-job-selection.png)
+
+- 点击 **确定（OK）**，将新原子对象命名为 **P02-frequency**。在 Outliner 隐藏优化轨迹，保留本频率对象可见。
 - 选 **P02-frequency** 并重新打开对象属性，展开 **科学记录与振动模式（Scientific Records and Vibration Modes）**。本段只有一次 SCF 求值，电子能量可用（available）；应有三个源振动模式，电子能量约为 **−74.9659012171 hartree**。
 
 | 源模式 | 频率（cm⁻¹） | IR 强度（km/mol） |
@@ -139,8 +144,12 @@
 
 - 保持静态 **P02-frequency** 活动，点击 **N 侧栏 → 导入与导出（Import and Export） → 导入外部结果（Import External Results） → 原子与键分析（Atom and Bond Analysis） → NBO 记录（NBO Records）**。
 - 将 **Gaussian Log / Out** 指向 `shared/data/public/gaussian-v1/P02/water_neutral_nbo_opt_freq.out`，先确认以检查日志。
-- 检查完成后的编号对话框中，设 **Gaussian 计算段（从1开始）（Gaussian job (1-based)）=2**、**计算段内 NBO 块（从1开始）（NBO block within job (1-based)）=1**，再确认。
-- 应新增并选中 **QC NBO: water_neutral_nbo_opt_freq.out**。重新打开它的对象属性，核对记录的计算段与 NBO 块。
+- 检查完成后的编号对话框中，设 **Gaussian 计算段（从1开始）（Gaussian job (1-based)）=2**、**计算段内 NBO 块（从1开始）（NBO block within job (1-based)）=1**，核对当前静态参考对象仍为 **P02-frequency**。
+- 截图保存为 `human/screenshots/P02-nbo-block-selection.png`。
+
+![NBO导入选择第2计算段、第1个块，并使用同段静态水分子作为参考](../screenshots/P02-nbo-block-selection.png)
+
+- 点击 **确定（OK）** 后，应新增并选中 **QC NBO: water_neutral_nbo_opt_freq.out**。重新打开它的对象属性，核对记录的计算段与 NBO 块。
 
 <details>
 <summary>理解 NBO、块编号与参考构型</summary>

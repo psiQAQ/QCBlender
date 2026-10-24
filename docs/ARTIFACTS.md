@@ -10,7 +10,7 @@ AICD 公开资料（2026-10-23）保存在 `submodules/AICD/reference-public-202
 
 开发流程工具已完成技术验收：[入口](agents/development-workflow.md)、[当前结果](../validation/agent/acceptance/dev-workflow.md)，日志与规则备份当前位置由本次迁移映射定位，正式记录在 `validation/agent/reports/2026-10-16/dev-workflow-20261016/legacy-outputs/`。真实 MCP、构建安装和原工程恢复 Passed；当前有效候选见下表。
 
-从 [validation](../validation/README.md) 查找当前教程、输入和校验材料；人工入口为 [SOP](../validation/human/SOP.md)。当前主线及 12 个按需专题共 98 步、75 个展示图片引用；2026-10-21 完成的 79 步和 27 张截图保留当时身份。Gaussian 换代及各批实际复验范围见对应验收。
+从 [validation](../validation/README.md) 查找当前教程、输入和校验材料；人工入口为 [SOP](../validation/human/SOP.md)。当前主线及 12 个按需专题共 98 步、79 个展示图片引用；2026-10-21 完成的 79 步和 27 张截图保留当时身份。Gaussian 换代及各批实际复验范围见对应验收。
 
 | 内容 | 当前入口 |
 | --- | --- |
@@ -30,7 +30,7 @@ AICD 公开资料（2026-10-23）保存在 `submodules/AICD/reference-public-202
 
 当前科学输入为 `validation/shared/data/public/gaussian-v1/`，可从 v3 包及当前交付索引用 `python tools/prepare_validation_data.py --dataset current --report .tmp/runs/restore-gaussian-data.json` 恢复（报告路径需尚不存在）；保留显式历史恢复入口。[科学摘要](../validation/agent/reports/2026-10-24/gaussian-sop/science.md)记录优化、频率、基函数表示、统一构型、完整路径、Mayer、NOCV 及同源 XYZ。P04 使用 geomeTRIC 积分与实际 Gaussian 能量/梯度，原生 IRC 失败尝试保留；NOCV 仍为实际复合物 KS 近似，未宣称严格 `F_TS`。
 
-公开 P02 第 12 专题、44 张新增 PNG、27 张重拍图及新渲染已完成。21 份自包含工程在 `validation/work/human/gaussian-v1/`，步骤与图片逐项见[工程索引](../validation/工程索引.md)。保存基线、MCP 收据、冷读及代表移动/解包的原始记录在 `.tmp/runs/sop-gaussian-20261024/`；科学原件由摘要中的忽略目录入口定位。[本批验收](../validation/agent/reports/2026-10-24/gaussian-sop/acceptance.md)区分实际运行、GUI 观察及独立验收。旧输入、v2 包、历史工程及原始截图记录保留；独立人工/科研签署及发布 Not Run。本地归档标签为 `archive/2026-10-24/sop-gaussian-20261024`，不 push。
+公开 P02 第 12 专题、首轮 44 张新增 PNG、27 张重拍图及新渲染已完成。原目标复查另补 P02 频率段、NBO 段/块选择和 IRC 两端共 4 张图，并重拍 IRC 总览，当前新增图共 48 张；本轮取图与原件字节核对记录位于 `.tmp/runs/sop-scope-audit-20261024/`。21 份自包含工程在 `validation/work/human/gaussian-v1/`，步骤与图片逐项见[工程索引](../validation/工程索引.md)。保存基线、MCP 收据、冷读及代表移动/解包的原始记录在 `.tmp/runs/sop-gaussian-20261024/`；科学原件由摘要中的忽略目录入口定位。[本批验收](../validation/agent/reports/2026-10-24/gaussian-sop/acceptance.md)区分实际运行、GUI 观察及独立验收。旧输入、v2 包、历史工程及原始截图记录保留；独立人工/科研签署及发布 Not Run。本地归档标签为 `archive/2026-10-24/sop-gaussian-20261024`，不 push。
 
 <a id="aicd-20261023"></a>
 ## AICD 张量与单位磁场响应（2026-10-23）
