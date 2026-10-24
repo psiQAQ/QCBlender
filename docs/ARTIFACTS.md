@@ -14,7 +14,7 @@ AICD 公开资料（2026-10-23）保存在 `submodules/AICD/reference-public-202
 
 | 内容 | 当前入口 |
 | --- | --- |
-| 宣传与教程网站 | [维护与预览](../website/README.md)、[线上网站](https://notes.psiqaq.cn/QCBlender/)；本批已同步当前 v3 样本与第 12 专题，20 页本地构建及链接/公开文件摘要检查 Passed，浏览器交互与发布 Not Run，见[本批验收](../validation/agent/reports/2026-10-24/gaussian-sop/acceptance.md)。既有线上部署、浏览器及三组 Blender 展示图身份见[原建站验收](../validation/agent/acceptance/website.md)，工程在 `outputs/projects/website-showcase/`，原收据在 `validation/agent/reports/2026-10-23/website/`；从 `website/README.md` 重建 |
+| 宣传与教程网站 | [维护与预览](../website/README.md)、[线上网站](https://notes.psiqaq.cn/QCBlender/)；本批已同步当前 v3 样本与第 12 专题，20 页本地构建、链接/公开文件摘要及 P02/中文搜索/实际下载浏览器补验 Passed，发布 Not Run，见[本批验收](../validation/agent/reports/2026-10-24/gaussian-sop/acceptance.md)。既有线上部署、浏览器及三组 Blender 展示图身份见[原建站验收](../validation/agent/acceptance/website.md)，工程在 `outputs/projects/website-showcase/`，原收据在 `validation/agent/reports/2026-10-23/website/`；从 `website/README.md` 重建 |
 | 当前完整教程材料 | `validation/`；[工程索引](../validation/工程索引.md)、[迁移与清理](#delivery-consolidation-20261022)；需要分发时按下行打包 |
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
 | 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；当前工程在 `validation/work/human/`；[当前截图与工程](../validation/工程索引.md) |
