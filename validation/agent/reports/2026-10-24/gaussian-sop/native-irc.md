@@ -61,3 +61,5 @@
 ## 选项依据
 
 已实际读取 [Gaussian IRC 参考](https://gaussian.com/irc/)中的 `Downhill`、`GS2`、`RecalcFC`、`ReCorrect` 与步长说明，以及 [Overlay 1](https://gaussian.com/overlay1/)中的 `1/26`、`1/45`、`1/105–109`、`1/131`。原始网页于 2026-10-24 保存到忽略目录 `submodules/GaussianView/native-irc-20261024/`：IRC HTML 的 SHA-256 为 `2b0c7acee87bd2bfc1e93c74e1eadcedb8e08435477b8d9dfceb1a3dc33fec3a`，Overlay 1 为 `6bd37fc991366233b089230a31439d4c63ee41fc7699c3a392db1b07a64603ba`。网页原件与本次实际计算结果具有各自身份。
+
+本批本地 Git 归档入口：`archive/2026-10-24/fix/native-irc-20261024`。未推送远端。
