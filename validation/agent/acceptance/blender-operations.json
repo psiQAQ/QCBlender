@@ -665,6 +665,18 @@
         "qcdata",
         "save_project",
         "自包含"
+      ],
+      "batch_replays": [
+        {
+          "id": "native-irc-current-20261024:portable-save-and-archive",
+          "date": "2026-10-24",
+          "status": "Passed",
+          "status_scope": "Only declared actual execution; historical GUI entry evidence retains its identity",
+          "validated_scope": "MCP portable save P04/P06 and archive P04; serial cold originals/moved P06/extracted P04 all0differences",
+          "not_run_scope": "Independent human/scientific review",
+          "path": "validation/agent/reports/2026-10-24/native-irc-current/acceptance.json",
+          "selector": "portable-save-and-archive"
+        }
       ]
     },
     {
@@ -5679,6 +5691,18 @@
         "H2O2",
         "IRC",
         "steps.csv"
+      ],
+      "batch_replays": [
+        {
+          "id": "native-irc-current-20261024:irc-path-import",
+          "date": "2026-10-24",
+          "status": "Passed",
+          "status_scope": "Only declared actual execution; historical GUI entry evidence retains its identity",
+          "validated_scope": "Native Gaussian53 CSV and all FCHK; real MCP invoke, GUI confirm; arrays checked",
+          "not_run_scope": "Independent human/scientific review",
+          "path": "validation/agent/reports/2026-10-24/native-irc-current/acceptance.json",
+          "selector": "irc-path-import"
+        }
       ]
     },
     {
@@ -5926,6 +5950,18 @@
         "Next",
         "Previous",
         "二面角更新"
+      ],
+      "batch_replays": [
+        {
+          "id": "native-irc-current-20261024:irc-step-navigation",
+          "date": "2026-10-24",
+          "status": "Passed",
+          "status_scope": "Only declared actual execution; historical GUI entry evidence retains its identity",
+          "validated_scope": "MCP complete53-step traversal; GUI27 to28 and back; annotations/energies matched",
+          "not_run_scope": "Independent human/scientific review",
+          "path": "validation/agent/reports/2026-10-24/native-irc-current/acceptance.json",
+          "selector": "irc-step-navigation"
+        }
       ]
     },
     {
@@ -6060,6 +6096,18 @@
         "18 values",
         "Mayer导入",
         "mayer-pyscf.csv"
+      ],
+      "batch_replays": [
+        {
+          "id": "native-irc-current-20261024:irc-mayer-import",
+          "date": "2026-10-24",
+          "status": "Passed",
+          "status_scope": "Only declared actual execution; historical GUI entry evidence retains its identity",
+          "validated_scope": "Native53-step Mayer CSV; MCP invoke and GUI confirm; 53x6 signed values",
+          "not_run_scope": "Independent human/scientific review",
+          "path": "validation/agent/reports/2026-10-24/native-irc-current/acceptance.json",
+          "selector": "irc-mayer-import"
+        }
       ]
     },
     {
@@ -6213,6 +6261,18 @@
         "Read Pair",
         "irc_steps.csv",
         "mayer.csv"
+      ],
+      "batch_replays": [
+        {
+          "id": "native-irc-current-20261024:irc-mayer-pair-plot",
+          "date": "2026-10-24",
+          "status": "Passed",
+          "status_scope": "Only declared actual execution; historical GUI entry evidence retains its identity",
+          "validated_scope": "MCP O-O query and neighboring step, GUI observation; values matched",
+          "not_run_scope": "Independent human/scientific review",
+          "path": "validation/agent/reports/2026-10-24/native-irc-current/acceptance.json",
+          "selector": "irc-mayer-pair-plot"
+        }
       ]
     },
     {
@@ -7342,6 +7402,18 @@
         "trajectory",
         "多帧XYZ",
         "随帧二面角"
+      ],
+      "batch_replays": [
+        {
+          "id": "native-irc-current-20261024:xyz-discrete-frame-navigation",
+          "date": "2026-10-24",
+          "status": "Passed",
+          "status_scope": "Only declared actual execution; historical GUI entry evidence retains its identity",
+          "validated_scope": "MCP new3-frame XYZ; GUI1 to2 to3 to2; source steps1/27/53 and annotations checked",
+          "not_run_scope": "Independent human/scientific review",
+          "path": "validation/agent/reports/2026-10-24/native-irc-current/acceptance.json",
+          "selector": "xyz-discrete-frame-navigation"
+        }
       ]
     },
     {
@@ -7471,6 +7543,18 @@
         "metadata",
         "导出数据",
         "输出目录"
+      ],
+      "batch_replays": [
+        {
+          "id": "native-irc-current-20261024:explicit-csv-export-directory",
+          "date": "2026-10-24",
+          "status": "Passed",
+          "status_scope": "Only declared actual execution; historical GUI entry evidence retains its identity",
+          "validated_scope": "MCP export actual IRC53 and Mayer318 rows; GUI export dialog Not Run this batch",
+          "not_run_scope": "Independent human/scientific review",
+          "path": "validation/agent/reports/2026-10-24/native-irc-current/acceptance.json",
+          "selector": "explicit-csv-export-directory"
+        }
       ]
     },
     {
@@ -9363,6 +9447,16 @@
           "report": "validation/agent/reports/2026-10-23/mayer/daily/acceptance.json",
           "sha256": "62456427aeb8cef5ba70b3619ef9973397596967b7a25c82b930545855fbf262",
           "scope": "Actual Computer Use clicks: enable/disable, keyboard Undo, Edit-menu Redo, threshold 0.5 to 0.96 and back, next/previous IRC step; read-only timer records state"
+        },
+        {
+          "id": "native-irc-current-20261024:irc-mayer-display",
+          "date": "2026-10-24",
+          "status": "Passed",
+          "status_scope": "Only declared actual execution; historical GUI entry evidence retains its identity",
+          "validated_scope": "MCP manual0..1 threshold.5 and three bonds; GUI observation; portable/cold0differences",
+          "not_run_scope": "Independent human/scientific review",
+          "path": "validation/agent/reports/2026-10-24/native-irc-current/acceptance.json",
+          "selector": "irc-mayer-display"
         }
       ]
     },

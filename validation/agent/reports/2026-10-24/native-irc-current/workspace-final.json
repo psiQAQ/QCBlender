@@ -1,0 +1,2312 @@
+{
+  "status": "Passed",
+  "dataset_id": "gaussian-v2",
+  "manifest_sha256": "b07fd042560cc4391a16bd8e97ad5937d3607a98db295d0ec8e618dc3be9fcb6",
+  "updated_copy": "Only current manifest provenance labels; scientific input bytes unchanged",
+  "previous_copy_manifest_sha256": "1afc2ecf22fafff801cab6d50e62589f22f91090cc9a3a22575dfe8263e8634b",
+  "resources": {
+    "dataset_id": "gaussian-v2",
+    "public_inputs": 270,
+    "historical_inputs": 451,
+    "p04_relative_files": "Passed",
+    "public_members": [
+      "LICENSE",
+      "NOTICE.md",
+      "P01/o2-uhf.fch",
+      "P01/o2-uhf.fchk",
+      "P03/aim/CPprop.txt",
+      "P03/aim/CPs.pdb",
+      "P03/aim/paths.pdb",
+      "P03/color.cube",
+      "P03/esp/stdout.log",
+      "P03/esp/surfanalysis.pdb",
+      "P03/igmh/dg_inter.cub",
+      "P03/igmh/sl2r.cub",
+      "P03/iri/func1.cub",
+      "P03/iri/func2.cub",
+      "P03/water-dimer.fch",
+      "P03/water-dimer.fchk",
+      "P04/mayer-pyscf.csv",
+      "P04/step-001-mayer-pyscf.txt",
+      "P04/step-001.fchk",
+      "P04/step-002-mayer-pyscf.txt",
+      "P04/step-002.fchk",
+      "P04/step-003-mayer-pyscf.txt",
+      "P04/step-003.fchk",
+      "P04/steps.csv",
+      "P05/bh3.fchk",
+      "P05/co.fchk",
+      "P05/complex.fchk",
+      "P05/nocv/ets-nocv.txt",
+      "P05/nocv/nocv-pair1.cub",
+      "P06/p04-three-frames.xyz",
+      "P06/source.json",
+      "P06/water-dimer.xyz",
+      "README.md",
+      "gaussian-native-irc-v1/P04/energies.csv",
+      "gaussian-native-irc-v1/P04/forward-endpoint-frequency.fchk",
+      "gaussian-native-irc-v1/P04/forward-endpoint-frequency.gjf",
+      "gaussian-native-irc-v1/P04/forward-endpoint-frequency.log",
+      "gaussian-native-irc-v1/P04/mayer.csv",
+      "gaussian-native-irc-v1/P04/path.xyz",
+      "gaussian-native-irc-v1/P04/reverse-endpoint-frequency.fchk",
+      "gaussian-native-irc-v1/P04/reverse-endpoint-frequency.gjf",
+      "gaussian-native-irc-v1/P04/reverse-endpoint-frequency.log",
+      "gaussian-native-irc-v1/P04/segments/forward-001.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-001.log",
+      "gaussian-native-irc-v1/P04/segments/forward-002.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-002.log",
+      "gaussian-native-irc-v1/P04/segments/forward-003.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-003.log",
+      "gaussian-native-irc-v1/P04/segments/forward-004.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-004.log",
+      "gaussian-native-irc-v1/P04/segments/forward-005.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-005.log",
+      "gaussian-native-irc-v1/P04/segments/forward-006.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-006.log",
+      "gaussian-native-irc-v1/P04/segments/forward-007.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-007.log",
+      "gaussian-native-irc-v1/P04/segments/forward-008.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-008.log",
+      "gaussian-native-irc-v1/P04/segments/forward-009.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-009.log",
+      "gaussian-native-irc-v1/P04/segments/forward-010.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-010.log",
+      "gaussian-native-irc-v1/P04/segments/forward-011.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-011.log",
+      "gaussian-native-irc-v1/P04/segments/forward-012.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-012.log",
+      "gaussian-native-irc-v1/P04/segments/forward-013.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-013.log",
+      "gaussian-native-irc-v1/P04/segments/forward-014.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-014.log",
+      "gaussian-native-irc-v1/P04/segments/forward-015.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-015.log",
+      "gaussian-native-irc-v1/P04/segments/forward-016.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-016.log",
+      "gaussian-native-irc-v1/P04/segments/forward-017.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-017.log",
+      "gaussian-native-irc-v1/P04/segments/forward-018.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-018.log",
+      "gaussian-native-irc-v1/P04/segments/forward-019.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-019.log",
+      "gaussian-native-irc-v1/P04/segments/forward-020.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-020.log",
+      "gaussian-native-irc-v1/P04/segments/forward-021.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-021.log",
+      "gaussian-native-irc-v1/P04/segments/forward-022.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-022.log",
+      "gaussian-native-irc-v1/P04/segments/forward-023.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-023.log",
+      "gaussian-native-irc-v1/P04/segments/forward-024.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-024.log",
+      "gaussian-native-irc-v1/P04/segments/forward-025.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-025.log",
+      "gaussian-native-irc-v1/P04/segments/forward-026.gjf",
+      "gaussian-native-irc-v1/P04/segments/forward-026.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-001.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-001.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-002.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-002.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-003.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-003.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-004.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-004.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-005.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-005.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-006.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-006.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-007.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-007.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-008.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-008.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-009.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-009.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-010.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-010.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-011.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-011.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-012.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-012.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-013.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-013.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-014.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-014.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-015.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-015.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-016.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-016.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-017.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-017.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-018.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-018.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-019.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-019.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-020.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-020.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-021.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-021.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-022.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-022.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-023.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-023.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-024.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-024.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-025.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-025.log",
+      "gaussian-native-irc-v1/P04/segments/reverse-026.gjf",
+      "gaussian-native-irc-v1/P04/segments/reverse-026.log",
+      "gaussian-native-irc-v1/P04/step-001-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-001.fchk",
+      "gaussian-native-irc-v1/P04/step-002-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-002.fchk",
+      "gaussian-native-irc-v1/P04/step-003-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-003.fchk",
+      "gaussian-native-irc-v1/P04/step-004-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-004.fchk",
+      "gaussian-native-irc-v1/P04/step-005-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-005.fchk",
+      "gaussian-native-irc-v1/P04/step-006-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-006.fchk",
+      "gaussian-native-irc-v1/P04/step-007-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-007.fchk",
+      "gaussian-native-irc-v1/P04/step-008-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-008.fchk",
+      "gaussian-native-irc-v1/P04/step-009-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-009.fchk",
+      "gaussian-native-irc-v1/P04/step-010-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-010.fchk",
+      "gaussian-native-irc-v1/P04/step-011-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-011.fchk",
+      "gaussian-native-irc-v1/P04/step-012-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-012.fchk",
+      "gaussian-native-irc-v1/P04/step-013-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-013.fchk",
+      "gaussian-native-irc-v1/P04/step-014-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-014.fchk",
+      "gaussian-native-irc-v1/P04/step-015-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-015.fchk",
+      "gaussian-native-irc-v1/P04/step-016-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-016.fchk",
+      "gaussian-native-irc-v1/P04/step-017-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-017.fchk",
+      "gaussian-native-irc-v1/P04/step-018-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-018.fchk",
+      "gaussian-native-irc-v1/P04/step-019-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-019.fchk",
+      "gaussian-native-irc-v1/P04/step-020-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-020.fchk",
+      "gaussian-native-irc-v1/P04/step-021-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-021.fchk",
+      "gaussian-native-irc-v1/P04/step-022-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-022.fchk",
+      "gaussian-native-irc-v1/P04/step-023-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-023.fchk",
+      "gaussian-native-irc-v1/P04/step-024-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-024.fchk",
+      "gaussian-native-irc-v1/P04/step-025-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-025.fchk",
+      "gaussian-native-irc-v1/P04/step-026-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-026.fchk",
+      "gaussian-native-irc-v1/P04/step-027-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-027.fchk",
+      "gaussian-native-irc-v1/P04/step-028-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-028.fchk",
+      "gaussian-native-irc-v1/P04/step-029-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-029.fchk",
+      "gaussian-native-irc-v1/P04/step-030-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-030.fchk",
+      "gaussian-native-irc-v1/P04/step-031-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-031.fchk",
+      "gaussian-native-irc-v1/P04/step-032-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-032.fchk",
+      "gaussian-native-irc-v1/P04/step-033-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-033.fchk",
+      "gaussian-native-irc-v1/P04/step-034-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-034.fchk",
+      "gaussian-native-irc-v1/P04/step-035-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-035.fchk",
+      "gaussian-native-irc-v1/P04/step-036-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-036.fchk",
+      "gaussian-native-irc-v1/P04/step-037-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-037.fchk",
+      "gaussian-native-irc-v1/P04/step-038-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-038.fchk",
+      "gaussian-native-irc-v1/P04/step-039-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-039.fchk",
+      "gaussian-native-irc-v1/P04/step-040-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-040.fchk",
+      "gaussian-native-irc-v1/P04/step-041-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-041.fchk",
+      "gaussian-native-irc-v1/P04/step-042-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-042.fchk",
+      "gaussian-native-irc-v1/P04/step-043-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-043.fchk",
+      "gaussian-native-irc-v1/P04/step-044-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-044.fchk",
+      "gaussian-native-irc-v1/P04/step-045-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-045.fchk",
+      "gaussian-native-irc-v1/P04/step-046-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-046.fchk",
+      "gaussian-native-irc-v1/P04/step-047-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-047.fchk",
+      "gaussian-native-irc-v1/P04/step-048-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-048.fchk",
+      "gaussian-native-irc-v1/P04/step-049-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-049.fchk",
+      "gaussian-native-irc-v1/P04/step-050-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-050.fchk",
+      "gaussian-native-irc-v1/P04/step-051-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-051.fchk",
+      "gaussian-native-irc-v1/P04/step-052-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-052.fchk",
+      "gaussian-native-irc-v1/P04/step-053-mayer.txt",
+      "gaussian-native-irc-v1/P04/step-053.fchk",
+      "gaussian-native-irc-v1/P04/steps.csv",
+      "gaussian-native-irc-v1/P04/ts.gjf",
+      "gaussian-native-irc-v1/P04/ts.log",
+      "gaussian-native-irc-v1/README.md",
+      "gaussian-native-irc-v1/diagnostics/baseline-forward.fchk",
+      "gaussian-native-irc-v1/diagnostics/baseline-forward.gjf",
+      "gaussian-native-irc-v1/diagnostics/baseline-forward.log",
+      "gaussian-native-irc-v1/diagnostics/false-min-frequency.fchk",
+      "gaussian-native-irc-v1/diagnostics/false-min-frequency.gjf",
+      "gaussian-native-irc-v1/diagnostics/false-min-frequency.log",
+      "gaussian-native-irc-v1/diagnostics/original-ts.fchk",
+      "gaussian-native-irc-v1/diagnostics/refined-ts.fchk",
+      "gaussian-native-irc-v1/diagnostics/refined-ts.gjf",
+      "gaussian-native-irc-v1/diagnostics/refined-ts.log",
+      "gaussian-native-irc-v1/native-irc.json",
+      "gaussian-v1/P01/o2-uhf.fch",
+      "gaussian-v1/P01/o2-uhf.fchk",
+      "gaussian-v1/P01/o2-uhf.gjf",
+      "gaussian-v1/P01/o2-uhf.log",
+      "gaussian-v1/P01/optimization.log",
+      "gaussian-v1/P02/water.gjf",
+      "gaussian-v1/P02/water_neutral_nbo_opt_freq.log",
+      "gaussian-v1/P02/water_neutral_nbo_opt_freq.out",
+      "gaussian-v1/P03/aim/CPprop.txt",
+      "gaussian-v1/P03/aim/CPs.pdb",
+      "gaussian-v1/P03/aim/paths.pdb",
+      "gaussian-v1/P03/color.cube",
+      "gaussian-v1/P03/esp/stdout.log",
+      "gaussian-v1/P03/esp/surfanalysis.pdb",
+      "gaussian-v1/P03/igmh/dg_inter.cub",
+      "gaussian-v1/P03/igmh/sl2r.cub",
+      "gaussian-v1/P03/iri/func1.cub",
+      "gaussian-v1/P03/iri/func2.cub",
+      "gaussian-v1/P03/optimization.log",
+      "gaussian-v1/P03/water-dimer.fch",
+      "gaussian-v1/P03/water-dimer.fchk",
+      "gaussian-v1/P03/water-dimer.gjf",
+      "gaussian-v1/P03/water-dimer.log",
+      "gaussian-v1/P04/forward-endpoint-optimization.log",
+      "gaussian-v1/P04/forward-endpoint.log",
+      "gaussian-v1/P04/geometric-irc.log",
+      "gaussian-v1/P04/mayer-reference.log",
+      "gaussian-v1/P04/mayer.csv",
+      "gaussian-v1/P04/reverse-endpoint-optimization.log",
+      "gaussian-v1/P04/reverse-endpoint.log",
+      "gaussian-v1/P04/step-001-mayer.txt",
+      "gaussian-v1/P04/step-001.fchk",
+      "gaussian-v1/P04/step-002-mayer.txt",
+      "gaussian-v1/P04/step-002.fchk",
+      "gaussian-v1/P04/step-003-mayer.txt",
+      "gaussian-v1/P04/step-003.fchk",
+      "gaussian-v1/P04/step-004-mayer.txt",
+      "gaussian-v1/P04/step-004.fchk",
+      "gaussian-v1/P04/step-005-mayer.txt",
+      "gaussian-v1/P04/step-005.fchk",
+      "gaussian-v1/P04/step-006-mayer.txt",
+      "gaussian-v1/P04/step-006.fchk",
+      "gaussian-v1/P04/step-007-mayer.txt",
+      "gaussian-v1/P04/step-007.fchk",
+      "gaussian-v1/P04/step-008-mayer.txt",
+      "gaussian-v1/P04/step-008.fchk",
+      "gaussian-v1/P04/step-009-mayer.txt",
+      "gaussian-v1/P04/step-009.fchk",
+      "gaussian-v1/P04/step-010-mayer.txt",
+      "gaussian-v1/P04/step-010.fchk",
+      "gaussian-v1/P04/step-011-mayer.txt",
+      "gaussian-v1/P04/step-011.fchk",
+      "gaussian-v1/P04/step-012-mayer.txt",
+      "gaussian-v1/P04/step-012.fchk",
+      "gaussian-v1/P04/step-013-mayer.txt",
+      "gaussian-v1/P04/step-013.fchk",
+      "gaussian-v1/P04/step-014-mayer.txt",
+      "gaussian-v1/P04/step-014.fchk",
+      "gaussian-v1/P04/step-015-mayer.txt",
+      "gaussian-v1/P04/step-015.fchk",
+      "gaussian-v1/P04/step-016-mayer.txt",
+      "gaussian-v1/P04/step-016.fchk",
+      "gaussian-v1/P04/step-017-mayer.txt",
+      "gaussian-v1/P04/step-017.fchk",
+      "gaussian-v1/P04/step-018-mayer.txt",
+      "gaussian-v1/P04/step-018.fchk",
+      "gaussian-v1/P04/step-019-mayer.txt",
+      "gaussian-v1/P04/step-019.fchk",
+      "gaussian-v1/P04/step-020-mayer.txt",
+      "gaussian-v1/P04/step-020.fchk",
+      "gaussian-v1/P04/step-021-mayer.txt",
+      "gaussian-v1/P04/step-021.fchk",
+      "gaussian-v1/P04/step-022-mayer.txt",
+      "gaussian-v1/P04/step-022.fchk",
+      "gaussian-v1/P04/step-023-mayer.txt",
+      "gaussian-v1/P04/step-023.fchk",
+      "gaussian-v1/P04/step-024-mayer.txt",
+      "gaussian-v1/P04/step-024.fchk",
+      "gaussian-v1/P04/step-025-mayer.txt",
+      "gaussian-v1/P04/step-025.fchk",
+      "gaussian-v1/P04/step-026-mayer.txt",
+      "gaussian-v1/P04/step-026.fchk",
+      "gaussian-v1/P04/step-027-mayer.txt",
+      "gaussian-v1/P04/step-027.fchk",
+      "gaussian-v1/P04/step-028-mayer.txt",
+      "gaussian-v1/P04/step-028.fchk",
+      "gaussian-v1/P04/step-029-mayer.txt",
+      "gaussian-v1/P04/step-029.fchk",
+      "gaussian-v1/P04/step-030-mayer.txt",
+      "gaussian-v1/P04/step-030.fchk",
+      "gaussian-v1/P04/step-031-mayer.txt",
+      "gaussian-v1/P04/step-031.fchk",
+      "gaussian-v1/P04/step-032-mayer.txt",
+      "gaussian-v1/P04/step-032.fchk",
+      "gaussian-v1/P04/step-033-mayer.txt",
+      "gaussian-v1/P04/step-033.fchk",
+      "gaussian-v1/P04/step-034-mayer.txt",
+      "gaussian-v1/P04/step-034.fchk",
+      "gaussian-v1/P04/step-035-mayer.txt",
+      "gaussian-v1/P04/step-035.fchk",
+      "gaussian-v1/P04/step-036-mayer.txt",
+      "gaussian-v1/P04/step-036.fchk",
+      "gaussian-v1/P04/step-037-mayer.txt",
+      "gaussian-v1/P04/step-037.fchk",
+      "gaussian-v1/P04/step-038-mayer.txt",
+      "gaussian-v1/P04/step-038.fchk",
+      "gaussian-v1/P04/step-039-mayer.txt",
+      "gaussian-v1/P04/step-039.fchk",
+      "gaussian-v1/P04/step-040-mayer.txt",
+      "gaussian-v1/P04/step-040.fchk",
+      "gaussian-v1/P04/step-041-mayer.txt",
+      "gaussian-v1/P04/step-041.fchk",
+      "gaussian-v1/P04/step-042-mayer.txt",
+      "gaussian-v1/P04/step-042.fchk",
+      "gaussian-v1/P04/step-043-mayer.txt",
+      "gaussian-v1/P04/step-043.fchk",
+      "gaussian-v1/P04/step-044-mayer.txt",
+      "gaussian-v1/P04/step-044.fchk",
+      "gaussian-v1/P04/step-045-mayer.txt",
+      "gaussian-v1/P04/step-045.fchk",
+      "gaussian-v1/P04/step-046-mayer.txt",
+      "gaussian-v1/P04/step-046.fchk",
+      "gaussian-v1/P04/step-047-mayer.txt",
+      "gaussian-v1/P04/step-047.fchk",
+      "gaussian-v1/P04/step-048-mayer.txt",
+      "gaussian-v1/P04/step-048.fchk",
+      "gaussian-v1/P04/step-049-mayer.txt",
+      "gaussian-v1/P04/step-049.fchk",
+      "gaussian-v1/P04/step-050-mayer.txt",
+      "gaussian-v1/P04/step-050.fchk",
+      "gaussian-v1/P04/step-051-mayer.txt",
+      "gaussian-v1/P04/step-051.fchk",
+      "gaussian-v1/P04/step-052-mayer.txt",
+      "gaussian-v1/P04/step-052.fchk",
+      "gaussian-v1/P04/step-053-mayer.txt",
+      "gaussian-v1/P04/step-053.fchk",
+      "gaussian-v1/P04/step-054-mayer.txt",
+      "gaussian-v1/P04/step-054.fchk",
+      "gaussian-v1/P04/step-055-mayer.txt",
+      "gaussian-v1/P04/step-055.fchk",
+      "gaussian-v1/P04/step-056-mayer.txt",
+      "gaussian-v1/P04/step-056.fchk",
+      "gaussian-v1/P04/step-057-mayer.txt",
+      "gaussian-v1/P04/step-057.fchk",
+      "gaussian-v1/P04/step-058-mayer.txt",
+      "gaussian-v1/P04/step-058.fchk",
+      "gaussian-v1/P04/step-059-mayer.txt",
+      "gaussian-v1/P04/step-059.fchk",
+      "gaussian-v1/P04/step-060-mayer.txt",
+      "gaussian-v1/P04/step-060.fchk",
+      "gaussian-v1/P04/step-061-mayer.txt",
+      "gaussian-v1/P04/step-061.fchk",
+      "gaussian-v1/P04/step-062-mayer.txt",
+      "gaussian-v1/P04/step-062.fchk",
+      "gaussian-v1/P04/step-063-mayer.txt",
+      "gaussian-v1/P04/step-063.fchk",
+      "gaussian-v1/P04/step-064-mayer.txt",
+      "gaussian-v1/P04/step-064.fchk",
+      "gaussian-v1/P04/step-065-mayer.txt",
+      "gaussian-v1/P04/step-065.fchk",
+      "gaussian-v1/P04/step-066-mayer.txt",
+      "gaussian-v1/P04/step-066.fchk",
+      "gaussian-v1/P04/step-067-mayer.txt",
+      "gaussian-v1/P04/step-067.fchk",
+      "gaussian-v1/P04/step-068-mayer.txt",
+      "gaussian-v1/P04/step-068.fchk",
+      "gaussian-v1/P04/step-069-mayer.txt",
+      "gaussian-v1/P04/step-069.fchk",
+      "gaussian-v1/P04/steps.csv",
+      "gaussian-v1/P04/ts.log",
+      "gaussian-v1/P05/bh3.fchk",
+      "gaussian-v1/P05/bh3.gjf",
+      "gaussian-v1/P05/bh3.log",
+      "gaussian-v1/P05/co.fchk",
+      "gaussian-v1/P05/co.gjf",
+      "gaussian-v1/P05/co.log",
+      "gaussian-v1/P05/complex.fchk",
+      "gaussian-v1/P05/complex.gjf",
+      "gaussian-v1/P05/complex.log",
+      "gaussian-v1/P05/nocv/ets-nocv.txt",
+      "gaussian-v1/P05/nocv/nocv-pair1.cub",
+      "gaussian-v1/P05/optimization.log",
+      "gaussian-v1/P06/p04-three-frames.xyz",
+      "gaussian-v1/P06/source.json",
+      "gaussian-v1/P06/water-dimer.xyz",
+      "gaussian-v1/tutorial-samples.json",
+      "gaussian-v2/P01/o2-uhf.fch",
+      "gaussian-v2/P01/o2-uhf.fchk",
+      "gaussian-v2/P01/o2-uhf.gjf",
+      "gaussian-v2/P01/o2-uhf.log",
+      "gaussian-v2/P01/optimization.log",
+      "gaussian-v2/P02/water.gjf",
+      "gaussian-v2/P02/water_neutral_nbo_opt_freq.log",
+      "gaussian-v2/P02/water_neutral_nbo_opt_freq.out",
+      "gaussian-v2/P03/aim/CPprop.txt",
+      "gaussian-v2/P03/aim/CPs.pdb",
+      "gaussian-v2/P03/aim/paths.pdb",
+      "gaussian-v2/P03/color.cube",
+      "gaussian-v2/P03/esp/stdout.log",
+      "gaussian-v2/P03/esp/surfanalysis.pdb",
+      "gaussian-v2/P03/igmh/dg_inter.cub",
+      "gaussian-v2/P03/igmh/sl2r.cub",
+      "gaussian-v2/P03/iri/func1.cub",
+      "gaussian-v2/P03/iri/func2.cub",
+      "gaussian-v2/P03/optimization.log",
+      "gaussian-v2/P03/water-dimer.fch",
+      "gaussian-v2/P03/water-dimer.fchk",
+      "gaussian-v2/P03/water-dimer.gjf",
+      "gaussian-v2/P03/water-dimer.log",
+      "gaussian-v2/P04/energies.csv",
+      "gaussian-v2/P04/forward-endpoint-frequency.fchk",
+      "gaussian-v2/P04/forward-endpoint-frequency.gjf",
+      "gaussian-v2/P04/forward-endpoint-frequency.log",
+      "gaussian-v2/P04/mayer.csv",
+      "gaussian-v2/P04/path.xyz",
+      "gaussian-v2/P04/reverse-endpoint-frequency.fchk",
+      "gaussian-v2/P04/reverse-endpoint-frequency.gjf",
+      "gaussian-v2/P04/reverse-endpoint-frequency.log",
+      "gaussian-v2/P04/segments/forward-001.gjf",
+      "gaussian-v2/P04/segments/forward-001.log",
+      "gaussian-v2/P04/segments/forward-002.gjf",
+      "gaussian-v2/P04/segments/forward-002.log",
+      "gaussian-v2/P04/segments/forward-003.gjf",
+      "gaussian-v2/P04/segments/forward-003.log",
+      "gaussian-v2/P04/segments/forward-004.gjf",
+      "gaussian-v2/P04/segments/forward-004.log",
+      "gaussian-v2/P04/segments/forward-005.gjf",
+      "gaussian-v2/P04/segments/forward-005.log",
+      "gaussian-v2/P04/segments/forward-006.gjf",
+      "gaussian-v2/P04/segments/forward-006.log",
+      "gaussian-v2/P04/segments/forward-007.gjf",
+      "gaussian-v2/P04/segments/forward-007.log",
+      "gaussian-v2/P04/segments/forward-008.gjf",
+      "gaussian-v2/P04/segments/forward-008.log",
+      "gaussian-v2/P04/segments/forward-009.gjf",
+      "gaussian-v2/P04/segments/forward-009.log",
+      "gaussian-v2/P04/segments/forward-010.gjf",
+      "gaussian-v2/P04/segments/forward-010.log",
+      "gaussian-v2/P04/segments/forward-011.gjf",
+      "gaussian-v2/P04/segments/forward-011.log",
+      "gaussian-v2/P04/segments/forward-012.gjf",
+      "gaussian-v2/P04/segments/forward-012.log",
+      "gaussian-v2/P04/segments/forward-013.gjf",
+      "gaussian-v2/P04/segments/forward-013.log",
+      "gaussian-v2/P04/segments/forward-014.gjf",
+      "gaussian-v2/P04/segments/forward-014.log",
+      "gaussian-v2/P04/segments/forward-015.gjf",
+      "gaussian-v2/P04/segments/forward-015.log",
+      "gaussian-v2/P04/segments/forward-016.gjf",
+      "gaussian-v2/P04/segments/forward-016.log",
+      "gaussian-v2/P04/segments/forward-017.gjf",
+      "gaussian-v2/P04/segments/forward-017.log",
+      "gaussian-v2/P04/segments/forward-018.gjf",
+      "gaussian-v2/P04/segments/forward-018.log",
+      "gaussian-v2/P04/segments/forward-019.gjf",
+      "gaussian-v2/P04/segments/forward-019.log",
+      "gaussian-v2/P04/segments/forward-020.gjf",
+      "gaussian-v2/P04/segments/forward-020.log",
+      "gaussian-v2/P04/segments/forward-021.gjf",
+      "gaussian-v2/P04/segments/forward-021.log",
+      "gaussian-v2/P04/segments/forward-022.gjf",
+      "gaussian-v2/P04/segments/forward-022.log",
+      "gaussian-v2/P04/segments/forward-023.gjf",
+      "gaussian-v2/P04/segments/forward-023.log",
+      "gaussian-v2/P04/segments/forward-024.gjf",
+      "gaussian-v2/P04/segments/forward-024.log",
+      "gaussian-v2/P04/segments/forward-025.gjf",
+      "gaussian-v2/P04/segments/forward-025.log",
+      "gaussian-v2/P04/segments/forward-026.gjf",
+      "gaussian-v2/P04/segments/forward-026.log",
+      "gaussian-v2/P04/segments/reverse-001.gjf",
+      "gaussian-v2/P04/segments/reverse-001.log",
+      "gaussian-v2/P04/segments/reverse-002.gjf",
+      "gaussian-v2/P04/segments/reverse-002.log",
+      "gaussian-v2/P04/segments/reverse-003.gjf",
+      "gaussian-v2/P04/segments/reverse-003.log",
+      "gaussian-v2/P04/segments/reverse-004.gjf",
+      "gaussian-v2/P04/segments/reverse-004.log",
+      "gaussian-v2/P04/segments/reverse-005.gjf",
+      "gaussian-v2/P04/segments/reverse-005.log",
+      "gaussian-v2/P04/segments/reverse-006.gjf",
+      "gaussian-v2/P04/segments/reverse-006.log",
+      "gaussian-v2/P04/segments/reverse-007.gjf",
+      "gaussian-v2/P04/segments/reverse-007.log",
+      "gaussian-v2/P04/segments/reverse-008.gjf",
+      "gaussian-v2/P04/segments/reverse-008.log",
+      "gaussian-v2/P04/segments/reverse-009.gjf",
+      "gaussian-v2/P04/segments/reverse-009.log",
+      "gaussian-v2/P04/segments/reverse-010.gjf",
+      "gaussian-v2/P04/segments/reverse-010.log",
+      "gaussian-v2/P04/segments/reverse-011.gjf",
+      "gaussian-v2/P04/segments/reverse-011.log",
+      "gaussian-v2/P04/segments/reverse-012.gjf",
+      "gaussian-v2/P04/segments/reverse-012.log",
+      "gaussian-v2/P04/segments/reverse-013.gjf",
+      "gaussian-v2/P04/segments/reverse-013.log",
+      "gaussian-v2/P04/segments/reverse-014.gjf",
+      "gaussian-v2/P04/segments/reverse-014.log",
+      "gaussian-v2/P04/segments/reverse-015.gjf",
+      "gaussian-v2/P04/segments/reverse-015.log",
+      "gaussian-v2/P04/segments/reverse-016.gjf",
+      "gaussian-v2/P04/segments/reverse-016.log",
+      "gaussian-v2/P04/segments/reverse-017.gjf",
+      "gaussian-v2/P04/segments/reverse-017.log",
+      "gaussian-v2/P04/segments/reverse-018.gjf",
+      "gaussian-v2/P04/segments/reverse-018.log",
+      "gaussian-v2/P04/segments/reverse-019.gjf",
+      "gaussian-v2/P04/segments/reverse-019.log",
+      "gaussian-v2/P04/segments/reverse-020.gjf",
+      "gaussian-v2/P04/segments/reverse-020.log",
+      "gaussian-v2/P04/segments/reverse-021.gjf",
+      "gaussian-v2/P04/segments/reverse-021.log",
+      "gaussian-v2/P04/segments/reverse-022.gjf",
+      "gaussian-v2/P04/segments/reverse-022.log",
+      "gaussian-v2/P04/segments/reverse-023.gjf",
+      "gaussian-v2/P04/segments/reverse-023.log",
+      "gaussian-v2/P04/segments/reverse-024.gjf",
+      "gaussian-v2/P04/segments/reverse-024.log",
+      "gaussian-v2/P04/segments/reverse-025.gjf",
+      "gaussian-v2/P04/segments/reverse-025.log",
+      "gaussian-v2/P04/segments/reverse-026.gjf",
+      "gaussian-v2/P04/segments/reverse-026.log",
+      "gaussian-v2/P04/step-001-mayer.txt",
+      "gaussian-v2/P04/step-001.fchk",
+      "gaussian-v2/P04/step-002-mayer.txt",
+      "gaussian-v2/P04/step-002.fchk",
+      "gaussian-v2/P04/step-003-mayer.txt",
+      "gaussian-v2/P04/step-003.fchk",
+      "gaussian-v2/P04/step-004-mayer.txt",
+      "gaussian-v2/P04/step-004.fchk",
+      "gaussian-v2/P04/step-005-mayer.txt",
+      "gaussian-v2/P04/step-005.fchk",
+      "gaussian-v2/P04/step-006-mayer.txt",
+      "gaussian-v2/P04/step-006.fchk",
+      "gaussian-v2/P04/step-007-mayer.txt",
+      "gaussian-v2/P04/step-007.fchk",
+      "gaussian-v2/P04/step-008-mayer.txt",
+      "gaussian-v2/P04/step-008.fchk",
+      "gaussian-v2/P04/step-009-mayer.txt",
+      "gaussian-v2/P04/step-009.fchk",
+      "gaussian-v2/P04/step-010-mayer.txt",
+      "gaussian-v2/P04/step-010.fchk",
+      "gaussian-v2/P04/step-011-mayer.txt",
+      "gaussian-v2/P04/step-011.fchk",
+      "gaussian-v2/P04/step-012-mayer.txt",
+      "gaussian-v2/P04/step-012.fchk",
+      "gaussian-v2/P04/step-013-mayer.txt",
+      "gaussian-v2/P04/step-013.fchk",
+      "gaussian-v2/P04/step-014-mayer.txt",
+      "gaussian-v2/P04/step-014.fchk",
+      "gaussian-v2/P04/step-015-mayer.txt",
+      "gaussian-v2/P04/step-015.fchk",
+      "gaussian-v2/P04/step-016-mayer.txt",
+      "gaussian-v2/P04/step-016.fchk",
+      "gaussian-v2/P04/step-017-mayer.txt",
+      "gaussian-v2/P04/step-017.fchk",
+      "gaussian-v2/P04/step-018-mayer.txt",
+      "gaussian-v2/P04/step-018.fchk",
+      "gaussian-v2/P04/step-019-mayer.txt",
+      "gaussian-v2/P04/step-019.fchk",
+      "gaussian-v2/P04/step-020-mayer.txt",
+      "gaussian-v2/P04/step-020.fchk",
+      "gaussian-v2/P04/step-021-mayer.txt",
+      "gaussian-v2/P04/step-021.fchk",
+      "gaussian-v2/P04/step-022-mayer.txt",
+      "gaussian-v2/P04/step-022.fchk",
+      "gaussian-v2/P04/step-023-mayer.txt",
+      "gaussian-v2/P04/step-023.fchk",
+      "gaussian-v2/P04/step-024-mayer.txt",
+      "gaussian-v2/P04/step-024.fchk",
+      "gaussian-v2/P04/step-025-mayer.txt",
+      "gaussian-v2/P04/step-025.fchk",
+      "gaussian-v2/P04/step-026-mayer.txt",
+      "gaussian-v2/P04/step-026.fchk",
+      "gaussian-v2/P04/step-027-mayer.txt",
+      "gaussian-v2/P04/step-027.fchk",
+      "gaussian-v2/P04/step-028-mayer.txt",
+      "gaussian-v2/P04/step-028.fchk",
+      "gaussian-v2/P04/step-029-mayer.txt",
+      "gaussian-v2/P04/step-029.fchk",
+      "gaussian-v2/P04/step-030-mayer.txt",
+      "gaussian-v2/P04/step-030.fchk",
+      "gaussian-v2/P04/step-031-mayer.txt",
+      "gaussian-v2/P04/step-031.fchk",
+      "gaussian-v2/P04/step-032-mayer.txt",
+      "gaussian-v2/P04/step-032.fchk",
+      "gaussian-v2/P04/step-033-mayer.txt",
+      "gaussian-v2/P04/step-033.fchk",
+      "gaussian-v2/P04/step-034-mayer.txt",
+      "gaussian-v2/P04/step-034.fchk",
+      "gaussian-v2/P04/step-035-mayer.txt",
+      "gaussian-v2/P04/step-035.fchk",
+      "gaussian-v2/P04/step-036-mayer.txt",
+      "gaussian-v2/P04/step-036.fchk",
+      "gaussian-v2/P04/step-037-mayer.txt",
+      "gaussian-v2/P04/step-037.fchk",
+      "gaussian-v2/P04/step-038-mayer.txt",
+      "gaussian-v2/P04/step-038.fchk",
+      "gaussian-v2/P04/step-039-mayer.txt",
+      "gaussian-v2/P04/step-039.fchk",
+      "gaussian-v2/P04/step-040-mayer.txt",
+      "gaussian-v2/P04/step-040.fchk",
+      "gaussian-v2/P04/step-041-mayer.txt",
+      "gaussian-v2/P04/step-041.fchk",
+      "gaussian-v2/P04/step-042-mayer.txt",
+      "gaussian-v2/P04/step-042.fchk",
+      "gaussian-v2/P04/step-043-mayer.txt",
+      "gaussian-v2/P04/step-043.fchk",
+      "gaussian-v2/P04/step-044-mayer.txt",
+      "gaussian-v2/P04/step-044.fchk",
+      "gaussian-v2/P04/step-045-mayer.txt",
+      "gaussian-v2/P04/step-045.fchk",
+      "gaussian-v2/P04/step-046-mayer.txt",
+      "gaussian-v2/P04/step-046.fchk",
+      "gaussian-v2/P04/step-047-mayer.txt",
+      "gaussian-v2/P04/step-047.fchk",
+      "gaussian-v2/P04/step-048-mayer.txt",
+      "gaussian-v2/P04/step-048.fchk",
+      "gaussian-v2/P04/step-049-mayer.txt",
+      "gaussian-v2/P04/step-049.fchk",
+      "gaussian-v2/P04/step-050-mayer.txt",
+      "gaussian-v2/P04/step-050.fchk",
+      "gaussian-v2/P04/step-051-mayer.txt",
+      "gaussian-v2/P04/step-051.fchk",
+      "gaussian-v2/P04/step-052-mayer.txt",
+      "gaussian-v2/P04/step-052.fchk",
+      "gaussian-v2/P04/step-053-mayer.txt",
+      "gaussian-v2/P04/step-053.fchk",
+      "gaussian-v2/P04/steps.csv",
+      "gaussian-v2/P04/ts.gjf",
+      "gaussian-v2/P04/ts.log",
+      "gaussian-v2/P05/bh3.fchk",
+      "gaussian-v2/P05/bh3.gjf",
+      "gaussian-v2/P05/bh3.log",
+      "gaussian-v2/P05/co.fchk",
+      "gaussian-v2/P05/co.gjf",
+      "gaussian-v2/P05/co.log",
+      "gaussian-v2/P05/complex.fchk",
+      "gaussian-v2/P05/complex.gjf",
+      "gaussian-v2/P05/complex.log",
+      "gaussian-v2/P05/nocv/ets-nocv.txt",
+      "gaussian-v2/P05/nocv/nocv-pair1.cub",
+      "gaussian-v2/P05/optimization.log",
+      "gaussian-v2/P06/p04-three-frames.xyz",
+      "gaussian-v2/P06/source.json",
+      "gaussian-v2/P06/water-dimer.xyz",
+      "gaussian-v2/README.md",
+      "gaussian-v2/diagnostics/baseline-forward.fchk",
+      "gaussian-v2/diagnostics/baseline-forward.gjf",
+      "gaussian-v2/diagnostics/baseline-forward.log",
+      "gaussian-v2/diagnostics/false-min-frequency.fchk",
+      "gaussian-v2/diagnostics/false-min-frequency.gjf",
+      "gaussian-v2/diagnostics/false-min-frequency.log",
+      "gaussian-v2/diagnostics/original-ts.fchk",
+      "gaussian-v2/diagnostics/refined-ts.fchk",
+      "gaussian-v2/diagnostics/refined-ts.gjf",
+      "gaussian-v2/diagnostics/refined-ts.log",
+      "gaussian-v2/tutorial-samples.json",
+      "tutorial-samples.json"
+    ],
+    "installer": "qcblender-0.1.0.zip"
+  },
+  "documents": {
+    "markdown_files": 16,
+    "links": 339,
+    "numbered_operations": 98,
+    "require_images": true,
+    "image_slots": [
+      {
+        "path": "human/renders/P01-final.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/AICD01-all-pi.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/AICD01-display-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/AICD01-import-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/AICD01-source-response.jpg",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-install.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-orbital-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-orbital.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-output.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-phase-opacity.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-project-archive.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-project-sidecar.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-sidebar-summary.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-spin-density.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-summary-preview.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-summary.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-frequency-job-selection.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-gaussian-job-selection.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-nbo-block-selection.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-nbo-browser.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-optimization-step.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-vibration-mode.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-aim-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-aim-paths.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-aim-point.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-charge-dipole.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-clip-box.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-clip-plane.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-color-presets.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube-color-binding.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube-mapped.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube-overlay.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube-quantity-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-density-esp-binding.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-esp-analysis-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-esp-area.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-esp-extrema.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-fog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-igmh-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-igmh.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-iri.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-legend-layout.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-paired-filter-swapped.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-paired-filter.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-probe.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-profile-csv.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-profile-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-slice-gizmo.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-slice-three-atoms.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-slice.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-irc-end.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-irc-start.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-irc.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-mayer-colors.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-mayer-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-mayer.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-density.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-filter.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-pair-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-table-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-table.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-annotations.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-layers.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-nodes-make-local.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-nodes-oxygen.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-nodes-wiring.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-nodes.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-difference.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-intersect.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-invert.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-replace.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-union.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-source-association.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-xyz-frames.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/SD01-display-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/SD01-import-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/SD01-point-miss.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/SD01-surface-projection.png",
+        "present": true
+      }
+    ],
+    "images_supplied": 79,
+    "images_missing": [],
+    "screenshot_slots": [
+      {
+        "path": "human/screenshots/AICD01-all-pi.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/AICD01-display-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/AICD01-import-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/AICD01-source-response.jpg",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-install.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-orbital-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-orbital.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-output.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-phase-opacity.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-project-archive.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-project-sidecar.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-sidebar-summary.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-spin-density.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-summary-preview.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-summary.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-frequency-job-selection.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-gaussian-job-selection.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-nbo-block-selection.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-nbo-browser.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-optimization-step.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-vibration-mode.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-aim-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-aim-paths.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-aim-point.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-charge-dipole.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-clip-box.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-clip-plane.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-color-presets.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube-color-binding.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube-mapped.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube-overlay.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube-quantity-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-density-esp-binding.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-esp-analysis-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-esp-area.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-esp-extrema.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-fog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-igmh-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-igmh.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-iri.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-legend-layout.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-paired-filter-swapped.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-paired-filter.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-probe.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-profile-csv.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-profile-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-slice-gizmo.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-slice-three-atoms.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-slice.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-irc-end.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-irc-start.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-irc.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-mayer-colors.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-mayer-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-mayer.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-density.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-filter.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-pair-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-table-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-table.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-annotations.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-layers.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-nodes-make-local.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-nodes-oxygen.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-nodes-wiring.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-nodes.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-difference.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-intersect.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-invert.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-replace.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-union.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-source-association.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-xyz-frames.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/SD01-display-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/SD01-import-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/SD01-point-miss.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/SD01-surface-projection.png",
+        "present": true
+      }
+    ],
+    "screenshots_supplied": 78,
+    "human_execution": "Not Run"
+  },
+  "portable": {
+    "root": "validation/work/native-irc-current-materials",
+    "resources": {
+      "dataset_id": "gaussian-v2",
+      "public_inputs": 270,
+      "historical_inputs": 0,
+      "p04_relative_files": "Passed",
+      "public_members": [
+        "LICENSE",
+        "NOTICE.md",
+        "README.md",
+        "gaussian-v2/P01/o2-uhf.fch",
+        "gaussian-v2/P01/o2-uhf.fchk",
+        "gaussian-v2/P01/o2-uhf.gjf",
+        "gaussian-v2/P01/o2-uhf.log",
+        "gaussian-v2/P01/optimization.log",
+        "gaussian-v2/P02/water.gjf",
+        "gaussian-v2/P02/water_neutral_nbo_opt_freq.log",
+        "gaussian-v2/P02/water_neutral_nbo_opt_freq.out",
+        "gaussian-v2/P03/aim/CPprop.txt",
+        "gaussian-v2/P03/aim/CPs.pdb",
+        "gaussian-v2/P03/aim/paths.pdb",
+        "gaussian-v2/P03/color.cube",
+        "gaussian-v2/P03/esp/stdout.log",
+        "gaussian-v2/P03/esp/surfanalysis.pdb",
+        "gaussian-v2/P03/igmh/dg_inter.cub",
+        "gaussian-v2/P03/igmh/sl2r.cub",
+        "gaussian-v2/P03/iri/func1.cub",
+        "gaussian-v2/P03/iri/func2.cub",
+        "gaussian-v2/P03/optimization.log",
+        "gaussian-v2/P03/water-dimer.fch",
+        "gaussian-v2/P03/water-dimer.fchk",
+        "gaussian-v2/P03/water-dimer.gjf",
+        "gaussian-v2/P03/water-dimer.log",
+        "gaussian-v2/P04/energies.csv",
+        "gaussian-v2/P04/forward-endpoint-frequency.fchk",
+        "gaussian-v2/P04/forward-endpoint-frequency.gjf",
+        "gaussian-v2/P04/forward-endpoint-frequency.log",
+        "gaussian-v2/P04/mayer.csv",
+        "gaussian-v2/P04/path.xyz",
+        "gaussian-v2/P04/reverse-endpoint-frequency.fchk",
+        "gaussian-v2/P04/reverse-endpoint-frequency.gjf",
+        "gaussian-v2/P04/reverse-endpoint-frequency.log",
+        "gaussian-v2/P04/segments/forward-001.gjf",
+        "gaussian-v2/P04/segments/forward-001.log",
+        "gaussian-v2/P04/segments/forward-002.gjf",
+        "gaussian-v2/P04/segments/forward-002.log",
+        "gaussian-v2/P04/segments/forward-003.gjf",
+        "gaussian-v2/P04/segments/forward-003.log",
+        "gaussian-v2/P04/segments/forward-004.gjf",
+        "gaussian-v2/P04/segments/forward-004.log",
+        "gaussian-v2/P04/segments/forward-005.gjf",
+        "gaussian-v2/P04/segments/forward-005.log",
+        "gaussian-v2/P04/segments/forward-006.gjf",
+        "gaussian-v2/P04/segments/forward-006.log",
+        "gaussian-v2/P04/segments/forward-007.gjf",
+        "gaussian-v2/P04/segments/forward-007.log",
+        "gaussian-v2/P04/segments/forward-008.gjf",
+        "gaussian-v2/P04/segments/forward-008.log",
+        "gaussian-v2/P04/segments/forward-009.gjf",
+        "gaussian-v2/P04/segments/forward-009.log",
+        "gaussian-v2/P04/segments/forward-010.gjf",
+        "gaussian-v2/P04/segments/forward-010.log",
+        "gaussian-v2/P04/segments/forward-011.gjf",
+        "gaussian-v2/P04/segments/forward-011.log",
+        "gaussian-v2/P04/segments/forward-012.gjf",
+        "gaussian-v2/P04/segments/forward-012.log",
+        "gaussian-v2/P04/segments/forward-013.gjf",
+        "gaussian-v2/P04/segments/forward-013.log",
+        "gaussian-v2/P04/segments/forward-014.gjf",
+        "gaussian-v2/P04/segments/forward-014.log",
+        "gaussian-v2/P04/segments/forward-015.gjf",
+        "gaussian-v2/P04/segments/forward-015.log",
+        "gaussian-v2/P04/segments/forward-016.gjf",
+        "gaussian-v2/P04/segments/forward-016.log",
+        "gaussian-v2/P04/segments/forward-017.gjf",
+        "gaussian-v2/P04/segments/forward-017.log",
+        "gaussian-v2/P04/segments/forward-018.gjf",
+        "gaussian-v2/P04/segments/forward-018.log",
+        "gaussian-v2/P04/segments/forward-019.gjf",
+        "gaussian-v2/P04/segments/forward-019.log",
+        "gaussian-v2/P04/segments/forward-020.gjf",
+        "gaussian-v2/P04/segments/forward-020.log",
+        "gaussian-v2/P04/segments/forward-021.gjf",
+        "gaussian-v2/P04/segments/forward-021.log",
+        "gaussian-v2/P04/segments/forward-022.gjf",
+        "gaussian-v2/P04/segments/forward-022.log",
+        "gaussian-v2/P04/segments/forward-023.gjf",
+        "gaussian-v2/P04/segments/forward-023.log",
+        "gaussian-v2/P04/segments/forward-024.gjf",
+        "gaussian-v2/P04/segments/forward-024.log",
+        "gaussian-v2/P04/segments/forward-025.gjf",
+        "gaussian-v2/P04/segments/forward-025.log",
+        "gaussian-v2/P04/segments/forward-026.gjf",
+        "gaussian-v2/P04/segments/forward-026.log",
+        "gaussian-v2/P04/segments/reverse-001.gjf",
+        "gaussian-v2/P04/segments/reverse-001.log",
+        "gaussian-v2/P04/segments/reverse-002.gjf",
+        "gaussian-v2/P04/segments/reverse-002.log",
+        "gaussian-v2/P04/segments/reverse-003.gjf",
+        "gaussian-v2/P04/segments/reverse-003.log",
+        "gaussian-v2/P04/segments/reverse-004.gjf",
+        "gaussian-v2/P04/segments/reverse-004.log",
+        "gaussian-v2/P04/segments/reverse-005.gjf",
+        "gaussian-v2/P04/segments/reverse-005.log",
+        "gaussian-v2/P04/segments/reverse-006.gjf",
+        "gaussian-v2/P04/segments/reverse-006.log",
+        "gaussian-v2/P04/segments/reverse-007.gjf",
+        "gaussian-v2/P04/segments/reverse-007.log",
+        "gaussian-v2/P04/segments/reverse-008.gjf",
+        "gaussian-v2/P04/segments/reverse-008.log",
+        "gaussian-v2/P04/segments/reverse-009.gjf",
+        "gaussian-v2/P04/segments/reverse-009.log",
+        "gaussian-v2/P04/segments/reverse-010.gjf",
+        "gaussian-v2/P04/segments/reverse-010.log",
+        "gaussian-v2/P04/segments/reverse-011.gjf",
+        "gaussian-v2/P04/segments/reverse-011.log",
+        "gaussian-v2/P04/segments/reverse-012.gjf",
+        "gaussian-v2/P04/segments/reverse-012.log",
+        "gaussian-v2/P04/segments/reverse-013.gjf",
+        "gaussian-v2/P04/segments/reverse-013.log",
+        "gaussian-v2/P04/segments/reverse-014.gjf",
+        "gaussian-v2/P04/segments/reverse-014.log",
+        "gaussian-v2/P04/segments/reverse-015.gjf",
+        "gaussian-v2/P04/segments/reverse-015.log",
+        "gaussian-v2/P04/segments/reverse-016.gjf",
+        "gaussian-v2/P04/segments/reverse-016.log",
+        "gaussian-v2/P04/segments/reverse-017.gjf",
+        "gaussian-v2/P04/segments/reverse-017.log",
+        "gaussian-v2/P04/segments/reverse-018.gjf",
+        "gaussian-v2/P04/segments/reverse-018.log",
+        "gaussian-v2/P04/segments/reverse-019.gjf",
+        "gaussian-v2/P04/segments/reverse-019.log",
+        "gaussian-v2/P04/segments/reverse-020.gjf",
+        "gaussian-v2/P04/segments/reverse-020.log",
+        "gaussian-v2/P04/segments/reverse-021.gjf",
+        "gaussian-v2/P04/segments/reverse-021.log",
+        "gaussian-v2/P04/segments/reverse-022.gjf",
+        "gaussian-v2/P04/segments/reverse-022.log",
+        "gaussian-v2/P04/segments/reverse-023.gjf",
+        "gaussian-v2/P04/segments/reverse-023.log",
+        "gaussian-v2/P04/segments/reverse-024.gjf",
+        "gaussian-v2/P04/segments/reverse-024.log",
+        "gaussian-v2/P04/segments/reverse-025.gjf",
+        "gaussian-v2/P04/segments/reverse-025.log",
+        "gaussian-v2/P04/segments/reverse-026.gjf",
+        "gaussian-v2/P04/segments/reverse-026.log",
+        "gaussian-v2/P04/step-001-mayer.txt",
+        "gaussian-v2/P04/step-001.fchk",
+        "gaussian-v2/P04/step-002-mayer.txt",
+        "gaussian-v2/P04/step-002.fchk",
+        "gaussian-v2/P04/step-003-mayer.txt",
+        "gaussian-v2/P04/step-003.fchk",
+        "gaussian-v2/P04/step-004-mayer.txt",
+        "gaussian-v2/P04/step-004.fchk",
+        "gaussian-v2/P04/step-005-mayer.txt",
+        "gaussian-v2/P04/step-005.fchk",
+        "gaussian-v2/P04/step-006-mayer.txt",
+        "gaussian-v2/P04/step-006.fchk",
+        "gaussian-v2/P04/step-007-mayer.txt",
+        "gaussian-v2/P04/step-007.fchk",
+        "gaussian-v2/P04/step-008-mayer.txt",
+        "gaussian-v2/P04/step-008.fchk",
+        "gaussian-v2/P04/step-009-mayer.txt",
+        "gaussian-v2/P04/step-009.fchk",
+        "gaussian-v2/P04/step-010-mayer.txt",
+        "gaussian-v2/P04/step-010.fchk",
+        "gaussian-v2/P04/step-011-mayer.txt",
+        "gaussian-v2/P04/step-011.fchk",
+        "gaussian-v2/P04/step-012-mayer.txt",
+        "gaussian-v2/P04/step-012.fchk",
+        "gaussian-v2/P04/step-013-mayer.txt",
+        "gaussian-v2/P04/step-013.fchk",
+        "gaussian-v2/P04/step-014-mayer.txt",
+        "gaussian-v2/P04/step-014.fchk",
+        "gaussian-v2/P04/step-015-mayer.txt",
+        "gaussian-v2/P04/step-015.fchk",
+        "gaussian-v2/P04/step-016-mayer.txt",
+        "gaussian-v2/P04/step-016.fchk",
+        "gaussian-v2/P04/step-017-mayer.txt",
+        "gaussian-v2/P04/step-017.fchk",
+        "gaussian-v2/P04/step-018-mayer.txt",
+        "gaussian-v2/P04/step-018.fchk",
+        "gaussian-v2/P04/step-019-mayer.txt",
+        "gaussian-v2/P04/step-019.fchk",
+        "gaussian-v2/P04/step-020-mayer.txt",
+        "gaussian-v2/P04/step-020.fchk",
+        "gaussian-v2/P04/step-021-mayer.txt",
+        "gaussian-v2/P04/step-021.fchk",
+        "gaussian-v2/P04/step-022-mayer.txt",
+        "gaussian-v2/P04/step-022.fchk",
+        "gaussian-v2/P04/step-023-mayer.txt",
+        "gaussian-v2/P04/step-023.fchk",
+        "gaussian-v2/P04/step-024-mayer.txt",
+        "gaussian-v2/P04/step-024.fchk",
+        "gaussian-v2/P04/step-025-mayer.txt",
+        "gaussian-v2/P04/step-025.fchk",
+        "gaussian-v2/P04/step-026-mayer.txt",
+        "gaussian-v2/P04/step-026.fchk",
+        "gaussian-v2/P04/step-027-mayer.txt",
+        "gaussian-v2/P04/step-027.fchk",
+        "gaussian-v2/P04/step-028-mayer.txt",
+        "gaussian-v2/P04/step-028.fchk",
+        "gaussian-v2/P04/step-029-mayer.txt",
+        "gaussian-v2/P04/step-029.fchk",
+        "gaussian-v2/P04/step-030-mayer.txt",
+        "gaussian-v2/P04/step-030.fchk",
+        "gaussian-v2/P04/step-031-mayer.txt",
+        "gaussian-v2/P04/step-031.fchk",
+        "gaussian-v2/P04/step-032-mayer.txt",
+        "gaussian-v2/P04/step-032.fchk",
+        "gaussian-v2/P04/step-033-mayer.txt",
+        "gaussian-v2/P04/step-033.fchk",
+        "gaussian-v2/P04/step-034-mayer.txt",
+        "gaussian-v2/P04/step-034.fchk",
+        "gaussian-v2/P04/step-035-mayer.txt",
+        "gaussian-v2/P04/step-035.fchk",
+        "gaussian-v2/P04/step-036-mayer.txt",
+        "gaussian-v2/P04/step-036.fchk",
+        "gaussian-v2/P04/step-037-mayer.txt",
+        "gaussian-v2/P04/step-037.fchk",
+        "gaussian-v2/P04/step-038-mayer.txt",
+        "gaussian-v2/P04/step-038.fchk",
+        "gaussian-v2/P04/step-039-mayer.txt",
+        "gaussian-v2/P04/step-039.fchk",
+        "gaussian-v2/P04/step-040-mayer.txt",
+        "gaussian-v2/P04/step-040.fchk",
+        "gaussian-v2/P04/step-041-mayer.txt",
+        "gaussian-v2/P04/step-041.fchk",
+        "gaussian-v2/P04/step-042-mayer.txt",
+        "gaussian-v2/P04/step-042.fchk",
+        "gaussian-v2/P04/step-043-mayer.txt",
+        "gaussian-v2/P04/step-043.fchk",
+        "gaussian-v2/P04/step-044-mayer.txt",
+        "gaussian-v2/P04/step-044.fchk",
+        "gaussian-v2/P04/step-045-mayer.txt",
+        "gaussian-v2/P04/step-045.fchk",
+        "gaussian-v2/P04/step-046-mayer.txt",
+        "gaussian-v2/P04/step-046.fchk",
+        "gaussian-v2/P04/step-047-mayer.txt",
+        "gaussian-v2/P04/step-047.fchk",
+        "gaussian-v2/P04/step-048-mayer.txt",
+        "gaussian-v2/P04/step-048.fchk",
+        "gaussian-v2/P04/step-049-mayer.txt",
+        "gaussian-v2/P04/step-049.fchk",
+        "gaussian-v2/P04/step-050-mayer.txt",
+        "gaussian-v2/P04/step-050.fchk",
+        "gaussian-v2/P04/step-051-mayer.txt",
+        "gaussian-v2/P04/step-051.fchk",
+        "gaussian-v2/P04/step-052-mayer.txt",
+        "gaussian-v2/P04/step-052.fchk",
+        "gaussian-v2/P04/step-053-mayer.txt",
+        "gaussian-v2/P04/step-053.fchk",
+        "gaussian-v2/P04/steps.csv",
+        "gaussian-v2/P04/ts.gjf",
+        "gaussian-v2/P04/ts.log",
+        "gaussian-v2/P05/bh3.fchk",
+        "gaussian-v2/P05/bh3.gjf",
+        "gaussian-v2/P05/bh3.log",
+        "gaussian-v2/P05/co.fchk",
+        "gaussian-v2/P05/co.gjf",
+        "gaussian-v2/P05/co.log",
+        "gaussian-v2/P05/complex.fchk",
+        "gaussian-v2/P05/complex.gjf",
+        "gaussian-v2/P05/complex.log",
+        "gaussian-v2/P05/nocv/ets-nocv.txt",
+        "gaussian-v2/P05/nocv/nocv-pair1.cub",
+        "gaussian-v2/P05/optimization.log",
+        "gaussian-v2/P06/p04-three-frames.xyz",
+        "gaussian-v2/P06/source.json",
+        "gaussian-v2/P06/water-dimer.xyz",
+        "gaussian-v2/diagnostics/baseline-forward.fchk",
+        "gaussian-v2/diagnostics/baseline-forward.gjf",
+        "gaussian-v2/diagnostics/baseline-forward.log",
+        "gaussian-v2/diagnostics/false-min-frequency.fchk",
+        "gaussian-v2/diagnostics/false-min-frequency.gjf",
+        "gaussian-v2/diagnostics/false-min-frequency.log",
+        "gaussian-v2/diagnostics/original-ts.fchk",
+        "gaussian-v2/diagnostics/refined-ts.fchk",
+        "gaussian-v2/diagnostics/refined-ts.gjf",
+        "gaussian-v2/diagnostics/refined-ts.log",
+        "gaussian-v2/tutorial-samples.json"
+      ],
+      "installer": "qcblender-0.1.0.zip"
+    },
+    "documents": {
+      "markdown_files": 15,
+      "links": 338,
+      "numbered_operations": 98,
+      "require_images": true,
+      "image_slots": [
+        {
+          "path": "human/renders/P01-final.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/AICD01-all-pi.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/AICD01-display-dialog.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/AICD01-import-dialog.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/AICD01-source-response.jpg",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-install.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-orbital-dialog.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-orbital.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-output.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-phase-opacity.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-project-archive.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-project-sidecar.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-sidebar-summary.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-spin-density.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-summary-preview.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-summary.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P02-frequency-job-selection.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P02-gaussian-job-selection.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P02-nbo-block-selection.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P02-nbo-browser.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P02-optimization-step.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P02-vibration-mode.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-aim-import.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-aim-paths.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-aim-point.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-charge-dipole.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-clip-box.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-clip-plane.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-color-presets.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-cube-color-binding.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-cube-mapped.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-cube-overlay.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-cube-quantity-dialog.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-cube.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-density-esp-binding.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-esp-analysis-import.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-esp-area.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-esp-extrema.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-fog.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-igmh-import.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-igmh.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-iri.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-legend-layout.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-paired-filter-swapped.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-paired-filter.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-probe.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-profile-csv.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-profile-dialog.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-slice-gizmo.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-slice-three-atoms.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-slice.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P04-irc-end.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P04-irc-start.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P04-irc.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P04-mayer-colors.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P04-mayer-import.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P04-mayer.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P05-nocv-density.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P05-nocv-filter.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P05-nocv-pair-import.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P05-nocv-table-import.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P05-nocv-table.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-annotations.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-layers.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-nodes-make-local.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-nodes-oxygen.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-nodes-wiring.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-nodes.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-selection-difference.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-selection-intersect.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-selection-invert.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-selection-replace.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-selection-union.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-source-association.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-xyz-frames.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/SD01-display-dialog.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/SD01-import-dialog.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/SD01-point-miss.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/SD01-surface-projection.png",
+          "present": true
+        }
+      ],
+      "images_supplied": 79,
+      "images_missing": [],
+      "screenshot_slots": [
+        {
+          "path": "human/screenshots/AICD01-all-pi.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/AICD01-display-dialog.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/AICD01-import-dialog.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/AICD01-source-response.jpg",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-install.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-orbital-dialog.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-orbital.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-output.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-phase-opacity.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-project-archive.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-project-sidecar.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-sidebar-summary.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-spin-density.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-summary-preview.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P01-summary.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P02-frequency-job-selection.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P02-gaussian-job-selection.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P02-nbo-block-selection.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P02-nbo-browser.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P02-optimization-step.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P02-vibration-mode.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-aim-import.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-aim-paths.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-aim-point.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-charge-dipole.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-clip-box.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-clip-plane.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-color-presets.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-cube-color-binding.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-cube-mapped.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-cube-overlay.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-cube-quantity-dialog.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-cube.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-density-esp-binding.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-esp-analysis-import.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-esp-area.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-esp-extrema.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-fog.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-igmh-import.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-igmh.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-iri.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-legend-layout.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-paired-filter-swapped.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-paired-filter.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-probe.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-profile-csv.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-profile-dialog.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-slice-gizmo.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-slice-three-atoms.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P03-slice.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P04-irc-end.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P04-irc-start.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P04-irc.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P04-mayer-colors.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P04-mayer-import.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P04-mayer.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P05-nocv-density.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P05-nocv-filter.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P05-nocv-pair-import.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P05-nocv-table-import.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P05-nocv-table.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-annotations.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-layers.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-nodes-make-local.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-nodes-oxygen.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-nodes-wiring.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-nodes.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-selection-difference.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-selection-intersect.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-selection-invert.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-selection-replace.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-selection-union.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-source-association.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/P06-xyz-frames.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/SD01-display-dialog.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/SD01-import-dialog.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/SD01-point-miss.png",
+          "present": true
+        },
+        {
+          "path": "human/screenshots/SD01-surface-projection.png",
+          "present": true
+        }
+      ],
+      "screenshots_supplied": 78,
+      "human_execution": "Not Run"
+    }
+  }
+}

@@ -17,7 +17,7 @@
 <a id="step-01"></a>
 ### 1. 导入水二聚体作为共同参考
 
-点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/gaussian-v1/P03/water-dimer.fchk](../../shared/data/public/gaussian-v1/P03/water-dimer.fchk)，将原子对象命名为 **P03-atoms**。应看到两个水分子，共六个原子。
+点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/gaussian-v2/P03/water-dimer.fchk](../../shared/data/public/gaussian-v2/P03/water-dimer.fchk)，将原子对象命名为 **P03-atoms**。应看到两个水分子，共六个原子。
 
 <details>
 <summary>了解 IGMH 与 IRI</summary>
@@ -37,8 +37,8 @@
 | 控件 | 输入值 |
 | --- | --- |
 | 分析（Analysis） | IGMH |
-| 几何场 Cube（Geometry Cube） | [shared/data/public/gaussian-v1/P03/igmh/dg_inter.cub](../../shared/data/public/gaussian-v1/P03/igmh/dg_inter.cub) |
-| sign(lambda2)rho Cube | [shared/data/public/gaussian-v1/P03/igmh/sl2r.cub](../../shared/data/public/gaussian-v1/P03/igmh/sl2r.cub) |
+| 几何场 Cube（Geometry Cube） | [shared/data/public/gaussian-v2/P03/igmh/dg_inter.cub](../../shared/data/public/gaussian-v2/P03/igmh/dg_inter.cub) |
+| sign(lambda2)rho Cube | [shared/data/public/gaussian-v2/P03/igmh/sl2r.cub](../../shared/data/public/gaussian-v2/P03/igmh/sl2r.cub) |
 | 几何场值单位（Geometry value unit） | electron/bohr^4 |
 | 着色场值单位（Color value unit） | electron/bohr^3 |
 | IGMH 分量（IGMH component） | inter |
@@ -101,8 +101,8 @@
 | 控件 | 输入值 |
 | --- | --- |
 | 分析（Analysis） | IRI |
-| 几何场 Cube（Geometry Cube） | [shared/data/public/gaussian-v1/P03/iri/func2.cub](../../shared/data/public/gaussian-v1/P03/iri/func2.cub) |
-| sign(lambda2)rho Cube | [shared/data/public/gaussian-v1/P03/iri/func1.cub](../../shared/data/public/gaussian-v1/P03/iri/func1.cub) |
+| 几何场 Cube（Geometry Cube） | [shared/data/public/gaussian-v2/P03/iri/func2.cub](../../shared/data/public/gaussian-v2/P03/iri/func2.cub) |
+| sign(lambda2)rho Cube | [shared/data/public/gaussian-v2/P03/iri/func1.cub](../../shared/data/public/gaussian-v2/P03/iri/func1.cub) |
 | 几何场值单位（Geometry value unit） | a.u. (electron^-0.1 bohr^-0.7) |
 | 着色场值单位（Color value unit） | electron/bohr^3 |
 | IRI 密度指数 a（IRI density exponent a） | 1.1 |

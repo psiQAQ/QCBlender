@@ -110,7 +110,8 @@ def verify(args):
                 assert clean_science(original.metadata['energies'])==clean_science(public_data.metadata['energies'])
                 assert clean_science(original.metadata.get('optimization'))==clean_science(public_data.metadata.get('optimization'))
             assert clean_science(parse_nbo(raw,1,0))==clean_science(nbo)
-        checks.append('Owned two-job optimization/frequency/NBO and raw/public scientific equality')
+        checks.append('Owned two-job optimization/frequency/NBO' +
+                      (' and raw/public scientific equality' if args.raw_root else ' (public inputs; raw comparison not requested)'))
     if 'P05-complex' in waves:
         assert waves['P05-co'].metadata['electron_count']==14 and waves['P05-bh3'].metadata['electron_count']==8
         np.testing.assert_allclose(waves['P05-complex'].arrays['positions'][:2],waves['P05-co'].arrays['positions'],atol=2e-7,rtol=0)
@@ -124,7 +125,8 @@ def verify(args):
             error=np.max(np.abs(pair['positive_eigenvalue']*get(read_cube(work/'nocv-orb1.cub'))**2+
                                pair['negative_eigenvalue']*get(read_cube(work/'nocv-orb-negative.cub'))**2-get(nocv)))
             assert error<3e-6,error
-        checks.append('Frozen NOCV fragment geometry/electron counts and signed pair density')
+        checks.append('Frozen NOCV fragment geometry/electron counts, ETS pairs and signed Pair field import' +
+                      ('; signed density formula checked' if args.derived_root else ''))
     if 'P04-steps.csv' in paths:
         irc=import_irc(paths['P04-steps.csv']);mayer=import_irc_mayer(irc,paths['P04-mayer.csv'])
         expected=manifest['files']['P04-steps.csv']['expected'];report=expected['irc_report']

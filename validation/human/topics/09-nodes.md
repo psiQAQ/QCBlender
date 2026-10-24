@@ -19,7 +19,7 @@
 <a id="step-01"></a>
 ### 1. 导入分子并创建显示副本
 
-- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/gaussian-v1/P06/water-dimer.xyz](../../shared/data/public/gaussian-v1/P06/water-dimer.xyz)。
+- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/gaussian-v2/P06/water-dimer.xyz](../../shared/data/public/gaussian-v2/P06/water-dimer.xyz)。
 - 选中新原子对象，在三维视口按 `F2` 命名为 **P06-original**。
 - 点击 **打开对象属性（Open Object Properties）**，在 **对象属性（Object Properties） → 显示层管理（Display Layer Management） → 复制（Duplicate）** 创建副本，将副本命名为 **P06-nodes**，重新打开副本的对象属性；在 Outliner 关闭原层的眼睛和相机图标，保持副本活动。
 - 复制（Duplicate）会为副本复制可编辑的外层节点树。

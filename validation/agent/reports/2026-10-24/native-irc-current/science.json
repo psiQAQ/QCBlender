@@ -1,0 +1,29 @@
+{
+  "status": "Passed",
+  "dataset_id": "gaussian-v2",
+  "manifest_sha256": "b07fd042560cc4391a16bd8e97ad5937d3607a98db295d0ec8e618dc3be9fcb6",
+  "file_count": 270,
+  "groups": [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06"
+  ],
+  "checks": [
+    "All file sizes/SHA-256/licenses",
+    "Public machine-detail scan",
+    "Native FCHK electron traces and MO density matrices",
+    "O2 spin identities and actual HOMO/MO source numbers",
+    "IGMH/IRI grids, geometry, fragments and ESP/AIM association",
+    "Owned two-job optimization/frequency/NBO (public inputs; raw comparison not requested)",
+    "Frozen NOCV fragment geometry/electron counts, ETS pairs and signed Pair field import",
+    "Bidirectional downhill IRC, first-order TS, positive-frequency endpoints and all six Mayer atom pairs",
+    "P06 same-source XYZ coordinates and source identities",
+    "Public ZIP exact membership, source bytes, license allowlist and CRC"
+  ],
+  "complete": true,
+  "gui": "Not Run",
+  "independent_human_review": "Not Run"
+}

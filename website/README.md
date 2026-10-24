@@ -33,7 +33,7 @@ npm run preview
 
 教程映射在 `tutorials.json`。正文只维护仓库原有 SOP、12 篇专题和 `docs/USER_GUIDE.md`；Gaussian日志专题使用当前自有P02。`prepare:docs` 生成的 Starlight 内容、复制资源和站点产物已忽略。嵌入图片及普通Markdown链接指向的历史图片均复制并核对摘要，普通链接不计入正文嵌入图片数。修改教程后重新构建；不要手工编辑生成内容。
 
-公开样本通过 `validation/agent/acceptance/tutorial-sample-delivery.json` 选择当前dataset、ZIP及摘要，复用仓库的版本/许可白名单检查。目前为 `gaussian-v1` / v3，185个数据文件；下载名称、大小和摘要也由该记录生成。自有P02仅按具体文件身份与CC BY 4.0许可纳入，历史受限P02、非白名单输入及其改名副本仍拒绝；legacy-v2冻结原身份保留。安装 ZIP、其他本地材料、`.blend` 和 `.qcdata` 不在网站部署范围。公开 Release 尚不可用时，安装页提供状态说明和 Releases 入口，不能把源码 ZIP 当扩展安装包。
+公开样本通过 `validation/agent/acceptance/tutorial-sample-delivery.json` 选择当前dataset、ZIP及摘要，复用仓库的版本/许可白名单检查。目前为 `gaussian-v2` / v4，270个数据文件（P04原生53帧，TS27）；下载名称、大小和摘要也由该记录生成。自有P02仅按具体文件身份与CC BY 4.0许可纳入，历史受限P02、非白名单输入及其改名副本仍拒绝；legacy-v2冻结原身份保留。安装 ZIP、其他本地材料、`.blend` 和 `.qcdata` 不在网站部署范围。公开 Release 尚不可用时，安装页提供状态说明和 Releases 入口，不能把源码 ZIP 当扩展安装包。
 
 不需要Astro依赖的定向检查可在仓库根运行 `python -m unittest discover -s website/scripts -p test_public_samples.py` 和 `node --test website/scripts/public-samples.test.mjs`。这两项不替代上述完整构建检查。部署校验仍拒绝历史遗留的非当前资源；首次切换版本应在干净的生成目录构建，不把旧资源的存在视为许可依据。
 

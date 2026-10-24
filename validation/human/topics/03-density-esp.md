@@ -30,7 +30,7 @@
 <a id="step-01"></a>
 ### 1. 导入水二聚体并查看计算记录
 
-- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/gaussian-v1/P03/water-dimer.fchk](../../shared/data/public/gaussian-v1/P03/water-dimer.fchk)并完成导入。
+- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/gaussian-v2/P03/water-dimer.fchk](../../shared/data/public/gaussian-v2/P03/water-dimer.fchk)并完成导入。
 - 选中新原子对象，按 `F2` 命名为 **P03-atoms**。应有 **O/H/H/O/H/H** 六个原子；点击 **打开对象属性（Open Object Properties）**，在 **科学记录与振动模式（Scientific Records and Vibration Modes）** 查看电子总能量，应约为 **−152.027859 Eh**。
 - 本样本为 Gaussian 16 C.01 的 **RHF/6-31G(d)** 优化构型，FCHK 中保留该构型的波函数。
 
@@ -223,7 +223,7 @@
 
 本练习改用开壳层氧分子；完成后恢复水二聚体的显示，再继续其他 P03 专题。
 
-- 若要看非零自旋密度，在同一工程导入 [shared/data/public/gaussian-v1/P01/o2-uhf.fchk](../../shared/data/public/gaussian-v1/P01/o2-uhf.fchk)，选新氧分子原子对象，按 `F2` 命名为 **P01-spin-atoms**，重新打开该对象属性，在 **创建视图与工具（Create Views and Tools） → 计算（Compute） → 生成量子化学场（Generate Quantum Field）** 生成 **物理量（Quantity）=自旋密度（Spin density）**，使用 **0.2 Å / 3 Å / 512 MiB**，点击 **确定（OK）** 并等待完成。
+- 若要看非零自旋密度，在同一工程导入 [shared/data/public/gaussian-v2/P01/o2-uhf.fchk](../../shared/data/public/gaussian-v2/P01/o2-uhf.fchk)，选新氧分子原子对象，按 `F2` 命名为 **P01-spin-atoms**，重新打开该对象属性，在 **创建视图与工具（Create Views and Tools） → 计算（Compute） → 生成量子化学场（Generate Quantum Field）** 生成 **物理量（Quantity）=自旋密度（Spin density）**，使用 **0.2 Å / 3 Å / 512 MiB**，点击 **确定（OK）** 并等待完成。
 - 选新生成的 **QC spin_density**，按 `F2` 命名为 **P01-spin-density**，点击 **打开对象属性（Open Object Properties）**，设 **正值阈值（Positive Isovalue）=0.002 electron/bohr^3**。
 - 在 Outliner 暂时关闭 P03 分子和密度表面的眼睛图标，应看到氧分子周围的自旋密度。
 - 截图保存为 `human/screenshots/P01-spin-density.png`。

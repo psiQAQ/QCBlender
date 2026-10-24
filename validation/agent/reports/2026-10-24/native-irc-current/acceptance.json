@@ -1,0 +1,294 @@
+{
+  "schema": "qcblender.native-irc-current.v1",
+  "date": "2026-10-24",
+  "status": "Passed",
+  "scope": "Native53 current SOP/data/projects/screenshots; no product API change",
+  "dataset_id": "gaussian-v2",
+  "manifest": {
+    "path": "validation/shared/data/public/gaussian-v2/tutorial-samples.json",
+    "bytes": 632310,
+    "sha256": "b07fd042560cc4391a16bd8e97ad5937d3607a98db295d0ec8e618dc3be9fcb6"
+  },
+  "package": {
+    "path": "validation/agent/packages/qcblender-public-tutorial-samples-v4.zip",
+    "bytes": 13404256,
+    "sha256": "93c7ffeba6876f7325c7f28e8f654fc3762e2b0735384747ab38f4fb00c15c8a"
+  },
+  "historical_datasets": {
+    "gaussian-v1": {
+      "dataset_id": "gaussian-v1",
+      "manifest": {
+        "path": "validation/shared/data/public/gaussian-v1/tutorial-samples.json",
+        "bytes": 488838,
+        "sha256": "bb5ce541994bb2a617a865da857db5c564c4032c7a98ae031ce589069b2c734b"
+      },
+      "package": {
+        "path": "validation/agent/packages/qcblender-public-tutorial-samples-v3.zip",
+        "bytes": 13055318,
+        "sha256": "c228f414c73f9d56ba264573d8f3526c96d1ebcf340030201e5acf5020a3369b"
+      }
+    }
+  },
+  "candidate": {
+    "status": "Passed",
+    "candidate_sha256": "0c72a26488417b6969ea3f8645339fc9218be17aa8d381d5e1f4b77fb7782e1b",
+    "source_commit": "43125d44ea1512abfec2506e5aff8bb1f9863781",
+    "blender_version": "5.1.1",
+    "installed_members": 137
+  },
+  "science": {
+    "status": "Passed",
+    "report": "science.json",
+    "receipt_format": {
+      "original": "private/science-scope-original.json",
+      "original_sha256": "14f13e62ca6aac4839936c64c9009c898f7534a1ba15d27325796fbea27618d9",
+      "public_change": "CRLF normalized to LF; JSON scientific values identical"
+    }
+  },
+  "mcp": {
+    "status": "Passed",
+    "saved_successful_receipts": 50,
+    "private_receipts": "private/mcp-receipts.json",
+    "operation_ids": [
+      "irc-path-import",
+      "irc-step-navigation",
+      "irc-mayer-import",
+      "irc-mayer-pair-plot",
+      "irc-mayer-display",
+      "xyz-discrete-frame-navigation",
+      "portable-save-and-archive",
+      "explicit-csv-export-directory"
+    ]
+  },
+  "gui": {
+    "status": "Passed",
+    "scope": "P04 import/annotation confirmations, navigation, Mayer observation; P06 XYZ1/2/3/2 and source/annotation observation",
+    "xyz_file_browser": "Not Run as successful evidence; cancelled after blank window, import completed through actual MCP",
+    "independent_human": "Not Run"
+  },
+  "cold": [
+    {
+      "case": "P04-original",
+      "project": "validation/work/human/gaussian-v2/P04/P04.blend",
+      "exit_code": 0,
+      "status": "Passed",
+      "differences": [],
+      "transport": "Serial Blender background cold process",
+      "copy_validation": "Original portable project",
+      "project_sha256": "a485c8b141caff13c19a4959377a7ad6b63359262cf23ccb5908ccf1ce2eb847"
+    },
+    {
+      "case": "P06-original",
+      "project": "validation/work/human/gaussian-v2/P06/P06.blend",
+      "exit_code": 0,
+      "status": "Passed",
+      "differences": [],
+      "transport": "Serial Blender background cold process",
+      "copy_validation": "Original portable project",
+      "project_sha256": "9563bddcc4f5801a312918c2fbe9190121d1bb877597a318d56046328878da30"
+    },
+    {
+      "case": "P06-moved",
+      "project": ".tmp/runs/native-irc-current-20261024/cold/moved/P06.blend",
+      "exit_code": 0,
+      "status": "Passed",
+      "differences": [],
+      "transport": "Serial Blender background cold process",
+      "copy_validation": "All project and sidecar bytes identical",
+      "project_sha256": "9563bddcc4f5801a312918c2fbe9190121d1bb877597a318d56046328878da30"
+    },
+    {
+      "case": "P04-extracted",
+      "project": ".tmp/runs/native-irc-current-20261024/cold/extracted/P04.blend",
+      "exit_code": 0,
+      "status": "Passed",
+      "differences": [],
+      "transport": "Serial Blender background cold process",
+      "copy_validation": "Native archive CRC and all extracted bytes identical",
+      "project_sha256": "a485c8b141caff13c19a4959377a7ad6b63359262cf23ccb5908ccf1ce2eb847"
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "validation/human/screenshots/P04-irc-end.png",
+      "bytes": 646717,
+      "sha256": "aaa0b4f67ce048fa5143e6988c358a3e62ae2bb76235a7778e49d9de1d87d691",
+      "previous": {
+        "path": "validation/agent/reports/2026-10-24/native-irc-current/history/P04-irc-end.png",
+        "bytes": 653782,
+        "sha256": "16f43357c05b1010812c9e33b4169e83809d6dee40984fff8043846b592bffe5"
+      },
+      "raw_sha256": "21aa801b1c5ce09f483e7310bfb73075a95007b104db210d266e13efcabef597",
+      "captured_at": "2026-10-24T05:52:03.697Z",
+      "redactions": [
+        [
+          0,
+          0,
+          1920,
+          31
+        ]
+      ]
+    },
+    {
+      "path": "validation/human/screenshots/P04-irc-start.png",
+      "bytes": 647251,
+      "sha256": "a5ff27a87f83901d1457669e954802a654da27da2d72097bba99ea1631b51b6e",
+      "previous": {
+        "path": "validation/agent/reports/2026-10-24/native-irc-current/history/P04-irc-start.png",
+        "bytes": 689600,
+        "sha256": "ff23ce30cc17d4611ce2ffdb853c8d01e65f50f075eefeba44a004d9df213bca"
+      },
+      "raw_sha256": "023c4e8c42030faea3d9fcfbaacccbebc04d17a53a69f16f0b113fb2ed37b62a",
+      "captured_at": "2026-10-24T05:49:19.458Z",
+      "redactions": [
+        [
+          0,
+          0,
+          1920,
+          31
+        ]
+      ]
+    },
+    {
+      "path": "validation/human/screenshots/P04-irc.png",
+      "bytes": 693610,
+      "sha256": "97ca2ce77ce04a973fa88dd2fb439d34f6803a643e039bdb00273ddcf95206b6",
+      "previous": {
+        "path": "validation/agent/reports/2026-10-24/native-irc-current/history/P04-irc.png",
+        "bytes": 702559,
+        "sha256": "20a23150b1d17da6a8b7aae9265cecc73707b08ccc467b4727da0742818a9fe8"
+      },
+      "raw_sha256": "52186901472dc1d987dc546406d3b4e4ad3ab84dc26d76a3a335583a935452cc",
+      "captured_at": "2026-10-24T05:49:57.377Z",
+      "redactions": [
+        [
+          0,
+          0,
+          1920,
+          31
+        ]
+      ]
+    },
+    {
+      "path": "validation/human/screenshots/P04-mayer-colors.png",
+      "bytes": 702725,
+      "sha256": "7fd5fa26bce1010c1b074e32e7391e9a5aa9ac3a496dbc64e2fb1e4825c434c7",
+      "previous": {
+        "path": "validation/agent/reports/2026-10-24/native-irc-current/history/P04-mayer-colors.png",
+        "bytes": 715157,
+        "sha256": "6580018d4550f5863e12b1ab478ef79e754568d7095593a6a98cab25da7b9256"
+      },
+      "raw_sha256": "fd3f432acde4b6acc3d54c19afbe4a599b9619bc5229f29384878bf9a2b37757",
+      "captured_at": "2026-10-24T05:55:09.484Z",
+      "redactions": [
+        [
+          0,
+          0,
+          1920,
+          31
+        ]
+      ]
+    },
+    {
+      "path": "validation/human/screenshots/P04-mayer-import.png",
+      "bytes": 675095,
+      "sha256": "b17ab115b0f6dc523a4d62625b24d82d208f85dcf1d6d97d395394091fc81afa",
+      "previous": {
+        "path": "validation/agent/reports/2026-10-24/native-irc-current/history/P04-mayer-import.png",
+        "bytes": 679027,
+        "sha256": "4f462852eb229267a26ae33b11a608a06cb373bb0bc5a700ecb2dd3825978d21"
+      },
+      "raw_sha256": "4734ffcfe648529781f28e344d80ef793494f5a255283c9c06f9f4f7b82e29cc",
+      "captured_at": "2026-10-24T05:50:31.93Z",
+      "redactions": [
+        [
+          0,
+          0,
+          1920,
+          31
+        ]
+      ]
+    },
+    {
+      "path": "validation/human/screenshots/P04-mayer.png",
+      "bytes": 692855,
+      "sha256": "b93be5d76935ef0e272bae769e1c5e76d05ca771dac7d0ff3f6094da84b08c69",
+      "previous": {
+        "path": "validation/agent/reports/2026-10-24/native-irc-current/history/P04-mayer.png",
+        "bytes": 657513,
+        "sha256": "41572363849ad5ca895c72af3fe5c746632a95c4b4d08c2367288d48e2e64a04"
+      },
+      "raw_sha256": "9b6a812119a86795be8dff8a49d78301567b72cd44d765b916611b8807fd8acd",
+      "captured_at": "2026-10-24T05:51:02.951Z",
+      "redactions": [
+        [
+          0,
+          0,
+          1920,
+          31
+        ]
+      ]
+    },
+    {
+      "path": "validation/human/screenshots/P06-xyz-frames.png",
+      "bytes": 628006,
+      "sha256": "ddeb765e9bb9bf4cda6d127b3812b9a066eb268150a406cea0ad8906cff5e88e",
+      "previous": {
+        "path": "validation/agent/reports/2026-10-24/native-irc-current/history/P06-xyz-frames.png",
+        "bytes": 612068,
+        "sha256": "971597cc2648c557843f55f20c50b4ce59e13d6e16d90c5759c393bf1aebe645"
+      },
+      "raw_sha256": "db117794b4666172389ef6b248de999b5b87166e35106433f7f9b898ff709106",
+      "captured_at": "2026-10-24T06:06:39.781Z",
+      "redactions": [
+        [
+          0,
+          0,
+          1920,
+          31
+        ]
+      ]
+    }
+  ],
+  "tools": {
+    "status": "Passed",
+    "tests": 51,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "modules": [
+      "test_tutorial_dataset",
+      "test_tutorial_workspace",
+      "test_candidate_artifacts"
+    ]
+  },
+  "materials": {
+    "status": "Passed",
+    "report": "workspace-final.json",
+    "steps": 98,
+    "images": 79
+  },
+  "protected": {
+    "status": "Passed",
+    "files": 2029,
+    "changed": [],
+    "scope": "All Gaussian-v1 inputs and projects, native supplement and original v3 ZIP"
+  },
+  "independent_scientific_review": "Not Run",
+  "browser_interaction": "Not Run",
+  "deployment": "Not Run",
+  "git": {
+    "branch": "docs/native-irc-current-20261024",
+    "integration": "main via ff-only",
+    "archive_tag": "archive/2026-10-24/docs/native-irc-current-20261024",
+    "push": "Not Run"
+  },
+  "website": {
+    "build": "Passed",
+    "tests": 10,
+    "internal_links": 1474,
+    "reviewed_public_files": 354,
+    "browser_interaction": "Not Run",
+    "deployment": "Not Run"
+  }
+}

@@ -30,7 +30,7 @@
 
 本文的文件路径均相对**材料根目录**，即解压后同时含有 `human/` 和 `shared/` 的文件夹。保留这两个目录的相对位置；无需安装 Gaussian、Multiwfn 或 PySCF。
 
-教程截图保存在 `human/screenshots/`，以案例编号和内容命名，如 `P01-orbital.png`；本页使用 P01 前缀。渲染图保存在 `human/renders/`，当前工程和导出文件保存在 `work/human/gaussian-v1/`，在仓库中对应 `validation/work/human/gaussian-v1/`。当前公开实践输入统一取自 `shared/data/public/gaussian-v1/`。按步骤保存图片后，下方引用便会显示对应图片。
+教程截图保存在 `human/screenshots/`，以案例编号和内容命名，如 `P01-orbital.png`；本页使用 P01 前缀。渲染图保存在 `human/renders/`，当前工程和导出文件保存在 `work/human/gaussian-v1/`，在仓库中对应 `validation/work/human/gaussian-v1/`。当前公开实践输入统一取自 `shared/data/public/gaussian-v2/`。 P04 原生 53 帧及 P06 三帧演示的新工程、导出和归档放在 `work/human/gaussian-v2/`；其余未变化工程沿用原位置。按步骤保存图片后，下方引用便会显示对应图片。
 
 旧的 `work/human/P01/` 等工程与未替换的历史截图保留原批次身份；其科学输入和数值不能用来证明本轮 Gaussian 案例。下文以当前输入路径、对象名和数值核对结果。
 
@@ -131,7 +131,7 @@ N 侧栏依次包含下列五区；**当前 QC 对象（Current QC Object）** �
 <a id="step-04"></a>
 ### 4. 导入氧分子并查看来源
 
-- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/gaussian-v1/P01/o2-uhf.fchk](../shared/data/public/gaussian-v1/P01/o2-uhf.fchk)。应出现两个氧原子，它们属于同一个原子对象。
+- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/gaussian-v2/P01/o2-uhf.fchk](../shared/data/public/gaussian-v2/P01/o2-uhf.fchk)。应出现两个氧原子，它们属于同一个原子对象。
 - 在大纲视图（Outliner）选中这个原子对象，按 `F2` 命名为 **P01-atoms**；在 **当前 QC 对象（Current QC Object）** 核对对象名与来源原子总数 **2**，展开 **数据与来源详情（Data and Source Details）** 查看计算信息，同时核对 **打开对象属性（Open Object Properties）** 旁的目标名。
 - 截图保存为 `human/screenshots/P01-sidebar-summary.png`。
 

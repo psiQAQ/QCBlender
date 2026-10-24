@@ -56,7 +56,7 @@ legacy计算原件按 `local/calculations/public-tutorial/owned/` 与 `irc/` 保
 - `tools.tutorial_dataset.load_dataset(root, dataset='current')` 选择并核对当前manifest与包身份；`dataset='legacy-v2'` 显式选择历史数据。默认教程、样本包校验与便携复制使用当前选择；读取输入时按所选清单的 `archive_path` 定位。
 - `tools.local_inputs.input_path(key, root)` 继续按本地/历史索引核对单文件或目录key，必需文件缺失、变化或越界时直接失败。`public-tutorial/P03/igmh` 等旧稳定key保留其legacy-v2文件与旧SHA，不重定向为新Gaussian数据。
 - `QCBLENDER_REFERENCE_ROOT` 可指向已经准备好资料的参考检出，供本地/历史索引解析使用；它不改变 `load_dataset` 的数据版本选择。
-- 当前公开P02为 `public/gaussian-v1/P02/water_neutral_nbo_opt_freq.out`，属于本批自有计算日志，按当前逐文件许可清单纳入v3包。历史 `local/log-examples/water_neutral_nbo_opt_freq.out` 及其字节相同的 `.log` 别名仍为再分发许可未确认的原输入，保持本地限定，均不进入v3包。分发依据文件身份与许可判断，不能仅按P02案例编号一概允许或排除。
+- 当前公开P02为 `public/gaussian-v2/P02/water_neutral_nbo_opt_freq.out`，属于本批自有计算日志，按当前逐文件许可清单纳入v3包。历史 `local/log-examples/water_neutral_nbo_opt_freq.out` 及其字节相同的 `.log` 别名仍为再分发许可未确认的原输入，保持本地限定，均不进入v3包。分发依据文件身份与许可判断，不能仅按P02案例编号一概允许或排除。
 - `scientific-displays/ru-vdw-20261023` 指向真实 Multiwfn 距离投影的八文件参照包及三份适配器输入（`reference.xyz`、`scan.json`、`validity.csv`），共十一文件；含固定构型、扫描日志/设置、原始三列及独立球面求交点表。条件和误差界见[研究记录](../../../docs/research/scientific-display-reference-inventory-20261023.md#本次实际运行及数值验收)。原件及派生数据限本地使用，不进入公开教程包。
 - 人工教程不要求读者执行身份核对、填写技术报告或记录实际结果；这些步骤属于 Agent 的准备与维护工作。
 - `scientific-displays/aicd-benzene` 指向同源全电子/π 的八个 Gaussian 原件及两份 `source.json` 导入声明；各原件和声明由 `local-inputs.json` 核对。基准条件及原始点契约见[研究记录](../../../docs/research/scientific-display-reference-inventory-20261023.md#aicd-本次实际运行及数值契约)，操作见[AICD 专题](../../human/topics/11-aicd.md)。原件限本地使用，不进入公开教程包。

@@ -27,7 +27,7 @@
 
 量名与单位按生成 Cube 的原计算填写；声明不会换算网格数值。
 
-- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/gaussian-v1/P03/color.cube](../../shared/data/public/gaussian-v1/P03/color.cube)并完成导入。
+- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/gaussian-v2/P03/color.cube](../../shared/data/public/gaussian-v2/P03/color.cube)并完成导入。
 - 会新增六原子水二聚体和一个场表面；选中场表面，按 `F2` 命名为 **P03-cube-field**。
 - 点击 **打开对象属性（Open Object Properties）**，在对象属性点击 **声明 Cube 物理量与单位（Identify Cube Quantity and Unit）**，选择 **其他外部计算的标量场（Other externally computed scalar field）**，填 **物理量（Physical quantity）=sign_lambda2_rho**、**单位（无法确定时填 unknown）（Unit (use unknown if unavailable)）=electron/bohr^3**，点击 **确定（OK）** 并等待完成。
 - 对象属性应显示 **65×68×121 网格**与上述量、单位。
@@ -99,7 +99,7 @@
 <a id="step-04"></a>
 ### 4. 导入第二个 Cube 并设置等值表面
 
-- 再导入 [shared/data/public/gaussian-v1/P03/igmh/dg_inter.cub](../../shared/data/public/gaussian-v1/P03/igmh/dg_inter.cub)。
+- 再导入 [shared/data/public/gaussian-v2/P03/igmh/dg_inter.cub](../../shared/data/public/gaussian-v2/P03/igmh/dg_inter.cub)。
 - 这次也会新增一份原子层和一个场表面。
 - 选中新场表面，命名为 **P03-igmh-surface**，重新点击 **打开对象属性（Open Object Properties）**，使用同一声明按钮，选择 **其他外部计算的标量场（Other externally computed scalar field）**，填写 **物理量（Physical quantity）=delta_g_inter、单位（无法确定时填 unknown）（Unit (use unknown if unavailable)）=electron/bohr^4**，点击 **确定（OK）** 并等待完成。
 - 设 **正值阈值（Positive Isovalue）=0.005**，开启 **显示正值（Show Positive Values）**、关闭 **显示负值（Show Negative Values）**。

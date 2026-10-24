@@ -15,31 +15,35 @@
 
 本页截图使用案例 `P04-` 前缀。
 
-本例是 H₂O₂ 的 **RHF/STO-3G、0 电荷、单重态**双向路径，共 **69 份接受构型**，过渡态位于第 **35** 步。路径由 **geomeTRIC 1.1.1** 积分，能量与梯度来自 **Gaussian 16 C.01**；波函数均为对应构型的原生 Gaussian FCHK。材料还保留两侧末端优化的接受构型，来源声明区分 `irc` 与 `endpoint_relaxation` 阶段。
+本例是 H₂O₂ 的 **RHF/STO-3G、0 电荷、单重态**双向路径，共 **53 份构型**，过渡态位于第 **27** 步。全部能量、梯度、波函数和新接受点均由 **Gaussian 16 C.01** 生成，采用**原生 GS2 分段续算**：两侧各 26 个新接受点，加一个 TS；没有端点优化补帧。
 
 <a id="step-01"></a>
 ### 1. 导入完整 IRC 路径
 
-- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 IRC 路径（Import IRC Path）**，在 **CSV 清单：step,fchk（CSV manifest: step,fchk）** 选择 [shared/data/public/gaussian-v1/P04/steps.csv](../../shared/data/public/gaussian-v1/P04/steps.csv)。
-- 保留该 CSV 与同目录全部 **69 份 FCHK**，从 `shared/data/public/gaussian-v1/P04/step-001.fchk` 到 `shared/data/public/gaussian-v1/P04/step-069.fchk`；不要只复制下表列出的三个代表构型。
-- 完成后在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 点击 **IRC path** 行最左侧的选择图标，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，在 **IRC 路径（IRC Path）** 应看到 **步 1 / 69（Step 1 / 69）**、能量约 **−148.7649966564 hartree**。
+- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 IRC 路径（Import IRC Path）**，在 **CSV 清单：step,fchk（CSV manifest: step,fchk）** 选择 [shared/data/public/gaussian-v2/P04/steps.csv](../../shared/data/public/gaussian-v2/P04/steps.csv)。
+- 保留该 CSV 与同目录全部 **53 份 FCHK**，从 `shared/data/public/gaussian-v2/P04/step-001.fchk` 到 `shared/data/public/gaussian-v2/P04/step-053.fchk`；不要只复制下表列出的三个代表构型。
+- 完成后在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 点击 **IRC path** 行最左侧的选择图标，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，在 **IRC 路径（IRC Path）** 应看到 **步 1 / 53（Step 1 / 53）**、能量约 **−148.7649966558 hartree**。
 
 | 代表构型 | 波函数文件 | 电子能量（hartree） |
 | --- | --- | --- |
-| 第1步：反向末端 | [shared/data/public/gaussian-v1/P04/step-001.fchk](../../shared/data/public/gaussian-v1/P04/step-001.fchk) | −148.7649966564 |
-| 第35步：过渡态 | [shared/data/public/gaussian-v1/P04/step-035.fchk](../../shared/data/public/gaussian-v1/P04/step-035.fchk) | −148.7648830348 |
-| 第69步：正向末端 | [shared/data/public/gaussian-v1/P04/step-069.fchk](../../shared/data/public/gaussian-v1/P04/step-069.fchk) | −148.7649966564 |
+| 第1步：负二面角端点 | [shared/data/public/gaussian-v2/P04/step-001.fchk](../../shared/data/public/gaussian-v2/P04/step-001.fchk) | −148.7649966558 |
+| 第27步：过渡态 | [shared/data/public/gaussian-v2/P04/step-027.fchk](../../shared/data/public/gaussian-v2/P04/step-027.fchk) | −148.7648830348 |
+| 第53步：正二面角端点 | [shared/data/public/gaussian-v2/P04/step-053.fchk](../../shared/data/public/gaussian-v2/P04/step-053.fchk) | −148.7649966558 |
 
 <details>
 <summary>了解 IRC、清单与步号</summary>
 
-> 过渡态是反应路径上能量势垒处的构型。IRC（内禀反应坐标）用于跟随过渡态两侧的反应路径；这里导入沿路径计算的一组构型。本例贯穿两侧末端与中间过渡态，原子顺序为 O/O/H/H。过渡态只有一个虚频 **−48.2239 cm⁻¹**，对应 O–O 扭转；两侧末端的六个谐振动频率全正，最低为 **184.6411 cm⁻¹**。
+> 过渡态是反应路径上能量势垒处的构型。IRC（内禀反应坐标）用于跟随过渡态两侧的反应路径；这里导入沿路径计算的一组构型。本例贯穿两侧末端与中间过渡态，原子顺序为 O/O/H/H。过渡态只有一个虚频 **−48.1468 cm⁻¹**，对应 O–O 扭转；两侧末端的六个谐振动频率全正，负端最低为 **185.0169 cm⁻¹**、正端最低为 **185.0168 cm⁻¹**。
 
 > CSV manifest 是文件清单；step、fchk 两列把步号与对应的波函数文件配对。IRC path 是管理整条路径的根对象。
 
-**步 1 / 69（Step 1 / 69）** 表示当前显示完整清单中的第一份构型。路径顺序为反向末端→过渡态→正向末端；这与程序从过渡态分别向两侧积分的计算顺序不同。步号不是物理时间。
+**步 1 / 53（Step 1 / 53）** 表示当前显示完整清单中的第一份构型。路径顺序为负二面角端点→过渡态→正二面角端点；这与程序从过渡态分别向两侧积分的计算顺序不同。步号不是物理时间。
 
-61 份构型属于 `irc` 阶段，8 份属于 `endpoint_relaxation`（末端优化）阶段；保留这些接受构型是为了展示两侧末端的收敛过程。逐步身份及 `path_stage` 见 [shared/data/public/gaussian-v1/tutorial-samples.json](../../shared/data/public/gaussian-v1/tutorial-samples.json)。生成记录为 [shared/data/public/gaussian-v1/P04/geometric-irc.log](../../shared/data/public/gaussian-v1/P04/geometric-irc.log)；过渡态与末端频率分别见 [shared/data/public/gaussian-v1/P04/ts.log](../../shared/data/public/gaussian-v1/P04/ts.log)、[shared/data/public/gaussian-v1/P04/reverse-endpoint.log](../../shared/data/public/gaussian-v1/P04/reverse-endpoint.log)、[shared/data/public/gaussian-v1/P04/forward-endpoint.log](../../shared/data/public/gaussian-v1/P04/forward-endpoint.log)。
+52 份构型属于 `native_gs2_accepted` 阶段，TS 单列为 `transition_state`。Gaussian 的 `Forward` 对应本例负二面角端，`Reverse` 对应正二面角端。每段局部第 0 点是前一段已有边界，第 1 点是新接受点，边界只计一次。后续段用 `Downhill` 从前一接受构型继续，坐标保持同一 TS 原始笛卡尔坐标系。
+
+逐段输入、日志和步长/父步映射见 [shared/data/public/gaussian-v2/P04/energies.csv](../../shared/data/public/gaussian-v2/P04/energies.csv) 与[当前清单](../../shared/data/public/gaussian-v2/tutorial-samples.json)。TS 频率见 [shared/data/public/gaussian-v2/P04/ts.log](../../shared/data/public/gaussian-v2/P04/ts.log)；两端直接在最后接受构型计算频率，见[负端频率](../../shared/data/public/gaussian-v2/P04/forward-endpoint-frequency.log)和[正端频率](../../shared/data/public/gaussian-v2/P04/reverse-endpoint-frequency.log)。
+
+常规单作业在平坦峰顶附近的早停限制仍存在，本例使用原生分段续算。旧 Gaussian-v1 的 69 帧路径、v3 包与旧工程保留为独立历史版本，不能与本例步号混用。
 
 </details>
 
@@ -79,32 +83,32 @@
 <a id="step-03"></a>
 ### 3. 切换构型并比较能量与标注
 
-- 先停在第 **1** 步，核对 **O–O 距离约 1.396248 Å、二面角约 −124.990583°、能量 −148.7649966564 hartree**。截图保存为 `human/screenshots/P04-irc-start.png`。
+- 先停在第 **1** 步，核对 **O–O 距离约 1.396242 Å、二面角约 −124.948142°、能量 −148.7649966558 hartree**。截图保存为 `human/screenshots/P04-irc-start.png`。
 
-![完整路径第1步的反向末端、负扭转角和电子能量](../screenshots/P04-irc-start.png)
+![完整路径第1步的负二面角端点、负扭转角和电子能量](../screenshots/P04-irc-start.png)
 
-- 从第 1 步开始，在 **IRC 路径（IRC Path）** 使用 **下一步（Next）** 逐步到第 **35** 步，途中观察步号、能量及构型变化；第 35 步是过渡态。再点一次 **下一步（Next）** 到第 **36** 步，随后点 **上一步（Previous）** 回第 **35** 步。
-- 第 35 步应显示 **O–O 距离约 1.401928 Å、二面角约 +180.000000°、能量 −148.7648830348 hartree**。第 36 步二面角约为 **171.760522°**，能量约 **−148.7648844777 hartree**。
-- 需要观察另一侧相邻构型时，在第 35 步点击 **上一步（Previous）** 到第 **34** 步，二面角约为 **−171.760522°**；再返回第 35 步。±180° 是有符号二面角的区间边界，两侧接近该平面时会跨过这个符号边界。
+- 从第 1 步开始，在 **IRC 路径（IRC Path）** 使用 **下一步（Next）** 逐步到第 **27** 步，途中观察步号、能量及构型变化；第 27 步是过渡态。再点一次 **下一步（Next）** 到第 **28** 步，随后点 **上一步（Previous）** 回第 **27** 步。
+- 第 27 步应显示 **O–O 距离约 1.401928 Å、二面角约 +180.000000°、能量 −148.7648830348 hartree**。第 28 步二面角约为 **177.689747°**，能量约 **−148.7648831526 hartree**。
+- 需要观察另一侧相邻构型时，在第 27 步点击 **上一步（Previous）** 到第 **26** 步，二面角约为 **−177.689747°**；再返回第 27 步。±180° 是有符号二面角的区间边界，两侧接近该平面时会跨过这个符号边界。
 
 | 路径构型 | O–O距离（Å） | H3–O1–O2–H4二面角（°） |
 | --- | --- | --- |
-| 第1步 | 1.396248 | −124.990583 |
-| 第35步 | 1.401928 | +180.000000 |
-| 第69步 | 1.396248 | +124.990582 |
+| 第1步 | 1.396242 | −124.948142 |
+| 第27步 | 1.401928 | +180.000000 |
+| 第53步 | 1.396242 | +124.948155 |
 
 - 面板步号、文字读数与测量几何应一起更新；来源构型保留在科学记录中，不额外拼入默认文字。
 - 二面角无法定义时会显示 `undefined`（未定义）并隐藏无效几何，不沿用上一构型的圆弧或面。
 - 截图保存为 `human/screenshots/P04-irc.png`。
 
-![69步完整路径中的过渡态构型、能量和随步二面角](../screenshots/P04-irc.png)
+![53步完整路径中的过渡态构型、能量和随步二面角](../screenshots/P04-irc.png)
 
-- 继续使用 **下一步（Next）** 到第 **69** 步，核对 **O–O 距离约 1.396248 Å、二面角约 +124.990582°、能量 −148.7649966564 hartree**；此时 **下一步（Next）** 停用。两侧末端能量接近，二面角符号不同，不能只凭能量判断当前位于哪一侧。
+- 继续使用 **下一步（Next）** 到第 **53** 步，核对 **O–O 距离约 1.396242 Å、二面角约 +124.948155°、能量 −148.7649966558 hartree**；此时 **下一步（Next）** 停用。两侧末端能量接近，二面角符号不同，不能只凭能量判断当前位于哪一侧。
 - 截图保存为 `human/screenshots/P04-irc-end.png`。
 
-![完整路径第69步的正向末端、正扭转角及停用的下一步按钮](../screenshots/P04-irc-end.png)
+![完整路径第53步的正二面角端点、正扭转角及停用的下一步按钮](../screenshots/P04-irc-end.png)
 
-- 用 **上一步（Previous）** 返回第 **35** 步，供下面的 Mayer 键级比较使用。
+- 用 **上一步（Previous）** 返回第 **27** 步，供下面的 Mayer 键级比较使用。
 
 <details>
 <summary>了解切步按钮与关联状态</summary>
@@ -119,8 +123,8 @@
 <a id="step-04"></a>
 ### 4. 导入各步的 Mayer 键级
 
-- 保持 **IRC path** 活动，点击 **对象属性（Object Properties） → IRC 路径（IRC Path） → 导入 Mayer 结果（Import Mayer Results）**，在 **CSV 清单：step,mayer_output（CSV manifest: step,mayer_output）** 选择 [shared/data/public/gaussian-v1/P04/mayer.csv](../../shared/data/public/gaussian-v1/P04/mayer.csv)。
-- 保留同目录的全部 **69 份 Mayer 文本**，从 `shared/data/public/gaussian-v1/P04/step-001-mayer.txt` 到 `shared/data/public/gaussian-v1/P04/step-069-mayer.txt`。清单中的步号与 FCHK 清单逐一对应；完成后应新增 **QC IRC Mayer orders**。
+- 保持 **IRC path** 活动，点击 **对象属性（Object Properties） → IRC 路径（IRC Path） → 导入 Mayer 结果（Import Mayer Results）**，在 **CSV 清单：step,mayer_output（CSV manifest: step,mayer_output）** 选择 [shared/data/public/gaussian-v2/P04/mayer.csv](../../shared/data/public/gaussian-v2/P04/mayer.csv)。
+- 保留同目录的全部 **53 份 Mayer 文本**，从 `shared/data/public/gaussian-v2/P04/step-001-mayer.txt` 到 `shared/data/public/gaussian-v2/P04/step-053-mayer.txt`。清单中的步号与 FCHK 清单逐一对应；完成后应新增 **QC IRC Mayer orders**。
 
 - 截图保存为 `human/screenshots/P04-mayer-import.png`。
 
@@ -128,14 +132,14 @@
 
 | 代表步号 | 分析文件 |
 | --- | --- |
-| 1 | [shared/data/public/gaussian-v1/P04/step-001-mayer.txt](../../shared/data/public/gaussian-v1/P04/step-001-mayer.txt) |
-| 35 | [shared/data/public/gaussian-v1/P04/step-035-mayer.txt](../../shared/data/public/gaussian-v1/P04/step-035-mayer.txt) |
-| 69 | [shared/data/public/gaussian-v1/P04/step-069-mayer.txt](../../shared/data/public/gaussian-v1/P04/step-069-mayer.txt) |
+| 1 | [shared/data/public/gaussian-v2/P04/step-001-mayer.txt](../../shared/data/public/gaussian-v2/P04/step-001-mayer.txt) |
+| 27 | [shared/data/public/gaussian-v2/P04/step-027-mayer.txt](../../shared/data/public/gaussian-v2/P04/step-027-mayer.txt) |
+| 53 | [shared/data/public/gaussian-v2/P04/step-053-mayer.txt](../../shared/data/public/gaussian-v2/P04/step-053-mayer.txt) |
 
 <details>
 <summary>了解 Mayer 键级与分析来源</summary>
 
-> Mayer 键级是由电子结构计算得到的无量纲数值，用于比较指定原子对沿路径的成键变化；本例从每份原生 Gaussian FCHK 的总 SCF 密度矩阵与 IOData 重叠矩阵计算，采用 `sum((P S)_AB × (P S)_BA)`，并按 Multiwfn 兼容文本格式保存；过渡态另保留 [shared/data/public/gaussian-v1/P04/mayer-reference.log](../../shared/data/public/gaussian-v1/P04/mayer-reference.log) 的 Multiwfn 对照。step、mayer_output 清单把各步与相应的键级分析文件配对。
+> Mayer 键级是由电子结构计算得到的无量纲数值，用于比较指定原子对沿路径的成键变化；本例从每份原生 Gaussian FCHK 的总 SCF 密度矩阵与 IOData 重叠矩阵计算，采用 `sum((P S)_AB × (P S)_BA)`，并按 Multiwfn 兼容文本格式保存。step、mayer_output 清单把各步与相应的键级分析文件配对。
 
 </details>
 
@@ -143,14 +147,14 @@
 ### 5. 选择原子对并比较随步键级
 
 - 在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 选 **QC IRC Mayer orders**，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，在 **IRC 路径（IRC Path）** 填 **原子 A（从1开始）（Atom A (1-based)）=1、原子 B（从1开始）（Atom B (1-based)）=2**，点击 **读取原子对（Read Pair）**。
-- 保持当前路径为第 **35** 步，应显示约 **0.987349**。第 1／69 步的同一原子对均约为 **0.985968**。
-- 点击 **下一步（Next）** 到第 **36** 步，值应变为约 **0.987331**，构型和标注同步切换；再点击 **上一步（Previous）** 回第 **35** 步。
+- 保持当前路径为第 **27** 步，应显示约 **0.987349**。第 1／53 步的同一原子对均约为 **0.985967**。
+- 点击 **下一步（Next）** 到第 **28** 步，值应变为约 **0.987345**，构型和标注同步切换；再点击 **上一步（Previous）** 回第 **27** 步。
 - 截图保存为 `human/screenshots/P04-mayer.png`。
 
 ![IRC 当前步与原子对 1、2 的 Mayer 键级](../screenshots/P04-mayer.png)
 
 - 需要表格时，在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 选 **IRC path**，按[数据导出](../SOP.md#export)选择 **数据（Data）=IRC** 并设置输出目录，得到 `irc_steps.csv`；再选 **QC IRC Mayer orders**，用同一入口选择 **数据（Data）=Mayer**，得到 `mayer.csv`。
-- 两次导出各有一个新子目录，各自的 `metadata.json` 与 CSV 一起保留。`irc_steps.csv` 应有 **69 行数据**，`mayer.csv` 应有 **414 行数据（69步 × 6原子对）**，均不含表头。
+- 两次导出各有一个新子目录，各自的 `metadata.json` 与 CSV 一起保留。`irc_steps.csv` 应有 **53 行数据**，`mayer.csv` 应有 **318 行数据（53步 × 6原子对）**，均不含表头。
 
 <details>
 <summary>了解原子对筛选与 IRC/Mayer 导出</summary>
@@ -179,12 +183,13 @@
 - **图例位置（Legend Position）** 和 **图例旋转（Legend Rotation）** 用于排版；从侧面观察时，旋转图例使文字正对观察方向，再按主流程重新取景出图。
 - 选回 **IRC path**，用 **局部选择与标注 → 局部原子选择（Local Atom Selection）** 的 **替换（Replace）** 模式输入 `1,2`，只保留两个氧原子及它们之间的连线；**清除（Clear）** 恢复原子范围。元素筛选同样要求连线两端原子都可见。
 - 在 **几何表示（Geometry Representation）** 调整 **原子半径（Atom Radius）** 和 **键半径（Bond Radius）**。再次点击 **显示 Mayer 连线** 可关闭显示并恢复开启前的表示方式；也可按 `Ctrl+Z` 撤销最近一步。
-- 回到路径第 **35** 步，使用 `0–1` 手动色域和 `0.5` 下限，截图保存为 `human/screenshots/P04-mayer-colors.png`。
+- 回到路径第 **27** 步，使用 `0–1` 手动色域和 `0.5` 下限，截图保存为 `human/screenshots/P04-mayer-colors.png`。
 
 ![Mayer 独立连线、固定色域与键级下限](../screenshots/P04-mayer-colors.png)
 
+- 本例新工程保存到 `work/human/gaussian-v2/P04/P04.blend`，导出目录用 `work/human/gaussian-v2/P04/exports/`。
 - 按[保存并重新打开工程](../SOP.md#save)保存便携工程及配套 `.qcdata`；重开后检查当前步、Mayer 开关、手动范围和下限仍与保存前一致。
-- 按上一步导出 **Mayer** 数据。即使画面只显示三条连线，`mayer.csv` 仍保留69步、六原子对的全部 **414** 个键级。
+- 按上一步导出 **Mayer** 数据。即使画面只显示三条连线，`mayer.csv` 仍保留53步、六原子对的全部 **318** 个键级。
 
 <details>
 <summary>了解色域、来源与失败处理</summary>

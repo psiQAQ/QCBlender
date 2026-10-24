@@ -108,7 +108,7 @@ IRC和优化关联比较双方当前步骤的源Å坐标。最后选择的对象
 
 ## Gaussian 优化轨迹浏览
 
-按 [公开Gaussian日志专题](../validation/human/topics/12-gaussian-log.md)导入 `shared/data/public/gaussian-v1/P02/water_neutral_nbo_opt_freq.out` 的 Job1，在 **对象属性 → Optimization Trajectory** 点击 **创建优化轨迹视图（Create Optimization View）**。选中新轨迹对象并重新打开对象属性，使用 **Previous / Next / Choose Step** 切步。本例优化共5步。Job2 的三个模式和能量在 **科学记录与振动模式**；IR数值通过数据导出取得。旧的本机限定日志仍由[历史本机案例](../validation/agent/LOCAL-CASES.md)定位，其数值不用于本专题。
+按 [公开Gaussian日志专题](../validation/human/topics/12-gaussian-log.md)导入 `shared/data/public/gaussian-v2/P02/water_neutral_nbo_opt_freq.out` 的 Job1，在 **对象属性 → Optimization Trajectory** 点击 **创建优化轨迹视图（Create Optimization View）**。选中新轨迹对象并重新打开对象属性，使用 **Previous / Next / Choose Step** 切步。本例优化共5步。Job2 的三个模式和能量在 **科学记录与振动模式**；IR数值通过数据导出取得。旧的本机限定日志仍由[历史本机案例](../validation/agent/LOCAL-CASES.md)定位，其数值不用于本专题。
 
 <details>
 <summary>查阅新建视图默认值与导出目录规则</summary>

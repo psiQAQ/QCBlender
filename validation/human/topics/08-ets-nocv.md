@@ -19,8 +19,8 @@
 
 轨道对能量单位按原始输出选择；单位选项不执行换算。
 
-- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/gaussian-v1/P05/complex.fchk](../../shared/data/public/gaussian-v1/P05/complex.fchk)。
-- 只选新原子对象，点击 **导入与导出（Import and Export） → 导入外部结果（Import External Results） → 能量分解（Energy Decomposition） → ETS-NOCV 表（ETS-NOCV Table）**，选 **ETS-NOCV 输出文本（ETS-NOCV output text）=[shared/data/public/gaussian-v1/P05/nocv/ets-nocv.txt](../../shared/data/public/gaussian-v1/P05/nocv/ets-nocv.txt)**、**轨道对能量单位（Pair energy unit）=kcal/mol** 并确认。应保留 **C/O/B/H/H/H** 六原子分子，并新增 **QC ETS-NOCV pairs**。
+- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，导入 [shared/data/public/gaussian-v2/P05/complex.fchk](../../shared/data/public/gaussian-v2/P05/complex.fchk)。
+- 只选新原子对象，点击 **导入与导出（Import and Export） → 导入外部结果（Import External Results） → 能量分解（Energy Decomposition） → ETS-NOCV 表（ETS-NOCV Table）**，选 **ETS-NOCV 输出文本（ETS-NOCV output text）=[shared/data/public/gaussian-v2/P05/nocv/ets-nocv.txt](../../shared/data/public/gaussian-v2/P05/nocv/ets-nocv.txt)**、**轨道对能量单位（Pair energy unit）=kcal/mol** 并确认。应保留 **C/O/B/H/H/H** 六原子分子，并新增 **QC ETS-NOCV pairs**。
 
 - 截图保存为 `human/screenshots/P05-nocv-table-import.png`。
 
@@ -96,7 +96,7 @@
 <a id="step-04"></a>
 ### 4. 导入 Pair1 的变形密度场
 
-- 保持表对象活动，点击 **N 侧栏 → 导入与导出（Import and Export） → 导入外部结果（Import External Results） → 能量分解（Energy Decomposition） → NOCV 贡献对 Cube（NOCV pair Cube）**，选择 **带符号的轨道对 Cube（Signed pair Cube）=[shared/data/public/gaussian-v1/P05/nocv/nocv-pair1.cub](../../shared/data/public/gaussian-v1/P05/nocv/nocv-pair1.cub)**，设 **自旋（Spin）=总计（Total）**，从 **轨道对编号（Pair number）** 的实际源编号列表选择 **1**，并设 **形变密度单位（Deformation density unit）=electron/bohr^3**。
+- 保持表对象活动，点击 **N 侧栏 → 导入与导出（Import and Export） → 导入外部结果（Import External Results） → 能量分解（Energy Decomposition） → NOCV 贡献对 Cube（NOCV pair Cube）**，选择 **带符号的轨道对 Cube（Signed pair Cube）=[shared/data/public/gaussian-v2/P05/nocv/nocv-pair1.cub](../../shared/data/public/gaussian-v2/P05/nocv/nocv-pair1.cub)**，设 **自旋（Spin）=总计（Total）**，从 **轨道对编号（Pair number）** 的实际源编号列表选择 **1**，并设 **形变密度单位（Deformation density unit）=electron/bohr^3**。
 
 - 截图保存为 `human/screenshots/P05-nocv-pair-import.png`。
 

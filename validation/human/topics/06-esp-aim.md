@@ -28,8 +28,8 @@
 
 | 控件 | 输入值 |
 | --- | --- |
-| 极值点 PDB（Extrema PDB） | [shared/data/public/gaussian-v1/P03/esp/surfanalysis.pdb](../../shared/data/public/gaussian-v1/P03/esp/surfanalysis.pdb) |
-| 面积分布文本（Area distribution text） | [shared/data/public/gaussian-v1/P03/esp/stdout.log](../../shared/data/public/gaussian-v1/P03/esp/stdout.log) |
+| 极值点 PDB（Extrema PDB） | [shared/data/public/gaussian-v2/P03/esp/surfanalysis.pdb](../../shared/data/public/gaussian-v2/P03/esp/surfanalysis.pdb) |
+| 面积分布文本（Area distribution text） | [shared/data/public/gaussian-v2/P03/esp/stdout.log](../../shared/data/public/gaussian-v2/P03/esp/stdout.log) |
 | 表面定义（Surface definition） | rho=0.001 electron/bohr^3 |
 | 极值单位（Extrema value unit） | kcal/mol |
 | 分布中心值单位（Distribution center unit） | kcal/mol |
@@ -128,9 +128,9 @@
 
 | 控件 | 输入文件 |
 | --- | --- |
-| 临界点 PDB（CPs PDB） | [shared/data/public/gaussian-v1/P03/aim/CPs.pdb](../../shared/data/public/gaussian-v1/P03/aim/CPs.pdb) |
-| 路径 PDB（Paths PDB） | [shared/data/public/gaussian-v1/P03/aim/paths.pdb](../../shared/data/public/gaussian-v1/P03/aim/paths.pdb) |
-| 临界点属性文本（可选）（CP properties text (optional)） | [shared/data/public/gaussian-v1/P03/aim/CPprop.txt](../../shared/data/public/gaussian-v1/P03/aim/CPprop.txt) |
+| 临界点 PDB（CPs PDB） | [shared/data/public/gaussian-v2/P03/aim/CPs.pdb](../../shared/data/public/gaussian-v2/P03/aim/CPs.pdb) |
+| 路径 PDB（Paths PDB） | [shared/data/public/gaussian-v2/P03/aim/paths.pdb](../../shared/data/public/gaussian-v2/P03/aim/paths.pdb) |
+| 临界点属性文本（可选）（CP properties text (optional)） | [shared/data/public/gaussian-v2/P03/aim/CPprop.txt](../../shared/data/public/gaussian-v2/P03/aim/CPprop.txt) |
 
 - 截图保存为 `human/screenshots/P03-aim-import.png`。
 

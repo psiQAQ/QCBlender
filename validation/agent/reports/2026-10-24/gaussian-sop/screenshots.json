@@ -875,67 +875,188 @@
     {
       "path": "validation/human/screenshots/P04-irc-end.png",
       "change": "new",
-      "sha256": "16f43357c05b1010812c9e33b4169e83809d6dee40984fff8043846b592bffe5",
-      "bytes": 653782,
-      "original_capture_sha256": "3abe0f8acd89a467ff652957f4e5e543057953ab276e9bb574c273d21afb7961",
-      "captured_at": "2026-10-24T03:40:29.321Z",
+      "sha256": "aaa0b4f67ce048fa5143e6988c358a3e62ae2bb76235a7778e49d9de1d87d691",
+      "bytes": 646717,
+      "original_capture_sha256": "21aa801b1c5ce09f483e7310bfb73075a95007b104db210d266e13efcabef597",
+      "captured_at": "2026-10-24T05:52:03.697Z",
       "width": 1920,
       "height": 1033,
       "redactions": [
         [
-          1550,
-          16,
-          1918,
-          34
+          0,
+          0,
+          1920,
+          31
         ]
       ],
-      "batch": "original-goal-audit"
+      "batch": "native-irc-current",
+      "scientific_dataset": "gaussian-v2",
+      "previous_captures": [
+        {
+          "path": "validation/human/screenshots/P04-irc-end.png",
+          "change": "new",
+          "sha256": "16f43357c05b1010812c9e33b4169e83809d6dee40984fff8043846b592bffe5",
+          "bytes": 653782,
+          "original_capture_sha256": "3abe0f8acd89a467ff652957f4e5e543057953ab276e9bb574c273d21afb7961",
+          "captured_at": "2026-10-24T03:40:29.321Z",
+          "width": 1920,
+          "height": 1033,
+          "redactions": [
+            [
+              1550,
+              16,
+              1918,
+              34
+            ]
+          ],
+          "batch": "original-goal-audit"
+        }
+      ],
+      "preserved_previous": {
+        "path": "validation/agent/reports/2026-10-24/native-irc-current/history/P04-irc-end.png",
+        "bytes": 653782,
+        "sha256": "16f43357c05b1010812c9e33b4169e83809d6dee40984fff8043846b592bffe5"
+      }
     },
     {
       "path": "validation/human/screenshots/P04-irc-start.png",
       "change": "new",
-      "sha256": "ff23ce30cc17d4611ce2ffdb853c8d01e65f50f075eefeba44a004d9df213bca",
-      "bytes": 689600,
-      "original_capture_sha256": "04c7e6c2016fb308fe22395faed59926f42def375d6ad058f2387713d25b838d",
-      "captured_at": "2026-10-24T03:40:03.431Z",
+      "sha256": "a5ff27a87f83901d1457669e954802a654da27da2d72097bba99ea1631b51b6e",
+      "bytes": 647251,
+      "original_capture_sha256": "023c4e8c42030faea3d9fcfbaacccbebc04d17a53a69f16f0b113fb2ed37b62a",
+      "captured_at": "2026-10-24T05:49:19.458Z",
       "width": 1920,
       "height": 1033,
       "redactions": [
         [
-          1550,
-          16,
-          1918,
-          34
+          0,
+          0,
+          1920,
+          31
         ]
       ],
-      "batch": "original-goal-audit"
+      "batch": "native-irc-current",
+      "scientific_dataset": "gaussian-v2",
+      "previous_captures": [
+        {
+          "path": "validation/human/screenshots/P04-irc-start.png",
+          "change": "new",
+          "sha256": "ff23ce30cc17d4611ce2ffdb853c8d01e65f50f075eefeba44a004d9df213bca",
+          "bytes": 689600,
+          "original_capture_sha256": "04c7e6c2016fb308fe22395faed59926f42def375d6ad058f2387713d25b838d",
+          "captured_at": "2026-10-24T03:40:03.431Z",
+          "width": 1920,
+          "height": 1033,
+          "redactions": [
+            [
+              1550,
+              16,
+              1918,
+              34
+            ]
+          ],
+          "batch": "original-goal-audit"
+        }
+      ],
+      "preserved_previous": {
+        "path": "validation/agent/reports/2026-10-24/native-irc-current/history/P04-irc-start.png",
+        "bytes": 689600,
+        "sha256": "ff23ce30cc17d4611ce2ffdb853c8d01e65f50f075eefeba44a004d9df213bca"
+      }
     },
     {
       "path": "validation/human/screenshots/P04-irc.png",
       "change": "reshoot",
-      "sha256": "20a23150b1d17da6a8b7aae9265cecc73707b08ccc467b4727da0742818a9fe8",
-      "bytes": 702559,
-      "original_capture_sha256": "0bbf04e095ba157eaccbb790770a4267e64e7668f100cbba99630ccd65d53321",
-      "captured_at": "2026-10-24T03:39:33.786Z",
+      "sha256": "97ca2ce77ce04a973fa88dd2fb439d34f6803a643e039bdb00273ddcf95206b6",
+      "bytes": 693610,
+      "original_capture_sha256": "52186901472dc1d987dc546406d3b4e4ad3ab84dc26d76a3a335583a935452cc",
+      "captured_at": "2026-10-24T05:49:57.377Z",
       "width": 1920,
       "height": 1033,
       "redactions": [
         [
-          1550,
-          16,
-          1918,
-          34
+          0,
+          0,
+          1920,
+          31
         ]
       ],
-      "batch": "original-goal-audit",
+      "batch": "native-irc-current",
       "previous_captures": [
         {
           "path": "validation/human/screenshots/P04-irc.png",
           "change": "reshoot",
-          "sha256": "41572363849ad5ca895c72af3fe5c746632a95c4b4d08c2367288d48e2e64a04",
-          "bytes": 657513,
-          "original_capture_sha256": "351810215dd8c7011e7e5ecc5cd530f48d5bce2576865f8d32af1d0588adcd39",
-          "captured_at": "2026-10-23T18:41:02.797Z",
+          "sha256": "20a23150b1d17da6a8b7aae9265cecc73707b08ccc467b4727da0742818a9fe8",
+          "bytes": 702559,
+          "original_capture_sha256": "0bbf04e095ba157eaccbb790770a4267e64e7668f100cbba99630ccd65d53321",
+          "captured_at": "2026-10-24T03:39:33.786Z",
+          "width": 1920,
+          "height": 1033,
+          "redactions": [
+            [
+              1550,
+              16,
+              1918,
+              34
+            ]
+          ],
+          "batch": "original-goal-audit",
+          "previous_captures": [
+            {
+              "path": "validation/human/screenshots/P04-irc.png",
+              "change": "reshoot",
+              "sha256": "41572363849ad5ca895c72af3fe5c746632a95c4b4d08c2367288d48e2e64a04",
+              "bytes": 657513,
+              "original_capture_sha256": "351810215dd8c7011e7e5ecc5cd530f48d5bce2576865f8d32af1d0588adcd39",
+              "captured_at": "2026-10-23T18:41:02.797Z",
+              "width": 1920,
+              "height": 1032,
+              "redactions": [
+                [
+                  1550,
+                  16,
+                  1918,
+                  34
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "scientific_dataset": "gaussian-v2",
+      "preserved_previous": {
+        "path": "validation/agent/reports/2026-10-24/native-irc-current/history/P04-irc.png",
+        "bytes": 702559,
+        "sha256": "20a23150b1d17da6a8b7aae9265cecc73707b08ccc467b4727da0742818a9fe8"
+      }
+    },
+    {
+      "path": "validation/human/screenshots/P04-mayer-colors.png",
+      "change": "reshoot",
+      "sha256": "7fd5fa26bce1010c1b074e32e7391e9a5aa9ac3a496dbc64e2fb1e4825c434c7",
+      "bytes": 702725,
+      "original_capture_sha256": "fd3f432acde4b6acc3d54c19afbe4a599b9619bc5229f29384878bf9a2b37757",
+      "captured_at": "2026-10-24T05:55:09.484Z",
+      "width": 1920,
+      "height": 1033,
+      "redactions": [
+        [
+          0,
+          0,
+          1920,
+          31
+        ]
+      ],
+      "batch": "native-irc-current",
+      "scientific_dataset": "gaussian-v2",
+      "previous_captures": [
+        {
+          "path": "validation/human/screenshots/P04-mayer-colors.png",
+          "change": "reshoot",
+          "sha256": "6580018d4550f5863e12b1ab478ef79e754568d7095593a6a98cab25da7b9256",
+          "bytes": 715157,
+          "original_capture_sha256": "98602bd529d6f2b1f4402b413b5cfbd0899bac9da35bc2bb3b69944446eb828c",
+          "captured_at": "2026-10-23T18:42:38.167Z",
           "width": 1920,
           "height": 1032,
           "redactions": [
@@ -947,61 +1068,102 @@
             ]
           ]
         }
-      ]
-    },
-    {
-      "path": "validation/human/screenshots/P04-mayer-colors.png",
-      "change": "reshoot",
-      "sha256": "6580018d4550f5863e12b1ab478ef79e754568d7095593a6a98cab25da7b9256",
-      "bytes": 715157,
-      "original_capture_sha256": "98602bd529d6f2b1f4402b413b5cfbd0899bac9da35bc2bb3b69944446eb828c",
-      "captured_at": "2026-10-23T18:42:38.167Z",
-      "width": 1920,
-      "height": 1032,
-      "redactions": [
-        [
-          1550,
-          16,
-          1918,
-          34
-        ]
-      ]
+      ],
+      "preserved_previous": {
+        "path": "validation/agent/reports/2026-10-24/native-irc-current/history/P04-mayer-colors.png",
+        "bytes": 715157,
+        "sha256": "6580018d4550f5863e12b1ab478ef79e754568d7095593a6a98cab25da7b9256"
+      }
     },
     {
       "path": "validation/human/screenshots/P04-mayer-import.png",
       "change": "new",
-      "sha256": "4f462852eb229267a26ae33b11a608a06cb373bb0bc5a700ecb2dd3825978d21",
-      "bytes": 679027,
-      "original_capture_sha256": "c9ac5eec2e7c7f2e1e89a23f8bf60f4ba12d510b9ad376927d241e8e124476ac",
-      "captured_at": "2026-10-23T18:40:32.717Z",
+      "sha256": "b17ab115b0f6dc523a4d62625b24d82d208f85dcf1d6d97d395394091fc81afa",
+      "bytes": 675095,
+      "original_capture_sha256": "4734ffcfe648529781f28e344d80ef793494f5a255283c9c06f9f4f7b82e29cc",
+      "captured_at": "2026-10-24T05:50:31.93Z",
       "width": 1920,
-      "height": 1032,
+      "height": 1033,
       "redactions": [
         [
-          1550,
-          16,
-          1918,
-          34
+          0,
+          0,
+          1920,
+          31
         ]
-      ]
+      ],
+      "batch": "native-irc-current",
+      "scientific_dataset": "gaussian-v2",
+      "previous_captures": [
+        {
+          "path": "validation/human/screenshots/P04-mayer-import.png",
+          "change": "new",
+          "sha256": "4f462852eb229267a26ae33b11a608a06cb373bb0bc5a700ecb2dd3825978d21",
+          "bytes": 679027,
+          "original_capture_sha256": "c9ac5eec2e7c7f2e1e89a23f8bf60f4ba12d510b9ad376927d241e8e124476ac",
+          "captured_at": "2026-10-23T18:40:32.717Z",
+          "width": 1920,
+          "height": 1032,
+          "redactions": [
+            [
+              1550,
+              16,
+              1918,
+              34
+            ]
+          ]
+        }
+      ],
+      "preserved_previous": {
+        "path": "validation/agent/reports/2026-10-24/native-irc-current/history/P04-mayer-import.png",
+        "bytes": 679027,
+        "sha256": "4f462852eb229267a26ae33b11a608a06cb373bb0bc5a700ecb2dd3825978d21"
+      }
     },
     {
       "path": "validation/human/screenshots/P04-mayer.png",
       "change": "reshoot",
-      "sha256": "41572363849ad5ca895c72af3fe5c746632a95c4b4d08c2367288d48e2e64a04",
-      "bytes": 657513,
-      "original_capture_sha256": "351810215dd8c7011e7e5ecc5cd530f48d5bce2576865f8d32af1d0588adcd39",
-      "captured_at": "2026-10-23T18:41:02.697Z",
+      "sha256": "b93be5d76935ef0e272bae769e1c5e76d05ca771dac7d0ff3f6094da84b08c69",
+      "bytes": 692855,
+      "original_capture_sha256": "9b6a812119a86795be8dff8a49d78301567b72cd44d765b916611b8807fd8acd",
+      "captured_at": "2026-10-24T05:51:02.951Z",
       "width": 1920,
-      "height": 1032,
+      "height": 1033,
       "redactions": [
         [
-          1550,
-          16,
-          1918,
-          34
+          0,
+          0,
+          1920,
+          31
         ]
-      ]
+      ],
+      "batch": "native-irc-current",
+      "scientific_dataset": "gaussian-v2",
+      "previous_captures": [
+        {
+          "path": "validation/human/screenshots/P04-mayer.png",
+          "change": "reshoot",
+          "sha256": "41572363849ad5ca895c72af3fe5c746632a95c4b4d08c2367288d48e2e64a04",
+          "bytes": 657513,
+          "original_capture_sha256": "351810215dd8c7011e7e5ecc5cd530f48d5bce2576865f8d32af1d0588adcd39",
+          "captured_at": "2026-10-23T18:41:02.697Z",
+          "width": 1920,
+          "height": 1032,
+          "redactions": [
+            [
+              1550,
+              16,
+              1918,
+              34
+            ]
+          ]
+        }
+      ],
+      "preserved_previous": {
+        "path": "validation/agent/reports/2026-10-24/native-irc-current/history/P04-mayer.png",
+        "bytes": 657513,
+        "sha256": "41572363849ad5ca895c72af3fe5c746632a95c4b4d08c2367288d48e2e64a04"
+      }
     },
     {
       "path": "validation/human/screenshots/P05-nocv-density.png",
@@ -1318,20 +1480,47 @@
     {
       "path": "validation/human/screenshots/P06-xyz-frames.png",
       "change": "reshoot",
-      "sha256": "971597cc2648c557843f55f20c50b4ce59e13d6e16d90c5759c393bf1aebe645",
-      "bytes": 612068,
-      "original_capture_sha256": "37a02a204bf958936f59144e9ab41528fba2303b0fe91dfefa3b5549c21f66d0",
-      "captured_at": "2026-10-23T19:09:38.264Z",
+      "sha256": "ddeb765e9bb9bf4cda6d127b3812b9a066eb268150a406cea0ad8906cff5e88e",
+      "bytes": 628006,
+      "original_capture_sha256": "db117794b4666172389ef6b248de999b5b87166e35106433f7f9b898ff709106",
+      "captured_at": "2026-10-24T06:06:39.781Z",
       "width": 1920,
       "height": 1032,
       "redactions": [
         [
-          1550,
-          16,
-          1918,
-          34
+          0,
+          0,
+          1920,
+          31
         ]
-      ]
+      ],
+      "batch": "native-irc-current",
+      "scientific_dataset": "gaussian-v2",
+      "previous_captures": [
+        {
+          "path": "validation/human/screenshots/P06-xyz-frames.png",
+          "change": "reshoot",
+          "sha256": "971597cc2648c557843f55f20c50b4ce59e13d6e16d90c5759c393bf1aebe645",
+          "bytes": 612068,
+          "original_capture_sha256": "37a02a204bf958936f59144e9ab41528fba2303b0fe91dfefa3b5549c21f66d0",
+          "captured_at": "2026-10-23T19:09:38.264Z",
+          "width": 1920,
+          "height": 1032,
+          "redactions": [
+            [
+              1550,
+              16,
+              1918,
+              34
+            ]
+          ]
+        }
+      ],
+      "preserved_previous": {
+        "path": "validation/agent/reports/2026-10-24/native-irc-current/history/P06-xyz-frames.png",
+        "bytes": 612068,
+        "sha256": "971597cc2648c557843f55f20c50b4ce59e13d6e16d90c5759c393bf1aebe645"
+      }
     },
     {
       "path": "validation/human/screenshots/SD01-display-dialog.png",
@@ -1395,5 +1584,12 @@
     "added": 4,
     "replaced_existing": 1,
     "previous_manifest_sha256": "a14591ad6164926a531bca6c1909f10eb0f57af9ac5e71cc010f6e44f9e15074"
+  },
+  "native_promotion": {
+    "date": "2026-10-24",
+    "reshoots": 7,
+    "irc_frames": 53,
+    "ts_step": 27,
+    "evidence": "validation/agent/reports/2026-10-24/native-irc-current/acceptance.md"
   }
 }

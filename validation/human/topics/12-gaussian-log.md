@@ -18,7 +18,7 @@
 
 路径相对材料根目录，即同时包含 `human/` 和 `shared/` 的目录。先按[安装与新工程准备](../SOP.md#install)启用插件。本页使用自有 Gaussian 16 C.01 水分子日志，输入已包含在公开材料中，无需本机安装 Gaussian。
 
-输入为 [shared/data/public/gaussian-v1/P02/water_neutral_nbo_opt_freq.out](../../shared/data/public/gaussian-v1/P02/water_neutral_nbo_opt_freq.out)。本例采用 **RHF/STO-3G、0 电荷、单重态**；第 1 段执行 **Opt**，第 2 段执行 **Freq Pop=NBO**。两段各有自己的构型、能量和来源记录。不要换用旧的本机限定 P02 日志来对照下文数值。
+输入为 [shared/data/public/gaussian-v2/P02/water_neutral_nbo_opt_freq.out](../../shared/data/public/gaussian-v2/P02/water_neutral_nbo_opt_freq.out)。本例采用 **RHF/STO-3G、0 电荷、单重态**；第 1 段执行 **Opt**，第 2 段执行 **Freq Pop=NBO**。两段各有自己的构型、能量和来源记录。不要换用旧的本机限定 P02 日志来对照下文数值。
 
 本页截图使用案例 `P02-` 前缀。
 
@@ -28,7 +28,7 @@
 <a id="step-01"></a>
 ### 1. 导入优化计算段
 
-- 按[准备新工程](../SOP.md#new-scene)进入物体模式，点击 **N 侧栏 → QCBlender → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 `shared/data/public/gaussian-v1/P02/water_neutral_nbo_opt_freq.out`。
+- 按[准备新工程](../SOP.md#new-scene)进入物体模式，点击 **N 侧栏 → QCBlender → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 `shared/data/public/gaussian-v2/P02/water_neutral_nbo_opt_freq.out`。
 - 等待日志检查，出现 **选择 Gaussian 计算段（Choose Gaussian Calculation）** 后，将 **计算段（Calculation）** 设为第 **1** 段。核对 route 含 **Opt**、状态为正常结束。本段有5次 SCF 求值，选段窗口中的静态能量显示 **ambiguous**（未能自动唯一选择）；先查看最近的能量记录，再确认导入，随后按优化轨迹逐步核对。
 - 将新原子对象命名为 **P02-opt-source**。在 **N 侧栏 → 当前 QC 对象（Current QC Object）** 核对 **3** 个源原子和计算段 **1**，应看到 **O/H/H** 水分子。
 - 截图保存为 `human/screenshots/P02-gaussian-job-selection.png`。
@@ -87,7 +87,7 @@
 <a id="step-04"></a>
 ### 4. 导入频率计算段
 
-- 再次使用 **导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择同一输入 `shared/data/public/gaussian-v1/P02/water_neutral_nbo_opt_freq.out`，这次在 **选择 Gaussian 计算段（Choose Gaussian Calculation）** 选择第 **2** 段。
+- 再次使用 **导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择同一输入 `shared/data/public/gaussian-v2/P02/water_neutral_nbo_opt_freq.out`，这次在 **选择 Gaussian 计算段（Choose Gaussian Calculation）** 选择第 **2** 段。
 - 核对 route 含 **Freq** 和 **Pop=NBO**、状态为正常结束，电子能量约为 **−74.9659012171 hartree**。
 - 截图保存为 `human/screenshots/P02-frequency-job-selection.png`。
 
@@ -143,7 +143,7 @@
 ### 7. 导入指定计算段的 NBO 块
 
 - 保持静态 **P02-frequency** 活动，点击 **N 侧栏 → 导入与导出（Import and Export） → 导入外部结果（Import External Results） → 原子与键分析（Atom and Bond Analysis） → NBO 记录（NBO Records）**。
-- 将 **Gaussian Log / Out** 指向 `shared/data/public/gaussian-v1/P02/water_neutral_nbo_opt_freq.out`，先确认以检查日志。
+- 将 **Gaussian Log / Out** 指向 `shared/data/public/gaussian-v2/P02/water_neutral_nbo_opt_freq.out`，先确认以检查日志。
 - 检查完成后的编号对话框中，设 **Gaussian 计算段（从1开始）（Gaussian job (1-based)）=2**、**计算段内 NBO 块（从1开始）（NBO block within job (1-based)）=1**，核对当前静态参考对象仍为 **P02-frequency**。
 - 截图保存为 `human/screenshots/P02-nbo-block-selection.png`。
 

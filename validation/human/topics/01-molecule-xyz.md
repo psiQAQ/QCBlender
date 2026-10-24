@@ -29,7 +29,7 @@
 <a id="step-01"></a>
 ### 1. 导入水二聚体并命名原子层
 
-- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/gaussian-v1/P06/water-dimer.xyz](../../shared/data/public/gaussian-v1/P06/water-dimer.xyz)。
+- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/gaussian-v2/P06/water-dimer.xyz](../../shared/data/public/gaussian-v2/P06/water-dimer.xyz)。
 - 选中导入的原子对象，按 `F2` 命名为 **P06-single**。应出现两个水分子，共 **6 个原子，顺序 O/H/H/O/H/H**。
 - 切到 **材质预览（Material Preview）**。
 
@@ -315,7 +315,7 @@
 <a id="step-09"></a>
 ### 9. 关联 XYZ 与 FCHK 数据源
 
-- 通过 **导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）** 导入 [shared/data/public/gaussian-v1/P03/water-dimer.fchk](../../shared/data/public/gaussian-v1/P03/water-dimer.fchk)，将新原子对象命名为 **P03-atoms**。
+- 通过 **导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）** 导入 [shared/data/public/gaussian-v2/P03/water-dimer.fchk](../../shared/data/public/gaussian-v2/P03/water-dimer.fchk)，将新原子对象命名为 **P03-atoms**。
 - 在大纲视图（Outliner）单击 **P06-single**，再按住 `Ctrl` 单击 **P03-atoms**，只选这两层，并使 **P03-atoms** 活动。
 - 点击 **打开对象属性（Open Object Properties）**，在对象属性点击 **关联选中数据源（Associate Selected Sources）**，保持 **最大原子偏差（Å）（Maximum atom deviation (angstrom)）=0.001**、关闭 **对齐刚体旋转与平移（Align rigid rotation/translation）**，点击 **确定（OK）**。应提示原子顺序和构型匹配。
 - 关联与刷新按钮只在对象属性提供，侧栏详情用于查看汇总。
@@ -339,15 +339,15 @@
 <a id="step-10"></a>
 ### 10. 导入并切换多帧 XYZ
 
-- 导入 [shared/data/public/gaussian-v1/P06/p04-three-frames.xyz](../../shared/data/public/gaussian-v1/P06/p04-three-frames.xyz)，选中新原子对象，命名为 **P06-frames**。
+- 导入 [shared/data/public/gaussian-v2/P06/p04-three-frames.xyz](../../shared/data/public/gaussian-v2/P06/p04-three-frames.xyz)，选中新原子对象，命名为 **P06-frames**。
 - 点击 **打开对象属性（Open Object Properties）**，在 **XYZ 帧（XYZ Frames）** 点击 **下一步（Next） → 下一步（Next） → 上一步（Previous）**，应按 **1→2→3→2** 切换；每帧都是 **O/O/H/H** 四个原子。
 - 展开原注释与 **来源行（Source lines）** 可看到当前帧来源。
-- 本 XYZ 的三帧分别取自完整 P04 路径的第 **1、35、69** 步，即反向末端、过渡态、正向末端；对应源文件为 `shared/data/public/gaussian-v1/P04/step-001.fchk`、`shared/data/public/gaussian-v1/P04/step-035.fchk` 和 `shared/data/public/gaussian-v1/P04/step-069.fchk`。来源映射保存在 [shared/data/public/gaussian-v1/P06/source.json](../../shared/data/public/gaussian-v1/P06/source.json)。
+- 本例新工程保存到 `work/human/gaussian-v2/P06/P06.blend`。本 XYZ 的三帧分别取自完整 P04 原生路径的第 **1、27、53** 步，即负二面角端点、过渡态、正二面角端点；对应源文件为 `shared/data/public/gaussian-v2/P04/step-001.fchk`、`shared/data/public/gaussian-v2/P04/step-027.fchk` 和 `shared/data/public/gaussian-v2/P04/step-053.fchk`。来源映射保存在 [shared/data/public/gaussian-v2/P06/source.json](../../shared/data/public/gaussian-v2/P06/source.json)。
 
 <details>
 <summary>了解 XYZ 帧与来源行</summary>
 
-> XYZ 帧是同一原子顺序的一组坐标，下一步（Next）/上一步（Previous）逐帧切换；来源行（Source lines）标示该帧在原文件中的行区间。帧序本身不提供物理时间。本例只抽取三个代表构型练习 XYZ 切帧，完整69步路径及电子能量请看 [IRC专题](07-irc-mayer.md#step-01)；XYZ 不包含这些波函数和能量。
+> XYZ 帧是同一原子顺序的一组坐标，下一步（Next）/上一步（Previous）逐帧切换；来源行（Source lines）标示该帧在原文件中的行区间。帧序本身不提供物理时间。本例只抽取三个代表构型练习 XYZ 切帧，完整53步原生路径及电子能量请看 [IRC专题](07-irc-mayer.md#step-01)；XYZ 不包含这些波函数和能量。
 
 </details>
 
@@ -355,7 +355,7 @@
 ### 11. 观察随帧更新的二面角
 
 - 保持 **P06-frames** 活动，重新打开该对象属性，点击 **对象属性（Object Properties） → 局部选择与标注（Local Selection and Annotations） → 二面角（Dihedral）**，在四个编号控件初始为 1/2/3/4 时，先点击 **2 ↔ 3**，再点击 **1 ↔ 2**，核对 **原子 1/2/3/4（Atom 1/2/3/4）** 依次为 **3/1/2/4**；设 **小数位数（Decimal places）=3**，保持默认前缀和测量几何可见，点击 **确定（OK）**。
-- 当前已在第 2 帧，先点击 **上一步（Previous）** 回第 1 帧，再点击 **下一步（Next） → 下一步（Next）** 观察三帧；应依次看到约 **−124.991°、+180.000°、+124.991°**，文字读数、圆弧和三角面随当前构型更新。
+- 当前已在第 2 帧，先点击 **上一步（Previous）** 回第 1 帧，再点击 **下一步（Next） → 下一步（Next）** 观察三帧；应依次看到约 **−124.948°、+180.000°、+124.948°**，文字读数、圆弧和三角面随当前构型更新。
 - 当前帧号在 **XYZ 帧（XYZ Frames）** 面板核对，来源构型保留在科学记录中，不额外拼入默认标注文字。
 - 最后点击 **上一步（Previous）** 回第 2 帧。
 - 截图保存为 `human/screenshots/P06-xyz-frames.png`。

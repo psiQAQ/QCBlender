@@ -2,7 +2,7 @@
 
 人工操作从 [SOP](human/SOP.md) 开始，按目录选择需要学习的专题。完整材料包含安装包和案例输入，适用 Windows x64、Blender 5.1.1、QCBlender 0.1.0。
 
-当前教程包含主线及 12 个专题，共 **98 个编号步骤、79 个展示图片引用**。按[工程索引](工程索引.md)查找步骤、图片与工程；当前 Gaussian 工程位于 `work/human/gaussian-v1/`，科学输入位于 `shared/data/public/gaussian-v1/`。21 份新工程均已保存并冷读通过，0 差异。首轮新增 44 张截图，原目标复查另补 4 张，并重拍 IRC 总览；当前共 48 张新增图及 27 张重拍图，均已转为 PNG。材料和独立公开副本检查通过，独立人工和科研验收 Not Run。详见[本批验收](agent/reports/2026-10-24/gaussian-sop/acceptance.md)。
+当前教程包含主线及 12 个专题，共 **98 个编号步骤、79 个展示图片引用**。按[工程索引](工程索引.md)查找步骤、图片与工程；当前 Gaussian 工程位于 `work/human/gaussian-v1/`，科学输入位于 `shared/data/public/gaussian-v2/`。21 份新工程均已保存并冷读通过，0 差异。首轮新增 44 张截图，原目标复查另补 4 张，并重拍 IRC 总览；当前共 48 张新增图及 27 张重拍图，均已转为 PNG。材料和独立公开副本检查通过，独立人工和科研验收 Not Run。详见[本批验收](agent/reports/2026-10-24/gaussian-sop/acceptance.md)。
 
 旧 `work/human/P01/` 等目录及其 36 份工程保留历史身份。2026-10-22 的迁移与旧副本清理见[迁移记录](agent/acceptance/delivery-consolidation.md)，当时检查点的生成与保存前验证见[补验记录](agent/acceptance/checkpoint-rebuild.md)；这些旧记录不代表当前 Gaussian 案例已完成验证。
 
@@ -35,13 +35,14 @@
 | `shared/data/regression/` | 自动回归使用的小样本 |
 | `shared/install/` | 当前安装包 |
 | `agent/` | 技术流程、检查覆盖、冻结材料及技术报告 |
-| `work/human/gaussian-v1/` | 当前 Gaussian 教程工程、配套科学数据、导出文件和工程归档，Git 忽略 |
+| `work/human/gaussian-v2/` | 当前原生53帧 P04 与 P06 新工程、侧车、导出和归档，Git 忽略 |
+| `work/human/gaussian-v1/` | 未变化工程继续复用；旧69帧 P04/P06 保留历史身份 |
 | `work/human/` 其余历史案例目录 | 旧教程工程、配套数据与移动副本，保留原批次身份，Git 忽略 |
 | `work/agent/<批次>/` | 新 Agent 验证批次的工作文件，Git 忽略 |
 
 截图前缀沿用所在章节的案例编号：P01 轨道入门与自旋密度，P02 Gaussian 日志，P03 水二聚体场和分析，P04 IRC，P05 ETS-NOCV，P06 XYZ 与公共节点，SD01 表面距离投影，AICD01 电流响应；后缀说明图片内容。截图用于展示独有的操作入口、控件或视觉结果，同一结果的重复确认保留文字说明。
 
-教程中的图片只引用 `human/` 内的图片文件。当前 Gaussian 的 `.blend`、`.qcdata/`、CSV 导出和工程 ZIP 放在 `work/human/gaussian-v1/`；保留需要继续使用的工程及配套数据。Agent 临时工作放 `.tmp/runs/`，长期报告放 `validation/agent/reports/<date>/<task>/`；既有批次当前位置由 [ARTIFACTS](../docs/ARTIFACTS.md) 定位。
+教程中的图片只引用 `human/` 内的图片文件。当前新 P04/P06 的 `.blend`、`.qcdata/`、CSV 导出和工程 ZIP 放在 `work/human/gaussian-v2/`，其他未变化工程沿用 `work/human/gaussian-v1/`；保留需要继续使用的工程及配套数据。Agent 临时工作放 `.tmp/runs/`，长期报告放 `validation/agent/reports/<date>/<task>/`；既有批次当前位置由 [ARTIFACTS](../docs/ARTIFACTS.md) 定位。
 
 ## 人工完成后的打包
 
@@ -61,7 +62,7 @@
 
 公开样本附带的 `LICENSE`、`NOTICE.md` 和来源说明一起保留。公开入门包不包含 `local/`、`regression/`、`agent/` 和 `work/`。当前公开 P02 使用自有 Gaussian 日志，许可随公开材料保留；历史本机 P02 日志与专题 10/11 的本机限定材料不进入公开教程包。
 
-需要连同已保存工程交给本地使用者检查时，在上述材料之外复制 `工程索引.md`，以及索引列出的当前 `work/human/gaussian-v1/` 工程、同名 `.qcdata/`、导出文件和工程归档；需要历史或本机限定专题时，再按各自范围与来源条件附上对应工程，保持相对位置，排除 `.blend1` 等自动备份。不要直接打包整个 `validation/`，其中另有本地限定输入、回归数据和技术报告。分发包的 README 说明从 `human/SOP.md` 和 `工程索引.md` 开始即可；主仓库保留本页导航。
+需要连同已保存工程交给本地使用者检查时，在上述材料之外复制 `工程索引.md`，以及索引列出的当前 `work/human/gaussian-v2/` 及继续复用的 `work/human/gaussian-v1/` 工程、同名 `.qcdata/`、导出文件和工程归档；需要历史或本机限定专题时，再按各自范围与来源条件附上对应工程，保持相对位置，排除 `.blend1` 等自动备份。不要直接打包整个 `validation/`，其中另有本地限定输入、回归数据和技术报告。分发包的 README 说明从 `human/SOP.md` 和 `工程索引.md` 开始即可；主仓库保留本页导航。
 
 ## 开发维护
 
