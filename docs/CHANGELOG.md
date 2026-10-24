@@ -1,5 +1,7 @@
 # 开发演进
 
+- 2026-10-24：续查 Gaussian 原生 IRC，复现常规 GS2 的假极小点早停、HPC/EulerPC 首点校正失败及旧 Restart 的 Hessian 更新失败。通过官方 Downhill 从真实接受点分段继续，得到 52 段原生 GS2 积分及 TS 共 53 帧；两侧逐点下降，端点最大梯度小于 10⁻⁶ Hartree/Bohr、六频均正。新增独立补充数据、原生来源链、318 项 Mayer、完整输入/日志和诊断证据；自动科学及解析检查 Passed，原 Gaussian-v1/v3、69 帧路径及工程保持原身份。常规单作业早停未被标为修复，新数据 GUI 与独立科研签署 Not Run。详见[原生 IRC 续查](../validation/agent/reports/2026-10-24/gaussian-sop/native-irc.md)。本地提交归档，不 push。
+
 - 2026-10-24：对照最初的 Gaussian 与截图目标复查，补齐 P02 频率段、NBO 段/块选择及 IRC 两侧末端 4 张截图，重拍重复的 IRC 总览；当前为 98 步、79 个展示图片引用。正文明确浏览完整路径两端，并解释 P01 同能轨道的预览与固定编号；修正工程索引的过期进行中状态和任务入口。复用原科学数据及工程，P02/P04 与 50 个配套资源字节未变；实际 MCP 切步和 Computer Use 观察通过。NOCV KS 近似及 Gaussian 原生 IRC 未完成的边界保留；独立人工/科研和发布 Not Run，本地提交，不 push。详见[原目标复核](../validation/agent/reports/2026-10-24/gaussian-sop/acceptance.md#对照最初目标的复核)。
 
 - 2026-10-24：以真实 Gaussian 重算并优化 P01–P05，生成含自有 P02 的 Gaussian-v1/v3 公开样本，公开完整 69 帧双向路径及逐步 Mayer，P06 从新构型派生；保留 P05 冻结片段与实际复合物 KS 的 NOCV 近似。修复真实多计算段日志识别和历史图片普通链接误报，当前/历史样本按版本及逐文件许可选择。新增第 12 专题、44 张 PNG，重拍 27 张旧图；21 新工程串行冷读及代表移动/归档解压均 Passed、0 差异。完整候选构建、隔离/日常安装、实际 MCP/GUI 与公开材料副本检查 Passed；续办补齐 P02 展示、中文搜索、锚点跳转及实际 v3 下载的浏览器验收。独立人工/科研与发布 Not Run。详见[本批验收](../validation/agent/reports/2026-10-24/gaussian-sop/acceptance.md)；本地归档，不推送。

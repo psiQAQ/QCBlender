@@ -51,7 +51,7 @@ IRI采用指数 **a=1.1**。IGMH δg inter单位为 electron/bohr⁴，着色量
 
 ### P04：真实Gaussian梯度驱动的双向路径
 
-Gaussian内置IRC的本批尝试未通过完整路径门禁：包括corrector积分失败，以及仅接受一个点后提前报告PES minimum的情况。正常终止标志未被用作完整IRC通过证明；相关原件保留。
+初次重算中的常规单作业Gaussian内置IRC未通过完整路径门禁：包括corrector积分失败，以及仅接受一个点后提前报告PES minimum的情况。正常终止标志未被用作完整IRC通过证明；相关原件保留。后续已取得独立的53帧原生GS2分段续算补充数据，详见[原生IRC续查](native-irc.md)；下文仍记录原Gaussian-v1/v3中69帧路径的实际身份。
 
 最终路径使用现有 **geomeTRIC 1.1.1** 积分器，每次电子能量和梯度均由 **Gaussian RHF/STO-3G** 实算，采用 `SCF=(Conver=12,MaxCycle=150)` 和无对称性处理。初始Hessian来自实际Gaussian TS频率计算。TS优化采用 `Opt=(TS,CalcFC,VeryTight,MaxCycles=100)`；完整TS频率为 **−48.2239、1485.8360、1493.7570、1885.5136、4168.7100、4188.6155**。唯一虚频的实际打印位移在分子平面外的平方分量比例为 **1.0**，对应O–O扭转。
 

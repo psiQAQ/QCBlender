@@ -1,0 +1,3 @@
+%Chk=result.chk
+#p RHF/STO-3G IRC=(Reverse,CalcAll,GS2,VeryTight,MaxPoints=1,StepSize=5,MaxCycle=100) Geom=AllCheck Guess=Read SCF=(Conver=12,MaxCycle=150) NoSymm
+

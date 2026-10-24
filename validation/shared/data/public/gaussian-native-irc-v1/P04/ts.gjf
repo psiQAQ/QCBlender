@@ -1,0 +1,15 @@
+%Chk=result.chk
+#p RHF/STO-3G Opt=(TS,CalcAll,VeryTight,MaxCycles=100) SCF=(Conver=12,MaxCycle=150) NoSymm
+
+QCBlender peroxide independently refined TS
+
+0 1
+O -0.0416927730677 -0.0000000000066 -0.7000742946452
+O 0.0416927730677 -0.0000000000066 0.7000742946452
+H 0.9314127665238 0.0000000000066 -0.9287969534250
+H -0.9314127665238 0.0000000000066 0.9287969534250
+
+--Link1--
+%Chk=result.chk
+#p RHF/STO-3G Freq Geom=AllCheck Guess=Read SCF=(Conver=12,MaxCycle=150) NoSymm
+

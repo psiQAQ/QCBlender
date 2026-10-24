@@ -13,4 +13,6 @@
 
 所有当前样本的身份、实际数值和计算条件见 [当前清单](gaussian-v1/tutorial-samples.json)。数据按 [LICENSE](LICENSE) 使用 CC BY 4.0，署名 QCBlender contributors。科学适用范围、软件引用及 NOCV 能量近似见 [NOTICE.md](NOTICE.md)。
 
+另有 [Gaussian 原生 GS2 分段续算补充数据](gaussian-native-irc-v1/README.md)：53 帧双向路径、全部原生接受点的 FCHK、逐段输入/日志及 Mayer 清单。它具有独立清单，默认教程的 Gaussian-v1、v3 包和历史输入保持原身份。
+
 根目录旧 P01–P06 及根 `tutorial-samples.json` 保留为 legacy-v2 历史输入；旧验证结论不代表当前 Gaussian 数据已通过界面或独立科研验收。

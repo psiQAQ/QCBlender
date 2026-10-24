@@ -1,0 +1,4840 @@
+{
+  "schema": 1,
+  "dataset_id": "gaussian-native-irc-v1",
+  "date": "2026-10-24",
+  "license": "CC-BY-4.0",
+  "attribution": "QCBlender contributors",
+  "calculation": {
+    "producer": "Gaussian 16 Revision C.01",
+    "method": "RHF",
+    "basis": "STO-3G",
+    "charge": 0,
+    "multiplicity": 1,
+    "electrons": 18,
+    "basis_functions": 12,
+    "scf": "Conver=12,MaxCycle=150",
+    "symmetry": "NoSymm",
+    "integrator": "Gaussian native GS2",
+    "execution": "Segmented; Forward/Reverse for initial points and Downhill for continuation",
+    "coordinate_frame": "Unrotated Cartesian frame of the independently refined Gaussian TS"
+  },
+  "identity": "Supplementary data; Gaussian-v1, its frozen manifest and v3 package are unchanged",
+  "frames": [
+    {
+      "step": 1,
+      "fchk": "step-001.fchk",
+      "energy_hartree": -148.7649966558122,
+      "torsion_degrees": -124.94814243960309,
+      "gradient_max_hartree_per_bohr": 7.37292213e-07,
+      "reaction_coordinate_sqrt_amu_bohr": -1.2288579109199993,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 2,
+      "source_segment": "forward-026",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.005,
+      "local_mass_weighted_length": 0.0071777397,
+      "log": "P04/segments/forward-026.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9859666077028337
+        ],
+        [
+          1,
+          3,
+          0.9506734905905633
+        ],
+        [
+          1,
+          4,
+          0.011559648076364495
+        ],
+        [
+          2,
+          3,
+          0.011559648068079461
+        ],
+        [
+          2,
+          4,
+          0.9506734905164114
+        ],
+        [
+          3,
+          4,
+          0.0019033235176635463
+        ]
+      ]
+    },
+    {
+      "step": 2,
+      "fchk": "step-002.fchk",
+      "energy_hartree": -148.7649966314586,
+      "torsion_degrees": -125.2707903658098,
+      "gradient_max_hartree_per_bohr": 4.77088326e-06,
+      "reaction_coordinate_sqrt_amu_bohr": -1.2216801712199994,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 3,
+      "source_segment": "forward-025",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.005,
+      "local_mass_weighted_length": 0.00714574576,
+      "log": "P04/segments/forward-025.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.985976450389139
+        ],
+        [
+          1,
+          3,
+          0.9506740243573946
+        ],
+        [
+          1,
+          4,
+          0.01151761882686574
+        ],
+        [
+          2,
+          3,
+          0.01151761882643679
+        ],
+        [
+          2,
+          4,
+          0.9506740243546332
+        ],
+        [
+          3,
+          4,
+          0.0019239093606322627
+        ]
+      ]
+    },
+    {
+      "step": 3,
+      "fchk": "step-003.fchk",
+      "energy_hartree": -148.7649965430188,
+      "torsion_degrees": -125.5919774359104,
+      "gradient_max_hartree_per_bohr": 1.04714669e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -1.2145344254599995,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 4,
+      "source_segment": "forward-024",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.005,
+      "local_mass_weighted_length": 0.00717351906,
+      "log": "P04/segments/forward-024.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9859862402656135
+        ],
+        [
+          1,
+          3,
+          0.9506744879969431
+        ],
+        [
+          1,
+          4,
+          0.01147583650583748
+        ],
+        [
+          2,
+          3,
+          0.01147583650537573
+        ],
+        [
+          2,
+          4,
+          0.9506744879960424
+        ],
+        [
+          3,
+          4,
+          0.0019444252148246206
+        ]
+      ]
+    },
+    {
+      "step": 4,
+      "fchk": "step-004.fchk",
+      "energy_hartree": -148.764996391893,
+      "torsion_degrees": -125.91439369378978,
+      "gradient_max_hartree_per_bohr": 1.52070336e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -1.2073609063999995,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 5,
+      "source_segment": "forward-023",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.01,
+      "local_mass_weighted_length": 0.0142373383,
+      "log": "P04/segments/forward-023.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9859961538907507
+        ],
+        [
+          1,
+          3,
+          0.9506751946916111
+        ],
+        [
+          1,
+          4,
+          0.011433973420342629
+        ],
+        [
+          2,
+          3,
+          0.011433973418836785
+        ],
+        [
+          2,
+          4,
+          0.9506751947078156
+        ],
+        [
+          3,
+          4,
+          0.0019650656453416484
+        ]
+      ]
+    },
+    {
+      "step": 5,
+      "fchk": "step-005.fchk",
+      "energy_hartree": -148.7649959149996,
+      "torsion_degrees": -126.55422613979188,
+      "gradient_max_hartree_per_bohr": 2.63629256e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -1.1931235680999994,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 6,
+      "source_segment": "forward-022",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.01,
+      "local_mass_weighted_length": 0.0143261377,
+      "log": "P04/segments/forward-022.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9860157167907532
+        ],
+        [
+          1,
+          3,
+          0.9506761176585169
+        ],
+        [
+          1,
+          4,
+          0.01135106835604602
+        ],
+        [
+          2,
+          3,
+          0.011351068350068948
+        ],
+        [
+          2,
+          4,
+          0.9506761176631024
+        ],
+        [
+          3,
+          4,
+          0.002006055631886284
+        ]
+      ]
+    },
+    {
+      "step": 6,
+      "fchk": "step-006.fchk",
+      "energy_hartree": -148.7649952108629,
+      "torsion_degrees": -127.19797481958149,
+      "gradient_max_hartree_per_bohr": 3.38724725e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -1.1787974303999995,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 7,
+      "source_segment": "forward-021",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.01,
+      "local_mass_weighted_length": 0.0142061576,
+      "log": "P04/segments/forward-021.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9860357565698935
+        ],
+        [
+          1,
+          3,
+          0.9506779506839966
+        ],
+        [
+          1,
+          4,
+          0.011268030097938994
+        ],
+        [
+          2,
+          3,
+          0.011268030097491322
+        ],
+        [
+          2,
+          4,
+          0.9506779506831188
+        ],
+        [
+          3,
+          4,
+          0.002047456991489254
+        ]
+      ]
+    },
+    {
+      "step": 7,
+      "fchk": "step-007.fchk",
+      "energy_hartree": -148.7649943057741,
+      "torsion_degrees": -127.83623562403336,
+      "gradient_max_hartree_per_bohr": 4.52479223e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -1.1645912727999994,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 8,
+      "source_segment": "forward-020",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.02,
+      "local_mass_weighted_length": 0.0285846301,
+      "log": "P04/segments/forward-020.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9860553478074237
+        ],
+        [
+          1,
+          3,
+          0.9506787092627026
+        ],
+        [
+          1,
+          4,
+          0.011185940540109088
+        ],
+        [
+          2,
+          3,
+          0.011185940538698959
+        ],
+        [
+          2,
+          4,
+          0.9506787092783282
+        ],
+        [
+          3,
+          4,
+          0.0020884702139023865
+        ]
+      ]
+    },
+    {
+      "step": 8,
+      "fchk": "step-008.fchk",
+      "energy_hartree": -148.7649919198621,
+      "torsion_degrees": -129.12029221285604,
+      "gradient_max_hartree_per_bohr": 5.72100495e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -1.1360066426999995,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 9,
+      "source_segment": "forward-019",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.02,
+      "local_mass_weighted_length": 0.028321645,
+      "log": "P04/segments/forward-019.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9860958392024237
+        ],
+        [
+          1,
+          3,
+          0.9506829244501784
+        ],
+        [
+          1,
+          4,
+          0.011022112037204093
+        ],
+        [
+          2,
+          3,
+          0.011022112034999858
+        ],
+        [
+          2,
+          4,
+          0.9506829236788412
+        ],
+        [
+          3,
+          4,
+          0.0021713547897183323
+        ]
+      ]
+    },
+    {
+      "step": 9,
+      "fchk": "step-009.fchk",
+      "energy_hartree": -148.7649889046251,
+      "torsion_degrees": -130.3921994395173,
+      "gradient_max_hartree_per_bohr": 7.54985823e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -1.1076849976999996,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 10,
+      "source_segment": "forward-018",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.02,
+      "local_mass_weighted_length": 0.0285067244,
+      "log": "P04/segments/forward-018.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9861356533674512
+        ],
+        [
+          1,
+          3,
+          0.9506851535581711
+        ],
+        [
+          1,
+          4,
+          0.010861330815307765
+        ],
+        [
+          2,
+          3,
+          0.010861330811983958
+        ],
+        [
+          2,
+          4,
+          0.9506851535692603
+        ],
+        [
+          3,
+          4,
+          0.002253311820322954
+        ]
+      ]
+    },
+    {
+      "step": 10,
+      "fchk": "step-010.fchk",
+      "energy_hartree": -148.7649853207519,
+      "torsion_degrees": -131.67215244956984,
+      "gradient_max_hartree_per_bohr": 8.11098904e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -1.0791782732999997,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 11,
+      "source_segment": "forward-017",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.02,
+      "local_mass_weighted_length": 0.0282308739,
+      "log": "P04/segments/forward-017.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9861770446224004
+        ],
+        [
+          1,
+          3,
+          0.9506906758673234
+        ],
+        [
+          1,
+          4,
+          0.010701625441342398
+        ],
+        [
+          2,
+          3,
+          0.010701625440933978
+        ],
+        [
+          2,
+          4,
+          0.9506906758665112
+        ],
+        [
+          3,
+          4,
+          0.002336030454594074
+        ]
+      ]
+    },
+    {
+      "step": 11,
+      "fchk": "step-011.fchk",
+      "energy_hartree": -148.7649813256461,
+      "torsion_degrees": -132.9393972638164,
+      "gradient_max_hartree_per_bohr": 9.6929087e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -1.0509473993999998,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 12,
+      "source_segment": "forward-016",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.02,
+      "local_mass_weighted_length": 0.0284269891,
+      "log": "P04/segments/forward-016.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9862173565035128
+        ],
+        [
+          1,
+          3,
+          0.9506929850125352
+        ],
+        [
+          1,
+          4,
+          0.010545377323960563
+        ],
+        [
+          2,
+          3,
+          0.010545377322881912
+        ],
+        [
+          2,
+          4,
+          0.9506929850053933
+        ],
+        [
+          3,
+          4,
+          0.002417385283082469
+        ]
+      ]
+    },
+    {
+      "step": 12,
+      "fchk": "step-012.fchk",
+      "energy_hartree": -148.7649769447004,
+      "torsion_degrees": -134.2152112732769,
+      "gradient_max_hartree_per_bohr": 9.72692717e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -1.0225204102999998,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 13,
+      "source_segment": "forward-015",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0701688797,
+      "log": "P04/segments/forward-015.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9862595729663086
+        ],
+        [
+          1,
+          3,
+          0.9506995771140021
+        ],
+        [
+          1,
+          4,
+          0.01039056310692092
+        ],
+        [
+          2,
+          3,
+          0.010390563105870181
+        ],
+        [
+          2,
+          4,
+          0.9506995771070395
+        ],
+        [
+          3,
+          4,
+          0.002499391879963091
+        ]
+      ]
+    },
+    {
+      "step": 13,
+      "fchk": "step-013.fchk",
+      "energy_hartree": -148.7649651076237,
+      "torsion_degrees": -137.36331292492756,
+      "gradient_max_hartree_per_bohr": 0.000116216516,
+      "reaction_coordinate_sqrt_amu_bohr": -0.9523515305999999,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 14,
+      "source_segment": "forward-014",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.070621675,
+      "log": "P04/segments/forward-014.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9863628236161941
+        ],
+        [
+          1,
+          3,
+          0.9507092495272103
+        ],
+        [
+          1,
+          4,
+          0.010019232404887193
+        ],
+        [
+          2,
+          3,
+          0.010019232403905962
+        ],
+        [
+          2,
+          4,
+          0.950709249520695
+        ],
+        [
+          3,
+          4,
+          0.002698693615243329
+        ]
+      ]
+    },
+    {
+      "step": 14,
+      "fchk": "step-014.fchk",
+      "energy_hartree": -148.7649525647899,
+      "torsion_degrees": -140.53030118440537,
+      "gradient_max_hartree_per_bohr": 0.000111398501,
+      "reaction_coordinate_sqrt_amu_bohr": -0.8817298556,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 15,
+      "source_segment": "forward-013",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0697158768,
+      "log": "P04/segments/forward-013.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9864696121980552
+        ],
+        [
+          1,
+          3,
+          0.950724940119466
+        ],
+        [
+          1,
+          4,
+          0.009663751287793973
+        ],
+        [
+          2,
+          3,
+          0.00966375128681165
+        ],
+        [
+          2,
+          4,
+          0.950724940131406
+        ],
+        [
+          3,
+          4,
+          0.0028949547472028525
+        ]
+      ]
+    },
+    {
+      "step": 15,
+      "fchk": "step-015.fchk",
+      "energy_hartree": -148.7649403847215,
+      "torsion_degrees": -143.65532818410222,
+      "gradient_max_hartree_per_bohr": 0.000114493406,
+      "reaction_coordinate_sqrt_amu_bohr": -0.8120139787999999,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 16,
+      "source_segment": "forward-012",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0701511061,
+      "log": "P04/segments/forward-012.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9865738873339296
+        ],
+        [
+          1,
+          3,
+          0.9507360368701102
+        ],
+        [
+          1,
+          4,
+          0.009332829295674657
+        ],
+        [
+          2,
+          3,
+          0.009332829294252207
+        ],
+        [
+          2,
+          4,
+          0.9507360368761518
+        ],
+        [
+          3,
+          4,
+          0.003081350521292664
+        ]
+      ]
+    },
+    {
+      "step": 16,
+      "fchk": "step-016.fchk",
+      "energy_hartree": -148.7649289275314,
+      "torsion_degrees": -146.7987456708725,
+      "gradient_max_hartree_per_bohr": 9.96935435e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -0.7418628727,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 17,
+      "source_segment": "forward-011",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0693062421,
+      "log": "P04/segments/forward-011.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9866794047219922
+        ],
+        [
+          1,
+          3,
+          0.9507524355280139
+        ],
+        [
+          1,
+          4,
+          0.009022004295022458
+        ],
+        [
+          2,
+          3,
+          0.009022004294745853
+        ],
+        [
+          2,
+          4,
+          0.950752435527438
+        ],
+        [
+          3,
+          4,
+          0.0032609974854806672
+        ]
+      ]
+    },
+    {
+      "step": 17,
+      "fchk": "step-017.fchk",
+      "energy_hartree": -148.7649187815199,
+      "torsion_degrees": -149.90326596835826,
+      "gradient_max_hartree_per_bohr": 9.30907788e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -0.6725566305999999,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 18,
+      "source_segment": "forward-010",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0697169128,
+      "log": "P04/segments/forward-010.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9867800264447596
+        ],
+        [
+          1,
+          3,
+          0.950764006862586
+        ],
+        [
+          1,
+          4,
+          0.008738394425772907
+        ],
+        [
+          2,
+          3,
+          0.008738394425522945
+        ],
+        [
+          2,
+          4,
+          0.9507640068620615
+        ],
+        [
+          3,
+          4,
+          0.0034277340260508897
+        ]
+      ]
+    },
+    {
+      "step": 18,
+      "fchk": "step-018.fchk",
+      "energy_hartree": -148.7649099686886,
+      "torsion_degrees": -153.025324801737,
+      "gradient_max_hartree_per_bohr": 7.57825778e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -0.6028397177999999,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 19,
+      "source_segment": "forward-009",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0689659328,
+      "log": "P04/segments/forward-009.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.986878630786458
+        ],
+        [
+          1,
+          3,
+          0.9507794022146866
+        ],
+        [
+          1,
+          4,
+          0.008477962559495015
+        ],
+        [
+          2,
+          3,
+          0.008477962560497857
+        ],
+        [
+          2,
+          4,
+          0.9507794023788088
+        ],
+        [
+          3,
+          4,
+          0.0035843260255690092
+        ]
+      ]
+    },
+    {
+      "step": 19,
+      "fchk": "step-019.fchk",
+      "energy_hartree": -148.7649027005346,
+      "torsion_degrees": -156.1129751588742,
+      "gradient_max_hartree_per_bohr": 6.51913283e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -0.5338737849999999,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 20,
+      "source_segment": "forward-008",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0693385673,
+      "log": "P04/segments/forward-008.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9869698416647643
+        ],
+        [
+          1,
+          3,
+          0.9507904808403634
+        ],
+        [
+          1,
+          4,
+          0.00824612806175032
+        ],
+        [
+          2,
+          3,
+          0.008246128061279695
+        ],
+        [
+          2,
+          4,
+          0.9507904808498306
+        ],
+        [
+          3,
+          4,
+          0.0037257179872818608
+        ]
+      ]
+    },
+    {
+      "step": 20,
+      "fchk": "step-020.fchk",
+      "energy_hartree": -148.7648968136143,
+      "torsion_degrees": -159.2166735487816,
+      "gradient_max_hartree_per_bohr": 4.99524562e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -0.46453521769999995,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 21,
+      "source_segment": "forward-007",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0687132026,
+      "log": "P04/segments/forward-007.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9870554830770607
+        ],
+        [
+          1,
+          3,
+          0.9508036385050175
+        ],
+        [
+          1,
+          4,
+          0.008039660459983505
+        ],
+        [
+          2,
+          3,
+          0.008039660459200368
+        ],
+        [
+          2,
+          4,
+          0.9508036385084591
+        ],
+        [
+          3,
+          4,
+          0.003854003223257031
+        ]
+      ]
+    },
+    {
+      "step": 21,
+      "fchk": "step-021.fchk",
+      "energy_hartree": -148.7648922755263,
+      "torsion_degrees": -162.29182309412542,
+      "gradient_max_hartree_per_bohr": 3.95808966e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -0.3958220151,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 22,
+      "source_segment": "forward-006",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0690338246,
+      "log": "P04/segments/forward-006.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9871313567709591
+        ],
+        [
+          1,
+          3,
+          0.9508132431142813
+        ],
+        [
+          1,
+          4,
+          0.007862274931640507
+        ],
+        [
+          2,
+          3,
+          0.007862274931500862
+        ],
+        [
+          2,
+          4,
+          0.9508132431139803
+        ],
+        [
+          3,
+          4,
+          0.00396546301390854
+        ]
+      ]
+    },
+    {
+      "step": 22,
+      "fchk": "step-022.fchk",
+      "energy_hartree": -148.7648888569597,
+      "torsion_degrees": -165.38087757777478,
+      "gradient_max_hartree_per_bohr": 2.84012171e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -0.32678819049999996,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 23,
+      "source_segment": "forward-005",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0685605959,
+      "log": "P04/segments/forward-005.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9871983549015542
+        ],
+        [
+          1,
+          3,
+          0.9508233183084069
+        ],
+        [
+          1,
+          4,
+          0.007711763227979868
+        ],
+        [
+          2,
+          3,
+          0.007711763227595163
+        ],
+        [
+          2,
+          4,
+          0.9508233182827195
+        ],
+        [
+          3,
+          4,
+          0.004061400546523253
+        ]
+      ]
+    },
+    {
+      "step": 23,
+      "fchk": "step-023.fchk",
+      "energy_hartree": -148.7648864153213,
+      "torsion_degrees": -168.44838748645657,
+      "gradient_max_hartree_per_bohr": 2.0426444e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -0.2582275946,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 24,
+      "source_segment": "forward-004",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0689528009,
+      "log": "P04/segments/forward-004.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9872536112976843
+        ],
+        [
+          1,
+          3,
+          0.9508305204413441
+        ],
+        [
+          1,
+          4,
+          0.0075903191644321405
+        ],
+        [
+          2,
+          3,
+          0.007590319164189325
+        ],
+        [
+          2,
+          4,
+          0.9508305204448465
+        ],
+        [
+          3,
+          4,
+          0.0041394269014446775
+        ]
+      ]
+    },
+    {
+      "step": 24,
+      "fchk": "step-024.fchk",
+      "energy_hartree": -148.7648847404359,
+      "torsion_degrees": -171.53316890922144,
+      "gradient_max_hartree_per_bohr": 1.32896066e-05,
+      "reaction_coordinate_sqrt_amu_bohr": -0.1892747937,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 25,
+      "source_segment": "forward-003",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0688676787,
+      "log": "P04/segments/forward-003.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9872973862640162
+        ],
+        [
+          1,
+          3,
+          0.9508368989163408
+        ],
+        [
+          1,
+          4,
+          0.007496585174988036
+        ],
+        [
+          2,
+          3,
+          0.007496585174874876
+        ],
+        [
+          2,
+          4,
+          0.9508368989172566
+        ],
+        [
+          3,
+          4,
+          0.0042002337005358275
+        ]
+      ]
+    },
+    {
+      "step": 25,
+      "fchk": "step-025.fchk",
+      "energy_hartree": -148.7648836930493,
+      "torsion_degrees": -174.61393450154668,
+      "gradient_max_hartree_per_bohr": 7.75711676e-06,
+      "reaction_coordinate_sqrt_amu_bohr": -0.12040711500000001,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 26,
+      "source_segment": "forward-002",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.068759813,
+      "log": "P04/segments/forward-002.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.987328128783522
+        ],
+        [
+          1,
+          3,
+          0.9508411750818767
+        ],
+        [
+          1,
+          4,
+          0.0074316796376348105
+        ],
+        [
+          2,
+          3,
+          0.007431679637480106
+        ],
+        [
+          2,
+          4,
+          0.9508411750747112
+        ],
+        [
+          3,
+          4,
+          0.00424256074345127
+        ]
+      ]
+    },
+    {
+      "step": 26,
+      "fchk": "step-026.fchk",
+      "energy_hartree": -148.7648831525941,
+      "torsion_degrees": -177.68974720594608,
+      "gradient_max_hartree_per_bohr": 3.1616669e-06,
+      "reaction_coordinate_sqrt_amu_bohr": -0.051647302,
+      "stage": "native_gs2_accepted",
+      "direction": "forward",
+      "parent_step": 27,
+      "source_segment": "forward-001",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.051647302,
+      "log": "P04/segments/forward-001.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9873453853979863
+        ],
+        [
+          1,
+          3,
+          0.9508435505048953
+        ],
+        [
+          1,
+          4,
+          0.007395624200761539
+        ],
+        [
+          2,
+          3,
+          0.007395624200761348
+        ],
+        [
+          2,
+          4,
+          0.950843550504895
+        ],
+        [
+          3,
+          4,
+          0.004266148067587392
+        ]
+      ]
+    },
+    {
+      "step": 27,
+      "fchk": "step-027.fchk",
+      "energy_hartree": -148.7648830348284,
+      "torsion_degrees": 179.99999999913288,
+      "gradient_max_hartree_per_bohr": 4.63451499e-12,
+      "reaction_coordinate_sqrt_amu_bohr": 0.0,
+      "stage": "transition_state",
+      "direction": null,
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9873493007824855
+        ],
+        [
+          1,
+          3,
+          0.9508441066306577
+        ],
+        [
+          1,
+          4,
+          0.007387492330989681
+        ],
+        [
+          2,
+          3,
+          0.007387492330989681
+        ],
+        [
+          2,
+          4,
+          0.9508441066306577
+        ],
+        [
+          3,
+          4,
+          0.004271484327923577
+        ]
+      ]
+    },
+    {
+      "step": 28,
+      "fchk": "step-028.fchk",
+      "energy_hartree": -148.7648831525941,
+      "torsion_degrees": 177.68974719978783,
+      "gradient_max_hartree_per_bohr": 3.1616669e-06,
+      "reaction_coordinate_sqrt_amu_bohr": 0.051647302,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 27,
+      "source_segment": "reverse-001",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": -0.051647302,
+      "log": "P04/segments/reverse-001.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9873453853980665
+        ],
+        [
+          1,
+          3,
+          0.950843550504093
+        ],
+        [
+          1,
+          4,
+          0.007395624200803786
+        ],
+        [
+          2,
+          3,
+          0.007395624200803691
+        ],
+        [
+          2,
+          4,
+          0.9508435505040929
+        ],
+        [
+          3,
+          4,
+          0.0042661480675786085
+        ]
+      ]
+    },
+    {
+      "step": 29,
+      "fchk": "step-029.fchk",
+      "energy_hartree": -148.7648836930493,
+      "torsion_degrees": 174.61393449816262,
+      "gradient_max_hartree_per_bohr": 7.75711682e-06,
+      "reaction_coordinate_sqrt_amu_bohr": 0.12040711509999999,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 28,
+      "source_segment": "reverse-002",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0687598131,
+      "log": "P04/segments/reverse-002.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.987328128783691
+        ],
+        [
+          1,
+          3,
+          0.9508411750779701
+        ],
+        [
+          1,
+          4,
+          0.007431679637445878
+        ],
+        [
+          2,
+          3,
+          0.007431679637394396
+        ],
+        [
+          2,
+          4,
+          0.9508411750784068
+        ],
+        [
+          3,
+          4,
+          0.004242560743470313
+        ]
+      ]
+    },
+    {
+      "step": 30,
+      "fchk": "step-030.fchk",
+      "energy_hartree": -148.7648847404358,
+      "torsion_degrees": 171.5331688465622,
+      "gradient_max_hartree_per_bohr": 1.32896061e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 0.18927479409999998,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 29,
+      "source_segment": "reverse-003",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.068867679,
+      "log": "P04/segments/reverse-003.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9872973862676513
+        ],
+        [
+          1,
+          3,
+          0.9508368988899639
+        ],
+        [
+          1,
+          4,
+          0.007496585174572294
+        ],
+        [
+          2,
+          3,
+          0.0074965851745021775
+        ],
+        [
+          2,
+          4,
+          0.9508368988903766
+        ],
+        [
+          3,
+          4,
+          0.004200233700628573
+        ]
+      ]
+    },
+    {
+      "step": 31,
+      "fchk": "step-031.fchk",
+      "energy_hartree": -148.764886415321,
+      "torsion_degrees": 168.44838748645657,
+      "gradient_max_hartree_per_bohr": 2.04264506e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 0.25822759419999997,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 30,
+      "source_segment": "reverse-004",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0689528001,
+      "log": "P04/segments/reverse-004.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.987253611297624
+        ],
+        [
+          1,
+          3,
+          0.950830520429725
+        ],
+        [
+          1,
+          4,
+          0.007590319164661484
+        ],
+        [
+          2,
+          3,
+          0.007590319164392654
+        ],
+        [
+          2,
+          4,
+          0.9508305204331764
+        ],
+        [
+          3,
+          4,
+          0.00413942690136975
+        ]
+      ]
+    },
+    {
+      "step": 32,
+      "fchk": "step-032.fchk",
+      "energy_hartree": -148.7648888569585,
+      "torsion_degrees": 165.38087881455394,
+      "gradient_max_hartree_per_bohr": 2.84012015e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 0.3267881627,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 31,
+      "source_segment": "reverse-005",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0685605685,
+      "log": "P04/segments/reverse-005.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9871983549120815
+        ],
+        [
+          1,
+          3,
+          0.9508233163832092
+        ],
+        [
+          1,
+          4,
+          0.007711763055719882
+        ],
+        [
+          2,
+          3,
+          0.007711763056043972
+        ],
+        [
+          2,
+          4,
+          0.9508233164162632
+        ],
+        [
+          3,
+          4,
+          0.004061400466260389
+        ]
+      ]
+    },
+    {
+      "step": 33,
+      "fchk": "step-033.fchk",
+      "energy_hartree": -148.7648922755241,
+      "torsion_degrees": 162.291825004655,
+      "gradient_max_hartree_per_bohr": 3.95809083e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 0.3958219735,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 32,
+      "source_segment": "reverse-006",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0690338108,
+      "log": "P04/segments/reverse-006.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9871313564614106
+        ],
+        [
+          1,
+          3,
+          0.95081324169415
+        ],
+        [
+          1,
+          4,
+          0.007862274932943041
+        ],
+        [
+          2,
+          3,
+          0.007862274932333106
+        ],
+        [
+          2,
+          4,
+          0.9508132416971959
+        ],
+        [
+          3,
+          4,
+          0.003965463043554672
+        ]
+      ]
+    },
+    {
+      "step": 34,
+      "fchk": "step-034.fchk",
+      "energy_hartree": -148.7648968136092,
+      "torsion_degrees": 159.21667669680923,
+      "gradient_max_hartree_per_bohr": 4.99524136e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 0.46453514789999995,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 33,
+      "source_segment": "reverse-007",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0687131744,
+      "log": "P04/segments/reverse-007.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9870554841685755
+        ],
+        [
+          1,
+          3,
+          0.9508036388645963
+        ],
+        [
+          1,
+          4,
+          0.008039660392074818
+        ],
+        [
+          2,
+          3,
+          0.008039660391969797
+        ],
+        [
+          2,
+          4,
+          0.9508036388636053
+        ],
+        [
+          3,
+          4,
+          0.0038540033496083305
+        ]
+      ]
+    },
+    {
+      "step": 35,
+      "fchk": "step-035.fchk",
+      "energy_hartree": -148.7649027005263,
+      "torsion_degrees": 156.11297879306431,
+      "gradient_max_hartree_per_bohr": 6.51913534e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 0.5338737036,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 34,
+      "source_segment": "reverse-008",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0693385557,
+      "log": "P04/segments/reverse-008.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9869698417703883
+        ],
+        [
+          1,
+          3,
+          0.9507904818750159
+        ],
+        [
+          1,
+          4,
+          0.00824612788362628
+        ],
+        [
+          2,
+          3,
+          0.00824612788421667
+        ],
+        [
+          2,
+          4,
+          0.9507904819460199
+        ],
+        [
+          3,
+          4,
+          0.003725718227613761
+        ]
+      ]
+    },
+    {
+      "step": 36,
+      "fchk": "step-036.fchk",
+      "energy_hartree": -148.7649099686759,
+      "torsion_degrees": 153.0253296249209,
+      "gradient_max_hartree_per_bohr": 7.57824996e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 0.6028396074,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 35,
+      "source_segment": "reverse-009",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0689659038,
+      "log": "P04/segments/reverse-009.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9868786321997939
+        ],
+        [
+          1,
+          3,
+          0.9507794043195533
+        ],
+        [
+          1,
+          4,
+          0.00847796219567464
+        ],
+        [
+          2,
+          3,
+          0.008477962193965072
+        ],
+        [
+          2,
+          4,
+          0.9507794043255814
+        ],
+        [
+          3,
+          4,
+          0.0035843262582740216
+        ]
+      ]
+    },
+    {
+      "step": 37,
+      "fchk": "step-037.fchk",
+      "energy_hartree": -148.7649187815027,
+      "torsion_degrees": 149.90327138410134,
+      "gradient_max_hartree_per_bohr": 9.30908305e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 0.6725565095,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 36,
+      "source_segment": "reverse-010",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0697169021,
+      "log": "P04/segments/reverse-010.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9867800279261959
+        ],
+        [
+          1,
+          3,
+          0.9507640082941771
+        ],
+        [
+          1,
+          4,
+          0.008738394016603004
+        ],
+        [
+          2,
+          3,
+          0.008738394016478017
+        ],
+        [
+          2,
+          4,
+          0.9507640082939147
+        ],
+        [
+          3,
+          4,
+          0.003427734316409002
+        ]
+      ]
+    },
+    {
+      "step": 38,
+      "fchk": "step-038.fchk",
+      "energy_hartree": -148.7649289275078,
+      "torsion_degrees": 146.79875247444468,
+      "gradient_max_hartree_per_bohr": 9.96934277e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 0.7418627206,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 37,
+      "source_segment": "reverse-011",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0693062111,
+      "log": "P04/segments/reverse-011.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9866794068723489
+        ],
+        [
+          1,
+          3,
+          0.9507524352264274
+        ],
+        [
+          1,
+          4,
+          0.009022003608730372
+        ],
+        [
+          2,
+          3,
+          0.009022003608075181
+        ],
+        [
+          2,
+          4,
+          0.9507524352367956
+        ],
+        [
+          3,
+          4,
+          0.003260997877040793
+        ]
+      ]
+    },
+    {
+      "step": 39,
+      "fchk": "step-039.fchk",
+      "energy_hartree": -148.7649403846942,
+      "torsion_degrees": 143.65533530728766,
+      "gradient_max_hartree_per_bohr": 0.000114493498,
+      "reaction_coordinate_sqrt_amu_bohr": 0.8120138183000001,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 38,
+      "source_segment": "reverse-012",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0701510977,
+      "log": "P04/segments/reverse-012.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.986573887417566
+        ],
+        [
+          1,
+          3,
+          0.9507360363931516
+        ],
+        [
+          1,
+          4,
+          0.009332828615844925
+        ],
+        [
+          2,
+          3,
+          0.00933282861554116
+        ],
+        [
+          2,
+          4,
+          0.9507360363925248
+        ],
+        [
+          3,
+          4,
+          0.0030813509394915038
+        ]
+      ]
+    },
+    {
+      "step": 40,
+      "fchk": "step-040.fchk",
+      "energy_hartree": -148.7649525647549,
+      "torsion_degrees": 140.53030977263606,
+      "gradient_max_hartree_per_bohr": 0.00011139838,
+      "reaction_coordinate_sqrt_amu_bohr": 0.8817296622,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 39,
+      "source_segment": "reverse-013",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0697158439,
+      "log": "P04/segments/reverse-013.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9864696130389705
+        ],
+        [
+          1,
+          3,
+          0.9507249441461353
+        ],
+        [
+          1,
+          4,
+          0.009663750261670942
+        ],
+        [
+          2,
+          3,
+          0.009663750261340039
+        ],
+        [
+          2,
+          4,
+          0.9507249441454587
+        ],
+        [
+          3,
+          4,
+          0.0028949552872288018
+        ]
+      ]
+    },
+    {
+      "step": 41,
+      "fchk": "step-041.fchk",
+      "energy_hartree": -148.7649651075885,
+      "torsion_degrees": 137.36332195837852,
+      "gradient_max_hartree_per_bohr": 0.000116216659,
+      "reaction_coordinate_sqrt_amu_bohr": 0.9523513296,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 40,
+      "source_segment": "reverse-014",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0706216674,
+      "log": "P04/segments/reverse-014.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9863628157748898
+        ],
+        [
+          1,
+          3,
+          0.9507092519846447
+        ],
+        [
+          1,
+          4,
+          0.010019231021591812
+        ],
+        [
+          2,
+          3,
+          0.010019231021262266
+        ],
+        [
+          2,
+          4,
+          0.950709251982445
+        ],
+        [
+          3,
+          4,
+          0.00269869416384327
+        ]
+      ]
+    },
+    {
+      "step": 42,
+      "fchk": "step-042.fchk",
+      "energy_hartree": -148.7649769446632,
+      "torsion_degrees": 134.21522184011255,
+      "gradient_max_hartree_per_bohr": 9.72692043e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 1.0225201792,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 41,
+      "source_segment": "reverse-015",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.05,
+      "local_mass_weighted_length": 0.0701688496,
+      "log": "P04/segments/reverse-015.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9862595633075273
+        ],
+        [
+          1,
+          3,
+          0.9506995792106001
+        ],
+        [
+          1,
+          4,
+          0.010390561666067194
+        ],
+        [
+          2,
+          3,
+          0.010390561682854689
+        ],
+        [
+          2,
+          4,
+          0.9506995788368956
+        ],
+        [
+          3,
+          4,
+          0.0024993925322219787
+        ]
+      ]
+    },
+    {
+      "step": 43,
+      "fchk": "step-043.fchk",
+      "energy_hartree": -148.7649813256122,
+      "torsion_degrees": 132.9394076318398,
+      "gradient_max_hartree_per_bohr": 9.69292634e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 1.0509471672000001,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 42,
+      "source_segment": "reverse-016",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.02,
+      "local_mass_weighted_length": 0.028426988,
+      "log": "P04/segments/reverse-016.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9862173594916274
+        ],
+        [
+          1,
+          3,
+          0.9506929836087481
+        ],
+        [
+          1,
+          4,
+          0.010545376143522996
+        ],
+        [
+          2,
+          3,
+          0.010545376143324346
+        ],
+        [
+          2,
+          4,
+          0.9506929836083514
+        ],
+        [
+          3,
+          4,
+          0.002417385960266473
+        ]
+      ]
+    },
+    {
+      "step": 44,
+      "fchk": "step-044.fchk",
+      "energy_hartree": -148.7649853207192,
+      "torsion_degrees": 131.67216341820705,
+      "gradient_max_hartree_per_bohr": 8.11098799e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 1.0791780308,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 43,
+      "source_segment": "reverse-017",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.02,
+      "local_mass_weighted_length": 0.0282308636,
+      "log": "P04/segments/reverse-017.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9861770381597461
+        ],
+        [
+          1,
+          3,
+          0.9506906755409928
+        ],
+        [
+          1,
+          4,
+          0.010701624284233918
+        ],
+        [
+          2,
+          3,
+          0.010701624283825498
+        ],
+        [
+          2,
+          4,
+          0.9506906755401803
+        ],
+        [
+          3,
+          4,
+          0.002336031165558803
+        ]
+      ]
+    },
+    {
+      "step": 45,
+      "fchk": "step-045.fchk",
+      "energy_hartree": -148.7649889045965,
+      "torsion_degrees": 130.392210535882,
+      "gradient_max_hartree_per_bohr": 7.54987744e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 1.1076847515000001,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 44,
+      "source_segment": "reverse-018",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.02,
+      "local_mass_weighted_length": 0.0285067207,
+      "log": "P04/segments/reverse-018.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9861356456338641
+        ],
+        [
+          1,
+          3,
+          0.9506851550071896
+        ],
+        [
+          1,
+          4,
+          0.010861329395532856
+        ],
+        [
+          2,
+          3,
+          0.01086132939626035
+        ],
+        [
+          2,
+          4,
+          0.9506851550297971
+        ],
+        [
+          3,
+          4,
+          0.002253312543051024
+        ]
+      ]
+    },
+    {
+      "step": 46,
+      "fchk": "step-046.fchk",
+      "energy_hartree": -148.7649919198375,
+      "torsion_degrees": 129.1203035217074,
+      "gradient_max_hartree_per_bohr": 5.72101062e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 1.1360063883000002,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 45,
+      "source_segment": "reverse-019",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.02,
+      "local_mass_weighted_length": 0.0283216368,
+      "log": "P04/segments/reverse-019.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9860958401451825
+        ],
+        [
+          1,
+          3,
+          0.9506829259856121
+        ],
+        [
+          1,
+          4,
+          0.011022110510879302
+        ],
+        [
+          2,
+          3,
+          0.011022110510448485
+        ],
+        [
+          2,
+          4,
+          0.9506829259847621
+        ],
+        [
+          3,
+          4,
+          0.0021713555458212487
+        ]
+      ]
+    },
+    {
+      "step": 47,
+      "fchk": "step-047.fchk",
+      "energy_hartree": -148.7649943057566,
+      "torsion_degrees": 127.83624720453179,
+      "gradient_max_hartree_per_bohr": 4.52481288e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 1.1645910191000002,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 46,
+      "source_segment": "reverse-020",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.02,
+      "local_mass_weighted_length": 0.0285846308,
+      "log": "P04/segments/reverse-020.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9860553494884738
+        ],
+        [
+          1,
+          3,
+          0.9506787067315092
+        ],
+        [
+          1,
+          4,
+          0.011185939065668758
+        ],
+        [
+          2,
+          3,
+          0.011185939055794156
+        ],
+        [
+          2,
+          4,
+          0.9506787063256404
+        ],
+        [
+          3,
+          4,
+          0.002088470930902491
+        ]
+      ]
+    },
+    {
+      "step": 48,
+      "fchk": "step-048.fchk",
+      "energy_hartree": -148.7649952108484,
+      "torsion_degrees": 127.19798622440513,
+      "gradient_max_hartree_per_bohr": 3.38726067e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 1.1787971713000003,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 47,
+      "source_segment": "reverse-021",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.01,
+      "local_mass_weighted_length": 0.0142061522,
+      "log": "P04/segments/reverse-021.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9860357482891866
+        ],
+        [
+          1,
+          3,
+          0.9506779535719546
+        ],
+        [
+          1,
+          4,
+          0.011268028312488774
+        ],
+        [
+          2,
+          3,
+          0.011268028311055701
+        ],
+        [
+          2,
+          4,
+          0.9506779535877616
+        ],
+        [
+          3,
+          4,
+          0.0020474577496137282
+        ]
+      ]
+    },
+    {
+      "step": 49,
+      "fchk": "step-049.fchk",
+      "energy_hartree": -148.7649959149888,
+      "torsion_degrees": 126.5542376926752,
+      "gradient_max_hartree_per_bohr": 2.63631342e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 1.1931233058000004,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 48,
+      "source_segment": "reverse-022",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.01,
+      "local_mass_weighted_length": 0.0143261345,
+      "log": "P04/segments/reverse-022.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9860157178117729
+        ],
+        [
+          1,
+          3,
+          0.9506761200938121
+        ],
+        [
+          1,
+          4,
+          0.01135106680064497
+        ],
+        [
+          2,
+          3,
+          0.011351066800418306
+        ],
+        [
+          2,
+          4,
+          0.9506761200933685
+        ],
+        [
+          3,
+          4,
+          0.0020060563978271735
+        ]
+      ]
+    },
+    {
+      "step": 50,
+      "fchk": "step-050.fchk",
+      "energy_hartree": -148.7649963918864,
+      "torsion_degrees": 125.91440552876675,
+      "gradient_max_hartree_per_bohr": 1.52072139e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 1.2073606439000004,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 49,
+      "source_segment": "reverse-023",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.01,
+      "local_mass_weighted_length": 0.0142373381,
+      "log": "P04/segments/reverse-023.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.985996154959118
+        ],
+        [
+          1,
+          3,
+          0.9506751926997725
+        ],
+        [
+          1,
+          4,
+          0.01143397200155439
+        ],
+        [
+          2,
+          3,
+          0.011433972001324927
+        ],
+        [
+          2,
+          4,
+          0.9506751926993243
+        ],
+        [
+          3,
+          4,
+          0.0019650663834264465
+        ]
+      ]
+    },
+    {
+      "step": 51,
+      "fchk": "step-051.fchk",
+      "energy_hartree": -148.7649965430141,
+      "torsion_degrees": 125.59198938243213,
+      "gradient_max_hartree_per_bohr": 1.04716745e-05,
+      "reaction_coordinate_sqrt_amu_bohr": 1.2145341572700004,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 50,
+      "source_segment": "reverse-024",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.005,
+      "local_mass_weighted_length": 0.00717351337,
+      "log": "P04/segments/reverse-024.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9859862314745584
+        ],
+        [
+          1,
+          3,
+          0.9506744895264928
+        ],
+        [
+          1,
+          4,
+          0.011475835049432576
+        ],
+        [
+          2,
+          3,
+          0.011475835047941248
+        ],
+        [
+          2,
+          4,
+          0.9506744895427559
+        ],
+        [
+          3,
+          4,
+          0.0019444259824789776
+        ]
+      ]
+    },
+    {
+      "step": 52,
+      "fchk": "step-052.fchk",
+      "energy_hartree": -148.7649966314561,
+      "torsion_degrees": 125.27080244561597,
+      "gradient_max_hartree_per_bohr": 4.77108454e-06,
+      "reaction_coordinate_sqrt_amu_bohr": 1.2216799014000004,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 51,
+      "source_segment": "reverse-025",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.005,
+      "local_mass_weighted_length": 0.00714574413,
+      "log": "P04/segments/reverse-025.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9859764533615301
+        ],
+        [
+          1,
+          3,
+          0.9506740228945147
+        ],
+        [
+          1,
+          4,
+          0.01151761725800765
+        ],
+        [
+          2,
+          3,
+          0.011517617257578706
+        ],
+        [
+          2,
+          4,
+          0.9506740228917534
+        ],
+        [
+          3,
+          4,
+          0.0019239101361210249
+        ]
+      ]
+    },
+    {
+      "step": 53,
+      "fchk": "step-053.fchk",
+      "energy_hartree": -148.7649966558122,
+      "torsion_degrees": 124.94815463808676,
+      "gradient_max_hartree_per_bohr": 7.37072166e-07,
+      "reaction_coordinate_sqrt_amu_bohr": 1.2288576371100004,
+      "stage": "native_gs2_accepted",
+      "direction": "reverse",
+      "parent_step": 52,
+      "source_segment": "reverse-026",
+      "local_accepted_point": 1,
+      "step_size_bohr": 0.005,
+      "local_mass_weighted_length": 0.00717773571,
+      "log": "P04/segments/reverse-026.log",
+      "mayer_orders": [
+        [
+          1,
+          2,
+          0.9859666084738349
+        ],
+        [
+          1,
+          3,
+          0.9506734910286543
+        ],
+        [
+          1,
+          4,
+          0.011559646524860221
+        ],
+        [
+          2,
+          3,
+          0.011559646524392838
+        ],
+        [
+          2,
+          4,
+          0.9506734910277441
+        ],
+        [
+          3,
+          4,
+          0.001903324303641123
+        ]
+      ]
+    }
+  ],
+  "endpoints": {
+    "forward": {
+      "name": "P04-native-forward-frequency",
+      "frequencies_cm1": [
+        185.0169,
+        1486.9402,
+        1589.7743,
+        1780.9191,
+        4140.851,
+        4148.2252
+      ],
+      "gradient_max": 7.37292221e-07,
+      "energy_hartree": -148.7649966558123,
+      "torsion_degrees": -124.94814243960309,
+      "step": 1
+    },
+    "reverse": {
+      "name": "P04-native-reverse-frequency",
+      "frequencies_cm1": [
+        185.0168,
+        1486.9402,
+        1589.7743,
+        1780.9191,
+        4140.8511,
+        4148.2252
+      ],
+      "gradient_max": 7.37072173e-07,
+      "energy_hartree": -148.7649966558125,
+      "torsion_degrees": 124.94815463808676,
+      "step": 53
+    }
+  },
+  "checks": {
+    "status": "Passed",
+    "native_segments": 52,
+    "frames": 53,
+    "ts_step": 27,
+    "fchk_byte_identical_count": 53,
+    "maximum_parent_coordinate_error_bohr": 6.2045748500000005e-12,
+    "maximum_wave_endpoint_coordinate_error_bohr": 0.0,
+    "maximum_density_trace_error": 3.433236273053808e-08,
+    "maximum_mo_orthogonality_error": 5.571021977068824e-09,
+    "maximum_outward_energy_increase_hartree": {
+      "forward": -2.435362489450199e-08,
+      "reverse": -2.4356097583222436e-08
+    },
+    "ts_frequencies_cm1": [
+      -48.1468099,
+      1485.83924,
+      1493.75933,
+      1885.51612,
+      4168.70698,
+      4188.61286
+    ],
+    "ts_torsional_mode_out_of_plane_fraction": 1.0,
+    "irc_parser": "Passed",
+    "mayer_parser": "Passed",
+    "mayer_pairs": 318,
+    "independent_scientific_signoff": "Not Run",
+    "blender_gui": "Not Run"
+  },
+  "files": {
+    "P04/step-001.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90527,
+      "sha256": "2de10d9a30ad24a5b9be4c87597e47488dab0e7fb4b4c8f18e6ddee794c538ba",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-026/result.fchk",
+      "original_sha256": "2de10d9a30ad24a5b9be4c87597e47488dab0e7fb4b4c8f18e6ddee794c538ba",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-026.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 180,
+      "sha256": "87bdab8b0f59634a2e2faa9778724bb9fc6f4aae97c639194d1f61cf27f20daa",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-026/input.gjf",
+      "original_sha256": "3334b4e89737c6d99e18987619fd957c7abe4830dbb94a2869289e7c9fa50844",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-026.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 59615,
+      "sha256": "31c2f5aed3ff37820e9e24bfbe9b1c981eb60df1cdbad4f75058bbd889af8662",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-026/output.log",
+      "original_sha256": "15c4cb652bd9b9bc274165db803072c596984435e0ddbb6d556de736143339b5",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-002.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90527,
+      "sha256": "4e7faea05a9d3315180c6c4bb27f06663d217f8d9f292289e8875add4630d5b0",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-025/result.fchk",
+      "original_sha256": "4e7faea05a9d3315180c6c4bb27f06663d217f8d9f292289e8875add4630d5b0",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-025.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 180,
+      "sha256": "87bdab8b0f59634a2e2faa9778724bb9fc6f4aae97c639194d1f61cf27f20daa",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-025/input.gjf",
+      "original_sha256": "3334b4e89737c6d99e18987619fd957c7abe4830dbb94a2869289e7c9fa50844",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-025.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 59242,
+      "sha256": "338af5eac6ffda58663e78dbbaff7f29bf3b1d55e6da5880e6433e5f0314fc9d",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-025/output.log",
+      "original_sha256": "19bdaf4881bdc76a9fd8263e5627f44b039537acde1e5f558165c2ee9d22be4f",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-003.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90527,
+      "sha256": "e1d1a2635e002c489667df31e655719191ef9c81d4f5c77157fd056ac5e1ecc1",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-024/result.fchk",
+      "original_sha256": "e1d1a2635e002c489667df31e655719191ef9c81d4f5c77157fd056ac5e1ecc1",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-024.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 180,
+      "sha256": "87bdab8b0f59634a2e2faa9778724bb9fc6f4aae97c639194d1f61cf27f20daa",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-024/input.gjf",
+      "original_sha256": "3334b4e89737c6d99e18987619fd957c7abe4830dbb94a2869289e7c9fa50844",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-024.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 59307,
+      "sha256": "91de50e7c48fb27502fc279f88a0b3892ffb528c6bda6a5ee28b874089ac5ab1",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-024/output.log",
+      "original_sha256": "ee9d08f4c494c257e41ffeca0cf97f1d27ce76c2f7312a57af8fa6e6fffbbc7a",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-004.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "dc2b2c3ef086543d07307b42003106ee9d4642ad861adc485e8ac9f5fe930550",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-023/result.fchk",
+      "original_sha256": "dc2b2c3ef086543d07307b42003106ee9d4642ad861adc485e8ac9f5fe930550",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-023.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "fa1f735e561e990e8ce232245975c27137fd4057a45c62a194efd8d2eb7805b6",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-023/input.gjf",
+      "original_sha256": "c9a7dca466e91e32d8a26894737b3f5577567384e0cf52cdf127aba5a0c1c986",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-023.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 60112,
+      "sha256": "ca835a25012f1a56a86540e18835047fd84f08328ae44406f106acde94b8da76",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-023/output.log",
+      "original_sha256": "5caa12aa6c8ca84d92f067efabf0696b8b11cc6e061e1c7b5986d11bbace492b",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-005.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "309e157b80e6fbcffc2909d8972999653990a3b111916ba11c31fbfadc8cb912",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-022/result.fchk",
+      "original_sha256": "309e157b80e6fbcffc2909d8972999653990a3b111916ba11c31fbfadc8cb912",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-022.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "fa1f735e561e990e8ce232245975c27137fd4057a45c62a194efd8d2eb7805b6",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-022/input.gjf",
+      "original_sha256": "c9a7dca466e91e32d8a26894737b3f5577567384e0cf52cdf127aba5a0c1c986",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-022.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 60755,
+      "sha256": "b3aa30353d13c026cc4327ea81325534add254cd42dc3bf79d12535f0b21be64",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-022/output.log",
+      "original_sha256": "b60f2895a278aef324c2153d72a2449bdb64811f2fa83a55389f43e57380d662",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-006.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "3e857e0d85bcef21b08a4f3126c9018969245ac09415f0b3952f90bdbfbcb1b5",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-021/result.fchk",
+      "original_sha256": "3e857e0d85bcef21b08a4f3126c9018969245ac09415f0b3952f90bdbfbcb1b5",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-021.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "fa1f735e561e990e8ce232245975c27137fd4057a45c62a194efd8d2eb7805b6",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-021/input.gjf",
+      "original_sha256": "c9a7dca466e91e32d8a26894737b3f5577567384e0cf52cdf127aba5a0c1c986",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-021.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 60140,
+      "sha256": "028c773f8e8e95493f47922795453c3d44a15465d8cc5bfc9c154198da7c5cf1",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-021/output.log",
+      "original_sha256": "7e914086cf88d79528dbc22ed1833b8070af1edbfeb0ab41caa4a85a3150927d",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-007.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "7c8b0383c66bc43c675c1704a0195df03eed765cf8a412b02e9f1cc6933235b6",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-020/result.fchk",
+      "original_sha256": "7c8b0383c66bc43c675c1704a0195df03eed765cf8a412b02e9f1cc6933235b6",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-020.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "f1890e1268475c445a2dea4e1b0316954976ffa40eb6c4cd438489411474a6b5",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-020/input.gjf",
+      "original_sha256": "c5d55352389b5ac1de6876ccf172e84b5de71a4f36f4990d2cdeb872d3023e76",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-020.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73067,
+      "sha256": "3303d015e84fa50f259e91a87c2c2c768e2333eb7876b7a7741b2cbd285a4fe4",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-020/output.log",
+      "original_sha256": "c1d079e3849218951e1260728d67c525fa8a2779085a353c6e39f9aa770e6670",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-008.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "f4324097a653a2b9dfaca19018f2869514de4fe08eef140847e3904b58ca39f1",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-019/result.fchk",
+      "original_sha256": "f4324097a653a2b9dfaca19018f2869514de4fe08eef140847e3904b58ca39f1",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-019.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "f1890e1268475c445a2dea4e1b0316954976ffa40eb6c4cd438489411474a6b5",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-019/input.gjf",
+      "original_sha256": "c5d55352389b5ac1de6876ccf172e84b5de71a4f36f4990d2cdeb872d3023e76",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-019.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 72270,
+      "sha256": "21fa2749cb63447280a257954ecea58059efd818a71671040ba72e2f72be9b73",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-019/output.log",
+      "original_sha256": "a91e3cbab251f2e3b3498917d85591c6e47295905b5b0fccafdf041ba950e104",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-009.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "b41b643dfe38a97384cae9ef91f4601b248302083e109a16dde2a1ac236fc75b",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-018/result.fchk",
+      "original_sha256": "b41b643dfe38a97384cae9ef91f4601b248302083e109a16dde2a1ac236fc75b",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-018.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "f1890e1268475c445a2dea4e1b0316954976ffa40eb6c4cd438489411474a6b5",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-018/input.gjf",
+      "original_sha256": "c5d55352389b5ac1de6876ccf172e84b5de71a4f36f4990d2cdeb872d3023e76",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-018.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73024,
+      "sha256": "d860772c01afd46be0d1581ac23e062ec1b6cd170595e7386f41aa0392ec3cb6",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-018/output.log",
+      "original_sha256": "d2e42f578c0434ce655e4ad42d8519b574d9b8ce9cd3a6b98d2025b3d87733c0",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-010.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "2a00da98ea62b267064da657bd00a91a47d11b5377ce21f67d66ce2791bbb539",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-017/result.fchk",
+      "original_sha256": "2a00da98ea62b267064da657bd00a91a47d11b5377ce21f67d66ce2791bbb539",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-017.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "f1890e1268475c445a2dea4e1b0316954976ffa40eb6c4cd438489411474a6b5",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-017/input.gjf",
+      "original_sha256": "c5d55352389b5ac1de6876ccf172e84b5de71a4f36f4990d2cdeb872d3023e76",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-017.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 72931,
+      "sha256": "fda2efe310d46a02526506fb1ab8042cd72679395ccda7617f2fb1fd5017682f",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-017/output.log",
+      "original_sha256": "b5018d4ca055c98c26753dd708adc4ccda712f4818c773ca30e0c3287ed0821e",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-011.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "2d739efe87daad93bf2d7cdb781840b4df8c150e25e2a63ccd83bab8b5b2dd81",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-016/result.fchk",
+      "original_sha256": "2d739efe87daad93bf2d7cdb781840b4df8c150e25e2a63ccd83bab8b5b2dd81",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-016.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "f1890e1268475c445a2dea4e1b0316954976ffa40eb6c4cd438489411474a6b5",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-016/input.gjf",
+      "original_sha256": "c5d55352389b5ac1de6876ccf172e84b5de71a4f36f4990d2cdeb872d3023e76",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-016.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73228,
+      "sha256": "11d2f75006d2552fb98f3600d37da0f7fd970b874167fd7909d86183f776b864",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-016/output.log",
+      "original_sha256": "b74cfa2b8bcf1d510e8e7c4d0943f5d2fdf0e30ace47ab6aab6d4828b83dc64a",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-012.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "c5fb8ef72ce512c5d89e6bfe3baae234a260dcd606ec277229706b98fa67f3bc",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-015/result.fchk",
+      "original_sha256": "c5fb8ef72ce512c5d89e6bfe3baae234a260dcd606ec277229706b98fa67f3bc",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-015.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-015/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-015.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73657,
+      "sha256": "9f8f2de2dfd1dcaf5cb0546de5b75f82be32da8247fd0256ec8ea3d907b77cec",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-015/output.log",
+      "original_sha256": "ef7e4a0bd34e0b079dfc89c058dbb938c5f590fe4dc7a2ddd4c99615b9bea49a",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-013.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "72099325e06d0e092ab3f470e4ef5b2a75d4cdc2685f989850c5e293e49027a2",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-014/result.fchk",
+      "original_sha256": "72099325e06d0e092ab3f470e4ef5b2a75d4cdc2685f989850c5e293e49027a2",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-014.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-014/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-014.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 74714,
+      "sha256": "5c081e63056628083b78182dc8aa24b7c4cbdef5d090e0aa8e52fec85450bc0d",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-014/output.log",
+      "original_sha256": "bdb9542a549055d6d854efb506289aeb3cc8f247be52ac35f930ab076bb01296",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-014.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "67794dfb4f224176fbacc7d3ebf1de4a35f769babe7be3d4021111efd4d07dc3",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-013/result.fchk",
+      "original_sha256": "67794dfb4f224176fbacc7d3ebf1de4a35f769babe7be3d4021111efd4d07dc3",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-013.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-013/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-013.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73875,
+      "sha256": "d140e0ec5f585cafd95db48caf9d65b9d9c214abd8847cbc4d2c5a85f1577202",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-013/output.log",
+      "original_sha256": "928524d8bc2e4d6526627bf313957ac687281c336d444e54e262f9d195132f6f",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-015.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "2ce52411e644f9fd886b3c789c4e156ec4f44643b921394b6cca3f7be226c285",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-012/result.fchk",
+      "original_sha256": "2ce52411e644f9fd886b3c789c4e156ec4f44643b921394b6cca3f7be226c285",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-012.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-012/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-012.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 74432,
+      "sha256": "a4f090571dde9f51ec03b6f8c2133056533ad27500e8f9d9b5ad29f7a8080c22",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-012/output.log",
+      "original_sha256": "ddd52d2bde3dc75d1dcb270a6042809b5264a5c7a85bc0d5500d25d446960bf5",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-016.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "709a89351b919e6cbed7621afecf31d6041917850bfc551293301903e3a070be",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-011/result.fchk",
+      "original_sha256": "709a89351b919e6cbed7621afecf31d6041917850bfc551293301903e3a070be",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-011.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-011/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-011.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73987,
+      "sha256": "fd9692ce4b3aca7be363b0f2494e39a32f4868643395451741ee3bbce8fbc850",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-011/output.log",
+      "original_sha256": "373ce4ee35e3f31e1f268a76070ba7cf67565c276aa47f81d187745451599bd4",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-017.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "1a5622bd98af383d99295e76717d1fc313f0378bd5e8b524df0b105a8aa15d7d",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-010/result.fchk",
+      "original_sha256": "1a5622bd98af383d99295e76717d1fc313f0378bd5e8b524df0b105a8aa15d7d",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-010.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-010/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-010.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 74579,
+      "sha256": "27c74645959b89804c8041bada6a5a2a744f760060c0b6e0fbf2ba0c7eecf48d",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-010/output.log",
+      "original_sha256": "094c32415e906f92ee3e8edfd7e52091c084a43c243ab042540889776f8b43b5",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-018.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "a74b35b940d7a4b7bd349ad865a1cbddb881e92e4cc5201ef76f97107b7fc6ba",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-009/result.fchk",
+      "original_sha256": "a74b35b940d7a4b7bd349ad865a1cbddb881e92e4cc5201ef76f97107b7fc6ba",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-009.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-009/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-009.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73854,
+      "sha256": "e2020c2a4d702572602cf00a45d6e67ceaa9d2833a56baba44951c2e4384fa7a",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-009/output.log",
+      "original_sha256": "ff0c5fcc0e348d7011b95a4ea266840d37ecd58e9743e2139bba571c25a641dc",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-019.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "5bc2c9aae31422494641a8f530396168c60d4649355f288d86efd1d254d77bb4",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-008/result.fchk",
+      "original_sha256": "5bc2c9aae31422494641a8f530396168c60d4649355f288d86efd1d254d77bb4",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-008.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-008/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-008.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73977,
+      "sha256": "14a3b67c64ce4ad0f74c3062d7ffbaf9228456be7fb27d26568862aec65aaf7b",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-008/output.log",
+      "original_sha256": "b2b78629f29f1368d1974c60c24651a1698653dfb300b76bed92023dc91dafa2",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-020.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "5f9e3ca3af67f435338a1ddcf353b5709984843205ecc5803451f815629317ab",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-007/result.fchk",
+      "original_sha256": "5f9e3ca3af67f435338a1ddcf353b5709984843205ecc5803451f815629317ab",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-007.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-007/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-007.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73953,
+      "sha256": "fa623c77a03251dabba47739daf75092c2f3940985683beb9a1c52257294abc4",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-007/output.log",
+      "original_sha256": "158db590c259b171337c85e8c72e6297cbef476d49a7ced47a92aaeaeed75a0d",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-021.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "261ee574e9fc862fc6eff14687ed356af9c171a35b6f82a37408d8d5f854a815",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-006/result.fchk",
+      "original_sha256": "261ee574e9fc862fc6eff14687ed356af9c171a35b6f82a37408d8d5f854a815",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-006.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-006/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-006.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73926,
+      "sha256": "330c0281956422fab8db4f7c64a33228492a1c687bad348c86839613a181f67c",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-006/output.log",
+      "original_sha256": "18b8046a9eecf79be3d9a99055658851c679ed1b10db7417dad65c0e4f490bb5",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-022.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "c0f73fe965f2ce7c71b95681a2d52b4426279336c9fac296fdbd4da1a7306788",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-005/result.fchk",
+      "original_sha256": "c0f73fe965f2ce7c71b95681a2d52b4426279336c9fac296fdbd4da1a7306788",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-005.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-005/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-005.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73833,
+      "sha256": "cbac5d543610ced8b4808ba7b1df1f4e16f3d63d9b5865a16c18d73fcc133f33",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-005/output.log",
+      "original_sha256": "617cf45af34f7e8ff52d55b0b70eaeaf7f9a33fc12276578211de79a0da2fe30",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-023.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "89b7d6ac5e712df9ceebc65e9a031049ced972bffa4e33d8c912c5e69820ce9b",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-004/result.fchk",
+      "original_sha256": "89b7d6ac5e712df9ceebc65e9a031049ced972bffa4e33d8c912c5e69820ce9b",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-004.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-004/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-004.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 60998,
+      "sha256": "fcce6084e84fc88a3e8163c66b1a65b7b5a2f412497c64e5589c958d4742016f",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-004/output.log",
+      "original_sha256": "83ee2d00f685a5f338c01db7843d8796bef3f52f4fb68db47feffcc5a8406964",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-024.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "4034473042e1ea7ac42c3f9ba240df53d1d95baba37dd6472c2d077adc3522ff",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-003/result.fchk",
+      "original_sha256": "4034473042e1ea7ac42c3f9ba240df53d1d95baba37dd6472c2d077adc3522ff",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-003.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-003/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-003.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 89354,
+      "sha256": "003214dc6a1a4fbe28cb3dee960873ce1a7918d8c7d6ab181ba510df6b0686b2",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-003/output.log",
+      "original_sha256": "ee522eda0f537389208b79917d82789c2857c556c61680bb89f15ec6e02267ad",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-025.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "5851b43b2655bdb00e5cb65a4b49ab038308d9491633260e49d41fd5907123b0",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-002/result.fchk",
+      "original_sha256": "5851b43b2655bdb00e5cb65a4b49ab038308d9491633260e49d41fd5907123b0",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-002.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-002/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-002.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 74800,
+      "sha256": "53e0259b350cfdd4af4c2b3e329b5cbbd7fa2261bdc322eca0e06cd9318855d9",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-002/output.log",
+      "original_sha256": "f6f76ce0327a337fb1e35b9c77ef798e32b91de368892c58a506d58caa777f0b",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-026.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "25a214665cb24389b46c5a05449d775bfb487a36b138776a9eed51233b585da0",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-001/result.fchk",
+      "original_sha256": "25a214665cb24389b46c5a05449d775bfb487a36b138776a9eed51233b585da0",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-001.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 164,
+      "sha256": "504d0dfac5b2f2c4c3f06c34673394a83adadee6394398e71220a2c814c9d28c",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-001/input.gjf",
+      "original_sha256": "b5e65b5f85225e826f42c9f59029cc1862859a24f0bc766c5454e2f862933de3",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/forward-001.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 60396,
+      "sha256": "b5589966dc5b2ac9e1d57489cb8e482d1c20812c43fb399bfe7ccbad4c7d9a82",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-001/output.log",
+      "original_sha256": "e0a6cb63a303ed1b1511defbba48f68a7ea269cf559a8d856d2cb4ae7d0bd4c1",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-027.fchk": {
+      "role": "Native Gaussian wavefunction at the TS",
+      "bytes": 96878,
+      "sha256": "b3f7f063aae4f897dd895a94804977a5bf2a32c58bc42acecf10e74275dd462a",
+      "original": ".local/gaussian/native-irc-20261024/download/P04-ts-reseeded/result.fchk",
+      "original_sha256": "b3f7f063aae4f897dd895a94804977a5bf2a32c58bc42acecf10e74275dd462a",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-028.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "f89e31875cbeed7a890ce2d8b1f41962fcb8ff77c43a20da58d3fa15664d1550",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-001/result.fchk",
+      "original_sha256": "f89e31875cbeed7a890ce2d8b1f41962fcb8ff77c43a20da58d3fa15664d1550",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-001.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 164,
+      "sha256": "22dbacfa0aa9ed73b50630e847f0859d7e8faf39f76145cf8a4d38a24e2dcbf7",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-001/input.gjf",
+      "original_sha256": "7a47fe390b06be10dff570452e7d52788732f2e29920c3559814d36b72b0f5a5",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-001.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 60398,
+      "sha256": "dd794955c329ea6e296c77d27a73320d47b76be6b562c8f3b7e68e8290f0e94f",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-001/output.log",
+      "original_sha256": "1200349050e74d1e5cdd7492a51f1cbb32499333a5da61b0a148b74698540908",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-029.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "09168b95282c5e5c6db3b5533e73e0b70619a3222941f2804d0b3d36849fdd5f",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-002/result.fchk",
+      "original_sha256": "09168b95282c5e5c6db3b5533e73e0b70619a3222941f2804d0b3d36849fdd5f",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-002.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-002/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-002.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 74712,
+      "sha256": "74198eb5d2a71f0dbd7f68be1fe807d1711eba7d4389db66e96e0eee64244659",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-002/output.log",
+      "original_sha256": "e39cf628f3d8f89c893249d70f1a0f4516e64ff89b340d64ae1cc0214ab5266b",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-030.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "0ae8ab50bf383038df7e2e4088e76d70a0576482eed80b222fcca5143442e716",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-003/result.fchk",
+      "original_sha256": "0ae8ab50bf383038df7e2e4088e76d70a0576482eed80b222fcca5143442e716",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-003.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-003/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-003.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 89395,
+      "sha256": "2b9498651eec044a510a16b2a729c23496f22dcf15239dface97d25abba1cca2",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-003/output.log",
+      "original_sha256": "164f11ed12849945844d35775b8b4cc5c7872a114972d946081864e633e90468",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-031.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "50a97ab564cfcc3a90e31267c87c1e63885b5c7f8b4d124fc4dcc57a7f08bf6e",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-004/result.fchk",
+      "original_sha256": "50a97ab564cfcc3a90e31267c87c1e63885b5c7f8b4d124fc4dcc57a7f08bf6e",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-004.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-004/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-004.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 60960,
+      "sha256": "ad2e8627a11fe4636c7cd73872465e0c10986b9a52c321d3e875850c0a1b90de",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-004/output.log",
+      "original_sha256": "b95499970569dd4255508c012a922823a5664224396b31ef0e6a737914e293a6",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-032.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "29ea175438347367fa384e79165bd3486f3604f6bc5beb533930eaa7ac8f4a66",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-005/result.fchk",
+      "original_sha256": "29ea175438347367fa384e79165bd3486f3604f6bc5beb533930eaa7ac8f4a66",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-005.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-005/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-005.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 74058,
+      "sha256": "3422f2e31d50d2fda38645450317e39adc2a1a669973152da5990f10f2d5dee2",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-005/output.log",
+      "original_sha256": "6f09675ba4e2e3b099a01f10c6decb89d0c1b664e886542bec32abe5a93c8e1f",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-033.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "765a17b35e98911e4d0535b70b069bc469ca943ec4858cd0894caada3edc93d3",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-006/result.fchk",
+      "original_sha256": "765a17b35e98911e4d0535b70b069bc469ca943ec4858cd0894caada3edc93d3",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-006.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-006/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-006.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73932,
+      "sha256": "8dffa657e1030046166284e3ccacb10a26b6c47f74b6e1a9c46f91b17a4b2cdb",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-006/output.log",
+      "original_sha256": "7840f312898ebabd45b0516591e104e0e4314fcd631f1cc32b2ebfd6cbd96c64",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-034.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "2c9e561eeb912ff906fe9a97aeb6f667f47094843f1dc8b7ed7dba64d6ea2cc6",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-007/result.fchk",
+      "original_sha256": "2c9e561eeb912ff906fe9a97aeb6f667f47094843f1dc8b7ed7dba64d6ea2cc6",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-007.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-007/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-007.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 74124,
+      "sha256": "1886f973c0b29d0a1cdbe5800b27d037ec1fce9843047486b6ae73279208f51e",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-007/output.log",
+      "original_sha256": "6913584fb9a533371f5495c7b8e8477aa919f5699b572999e701a03ac8510ae3",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-035.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "fd2634627866d74cfc1399bd8503becaae33440b47ce9eefb19712e31457ad98",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-008/result.fchk",
+      "original_sha256": "fd2634627866d74cfc1399bd8503becaae33440b47ce9eefb19712e31457ad98",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-008.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-008/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-008.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73759,
+      "sha256": "653d5e608712129c78b07f9b32668770d277cd94570634ae2f50bd1bb71708e9",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-008/output.log",
+      "original_sha256": "f2f42810ccdd10c89a6d36f855087680c7aa1c1d00f1e0efb5c87c08182a46a4",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-036.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "280bae7507a60ad93df5443fda642e96aa4f1ae30074220bc7139fcb11677039",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-009/result.fchk",
+      "original_sha256": "280bae7507a60ad93df5443fda642e96aa4f1ae30074220bc7139fcb11677039",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-009.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-009/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-009.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73843,
+      "sha256": "8ea254c8bfea27734c296434f1d8adc0da687e73e52d8dc1d50ed9d86d09cb52",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-009/output.log",
+      "original_sha256": "2508887afc578be336ed2622ea2af5268b82e83311e877f92ac2508927b1dd33",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-037.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "5a61e41d54a23a42b33729059effa97c655ea00c4761bb99eb501314f5262891",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-010/result.fchk",
+      "original_sha256": "5a61e41d54a23a42b33729059effa97c655ea00c4761bb99eb501314f5262891",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-010.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-010/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-010.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 74605,
+      "sha256": "f371070ce6297689d2c4c6aa3c9c9b6c2b3d3f66da672be2bc43a4d1e2f3bd2a",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-010/output.log",
+      "original_sha256": "98d2176262236396baaa06ac38a2917e0acfe792fb9eaed6e285b4ef1641dd9e",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-038.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "c9e3010145612e4695f4337006e7ea485601349c0f97d4d52cf31ee57a53cf24",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-011/result.fchk",
+      "original_sha256": "c9e3010145612e4695f4337006e7ea485601349c0f97d4d52cf31ee57a53cf24",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-011.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-011/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-011.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73761,
+      "sha256": "7a156ac776615a32b58531908976676a3e7ac6a71077d619d28b456f608ef548",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-011/output.log",
+      "original_sha256": "68ed9a989daa73e193edd11e820147af98ea7b93ae84810efd553dffaaa0aff5",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-039.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "a16e1bd423af15bf33c1f3133775dbdc1a2d8fb12210392d8e87795df3b05d4b",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-012/result.fchk",
+      "original_sha256": "a16e1bd423af15bf33c1f3133775dbdc1a2d8fb12210392d8e87795df3b05d4b",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-012.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-012/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-012.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 74557,
+      "sha256": "4fb47215c1e51e541f6136289de9b0f697569ac9773ae9d9e79787e36db327aa",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-012/output.log",
+      "original_sha256": "efc65c9bb55b9fc427b79421517447b3c40dda7ec4a3c30c489a47405a0b6a0b",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-040.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "897bd31df42c6935a0211fb332ac1633d27793f3f0a4b85baa499dd65d7a3cc3",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-013/result.fchk",
+      "original_sha256": "897bd31df42c6935a0211fb332ac1633d27793f3f0a4b85baa499dd65d7a3cc3",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-013.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-013/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-013.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73764,
+      "sha256": "3f5c9880fa7236367581e42f1c9631bc930f9879ee1f045d5722d2bbbe2584ea",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-013/output.log",
+      "original_sha256": "8b5a074c0bbf06a05a3e01e289b6371bbf8fe57412d57a818d97561faddda945",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-041.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "2906f87510c7bcb264e8a2aaf2ec30cc4afa12a572b4036f610cfddbf34be50e",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-014/result.fchk",
+      "original_sha256": "2906f87510c7bcb264e8a2aaf2ec30cc4afa12a572b4036f610cfddbf34be50e",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-014.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-014/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-014.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 74784,
+      "sha256": "87e7748909c50d5c493eb19d81fad725306b92cd07ab78cfcd390bf09c21168d",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-014/output.log",
+      "original_sha256": "4c9e1e78573c24119385089a55626b17dbb51c768eb0fda7777fdbe2eb27f636",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-042.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "5d1d29773121563e069a534d11b3b3c3872e756892eb37691249af70810fe47a",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-015/result.fchk",
+      "original_sha256": "5d1d29773121563e069a534d11b3b3c3872e756892eb37691249af70810fe47a",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-015.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "493fc4219ea06aa7d2e85ca30b73dcc8c8efb1a3b2e9ef3032302889a6f68405",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-015/input.gjf",
+      "original_sha256": "4996f294a0ec96f86081a148060d7d4f60538b068f27f71ceb2421987c75a724",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-015.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73677,
+      "sha256": "af240b25847234243c71fa2ed9a1aead19d0d12317958f6f6566d503468bbe77",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-015/output.log",
+      "original_sha256": "d59220e06b4431ee800b78f5b8c6d5f242dd853db4e9fc7816f36f56f6e294c9",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-043.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "1ec18b95019af6b20dfbd97c4d6e15bec01effbe2bd0fe45b335608e6a7c899c",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-016/result.fchk",
+      "original_sha256": "1ec18b95019af6b20dfbd97c4d6e15bec01effbe2bd0fe45b335608e6a7c899c",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-016.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "f1890e1268475c445a2dea4e1b0316954976ffa40eb6c4cd438489411474a6b5",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-016/input.gjf",
+      "original_sha256": "c5d55352389b5ac1de6876ccf172e84b5de71a4f36f4990d2cdeb872d3023e76",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-016.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73147,
+      "sha256": "d2f9da6df55191f1e9b2bfd4bd76ad9ccefce6fe1cb58f0514970db83031bca3",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-016/output.log",
+      "original_sha256": "327333549e38cc37434805271a0342d69b0c03861e8ec37a190c49970dc838a3",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-044.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "d369f5cd9131e56193259a601c27466026070bc7b2a4a9cc8ec015ac3b6da7c6",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-017/result.fchk",
+      "original_sha256": "d369f5cd9131e56193259a601c27466026070bc7b2a4a9cc8ec015ac3b6da7c6",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-017.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "f1890e1268475c445a2dea4e1b0316954976ffa40eb6c4cd438489411474a6b5",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-017/input.gjf",
+      "original_sha256": "c5d55352389b5ac1de6876ccf172e84b5de71a4f36f4990d2cdeb872d3023e76",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-017.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 72932,
+      "sha256": "eea5694ae5472ef4a53b51910525a59c2cf7bed8e14eb35d9a418ee13c5c3c63",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-017/output.log",
+      "original_sha256": "93e33b5f3e6d3af6b0873f96f5628966c77ba928e246d7a9f0c0adcfd620640f",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-045.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "932e365f35381515b59baa5ddeb30aa37fce423cef452d2b30506ede670b3a52",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-018/result.fchk",
+      "original_sha256": "932e365f35381515b59baa5ddeb30aa37fce423cef452d2b30506ede670b3a52",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-018.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "f1890e1268475c445a2dea4e1b0316954976ffa40eb6c4cd438489411474a6b5",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-018/input.gjf",
+      "original_sha256": "c5d55352389b5ac1de6876ccf172e84b5de71a4f36f4990d2cdeb872d3023e76",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-018.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73033,
+      "sha256": "53b549e33d5d6f105f83a2e01235aa6c4ca0985bdb8181051b48f0b0b7a1f59f",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-018/output.log",
+      "original_sha256": "cdd647e7598030b7a5910034d28eefdc7878c6d8b3753a5327775dadd144b921",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-046.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "c9704fe628e453efcc4fe8211cbac5c5477491eacd93252789d4838c7e654877",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-019/result.fchk",
+      "original_sha256": "c9704fe628e453efcc4fe8211cbac5c5477491eacd93252789d4838c7e654877",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-019.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "f1890e1268475c445a2dea4e1b0316954976ffa40eb6c4cd438489411474a6b5",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-019/input.gjf",
+      "original_sha256": "c5d55352389b5ac1de6876ccf172e84b5de71a4f36f4990d2cdeb872d3023e76",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-019.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 72325,
+      "sha256": "c4d2c1a42e4b26cf44b33e60d4971d671bdb6554b71be2132cedbf945d1ed263",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-019/output.log",
+      "original_sha256": "31e1d94e724ad18de6ed10e2fc4ccf89fd29a5d6f2096273cd17a087eb6fec8d",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-047.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "db57ee2fab51903e199982ea9ce1b1bbf98eeac9ea2c7f18c4ce7453bbca1f32",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-020/result.fchk",
+      "original_sha256": "db57ee2fab51903e199982ea9ce1b1bbf98eeac9ea2c7f18c4ce7453bbca1f32",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-020.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "f1890e1268475c445a2dea4e1b0316954976ffa40eb6c4cd438489411474a6b5",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-020/input.gjf",
+      "original_sha256": "c5d55352389b5ac1de6876ccf172e84b5de71a4f36f4990d2cdeb872d3023e76",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-020.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 73148,
+      "sha256": "4ba8f08be7098d122333c8822d9dc55c1e349621bdca12d8ddff191fbab2e55f",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-020/output.log",
+      "original_sha256": "ad0a81ca2481ef5b11857748adb8839519138843eef4bd0c6707c22cd6e129ba",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-048.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "811641dfe6fd700064c2a54464a56dea9e4178f74a6bbc0d1431e4ed8f6834fa",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-021/result.fchk",
+      "original_sha256": "811641dfe6fd700064c2a54464a56dea9e4178f74a6bbc0d1431e4ed8f6834fa",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-021.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "fa1f735e561e990e8ce232245975c27137fd4057a45c62a194efd8d2eb7805b6",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-021/input.gjf",
+      "original_sha256": "c9a7dca466e91e32d8a26894737b3f5577567384e0cf52cdf127aba5a0c1c986",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-021.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 59926,
+      "sha256": "8545a927c57ec49559aadb0dc6a1d6f6de8ceca96fb3462b421f411bc2150115",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-021/output.log",
+      "original_sha256": "30353a81a749840fd0e138c354bcd08e5ab89dcfd2a6103dce33182eefeef7af",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-049.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "9fb911ecfb78d5df466c8eba8c508be54347dcfd68b6ebc5356e8faadc0d4ebb",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-022/result.fchk",
+      "original_sha256": "9fb911ecfb78d5df466c8eba8c508be54347dcfd68b6ebc5356e8faadc0d4ebb",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-022.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "fa1f735e561e990e8ce232245975c27137fd4057a45c62a194efd8d2eb7805b6",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-022/input.gjf",
+      "original_sha256": "c9a7dca466e91e32d8a26894737b3f5577567384e0cf52cdf127aba5a0c1c986",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-022.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 60700,
+      "sha256": "4764c07a30fa546b4fb30de331244013b5bf719266ebbcd06ed5d319a500a642",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-022/output.log",
+      "original_sha256": "59062eeefd93b8317ed03558dd0aa502511d433621fc8066739e09176a28f66c",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-050.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90515,
+      "sha256": "8666780f979ce3d62c89dcd4fa01770974f2b75655f0d743902e9c75c19fcc18",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-023/result.fchk",
+      "original_sha256": "8666780f979ce3d62c89dcd4fa01770974f2b75655f0d743902e9c75c19fcc18",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-023.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 165,
+      "sha256": "fa1f735e561e990e8ce232245975c27137fd4057a45c62a194efd8d2eb7805b6",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-023/input.gjf",
+      "original_sha256": "c9a7dca466e91e32d8a26894737b3f5577567384e0cf52cdf127aba5a0c1c986",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-023.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 60015,
+      "sha256": "8bee543d34a01e3c397b94b574439d268c5de85341442e205a2e44fee3e3ff2e",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-023/output.log",
+      "original_sha256": "037a420c195ffbe507377146cc9162cce92a96856f83222724436fff0607b173",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-051.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90527,
+      "sha256": "9b9bb47f41c729490ae7819abf5573828495ed4797826a61452a3d9df81ddf82",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-024/result.fchk",
+      "original_sha256": "9b9bb47f41c729490ae7819abf5573828495ed4797826a61452a3d9df81ddf82",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-024.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 180,
+      "sha256": "87bdab8b0f59634a2e2faa9778724bb9fc6f4aae97c639194d1f61cf27f20daa",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-024/input.gjf",
+      "original_sha256": "3334b4e89737c6d99e18987619fd957c7abe4830dbb94a2869289e7c9fa50844",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-024.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 59215,
+      "sha256": "e9b5d3c2aa636a55f48ef3bcafdf532cbf7c9a9bab83b0fed2a6b3552d767579",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-024/output.log",
+      "original_sha256": "4fb733910b597687d9dd0868afd4702edd5fd7578d0ea260da2ff878a785031d",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-052.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90527,
+      "sha256": "619b4621197169cbb600f096d0bfff5699109f90b278c67556105d9c8a5a4244",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-025/result.fchk",
+      "original_sha256": "619b4621197169cbb600f096d0bfff5699109f90b278c67556105d9c8a5a4244",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-025.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 180,
+      "sha256": "87bdab8b0f59634a2e2faa9778724bb9fc6f4aae97c639194d1f61cf27f20daa",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-025/input.gjf",
+      "original_sha256": "3334b4e89737c6d99e18987619fd957c7abe4830dbb94a2869289e7c9fa50844",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-025.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 59185,
+      "sha256": "26cc1484fed68751bdd7d654a2593aab528721b411f50d46b32ac7599ded5809",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-025/output.log",
+      "original_sha256": "709bc0563418e393421a363880e814d9e88a447f6391834e785382cdb970f676",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-053.fchk": {
+      "role": "Native Gaussian wavefunction at accepted GS2 point",
+      "bytes": 90527,
+      "sha256": "d43d313ee55db661267131a55365776d7576d19f5c8ec56bad1004e9c2e06ab2",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-026/result.fchk",
+      "original_sha256": "d43d313ee55db661267131a55365776d7576d19f5c8ec56bad1004e9c2e06ab2",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-026.gjf": {
+      "role": "Native GS2 segment input",
+      "bytes": 180,
+      "sha256": "87bdab8b0f59634a2e2faa9778724bb9fc6f4aae97c639194d1f61cf27f20daa",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-026/input.gjf",
+      "original_sha256": "3334b4e89737c6d99e18987619fd957c7abe4830dbb94a2869289e7c9fa50844",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/segments/reverse-026.log": {
+      "role": "Native GS2 segment log",
+      "bytes": 59510,
+      "sha256": "997282a2a518132468ccdf593446e4dd6c32217b6213ced869a53a6a2aad2d8a",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-026/output.log",
+      "original_sha256": "5a6da2943a0c892015ba29882e9a4af052d8bd7afc19b4e63e9c5bf8ce41bf76",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/ts.gjf": {
+      "role": "TS optimization and frequency calculation",
+      "bytes": 471,
+      "sha256": "2555580bc8809f7d8fcdb024f06325994489c2746f9d3f85cb86e76b87d2085a",
+      "original": ".local/gaussian/native-irc-20261024/download/P04-ts-reseeded/input.gjf",
+      "original_sha256": "255d3acaa598e839e417bff16561ec6f09ac0fb42eeb3df2cc179fe27ed29ce0",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/ts.log": {
+      "role": "TS optimization and frequency calculation",
+      "bytes": 143182,
+      "sha256": "158fa27bf64edcd0810420d105a4170a3bb031fbdd2712ee89250f4f060cc2de",
+      "original": ".local/gaussian/native-irc-20261024/download/P04-ts-reseeded/output.log",
+      "original_sha256": "07730f6a5f04b82dd8c3c5f12aa357f76b7927f08df787e7c9245f909bf875cb",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/forward-endpoint-frequency.gjf": {
+      "role": "Native endpoint frequency calculation",
+      "bytes": 97,
+      "sha256": "a739d30a937d699eb8aed0ef585171eb51dc6454e83e6ed1842d91d44cacf4e7",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-frequency/input.gjf",
+      "original_sha256": "b6cc84602be0b3e594164b9a86acf00db31197af244d9d9c55c5207623da1779",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/forward-endpoint-frequency.log": {
+      "role": "Native endpoint frequency calculation",
+      "bytes": 47048,
+      "sha256": "ebb0d88981cc308208646303056bd2e19252bf398580631eb754fae87552a6fb",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-frequency/output.log",
+      "original_sha256": "37b1ab95204bc7f1a843f8dfcc39172a9ee117dbeeb66c286b0e2c00a38cc967",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/forward-endpoint-frequency.fchk": {
+      "role": "Native endpoint frequency calculation",
+      "bytes": 95495,
+      "sha256": "37d28c4404e70d60f63dcf1a6d09046d32f9a567cf246747db4cf624ee81045d",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-forward-frequency/result.fchk",
+      "original_sha256": "37d28c4404e70d60f63dcf1a6d09046d32f9a567cf246747db4cf624ee81045d",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/reverse-endpoint-frequency.gjf": {
+      "role": "Native endpoint frequency calculation",
+      "bytes": 97,
+      "sha256": "a739d30a937d699eb8aed0ef585171eb51dc6454e83e6ed1842d91d44cacf4e7",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-frequency/input.gjf",
+      "original_sha256": "b6cc84602be0b3e594164b9a86acf00db31197af244d9d9c55c5207623da1779",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/reverse-endpoint-frequency.log": {
+      "role": "Native endpoint frequency calculation",
+      "bytes": 47050,
+      "sha256": "1b44e5690c1bc394e410979f363f116999ecb6c2fc63fae7b20c9ab923d3a052",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-frequency/output.log",
+      "original_sha256": "e6dc69e9cc5cccc27000f788bb164a8ed1b5139c3164c27509ce51adda80e558",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/reverse-endpoint-frequency.fchk": {
+      "role": "Native endpoint frequency calculation",
+      "bytes": 95495,
+      "sha256": "4d01ff185fae2443fac6b3bd558b1b88755bb042277c42c0cf3a3e1a02e49ac8",
+      "original": ".local/gaussian/native-irc-20261024/download-segmented/P04-native-reverse-frequency/result.fchk",
+      "original_sha256": "4d01ff185fae2443fac6b3bd558b1b88755bb042277c42c0cf3a3e1a02e49ac8",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "diagnostics/baseline-forward.fchk": {
+      "bytes": 90503,
+      "sha256": "6f1f944fc10de51c31671a8dbbf5eb19aaeac97acd8994ec19ced1c51872d1fa",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "original": ".local/gaussian/native-irc-20261024/download/P04-baseline-forward/result.fchk",
+      "original_sha256": "6f1f944fc10de51c31671a8dbbf5eb19aaeac97acd8994ec19ced1c51872d1fa",
+      "distribution": "included"
+    },
+    "diagnostics/baseline-forward.gjf": {
+      "bytes": 167,
+      "sha256": "c00bd7a794ed891117d3082fe62b8a249e6426cd587d25915d2a5f91eff5c583",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "original": ".local/gaussian/native-irc-20261024/download/P04-baseline-forward/input.gjf",
+      "original_sha256": "e422ff6c026f509d92ae511879acafb9d0c5ef4f5f2cd99e5ffe3de84532050f",
+      "distribution": "included"
+    },
+    "diagnostics/baseline-forward.log": {
+      "bytes": 74738,
+      "sha256": "5e73d1daeba106503c94f1e205f515682fa243265bb26f8d2f897bd21d1a8354",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "original": ".local/gaussian/native-irc-20261024/download/P04-baseline-forward/output.log",
+      "original_sha256": "faa84c0b8a7f4a8dca84a66060d00d3ffbc123a385eb1dae8d6897501408b800",
+      "distribution": "included"
+    },
+    "diagnostics/false-min-frequency.fchk": {
+      "bytes": 95495,
+      "sha256": "7d3446ef2dc6f6ccad1d90ce1e004cb34b992e69a53d2ab9b2b1a7c144ac4582",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "original": ".local/gaussian/native-irc-20261024/download/P04-false-min-frequency/result.fchk",
+      "original_sha256": "7d3446ef2dc6f6ccad1d90ce1e004cb34b992e69a53d2ab9b2b1a7c144ac4582",
+      "distribution": "included"
+    },
+    "diagnostics/false-min-frequency.gjf": {
+      "bytes": 97,
+      "sha256": "a739d30a937d699eb8aed0ef585171eb51dc6454e83e6ed1842d91d44cacf4e7",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "original": ".local/gaussian/native-irc-20261024/download/P04-false-min-frequency/input.gjf",
+      "original_sha256": "b6cc84602be0b3e594164b9a86acf00db31197af244d9d9c55c5207623da1779",
+      "distribution": "included"
+    },
+    "diagnostics/false-min-frequency.log": {
+      "bytes": 47334,
+      "sha256": "afe2ce860fbb776eb2f5bdb86b1b9dc33d8eddf0ccd5ed0e532361dfa414c6fb",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "original": ".local/gaussian/native-irc-20261024/download/P04-false-min-frequency/output.log",
+      "original_sha256": "4d81d563df9c7995c7aacdb088614c73e481db539f70c271a2a862ccaead33c9",
+      "distribution": "included"
+    },
+    "diagnostics/original-ts.fchk": {
+      "bytes": 96866,
+      "sha256": "dbfaefab01928f152b97754306d451232e085c50708932e224731c4c345e7322",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "original": ".local/gaussian/sop-20261024/download/P04-ts-r1/result.fchk",
+      "original_sha256": "dbfaefab01928f152b97754306d451232e085c50708932e224731c4c345e7322",
+      "distribution": "included"
+    },
+    "diagnostics/refined-ts.fchk": {
+      "bytes": 96878,
+      "sha256": "b3f7f063aae4f897dd895a94804977a5bf2a32c58bc42acecf10e74275dd462a",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "original": ".local/gaussian/native-irc-20261024/download/P04-ts-reseeded/result.fchk",
+      "original_sha256": "b3f7f063aae4f897dd895a94804977a5bf2a32c58bc42acecf10e74275dd462a",
+      "distribution": "included"
+    },
+    "diagnostics/refined-ts.gjf": {
+      "bytes": 471,
+      "sha256": "2555580bc8809f7d8fcdb024f06325994489c2746f9d3f85cb86e76b87d2085a",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "original": ".local/gaussian/native-irc-20261024/download/P04-ts-reseeded/input.gjf",
+      "original_sha256": "255d3acaa598e839e417bff16561ec6f09ac0fb42eeb3df2cc179fe27ed29ce0",
+      "distribution": "included"
+    },
+    "diagnostics/refined-ts.log": {
+      "bytes": 143182,
+      "sha256": "158fa27bf64edcd0810420d105a4170a3bb031fbdd2712ee89250f4f060cc2de",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "original": ".local/gaussian/native-irc-20261024/download/P04-ts-reseeded/output.log",
+      "original_sha256": "07730f6a5f04b82dd8c3c5f12aa357f76b7927f08df787e7c9245f909bf875cb",
+      "distribution": "included"
+    },
+    "P04/energies.csv": {
+      "bytes": 6733,
+      "sha256": "3716090343f6e3badc2dd1e54b7f8517840abd755d049f2e3548cd0135e75416",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/mayer.csv": {
+      "bytes": 1229,
+      "sha256": "cc8af13a793d2359ad36d0ddc26cbd22d490da4b9eadc1a30c23ffa1a220d2f0",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/path.xyz": {
+      "bytes": 16951,
+      "sha256": "b2fd18127f8d951d2cb31f19b960e3689bee2ffda1edce39a2eb70f5be0f5af5",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-001-mayer.txt": {
+      "bytes": 361,
+      "sha256": "ca6cb8460ae86b18f8c0422ab8461825b19b3f7de41a8e3dfbb9268b4cf9a13c",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-002-mayer.txt": {
+      "bytes": 361,
+      "sha256": "d7166f9a42d7a47acdb0248081c539b3deb83c55cb4245296d34b3c5c9d2a1d4",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-003-mayer.txt": {
+      "bytes": 361,
+      "sha256": "a1d59f80e54042b2b8bc57da7327d806de244f390537373f26307bb71e60af3e",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-004-mayer.txt": {
+      "bytes": 361,
+      "sha256": "3e7052ee10110167446d0c64b3a5732e9a32902c7e89fbaf50ab4b59ba8b2d18",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-005-mayer.txt": {
+      "bytes": 361,
+      "sha256": "88e433a659eac25f4a36141266cc159ef7f5e8417e0d0982f09efea09469a336",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-006-mayer.txt": {
+      "bytes": 361,
+      "sha256": "a2d04c9f5ca85fe860d70caa2be9097ab89777b5502d0654dd5993fab275f224",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-007-mayer.txt": {
+      "bytes": 361,
+      "sha256": "9f3b5157cd4a537d89fcd72027c46f99856eecf9e91f55328223171b2da7047d",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-008-mayer.txt": {
+      "bytes": 361,
+      "sha256": "cc80998a38bd456fad4ea7f425657ee8202f18c19accb07f420b31d8bba8fe6c",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-009-mayer.txt": {
+      "bytes": 361,
+      "sha256": "ddd45005784b7759bbad1cc2043b515c5eeb98b65db815ee9a87837273189527",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-010-mayer.txt": {
+      "bytes": 361,
+      "sha256": "338a2e86e403182379894a45ffae0e8c9c6521bae0dfff1caf903a7e2b2e0b8f",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-011-mayer.txt": {
+      "bytes": 361,
+      "sha256": "76cddde6f63ce7eed77a5a50425e78f4690980406752fd5cbc93aca68f1deeac",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-012-mayer.txt": {
+      "bytes": 361,
+      "sha256": "b92439d8d3a86c4df1ba78b7eafe45b5117837933849a86d27f616a99947f96a",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-013-mayer.txt": {
+      "bytes": 361,
+      "sha256": "4b06def845a6ee8b6b97098dbe559c883cbb3c13f6228fb6827fb47d76224ecb",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-014-mayer.txt": {
+      "bytes": 361,
+      "sha256": "43fb8494c89f6f90dbda76eea689dc91059f9f94e7ac5c694de29ac673dff78e",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-015-mayer.txt": {
+      "bytes": 361,
+      "sha256": "9fd15740bd5844897f4968219d2a0ecc0bf335b4aeec708a02e943eb51c4738d",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-016-mayer.txt": {
+      "bytes": 361,
+      "sha256": "f7cb8e241f7f70c29435c6ff7a0fb7b86e3e052cec8c7744d32dece1f171e683",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-017-mayer.txt": {
+      "bytes": 361,
+      "sha256": "7430aa4523a752be8d5aed682da0c76cce1f40075ce6a3a1e7731a50402ed77b",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-018-mayer.txt": {
+      "bytes": 361,
+      "sha256": "0a8a0bf481c0378d8dabfd5818343c6e6551506ca79fd0227a928be137cc4d06",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-019-mayer.txt": {
+      "bytes": 361,
+      "sha256": "e32411badf9398e5c1f0554a410b72326e6a320d609b057777b84df9124f2a9b",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-020-mayer.txt": {
+      "bytes": 361,
+      "sha256": "419b4a557d020b8fb01d08a8c0d690688cccee13b79906fdee85b0efc981843e",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-021-mayer.txt": {
+      "bytes": 361,
+      "sha256": "ce3ef8acd2477aa188fb27e74fa3e76e052e9ebaa6d7f318fe0419b97ee6d472",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-022-mayer.txt": {
+      "bytes": 361,
+      "sha256": "72dae6c16edc83c8de695f4547b1ff9c4e4f4d430faa587f2770b0ef8727c5f7",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-023-mayer.txt": {
+      "bytes": 361,
+      "sha256": "48c1fc8a7a0e379e28c6b5cb246f7643c86f561709f004763cd9396dd5ab9d9c",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-024-mayer.txt": {
+      "bytes": 361,
+      "sha256": "05fc8d0dcc0d16d75b275559e25f65573d229c71a38b854bf490d725cba1446f",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-025-mayer.txt": {
+      "bytes": 361,
+      "sha256": "1fbd8a888e6be4ebbcb75d3330169ddb2633e1fdac40d104b833bfdff1f75b16",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-026-mayer.txt": {
+      "bytes": 361,
+      "sha256": "1a42cb6d936f494c829c513fcca6de9c0e2a6c2610075b718a302a0c954da2ac",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-027-mayer.txt": {
+      "bytes": 361,
+      "sha256": "935e8487a365a8f538a35667e014f1c471345e954ec5f215e4495dfb72ae4eb1",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-028-mayer.txt": {
+      "bytes": 361,
+      "sha256": "f079743dd1ba18f03fb71d753165c9173308f7842d670b785dc3cf191c7d918e",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-029-mayer.txt": {
+      "bytes": 361,
+      "sha256": "13cfc5f444395516a394ba5ae8624a5d51b36750d55f191984d65d34145761a3",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-030-mayer.txt": {
+      "bytes": 361,
+      "sha256": "5d0b25420ba5aa0b32141674c22bb859d70ab483f8a31f61eb15b421e702abfb",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-031-mayer.txt": {
+      "bytes": 361,
+      "sha256": "9c252d6322d5d0a3a07b066f135ba95814cdefae9aba2e21dfa4e55dfdc0b452",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-032-mayer.txt": {
+      "bytes": 361,
+      "sha256": "ffc8351791ae5c91229b0c70f20542f350072a54b466b14d522308539bf44bea",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-033-mayer.txt": {
+      "bytes": 361,
+      "sha256": "1f176b2559ca96f025a95cbf22c528d256d0b0386a07105fa5af3e2b6a10539b",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-034-mayer.txt": {
+      "bytes": 361,
+      "sha256": "c5867618ac322f33e52bb4120ba5d40bed9c706d517255c57fa12b9f6bf7a54f",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-035-mayer.txt": {
+      "bytes": 361,
+      "sha256": "c62069d7e93518d9b86712eedd8c5b4b0532cd66f23f9b663c1a6e62990119a8",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-036-mayer.txt": {
+      "bytes": 361,
+      "sha256": "62f35451bb7316d53cf0449b68449c36671d6e5e3c00f73218baad592c7d537f",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-037-mayer.txt": {
+      "bytes": 361,
+      "sha256": "ca9a2df784451729b2b4fb70225718670e9a70b423f6275dd5f315ba851b596a",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-038-mayer.txt": {
+      "bytes": 361,
+      "sha256": "cf4bc75ffd83cef3f0959dac4244336a7cc18c4ed6a579cbf5bc6df742b9b3c8",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-039-mayer.txt": {
+      "bytes": 361,
+      "sha256": "d22990c38bb960cba7377f5fcf100137b86bb3b2f8fb9927c3b6b421855116a3",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-040-mayer.txt": {
+      "bytes": 361,
+      "sha256": "36fdfe2ef3bc5f4890dd82b840a7a25e4d78002f812175ecfaf26727d4582c72",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-041-mayer.txt": {
+      "bytes": 361,
+      "sha256": "bf98ea89b73cd918a180e87b4b2b41ab33bda102c6aafcba5d012c10b45c8ec0",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-042-mayer.txt": {
+      "bytes": 361,
+      "sha256": "6d3013656eec2c3aa2c18d01036936dafc78d9a5ec284136998721c740bf7ce4",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-043-mayer.txt": {
+      "bytes": 361,
+      "sha256": "2228618acc3bf948d7737af024b7b32a492204b42d9e9e22003c3918f4cbc0be",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-044-mayer.txt": {
+      "bytes": 361,
+      "sha256": "80ddcb97649632d76c89bbc07a6f1f77492684f8820d36c42826f427b2f0280f",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-045-mayer.txt": {
+      "bytes": 361,
+      "sha256": "0c6314d0cf7512be6648f082d21ebdd6280bc589ec251e31fb78c111f0eae359",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-046-mayer.txt": {
+      "bytes": 361,
+      "sha256": "3c01342714b305b2a44afeb0a8cf0a52d36a776a3e2d57ff11a016b7a11a22dd",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-047-mayer.txt": {
+      "bytes": 361,
+      "sha256": "eef2e31bde4011f85847fca2ae5d3ae9af52810d486b1293f458ec7bc706a904",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-048-mayer.txt": {
+      "bytes": 361,
+      "sha256": "ba058d28d9194c6af28097e3e7f2ae40a16f0a6f43fb32a60540567ef1959ff8",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-049-mayer.txt": {
+      "bytes": 361,
+      "sha256": "777dda242821728554ab163e386b163f3c768ac3e5d9dbc8c103507e7cc52266",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-050-mayer.txt": {
+      "bytes": 361,
+      "sha256": "d2660443444b84e6f205763c919cefc6f8f46b4f9f1bc4776e9d6dfa6df444b1",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-051-mayer.txt": {
+      "bytes": 361,
+      "sha256": "ed2760a4ed407451ade3ba642ac55645b05e601d308344c1534fcdc7e21e899a",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-052-mayer.txt": {
+      "bytes": 361,
+      "sha256": "c634930ebb06522ebeacbde5f5a305b7834d4b9d63d572496eb90899b4ca5d9b",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/step-053-mayer.txt": {
+      "bytes": 361,
+      "sha256": "c3c856cc5881d7dd2f6e7be9080b75890a6fc8bb8aeb2df510efde5dfb36c6d1",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    },
+    "P04/steps.csv": {
+      "bytes": 956,
+      "sha256": "3523fd29441d1bd89ced40c170c4df6cb707e372b25503c24ed15ce12e858275",
+      "role": "Derived path or diagnostic evidence",
+      "license": "CC-BY-4.0",
+      "attribution": "QCBlender contributors",
+      "distribution": "included"
+    }
+  },
+  "derived_mayer": {
+    "producer": "QCBlender explicit contraction using qc-iodata 1.0.1",
+    "overlap_provider": "iodata.overlap.compute_overlap",
+    "density": "Gaussian total SCF density",
+    "formula": "sum((P S)_AB * (P S)_BA)",
+    "unit": "dimensionless",
+    "atom_number_base": 1,
+    "pairs_per_frame": 6
+  }
+}
