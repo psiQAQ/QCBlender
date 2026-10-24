@@ -126,11 +126,11 @@ def _prepare_legacy(root=ROOT, reference_root=None, reference_layout='current',
                 deletion='Not Run; this command only creates or verifies files')
 
 
-def prepare_current(root=ROOT):
+def prepare_current(root=ROOT, dataset='current'):
     """Restore only the selected public version; never replace a different existing file."""
     root = Path(root).resolve()
-    selected = load_dataset(root)
-    report = verify_samples(root=root)
+    selected = load_dataset(root, dataset)
+    report = verify_samples(root=root, dataset=dataset)
     public = checked_path(root, DATA + '/public')
     planned = []
     with zipfile.ZipFile(selected['package_path']) as archive:
@@ -147,7 +147,7 @@ def prepare_current(root=ROOT):
             verify_file(path, dict(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest()))
     files = [dict(path=path.relative_to(root).as_posix(), action=write_public(path, raw))
              for path, raw in planned]
-    verify_csv_inputs(root)
+    verify_csv_inputs(root, dataset)
     return dict(schema='qcblender.validation-data-preparation.v2', status='Passed',
                 dataset_id=selected['dataset_id'], public_package=report, public_files=files,
                 copies=[], verified_paths=[], local_input_count=0,
@@ -162,13 +162,13 @@ def prepare(root=ROOT, reference_root=None, reference_layout='current',
         return _prepare_legacy(root, reference_root, reference_layout, include_local, include_calculations)
     if include_local or include_calculations:
         raise ValueError('Historical local migration requires --dataset legacy-v2')
-    return prepare_current(root)
+    return prepare_current(root, dataset)
 
 
 def main():
     parser = argparse.ArgumentParser(__doc__)
     parser.add_argument('--reference-root', type=Path)
-    parser.add_argument('--dataset', choices=('current', 'legacy-v2'), default='current')
+    parser.add_argument('--dataset', default='current', help='current or an explicit delivery dataset ID, e.g. gaussian-v1 / legacy-v2')
     parser.add_argument('--reference-layout', choices=('legacy', 'current'), default='current',
                         help='Use legacy source paths only for the reviewed first migration')
     parser.add_argument('--include-local', action='store_true')

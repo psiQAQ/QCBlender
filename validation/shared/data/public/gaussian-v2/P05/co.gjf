@@ -1,0 +1,9 @@
+%Chk=result.chk
+#p RB3LYP/6-31G(d) SCF=Tight NoSymm 5D 7F Integral=UltraFine
+
+QCBlender Gaussian tutorial P05-co
+
+0 1
+C 0.000000000000 0.000000000000 0.000000000000
+O -0.000000664995 0.000019624911 -1.140437807908
+

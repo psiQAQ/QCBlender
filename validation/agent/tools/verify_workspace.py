@@ -82,6 +82,8 @@ def check_materials(materials, install, dataset=None, legacy=None):
                      dataset['dataset_id'] + '/tutorial-samples.json')
     verify_file(checked_path(public, manifest_name), dataset['manifest_record'])
     support = {'LICENSE', 'NOTICE.md', 'README.md', 'source.json', manifest_name}
+    if not dataset['legacy']:
+        support.add(dataset['dataset_id'] + '/README.md')
     actual = {path.relative_to(public).as_posix() for path in safe_files(public)}
     historical = set()
     if legacy is not None and not dataset['legacy']:
@@ -92,6 +94,28 @@ def check_materials(materials, install, dataset=None, legacy=None):
         if 'tutorial-samples.json' in actual:
             verify_file(public / 'tutorial-samples.json', legacy['manifest_record'])
             historical.add('tutorial-samples.json')
+        # The primary checkout retains explicit versioned history. Detached
+        # materials pass a selected dataset and contain only active inputs.
+        delivery_path = materials / 'agent/acceptance/tutorial-sample-delivery.json'
+        if delivery_path.is_file():
+            delivery = json.loads(delivery_path.read_text(encoding='utf-8'))
+            for version in delivery.get('historical_datasets', {}):
+                previous = load_dataset(materials.parent, version)
+                historical.add(previous['manifest_path'].relative_to(public).as_posix())
+                for name, row in included_files(previous, materials.parent).items():
+                    verify_file(checked_path(public, name), row)
+                    historical.add(name)
+            for upstream in dataset['manifest'].get('upstream_datasets', []):
+                if upstream['dataset_id'] != 'gaussian-native-irc-v1':
+                    continue
+                path = checked_path(materials.parent, upstream['manifest'])
+                verify_file(path, upstream)
+                supplement = json.loads(path.read_text(encoding='utf-8'))
+                prefix = path.parent.relative_to(public)
+                historical.update((prefix / name).as_posix() for name in ('native-irc.json', 'README.md'))
+                for name, row in supplement['files'].items():
+                    verify_file(checked_path(path.parent, name), row)
+                    historical.add((prefix / name).as_posix())
     extras = actual - expected - support - historical
     if extras:
         raise ValueError(f'Unexpected public resources: {sorted(extras)}')
@@ -155,12 +179,21 @@ def human_resources(human):
     return images
 
 
-def check_documents(materials, require_images=False):
+def check_documents(materials, require_images=False, dataset=None):
     materials = materials.resolve()
     human = materials / 'human'
     supplied_images = human_resources(human)
     allowed = [(materials / part).resolve() for part in PUBLIC_PARTS]
     files = [p for part in PUBLIC_PARTS for p in safe_files(materials / part) if p.suffix == '.md']
+    if dataset is None and (materials / 'agent/acceptance/tutorial-sample-delivery.json').is_file():
+        dataset = load_dataset(materials.parent)
+    if dataset is not None:
+        public = materials / 'shared/data/public'
+        public_documents = set(included_files(dataset, materials.parent)) | {'README.md', 'NOTICE.md'}
+        # Historical/repository overviews are preserved, but are not members of
+        # the detached current tutorial. check_materials still checks their scope.
+        files = [p for p in files if not p.is_relative_to(public)
+                 or p.relative_to(public).as_posix() in public_documents]
     image_roots = [(human / name).resolve() for name in ('screenshots', 'renders')]
     image_slots = {}
     referenced_images = set()
@@ -248,7 +281,7 @@ def main():
                 raise ValueError('Portable verification requires a new directory under validation/work')
             copy_public_materials(materials, detached, install, selected)
             report['portable'] = {'root': str(detached), 'resources': check_materials(detached, install, selected),
-                                  'documents': check_documents(detached, require_images=args.require_images)}
+                                  'documents': check_documents(detached, require_images=args.require_images, dataset=selected)}
         report['status'] = 'Passed'
     except (OSError, ValueError, KeyError, zipfile.BadZipFile) as error:
         report['error'] = f'{type(error).__name__}: {error}'

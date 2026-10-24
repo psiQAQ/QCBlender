@@ -1,0 +1,9 @@
+Producer: Gaussian native FCHK total SCF density and IOData overlap
+Method: Mayer; sum((P S)_AB * (P S)_BA); unit dimensionless
+Bond orders with absolute value >= 0.000000
+# 1: 1(O) 2(O) 0.986259563308
+# 2: 1(O) 3(H) 0.950699579211
+# 3: 1(O) 4(H) 0.010390561666
+# 4: 2(O) 3(H) 0.010390561683
+# 5: 2(O) 4(H) 0.950699578837
+# 6: 3(H) 4(H) 0.002499392532

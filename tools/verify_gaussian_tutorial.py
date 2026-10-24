@@ -25,6 +25,9 @@ def verify(args):
     from tools.local_inputs import checked_path,verify_file
     from tools.generate_gaussian_tutorial import clean_science,sha
     manifest=json.loads(args.manifest.read_text(encoding='utf-8'))
+    dataset_id=manifest['dataset_id']
+    if dataset_id not in ('gaussian-v1','gaussian-v2'):
+        raise ValueError('Unknown Gaussian tutorial dataset: '+dataset_id)
     public=ROOT/'validation/shared/data/public'
     paths={}
     prohibited=re.compile(r'(?i)/home/|/opt/|GINC-(?!PUBLIC)[^\\\s]+|'
@@ -41,7 +44,7 @@ def verify(args):
     for sid,record in manifest['files'].items():
         if record['distribution']!='included' or record['license']!='CC-BY-4.0':
             raise ValueError('Non-public input in Gaussian dataset: '+sid)
-        if not record['archive_path'].startswith('gaussian-v1/'):
+        if not record['archive_path'].startswith(dataset_id+'/'):
             raise ValueError('Input is outside Gaussian dataset: '+sid)
         path=checked_path(public,record['archive_path']);verify_file(path,record);paths[sid]=path
         text=path.read_text(encoding='utf-8')
@@ -135,18 +138,20 @@ def verify(args):
         assert np.all(np.diff(energies[:ts])>=-tolerance)
         assert np.all(np.diff(energies[ts-1:])<=tolerance)
         assert max(energies[0],energies[-1])<energies[ts-1]-tolerance
-        ts_frequencies=[float(value) for line in paths['P04-ts-log'].read_text().splitlines() if 'Frequencies --' in line
-                        for value in line.split('--',1)[1].split()]
+        from qcblender.gaussian_log import inspect_log
+        ts_jobs=inspect_log(paths['P04-ts-log'])['jobs']
+        ts_data=read_source(paths['P04-ts-log'],len(ts_jobs)-1)
+        ts_frequencies=ts_data.arrays['mode_frequencies']
         np.testing.assert_allclose(ts_frequencies,report['ts_frequencies_cm_minus1'],atol=1e-8,rtol=0)
         assert sum(value<0 for value in ts_frequencies)==1
-        from qcblender.gaussian_log import inspect_log
-        ts_data=read_source(paths['P04-ts-log'],len(inspect_log(paths['P04-ts-log'])['jobs'])-1)
         mode=ts_data.arrays['mode_displacements'][int(np.argmin(ts_data.arrays['mode_frequencies']))]
         positions=ts_data.arrays['positions'];normal=np.cross(positions[1]-positions[0],positions[2]-positions[0])
         normal/=np.linalg.norm(normal);fraction=float(np.sum((mode@normal)**2)/np.sum(mode**2))
         assert fraction>.99
         np.testing.assert_allclose(fraction,report['ts_mode_assignment']['out_of_plane_displacement_fraction'],atol=1e-10,rtol=0)
-        for direction,index in [('reverse',0),('forward',len(energies)-1)]:
+        for direction,check in report['endpoint_checks'].items():
+            index=check['step']-1
+            assert index in (0,len(energies)-1)
             sid='P04-'+direction+'-endpoint-log';text=paths[sid].read_text()
             values=[float(value) for line in text.splitlines() if 'Frequencies --' in line
                     for value in line.split('--',1)[1].split()]
@@ -182,7 +187,7 @@ def verify(args):
                 assert archive.read(record['archive_path'])==paths[record['id']].read_bytes()
             assert archive.testzip() is None
         checks.append('Public ZIP exact membership, source bytes, license allowlist and CRC')
-    return dict(status='Passed',dataset_id='gaussian-v1',manifest_sha256=sha(args.manifest),
+    return dict(status='Passed',dataset_id=dataset_id,manifest_sha256=sha(args.manifest),
                 file_count=len(paths),groups=sorted(manifest['groups']),checks=checks,
                 complete=bool(args.require_complete),gui='Not Run',independent_human_review='Not Run')
 
@@ -190,7 +195,8 @@ def verify(args):
 def main():
     parser=argparse.ArgumentParser(__doc__)
     parser.add_argument('--reference-root',type=Path,required=True)
-    parser.add_argument('--manifest',type=Path,default=ROOT/'validation/shared/data/public/gaussian-v1/tutorial-samples.json')
+    from tools.tutorial_dataset import load_dataset
+    parser.add_argument('--manifest',type=Path,default=load_dataset(ROOT)['manifest_path'])
     parser.add_argument('--derived-root',type=Path)
     parser.add_argument('--raw-root',type=Path)
     parser.add_argument('--package',type=Path)

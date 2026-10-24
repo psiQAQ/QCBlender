@@ -1,0 +1,46 @@
+{
+  "license": "CC-BY-4.0",
+  "attribution": "QCBlender contributors",
+  "source_manifest": "../tutorial-samples.json",
+  "coordinate_unit": "angstrom",
+  "derivation": "Native Gaussian FCHK coordinates; IRC representatives 1/27/53; XYZ contains no energy or wavefunction",
+  "samples": [
+    {
+      "file": "water-dimer.xyz",
+      "sha256": "6d5efe7c613188ea075d497966ecd91604a7de91ff99d5cf786ff4173c0c6545",
+      "frames": 1,
+      "sources": [
+        {
+          "id": "P03-water-dimer",
+          "path": "../P03/water-dimer.fchk",
+          "sha256": "7fbebe3926aad70d68b1c6f3c8bd4a718cd99e7c708191d6424d25485acbd527"
+        }
+      ]
+    },
+    {
+      "file": "p04-three-frames.xyz",
+      "sha256": "d6f60a3b05db78be6a9c1ad5715ee430fc86cee764931fbb083e295a89ff0ff7",
+      "frames": 3,
+      "sources": [
+        {
+          "id": "P04-step-001.fchk",
+          "path": "../P04/step-001.fchk",
+          "sha256": "2de10d9a30ad24a5b9be4c87597e47488dab0e7fb4b4c8f18e6ddee794c538ba",
+          "source_step": 1
+        },
+        {
+          "id": "P04-step-027.fchk",
+          "path": "../P04/step-027.fchk",
+          "sha256": "b3f7f063aae4f897dd895a94804977a5bf2a32c58bc42acecf10e74275dd462a",
+          "source_step": 27
+        },
+        {
+          "id": "P04-step-053.fchk",
+          "path": "../P04/step-053.fchk",
+          "sha256": "d43d313ee55db661267131a55365776d7576d19f5c8ec56bad1004e9c2e06ab2",
+          "source_step": 53
+        }
+      ]
+    }
+  ]
+}

@@ -2,17 +2,32 @@
   "schema": 2,
   "date": "2026-10-24",
   "status": "Passed",
-  "dataset_id": "gaussian-v1",
-  "scope": "Current owned Gaussian scientific data; GUI and independent scientific acceptance remain separate",
+  "dataset_id": "gaussian-v2",
+  "scope": "Native Gaussian GS2 segmented 53-frame IRC; scientific, GUI and independent acceptance recorded separately",
   "manifest": {
-    "path": "validation/shared/data/public/gaussian-v1/tutorial-samples.json",
-    "bytes": 488838,
-    "sha256": "bb5ce541994bb2a617a865da857db5c564c4032c7a98ae031ce589069b2c734b"
+    "path": "validation/shared/data/public/gaussian-v2/tutorial-samples.json",
+    "bytes": 632310,
+    "sha256": "b07fd042560cc4391a16bd8e97ad5937d3607a98db295d0ec8e618dc3be9fcb6"
   },
   "package": {
-    "path": "validation/agent/packages/qcblender-public-tutorial-samples-v3.zip",
-    "bytes": 13055318,
-    "sha256": "c228f414c73f9d56ba264573d8f3526c96d1ebcf340030201e5acf5020a3369b"
+    "path": "validation/agent/packages/qcblender-public-tutorial-samples-v4.zip",
+    "bytes": 13404256,
+    "sha256": "93c7ffeba6876f7325c7f28e8f654fc3762e2b0735384747ab38f4fb00c15c8a"
+  },
+  "historical_datasets": {
+    "gaussian-v1": {
+      "dataset_id": "gaussian-v1",
+      "manifest": {
+        "path": "validation/shared/data/public/gaussian-v1/tutorial-samples.json",
+        "bytes": 488838,
+        "sha256": "bb5ce541994bb2a617a865da857db5c564c4032c7a98ae031ce589069b2c734b"
+      },
+      "package": {
+        "path": "validation/agent/packages/qcblender-public-tutorial-samples-v3.zip",
+        "bytes": 13055318,
+        "sha256": "c228f414c73f9d56ba264573d8f3526c96d1ebcf340030201e5acf5020a3369b"
+      }
+    }
   },
   "legacy_dataset": {
     "dataset_id": "legacy-v2",
@@ -31,7 +46,13 @@
   "checks": {
     "scientific_data": "Passed",
     "sample_package": "Passed",
-    "gui": "Not Run",
-    "independent_human_review": "Not Run"
-  }
+    "gui": "Passed",
+    "independent_human_review": "Not Run",
+    "mcp": "Passed",
+    "cold_open": "Passed",
+    "portable_move_and_archive": "Passed",
+    "gui_scope": "P04 native53 import confirmation, IRC stepping and annotations, Mayer observation; P06 new XYZ frames 1/2/3 and annotation",
+    "independent_scientific_review": "Not Run"
+  },
+  "validation_report": "validation/agent/reports/2026-10-24/native-irc-current/acceptance.md"
 }

@@ -1,5 +1,6 @@
 """Version selection and public restore checks using explicit small sample fixtures."""
 import hashlib
+import copy
 import json
 from pathlib import Path
 import tempfile
@@ -176,6 +177,39 @@ class TutorialDatasets(unittest.TestCase):
         path.write_text('step,fchk\n10,../P02/water.out\n', encoding='utf-8')
         with self.assertRaisesRegex(ValueError, 'relative data path'):
             verify_csv_inputs(self.root / 'validation/shared/data/public', load_dataset(self.root))
+
+    def test_promoted_current_and_explicit_previous_version_restore_independently(self):
+        previous = copy.deepcopy(self.delivery)
+        original_package = (self.root / previous['package']['path']).read_bytes()
+        promoted = copy.deepcopy(self.manifest)
+        blobs = {name.replace('gaussian-v1/', 'gaussian-v2/'): raw for name, raw in self.blobs.items()}
+        promoted['files'] = {name: dict(row, archive_path=row['archive_path'].replace('gaussian-v1/', 'gaussian-v2/'),
+                            path=row['path'].replace('gaussian-v1/', 'gaussian-v2/'))
+                            for name, row in promoted['files'].items()}
+        raw = json.dumps(promoted).encode()
+        manifest_path = 'validation/shared/data/public/gaussian-v2/tutorial-samples.json'
+        target = self.root / manifest_path
+        target.parent.mkdir(parents=True)
+        target.write_bytes(raw)
+        package_name = 'validation/agent/packages/qcblender-public-tutorial-samples-v4.zip'
+        package = self.root / package_name
+        with zipfile.ZipFile(package, 'w') as archive:
+            for name, content in dict(blobs, **{'tutorial-samples.json': raw,
+                         'LICENSE': b'CC-BY-4.0', 'NOTICE.md': b'Promoted data'}).items():
+                archive.writestr(name, content)
+        self.delivery.update(dataset_id='gaussian-v2',
+            manifest=dict(path=manifest_path, **identity(raw)),
+            package=dict(path=package_name, **identity(package.read_bytes())),
+            historical_datasets={'gaussian-v1': previous})
+        (self.root / DELIVERY).write_text(json.dumps(self.delivery), encoding='utf-8')
+        self.assertEqual(prepare(self.root)['dataset_id'], 'gaussian-v2')
+        self.assertEqual(prepare(self.root, dataset='gaussian-v1')['dataset_id'], 'gaussian-v1')
+        self.assertEqual(verify_samples(root=self.root, dataset='gaussian-v1')['included_files'], len(self.blobs))
+        self.assertEqual((self.root / previous['package']['path']).read_bytes(), original_package)
+        self.assertTrue((self.root / 'validation/shared/data/public/gaussian-v2/P04/a.fchk').is_file())
+        self.assertTrue((self.root / 'validation/shared/data/public/gaussian-v1/P04/a.fchk').is_file())
+        with self.assertRaisesRegex(ValueError, 'Unknown tutorial dataset'):
+            load_dataset(self.root, 'unrecorded-version')
 
 
 if __name__ == '__main__':

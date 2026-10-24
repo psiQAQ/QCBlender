@@ -1,4 +1,6 @@
-# 冻结的公开教程样本
+# 公开教程样本版本
+
+当前入口由 [交付索引](../acceptance/tutorial-sample-delivery.json) 选择：v4 包为 Gaussian-v2，270 个输入，P04 原生 53 帧（TS27），P06 取 1/27/53 帧。旧 v3 包与 Gaussian-v1 的 69 帧保持原字节，使用 `--dataset gaussian-v1` 显式恢复。下文为更早 v2 的冻结身份。
 
 `qcblender-public-tutorial-samples-v2.zip` 为既有本地交付包的原始字节，未重新生成或压缩。来源及逐文件记录见 `validation/agent/v1-acceptance/tutorial-samples.json` 和 `validation/agent/acceptance/tutorial-sample-delivery.json`。
 

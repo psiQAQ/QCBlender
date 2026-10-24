@@ -6,7 +6,8 @@
 
 | 位置 | 内容 | 分发与 Git |
 | --- | --- | --- |
-| [public/gaussian-v1/](public/README.md) | 当前 P01–P06 的185个数据文件及版本清单，包含自有P02优化/频率/NBO日志 | 按逐文件许可清单随教程打包；科学输入从v3包恢复，当前版本清单显式跟踪 |
+| [public/gaussian-v2/](public/README.md) | 当前 P01–P06 的270个输入及版本清单；P04原生53帧、TS27，P06取1/27/53帧 | 按逐文件许可清单随v4包分发 |
+| `public/gaussian-v1/`、`public/gaussian-native-irc-v1/` | 旧69帧全套案例及原生53帧补充原件 | 保留原字节和历史身份；v3包保留 |
 | `public/P01/`–`public/P06/`、根 `public/tutorial-samples.json` | legacy-v2历史输入与历史清单副本 | 保留原字节；历史身份由冻结清单与v2包核对，不作为当前教程入口 |
 | `local/` | 历史受限Gaussian日志、本地科研输入和 `calculations/public-tutorial/` 历史计算原件 | Git 忽略；不进入公开教程包 |
 | `regression/` | cclib、ChemTools、GBasis、IOData 小样本及 visual-baseline | 原字节与原来源文件跟踪；公开教程包排除 |
@@ -26,11 +27,11 @@ python -B tools/prepare_validation_data.py `
   --report validation/agent/reports/2026-10-24/gaussian-sop/public-inputs.json
 ```
 
-`current` 是默认值，由 [活动交付记录](../../agent/acceptance/tutorial-sample-delivery.json) 选择当前数据集与包身份。目前为 `gaussian-v1` / `validation/agent/packages/qcblender-public-tutorial-samples-v3.zip`。命令按允许成员集合恢复185个数据文件至 `public/gaussian-v1/`，并恢复当前清单及根许可说明；核对逐文件身份、许可和P04两份CSV的全部相对引用与步号。已有文件必须匹配选定身份；不同内容直接失败，不覆盖用户文件。每次运行指定新的报告文件名。
+`current` 是默认值，由 [活动交付记录](../../agent/acceptance/tutorial-sample-delivery.json) 选择当前数据集与包身份。目前为 `gaussian-v2` / `validation/agent/packages/qcblender-public-tutorial-samples-v4.zip`。命令按允许成员集合恢复270个数据文件至 `public/gaussian-v2/`，并恢复当前清单及根许可说明；核对逐文件身份、许可和P04两份CSV的全部相对引用与步号。已有文件必须匹配选定身份；不同内容直接失败，不覆盖用户文件。每次运行指定新的报告文件名。
 
-v3包根 `tutorial-samples.json` 与仓库的 [当前清单](public/gaussian-v1/tutorial-samples.json) 保持原字节。当前清单的 `archive_path` 为 `gaussian-v1/Pxx/...`，相对于 `public/`；`path` 对应仓库内的版本化输入路径。当前 `P06/source.json` 指向新P03及新P04第1/35/69帧，并记录各源SHA-256。
+v4包根 `tutorial-samples.json` 与仓库的 [当前清单](public/gaussian-v2/tutorial-samples.json) 保持原字节。当前清单的 `archive_path` 为 `gaussian-v2/Pxx/...`，相对于 `public/`；`path` 对应仓库内的版本化输入路径。当前 `P06/source.json` 指向新P03及新P04第1/27/53帧，并记录各源SHA-256。
 
-显式选择 `--dataset legacy-v2` 才恢复历史v2包；[冻结清单](../../agent/v1-acceptance/tutorial-samples.json)与v2包的原字节身份保留在活动记录的 `legacy_dataset` 中，schema 1旧记录仍兼容。历史清单的 `archive_path` 用于定位 `public/` 下的旧输入，`path` 仅保留冻结时的来源位置。不要重跑旧finalize流程覆盖冻结原件，也不要用旧GUI或科学验证结论代替当前数据验收。
+显式选择 `--dataset gaussian-v1` 恢复旧69帧与v3包，选择 `--dataset legacy-v2` 恢复更早v2包；[冻结清单](../../agent/v1-acceptance/tutorial-samples.json)与v2包的原字节身份保留在活动记录的 `legacy_dataset` 中，schema 1旧记录仍兼容。历史清单的 `archive_path` 用于定位 `public/` 下的旧输入，`path` 仅保留冻结时的来源位置。不要重跑旧finalize流程覆盖冻结原件，也不要用旧GUI或科学验证结论代替当前数据验收。
 
 ## 复制本地输入与计算原件
 

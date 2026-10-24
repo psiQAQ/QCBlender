@@ -4,14 +4,14 @@ from pathlib import Path
 p=argparse.ArgumentParser();p.add_argument('--reference-root',type=Path,required=True);p.add_argument('--package',type=Path);p.add_argument('--report',type=Path,required=True)
 p.add_argument('--site',type=Path,help='Existing science environment; defaults to reference-root/modules/science')
 p.add_argument('--checkpoints',action='store_true',help='Legacy only: compare original PySCF checkpoints in the existing calculation environment')
-p.add_argument('--dataset',choices=('current','legacy-v2'),default='current')
+p.add_argument('--dataset',default='current',help='current or an explicit delivery dataset ID')
 a=p.parse_args();ROOT=Path(__file__).resolve().parents[1];REF=a.reference_root.resolve();sys.path[:0]=[str(a.site.resolve() if a.site else REF/'modules/science'),str(ROOT)]
 from tools.local_inputs import input_path,public_input_path
 from tools.tutorial_dataset import load_dataset
 selected=load_dataset(ROOT,a.dataset)
 a.package=a.package or selected['package_path']
 if not selected['legacy']:
- if selected['dataset_id']!='gaussian-v1':raise ValueError('Unsupported scientific tutorial dataset: '+selected['dataset_id'])
+ if selected['dataset_id'] not in ('gaussian-v1','gaussian-v2'):raise ValueError('Unsupported scientific tutorial dataset: '+selected['dataset_id'])
  if a.checkpoints:raise ValueError('--checkpoints only applies to the legacy-v2 PySCF dataset')
  from tools.verify_gaussian_tutorial import verify
  args=argparse.Namespace(reference_root=REF,manifest=selected['manifest_path'],derived_root=None,raw_root=None,package=a.package,require_complete=True)

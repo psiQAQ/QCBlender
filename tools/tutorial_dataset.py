@@ -20,14 +20,19 @@ def load_dataset(root, dataset='current'):
     """Return selected manifest, package identities and paths; verify the manifest now."""
     root = Path(root).resolve()
     delivery = json.loads(checked_path(root, DELIVERY).read_text(encoding='utf-8'))
-    if dataset not in ('current', 'legacy-v2'):
-        raise ValueError('Unknown tutorial dataset: ' + dataset)
     if delivery['schema'] == 1:
+        if dataset not in ('current', 'legacy-v2'):
+            raise ValueError('Unknown tutorial dataset: ' + dataset)
         selected = dict(dataset_id='legacy-v2',
                         manifest=dict(delivery['manifest'], path=FROZEN_MANIFEST),
                         package=dict(delivery['package'], path=LEGACY_PACKAGE))
     elif delivery['schema'] == 2:
-        selected = delivery if dataset == 'current' else delivery['legacy_dataset']
+        versions = dict(delivery.get('historical_datasets', {}))
+        versions['legacy-v2'] = delivery['legacy_dataset']
+        versions[delivery['dataset_id']] = delivery
+        if dataset != 'current' and dataset not in versions:
+            raise ValueError('Unknown tutorial dataset: ' + dataset)
+        selected = delivery if dataset == 'current' else versions[dataset]
     else:
         raise ValueError('Unknown tutorial delivery schema')
     legacy = selected['dataset_id'] == 'legacy-v2'
@@ -44,7 +49,7 @@ def load_dataset(root, dataset='current'):
         raise ValueError('Tutorial package is outside the package directory')
     restricted = {row['sha256'] for row in manifest['files'].values()
                   if row['distribution'] != 'included'}
-    if delivery['schema'] == 2 and not legacy:
+    if delivery['schema'] == 2:
         if (delivery['legacy_dataset']['dataset_id'] != 'legacy-v2'
                 or delivery['legacy_dataset']['manifest']['path'] != FROZEN_MANIFEST):
             raise ValueError('Legacy tutorial dataset must retain its frozen identity')
@@ -96,6 +101,10 @@ def verify_csv_inputs(public, dataset):
         with path.open(encoding='utf-8-sig', newline='') as stream:
             reader = csv.DictReader(stream)
             columns = [column for column in ('fchk', 'mayer_output') if column in (reader.fieldnames or [])]
+            if not columns and record.get('role') == 'energy_and_segment_mapping':
+                if not {'step', 'energy_hartree', 'source_segment'}.issubset(reader.fieldnames or []):
+                    raise ValueError('Unknown native energy mapping header: ' + name)
+                continue
             if 'step' not in (reader.fieldnames or []) or len(columns) != 1:
                 raise ValueError('Unknown IRC/Mayer CSV header: ' + name)
             column = columns[0]

@@ -94,6 +94,20 @@ class TutorialWorkspace(unittest.TestCase):
         self.assertEqual(report['human_execution'], 'Not Run')
         self.assertNotIn('work', workspace.PUBLIC_PARTS)
 
+    def test_repository_version_overview_is_preserved_but_not_a_portable_member(self):
+        install = self.versioned_materials()
+        self.supply_images()
+        overview = self.write('shared/data/public/gaussian-v1/README.md',
+                              '# Repository history\n[Evidence](../../../agent/reports/history.md)\n')
+        selected = load_dataset(self.materials.parent)
+        workspace.check_materials(self.materials, install)
+        workspace.check_documents(self.materials, require_images=True)
+        detached = self.materials.parent/'detached'
+        workspace.copy_public_materials(self.materials, detached, install, selected)
+        self.assertTrue(overview.is_file())
+        self.assertFalse((detached/'shared/data/public/gaussian-v1/README.md').exists())
+        workspace.check_documents(detached, require_images=True, dataset=selected)
+
     def test_linked_historical_images_are_retained_without_counting_as_current_figures(self):
         self.supply_images()
         self.write('human/renders/P01-final.png', 'current render fixture')

@@ -1,0 +1,14 @@
+%Chk=result.chk
+#p RHF/STO-3G Opt=(Tight,MaxCycles=100) SCF=(Tight,MaxCycle=150) NoSymm
+
+QCBlender water opt freq NBO
+
+0 1
+O 0.0000000000 0.0000000000 0.0000000000
+H 0.7586000000 0.0000000000 0.5043000000
+H -0.7586000000 0.0000000000 0.5043000000
+
+--Link1--
+%Chk=result.chk
+#p RHF/STO-3G Freq Geom=AllCheck Guess=Read SCF=Tight NoSymm Pop=NBO
+
