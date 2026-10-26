@@ -82,6 +82,10 @@ def _prepare_legacy(root=ROOT, reference_root=None, reference_layout='current',
         group = row['group']
         if group not in selected | {'regression', 'package', 'catalog'}:
             continue
+        # The migration records its original bytes for history, but this guide
+        # now documents multiple package versions. It is not a frozen input.
+        if group == 'package' and row['path'] == 'validation/agent/packages/README.md':
+            continue
         target = checked_path(root, row['path'])
         allowed = (root / DATA, root / 'validation/agent/packages')
         if not any(target.is_relative_to(base) for base in allowed):

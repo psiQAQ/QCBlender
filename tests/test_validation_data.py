@@ -47,6 +47,18 @@ class ValidationDataPreparation(unittest.TestCase):
             prepare(self.root, dataset='legacy-v2')
         self.assertEqual(changed.read_bytes(), b'user changed file')
 
+    def test_current_package_guide_is_not_frozen_but_regression_inputs_are(self):
+        guide = self.root / 'validation/agent/packages/README.md'
+        guide.write_bytes(b'Current package navigation, revised after the migration.\n')
+        report = prepare(self.root, dataset='legacy-v2')
+        self.assertNotIn(guide.relative_to(self.root).as_posix(), report['verified_paths'])
+        self.assertEqual(guide.read_bytes(), b'Current package navigation, revised after the migration.\n')
+        migration = json.loads((self.root / MIGRATION).read_text(encoding='utf-8'))
+        record = next(row for row in migration['files'] if row['group'] == 'regression')
+        (self.root / record['path']).write_bytes(b'changed scientific fixture')
+        with self.assertRaisesRegex(ValueError, 'mismatch'):
+            prepare(self.root, dataset='legacy-v2')
+
     def test_local_layout_is_explicit_and_missing_source_fails_before_copying(self):
         reference = Path(self.temporary.name) / 'reference'
         reference.mkdir()
