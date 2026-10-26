@@ -56,7 +56,7 @@ python -m tools.dev_workflow --run-dir $run install --candidate $candidate --ble
 
 ## 4. 串行使用 Blender，恢复原工程
 
-需要 Blender 的任务先请用户保存并关闭当前 Blender。记录用户确认的原保存工程，查询进程并确认已退出，随后启动本批实例。较新的恢复文件只有在用户明确选为目标时才使用；恢复草稿本身不是本流程目标。
+需要 Blender 的任务先执行下方 `session list`，按[交互规则](blender-interaction.md#单进程与工程切换)处理实际存在的用户会话及恢复目标。没有运行中的 Blender 时直接继续已授权步骤，无需关闭确认；发现用户会话时才请其保存关闭，并复查退出后启动本批实例。
 
 ```powershell
 python -m tools.dev_workflow session list
@@ -68,7 +68,7 @@ python -m tools.dev_workflow session wait --help
 
 当前集成在直接带工程启动时可能保持 `Stopped`。新建本批 GUI 会话时可加 `--script tools/dev_workflow/mcp_start.py`，复用已启用集成启动服务，不改偏好或令牌；随后仍用 `mcp` 核实工具发现。已打开的窗口可从“偏好设置 → 插件 → Blender MCP Integrated → Start MCP”启动。HTTP 401 先核对客户端与服务令牌是否一致，获授权后只同步对应鉴权项，不打印令牌或整份配置。本批真实验收使用现有 SDK 的 HTTP MCP 工具调用；宿主当前会话的原生 MCP 工具列表是否重载需另行核对。
 
-完成验证、保存本批工程并关闭本批 PID 后，打开原保存工程：
+完成验证、保存本批工程并关闭本批 PID 后，如有已确认的原保存工程，按以下命令恢复；初始无用户会话且未指定目标时不执行恢复：
 
 ```powershell
 $originalProject = '<用户确认的原保存工程路径>'

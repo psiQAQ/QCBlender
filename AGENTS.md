@@ -44,7 +44,7 @@
 
 ## Blender 交互
 
-涉及 Blender 会话、安装或工程验证时读取 [交互规则](docs/agents/blender-interaction.md)。先请用户保存并关闭 Blender，确认退出后开始，结束打开原保存工程。用统一入口按关键词查询 [操作登记表](validation/agent/acceptance/blender-operations.json)；已确认入口优先真实 MCP，其次已有 CLI，Computer Use 按首次入口及 UI 输入、弹窗、布局、交互变化复验。理由：保护原工程，减少整表加载与重复点击；实际结果仍按本批记录。
+涉及 Blender 会话、安装或工程验证时读取 [交互规则](docs/agents/blender-interaction.md)。先只读盘点进程；存在用户会话时才请用户保存关闭并记录恢复目标，没有运行中的 Blender 就直接继续已授权步骤。用统一入口按关键词查询 [操作登记表](validation/agent/acceptance/blender-operations.json)；已确认入口优先真实 MCP，其次已有 CLI，Computer Use 按首次入口及 UI 输入、弹窗、布局、交互变化复验。理由：保护原工程，避免无会话时的重复确认，减少整表加载与重复点击；实际结果仍按本批记录。
 
 ## 阶段产物维护
 
