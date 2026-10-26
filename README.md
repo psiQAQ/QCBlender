@@ -1,60 +1,90 @@
 # QCBlender
 
-QCBlender 在 Blender 中显示已有量子化学结果，并对支持的 HF/DFT 波函数生成轨道、密度和静电势网格。结构、等值面、材质与振动可通过原生几何节点调整；科学数据保留来源、单位和计算条件。
+English | [简体中文](README_zh.md)
 
-当前 manifest 版本为 **0.1.0 Alpha 候选**。公开安装包以 [GitHub Releases](https://github.com/psiQAQ/QCBlender/releases) 实际批准的 prerelease 为准；候选技术检查、组件许可复核和独立试装分别记录，准备状态不代表已公开发布。
+QCBlender displays existing quantum chemistry results in Blender and generates orbital, density, and electrostatic potential grids from supported HF/DFT wavefunctions. Structures, isosurfaces, materials, and vibrations can be adjusted through native Geometry Nodes. Scientific data retain their provenance, units, and calculation conditions.
 
-## 可以做什么
+The current manifest version is **0.1.0 Alpha candidate**. Public installation packages are the approved prereleases available on [GitHub Releases](https://github.com/psiQAQ/QCBlender/releases). Candidate technical checks, component license reviews, and independent installation trials are recorded separately; readiness does not mean a release has been published.
 
-| 用户任务 | 输入 | 可得到的结果 |
+## What you can do
+
+| Task | Input | Result |
 | --- | --- | --- |
-| 轨道与电子分布成图 | 含完整基组/MO 的 Gaussian `.fchk/.fch`，或已有 `.cube/.cub` | MO 正负相位、总/Alpha/Beta/自旋密度的等值面和体积显示 |
-| 查看静电势分布 | 支持的 FCHK，或已有密度/ESP Cube | 密度表面按 ESP 着色、固定色标、切片、取值及线剖面 |
-| 查看分子性质与振动 | Gaussian `.log/.out`、含相应性质的 FCHK | 结构、方法特定能量、电荷、偶极；有正常模式时显示振动，导出原始 IR 频率/强度 |
-| 浏览构型变化 | Gaussian 优化日志、有序 IRC FCHK 清单或标准 XYZ | 优化/IRC 逐步构型与记录，XYZ 同原子顺序多帧离散查看 |
-| 展示已有外部分析 | 配对 Cube、点/路径文件或结果表 | IGMH/IRI、ESP 极值/面积、NBO/E(2)、AIM、Mayer、ETS-NOCV/NOCV 结果；文件要求见 [导入说明](docs/EXTERNAL_ANALYSIS_IMPORT.md) |
+| Visualize orbitals and electron distributions | Gaussian `.fchk/.fch` with a complete basis set and MOs, or existing `.cube/.cub` files | Isosurface and volume displays of positive/negative MO phases and total/alpha/beta/spin densities |
+| Inspect electrostatic potential | Supported FCHK, or existing density/ESP Cube files | Density surfaces colored by ESP, fixed color scales, slices, point values, and line profiles |
+| Inspect molecular properties and vibrations | Gaussian `.log/.out`, or FCHK containing the relevant properties | Structures, method-specific energies, charges, and dipoles; vibration display when normal modes are available, and export of original IR frequencies/intensities |
+| Browse geometry changes | Gaussian optimization logs, ordered IRC FCHK lists, or standard XYZ | Stepwise optimization/IRC geometries and records; discrete viewing of XYZ frames with the same atom order |
+| Display existing external analyses | Paired Cube files, point/path files, or result tables | IGMH/IRI, ESP extrema/areas, NBO/E(2), AIM, Mayer, and ETS-NOCV/NOCV results; see the [import guide](docs/EXTERNAL_ANALYSIS_IMPORT.md) for file requirements |
 
-外部分析由相应软件事先完成，QCBlender 读取和显示其结果。插件内置求值不执行新的 SCF 计算。
+External analyses must first be performed with the corresponding software. QCBlender reads and displays their results. Its built-in evaluation does not run new SCF calculations.
 
-## 兼容范围与安装
+## Compatibility and installation
 
-实际验证环境为 **Windows x64、Blender 5.1.1**。扩展清单声明最低 5.1.1、最高版本边界 5.2.0；其他版本和平台未经本次验证。内置求值限非周期、实值、全电子 HF/DFT，具体基组、方法及样本边界见 [支持与验证状态](docs/VALIDATION.md)。
+The documented validation was performed on **Windows x64 with Blender 5.1.1**. The extension manifest declares a minimum Blender version of 5.1.1 and an upper version boundary of 5.2.0. Other versions and platforms were not covered by that validation.
 
-目前需使用维护者提供或按下方开发说明构建并验证的扩展 ZIP。取得合格包后，在 Blender **Preferences → Get Extensions → 菜单 → Install from Disk** 安装并启用。扩展包含必要科学库，运行时无需另配 Python 环境；仓库的源码 ZIP 不能直接作为扩展安装包。
+Built-in evaluation is limited to nonperiodic, real-valued, all-electron HF/DFT wavefunctions. See [support and validation status](docs/VALIDATION.md) for the specific basis sets, methods, and sample coverage. The extension includes the required scientific libraries; no separate Python environment is needed at runtime.
 
-## 第一次生成轨道图
+1. **Obtain an installation package**: use a qualified extension ZIP provided by the maintainer, or build and validate one using the [development guide](docs/DEVELOPMENT.md). The repository's source ZIP cannot be installed directly as a Blender extension.
+2. **Install the extension**: in Blender, open **Edit → Preferences → Get Extensions → top-right menu → Install from Disk**, then select the extension ZIP.
+3. **Enable it and check the runtime**: select **Add-ons** in the Preferences sidebar, search for **QCBlender**, and confirm that it is enabled. Expand its preferences and click **Check Scientific Runtime**. Continue to orbital generation after all module checks pass.
 
-1. 安装并启用合格包，在 Add-ons 的 QCBlender 偏好设置中运行 **Check Scientific Runtime**。
-2. 在 3D Viewport 按 **N**，打开 **QCBlender → 工作流 → 导入 Gaussian / Cube / XYZ**，选择含基组和轨道的 FCHK。
-3. 选中新原子视图，点击 **生成量子化学场**，等待独立科学预检通过并打开参数对话框，再选择 **Molecular orbital**，核对自旋通道和源轨道编号或 HOMO/LUMO，生成场。
-4. 在对象属性中调整等值和正负相位，在材质属性中调整颜色；正负表示轨道相位。生成网格初值为0.2 Å、边缘3 Å、预算512 MiB；新建原子外层Quality=3，新切片每轴201点。九个公共节点资产的原有默认值保留。
-5. 在 **N 侧栏 → 工程与诊断 → 保存自包含工程** 保存 `.blend` 和同名 `.qcdata/`；两者一起移动。设置相机与灯光后可用 Blender 原生渲染出图。
+## Create your first orbital image
 
-人工操作按 [用户教程](validation/human/SOP.md) 从安装开始，再按需选择专题；[校验目录](validation/README.md) 集中教程、截图、安装包和数据，并说明人工完成后的打包方法。[数据目录](validation/shared/data/README.md) 管理公开、本地限定及回归输入。公开 P01/P03/P04/P05/P06 使用 CC BY 4.0；P02 仅供本机限定案例使用，再分发许可未确认。技术检查见 [Agent 流程](validation/agent/README.md)。
+After installation and the runtime check, prepare an FCHK containing a complete basis set and molecular orbitals (MOs), such as the [P01 oxygen molecule example](validation/shared/data/public/gaussian-v2/P01/o2-uhf.fchk). For a detailed parameter checklist and expected results, follow the [orbital workflow in the user tutorial](validation/human/SOP.md#orbital).
 
-原始 IR、优化/收敛、IRC、Mayer、采样线剖面、成对场体素与ESP面积记录可在 **N侧栏 → 工程与诊断 → 导出数据与参数摘要** 显式保存为UTF-8 CSV和metadata.json；每次创建唯一结果子目录。默认目录为已保存.blend的父目录，否则为系统Documents；Addon偏好“数据导出目录”可设置跨工程绝对路径，单次导出可覆盖。操作见[参数摘要](validation/human/SOP.md#export)和[剖面 CSV](validation/human/topics/04-spatial-tools.md)。
+1. **Import the FCHK**: in the **3D Viewport**, press **N** and open **QCBlender → Import and Export → Import → Import Gaussian / Cube / XYZ**, then select the FCHK.
+2. **Open the atom view settings**: select the atom object created by the import. Under **N sidebar → Current QC Object → Open Object Properties**, check the target object name and open its settings.
+3. **Generate the orbital field**: under **Object Properties → Create Views and Tools → Compute**, click **Generate Quantum Field**. Wait for the independent scientific preflight to pass. In the parameter dialog, select **Molecular orbital**, check the spin channel, and choose an orbital by its source orbital number or HOMO/LUMO. Check the grid parameters, click **OK**, and wait for generation to finish.
+4. **Adjust the orbital display**: select the new field object and click **Open Object Properties** again. Under **Geometry Representation**, adjust the isovalue and positive/negative phase display. Adjust colors in **Material Properties** in the Properties editor.
 
-## 保存与科学限制
+   > Positive and negative orbital surfaces represent orbital phase.
 
-`.blend` 保存节点、材质和布局，`.qcdata/` 保存科学数组、来源和显示缓存。打包前先保存最新工程；只有表面网格无法恢复丢失的科学数组。原始计算输出另行保留。
+5. **Save the project**: use **N sidebar → Project and Maintenance → Save and Archive → Save Self-Contained Project**. This should create a `.blend` file and a `.qcdata/` directory with the same base name. Move both together when relocating the project.
+6. **Render the image**: set up the camera and lights, then render with Blender's native renderer.
 
-二进制 `.chk` 须先用已有 Gaussian 的 `formchk` 导出 FCHK。普通 Cube 的物理量和单位可能未知，需依据生成条件显式声明；声明不转换数值。ECP、复轨道、周期体系、ORCA 原生格式和 `.mwfn` 不在当前支持范围内。
+<details>
+<summary>Default grid parameters and defaults for new views</summary>
 
-标准XYZ支持元素符号/原子序数与三个有限坐标，坐标为Å；同原子数/元素顺序多帧可离散切换。扩展属性、晶胞/PBC、插值和播放不在XYZ范围内；多帧XYZ科学来源关联会明确拒绝，单帧按真实构型核对。
+- Initial grid settings: spacing **0.2 Å**, margin **3 Å**, and memory budget **512 MiB**.
+- The outer parameter for a new atom view is `Quality=3`; a new slice has **201** points per axis.
+- The nine public node assets retain their original defaults.
 
-原子间连线由距离推断，不代表计算键级；振动播放速度是展示参数，静态轨道/密度不随之成为时变波函数。科研出图应记录方法、基组、来源摘要、物理量/单位、网格、等值和色标范围。
+</details>
 
-## 开发者文档
+<details>
+<summary>Export data and parameter summaries, and set an output directory</summary>
 
-完整分类见[文档索引](docs/README.md)，当前说明、研究依据与历史验收各有独立入口。
+To export data, select the QC object containing the target records and use **N sidebar → Import and Export → Export → Export Data and Parameter Summary**. This explicitly saves original IR, optimization/convergence, IRC, Mayer, sampled line-profile, paired-field voxel, and ESP area records as UTF-8 CSV files and `metadata.json`. See [parameter summaries](validation/human/SOP.md#export) and [profile CSV export](validation/human/topics/04-spatial-tools.md) for instructions.
 
-| 类别 | 入口与用途 |
+Each export creates a uniquely named result subdirectory. If no export directory is set, saved projects use the directory containing the `.blend` file; unsaved projects use the system Documents directory. Set **Data Export Directory** in the add-on preferences to an absolute path for use across projects, or override it for an individual export.
+
+</details>
+
+For the full workflow, start with installation in the [user tutorial](validation/human/SOP.md), then choose topics as needed. The [validation directory](validation/README.md) brings together tutorials, screenshots, installation packages, and data, and explains how to package the materials after manual completion. See the [Agent workflow](validation/agent/README.md) for technical checks.
+
+The [data directory](validation/shared/data/README.md) manages public, local-only, and regression inputs. Public P01/P03/P04/P05/P06 data use CC BY 4.0. P02 is restricted to local use; redistribution permission has not been confirmed.
+
+## Saving projects and scientific limitations
+
+The `.blend` file stores nodes, materials, and layouts; `.qcdata/` stores scientific arrays, provenance, and display caches. Save the latest project state before packaging it. Surface meshes alone cannot recover missing scientific arrays. Keep the original calculation outputs separately.
+
+Binary `.chk` files must first be converted to FCHK with `formchk` from an existing Gaussian installation. The physical quantity and units of an ordinary Cube file may be unknown and must be explicitly declared based on how it was generated. Declaring them does not convert the values. ECP, complex orbitals, periodic systems, native ORCA formats, and `.mwfn` are not currently supported.
+
+Standard XYZ supports element symbols/atomic numbers and three finite coordinates in Å. Multiple frames with the same atom count and element order can be viewed discretely. Extended properties, unit cells/PBC, interpolation, and playback are outside XYZ support. Linking scientific sources to multi-frame XYZ is explicitly rejected; single-frame XYZ is checked against the actual geometry.
+
+Connections between atoms are inferred from distances and do not represent calculated bond orders. Vibration playback speed is a display parameter; it does not turn static orbitals or densities into time-dependent wavefunctions. For scientific figures, record the method, basis set, provenance summary, physical quantity/units, grid, isovalue, and color-scale range.
+
+## Developer documentation
+
+See the [documentation index](docs/README.md) for the full classification, with separate entry points for current guidance, research evidence, and historical acceptance records.
+
+| Category | Documents and purpose |
 | --- | --- |
-| 构建与验证 | [开发说明](docs/DEVELOPMENT.md)：环境、构建与同批复验；[验证状态](docs/VALIDATION.md)：精确候选及 Passed / Not Run |
-| 架构与数据 | [架构](docs/QCBLENDER_V1_DESIGN.md)、[数据契约](docs/specs/qc-data-contract.md)、[节点契约](docs/specs/geometry-nodes.md)、[单扩展 ADR](docs/adr/0001-self-contained-extension.md) |
-| 科学依据 | [领域词汇](CONTEXT.md)、[输入格式研究](docs/research/gaussian-inputs.md)、[Gaussian 能量语义](docs/research/gaussian-energy-semantics.md) |
-| 样本与复现 | [数据目录](validation/shared/data/README.md)、[用户教程](validation/human/SOP.md)、[复杂案例参数与复建](docs/COMPLEX_EXAMPLES.md) |
-| 开发约定与问题 | [AGENTS](AGENTS.md)、[本地任务规则](docs/agents/issue-tracker.md)、[开发问题记录](docs/DEVELOPMENT_PITFALLS.md) |
-| 许可证与历史 | [LICENSE](LICENSE)、[第三方材料](THIRD_PARTY.md)、[CHANGELOG](docs/CHANGELOG.md) |
+| Building and validation | [Development guide](docs/DEVELOPMENT.md): environment, building, and verification of the same candidate; [validation status](docs/VALIDATION.md): exact candidates and Passed / Not Run results |
+| Architecture and data | [Architecture](docs/QCBLENDER_V1_DESIGN.md), [data contract](docs/specs/qc-data-contract.md), [node contract](docs/specs/geometry-nodes.md), and [single-extension ADR](docs/adr/0001-self-contained-extension.md) |
+| Scientific basis | [Domain vocabulary](CONTEXT.md), [input format research](docs/research/gaussian-inputs.md), and [Gaussian energy semantics](docs/research/gaussian-energy-semantics.md) |
+| Samples and reproduction | [Data directory](validation/shared/data/README.md), [user tutorial](validation/human/SOP.md), and [complex example parameters and reconstruction](docs/COMPLEX_EXAMPLES.md) |
+| Development conventions and issues | [AGENTS](AGENTS.md), [local task rules](docs/agents/issue-tracker.md), and [development issue records](docs/DEVELOPMENT_PITFALLS.md) |
+| Licenses and history | [LICENSE](LICENSE), [third-party materials](THIRD_PARTY.md), and [CHANGELOG](docs/CHANGELOG.md) |
 
-Alpha 首次操作使用 [P01/MO9 主流程](validation/human/SOP.md)，在“工程与诊断 → 导出数据与参数摘要”选择“当前视图参数摘要”，保存中文 Markdown 与 JSON。发布方式及门禁见[GitHub 发布研究](docs/research/github-release-workflow.md)。
+For your first Alpha session, follow the [P01/MO9 workflow](validation/human/SOP.md). Under **Import and Export → Export → Export Data and Parameter Summary**, select **Current View Parameter Summary** to save Chinese Markdown and JSON. See the [GitHub release study](docs/research/github-release-workflow.md) for the release process and gates.

@@ -1,5 +1,7 @@
 # 开发演进
 
+- 2026-10-26：将 README 拆分为英文 `README.md` 与中文 `README_zh.md`，保留已有入门流程改进，在开头增加双向语言链接，并同步末尾导出菜单路径。仅改文档；链接、翻译对应及 diff 静态检查 Passed，Blender 运行验收 Not Run。
+
 - 2026-10-24：将原生GS2分段53帧（TS27）设为当前SOP的Gaussian-v2/v4样本，P06同步1/27/53来源；保留69帧、v3包、旧工程和原生补充。重拍7张图，真实MCP/GUI、53/318行导出、两工程冷重开及移动/解包均Passed（0差异）；51项工具测试和当前独立材料/网站静态检查Passed。产品和依赖未变，独立人工/科研及部署Not Run。见[当前切换验收](../validation/agent/reports/2026-10-24/native-irc-current/acceptance.md)。本地提交归档，不push。
 
 - 2026-10-24：续查 Gaussian 原生 IRC，复现常规 GS2 的假极小点早停、HPC/EulerPC 首点校正失败及旧 Restart 的 Hessian 更新失败。通过官方 Downhill 从真实接受点分段继续，得到 52 段原生 GS2 积分及 TS 共 53 帧；两侧逐点下降，端点最大梯度小于 10⁻⁶ Hartree/Bohr、六频均正。新增独立补充数据、原生来源链、318 项 Mayer、完整输入/日志和诊断证据；自动科学及解析检查 Passed，原 Gaussian-v1/v3、69 帧路径及工程保持原身份。常规单作业早停未被标为修复，新数据 GUI 与独立科研签署 Not Run。详见[原生 IRC 续查](../validation/agent/reports/2026-10-24/gaussian-sop/native-irc.md)。本地提交归档，不 push。
