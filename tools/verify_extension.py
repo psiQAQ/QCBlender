@@ -49,6 +49,29 @@ def run_job(job):
     raise TimeoutError(str(job.directory))
 
 
+def verify_remote_worker():
+    """Exercise the custom repository namespace discarded by factory startup."""
+    repository = 'qcblender_remote_probe'
+    module = f'bl_ext.{repository}.qcblender'
+    path = Path(bpy.utils.user_resource('EXTENSIONS')) / repository
+    path.mkdir(exist_ok=True)
+    bpy.ops.preferences.addon_disable(module=MODULE)
+    bpy.context.preferences.extensions.repos.new(
+        name='QCBlender remote worker probe', module=repository,
+        custom_directory=str(path), remote_url='', source='USER')
+    assert bpy.ops.extensions.package_install_files(
+        filepath=str(args.candidate.resolve()), repo=repository,
+        enable_on_install=True, overwrite=True) == {'FINISHED'}
+    jobs = importlib.import_module(module + '.blender.jobs')
+    assert run_job(jobs.Job('diagnose'))['ok']
+    imported = jobs.Job('import', source=str(ROOT / 'validation/shared/data/regression/chemtools/ch4_uhf_ccpvdz.fchk'))
+    run_job(imported)
+    storage = importlib.import_module(module + '.data')
+    assert len(storage.load_dataset(imported.directory / 'dataset').arrays['atomic_numbers']) == 5
+    bpy.ops.preferences.addon_disable(module=module)
+    bpy.ops.preferences.addon_enable(module=MODULE)
+
+
 if '--reopen' in sys.argv:
     report = json.loads(REPORT.read_text(encoding='utf-8'))
     bpy.ops.preferences.addon_enable(module=MODULE)
@@ -168,10 +191,12 @@ else:
     moved.mkdir(exist_ok=True)
     with zipfile.ZipFile(archive_path) as archive:
         archive.extractall(moved)
+    verify_remote_worker()
     report = {'status': 'Passed', 'blender': bpy.app.version_string, 'offline_install': 'Passed',
               'source_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
               'candidate_sha256': hashlib.sha256(args.candidate.read_bytes()).hexdigest(),
               'worker_import_evaluate': 'Passed', 'cancel': 'Passed', 'lifecycle': 'Passed',
+              'custom_repository_worker': 'Passed',
               'repeated_field_cache': 'Passed',
               'threshold_updates_geometry': 'Passed', 'phase_switches': 'Passed',
               'field_cache_unchanged': 'Passed', 'cold_open': 'Not Run',

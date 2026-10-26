@@ -34,8 +34,17 @@ def main():
 
     try:
         progress(0, 'Loading scientific runtime')
-        if not args.module.startswith('bl_ext.') or args.module.rsplit('.', 1)[-1] != 'qcblender':
+        parts = args.module.split('.')
+        if len(parts) != 3 or parts[0] != 'bl_ext' or not parts[1].isidentifier() or parts[2] != 'qcblender':
             raise ValueError('Expected an installed QCBlender extension module')
+        # Factory startup omits user-added repositories. Restore only the local
+        # repository containing this worker, without loading unrelated add-ons.
+        repository_path = Path(__file__).resolve().parent.parent
+        repositories = bpy.context.preferences.extensions.repos
+        repository = next((repo for repo in repositories if repo.module == parts[1]), None)
+        if repository is None:
+            repositories.new(name='QCBlender worker', module=parts[1],
+                             custom_directory=str(repository_path), remote_url='', source='SYSTEM')
         bpy.ops.preferences.addon_enable(module=args.module)
         package = importlib.import_module(args.module)
         if Path(package.__file__).resolve().parent != Path(__file__).resolve().parent:

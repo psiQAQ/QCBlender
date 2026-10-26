@@ -32,3 +32,5 @@ Status: claimed
 - 用户已回复 Blender 关闭，并要求将“先调查进程，再在确有用户会话时请求关闭”写入规则偏好。本次 `session list` 实际返回空进程列表；规则入口和交互文档已同步。用户未指定原工程，不从最近文件猜选恢复目标。
 
 - 教程 80 张图全部视觉复查：裁剪区域解码像素一致；5 张局部选择图重新构图、8 张科学显示图改为新案例。总计 49,091,794 → 20,945,908 字节。旧图和完整原图保全，逐图身份见产物入口。发布工具 7 项扩展边界测试 Passed，最终远端候选和发布仍待执行。
+- 候选 run `40338016490`（源码 `cf2a27a`，扩展 SHA-256 `478c9d9a1959018ea24904868cbc5c2f0bc17afd126eb8df48b799c95b654eaf`）完整 CI Passed；实际 ZIP 安装、P01/投影/AICD 与冷重开 Passed。通过 UI 添加临时远程仓库并下载相同字节后，科学运行时检查 Failed：worker 的 `--factory-startup` 丢失新增仓库命名空间，报 `extension repository "repository" doesn't exist`。因此该候选不发布。
+- 修复 worker：从自身安装文件定位本地仓库，仅在出厂配置缺少对应仓库时补入，不加载其他用户插件或远程地址。保留启用后的扩展来源一致性检查。失败安装的隔离开发副本经真实后台 Blender 诊断和 P01 导入 Passed（`.tmp/runs/windows-preview-0.1.0/worker-fix/`）；新增候选 CI 的自定义仓库 worker 验收，最终新包仍待 CI 及安装复验。
