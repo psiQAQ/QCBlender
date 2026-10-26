@@ -22,6 +22,9 @@ def main():
     parser.add_argument('--channel', choices=('alpha', 'preview'), default='alpha')
     args = parser.parse_args()
     commit, _ = source_identity()
+    # Fail before native builds if any required public tutorial input is unresolved.
+    from tools.tutorial_bundle import inventory
+    inventory(ROOT)
     import numpy as np
     lock = json.loads((ROOT / 'dependencies.lock.json').read_text(encoding='utf-8'))
     if '.'.join(str(v) for v in sys.version_info[:2]) != lock['target']['python'] or np.__version__ != lock['host_provided']['numpy']:
@@ -109,6 +112,13 @@ def main():
     native('public-reproduction-cold', ['verify_alpha_workflow.py'],
            ['--candidate', candidate, '--output-dir', reproduction, '--report', reproduction_report, '--reopen'],
            first_reproduction['moved_blend'])
+    tutorial = out / 'dist' / ('qcblender-tutorial-' + extension_filename().removeprefix('qcblender-'))
+    run('tutorial', [sys.executable, '-B', ROOT / 'tools/tutorial_bundle.py', '--output', tutorial,
+                     '--stage', work / '教程材料', '--report', reports / 'tutorial.json'])
+    repository_index = out / 'dist/index.json'
+    run('repository-index', [sys.executable, '-B', ROOT / 'tools/repository_index.py',
+                             '--blender', args.blender, '--candidate', candidate,
+                             '--output', repository_index, '--scan-dir', work / 'repository-scan'])
     run('sample-package', [sys.executable, '-B', ROOT / 'tools/candidate_artifacts.py', 'check-samples',
                            '--output', reports / 'sample-package.json'])
     index = dict(candidate_sha256=candidate_sha, source_commit=commit, checks={})
@@ -123,7 +133,8 @@ def main():
                           '--evidence-index', index_path, '--installed-dir', installed,
                           '--output', reports / 'qualification.json'])
     result = assemble(candidate, None,
-                      reproduction, reports, out / 'artifact', args.run_id, args.channel)
+                      reproduction, reports, out / 'artifact', args.run_id, args.channel,
+                      tutorial=tutorial, repository_index=repository_index)
     print(result['artifact_name'])
 
 

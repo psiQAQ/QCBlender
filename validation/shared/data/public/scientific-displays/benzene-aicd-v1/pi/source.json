@@ -1,0 +1,27 @@
+{
+  "format": "qcblender.aicd.source.v1",
+  "coordinate_unit": "bohr",
+  "response_unit": "au_current_density_per_au_field",
+  "job_index": 0,
+  "component": "pi",
+  "orbitals": [
+    17,
+    20,
+    21
+  ],
+  "orbital_assignment_evidence": "Multiwfn 2026.9.20, same all.fchk; occupied XY-plane pi orbitals 17,20,21, six electrons; output sha256 5b9c8a0fcc256139b71f4365bdb206957663ff4983c026cb2f25e9cd3c37ada5",
+  "files": {
+    "tensor": {
+      "path": "AICD.txt",
+      "sha256": "f0cbb1abe13bcb5e788bd8225d61e536f52149b680ac0e5f8bee6b1b177d373f"
+    },
+    "log": {
+      "path": "pi.log",
+      "sha256": "46d6cdfe609813c91b84286048c7477f7fbe5cf6b31fee7b1b7c65ef3b33af86"
+    },
+    "input": {
+      "path": "pi.gjf",
+      "sha256": "f3e554ee291aad4a2a2f7a57bf570fb8773a7e03162c827b18ebdbfa08eade62"
+    }
+  }
+}

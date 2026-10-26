@@ -1,0 +1,189 @@
+{
+  "schema": "qcblender.tutorial-extras.v1",
+  "groups": {
+    "surface-projection": {
+      "status": "Passed",
+      "license_evidence": [
+        {
+          "path": "validation/shared/data/public/scientific-displays/water-dimer-vdw-v1/NOTICE.md",
+          "bytes": 1918,
+          "sha256": "e104310a97a64d313a2eec53e731b1d7df1e7fe953dd1fe08e7808e16846eb8c"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/water-dimer-vdw-v1/LICENSE",
+          "bytes": 303,
+          "sha256": "c4818b27800c204f2bfba3b31647faf4b9d46101ff4a83657abcf0ac6b76d6c7"
+        }
+      ],
+      "files": [
+        {
+          "path": "validation/shared/data/public/scientific-displays/water-dimer-vdw-v1/distmap.txt",
+          "bytes": 105042,
+          "sha256": "748e172ce05f540770961cd3fb9c539c9bea78037afcd95ecbf9242b3ae70f64",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/water-dimer-vdw-v1/input.gjf",
+          "bytes": 401,
+          "sha256": "442b96ade62811333fb29fed23203113a4b9299a76ef5f1935a122210aa84707",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/water-dimer-vdw-v1/LICENSE",
+          "bytes": 303,
+          "sha256": "c4818b27800c204f2bfba3b31647faf4b9d46101ff4a83657abcf0ac6b76d6c7",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/water-dimer-vdw-v1/mwfn_commands.txt",
+          "bytes": 104,
+          "sha256": "e1e36f8c534b8058afb9a68aeee01ccb6f2fe43039ee4e184883404942c9c5e8",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/water-dimer-vdw-v1/mwfn_log.txt",
+          "bytes": 19927,
+          "sha256": "1f2d79a98a957e732d5f1207386198b089f44b28edd92a8e06ad724374cc05d4",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/water-dimer-vdw-v1/NOTICE.md",
+          "bytes": 1918,
+          "sha256": "e104310a97a64d313a2eec53e731b1d7df1e7fe953dd1fe08e7808e16846eb8c",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/water-dimer-vdw-v1/reference.xyz",
+          "bytes": 375,
+          "sha256": "76c68efd5ab6fd2badbb874295e617dfcce8eecb8e73a27cebfb1b031bb0a7a6",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/water-dimer-vdw-v1/scan.json",
+          "bytes": 728,
+          "sha256": "a40465df93ea1ae6b0a45a7a266f4ab5096185f921f96213509529c9a6cc80fb",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/water-dimer-vdw-v1/source.json",
+          "bytes": 1559,
+          "sha256": "97d6e9376ca7afa87a99f39816206c04de5d83071ccb7d7e3b34682a5b85863d",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/water-dimer-vdw-v1/validity.csv",
+          "bytes": 19000,
+          "sha256": "9ca7129bf9a3c0f913a97c10a3e12aec1742bdbdb42bf4feb3d45289779e66eb",
+          "license": "CC-BY-4.0"
+        }
+      ]
+    },
+    "aicd": {
+      "status": "Passed",
+      "license_evidence": [
+        {
+          "path": "validation/shared/data/public/scientific-displays/benzene-aicd-v1/NOTICE.md",
+          "bytes": 2751,
+          "sha256": "48e9dbf46190d51f6ce2348c32839d3c9a7fba0e358626adbfce82673435174c"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/benzene-aicd-v1/LICENSE",
+          "bytes": 290,
+          "sha256": "1012b2e51efe008c30d385f0f8c406298add41b5ffc38a9520df1c3a2af37029"
+        }
+      ],
+      "files": [
+        {
+          "path": "validation/shared/data/public/scientific-displays/benzene-aicd-v1/all/AICD.txt",
+          "bytes": 55147042,
+          "sha256": "31d638487e6baa975565792030d01f2fa32c77b6a00bd661cebd89b4615cc6b5",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/benzene-aicd-v1/all/all.fchk",
+          "bytes": 516282,
+          "sha256": "604fbbd00f73f47c1a5271a582d7688de1f2a9f20d606f35dc4fb55f7bba31e2",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/benzene-aicd-v1/all/all.gjf",
+          "bytes": 682,
+          "sha256": "731a1c4738a84824feb9286b916aa7b8bc66c7e9c801c3bd0887ce5ab663f387",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/benzene-aicd-v1/all/all.log",
+          "bytes": 37880,
+          "sha256": "b6f8ac7e277b72fe1756d92c86835e42cf5dd6a8414e926894a51d02d38cf890",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/benzene-aicd-v1/all/source.json",
+          "bytes": 651,
+          "sha256": "df6bb1020a513672e114898415f3a7c054c54d0717bf53b43397217ead06be81",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/benzene-aicd-v1/LICENSE",
+          "bytes": 290,
+          "sha256": "1012b2e51efe008c30d385f0f8c406298add41b5ffc38a9520df1c3a2af37029",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/benzene-aicd-v1/NOTICE.md",
+          "bytes": 2751,
+          "sha256": "48e9dbf46190d51f6ce2348c32839d3c9a7fba0e358626adbfce82673435174c",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/benzene-aicd-v1/original.xyz",
+          "bytes": 590,
+          "sha256": "ceaf26cef1309390825da668b854e30db925e95b1cc9d08ce78f24efb8f05d14",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/benzene-aicd-v1/pi/AICD.txt",
+          "bytes": 55147042,
+          "sha256": "f0cbb1abe13bcb5e788bd8225d61e536f52149b680ac0e5f8bee6b1b177d373f",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/benzene-aicd-v1/pi/pi.fchk",
+          "bytes": 516307,
+          "sha256": "1477083f30cfcba17d92b7bddca9e001fd821a366495b3410a75dea17842bafc",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/benzene-aicd-v1/pi/pi.gjf",
+          "bytes": 718,
+          "sha256": "f3e554ee291aad4a2a2f7a57bf570fb8773a7e03162c827b18ebdbfa08eade62",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/benzene-aicd-v1/pi/pi.log",
+          "bytes": 32576,
+          "sha256": "46d6cdfe609813c91b84286048c7477f7fbe5cf6b31fee7b1b7c65ef3b33af86",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/benzene-aicd-v1/pi/source.json",
+          "bytes": 846,
+          "sha256": "5be7fd64f03b8105acfd43379fa0c2f1a332fbc5fc7c32a4274f3102d0dd03bb",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/benzene-aicd-v1/pi-orbital-analysis.txt",
+          "bytes": 8961,
+          "sha256": "5b9c8a0fcc256139b71f4365bdb206957663ff4983c026cb2f25e9cd3c37ada5",
+          "license": "CC-BY-4.0"
+        },
+        {
+          "path": "validation/shared/data/public/scientific-displays/benzene-aicd-v1/pi-orbital-commands.txt",
+          "bytes": 21,
+          "sha256": "b6a76893fe4427670469107b4dfdf9773a71d64b6f81d7894ab58133a0e3150e",
+          "license": "CC-BY-4.0"
+        }
+      ]
+    }
+  }
+}

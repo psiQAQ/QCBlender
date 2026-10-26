@@ -103,7 +103,8 @@ def reproduction_zip(directory, destination, root=ROOT):
     return file_record(destination)
 
 
-def assemble(candidate, samples, reproduction, reports_dir, output, run_id, channel='alpha', root=ROOT):
+def assemble(candidate, samples, reproduction, reports_dir, output, run_id, channel='alpha', root=ROOT,
+             *, tutorial=None, repository_index=None):
     root, output = Path(root), Path(output)
     selected = load_dataset(root)
     samples = selected['package_path'] if samples is None else Path(samples)
@@ -116,6 +117,22 @@ def assemble(candidate, samples, reproduction, reports_dir, output, run_id, chan
     sample_report = verify_samples(samples, root)
     candidate_record = file_record(candidate)
     reports = validate_reports(reports_dir, commit, candidate_record['sha256'])
+    preview = tutorial is not None or repository_index is not None
+    if preview:
+        from tools.repository_index import verify_index
+        from tools.tutorial_bundle import inventory, verify_archive
+        if tutorial is None or repository_index is None:
+            raise ValueError('Preview requires both the complete tutorial and repository index')
+        sources, _ = inventory(root)
+        members = {name: file_record(path) for name, path in sources.items()}
+        verify_archive(tutorial, members)
+        verify_index(json.loads(Path(repository_index).read_text(encoding='utf-8')), manifest, candidate_record)
+        tutorial_report = Path(reports_dir) / 'tutorial.json'
+        record = json.loads(tutorial_report.read_text(encoding='utf-8'))
+        if (record.get('status') != 'Passed' or record.get('source_commit') != commit
+                or record.get('package') != file_record(tutorial)):
+            raise ValueError('Tutorial report does not describe this source and ZIP')
+        reports['tutorial'] = dict(file_record(tutorial_report, Path(reports_dir).parent), status='Passed')
     qualification = json.loads((Path(reports_dir) / 'qualification.json').read_text(encoding='utf-8'))
     dependencies = dependency_identity((root / 'dependencies.lock.json').read_bytes(),
                                        (root / 'science-sources.lock.json').read_bytes(), qualification['backend'])
@@ -130,6 +147,10 @@ def assemble(candidate, samples, reproduction, reports_dir, output, run_id, chan
     for role, path in (('extension', Path(candidate)), ('samples', Path(samples))):
         shutil.copyfile(path, output / path.name)
         files[role] = file_record(output / path.name)
+    if preview:
+        for role, path in (('tutorial', Path(tutorial)), ('repository_index', Path(repository_index))):
+            shutil.copyfile(path, output / path.name)
+            files[role] = file_record(output / path.name)
     files['reproduction'] = reproduction_zip(reproduction, output / f"qcblender-reproduction-{manifest['version']}.zip", root)
     target_reports = output / 'reports'
     target_reports.mkdir()
@@ -142,12 +163,28 @@ def assemble(candidate, samples, reproduction, reports_dir, output, run_id, chan
                   workflow='extension-package.yml', artifact_name=f"qcblender-candidate-{manifest['version']}-{commit}",
                   platform=dict(os='windows', architecture='x64', blender='5.1.1', python='3.13', numpy='2.3.4'),
                   dependencies=dependencies, files=files, reports=reports,
-                  license_review=dict(status='Not Run', blocker='IOData/GBasis GPL metadata and LGPL source-license text remain unresolved'),
+                  license_review=dict(status='Not Run', blocker='Exact candidate component notices and tutorial redistribution review must be bound in the release gate record'),
                   independent_alpha_installation=dict(status='Not Run'), public_release_approval=dict(status='Not Run'))
-    manifest_path = output / 'release-manifest.json'
+    if preview:
+        result['schema'] = 'qcblender.release-candidate.v2'
+        result['agent_preview_installation'] = dict(status='Not Run')
+        public = {key: result[key] for key in ('version', 'channel', 'source_commit', 'product_tree',
+                  'candidate_run_id', 'workflow', 'artifact_name', 'platform', 'dependencies')}
+        public.update(schema='qcblender.release.v1', files={key: files[key] for key in
+                      ('extension', 'tutorial', 'repository_index')},
+                      independent_alpha_installation=dict(status='Not Run'))
+        public_path = output / 'release-manifest.json'
+        public_path.write_text(json.dumps(public, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        files['public_manifest'] = file_record(public_path)
+        public_paths = [public_path] + [output / entry['path'] for entry in public['files'].values()]
+        sums = output / 'SHA256SUMS.txt'
+        sums.write_text(''.join(file_record(path)['sha256'] + '  ' + path.name + '\n'
+                               for path in sorted(public_paths)), encoding='ascii')
+        files['public_checksums'] = file_record(sums)
+    manifest_path = output / ('candidate-manifest.json' if preview else 'release-manifest.json')
     manifest_path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     checksummed = sorted([output / record['path'] for record in files.values()] + [manifest_path] + list(target_reports.glob('*.json')))
-    (output / 'SHA256SUMS.txt').write_text(''.join(file_record(path)['sha256'] + '  ' + path.relative_to(output).as_posix() + '\n' for path in checksummed), encoding='ascii')
+    (output / ('CANDIDATE-SHA256SUMS.txt' if preview else 'SHA256SUMS.txt')).write_text(''.join(file_record(path)['sha256'] + '  ' + path.relative_to(output).as_posix() + '\n' for path in checksummed), encoding='ascii')
     return result
 
 
@@ -162,6 +199,8 @@ def main():
     for name in ('candidate', 'reproduction', 'reports', 'output'):
         build.add_argument('--' + name, type=Path, required=True)
     build.add_argument('--samples', type=Path)
+    build.add_argument('--tutorial', type=Path)
+    build.add_argument('--repository-index', type=Path)
     build.add_argument('--run-id', type=int, required=True)
     build.add_argument('--channel', choices=('alpha', 'preview'), default='alpha')
     args = parser.parse_args()
@@ -172,7 +211,8 @@ def main():
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
     else:
-        result = assemble(args.candidate, args.samples, args.reproduction, args.reports, args.output, args.run_id, args.channel)
+        result = assemble(args.candidate, args.samples, args.reproduction, args.reports, args.output, args.run_id, args.channel,
+                          tutorial=args.tutorial, repository_index=args.repository_index)
         print(result['artifact_name'])
 
 

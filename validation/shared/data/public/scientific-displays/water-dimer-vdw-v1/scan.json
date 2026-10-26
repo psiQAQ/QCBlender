@@ -1,0 +1,34 @@
+{
+  "nx": 61,
+  "ny": 41,
+  "x_range_angstrom": [
+    -4.0,
+    4.0
+  ],
+  "y_range_angstrom": [
+    -3.0,
+    3.0
+  ],
+  "z_start_angstrom": 4.0,
+  "z_end_angstrom": -4.0,
+  "z_step_angstrom": 0.05,
+  "surface": "union_of_open_vdw_spheres",
+  "radius_scale": 1.0,
+  "radii_angstrom": {
+    "H": 1.2,
+    "O": 1.52
+  },
+  "data_scale_factor": 1.0,
+  "format": "qcblender.surface_projection.scan.v1",
+  "producer": "Multiwfn",
+  "producer_version": "2026.9.20",
+  "coordinate_unit": "angstrom",
+  "depth_unit": "angstrom",
+  "coordinate_frame": "reference_cartesian",
+  "depth_definition": "z_hit-z_start",
+  "xy_mode": "relative_to_scan_min",
+  "xy_offset_angstrom": [
+    -4.0,
+    -3.0
+  ]
+}

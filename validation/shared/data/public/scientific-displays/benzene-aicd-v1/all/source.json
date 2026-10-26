@@ -1,0 +1,23 @@
+{
+  "format": "qcblender.aicd.source.v1",
+  "coordinate_unit": "bohr",
+  "response_unit": "au_current_density_per_au_field",
+  "job_index": 0,
+  "component": "all",
+  "orbitals": [],
+  "orbital_assignment_evidence": "",
+  "files": {
+    "tensor": {
+      "path": "AICD.txt",
+      "sha256": "31d638487e6baa975565792030d01f2fa32c77b6a00bd661cebd89b4615cc6b5"
+    },
+    "log": {
+      "path": "all.log",
+      "sha256": "b6f8ac7e277b72fe1756d92c86835e42cf5dd6a8414e926894a51d02d38cf890"
+    },
+    "input": {
+      "path": "all.gjf",
+      "sha256": "731a1c4738a84824feb9286b916aa7b8bc66c7e9c801c3bd0887ce5ab663f387"
+    }
+  }
+}

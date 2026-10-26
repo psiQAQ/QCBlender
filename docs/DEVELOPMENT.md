@@ -257,6 +257,24 @@ Invoke-QCCheck 'qualification' $blenderPython @('-I', 'tools/qualify_package.py'
 
 目标目录必须不存在。该入口运行显式标准库集合与公开科学集合、构建、隔离离线安装、注册/注销、原地及中文移动冷重开、P01/MO9 摘要及首次渲染。公开科学集合必须调用真实 IOData/GBasis 并通过独立 cubegen/Fortran 对照；缺必要输入或跳过即失败。完整受限样本集合继续用 `run_science_tests.py` 默认 full 入口。
 
-候选 artifact 包含原扩展 ZIP、冻结 v2 样本 ZIP、精简复现 ZIP、报告、release-manifest.json 和 SHA256SUMS.txt。manifest 保存源码提交、运行 ID、依赖和包/样本摘要；上传返回的 artifact ID 单独用于发布身份核验。资格工具要求本次 evidence-index 和隔离安装路径，没有历史报告兜底。
+候选 artifact 的 v2 清单为 `candidate-manifest.json`，完整校验和为 `CANDIDATE-SHA256SUMS.txt`；它包含原扩展 ZIP、当前冻结样本 ZIP、精简复现 ZIP、完整教程 ZIP、官方工具生成的索引及技术报告。清单保存源码提交、运行 ID、依赖和各附件摘要；上传返回的 artifact ID 单独用于发布身份核验。资格工具要求本次 evidence-index 和隔离安装路径，没有历史报告兜底。
 
-候选 CI 在 `.github/workflows/extension-package.yml`；发布入口在 `extension-release.yml`，默认分支手动输入 tag、candidate_run_id、dry_run（默认 true）。发布只核验并上传原文件，不重新打包；先核对注释标签、main 可达性、manifest 版本、精确运行提交、artifact 与报告。组件许可通过后可创建草稿，独立试装和公开批准另记绑定候选的 release-gates 记录；维护者最后在 GitHub UI 公开为 prerelease。首次 Alpha 只发 GitHub。详见[发布研究](research/github-release-workflow.md)。
+候选 CI 在 `.github/workflows/extension-package.yml`；发布入口在 `extension-release.yml`，默认分支手动输入 `tag`、`candidate_run_id`、`dry_run`（默认 true）、`publish_preview`（默认 false）及 `gates_record`。发布只核验并上传原文件，不重新打包；先核对注释标签、main 可达性、manifest 版本、精确运行提交、artifact 与报告。v1 历史 artifact 仍可只读核验或按原门禁建立草稿，不可通过新的公开预览动作放行。
+
+### 0.1.0 Windows 预览版
+
+本次预览按用户批准的计划采用 Agent 实际安装、MCP、Computer Use 门槛；正式版本的独立人工要求不变。公开发布限于 `v0.1.0`、Windows x64、Blender 5.1.1，设置 `prerelease=true`、`make_latest=false`。独立人工／科研验收保持真实状态，不从技术检查推导通过。
+
+`tools/tutorial_bundle.py` 构建 `qcblender-tutorial-0.1.0.zip`，必须包含 SOP、全部 12 个专题、图片和输入；不含扩展 ZIP。它核对当前样本字节、补充素材许可清单、文档引用、CSV 配套文件与 AICD 来源声明，解包材料根目录使用独立中文路径。缺输入、图片或许可依据时失败，不删减专题。补充素材的权威清单是 `validation/agent/acceptance/tutorial-public-extras.json`。
+
+CI 使用 Blender 官方 `extension server-generate --repo-dir ...`，扫描目录仅放确切扩展 ZIP，随后校验平台、兼容版本、大小与摘要，并将 URL 固定到本版本 Release 附件。实现与索引契约见 `tools/repository_index.py`；命令来自 [Blender 官方说明](https://docs.blender.org/manual/en/5.0/advanced/extensions/creating_repository/static_repository.html)。本机运行官方工具前仍遵守 Blender 会话保护规则。
+
+公开附件只有 `qcblender-0.1.0.zip`、`qcblender-tutorial-0.1.0.zip`、`index.json`、`release-manifest.json`、`SHA256SUMS.txt`。公开清单及校验和不包含内部报告、独立样本包或复现工程；这些仍保存在同一候选 CI artifact。公开文件均在候选阶段生成，发布阶段不改写。
+
+发布门禁记录仍使用 `qcblender.release-gates.v1`，绑定精确 `candidate_run_id`、`artifact_id`、`source_commit`、`extension_sha256`。除许可与公开批准外，v2 候选需要 `agent_preview_installation`：实际的 `zip_install`、`remote_repository_install`、`mcp`、`computer_use`、`p01`、`cold_reopen`、`scientific_displays`、`tutorial_portability` 均为 Passed，且有审查人、日期、说明和带摘要的证据文件。未执行项保留 Not Run。门禁记录与证据放在同一可访问的仓库目录树内，不在公开素材包中。
+
+先以 `dry_run=true` 核验；写入草稿设 `dry_run=false`、`publish_preview=false`；实际发布还需 `publish_preview=true` 且全部预览门禁通过。写入阶段重新核验来源和远端标签，下载 Release 附件核对字节；已有同名但不同摘要的附件直接失败，不覆盖、不移动标签。中断时保留同一草稿重试。
+
+公开后 workflow 显式调度 Pages 的 `release_tag=v0.1.0`。Pages 读取已公开 Release，核对元数据、索引和 GitHub 附件摘要，将原始 `index.json` 部署至 `https://notes.psiqaq.cn/QCBlender/index.json`。正常部署也查询同一已发布标签；已有线上索引但 Release 无法确认时停止部署，避免擦除安装入口。本地离线源码检查可设置 `QCB_RELEASE_OFFLINE=1`，CI 禁止此模式；离线结果不代表线上发布验证。
+
+完成发布后仍须从正式下载地址核对摘要，用正式索引实际同步和安装，并检查中英文页面。Pages 失败不撤销已公开安装包，修复部署后再确认整体完成。

@@ -42,7 +42,9 @@ QCBlender 使用单个自包含 Blender 扩展，首发 Windows x64 / Blender 5.
 
 发布报告保存明确的 run ID、artifact ID、tag 提交、每份附件摘要和校验状态。所有可推广附件只复制原始字节；Release notes 取当前版本的已审阅文档，不根据提交列表推导科研功能或支持范围。
 
-许可、人工试装和公开批准使用独立记录，不能改写已构建 artifact 的门禁初态。`qcblender.release-gates.v1` 必须绑定 `candidate_run_id`、`artifact_id`、`source_commit`、`extension_sha256`；三个结果分别为 `license_review`、`independent_alpha_installation`、`public_release_approval`。每项 `Passed` 必須提供实际 `reviewer`、ISO 日期 `reviewed_at`、`notes` 与非空 `evidence` 清单；每份证据的 `path` 是记录目录内相对路径，`sha256` 核对实际字节。Agent 只检查字段、身份和摘要，不生成通过签署。
+许可、人工试装和公开批准使用独立记录，不能改写已构建 artifact 的门禁初态。`qcblender.release-gates.v1` 必须绑定 `candidate_run_id`、`artifact_id`、`source_commit`、`extension_sha256`；三个结果分别为 `license_review`、`independent_alpha_installation`、`public_release_approval`。每项 `Passed` 必須提供实际 `reviewer`、ISO 日期 `reviewed_at`、`notes` 与非空 `evidence` 清单；每份证据的 `path` 是记录目录内相对路径，`sha256` 核对实际字节。Agent 不替独立使用者生成通过签署。
+
+2026-10-26 的 `0.1.0 Alpha Preview` 按用户另行批准的计划新增 `agent_preview_installation`，由 Agent 记录实际安装、MCP 与 Computer Use 的执行证据，独立人工结果仍单列。公开由 CI 完成，原草稿工作流的历史设计不再代表本次最终发布方式。完整教程附件、索引、预览专用门禁和 Pages 调度的当前流程见 [DEVELOPMENT 的 0.1.0 Windows 预览版](../DEVELOPMENT.md#010-windows-预览版)；正式版本的独立人工要求未放宽。
 
 `tools/verify_release_gates.py --record <记录> --candidate-manifest <候选清单> --artifact-id <ID>` 是本地记录核验入口。发布 workflow 的可选 `gates_record` 指向默认分支检出内的该记录。技术 dry-run 可以 Passed 并显示 `draft_readiness=Failed`；创建草稿要求独立许可复核记录 Passed。人工试装与公开批准保持各自真实状态，后续由实际操作者填写；脚本始终不公开 Release。
 

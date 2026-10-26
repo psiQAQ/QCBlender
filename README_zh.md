@@ -3,7 +3,7 @@
 [English](README.md) | 简体中文
 QCBlender 在 Blender 中显示已有量子化学结果，并对支持的 HF/DFT 波函数生成轨道、密度和静电势网格。结构、等值面、材质与振动可通过原生几何节点调整；科学数据保留来源、单位和计算条件。
 
-当前 manifest 版本为 **0.1.0 Alpha 候选**。公开安装包以 [GitHub Releases](https://github.com/psiQAQ/QCBlender/releases) 实际批准的 prerelease 为准；候选技术检查、组件许可复核和独立试装分别记录，准备状态不代表已公开发布。
+**QCBlender 0.1.0 Alpha Preview** 面向 Windows x64、Blender 5.1.1。实际发布状态及附件见 [GitHub Releases](https://github.com/psiQAQ/QCBlender/releases/tag/v0.1.0)。候选检查、Agent 试装和独立人工／科研验收分别记录；候选准备完成不代表已经公开发布。
 
 ## 可以做什么
 
@@ -23,9 +23,21 @@ QCBlender 在 Blender 中显示已有量子化学结果，并对支持的 HF/DFT
 
 内置求值限于非周期、实值、全电子 HF/DFT。具体基组、方法及样本边界见 [支持与验证状态](docs/VALIDATION.md)。扩展包含必要的科学库，运行时无需另配 Python 环境。
 
-1. **准备安装包**：使用维护者提供的合格扩展 ZIP，或按 [开发说明](docs/DEVELOPMENT.md) 构建并验证。仓库的源码 ZIP 不能直接作为扩展安装包。
+预览版在 [GitHub Releases](https://github.com/psiQAQ/QCBlender/releases/tag/v0.1.0) 公开后，任选一种方式安装。
+
+### 从 ZIP 安装
+
+1. **下载扩展**：取得 `qcblender-0.1.0.zip`，与同一 Release 的 `SHA256SUMS.txt` 核对 SHA-256。仓库的源码 ZIP 不能直接作为扩展安装包。
 2. **安装扩展**：在 Blender 打开 **编辑（Edit） → 偏好设置（Preferences） → 获取扩展（Get Extensions） → 右上角菜单 → 从磁盘安装（Install from Disk）**，选择扩展 ZIP。
 3. **启用并检查运行环境**：在偏好设置左侧切换到 **插件（Add-ons）**，搜索 **QCBlender** 并确认已启用。展开插件偏好设置，点击 **检查科学运行环境（Check Scientific Runtime）**。确认各模块检查通过后，再继续生成轨道。
+
+### 从远程仓库安装
+
+1. 打开 **编辑（Edit） → 偏好设置（Preferences） → 系统（System） → 网络（Network）**，启用 **允许在线访问（Allow Online Access）**。
+2. 进入 **获取扩展（Get Extensions） → 仓库（Repositories） → ＋ → 添加远程仓库（Add Remote Repository）**，粘贴完整地址 `https://notes.psiqaq.cn/QCBlender/index.json`，添加仓库。
+3. 同步仓库，搜索并安装 **QCBlender**。在 **插件（Add-ons）** 中确认启用，再按上文运行 **检查科学运行环境（Check Scientific Runtime）**。
+
+同一 Release 提供 `qcblender-tutorial-0.1.0.zip`，包含中文 SOP、全部专题、截图、渲染图、必需输入及来源／许可说明。解压后保留 `human/` 和 `shared/` 的相对位置；教程包不重复包含扩展安装包。远程同步失败时，先检查在线访问开关和完整 URL，也可改用 ZIP 安装。
 
 ## 第一次生成轨道图
 

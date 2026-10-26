@@ -4,7 +4,7 @@ English | [简体中文](README_zh.md)
 
 QCBlender displays existing quantum chemistry results in Blender and generates orbital, density, and electrostatic potential grids from supported HF/DFT wavefunctions. Structures, isosurfaces, materials, and vibrations can be adjusted through native Geometry Nodes. Scientific data retain their provenance, units, and calculation conditions.
 
-The current manifest version is **0.1.0 Alpha candidate**. Public installation packages are the approved prereleases available on [GitHub Releases](https://github.com/psiQAQ/QCBlender/releases). Candidate technical checks, component license reviews, and independent installation trials are recorded separately; readiness does not mean a release has been published.
+**QCBlender 0.1.0 Alpha Preview** targets Windows x64 and Blender 5.1.1. Availability and exact assets are shown on [GitHub Releases](https://github.com/psiQAQ/QCBlender/releases/tag/v0.1.0). Candidate checks, Agent installation verification and independent human/scientific acceptance are recorded separately; preparing a candidate does not mean it has been published.
 
 ## What you can do
 
@@ -24,9 +24,21 @@ The documented validation was performed on **Windows x64 with Blender 5.1.1**. T
 
 Built-in evaluation is limited to nonperiodic, real-valued, all-electron HF/DFT wavefunctions. See [support and validation status](docs/VALIDATION.md) for the specific basis sets, methods, and sample coverage. The extension includes the required scientific libraries; no separate Python environment is needed at runtime.
 
-1. **Obtain an installation package**: use a qualified extension ZIP provided by the maintainer, or build and validate one using the [development guide](docs/DEVELOPMENT.md). The repository's source ZIP cannot be installed directly as a Blender extension.
+Choose either installation method after the preview is available on [GitHub Releases](https://github.com/psiQAQ/QCBlender/releases/tag/v0.1.0).
+
+### Install from a ZIP
+
+1. **Download the extension**: obtain `qcblender-0.1.0.zip` and compare its SHA-256 with `SHA256SUMS.txt` from the same Release. The repository's source ZIP cannot be installed directly as a Blender extension.
 2. **Install the extension**: in Blender, open **Edit → Preferences → Get Extensions → top-right menu → Install from Disk**, then select the extension ZIP.
 3. **Enable it and check the runtime**: select **Add-ons** in the Preferences sidebar, search for **QCBlender**, and confirm that it is enabled. Expand its preferences and click **Check Scientific Runtime**. Continue to orbital generation after all module checks pass.
+
+### Install from the remote repository
+
+1. Open **Edit → Preferences → System → Network** and enable **Allow Online Access**.
+2. Open **Get Extensions → Repositories → ＋ → Add Remote Repository**. Paste the complete URL `https://notes.psiqaq.cn/QCBlender/index.json` and add the repository.
+3. Sync the repository, search for **QCBlender**, and install it. Confirm that it is enabled under **Add-ons**, then run **Check Scientific Runtime** as above.
+
+The same Release provides `qcblender-tutorial-0.1.0.zip`: the Chinese SOP, all topics, screenshots, renders, required inputs and source/license notices. Extract it without changing the relative locations of `human/` and `shared/`. The tutorial bundle does not duplicate the extension installer. If the repository cannot sync, check online access and the complete URL, or use the ZIP method.
 
 ## Create your first orbital image
 

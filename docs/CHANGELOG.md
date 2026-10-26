@@ -1,5 +1,7 @@
 # 开发演进
 
+- 2026-10-26：准备首个 Windows 0.1.0 Alpha Preview，新增完整教程附件、Blender 原生远程索引和精确 CI 候选推广流程；公开附件固定为五项，独立人工/科研状态保留。专题 10/11 换为自建公开案例，实际参考计算、MCP/GUI 与冷重开 Passed；80 张图片裁剪压缩或重拍，保留原件。最终 CI、安装及公开发布状态以[发布任务](../.scratch/alpha-readiness/issues/14-windows-preview.md)为准。
+
 - 2026-10-26：将 README 拆分为英文 `README.md` 与中文 `README_zh.md`，保留已有入门流程改进，在开头增加双向语言链接，并同步末尾导出菜单路径。仅改文档；链接、翻译对应及 diff 静态检查 Passed，Blender 运行验收 Not Run。
 
 - 2026-10-24：将原生GS2分段53帧（TS27）设为当前SOP的Gaussian-v2/v4样本，P06同步1/27/53来源；保留69帧、v3包、旧工程和原生补充。重拍7张图，真实MCP/GUI、53/318行导出、两工程冷重开及移动/解包均Passed（0差异）；51项工具测试和当前独立材料/网站静态检查Passed。产品和依赖未变，独立人工/科研及部署Not Run。见[当前切换验收](../validation/agent/reports/2026-10-24/native-irc-current/acceptance.md)。本地提交归档，不push。

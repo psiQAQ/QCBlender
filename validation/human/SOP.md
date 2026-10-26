@@ -40,7 +40,18 @@
 <a id="step-01"></a>
 ### 1. 安装并启用 QCBlender
 
-- 打开 Blender，选择 **编辑（Edit） → 偏好设置（Preferences） → 获取扩展（Get Extensions） → 右上角菜单 → 从磁盘安装（Install from Disk）**，选择 [shared/install/qcblender-0.1.0.zip](../shared/install/qcblender-0.1.0.zip)，完成安装。
+先从 [QCBlender 0.1.0 Release](https://github.com/psiQAQ/QCBlender/releases/tag/v0.1.0) 下载扩展安装包 `qcblender-0.1.0.zip`，核对同页 `SHA256SUMS.txt` 中的摘要。教程包已经包含操作所需材料，不重复包含扩展安装包。以下两种安装方式任选一种。
+
+**从 ZIP 安装**：打开 Blender，选择 **编辑（Edit） → 偏好设置（Preferences） → 获取扩展（Get Extensions） → 右上角菜单 → 从磁盘安装（Install from Disk）**，选择下载的扩展 ZIP，完成安装。
+
+**从远程仓库安装**：
+
+- 在 **编辑（Edit） → 偏好设置（Preferences） → 系统（System） → 网络（Network）** 启用 **允许在线访问（Allow Online Access）**。
+- 进入 **获取扩展（Get Extensions） → 仓库（Repositories） → ＋ → 添加远程仓库（Add Remote Repository）**，粘贴完整地址 `https://notes.psiqaq.cn/QCBlender/index.json`，添加仓库。
+- 同步仓库，搜索并安装 **QCBlender**。同步失败时核对在线访问开关和完整地址，或改用 ZIP 安装。
+
+完成任一种安装后：
+
 - 在 **插件（Add-ons）** 中搜索 **QCBlender**，确认已经启用。
 
 - 需要切换语言时，打开 **编辑（Edit） → 偏好设置（Preferences） → 界面（Interface） → 语言（Language）**，选择简体中文或 English。

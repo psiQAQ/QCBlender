@@ -15,9 +15,9 @@
 
 路径相对材料根目录，即包含 `human/` 和 `shared/` 的目录。先按[入门教程](../SOP.md#install)安装插件。本页用同一苯构型的全电子与 π 结果，练习等值面显示、磁场方向调整和原始点读取。
 
-本例原始计算材料仅保存在本机，不包含在公开样本 ZIP 中。缺少输入时，先按[准备自己的来源声明](#inputs)取得同源完整材料；不能把其他分子的坐标与本例张量配对。
+完整教程包已包含本例的输入、波函数、计算日志、张量和来源声明。苯构型由正六边形解析构造；碳环半径 1.40 Å，氢距环中心 2.49 Å，未作几何优化。材料及许可说明见 [NOTICE](../../shared/data/public/scientific-displays/benzene-aicd-v1/NOTICE.md)。不能把其他分子的坐标与本例张量配对。
 
-本页截图使用案例 `AICD01-` 前缀。
+本页截图使用案例 `AICD02-` 前缀。
 
 <a id="example"></a>
 ## 比较同源苯的全电子与 π 结果
@@ -25,7 +25,7 @@
 <a id="step-01"></a>
 ### 1. 导入生成朝向的静态分子
 
-- 按[准备新工程](../SOP.md#new-scene)进入物体模式，点击 **N 侧栏 → QCBlender → 导入与导出（Import and Export） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 `shared/data/local/scientific-displays/aicd-benzene/all/all.fchk`。
+- 按[准备新工程](../SOP.md#new-scene)进入物体模式，点击 **N 侧栏 → QCBlender → 导入与导出（Import and Export） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 `shared/data/public/scientific-displays/benzene-aicd-v1/all/all.fchk`。
 - 在 Outliner 选中导入的 **12 原子静态分子**，保留其原始朝向。若场景中还有其他案例对象，先隐藏它们。
 
 所选分子的原子顺序与坐标须符合日志中的 Standard orientation；不要使用另行对齐或优化后的坐标。轨迹、优化及 IRC 动态对象不能作为参考。
@@ -44,19 +44,19 @@
 
 | 控件 | 输入值 |
 | --- | --- |
-| AICD 来源 JSON（AICD source JSON） | `shared/data/local/scientific-displays/aicd-benzene/all/source.json` |
+| AICD 来源 JSON（AICD source JSON） | `shared/data/public/scientific-displays/benzene-aicd-v1/all/source.json` |
 | Aniso 等值值（响应原子单位）（Aniso isovalue (response a.u.)） | `0.05` |
 | AICD 网格间距（Å）（AICD grid spacing (Å)） | `0.25` |
 | AICD 边界外扩（Å）（AICD grid padding (Å)） | `2.5` |
 | 内存预算（MiB）（Memory budget (MiB)） | `512` |
 
-- 截图保存为 `human/screenshots/AICD01-import-dialog.png`。
+- 截图保存为 `human/screenshots/AICD02-import-dialog.png`。
 
-![全电子AICD来源声明、正Aniso等值值、网格及内存参数](../screenshots/AICD01-import-dialog.png)
+![全电子AICD来源声明、正Aniso等值值、网格及内存参数](../screenshots/AICD02-import-dialog.png)
 
 - 等待后台导入完成，应生成独立的 **QC AICD all** 对象，原分子仍保留。黄色等值面和电流响应箭头应围绕同一个苯环，蓝色箭头及文字标明单位磁场。
-- 选中 **QC AICD all**，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，展开 **AICD 来源与响应（AICD Source and Response）**，应看到全电子贡献、程序版本、**240570 个原始点**和最多 **1000 个显示箭头**。
-- 为清楚观察，可隐藏第 1 步的原分子副本，并关闭视口的 **显示叠加层（Show Overlays）**。保留原分子对象，第 5 步还需选中它。
+- 选中 **QC AICD all**，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，展开 **AICD 来源与响应（AICD Source and Response）**，应看到全电子贡献、程序版本、**240630 个原始点**和最多 **1000 个显示箭头**。
+- 为清楚观察，可隐藏第 1 步的原分子副本，并关闭视口的 **显示叠加层（Show Overlays）**。保留原分子对象，第 5 步还需选中它。截图使用材质预览，关闭预览的场景灯光与世界环境；在深色背景下将磁场文字材质改为白色以便阅读，这些设置不改变科学数据。
 
 等值值必须明确填写，初始 `0` 不会自动套用其他程序的值；`0.05` 是本例的显示选择，不是适用于所有分子的芳香性阈值。输入哈希、计算段、轨道号或静态构型不匹配时，先核对原始材料，不要编辑日志来绕过检查。
 
@@ -82,9 +82,9 @@
 | 磁场方向（生成坐标系）（Field direction in generating coordinates） | `(0,0,-3)` |
 | AICD 箭头数上限（Maximum AICD arrows） | `250` |
 
-- 截图保存为 `human/screenshots/AICD01-display-dialog.png`。
+- 截图保存为 `human/screenshots/AICD02-display-dialog.png`。
 
-![生成坐标系中的磁场方向0、0、−3与250个箭头上限](../screenshots/AICD01-display-dialog.png)
+![归一化后的负Z磁场方向与250个箭头上限](../screenshots/AICD02-display-dialog.png)
 
 - 面板中的单位磁场应变为 **(0,0,-1)**，视口中的响应箭头反向并减少，等值面保持不变。磁场不能设为零向量。
 - 可重新打开显示设置，关闭 **显示电流响应箭头（Show current response arrows）** 后取消，箭头应保持可见；确认后的修改可用 **编辑 → 撤销 / 重做**恢复。继续下一步前，保持负 Z 单位场和 **250** 个箭头上限。
@@ -106,35 +106,35 @@
 ### 4. 读取原始点并导出全部数值
 
 - 在 **AICD 来源与响应（AICD Source and Response）** 面板点击 **读取 AICD 原始采样点（Inspect AICD Sample）**，设 **原始点索引（从 0 开始）（Original sample index (0-based)）=12345** 并确认。
-- 面板应显示块 **29**、局部点 **73**，坐标约为 **(-0.804191, 2.2008, -0.105296) Å**，积分权重 **0.00222433**，Aniso **0.0138448**。在上一步的负 Z 单位场下，`J = (-0.00825361, -0.0274461, -0.000248982)`；下面三行保留完整九分量张量。
-- 截图保存为 `human/screenshots/AICD01-source-response.jpg`。
+- 面板应显示块 **29**、局部点 **73**，坐标约为 **(-0.804191, 2.20419, -0.105296) Å**，积分权重 **0.00225692**，Aniso **0.0139264**。在上一步的负 Z 单位场下，`J = (-0.00825906, -0.0274463, -0.000249716)`；下面三行保留完整九分量张量。
+- 截图保存为 `human/screenshots/AICD02-source-response.png`。
 
-![真实全电子 AICD 的来源、250 个箭头与原始点 12345 读值](../screenshots/AICD01-source-response.jpg)
+![真实全电子 AICD 的来源、250 个箭头与原始点 12345 读值](../screenshots/AICD02-source-response.png)
 
-- 点击 **导出科学数据（Export Scientific Data）**，按[公共导出步骤](../SOP.md#export)选择 **数据（Data）=AICD**，保存到 `work/human/gaussian-v1/AICD01-export/`，应得到 `aicd_samples.csv` 和随附元数据。
+- 点击 **导出科学数据（Export Scientific Data）**，按[公共导出步骤](../SOP.md#export)选择 **数据（Data）=AICD**，保存到 `work/human/gaussian-v1/AICD02-export/`，应得到 `aicd_samples.csv` 和随附元数据。
 
 <details>
 <summary>区分原始采样点、显示箭头与导出数值</summary>
 
 原始点索引从 `0` 开始，用于回查输入张量中的一条记录。减少显示箭头只改变视口中的抽样数量，不删除原始点。
 
-`aicd_samples.csv` 包含全部 `240570` 个原始点，而不是显示的 250 个箭头：原始块及点号、bohr/Å 坐标、积分权重、九分量、Aniso 和当前单位场下的 J。随附元数据保留输入身份、轨道声明、生成坐标系及重映射参数。
+`aicd_samples.csv` 包含全部 `240630` 个原始点，而不是显示的 250 个箭头：原始块及点号、bohr/Å 坐标、积分权重、九分量、Aniso 和当前单位场下的 J。随附元数据保留输入身份、轨道声明、生成坐标系及重映射参数。
 
 </details>
 
 <a id="step-05"></a>
 ### 5. 导入 π 贡献并保存工程
 
-- 在 Outliner 恢复第 1 步原分子的可见性并选中它，重复第 2 步导入，将 **AICD 来源 JSON（AICD source JSON）** 改为 `shared/data/local/scientific-displays/aicd-benzene/pi/source.json`。保留相同的 **0.05、0.25 Å、2.5 Å、512 MiB**。
-- 生成 **QC AICD pi** 后，选中它并打开对象属性，在 **AICD 来源与响应（AICD Source and Response）** 中应看到 **π**、轨道 **17,20,21**、**240570 个原始点**，以及“轨道号已核对；π/σ 归属由使用者声明”。
+- 在 Outliner 恢复第 1 步原分子的可见性并选中它，重复第 2 步导入，将 **AICD 来源 JSON（AICD source JSON）** 改为 `shared/data/public/scientific-displays/benzene-aicd-v1/pi/source.json`。保留相同的 **0.05、0.25 Å、2.5 Å、512 MiB**。
+- 生成 **QC AICD pi** 后，选中它并打开对象属性，在 **AICD 来源与响应（AICD Source and Response）** 中应看到 **π**、轨道 **17,20,21**、**240630 个原始点**，以及“轨道号已核对；π/σ 归属由使用者声明”。
 - 分别打开两份对象的 **AICD 显示设置（AICD Display）**，将磁场方向都设为 **(0,0,-1)**、箭头数上限设为 **250**、**箭头缩放（Å/响应原子单位）（Arrow scale (Å per response a.u.)）=3**、**Aniso 表面不透明度（Aniso surface opacity）=0.45** 后确认。两份对象的单位磁场均为 **(0,0,-1)**。
 - 隐藏原分子副本，整体平移两个 **AICD 根对象**分开展示：全电子放左侧，根对象位置 **X=−4 Å**；π 放右侧，根对象位置 **X=+4 Å**。子对象随根对象一起移动，原始坐标和源张量保持不变。本例相同等值值下，全电子表面更接近六边形环，π 表面更接近连续圆环。
 
-- 截图保存为 `human/screenshots/AICD01-all-pi.png`。
+- 截图保存为 `human/screenshots/AICD02-all-pi.png`。
 
-![全电子在左、π在右的AICD比较；相同等值值、负Z单位场、250个箭头、缩放3和不透明度0.45](../screenshots/AICD01-all-pi.png)
+![全电子在左、π在右的AICD比较；相同等值值、负Z单位场、250个箭头、缩放3和不透明度0.45](../screenshots/AICD02-all-pi.png)
 
-- 若前面关闭了视口叠加层，恢复原设置，再按[保存与重开](../SOP.md#save)保存为 `work/human/gaussian-v1/AICD01.blend`，保留同名 `.qcdata/`。
+- 若前面关闭了视口叠加层，恢复原设置，再按[保存与重开](../SOP.md#save)保存为 `work/human/gaussian-v1/AICD02.blend`，保留同名 `.qcdata/`。
 - 重开后分别选中两个对象，查看贡献身份、等值值、磁场、箭头数及最后读取的点；选中 **QC AICD all** 再读取 **12345**，应与第 4 步一致。移动工程时将 `.blend` 与 `.qcdata/` 成套移动。
 
 <details>
@@ -201,7 +201,7 @@
 
 规则网格只用于显示。程序先在原始点计算 Aniso，再将该标量和九分量张量分别映射到最近四个有限网格节点，用 `1/max(d, 10⁻⁸ Å)` 归一化；并列距离按网格编号确定次序。原始 Gaussian 积分权重被保存，但不参与显示插值。网格外原始点仍向有限网格的最近节点贡献，不将坐标截到边界；无贡献节点保留无效掩码，等值面不填洞或外推。
 
-网格从原子包围盒向各侧扩展指定距离。较小间距增加内存与计算量，也会改变有效域和局部数值。本例 `0.25 Å` 与 `0.125 Å` 的独立算法对照均通过，但两种间距之间并未收敛到相同数值；不能把网格显示当作积分守恒的计算结果。原始点读值和 CSV 不受网格间距或箭头抽样影响。
+网格从原子包围盒向各侧扩展指定距离。较小间距增加内存与计算量，也会改变有效域和局部数值。网格间距改变时需要重新检查有效域与显示形状；本例未以网格收敛作为验收条件，不能把网格显示当作积分守恒的计算结果。原始点读值和 CSV 不受网格间距或箭头抽样影响。
 
 </details>
 

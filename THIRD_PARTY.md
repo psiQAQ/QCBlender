@@ -1,6 +1,6 @@
 # 随包组件
 
-本文件描述开发构建中的组件；不代表科学功能或发布验收已经通过。
+本文件描述扩展随包组件及原始许可材料；科学功能和发布验收另行记录。
 
 Python 3.13、NumPy 2.3.4 和 OpenVDB 由 Blender 5.1.1 提供。扩展不安装或覆盖这些组件。
 其他 Python 组件的固定版本、来源、SHA-256 和声明依赖见 `dependencies.lock.json`；
@@ -17,7 +17,8 @@ Python 3.13、NumPy 2.3.4 和 OpenVDB 由 Blender 5.1.1 提供。扩展不安装
 
 GBasis 源码归档地址、commit 和 SHA-256 见 `science-sources.lock.json`。
 IOData 的包元数据及源码头、GBasis 的上游包元数据声明 GPL-3.0-or-later，根 LICENSE 文件却含 LGPLv3 文本；
-原样保留这些上游声明，发布前进一步核对，不将其改写为较宽松的统一许可。
+本次逐项核对后原样保留包元数据、源码头、完整 LGPLv3 文本及本项目 GPLv3 文本，
+不将上游声明差异改写为较宽松的统一许可，也不宣称上游已澄清该差异。
 `tools/build_science_backend.py` 从已校验源码生成纯 Python wheel；数值代码不修改，
 排除可选的 libcint Python 包装器和原生代码。修改说明随 `gbasis/QCBLENDER_BUILD.md` 分发。
 GBasis wheel 内保留 Python 源码与原始许可文本；SciPy 二进制及其许可声明原样使用固定上游 wheel。
@@ -28,4 +29,5 @@ GBasis wheel 内保留 Python 源码与原始许可文本；SciPy 二进制及�
 `qcblender/radii.py` 的范德华半径表提取自 MolecularNodes contributors 的 `molecularnodes/assets/data.py`，固定 commit `5ad56c9cf33c4f82ceb3ca507d26d0cab6f7203c`，GPL-3.0-or-later；修改为从皮米转换至埃的数值表。原始文件和许可证保留于 MolecularNodes 子模块；插件无 MolecularNodes 运行时依赖。
 
 `qcblender/color_presets.py` 的 Viridis、Cividis 各 13 个 RGBA 色阶、位置与插值方式提取自 MolecularNodes contributors 的 `molecularnodes/nodes/geometry/color_matplotlib.py`，固定 commit `2eb05987d0fa60678ea2d793c95fe4bc886270af`，GPL-3.0-or-later。两组冻结数据在本批参考提交 `f88961b28828dfb32697748b575298dec20af3af` 中相同；保留完整数值并改为 QCBlender 的静态预设表。QC_DEFAULT 为本项目既有红白蓝色带。原始来源与采用边界见 `docs/research/upstream-20261011-molecularnodes.md`；运行及构建均不增加 MolecularNodes、matplotlib 或 nodebpy 依赖。
-对外发布前须完成所有组件的许可材料复核；当前产物用于本地开发验收。
+2026-10-26 已核对两份锁所选的 11 个 wheel 的身份和原始许可材料，见
+`docs/research/windows-preview-license-review-20261026.md`；最终发布门禁还须核对实际 CI 候选中的相同字节。

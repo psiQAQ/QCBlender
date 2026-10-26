@@ -8,6 +8,7 @@ export default defineConfig({
   base: '/QCBlender',
   trailingSlash: 'always',
   output: 'static',
+  cacheDir: './.astro/cache/',
   markdown: { processor: unified({ remarkPlugins: [remarkTutorialLinks], smartypants: false }) },
   integrations: [starlight({
     title: 'QCBlender',

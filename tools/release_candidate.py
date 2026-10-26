@@ -28,6 +28,9 @@ REQUIRED_REPORTS = frozenset({
     'cold-original', 'cold-moved', 'qualification', 'sample-package', 'reproduction',
 })
 REQUIRED_FILES = frozenset({'extension', 'samples', 'reproduction'})
+PREVIEW_FILES = REQUIRED_FILES | {'tutorial', 'repository_index', 'public_manifest', 'public_checksums'}
+PREVIEW_CHECKS = frozenset({'zip_install', 'remote_repository_install', 'mcp', 'computer_use',
+                          'p01', 'cold_reopen', 'scientific_displays', 'tutorial_portability'})
 GATES = ('license_review', 'independent_alpha_installation', 'public_release_approval')
 SHA256 = re.compile(r'[0-9a-f]{64}')
 GIT_SHA = re.compile(r'[0-9a-f]{40}')
@@ -93,10 +96,12 @@ def verify_run(run, *, run_id, repository, commit, workflow_id):
 
 
 def verify_manifest(manifest, *, version, commit, product_tree, run_id):
-    require(manifest.get('schema') == 'qcblender.release-candidate.v1', 'Unsupported candidate schema')
+    require(manifest.get('schema') in ('qcblender.release-candidate.v1', 'qcblender.release-candidate.v2'),
+            'Unsupported candidate schema')
+    preview = manifest['schema'].endswith('.v2')
     require(VERSION.fullmatch(version) is not None and manifest.get('version') == version,
             'Candidate version does not match tag source')
-    require(manifest.get('channel') == 'alpha', 'Expected Alpha candidate channel')
+    require(manifest.get('channel') in (('alpha', 'preview') if preview else ('alpha',)), 'Expected Alpha candidate channel')
     require(manifest.get('source_commit') == commit, 'Candidate source commit mismatch')
     require(manifest.get('product_tree') == product_tree, 'Candidate product tree mismatch')
     require(str(manifest.get('candidate_run_id')) == str(run_id), 'Manifest candidate run mismatch')
@@ -107,12 +112,17 @@ def verify_manifest(manifest, *, version, commit, product_tree, run_id):
     expected_name = f'qcblender-candidate-{version}-{commit}'
     require(manifest.get('artifact_name') == expected_name, 'Candidate artifact name mismatch')
     require(isinstance(manifest.get('dependencies'), dict), 'Candidate dependency identity is missing')
-    require(set(manifest.get('files', {})) == REQUIRED_FILES, 'Candidate file roles are incomplete')
-    require(set(manifest.get('reports', {})) == REQUIRED_REPORTS, 'Candidate reports are incomplete')
+    require(set(manifest.get('files', {})) == (PREVIEW_FILES if preview else REQUIRED_FILES), 'Candidate file roles are incomplete')
+    require(set(manifest.get('reports', {})) == (REQUIRED_REPORTS | {'tutorial'} if preview else REQUIRED_REPORTS), 'Candidate reports are incomplete')
     paths = []
     for role, entry in manifest['files'].items():
         paths.append(safe_name(entry['path'], root_file=True))
-        require(entry['path'].endswith('.zip'), 'Candidate asset must be a ZIP: ' + role)
+        if role not in ('repository_index', 'public_manifest', 'public_checksums'):
+            require(entry['path'].endswith('.zip'), 'Candidate asset must be a ZIP: ' + role)
+    if preview:
+        for role, name in {'tutorial': f'qcblender-tutorial-{version}.zip', 'repository_index': 'index.json',
+                           'public_manifest': 'release-manifest.json', 'public_checksums': 'SHA256SUMS.txt'}.items():
+            require(manifest['files'][role]['path'] == name, 'Unexpected preview asset name: ' + role)
     require(manifest['files']['extension']['path'] == f'qcblender-{version}.zip',
             'Extension asset name does not match manifest version')
     for key, entry in manifest['reports'].items():
@@ -146,16 +156,20 @@ def parse_checksums(text):
 def unpack_candidate(bundle, destination, *, version, commit, product_tree, run_id):
     with zipfile.ZipFile(bundle) as archive:
         members = zip_members(archive)
-        require('release-manifest.json' in members, 'Candidate manifest is missing')
-        manifest = json.loads(archive.read('release-manifest.json'))
+        preview = 'candidate-manifest.json' in members
+        manifest_name = 'candidate-manifest.json' if preview else 'release-manifest.json'
+        sums_name = 'CANDIDATE-SHA256SUMS.txt' if preview else 'SHA256SUMS.txt'
+        require(manifest_name in members, 'Candidate manifest is missing')
+        manifest = json.loads(archive.read(manifest_name))
         verify_manifest(manifest, version=version, commit=commit, product_tree=product_tree, run_id=run_id)
+        require(preview == manifest['schema'].endswith('.v2'), 'Candidate filename/schema mismatch')
         entries = list(manifest['files'].values()) + list(manifest['reports'].values())
-        expected = {entry['path'] for entry in entries} | {'release-manifest.json', 'SHA256SUMS.txt'}
+        expected = {entry['path'] for entry in entries} | {manifest_name, sums_name}
         require(set(members) == expected, 'Candidate bundle contains missing or unexpected members')
         require(all(any(name.startswith(info.filename) for name in expected)
                     for info in archive.infolist() if info.is_dir()), 'Unexpected bundle directory')
-        sums = parse_checksums(archive.read('SHA256SUMS.txt').decode('utf-8'))
-        require(set(sums) == expected - {'SHA256SUMS.txt'}, 'SHA256SUMS coverage is incomplete')
+        sums = parse_checksums(archive.read(sums_name).decode('utf-8'))
+        require(set(sums) == expected - {sums_name}, 'SHA256SUMS coverage is incomplete')
         for entry in entries:
             require(members[entry['path']].file_size == entry['bytes'], 'Candidate file size mismatch')
             require(sums[entry['path']] == entry['sha256'], 'Manifest/checksum digest mismatch')
@@ -194,6 +208,8 @@ def verify_reports(manifest, root):
                     'Qualification backend identity differs from candidate')
         if key in ('extension-install', 'node-assets', 'cold-original', 'cold-moved', 'reproduction'):
             require(report.get('candidate_sha256') == extension_sha, 'Report candidate mismatch: ' + key)
+        if key == 'tutorial':
+            require(report.get('package') == manifest['files']['tutorial'], 'Tutorial report package mismatch')
 
 
 def verify_extension(path, source, dependencies):
@@ -252,7 +268,8 @@ def verify_release_gates(record, manifest, artifact_id, evidence_root):
         'extension_sha256': manifest['files']['extension']['sha256'],
     }
     require(all(record.get(key) == value for key, value in identity.items()), 'Release gate identity mismatch')
-    for key in GATES:
+    keys = GATES + (('agent_preview_installation',) if manifest['schema'].endswith('.v2') else ())
+    for key in keys:
         gate = record.get(key, {})
         require(gate.get('status') in ('Passed', 'Failed', 'Not Run'), 'Missing release gate result: ' + key)
         if gate['status'] == 'Passed':
@@ -269,7 +286,57 @@ def verify_release_gates(record, manifest, artifact_id, evidence_root):
                 require(path.is_relative_to(evidence_root.resolve()), 'Gate evidence escapes its record directory')
                 require(SHA256.fullmatch(entry['sha256']) and digest_file(path) == entry['sha256'],
                         'Gate evidence checksum mismatch: ' + key)
-    return {key: record[key] for key in GATES}
+            if key == 'agent_preview_installation':
+                require(set(gate.get('checks', {})) == PREVIEW_CHECKS and
+                        all(value == 'Passed' for value in gate['checks'].values()),
+                        'Agent preview installation lacks required actual checks')
+    return {key: record[key] for key in keys}
+
+
+def verify_preview_materials(manifest, root, source):
+    from tools.repository_index import verify_index
+    from tools.tutorial_bundle import EXTRAS, verify_archive
+    tracked = tomllib.loads(source['qcblender/blender_manifest.toml'].decode('utf-8'))
+    verify_index(json.loads((root / 'index.json').read_text(encoding='utf-8')), tracked, manifest['files']['extension'])
+    public = json.loads((root / 'release-manifest.json').read_text(encoding='utf-8'))
+    require(public.get('schema') == 'qcblender.release.v1', 'Unsupported public release manifest')
+    for key in ('version', 'channel', 'source_commit', 'product_tree', 'candidate_run_id', 'workflow',
+                'artifact_name', 'platform', 'dependencies'):
+        require(public.get(key) == manifest[key], 'Public release identity differs: ' + key)
+    expected_files = {key: manifest['files'][key] for key in ('extension', 'tutorial', 'repository_index')}
+    require(public.get('files') == expected_files, 'Public release asset inventory differs')
+    sums = parse_checksums((root / 'SHA256SUMS.txt').read_text(encoding='ascii'))
+    expected_sums = {entry['path']: entry['sha256'] for entry in expected_files.values()}
+    expected_sums['release-manifest.json'] = manifest['files']['public_manifest']['sha256']
+    require(sums == expected_sums, 'Public checksums must cover exactly the public assets')
+    _, _, _, selected = tutorial_source(source)
+    require(selected is not None, 'Preview requires the current tutorial dataset')
+    names = {'shared/data/public/' + name for name in included_files(selected, root)}
+    names |= {'shared/data/public/' + name for name in ('LICENSE', 'NOTICE.md', 'README.md',
+               selected['dataset_id'] + '/tutorial-samples.json')}
+    names |= {name.removeprefix('validation/') for name in source if name.startswith('validation/human/')
+              and not name.endswith('/.gitkeep')}
+    require('human/SOP.md' in names and len([name for name in names if name.startswith('human/topics/')]) == 12,
+            'Public tutorial must retain the SOP and all twelve topics')
+    extras = json.loads(source[EXTRAS])
+    require(extras.get('schema') == 'qcblender.tutorial-extras.v1' and
+            set(extras.get('groups', {})) == {'surface-projection', 'aicd'}, 'Missing tutorial extras')
+    for group in extras['groups'].values():
+        require(group.get('status') == 'Passed' and group.get('license_evidence') and group.get('files'),
+                'Unresolved tutorial redistribution basis')
+        for entry in group['license_evidence'] + group['files']:
+            raw = source[safe_name(entry['path'])]
+            require(len(raw) == entry['bytes'] and hashlib.sha256(raw).hexdigest() == entry['sha256'],
+                    'Tutorial supplemental source identity differs')
+        for entry in group['files']:
+            require(entry['path'].startswith('validation/shared/data/public/scientific-displays/') and entry.get('license'),
+                    'Unexpected supplemental tutorial path or license')
+            names.add(entry['path'].removeprefix('validation/'))
+    members = {}
+    for name in names:
+        raw = source['validation/' + name]
+        members[name] = dict(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+    verify_archive(root / manifest['files']['tutorial']['path'], members)
 
 
 def tutorial_source(source):
@@ -387,6 +454,20 @@ class GitSource:
                     'Current tutorial manifest is outside its versioned public directory')
             source[manifest_path] = self.read(commit, manifest_path)
         tutorial_source(source)
+        from tools.tutorial_bundle import EXTRAS
+        extra_names = self.git('ls-tree', '-r', '--name-only', '-z', commit, '--',
+                              'validation/human', EXTRAS).split(b'\0')
+        extra_names = {name.decode('utf-8') for name in extra_names if name}
+        if EXTRAS in extra_names:
+            source[EXTRAS] = self.read(commit, EXTRAS)
+            _, _, _, selected = tutorial_source(source)
+            require(selected is not None, 'Preview requires a versioned public dataset')
+            extra_names.update('validation/shared/data/public/' + name for name in included_files(selected, self.root))
+            extra_names.update('validation/shared/data/public/' + name for name in ('LICENSE', 'NOTICE.md', 'README.md'))
+            for group in json.loads(source[EXTRAS])['groups'].values():
+                extra_names.update(safe_name(entry['path']) for entry in group['files'] + group['license_evidence'])
+            for name in sorted(extra_names):
+                source[name] = self.read(commit, name)
         version = tomllib.loads(source['qcblender/blender_manifest.toml'].decode('utf-8'))['version']
         require(tag == 'v' + version, 'Release tag does not match manifest version')
         return version, commit, product_tree, source
@@ -454,7 +535,7 @@ class GitHub:
                 annotated['object']['sha'] == commit, 'Remote release tag moved after verification')
 
     def create_draft(self, tag, version, notes):
-        body = json.dumps({'tag_name': tag, 'name': f'QCBlender {version} Alpha', 'draft': True,
+        body = json.dumps({'tag_name': tag, 'name': f'QCBlender {version} Alpha Preview', 'draft': True,
                            'prerelease': True, 'make_latest': 'false', 'body': notes}).encode('utf-8')
         with self.request('releases', method='POST', body=body, headers={'Content-Type': 'application/json'}) as response:
             return json.load(response)
@@ -475,6 +556,28 @@ class GitHub:
         })
         with self.opener.open(request, timeout=60) as response:
             return json.load(response)
+
+    def publish_preview(self, release_id, assets):
+        release = self.get_json(f'releases/{release_id}')
+        expected = {path.name: path for path in assets}
+        require({entry['name'] for entry in release['assets']} == set(expected), 'Remote asset set differs')
+        for entry in release['assets']:
+            path = expected[entry['name']]
+            with self.request(f"releases/assets/{entry['id']}", headers={'Accept': 'application/octet-stream'}) as stream:
+                digest = hashlib.sha256()
+                size = 0
+                while block := stream.read(65536):
+                    digest.update(block)
+                    size += len(block)
+            require(size == path.stat().st_size and digest.hexdigest() == digest_file(path),
+                    'Downloaded Release bytes differ: ' + path.name)
+        if release['draft']:
+            with self.request(f'releases/{release_id}', method='PATCH',
+                              body=json.dumps(dict(draft=False, prerelease=True, make_latest='false')).encode('utf-8'),
+                              headers={'Content-Type': 'application/json'}) as response:
+                release = json.load(response)
+        require(release.get('draft') is False and release.get('prerelease') is True, 'Preview publication failed')
+        return dict(status='Published', release_id=release_id, url=release['html_url'], remote_bytes='Passed')
 
 
 def promote_draft(client, tag, version, assets, notes):
@@ -515,6 +618,8 @@ def main():
     parser.add_argument('--notes-file', type=Path)
     parser.add_argument('--require-draft-ready', action='store_true')
     parser.add_argument('--create-draft', action='store_true', help='Explicitly write a draft; never publish it')
+    parser.add_argument('--publish-preview', action='store_true')
+    parser.add_argument('--require-preview-ready', action='store_true')
     args = parser.parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
     report_path = args.output_dir / 'verification.json'
@@ -541,6 +646,9 @@ def main():
                                 product_tree=product_tree, run_id=args.candidate_run_id)
     verify_extension(unpacked / manifest['files']['extension']['path'], source, manifest.get('dependencies'))
     verify_public_materials(manifest, unpacked, source)
+    preview = manifest['schema'].endswith('.v2')
+    if preview:
+        verify_preview_materials(manifest, unpacked, source)
     gates = {key: manifest[key] for key in GATES}
     if args.gates_record:
         require(args.gates_record.resolve(strict=True).is_relative_to(root),
@@ -548,7 +656,10 @@ def main():
         record = json.loads(args.gates_record.read_text(encoding='utf-8'))
         gates = verify_release_gates(record, manifest, artifact['id'], args.gates_record.parent)
     draft_ready = args.gates_record is not None and gates['license_review']['status'] == 'Passed'
-    assets = [unpacked / manifest['files'][role]['path'] for role in sorted(REQUIRED_FILES)]
+    preview_ready = preview and version == '0.1.0' and draft_ready and all(
+        gates.get(key, {}).get('status') == 'Passed' for key in ('agent_preview_installation', 'public_release_approval'))
+    roles = ('extension', 'tutorial', 'repository_index') if preview else sorted(REQUIRED_FILES)
+    assets = [unpacked / manifest['files'][role]['path'] for role in roles]
     assets += [unpacked / 'release-manifest.json', unpacked / 'SHA256SUMS.txt']
     report = {'status': 'Passed', 'scope': 'Exact candidate technical verification',
               'schema': 'qcblender.release-verification.v1', 'source_commit': commit,
@@ -556,14 +667,17 @@ def main():
               'candidate_run_id': args.candidate_run_id, 'artifact_id': artifact['id'],
               'extension_sha256': manifest['files']['extension']['sha256'],
               'assets': {path.name: {'bytes': path.stat().st_size, 'sha256': digest_file(path)} for path in assets},
-              'dry_run': not args.create_draft, 'draft_readiness': 'Passed' if draft_ready else 'Failed',
+              'dry_run': not (args.create_draft or args.publish_preview), 'draft_readiness': 'Passed' if draft_ready else 'Failed',
+              'preview_readiness': 'Passed' if preview_ready else 'Failed',
               'draft_blocker': None if draft_ready else 'Verified license review record is required',
               'gates': gates, 'release': {'status': 'Not Run'}}
     (args.output_dir / 'verification.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(report, indent=2))
     if args.require_draft_ready or args.create_draft:
         require(draft_ready, report['draft_blocker'])
-    if args.create_draft:
+    if args.require_preview_ready or args.publish_preview:
+        require(preview_ready, 'Preview requires v2 assets, license review, actual Agent installation checks and public approval')
+    if args.create_draft or args.publish_preview:
         try:
             require(git.git('rev-list', '-n', '1', 'refs/tags/' + args.tag).decode('ascii') == commit,
                     'Tag changed after verification')
@@ -574,6 +688,9 @@ def main():
                 f'Install the attached `qcblender-{version}.zip`; compare its SHA-256 to its entry '
                 f'in SHA256SUMS.txt before installation.\n')
             report['release'] = promote_draft(client, args.tag, version, assets, notes)
+            if args.publish_preview:
+                client.verify_remote_tag(args.tag, commit)
+                report['release'] = client.publish_preview(report['release']['release_id'], assets)
         except (OSError, ValueError) as error:
             report['release'] = {'status': 'Failed', 'error': str(error)}
             report_path.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')

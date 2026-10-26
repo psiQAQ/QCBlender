@@ -16,6 +16,11 @@ on:
         default: true
         required: true
         type: boolean
+      publish_preview:
+        description: Publish v0.1.0 prerelease after exact Agent installation and license gates pass
+        default: false
+        required: true
+        type: boolean
       gates_record:
         description: Optional release-gates JSON path in the default-branch checkout
         default: ""
@@ -51,6 +56,7 @@ jobs:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
           WORKFLOW_REF: ${{ github.ref }}
           DRY_RUN: ${{ inputs.dry_run }}
+          PUBLISH_PREVIEW: ${{ inputs.publish_preview }}
           GATES_RECORD: ${{ inputs.gates_record }}
         shell: bash
         run: |
@@ -63,6 +69,9 @@ jobs:
           fi
           if [[ "$DRY_RUN" == "false" ]]; then
             args+=(--require-draft-ready)
+          fi
+          if [[ "$PUBLISH_PREVIEW" == "true" ]]; then
+            args+=(--require-preview-ready)
           fi
           python tools/release_candidate.py "${args[@]}"
       - name: Save verification record
@@ -101,13 +110,19 @@ jobs:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
           WORKFLOW_REF: ${{ github.ref }}
           GATES_RECORD: ${{ inputs.gates_record }}
+          PUBLISH_PREVIEW: ${{ inputs.publish_preview }}
         shell: bash
         run: |
           set -euo pipefail
           args=(--repository "$REPOSITORY" --tag "$RELEASE_TAG"
                 --candidate-run-id "$CANDIDATE_RUN_ID"
                 --default-branch "$DEFAULT_BRANCH" --workflow-ref "$WORKFLOW_REF"
-                --create-draft)
+                --notes-file docs/releases/v0.1.0.md)
+          if [[ "$PUBLISH_PREVIEW" == "true" ]]; then
+            args+=(--publish-preview)
+          else
+            args+=(--create-draft)
+          fi
           if [[ -n "$GATES_RECORD" ]]; then
             args+=(--gates-record "$GATES_RECORD")
           fi
@@ -120,3 +135,19 @@ jobs:
           path: outputs/release-verification/verification.json
           if-no-files-found: warn
           retention-days: 30
+
+  deploy-published-preview:
+    if: ${{ !inputs.dry_run && inputs.publish_preview }}
+    needs: draft
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - name: Explicitly dispatch Pages for this published tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          RELEASE_TAG: ${{ inputs.tag }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: gh workflow run pages.yml --repo "$REPOSITORY" --ref "$DEFAULT_BRANCH" -f release_tag="$RELEASE_TAG"

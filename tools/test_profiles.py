@@ -13,4 +13,4 @@ STDLIB = tuple('test_' + name for name in (
     'generate_qualification', 'view_summary', 'release_candidate', 'validation_data',
     'empty_button_guards', 'record_ranges', 'color_presets', 'atom_benchmark',
     'annotation_inputs', 'object_summary', 'source_summary_cache', 'sidebar_layout', 'property_viewport_context',
-    'workspace_paths', 'tutorial_dataset', 'tutorial_workspace'))
+    'workspace_paths', 'tutorial_dataset', 'tutorial_workspace', 'preview_release'))

@@ -4,5 +4,6 @@ dist/
 src/content/docs/
 public/tutorial-assets/
 public/downloads/
+public/index.json
 src/data/generated-product.json
 reports/

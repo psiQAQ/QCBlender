@@ -1,8 +1,11 @@
 # 产物查找入口
 
-更新：2026-10-24。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
+更新：2026-10-26。本页路由现存产物、历史摘要、重建方法和剩余限制。任务状态在 `.scratch/`，开发步骤见 [DEVELOPMENT](DEVELOPMENT.md)，清理边界见[维护规则](agents/storage-maintenance.md)。
 
 ## 当前交付
+
+<a id="windows-preview-20261026"></a>
+Windows 0.1.0 预览版的范围与最终状态由[发布任务](../.scratch/alpha-readiness/issues/14-windows-preview.md)维护。新公开输入位于 `validation/shared/data/public/scientific-displays/{water-dimer-vdw-v1,benzene-aicd-v1}/`，逐文件许可与身份由 `validation/agent/acceptance/tutorial-public-extras.json` 核对。组件许可及 80 张图的审阅收据在 `validation/agent/reports/2026-10-26/windows-preview/`；旧科学案例图片在同级 `windows-preview-prior-screenshots/`，原图、参考计算、MCP 会话与新工程暂在 `.tmp/runs/windows-preview-0.1.0/`，任务收尾时按本入口保全。新案例实际计算、界面观察和冷读 Passed；最终候选与线上发布尚待核验，不替代下方既有安装入口。
 
 AICD 公开资料（2026-10-23）保存在 `submodules/AICD/reference-public-20261023/`；来源、归档成员和哈希见[公开检索记录](research/aicd-public-samples-20261023.md)。后续已生成并验收同源苯 all/π 原始材料，保存在 `validation/shared/data/local/scientific-displays/aicd-benzene/`，独立提取与全部点值参照在 `validation/agent/reports/2026-10-23/aicd-reference/`；均 Git 忽略。科学条件、重算依据、格式及误差契约见[本次结果](research/scientific-display-reference-inventory-20261023.md#aicd-本次实际运行及数值契约)。原件由 `local-inputs.json` 核对，独立参照可用原 AICD 提取器及该报告目录的 C++ 入口重建；04/05 均完成，当前候选已包含 AICD 功能，见下节。
 

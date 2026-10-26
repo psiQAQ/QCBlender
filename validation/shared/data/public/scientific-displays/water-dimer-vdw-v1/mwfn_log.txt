@@ -1,0 +1,279 @@
+ Multiwfn -- A Multifunctional Wavefunction Analyzer
+ Version 2026.9.20 (release date is the same as version name)
+ Developer: Tian Lu (Beijing Kein Research Center for Natural Sciences)
+ Multiwfn official website: http://sobereva.com/multiwfn
+ Multiwfn English forum: http://sobereva.com/wfnbbs
+ Multiwfn Chinese forum: http://bbs.keinsci.com/wfn
+ ( Number of parallel threads:   4  Current date: 2026-10-26  Time: 20:56:06 )
+ 
+ Both following papers ***MUST BE CITED IN MAIN TEXT*** if Multiwfn is used:
+  Tian Lu, Feiwu Chen, J. Comput. Chem., 33, 580 (2012) DOI: 10.1002/jcc.22885
+  Tian Lu, J. Chem. Phys., 161, 082503 (2024) DOI: 10.1063/5.0216272
+ See "How to cite Multiwfn.pdf" in Multiwfn binary package for more information
+ 
+ Please wait...
+ Totally       6 atoms
+ The number of alpha and beta electrons:      10      10
+
+ Loaded input.gjf successfully!
+ 
+ Formula: H4 O2      Total atoms:       6
+ Molecule weight:        36.03057 Da
+ Point group: Cs 
+ 
+ "q": Exit program gracefully          "r": Load a new file
+                    ************ Main function menu ************
+ 0 Show molecular structure and view orbitals
+ 1 Output all properties at a point       2 Topology analysis
+ 3 Output and plot specific property in a line
+ 4 Output and plot specific property in a plane
+ 5 Output and plot specific property within a spatial region (calc. grid data)
+ 6 Check & modify wavefunction
+ 7 Population analysis and calculation of atomic charges
+ 8 Orbital composition analysis           9 Bond order analysis
+ 10 Plot total DOS, PDOS, OPDOS, local DOS, COHP and photoelectron spectrum
+ 11 Plot IR/Raman/UV-Vis/ECD/VCD/ROA/NMR spectrum
+ 12 Quantitative analysis of molecular surface
+ 13 Process grid data (No grid data is presented currently)
+ 14 Adaptive natural density partitioning (AdNDP) analysis
+ 15 Fuzzy atomic space analysis
+ 16 Charge decomposition analysis (CDA) and plot orbital interaction diagram
+ 17 Basin analysis                       18 Electron excitation analysis
+ 19 Orbital localization analysis        20 Visual study of weak interaction
+ 21 Energy decomposition analysis        22 Conceptual DFT (CDFT) analysis
+ 23 ETS-NOCV analysis                    24 (Hyper)polarizability analysis
+ 25 Electron delocalization and aromaticity analyses
+ 26 Structure and geometry related analyses
+ 100 Other functions (Part 1)            200 Other functions (Part 2)
+ 300 Other functions (Part 3)
+ 
+               ============ Other functions (Part 3) ============ 
+ 0 Return
+ 1 Viewing free regions and calculating free volume in a cell
+ 2 Fitting atomic radial density as linear combination of multiple STOs or GTFs
+ 4 Simulating scanning tunneling microscope (STM) image
+ 5 Calculate electric dipole/multipole moments and electronic spatial extent
+ 6 Calculate energies of present orbitals by inputting Fock matrix
+ 7 Geometry operation on the present system
+ 8 Plot surface distance projection map
+ 9 Determine Fermi level
+ 
+  ====================== Surface distance projection map =====================
+ -1 Return
+  0 Start calculation
+  1 Set definition of system surface, current: Promolecular density with isovalue of  0.05000 a.u.
+  2 Choose range of X axis, current:  -3.397 to   3.332 Angstrom
+  3 Choose range of Y axis, current:  -2.345 to   2.345 Angstrom
+  4 Set number of grids in X, current: 300
+  5 Set number of grids in Y, current: 300
+  6 Set stepsize for detection isosurface in Z, current:  0.0500 Angstrom
+  7 Set Z position of starting detection, current:   0.5080 Angstrom
+  8 Set Z position of ending detection, current:  -0.8887 Angstrom
+  9 Set number of contour lines to generate, current:   25
+ Use which definition of system surface?
+ 1 Promolecular electron density
+ 3 Superposition of atomic van der Waals spheres scaled by a factor
+ Input scale factor for vdW radii, e.g. 0.8
+ 
+  ====================== Surface distance projection map =====================
+ -1 Return
+  0 Start calculation
+  1 Set definition of system surface, current: Superposition of vdW spheres multiplied by  1.000
+  2 Choose range of X axis, current:  -3.397 to   3.332 Angstrom
+  3 Choose range of Y axis, current:  -2.345 to   2.345 Angstrom
+  4 Set number of grids in X, current: 300
+  5 Set number of grids in Y, current: 300
+  6 Set stepsize for detection isosurface in Z, current:  0.0500 Angstrom
+  7 Set Z position of starting detection, current:   0.5080 Angstrom
+  8 Set Z position of ending detection, current:  -0.8887 Angstrom
+  9 Set number of contour lines to generate, current:   25
+ Input lower and upper limits of X in Angstrom, e.g. -2.6,8.3
+ 
+  ====================== Surface distance projection map =====================
+ -1 Return
+  0 Start calculation
+  1 Set definition of system surface, current: Superposition of vdW spheres multiplied by  1.000
+  2 Choose range of X axis, current:  -4.000 to   4.000 Angstrom
+  3 Choose range of Y axis, current:  -2.345 to   2.345 Angstrom
+  4 Set number of grids in X, current: 300
+  5 Set number of grids in Y, current: 300
+  6 Set stepsize for detection isosurface in Z, current:  0.0500 Angstrom
+  7 Set Z position of starting detection, current:   0.5080 Angstrom
+  8 Set Z position of ending detection, current:  -0.8887 Angstrom
+  9 Set number of contour lines to generate, current:   25
+ Input lower and upper limits of Y in Angstrom, e.g. -2.6,8.3
+ 
+  ====================== Surface distance projection map =====================
+ -1 Return
+  0 Start calculation
+  1 Set definition of system surface, current: Superposition of vdW spheres multiplied by  1.000
+  2 Choose range of X axis, current:  -4.000 to   4.000 Angstrom
+  3 Choose range of Y axis, current:  -3.000 to   3.000 Angstrom
+  4 Set number of grids in X, current: 300
+  5 Set number of grids in Y, current: 300
+  6 Set stepsize for detection isosurface in Z, current:  0.0500 Angstrom
+  7 Set Z position of starting detection, current:   0.5080 Angstrom
+  8 Set Z position of ending detection, current:  -0.8887 Angstrom
+  9 Set number of contour lines to generate, current:   25
+ Input number of grids in X, e.g. 150
+ 
+  ====================== Surface distance projection map =====================
+ -1 Return
+  0 Start calculation
+  1 Set definition of system surface, current: Superposition of vdW spheres multiplied by  1.000
+  2 Choose range of X axis, current:  -4.000 to   4.000 Angstrom
+  3 Choose range of Y axis, current:  -3.000 to   3.000 Angstrom
+  4 Set number of grids in X, current:  61
+  5 Set number of grids in Y, current: 300
+  6 Set stepsize for detection isosurface in Z, current:  0.0500 Angstrom
+  7 Set Z position of starting detection, current:   0.5080 Angstrom
+  8 Set Z position of ending detection, current:  -0.8887 Angstrom
+  9 Set number of contour lines to generate, current:   25
+ Input number of grids in Y, e.g. 150
+ 
+  ====================== Surface distance projection map =====================
+ -1 Return
+  0 Start calculation
+  1 Set definition of system surface, current: Superposition of vdW spheres multiplied by  1.000
+  2 Choose range of X axis, current:  -4.000 to   4.000 Angstrom
+  3 Choose range of Y axis, current:  -3.000 to   3.000 Angstrom
+  4 Set number of grids in X, current:  61
+  5 Set number of grids in Y, current:  41
+  6 Set stepsize for detection isosurface in Z, current:  0.0500 Angstrom
+  7 Set Z position of starting detection, current:   0.5080 Angstrom
+  8 Set Z position of ending detection, current:  -0.8887 Angstrom
+  9 Set number of contour lines to generate, current:   25
+ Input stepsize for detecting isosurface in Z (in Angstrom), e.g. 0.01
+ 
+  ====================== Surface distance projection map =====================
+ -1 Return
+  0 Start calculation
+  1 Set definition of system surface, current: Superposition of vdW spheres multiplied by  1.000
+  2 Choose range of X axis, current:  -4.000 to   4.000 Angstrom
+  3 Choose range of Y axis, current:  -3.000 to   3.000 Angstrom
+  4 Set number of grids in X, current:  61
+  5 Set number of grids in Y, current:  41
+  6 Set stepsize for detection isosurface in Z, current:  0.0500 Angstrom
+  7 Set Z position of starting detection, current:   0.5080 Angstrom
+  8 Set Z position of ending detection, current:  -0.8887 Angstrom
+  9 Set number of contour lines to generate, current:   25
+ Input Z position of starting detection (in Angstrom), e.g. 6.25
+ You can also input e.g. "a 5" to use Z coordinate of atom 5 as this position
+ 
+  ====================== Surface distance projection map =====================
+ -1 Return
+  0 Start calculation
+  1 Set definition of system surface, current: Superposition of vdW spheres multiplied by  1.000
+  2 Choose range of X axis, current:  -4.000 to   4.000 Angstrom
+  3 Choose range of Y axis, current:  -3.000 to   3.000 Angstrom
+  4 Set number of grids in X, current:  61
+  5 Set number of grids in Y, current:  41
+  6 Set stepsize for detection isosurface in Z, current:  0.0500 Angstrom
+  7 Set Z position of starting detection, current:   4.0000 Angstrom
+  8 Set Z position of ending detection, current:  -0.8887 Angstrom
+  9 Set number of contour lines to generate, current:   25
+ Input Z position of ending detection (in Angstrom), e.g. -3.2
+ 
+  ====================== Surface distance projection map =====================
+ -1 Return
+  0 Start calculation
+  1 Set definition of system surface, current: Superposition of vdW spheres multiplied by  1.000
+  2 Choose range of X axis, current:  -4.000 to   4.000 Angstrom
+  3 Choose range of Y axis, current:  -3.000 to   3.000 Angstrom
+  4 Set number of grids in X, current:  61
+  5 Set number of grids in Y, current:  41
+  6 Set stepsize for detection isosurface in Z, current:  0.0500 Angstrom
+  7 Set Z position of starting detection, current:   4.0000 Angstrom
+  8 Set Z position of ending detection, current:  -4.0000 Angstrom
+  9 Set number of contour lines to generate, current:   25
+ Progress: [--------------------------------------------------]     0.0 %     - Progress: [--------------------------------------------------]     1.6 %     \ Progress: [#-------------------------------------------------]     3.3 %     | Progress: [##------------------------------------------------]     4.9 %     / Progress: [###-----------------------------------------------]     6.6 %     - Progress: [####----------------------------------------------]     8.2 %     \ Progress: [####----------------------------------------------]     9.8 %     | Progress: [#####---------------------------------------------]    11.5 %     / Progress: [######--------------------------------------------]    13.1 %     - Progress: [#######-------------------------------------------]    14.8 %     \ Progress: [########------------------------------------------]    16.4 %     | Progress: [#########-----------------------------------------]    18.0 %     / Progress: [#########-----------------------------------------]    19.7 %     - Progress: [##########----------------------------------------]    21.3 %     \ Progress: [###########---------------------------------------]    23.0 %     | Progress: [############--------------------------------------]    24.6 %     / Progress: [#############-------------------------------------]    26.2 %     - Progress: [#############-------------------------------------]    27.9 %     \ Progress: [##############------------------------------------]    29.5 %     | Progress: [###############-----------------------------------]    31.1 %     / Progress: [################----------------------------------]    32.8 %     - Progress: [#################---------------------------------]    34.4 %     \ Progress: [##################--------------------------------]    36.1 %     | Progress: [##################--------------------------------]    37.7 %     / Progress: [###################-------------------------------]    39.3 %     - Progress: [####################------------------------------]    41.0 %     \ Progress: [#####################-----------------------------]    42.6 %     | Progress: [######################----------------------------]    44.3 %     / Progress: [######################----------------------------]    45.9 %     - Progress: [#######################---------------------------]    47.5 %     \ Progress: [########################--------------------------]    49.2 %     | Progress: [#########################-------------------------]    50.8 %     / Progress: [##########################------------------------]    52.5 %     - Progress: [###########################-----------------------]    54.1 %     \ Progress: [###########################-----------------------]    55.7 %     | Progress: [############################----------------------]    57.4 %     / Progress: [#############################---------------------]    59.0 %     - Progress: [##############################--------------------]    60.7 %     \ Progress: [###############################-------------------]    62.3 %     | Progress: [###############################-------------------]    63.9 %     / Progress: [################################------------------]    65.6 %     - Progress: [#################################-----------------]    67.2 %     \ Progress: [##################################----------------]    68.9 %     | Progress: [###################################---------------]    70.5 %     / Progress: [####################################--------------]    72.1 %     - Progress: [####################################--------------]    73.8 %     \ Progress: [#####################################-------------]    75.4 %     | Progress: [######################################------------]    77.0 %     / Progress: [#######################################-----------]    78.7 %     - Progress: [########################################----------]    80.3 %     \ Progress: [########################################----------]    82.0 %     | Progress: [#########################################---------]    83.6 %     / Progress: [##########################################--------]    85.2 %     - Progress: [###########################################-------]    86.9 %     \ Progress: [############################################------]    88.5 %     | Progress: [#############################################-----]    90.2 %     / Progress: [#############################################-----]    91.8 %     - Progress: [##############################################----]    93.4 %     \ Progress: [###############################################---]    95.1 %     | Progress: [################################################--]    96.7 %     / Progress: [#################################################-]    98.4 %     - Progress: [##################################################]   100.0 %     \ 
+ Calculation took up wall clock time         0 s
+ 
+ ---------------------- Plotting surface projection map ----------------------
+ -5 Save (load) all plotting settings to (from) from an external file
+ -4 Multiply the current data by a factor
+ -3 Change other plotting settings
+ -2 Export plane data as distmap.txt in current folder
+ -1 Return
+ 0 Show the map on screen
+ 1 Save the map as graphical file in current folder
+ 2 Choose map type, current: Color-filled map with contour lines
+ 3 Toggle showing atom labels, current: Yes
+ 4 Set distance threshold for showing atom labels, current:   2.000 Bohr
+ 5 Toggle showing bonds, current: No
+ 6 Change length unit of the graph to Bohr
+ 7 Set label intervals in X, Y and color scale axes, current:  1.000  1.000    1.000000
+ 8 Set lower&upper limit of color scale, current:     -8.0000095      0.0000000
+ 9 Set color transition, current: Rainbow starting from white
+ 10 Change contour line setting
+ 11 Toggle showing isovalue on contour lines, current: No
+ Done! plane data has been exported to distmap.txt in current folder. The first two column correspond to X and Y coordinates in Angstrom, the last column is data
+ 
+ ---------------------- Plotting surface projection map ----------------------
+ -5 Save (load) all plotting settings to (from) from an external file
+ -4 Multiply the current data by a factor
+ -3 Change other plotting settings
+ -2 Export plane data as distmap.txt in current folder
+ -1 Return
+ 0 Show the map on screen
+ 1 Save the map as graphical file in current folder
+ 2 Choose map type, current: Color-filled map with contour lines
+ 3 Toggle showing atom labels, current: Yes
+ 4 Set distance threshold for showing atom labels, current:   2.000 Bohr
+ 5 Toggle showing bonds, current: No
+ 6 Change length unit of the graph to Bohr
+ 7 Set label intervals in X, Y and color scale axes, current:  1.000  1.000    1.000000
+ 8 Set lower&upper limit of color scale, current:     -8.0000095      0.0000000
+ 9 Set color transition, current: Rainbow starting from white
+ 10 Change contour line setting
+ 11 Toggle showing isovalue on contour lines, current: No
+ 
+  ====================== Surface distance projection map =====================
+ -1 Return
+  0 Start calculation
+  1 Set definition of system surface, current: Superposition of vdW spheres multiplied by  1.000
+  2 Choose range of X axis, current:  -4.000 to   4.000 Angstrom
+  3 Choose range of Y axis, current:  -3.000 to   3.000 Angstrom
+  4 Set number of grids in X, current:  61
+  5 Set number of grids in Y, current:  41
+  6 Set stepsize for detection isosurface in Z, current:  0.0500 Angstrom
+  7 Set Z position of starting detection, current:   4.0000 Angstrom
+  8 Set Z position of ending detection, current:  -4.0000 Angstrom
+  9 Set number of contour lines to generate, current:   25
+ 
+               ============ Other functions (Part 3) ============ 
+ 0 Return
+ 1 Viewing free regions and calculating free volume in a cell
+ 2 Fitting atomic radial density as linear combination of multiple STOs or GTFs
+ 4 Simulating scanning tunneling microscope (STM) image
+ 5 Calculate electric dipole/multipole moments and electronic spatial extent
+ 6 Calculate energies of present orbitals by inputting Fock matrix
+ 7 Geometry operation on the present system
+ 8 Plot surface distance projection map
+ 9 Determine Fermi level
+ 
+ "q": Exit program gracefully          "r": Load a new file
+                    ************ Main function menu ************
+ 0 Show molecular structure and view orbitals
+ 1 Output all properties at a point       2 Topology analysis
+ 3 Output and plot specific property in a line
+ 4 Output and plot specific property in a plane
+ 5 Output and plot specific property within a spatial region (calc. grid data)
+ 6 Check & modify wavefunction
+ 7 Population analysis and calculation of atomic charges
+ 8 Orbital composition analysis           9 Bond order analysis
+ 10 Plot total DOS, PDOS, OPDOS, local DOS, COHP and photoelectron spectrum
+ 11 Plot IR/Raman/UV-Vis/ECD/VCD/ROA/NMR spectrum
+ 12 Quantitative analysis of molecular surface
+ 13 Process grid data (No grid data is presented currently)
+ 14 Adaptive natural density partitioning (AdNDP) analysis
+ 15 Fuzzy atomic space analysis
+ 16 Charge decomposition analysis (CDA) and plot orbital interaction diagram
+ 17 Basin analysis                       18 Electron excitation analysis
+ 19 Orbital localization analysis        20 Visual study of weak interaction
+ 21 Energy decomposition analysis        22 Conceptual DFT (CDFT) analysis
+ 23 ETS-NOCV analysis                    24 (Hyper)polarizability analysis
+ 25 Electron delocalization and aromaticity analyses
+ 26 Structure and geometry related analyses
+ 100 Other functions (Part 1)            200 Other functions (Part 2)
+ 300 Other functions (Part 3)

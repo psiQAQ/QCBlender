@@ -11,6 +11,7 @@ sys.path.insert(0, str(REPOSITORY))
 from tools.candidate_artifacts import verify_samples
 from tools.local_inputs import checked_path
 from tools.tutorial_dataset import DELIVERY, load_dataset
+from tools.tutorial_bundle import EXTRAS, supplemental_files
 
 
 def public_samples(root, destination=None):
@@ -28,6 +29,13 @@ def public_samples(root, destination=None):
             records.append(dict(path=entry.filename, bytes=len(data), sha256=hashlib.sha256(data).hexdigest()))
             if destination is not None:
                 payloads.append((checked_path(destination, entry.filename), data))
+    supplemental = []
+    if (root / EXTRAS).exists():
+        for name, entry in supplemental_files(root, require_complete=False).items():
+            member = name.removeprefix('validation/shared/data/public/')
+            supplemental.append(dict(path=member, bytes=entry['bytes'], sha256=entry['sha256']))
+            if destination is not None:
+                payloads.append((checked_path(destination, member), checked_path(root, name).read_bytes()))
     # Verify every member and output path before creating any extracted data.
     for target, data in payloads:
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -36,7 +44,7 @@ def public_samples(root, destination=None):
                    bytes=selected['package_record']['bytes'], sha256=selected['package_record']['sha256'],
                    download=selected['package_path'].name, members=len(records),
                    dataset_id=selected['dataset_id'])
-    return dict(delivery=DELIVERY, archive=archive, samples=records,
+    return dict(delivery=DELIVERY, archive=archive, samples=records, supplemental=supplemental,
                 manifest_member='tutorial-samples.json' if selected['legacy'] else
                 selected['manifest_record']['path'].split('/public/', 1)[1])
 

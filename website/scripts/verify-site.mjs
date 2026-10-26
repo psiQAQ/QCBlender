@@ -82,6 +82,7 @@ export async function verifySite(dist = path.join(websiteRoot, 'dist')) {
     }
   }
   require(JSON.stringify(report.samples) === JSON.stringify(selected.samples), 'Prepared sample allowlist differs from the active licensed package');
+  require(JSON.stringify(report.supplemental) === JSON.stringify(selected.supplemental), 'Prepared supplemental inputs differ from the reviewed allowlist');
   require(JSON.stringify(report.archive) === JSON.stringify(publicSamples), 'Prepared archive differs from the active delivery');
   const expectedSources = mapping.pages.filter((page) => page.source).map((page) => page.source).sort();
   require(JSON.stringify(report.pages.map((page) => page.source).sort()) === JSON.stringify(expectedSources), 'Prepared tutorial page inventory differs from mapping');
@@ -119,6 +120,7 @@ export async function verifySite(dist = path.join(websiteRoot, 'dist')) {
 
   const permittedAssets = new Map(report.images.map((entry) => [entry.path, entry.sha256]));
   for (const sample of report.samples) permittedAssets.set(`tutorial-assets/shared/data/public/${sample.path}`, sample.sha256);
+  for (const sample of report.supplemental) permittedAssets.set(`tutorial-assets/shared/data/public/${sample.path}`, sample.sha256);
   permittedAssets.set(`downloads/${publicSamples.download}`, publicSamples.sha256);
   for (const [relative, expectedHash] of permittedAssets) {
     require(fileSet.has(relative), `Missing reviewed public asset ${relative}`);
@@ -126,7 +128,14 @@ export async function verifySite(dist = path.join(websiteRoot, 'dist')) {
   }
   errors.push(...deploymentViolations(files, permittedAssets, selected));
   const product = JSON.parse(await readFile(path.join(websiteRoot, 'src/data/generated-product.json'), 'utf8'));
-  require(product.public_release === false && product.install_download === null, 'Local install candidate must not become a public download');
+  if (product.public_release) {
+    require(product.install_download === `https://github.com/psiQAQ/QCBlender/releases/download/v${product.version}/qcblender-${product.version}.zip`, 'Published extension URL mismatch');
+    require(product.tutorial_download === `https://github.com/psiQAQ/QCBlender/releases/download/v${product.version}/qcblender-tutorial-${product.version}.zip`, 'Published tutorial URL mismatch');
+    require(fileSet.has('index.json'), 'Published extension index is missing');
+    if (fileSet.has('index.json')) require(sha256(await readFile(path.join(dist, 'index.json'))) === product.index_sha256, 'Deployed repository index differs from public release');
+  } else {
+    require(product.install_download === null && product.tutorial_download === null && !fileSet.has('index.json'), 'Unpublished candidate must not become a public download');
+  }
   require(product.samples_sha256 === publicSamples.sha256 && product.samples_name === publicSamples.download
     && product.samples_bytes === publicSamples.bytes && product.samples_dataset_id === publicSamples.dataset_id, 'Public samples identity drift');
   for (const route of ['downloads/index.html', 'en/downloads/index.html']) {

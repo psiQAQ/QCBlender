@@ -31,4 +31,6 @@ Status: claimed
 
 ## Comments
 
+2026-10-26：用户批准[Windows 首个预览版发布计划](issues/14-windows-preview.md)。本次预览使用 Agent 安装、MCP 和 Computer Use 作为安装门槛，由 CI 公开，独立人工/科研验收仍如实为 Not Run；替代本规格早期的人工试装/UI 公开安排，仅适用于本次 Alpha。新增完整 SOP/公开素材附件及 Pages 扩展索引；组件和素材许可门槛保留，未知许可素材不公开。其他历史实施与证据保持原身份。
+
 当前主仓库工作区干净。既有reliability任务resolved；本批不改其历史身份，不重复实施流式摘要实验或扩大性能重构。

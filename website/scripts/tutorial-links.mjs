@@ -51,7 +51,7 @@ export function rewriteTutorialUrl(url, source, { tracked = trackedFiles(), memb
     const selected = loadPublicSamples();
     let member = resolved.slice(publicPrefix.length);
     if (member === selected.manifest_member) member = 'tutorial-samples.json';
-    const allowed = new Set(selected.samples.map((entry) => entry.path));
+    const allowed = new Set([...selected.samples, ...(selected.supplemental ?? [])].map((entry) => entry.path));
     if (!allowed.has(member) || (members && !members.has(member))) throw new Error(`Public tutorial input is absent from licensed ZIP allowlist: ${member}`);
     return siteUrl(`tutorial-assets/shared/data/public/${member}`) + suffix;
   }
