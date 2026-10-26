@@ -1,0 +1,97 @@
+{
+  "schema": "qcblender.preview-publication.v1",
+  "date": "2026-10-26",
+  "status": "Passed",
+  "checked_at": "2026-10-26T15:12:54.441271+00:00",
+  "release_url": "https://github.com/psiQAQ/QCBlender/releases/tag/v0.1.0",
+  "release_id": 424402970,
+  "prerelease": true,
+  "latest": false,
+  "source_commit": "bec0877d025d95a291e99efdbc09fdad9c423be6",
+  "candidate_run_id": 40341330234,
+  "artifact_id": 12659470998,
+  "assets": [
+    {
+      "name": "index.json",
+      "url": "https://github.com/psiQAQ/QCBlender/releases/download/v0.1.0/index.json",
+      "bytes": 972,
+      "sha256": "a173f0446dd9baa58385b528829218fbd61a309a1b2a9bdb72484600fda54a86",
+      "status": "Passed"
+    },
+    {
+      "name": "qcblender-0.1.0.zip",
+      "url": "https://github.com/psiQAQ/QCBlender/releases/download/v0.1.0/qcblender-0.1.0.zip",
+      "bytes": 50999095,
+      "sha256": "020efb1652c7f1ed9309d032bfd454898db95a61ec099c5109f43ad037006642",
+      "status": "Passed"
+    },
+    {
+      "name": "qcblender-tutorial-0.1.0.zip",
+      "url": "https://github.com/psiQAQ/QCBlender/releases/download/v0.1.0/qcblender-tutorial-0.1.0.zip",
+      "bytes": 54726364,
+      "sha256": "fb5072f6950344bd70e5a8a48b81d729b79b54c13424fd173dc0b27cff47b15f",
+      "status": "Passed"
+    },
+    {
+      "name": "release-manifest.json",
+      "url": "https://github.com/psiQAQ/QCBlender/releases/download/v0.1.0/release-manifest.json",
+      "bytes": 4339,
+      "sha256": "e94964a8edca26d8d88a5fdeb2f34061372c65e8c607691aa9272794e2b168af",
+      "status": "Passed"
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "url": "https://github.com/psiQAQ/QCBlender/releases/download/v0.1.0/SHA256SUMS.txt",
+      "bytes": 350,
+      "sha256": "0308966b7fa0a353f4a491be52ad3da1a344c5df3b6c72aed095d384bb676595",
+      "status": "Passed"
+    }
+  ],
+  "deployed_index": {
+    "status": "Passed",
+    "url": "https://notes.psiqaq.cn/QCBlender/index.json",
+    "sha256": "a173f0446dd9baa58385b528829218fbd61a309a1b2a9bdb72484600fda54a86",
+    "original_ci_bytes": true
+  },
+  "release_workflow": {
+    "run_id": 40344466320,
+    "status": "Passed"
+  },
+  "pages_workflow": {
+    "run_id": 40346754457,
+    "status": "Passed",
+    "head_commit": "7749965c954bdfd4bf95fe4bb3b8b08e2bbf5ea7"
+  },
+  "formal_repository_install": {
+    "status": "Passed",
+    "blender": "5.1.1",
+    "platform": "Windows x64",
+    "members": 137,
+    "runtime_modules": 7,
+    "computer_use": "Passed",
+    "report": "validation/agent/reports/2026-10-26/windows-preview/runs/public/"
+  },
+  "browser": {
+    "status": "Passed",
+    "browser": "Codex in-app browser",
+    "pages": [
+      "https://notes.psiqaq.cn/QCBlender/",
+      "https://notes.psiqaq.cn/QCBlender/downloads/",
+      "https://notes.psiqaq.cn/QCBlender/en/",
+      "https://notes.psiqaq.cn/QCBlender/en/downloads/"
+    ],
+    "checks": [
+      "rendered content and viewport screenshots",
+      "Chinese and English navigation and language links",
+      "fixed v0.1.0 extension/tutorial targets",
+      "ZIP and complete remote repository instructions"
+    ],
+    "download_bytes": "Reuses verified actual public downloads; no duplicate browser download",
+    "report": "validation/agent/reports/2026-10-26/windows-preview/runs/browser/",
+    "tool_limitations": "Initial calls timed out; completed via documented DOM and viewport screenshot APIs. Previous Windows browser safety stop retained as historical tool failure."
+  },
+  "independent_human_review": "Not Run",
+  "scientific_acceptance": "Not Run",
+  "daily_install": "Not Run",
+  "notes": "Daily installation remains the previously verified 2026-10-24 candidate. New installs used isolated profiles. No initial user Blender session or project required restoration."
+}

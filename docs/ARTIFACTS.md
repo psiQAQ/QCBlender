@@ -5,7 +5,13 @@
 ## 当前交付
 
 <a id="windows-preview-20261026"></a>
-Windows 0.1.0 预览版的范围与最终状态由[发布任务](../.scratch/alpha-readiness/issues/14-windows-preview.md)维护。新公开输入位于 `validation/shared/data/public/scientific-displays/{water-dimer-vdw-v1,benzene-aicd-v1}/`，逐文件许可与身份由 `validation/agent/acceptance/tutorial-public-extras.json` 核对。组件许可及 80 张图的审阅收据在 `validation/agent/reports/2026-10-26/windows-preview/`；旧科学案例图片在同级 `windows-preview-prior-screenshots/`，原图、参考计算、MCP 会话与新工程暂在 `.tmp/runs/windows-preview-0.1.0/`，任务收尾时按本入口保全。新案例实际计算、界面观察和冷读 Passed；最终候选与线上发布尚待核验，不替代下方既有安装入口。
+Windows 0.1.0 Alpha Preview 已公开：[Release](https://github.com/psiQAQ/QCBlender/releases/tag/v0.1.0)、[网站](https://notes.psiqaq.cn/QCBlender/)、[远程索引](https://notes.psiqaq.cn/QCBlender/index.json)。源码标签 `v0.1.0` 固定于 `bec0877d025d95a291e99efdbc09fdad9c423be6`，候选 run `40341330234` / artifact `12659470998`；[发布验收](../validation/agent/acceptance/releases/v0.1.0/publication.json)记录发布、部署、附件字节、正式索引安装及内置浏览器双语验收 Passed。[发布任务](../.scratch/alpha-readiness/issues/14-windows-preview.md)已完成，独立人工/科研与新包日常安装仍 Not Run。
+
+- 当前安装包：`validation/shared/install/qcblender-0.1.0.zip`；身份与既有日常安装分别记录在 [current-install.json](../validation/agent/current-install.json)。完整 CI 候选和实际公开下载在 `outputs/candidates/windows-preview-20261026/`，`published/` 保存五个公开附件及核验结果。
+- 新公开输入：`validation/shared/data/public/scientific-displays/{water-dimer-vdw-v1,benzene-aicd-v1}/`；许可与摘要由 `validation/agent/acceptance/tutorial-public-extras.json` 核对。原始计算、日志和独立参照在 `validation/shared/data/local/windows-preview-20261026/`，由 `local-inputs.json` 登记；重建使用原计算脚本、输入和日志。
+- 五组完整 `.blend + .qcdata` 工程：`outputs/projects/windows-preview-20261026/{projection-gui,aicd-gui,p06-gui,final-zip,r2zip}/`；最终验收工程为 `r2zip/preview-acceptance.blend`。既有冷读证据保持原身份；本次迁移逐文件核对字节及组内相对引用。
+- 原始报告、脚本、MCP 收据、界面截图、80 张图审阅及原图在 `validation/agent/reports/2026-10-26/windows-preview/`，运行记录按原目录关系保存在 `runs/`；旧案例截图在同级 `windows-preview-prior-screenshots/`。`preservation/mapping.jsonl.gz` 是迁移映射，`preservation/cleanup.json` 与 `removed.jsonl.gz` 为清理结果；`finish/` 为正常归档收据。
+- 本地归档标签：`archive/2026-10-26/release/windows-preview-0.1.0`。重新构建按 [DEVELOPMENT](DEVELOPMENT.md)，既有公开包保持原 CI 字节及标签。
 
 AICD 公开资料（2026-10-23）保存在 `submodules/AICD/reference-public-20261023/`；来源、归档成员和哈希见[公开检索记录](research/aicd-public-samples-20261023.md)。后续已生成并验收同源苯 all/π 原始材料，保存在 `validation/shared/data/local/scientific-displays/aicd-benzene/`，独立提取与全部点值参照在 `validation/agent/reports/2026-10-23/aicd-reference/`；均 Git 忽略。科学条件、重算依据、格式及误差契约见[本次结果](research/scientific-display-reference-inventory-20261023.md#aicd-本次实际运行及数值契约)。原件由 `local-inputs.json` 核对，独立参照可用原 AICD 提取器及该报告目录的 C++ 入口重建；04/05 均完成，当前候选已包含 AICD 功能，见下节。
 
@@ -17,13 +23,13 @@ AICD 公开资料（2026-10-23）保存在 `submodules/AICD/reference-public-202
 
 | 内容 | 当前入口 |
 | --- | --- |
-| 宣传与教程网站 | [维护与预览](../website/README.md)、[线上网站](https://notes.psiqaq.cn/QCBlender/)；当前 v4 样本和原生53帧专题已同步，20 页本地构建/静态核验 Passed；本轮浏览器交互与发布 Not Run，见[当前切换验收](../validation/agent/reports/2026-10-24/native-irc-current/acceptance.md)。旧 v3 的 P02/搜索/下载浏览器记录保留原身份。既有线上部署、浏览器及三组 Blender 展示图身份见[原建站验收](../validation/agent/acceptance/website.md)，工程在 `outputs/projects/website-showcase/`，原收据在 `validation/agent/reports/2026-10-23/website/`；从 `website/README.md` 重建 |
+| 宣传与教程网站 | [线上网站](https://notes.psiqaq.cn/QCBlender/)、[维护与重建](../website/README.md)；v0.1.0 及固定索引已部署，中英文首页、下载页、语言切换和安装说明内置浏览器验收 Passed；[证据](../validation/agent/acceptance/releases/v0.1.0/publication.json) |
 | 当前完整教程材料 | `validation/`；[工程索引](../validation/工程索引.md)、[迁移与清理](#delivery-consolidation-20261022)；需要分发时按下行打包 |
 | 教程与打包 | `validation/human/`；[材料打包](../validation/README.md#人工完成后的打包) |
 | 教程图片和人工工程 | `validation/human/screenshots/`、`validation/human/renders/` 随文档入库；当前工程在 `validation/work/human/`；[当前截图与工程](../validation/工程索引.md) |
 | 公开、本地及回归输入 | [shared/data](../validation/shared/data/README.md)；当前位置与旧路径由 `migration-map.json` 定位 |
-| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,998,929 字节，SHA-256 `0c72a26488417b6969ea3f8645339fc9218be17aa8d381d5e1f4b77fb7782e1b` |
-| 当前候选及验证 | `outputs/candidates/sop-gaussian-20261024/build-1/`；插件源码 `43125d4`，修复真实 Gaussian 多计算段识别；完整构建、137 成员隔离安装、日常安装、真实 MCP/GUI、21 新工程冷读及代表性移动/归档 Passed；[身份记录](../validation/agent/current-install.json)、[本批验证](../validation/agent/reports/2026-10-24/gaussian-sop/acceptance.md)。旧插件及偏好已保全 |
+| 当前安装包 | `validation/shared/install/qcblender-0.1.0.zip`；50,999,095 字节，SHA-256 `020efb1652c7f1ed9309d032bfd454898db95a61ec099c5109f43ad037006642` |
+| 当前候选及验证 | `outputs/candidates/windows-preview-20261026/`；源码 `bec0877d`，完整 CI、ZIP/正式仓库安装、MCP/GUI、工程冷读及公开字节核验 Passed；[身份](../validation/agent/current-install.json)、[发布验收](../validation/agent/acceptance/releases/v0.1.0/publication.json)。日常 Blender 保持 2026-10-24 已验证安装 |
 | 当前公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v4.zip`；270 个 Gaussian-v2 输入，含自有 P02、原生53帧路径（TS27）和同源P06；旧69帧/v3保留；[交付索引](../validation/agent/acceptance/tutorial-sample-delivery.json) |
 | 历史冻结公开样本 | `validation/agent/packages/qcblender-public-tutorial-samples-v2.zip`；冻结清单 `validation/agent/v1-acceptance/tutorial-samples.json` 保持原身份，显式 `--dataset legacy-v2` 恢复 |
 | 校验流程与结果 | [Agent 流程](../validation/agent/README.md)、[当前与历史验证](../validation/agent/VALIDATION.md)；主干维护及历史结果见下文 |

@@ -1,7 +1,7 @@
 # 14 Windows 0.1.0 预览发布
 
 Triage: ready-for-agent
-Status: claimed
+Status: resolved
 
 ## 目标与授权
 
@@ -35,3 +35,5 @@ Status: claimed
 - 候选 run `40338016490`（源码 `cf2a27a`，扩展 SHA-256 `478c9d9a1959018ea24904868cbc5c2f0bc17afd126eb8df48b799c95b654eaf`）完整 CI Passed；实际 ZIP 安装、P01/投影/AICD 与冷重开 Passed。通过 UI 添加临时远程仓库并下载相同字节后，科学运行时检查 Failed：worker 的 `--factory-startup` 丢失新增仓库命名空间，报 `extension repository "repository" doesn't exist`。因此该候选不发布。
 - 修复 worker：从自身安装文件定位本地仓库，仅在出厂配置缺少对应仓库时补入，不加载其他用户插件或远程地址。保留启用后的扩展来源一致性检查。失败安装的隔离开发副本经真实后台 Blender 诊断和 P01 导入 Passed（`.tmp/runs/windows-preview-0.1.0/worker-fix/`）；新增候选 CI 的自定义仓库 worker 验收，最终新包仍待 CI 及安装复验。
 - 最终候选 run `40341330234`、artifact `12659470998`、源码 `bec0877d025d95a291e99efdbc09fdad9c423be6` 完整 CI Passed，含新增远程仓库 worker 检查。扩展 SHA-256 `020efb1652c7f1ed9309d032bfd454898db95a61ec099c5109f43ad037006642`。最终包实际 ZIP/暂存远程安装、137 文件字节比对、科学运行环境、P01/投影/AICD、14 数据对象冷重开与中文路径教程检查 Passed。绑定身份的公开门禁见 `validation/agent/acceptance/releases/v0.1.0/gates.json`；正式发布、Pages 与正式索引安装尚待执行，独立人工及科研验收 Not Run。
+
+- 发布收尾：Release run `40344466320`、Pages run `40346754457` 均 Passed。五个公开附件和正式索引与原始 CI 字节一致；正式索引实际 GUI 安装、137 成员与七项运行环境 Passed。内置浏览器完成中英文首页、下载页、语言切换、固定附件目标和两种安装说明验收。结果见 `validation/agent/acceptance/releases/v0.1.0/publication.json`；原始材料和工程由 `docs/ARTIFACTS.md#windows-preview-20261026` 定位。独立人工/科研及新包日常安装 Not Run，既有日常安装不变。

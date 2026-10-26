@@ -1,5 +1,7 @@
 # 开发演进
 
+- 2026-10-26：发布 Windows x64 / Blender 5.1.1 的 `v0.1.0` Alpha Preview（prerelease，非 latest）。五个 CI 附件、正式索引安装、科学运行环境、工程冷读、网站部署及双语内置浏览器验收 Passed。原始输入、五组完整工程和证据已逐文件保全，更新当前安装包入口；日常 Blender 未替换，独立人工/科研仍 Not Run。保留与归档位置见 [ARTIFACTS](ARTIFACTS.md#windows-preview-20261026)。
+
 - 2026-10-26：首个预览候选的在线安装验收发现科学 worker 无法识别新增仓库；子进程现在按自身安装路径恢复所需本地仓库，仍使用出厂配置和禁用在线访问。默认 ZIP 仓库不受影响。新增真实自定义仓库诊断/导入回归；最终候选状态见[发布任务](../.scratch/alpha-readiness/issues/14-windows-preview.md)。
 
 - 2026-10-26：准备首个 Windows 0.1.0 Alpha Preview，新增完整教程附件、Blender 原生远程索引和精确 CI 候选推广流程；公开附件固定为五项，独立人工/科研状态保留。专题 10/11 换为自建公开案例，实际参考计算、MCP/GUI 与冷重开 Passed；80 张图片裁剪压缩或重拍，保留原件。最终 CI、安装及公开发布状态以[发布任务](../.scratch/alpha-readiness/issues/14-windows-preview.md)为准。

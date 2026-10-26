@@ -1648,6 +1648,1423 @@
       ],
       "provenance": "Derived from verified same-wavefunction benchmark originals and pi identity evidence",
       "data_license_status": "local-only; not distributed with public tutorials"
+    },
+    "windows-preview-20261026/20261026T125404157162-start_all_remote.receipt.json": {
+      "id": "WP20261026-001",
+      "path": "validation/shared/data/local/windows-preview-20261026/20261026T125404157162-start_all_remote.receipt.json",
+      "sha256": "84b3ee6d72a1050a3a81ad7911314dcaf4679e1d4bfd14e3d2c2ef3fd166e366",
+      "bytes": 127,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/20261026T125404157162-start_all_remote.receipt.json",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/20261026T125404157162-start_all_remote.stderr": {
+      "id": "WP20261026-002",
+      "path": "validation/shared/data/local/windows-preview-20261026/20261026T125404157162-start_all_remote.stderr",
+      "sha256": "a5dfc6c3b3045799f79f0e2c4c4110d965fba1be411207b0d5dce865de652cc3",
+      "bytes": 112,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/20261026T125404157162-start_all_remote.stderr",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/20261026T125404157162-start_all_remote.stdout": {
+      "id": "WP20261026-003",
+      "path": "validation/shared/data/local/windows-preview-20261026/20261026T125404157162-start_all_remote.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/20261026T125404157162-start_all_remote.stdout",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/20261026T132918418506-start_all_remote.receipt.json": {
+      "id": "WP20261026-004",
+      "path": "validation/shared/data/local/windows-preview-20261026/20261026T132918418506-start_all_remote.receipt.json",
+      "sha256": "a1b3fd68fefd5259a9c88784952571be65323306830a0c06ccb25f05ee63b9f7",
+      "bytes": 125,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/20261026T132918418506-start_all_remote.receipt.json",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/20261026T132918418506-start_all_remote.stderr": {
+      "id": "WP20261026-005",
+      "path": "validation/shared/data/local/windows-preview-20261026/20261026T132918418506-start_all_remote.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/20261026T132918418506-start_all_remote.stderr",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/20261026T132918418506-start_all_remote.stdout": {
+      "id": "WP20261026-006",
+      "path": "validation/shared/data/local/windows-preview-20261026/20261026T132918418506-start_all_remote.stdout",
+      "sha256": "b0243b364d771ce68612e361e6b3886546a23aa3880cc3860916ac9287eb77b4",
+      "bytes": 380,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/20261026T132918418506-start_all_remote.stdout",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/20261026T132952857337-status_remote.receipt.json": {
+      "id": "WP20261026-007",
+      "path": "validation/shared/data/local/windows-preview-20261026/20261026T132952857337-status_remote.receipt.json",
+      "sha256": "80c9c65f28b8e2f167a5736c1e908c8a61dbc695f6549c5207212337fde26fb8",
+      "bytes": 122,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/20261026T132952857337-status_remote.receipt.json",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/20261026T132952857337-status_remote.stderr": {
+      "id": "WP20261026-008",
+      "path": "validation/shared/data/local/windows-preview-20261026/20261026T132952857337-status_remote.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/20261026T132952857337-status_remote.stderr",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/20261026T132952857337-status_remote.stdout": {
+      "id": "WP20261026-009",
+      "path": "validation/shared/data/local/windows-preview-20261026/20261026T132952857337-status_remote.stdout",
+      "sha256": "37d47968aca1398bb578f7b93c9e7f10812627186386e16fdd130172b4c3e11f",
+      "bytes": 1634,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/20261026T132952857337-status_remote.stdout",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/20261026T133440049951-start_pi_remote.receipt.json": {
+      "id": "WP20261026-010",
+      "path": "validation/shared/data/local/windows-preview-20261026/20261026T133440049951-start_pi_remote.receipt.json",
+      "sha256": "4770e908f55521f85b4e4d72b158550ecd275446c8caeb42cfdcb5c515bc94ac",
+      "bytes": 124,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/20261026T133440049951-start_pi_remote.receipt.json",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/20261026T133440049951-start_pi_remote.stderr": {
+      "id": "WP20261026-011",
+      "path": "validation/shared/data/local/windows-preview-20261026/20261026T133440049951-start_pi_remote.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/20261026T133440049951-start_pi_remote.stderr",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/20261026T133440049951-start_pi_remote.stdout": {
+      "id": "WP20261026-012",
+      "path": "validation/shared/data/local/windows-preview-20261026/20261026T133440049951-start_pi_remote.stdout",
+      "sha256": "cd96c7c52836ab837a4df05934eceba632686b3454502ef6059c47fc1f0612a4",
+      "bytes": 356,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/20261026T133440049951-start_pi_remote.stdout",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/20261026T133746810254-status_remote.receipt.json": {
+      "id": "WP20261026-013",
+      "path": "validation/shared/data/local/windows-preview-20261026/20261026T133746810254-status_remote.receipt.json",
+      "sha256": "ac4756cb57603143a67008083890a78d25cbee364937add631ca9c242440ed9f",
+      "bytes": 122,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/20261026T133746810254-status_remote.receipt.json",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/20261026T133746810254-status_remote.stderr": {
+      "id": "WP20261026-014",
+      "path": "validation/shared/data/local/windows-preview-20261026/20261026T133746810254-status_remote.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/20261026T133746810254-status_remote.stderr",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/20261026T133746810254-status_remote.stdout": {
+      "id": "WP20261026-015",
+      "path": "validation/shared/data/local/windows-preview-20261026/20261026T133746810254-status_remote.stdout",
+      "sha256": "5825160e8fe4aac2c138951398bcbab05ba437c471311d2ca4f3709381acdf4d",
+      "bytes": 3208,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/20261026T133746810254-status_remote.stdout",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/acceptance.json": {
+      "id": "WP20261026-016",
+      "path": "validation/shared/data/local/windows-preview-20261026/acceptance.json",
+      "sha256": "58cbd8f0a888305552438ce43458b64ebcf67e6dc560cb35a7b8bf390efc12f6",
+      "bytes": 2055,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/acceptance.json",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/all.gjf": {
+      "id": "WP20261026-017",
+      "path": "validation/shared/data/local/windows-preview-20261026/all.gjf",
+      "sha256": "731a1c4738a84824feb9286b916aa7b8bc66c7e9c801c3bd0887ce5ab663f387",
+      "bytes": 682,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/all.gjf",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/benzene/all/AICD.txt": {
+      "id": "WP20261026-018",
+      "path": "validation/shared/data/local/windows-preview-20261026/benzene/all/AICD.txt",
+      "sha256": "31d638487e6baa975565792030d01f2fa32c77b6a00bd661cebd89b4615cc6b5",
+      "bytes": 55147042,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/benzene/all/AICD.txt",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/benzene/all/all.chk": {
+      "id": "WP20261026-019",
+      "path": "validation/shared/data/local/windows-preview-20261026/benzene/all/all.chk",
+      "sha256": "18ca52ef3fa59105d02eb7b3e48b549713eb4b44a91fa5ac60cb1a18dbb55948",
+      "bytes": 1384448,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/benzene/all/all.chk",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/benzene/all/all.fchk": {
+      "id": "WP20261026-020",
+      "path": "validation/shared/data/local/windows-preview-20261026/benzene/all/all.fchk",
+      "sha256": "604fbbd00f73f47c1a5271a582d7688de1f2a9f20d606f35dc4fb55f7bba31e2",
+      "bytes": 516282,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/benzene/all/all.fchk",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/benzene/all/all.gjf": {
+      "id": "WP20261026-021",
+      "path": "validation/shared/data/local/windows-preview-20261026/benzene/all/all.gjf",
+      "sha256": "731a1c4738a84824feb9286b916aa7b8bc66c7e9c801c3bd0887ce5ab663f387",
+      "bytes": 682,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/benzene/all/all.gjf",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/benzene/all/all.log": {
+      "id": "WP20261026-022",
+      "path": "validation/shared/data/local/windows-preview-20261026/benzene/all/all.log",
+      "sha256": "5ce6ecb8e1512fac11274b902e650b8ce2c749d79c6b75a3f5c080252be93909",
+      "bytes": 38031,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/benzene/all/all.log",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/benzene/all/formchk.log": {
+      "id": "WP20261026-023",
+      "path": "validation/shared/data/local/windows-preview-20261026/benzene/all/formchk.log",
+      "sha256": "54200b2133dc06fd20833f37d978dcd32e5bc03167a8f6a282e9e5ee81700727",
+      "bytes": 180,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/benzene/all/formchk.log",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/benzene/all/gaussian.stderr": {
+      "id": "WP20261026-024",
+      "path": "validation/shared/data/local/windows-preview-20261026/benzene/all/gaussian.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/benzene/all/gaussian.stderr",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/benzene/all/run-status.json": {
+      "id": "WP20261026-025",
+      "path": "validation/shared/data/local/windows-preview-20261026/benzene/all/run-status.json",
+      "sha256": "ba2abf4c5de09082e0b6f9ca3270511e5fd5f8c78733158347674e28518f367f",
+      "bytes": 1381,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/benzene/all/run-status.json",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/benzene/pi/AICD.txt": {
+      "id": "WP20261026-026",
+      "path": "validation/shared/data/local/windows-preview-20261026/benzene/pi/AICD.txt",
+      "sha256": "f0cbb1abe13bcb5e788bd8225d61e536f52149b680ac0e5f8bee6b1b177d373f",
+      "bytes": 55147042,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/benzene/pi/AICD.txt",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/benzene/pi/formchk.log": {
+      "id": "WP20261026-027",
+      "path": "validation/shared/data/local/windows-preview-20261026/benzene/pi/formchk.log",
+      "sha256": "9b7290a5ef518d7e6c8e4fd0d0d82bfce11ac1436dea15d6690f8040c26775f7",
+      "bytes": 178,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/benzene/pi/formchk.log",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/benzene/pi/gaussian.stderr": {
+      "id": "WP20261026-028",
+      "path": "validation/shared/data/local/windows-preview-20261026/benzene/pi/gaussian.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/benzene/pi/gaussian.stderr",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/benzene/pi/pi.chk": {
+      "id": "WP20261026-029",
+      "path": "validation/shared/data/local/windows-preview-20261026/benzene/pi/pi.chk",
+      "sha256": "5b777065a2947665cf4df4f6ee1805c4d5f1afef468539acd7c7449c6e894f85",
+      "bytes": 1384448,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/benzene/pi/pi.chk",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/benzene/pi/pi.fchk": {
+      "id": "WP20261026-030",
+      "path": "validation/shared/data/local/windows-preview-20261026/benzene/pi/pi.fchk",
+      "sha256": "1477083f30cfcba17d92b7bddca9e001fd821a366495b3410a75dea17842bafc",
+      "bytes": 516307,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/benzene/pi/pi.fchk",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/benzene/pi/pi.gjf": {
+      "id": "WP20261026-031",
+      "path": "validation/shared/data/local/windows-preview-20261026/benzene/pi/pi.gjf",
+      "sha256": "f3e554ee291aad4a2a2f7a57bf570fb8773a7e03162c827b18ebdbfa08eade62",
+      "bytes": 718,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/benzene/pi/pi.gjf",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/benzene/pi/pi.log": {
+      "id": "WP20261026-032",
+      "path": "validation/shared/data/local/windows-preview-20261026/benzene/pi/pi.log",
+      "sha256": "f2a72c4dbff989b6b40ba5901fa5333c01d2c6aed54798c66eaa577c79796bcf",
+      "bytes": 32727,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/benzene/pi/pi.log",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/benzene/pi/run-status.json": {
+      "id": "WP20261026-033",
+      "path": "validation/shared/data/local/windows-preview-20261026/benzene/pi/run-status.json",
+      "sha256": "3b922236c0bf5c8acf7688ae45a5728cbe37dbd995243435e8020a1738a09c81",
+      "bytes": 1375,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/benzene/pi/run-status.json",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/check_owned_pi.py": {
+      "id": "WP20261026-034",
+      "path": "validation/shared/data/local/windows-preview-20261026/check_owned_pi.py",
+      "sha256": "9d1d0aac8400be7bde72ab4d318a1206d9eb105ac0fccafb5c0dbc9eed3d76b0",
+      "bytes": 1683,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/check_owned_pi.py",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/all/arrays/13d280040807e8607bc503c767c5f6922d382daf3e38231bba8e4a201fa3e399.npy": {
+      "id": "WP20261026-035",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/all/arrays/13d280040807e8607bc503c767c5f6922d382daf3e38231bba8e4a201fa3e399.npy",
+      "sha256": "13d280040807e8607bc503c767c5f6922d382daf3e38231bba8e4a201fa3e399",
+      "bytes": 1925168,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/all/arrays/13d280040807e8607bc503c767c5f6922d382daf3e38231bba8e4a201fa3e399.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/all/arrays/18dc9de4e6ead0a8d4a947fb89aac5d01d0a742e8b209956c7b068bb4de7b4f6.npy": {
+      "id": "WP20261026-036",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/all/arrays/18dc9de4e6ead0a8d4a947fb89aac5d01d0a742e8b209956c7b068bb4de7b4f6.npy",
+      "sha256": "18dc9de4e6ead0a8d4a947fb89aac5d01d0a742e8b209956c7b068bb4de7b4f6",
+      "bytes": 5775248,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/all/arrays/18dc9de4e6ead0a8d4a947fb89aac5d01d0a742e8b209956c7b068bb4de7b4f6.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/all/arrays/25763dd8d786b500f8b1522c8c1eae37f7d95e6d18ec23b206720e2219429646.npy": {
+      "id": "WP20261026-037",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/all/arrays/25763dd8d786b500f8b1522c8c1eae37f7d95e6d18ec23b206720e2219429646.npy",
+      "sha256": "25763dd8d786b500f8b1522c8c1eae37f7d95e6d18ec23b206720e2219429646",
+      "bytes": 17325488,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/all/arrays/25763dd8d786b500f8b1522c8c1eae37f7d95e6d18ec23b206720e2219429646.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/all/arrays/25d83f527b234b5a87eb4d6b92f811161608732ea573969d334a6616a5b35fdb.npy": {
+      "id": "WP20261026-038",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/all/arrays/25d83f527b234b5a87eb4d6b92f811161608732ea573969d334a6616a5b35fdb.npy",
+      "sha256": "25d83f527b234b5a87eb4d6b92f811161608732ea573969d334a6616a5b35fdb",
+      "bytes": 2417816,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/all/arrays/25d83f527b234b5a87eb4d6b92f811161608732ea573969d334a6616a5b35fdb.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/all/arrays/3233dc4136ece945444052cc835c968fc44c603b8a3c631f025aab2f33cdb868.npy": {
+      "id": "WP20261026-039",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/all/arrays/3233dc4136ece945444052cc835c968fc44c603b8a3c631f025aab2f33cdb868.npy",
+      "sha256": "3233dc4136ece945444052cc835c968fc44c603b8a3c631f025aab2f33cdb868",
+      "bytes": 176,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/all/arrays/3233dc4136ece945444052cc835c968fc44c603b8a3c631f025aab2f33cdb868.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/all/arrays/6a2acf4a4661ba5031785e52b5c9e275250a0a6521f9e56e92f02dba7c33a810.npy": {
+      "id": "WP20261026-040",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/all/arrays/6a2acf4a4661ba5031785e52b5c9e275250a0a6521f9e56e92f02dba7c33a810.npy",
+      "sha256": "6a2acf4a4661ba5031785e52b5c9e275250a0a6521f9e56e92f02dba7c33a810",
+      "bytes": 1925168,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/all/arrays/6a2acf4a4661ba5031785e52b5c9e275250a0a6521f9e56e92f02dba7c33a810.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/all/arrays/ab2a08ce00d728762a8cd9c01c691a6454561c9babf81ef5d3a7f6768853af3d.npy": {
+      "id": "WP20261026-041",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/all/arrays/ab2a08ce00d728762a8cd9c01c691a6454561c9babf81ef5d3a7f6768853af3d.npy",
+      "sha256": "ab2a08ce00d728762a8cd9c01c691a6454561c9babf81ef5d3a7f6768853af3d",
+      "bytes": 1925168,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/all/arrays/ab2a08ce00d728762a8cd9c01c691a6454561c9babf81ef5d3a7f6768853af3d.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/all/arrays/af09101b32ddab8bf9aae35392ced35a2ec2598a2e46f8e99e6c034e25ba648a.npy": {
+      "id": "WP20261026-042",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/all/arrays/af09101b32ddab8bf9aae35392ced35a2ec2598a2e46f8e99e6c034e25ba648a.npy",
+      "sha256": "af09101b32ddab8bf9aae35392ced35a2ec2598a2e46f8e99e6c034e25ba648a",
+      "bytes": 224,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/all/arrays/af09101b32ddab8bf9aae35392ced35a2ec2598a2e46f8e99e6c034e25ba648a.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/all/arrays/b8e33eea1f9c8366354001540fc82cbd57b3c1518d41555cc497ed9dadec205c.npy": {
+      "id": "WP20261026-043",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/all/arrays/b8e33eea1f9c8366354001540fc82cbd57b3c1518d41555cc497ed9dadec205c.npy",
+      "sha256": "b8e33eea1f9c8366354001540fc82cbd57b3c1518d41555cc497ed9dadec205c",
+      "bytes": 416,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/all/arrays/b8e33eea1f9c8366354001540fc82cbd57b3c1518d41555cc497ed9dadec205c.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/all/arrays/d2259124783f0f6c6a1a84efd0a81343047e03e1749cc5bcf4fd92b9eada9681.npy": {
+      "id": "WP20261026-044",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/all/arrays/d2259124783f0f6c6a1a84efd0a81343047e03e1749cc5bcf4fd92b9eada9681.npy",
+      "sha256": "d2259124783f0f6c6a1a84efd0a81343047e03e1749cc5bcf4fd92b9eada9681",
+      "bytes": 33707,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/all/arrays/d2259124783f0f6c6a1a84efd0a81343047e03e1749cc5bcf4fd92b9eada9681.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/all/arrays/dcfc38cfdaaee438c99f5ad7cd83cf39e73a89505258441885a49f5d045148d6.npy": {
+      "id": "WP20261026-045",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/all/arrays/dcfc38cfdaaee438c99f5ad7cd83cf39e73a89505258441885a49f5d045148d6.npy",
+      "sha256": "dcfc38cfdaaee438c99f5ad7cd83cf39e73a89505258441885a49f5d045148d6",
+      "bytes": 268760,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/all/arrays/dcfc38cfdaaee438c99f5ad7cd83cf39e73a89505258441885a49f5d045148d6.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/all/manifest.json": {
+      "id": "WP20261026-046",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/all/manifest.json",
+      "sha256": "ca738b0a2c44be2f4f123da193377e4fba7cb6878a8ea53543a4f1bb5b08a5b2",
+      "bytes": 7288,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/all/manifest.json",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/pi/arrays/13d280040807e8607bc503c767c5f6922d382daf3e38231bba8e4a201fa3e399.npy": {
+      "id": "WP20261026-047",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/pi/arrays/13d280040807e8607bc503c767c5f6922d382daf3e38231bba8e4a201fa3e399.npy",
+      "sha256": "13d280040807e8607bc503c767c5f6922d382daf3e38231bba8e4a201fa3e399",
+      "bytes": 1925168,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/pi/arrays/13d280040807e8607bc503c767c5f6922d382daf3e38231bba8e4a201fa3e399.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/pi/arrays/18dc9de4e6ead0a8d4a947fb89aac5d01d0a742e8b209956c7b068bb4de7b4f6.npy": {
+      "id": "WP20261026-048",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/pi/arrays/18dc9de4e6ead0a8d4a947fb89aac5d01d0a742e8b209956c7b068bb4de7b4f6.npy",
+      "sha256": "18dc9de4e6ead0a8d4a947fb89aac5d01d0a742e8b209956c7b068bb4de7b4f6",
+      "bytes": 5775248,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/pi/arrays/18dc9de4e6ead0a8d4a947fb89aac5d01d0a742e8b209956c7b068bb4de7b4f6.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/pi/arrays/20f4ba5d26911dfc84630cd4ecdc81749f739ee1253ee7ed3d28244e9da3ab9c.npy": {
+      "id": "WP20261026-049",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/pi/arrays/20f4ba5d26911dfc84630cd4ecdc81749f739ee1253ee7ed3d28244e9da3ab9c.npy",
+      "sha256": "20f4ba5d26911dfc84630cd4ecdc81749f739ee1253ee7ed3d28244e9da3ab9c",
+      "bytes": 268760,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/pi/arrays/20f4ba5d26911dfc84630cd4ecdc81749f739ee1253ee7ed3d28244e9da3ab9c.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/pi/arrays/3233dc4136ece945444052cc835c968fc44c603b8a3c631f025aab2f33cdb868.npy": {
+      "id": "WP20261026-050",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/pi/arrays/3233dc4136ece945444052cc835c968fc44c603b8a3c631f025aab2f33cdb868.npy",
+      "sha256": "3233dc4136ece945444052cc835c968fc44c603b8a3c631f025aab2f33cdb868",
+      "bytes": 176,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/pi/arrays/3233dc4136ece945444052cc835c968fc44c603b8a3c631f025aab2f33cdb868.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/pi/arrays/5a61f2eba9cd938116144c312eacb2dab550eba1a5d60aa7acc5f69e4809a8c8.npy": {
+      "id": "WP20261026-051",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/pi/arrays/5a61f2eba9cd938116144c312eacb2dab550eba1a5d60aa7acc5f69e4809a8c8.npy",
+      "sha256": "5a61f2eba9cd938116144c312eacb2dab550eba1a5d60aa7acc5f69e4809a8c8",
+      "bytes": 17325488,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/pi/arrays/5a61f2eba9cd938116144c312eacb2dab550eba1a5d60aa7acc5f69e4809a8c8.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/pi/arrays/8a827e48df4f869c7aab7ec0a125516d419b872df890381c35bf02d16f6de33e.npy": {
+      "id": "WP20261026-052",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/pi/arrays/8a827e48df4f869c7aab7ec0a125516d419b872df890381c35bf02d16f6de33e.npy",
+      "sha256": "8a827e48df4f869c7aab7ec0a125516d419b872df890381c35bf02d16f6de33e",
+      "bytes": 1925168,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/pi/arrays/8a827e48df4f869c7aab7ec0a125516d419b872df890381c35bf02d16f6de33e.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/pi/arrays/ab2a08ce00d728762a8cd9c01c691a6454561c9babf81ef5d3a7f6768853af3d.npy": {
+      "id": "WP20261026-053",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/pi/arrays/ab2a08ce00d728762a8cd9c01c691a6454561c9babf81ef5d3a7f6768853af3d.npy",
+      "sha256": "ab2a08ce00d728762a8cd9c01c691a6454561c9babf81ef5d3a7f6768853af3d",
+      "bytes": 1925168,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/pi/arrays/ab2a08ce00d728762a8cd9c01c691a6454561c9babf81ef5d3a7f6768853af3d.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/pi/arrays/af09101b32ddab8bf9aae35392ced35a2ec2598a2e46f8e99e6c034e25ba648a.npy": {
+      "id": "WP20261026-054",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/pi/arrays/af09101b32ddab8bf9aae35392ced35a2ec2598a2e46f8e99e6c034e25ba648a.npy",
+      "sha256": "af09101b32ddab8bf9aae35392ced35a2ec2598a2e46f8e99e6c034e25ba648a",
+      "bytes": 224,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/pi/arrays/af09101b32ddab8bf9aae35392ced35a2ec2598a2e46f8e99e6c034e25ba648a.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/pi/arrays/b8e33eea1f9c8366354001540fc82cbd57b3c1518d41555cc497ed9dadec205c.npy": {
+      "id": "WP20261026-055",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/pi/arrays/b8e33eea1f9c8366354001540fc82cbd57b3c1518d41555cc497ed9dadec205c.npy",
+      "sha256": "b8e33eea1f9c8366354001540fc82cbd57b3c1518d41555cc497ed9dadec205c",
+      "bytes": 416,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/pi/arrays/b8e33eea1f9c8366354001540fc82cbd57b3c1518d41555cc497ed9dadec205c.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/pi/arrays/bf5bee0afd8ab2313b66f13bf9d8ed5e67bfb27ecd2d6faaead3fbe33a42595c.npy": {
+      "id": "WP20261026-056",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/pi/arrays/bf5bee0afd8ab2313b66f13bf9d8ed5e67bfb27ecd2d6faaead3fbe33a42595c.npy",
+      "sha256": "bf5bee0afd8ab2313b66f13bf9d8ed5e67bfb27ecd2d6faaead3fbe33a42595c",
+      "bytes": 2417816,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/pi/arrays/bf5bee0afd8ab2313b66f13bf9d8ed5e67bfb27ecd2d6faaead3fbe33a42595c.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/pi/arrays/d2259124783f0f6c6a1a84efd0a81343047e03e1749cc5bcf4fd92b9eada9681.npy": {
+      "id": "WP20261026-057",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/pi/arrays/d2259124783f0f6c6a1a84efd0a81343047e03e1749cc5bcf4fd92b9eada9681.npy",
+      "sha256": "d2259124783f0f6c6a1a84efd0a81343047e03e1749cc5bcf4fd92b9eada9681",
+      "bytes": 33707,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/pi/arrays/d2259124783f0f6c6a1a84efd0a81343047e03e1749cc5bcf4fd92b9eada9681.npy",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/pi/manifest.json": {
+      "id": "WP20261026-058",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/pi/manifest.json",
+      "sha256": "a2e75b1b287600f1935bcfaab3ba4ca773104f154b820f41c2e25c8eefd7864c",
+      "bytes": 7768,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/pi/manifest.json",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core/summary.json": {
+      "id": "WP20261026-059",
+      "path": "validation/shared/data/local/windows-preview-20261026/core/summary.json",
+      "sha256": "ef0bfb4ccc775dbc999a87bf28e1386846a787d6c51dfc4a34badb53b23272dd",
+      "bytes": 2020,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core/summary.json",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/core_owned.py": {
+      "id": "WP20261026-060",
+      "path": "validation/shared/data/local/windows-preview-20261026/core_owned.py",
+      "sha256": "5e33d205ac6a34f56640a38f2b364f1b123b5e60a1ddc00b6f431d6b9e73bd27",
+      "bytes": 2525,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/core_owned.py",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/finalize_owned_materials.py": {
+      "id": "WP20261026-061",
+      "path": "validation/shared/data/local/windows-preview-20261026/finalize_owned_materials.py",
+      "sha256": "fa7e4d91e826e6c3a740f984a7c8b09d9a0a8a593b8375e10f7817471da75f24",
+      "bytes": 3763,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/finalize_owned_materials.py",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/original.xyz": {
+      "id": "WP20261026-062",
+      "path": "validation/shared/data/local/windows-preview-20261026/original.xyz",
+      "sha256": "ceaf26cef1309390825da668b854e30db925e95b1cc9d08ce78f24efb8f05d14",
+      "bytes": 590,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/original.xyz",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/pi-identity/all.fchk": {
+      "id": "WP20261026-063",
+      "path": "validation/shared/data/local/windows-preview-20261026/pi-identity/all.fchk",
+      "sha256": "604fbbd00f73f47c1a5271a582d7688de1f2a9f20d606f35dc4fb55f7bba31e2",
+      "bytes": 516282,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/pi-identity/all.fchk",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/pi-identity/input.txt": {
+      "id": "WP20261026-064",
+      "path": "validation/shared/data/local/windows-preview-20261026/pi-identity/input.txt",
+      "sha256": "b6a76893fe4427670469107b4dfdf9773a71d64b6f81d7894ab58133a0e3150e",
+      "bytes": 21,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/pi-identity/input.txt",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/pi-identity/output.txt": {
+      "id": "WP20261026-065",
+      "path": "validation/shared/data/local/windows-preview-20261026/pi-identity/output.txt",
+      "sha256": "b7266e593dd61e50c39954f047ab4c953667433fe8ed9f2a315e41ca52ab3915",
+      "bytes": 9140,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/pi-identity/output.txt",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/pi-identity/process.json": {
+      "id": "WP20261026-066",
+      "path": "validation/shared/data/local/windows-preview-20261026/pi-identity/process.json",
+      "sha256": "737b7aea09227ebcff7294c80e93d3c6ddd82bfb8a25dd07ae587e6798f6095c",
+      "bytes": 131,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/pi-identity/process.json",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/pi-identity/settings.ini": {
+      "id": "WP20261026-067",
+      "path": "validation/shared/data/local/windows-preview-20261026/pi-identity/settings.ini",
+      "sha256": "243369dd9ace19cd3d1a2b8273ad81bb340fe8f282b1d9d33e98205fc0d06104",
+      "bytes": 21478,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/pi-identity/settings.ini",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/prepare_gaussian.py": {
+      "id": "WP20261026-068",
+      "path": "validation/shared/data/local/windows-preview-20261026/prepare_gaussian.py",
+      "sha256": "ba3f0f7629b1216190ef1c0c66fa086bf785d040611e09909d31f8d78c18afee",
+      "bytes": 1994,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/prepare_gaussian.py",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/prepare_owned_reference.py": {
+      "id": "WP20261026-069",
+      "path": "validation/shared/data/local/windows-preview-20261026/prepare_owned_reference.py",
+      "sha256": "d43a5f817724c5a8d92087baf34a9d49167ae9dca3835e44d16fa89a8b1e7a5d",
+      "bytes": 1613,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/prepare_owned_reference.py",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/preserve_owned_benzene.py": {
+      "id": "WP20261026-070",
+      "path": "validation/shared/data/local/windows-preview-20261026/preserve_owned_benzene.py",
+      "sha256": "2c9b7d1b199ffb959a87db92d93e3a1d43150d492979071f9828382b9c420e3e",
+      "bytes": 5265,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/preserve_owned_benzene.py",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/preserve_projection.py": {
+      "id": "WP20261026-071",
+      "path": "validation/shared/data/local/windows-preview-20261026/preserve_projection.py",
+      "sha256": "44e900a53b6435cc0fe6dadf3d9d7ad364e9506b6524b7088f0cd651352f39cc",
+      "bytes": 4900,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/preserve_projection.py",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/projection-adapter.json": {
+      "id": "WP20261026-072",
+      "path": "validation/shared/data/local/windows-preview-20261026/projection-adapter.json",
+      "sha256": "d3dddc973bb170b20e6bf37548d71d296ecb7963010f748c2e60ad128b751aae",
+      "bytes": 232,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/projection-adapter.json",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/projection_owned.py": {
+      "id": "WP20261026-073",
+      "path": "validation/shared/data/local/windows-preview-20261026/projection_owned.py",
+      "sha256": "645671ed81857c976c39fb0ea3de7d736039d95c014d39cd3c89b86c8acb1ee6",
+      "bytes": 3103,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/projection_owned.py",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/projection_reference.py": {
+      "id": "WP20261026-074",
+      "path": "validation/shared/data/local/windows-preview-20261026/projection_reference.py",
+      "sha256": "2b5a71cb4396a94d53c30647f9caecf3b0d5214f971b6a82071163c460bea248",
+      "bytes": 10216,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/projection_reference.py",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/all/AICD.txt": {
+      "id": "WP20261026-075",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/all/AICD.txt",
+      "sha256": "31d638487e6baa975565792030d01f2fa32c77b6a00bd661cebd89b4615cc6b5",
+      "bytes": 55147042,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/all/AICD.txt",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/all/all.1.icd-raw": {
+      "id": "WP20261026-076",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/all/all.1.icd-raw",
+      "sha256": "d999dbfe3769c2aba3c470301042bd8c97e9c9f9a1bad2245386ea45d82f100d",
+      "bytes": 38791021,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/all/all.1.icd-raw",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/all/all.1.log": {
+      "id": "WP20261026-077",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/all/all.1.log",
+      "sha256": "5ce6ecb8e1512fac11274b902e650b8ce2c749d79c6b75a3f5c080252be93909",
+      "bytes": 38031,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/all/all.1.log",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/all/all.1.pdb": {
+      "id": "WP20261026-078",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/all/all.1.pdb",
+      "sha256": "a2c2456001a2dc2f5dc3905dbb6d9c779298d0ab5f822a813cc1b0565c013c07",
+      "bytes": 1264,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/all/all.1.pdb",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/all/all.log": {
+      "id": "WP20261026-079",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/all/all.log",
+      "sha256": "5ce6ecb8e1512fac11274b902e650b8ce2c749d79c6b75a3f5c080252be93909",
+      "bytes": 38031,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/all/all.log",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/all/extract.stderr": {
+      "id": "WP20261026-080",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/all/extract.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/all/extract.stderr",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/all/extract.stdout": {
+      "id": "WP20261026-081",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/all/extract.stdout",
+      "sha256": "368e45b536f09748d9be518358e11650ef66f35e8599f626cc86764327d47fd3",
+      "bytes": 63,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/all/extract.stdout",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/all/parsed.npz": {
+      "id": "WP20261026-082",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/all/parsed.npz",
+      "sha256": "332630c93110bd57b5c1b237a870c497ff04619128a616e5437ea864521ded2c",
+      "bytes": 26951560,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/all/parsed.npz",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/all/points.csv": {
+      "id": "WP20261026-083",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/all/points.csv",
+      "sha256": "7d09f2fc9f4705a4588f287240aff61c83de0dcb3433776a335ad4ad6ea5f9a9",
+      "bytes": 30610824,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/all/points.csv",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/pi/AICD.txt": {
+      "id": "WP20261026-084",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/pi/AICD.txt",
+      "sha256": "f0cbb1abe13bcb5e788bd8225d61e536f52149b680ac0e5f8bee6b1b177d373f",
+      "bytes": 55147042,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/pi/AICD.txt",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/pi/extract.stderr": {
+      "id": "WP20261026-085",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/pi/extract.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/pi/extract.stderr",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/pi/extract.stdout": {
+      "id": "WP20261026-086",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/pi/extract.stdout",
+      "sha256": "368e45b536f09748d9be518358e11650ef66f35e8599f626cc86764327d47fd3",
+      "bytes": 63,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/pi/extract.stdout",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/pi/parsed.npz": {
+      "id": "WP20261026-087",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/pi/parsed.npz",
+      "sha256": "9391dc5ffd02b124fe7d64aae1de1e090f7c4a4abfc659e670b2dffc8a2a1e0a",
+      "bytes": 26951560,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/pi/parsed.npz",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/pi/pi.1.icd-raw": {
+      "id": "WP20261026-088",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/pi/pi.1.icd-raw",
+      "sha256": "73722d1fd159fd86858c173f94df1eaf29d32475c4dbe1235b5ec6a2717ecc8a",
+      "bytes": 38733556,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/pi/pi.1.icd-raw",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/pi/pi.1.log": {
+      "id": "WP20261026-089",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/pi/pi.1.log",
+      "sha256": "f2a72c4dbff989b6b40ba5901fa5333c01d2c6aed54798c66eaa577c79796bcf",
+      "bytes": 32727,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/pi/pi.1.log",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/pi/pi.1.pdb": {
+      "id": "WP20261026-090",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/pi/pi.1.pdb",
+      "sha256": "897e88d242d8651fef5768792cf37083ee6a8ba9c6ff3814341e04e2d13bb160",
+      "bytes": 1280,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/pi/pi.1.pdb",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/pi/pi.log": {
+      "id": "WP20261026-091",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/pi/pi.log",
+      "sha256": "f2a72c4dbff989b6b40ba5901fa5333c01d2c6aed54798c66eaa577c79796bcf",
+      "bytes": 32727,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/pi/pi.log",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/pi/points.csv": {
+      "id": "WP20261026-092",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/pi/points.csv",
+      "sha256": "534af6e941461db16b545bb4d40d3527f3562d9e3c3296981b82dfbb87bbaa31",
+      "bytes": 29023225,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/pi/points.csv",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/reference/summary.json": {
+      "id": "WP20261026-093",
+      "path": "validation/shared/data/local/windows-preview-20261026/reference/summary.json",
+      "sha256": "81f32dfdf0f2b39773709e1e391e3b8be0de4dc622d0725443942599f03364d2",
+      "bytes": 5677,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/reference/summary.json",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/ssh_stage.py": {
+      "id": "WP20261026-094",
+      "path": "validation/shared/data/local/windows-preview-20261026/ssh_stage.py",
+      "sha256": "46411b18f50d51c686765097714ea72f0550c9faf29ab8f4fca10e392fef1ddc",
+      "bytes": 1154,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/ssh_stage.py",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/start_all_remote.py": {
+      "id": "WP20261026-095",
+      "path": "validation/shared/data/local/windows-preview-20261026/start_all_remote.py",
+      "sha256": "e6dc464771ebd57e137e473912dc2b9fdc6da3907da6115b43b676ec0144d785",
+      "bytes": 6023,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/start_all_remote.py",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/start_pi_remote.py": {
+      "id": "WP20261026-096",
+      "path": "validation/shared/data/local/windows-preview-20261026/start_pi_remote.py",
+      "sha256": "09ae8d7c2aed108912a0f9df51ac3a168f3a8dad07488c5809ce4fde8487a6c1",
+      "bytes": 1980,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/start_pi_remote.py",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/status_remote.py": {
+      "id": "WP20261026-097",
+      "path": "validation/shared/data/local/windows-preview-20261026/status_remote.py",
+      "sha256": "e61546aebf860cb773758161a20631507d954cacdc4255f6635859dad95b3452",
+      "bytes": 1096,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/status_remote.py",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/update_projection_topic.py": {
+      "id": "WP20261026-098",
+      "path": "validation/shared/data/local/windows-preview-20261026/update_projection_topic.py",
+      "sha256": "e21aef69386d1e723bd12ad0974898926243686e8c2dad7f10ecf27e06314310",
+      "bytes": 3146,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/update_projection_topic.py",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/verify_owned_reference.py": {
+      "id": "WP20261026-099",
+      "path": "validation/shared/data/local/windows-preview-20261026/verify_owned_reference.py",
+      "sha256": "f921e3d8ecadec25c98106c496e5f70d3f064034441f86dd31c2c5d6f03ae3e4",
+      "bytes": 3037,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/verify_owned_reference.py",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/water-dimer-projection/distmap.txt": {
+      "id": "WP20261026-100",
+      "path": "validation/shared/data/local/windows-preview-20261026/water-dimer-projection/distmap.txt",
+      "sha256": "748e172ce05f540770961cd3fb9c539c9bea78037afcd95ecbf9242b3ae70f64",
+      "bytes": 105042,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/water-dimer-projection/distmap.txt",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/water-dimer-projection/execution.json": {
+      "id": "WP20261026-101",
+      "path": "validation/shared/data/local/windows-preview-20261026/water-dimer-projection/execution.json",
+      "sha256": "e91d3d012d1ab21e4dc6c3f3b7082ae3b74d26cd313934a9982eb6e9d2906dc8",
+      "bytes": 699,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/water-dimer-projection/execution.json",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/water-dimer-projection/independent-reference.csv": {
+      "id": "WP20261026-102",
+      "path": "validation/shared/data/local/windows-preview-20261026/water-dimer-projection/independent-reference.csv",
+      "sha256": "0767f13629a2cdefd56ab1afc8631fee5b5801c6a52ea0ccec1694ca1fcd7007",
+      "bytes": 140416,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/water-dimer-projection/independent-reference.csv",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/water-dimer-projection/input.gjf": {
+      "id": "WP20261026-103",
+      "path": "validation/shared/data/local/windows-preview-20261026/water-dimer-projection/input.gjf",
+      "sha256": "442b96ade62811333fb29fed23203113a4b9299a76ef5f1935a122210aa84707",
+      "bytes": 401,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/water-dimer-projection/input.gjf",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/water-dimer-projection/mwfn_commands.txt": {
+      "id": "WP20261026-104",
+      "path": "validation/shared/data/local/windows-preview-20261026/water-dimer-projection/mwfn_commands.txt",
+      "sha256": "e1e36f8c534b8058afb9a68aeee01ccb6f2fe43039ee4e184883404942c9c5e8",
+      "bytes": 104,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/water-dimer-projection/mwfn_commands.txt",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/water-dimer-projection/mwfn_log.txt": {
+      "id": "WP20261026-105",
+      "path": "validation/shared/data/local/windows-preview-20261026/water-dimer-projection/mwfn_log.txt",
+      "sha256": "1f2d79a98a957e732d5f1207386198b089f44b28edd92a8e06ad724374cc05d4",
+      "bytes": 19927,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/water-dimer-projection/mwfn_log.txt",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/water-dimer-projection/parameters.json": {
+      "id": "WP20261026-106",
+      "path": "validation/shared/data/local/windows-preview-20261026/water-dimer-projection/parameters.json",
+      "sha256": "0faaf63caf43a56d993c46b4fa069d1036e09206fcfc689b61453c2f2057cc19",
+      "bytes": 2533,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/water-dimer-projection/parameters.json",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/water-dimer-projection/reference.xyz": {
+      "id": "WP20261026-107",
+      "path": "validation/shared/data/local/windows-preview-20261026/water-dimer-projection/reference.xyz",
+      "sha256": "76c68efd5ab6fd2badbb874295e617dfcce8eecb8e73a27cebfb1b031bb0a7a6",
+      "bytes": 375,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/water-dimer-projection/reference.xyz",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/water-dimer-projection/settings.ini": {
+      "id": "WP20261026-108",
+      "path": "validation/shared/data/local/windows-preview-20261026/water-dimer-projection/settings.ini",
+      "sha256": "bbfc4f49a32a473ca381868d8ac7067667ed91374afdba516c16f9c79cf9cbe0",
+      "bytes": 21478,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/water-dimer-projection/settings.ini",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
+    },
+    "windows-preview-20261026/water-dimer.gjf": {
+      "id": "WP20261026-109",
+      "path": "validation/shared/data/local/windows-preview-20261026/water-dimer.gjf",
+      "sha256": "442b96ade62811333fb29fed23203113a4b9299a76ef5f1935a122210aa84707",
+      "bytes": 401,
+      "original_path": ".tmp/runs/windows-preview-0.1.0/examples/water-dimer.gjf",
+      "role": "Windows preview original calculation, source or independent reference",
+      "used_by": [
+        "Windows preview 0.1.0",
+        "SOP topics 10/11"
+      ],
+      "data_license_status": "Local provenance retained; public distribution governed by tutorial-public-extras.json"
     }
   },
   "documentation": "docs/v1-acceptance/SOURCES.md"
