@@ -40,7 +40,7 @@ GBasis 随包的是 Python 实现，`gbasis/QCBLENDER_BUILD.md` 记录去除可�
 
 QCBlender 中采用的 MolecularNodes 半径、Viridis/Cividis 数值表沿用 `THIRD_PARTY.md` 的作者、固定 commit 和 GPL-3.0-or-later 归属；本批不改其数值或来源。教程中的旧 Ru/外部苯素材不纳入新公开附件。
 
-`Passed`：锁定组件身份与原始许可材料的技术核对。`Not Run`：最终 CI 候选的包内字节复核，因此尚不记录最终 `license_review=Passed`。这份记录不代表独立法律审查或上游许可声明的修订。版本及来源继续以两份锁和 `THIRD_PARTY.md` 为准，不更换依赖。
+`Passed`：锁定组件身份、原始许可材料及最终 CI 候选包内字节的技术核对。候选 run `40341330234`、artifact `12659470998`、源码 `bec0877d025d95a291e99efdbc09fdad9c423be6` 的 11 个 wheel 与已审阅材料一致；精确身份见[最终许可核对](../../validation/agent/acceptance/releases/v0.1.0/license-audit.json)及[发布门禁](../../validation/agent/acceptance/releases/v0.1.0/gates.json)。这份记录不代表独立法律审查或上游许可声明的修订。版本及来源继续以两份锁和 `THIRD_PARTY.md` 为准，不更换依赖。
 
 ## 本批处理边界
 
@@ -50,4 +50,4 @@ QCBlender 中采用的 MolecularNodes 半径、Viridis/Cividis 数值表沿用 `
 
 公开清单中的水二聚体投影和苯 all/π 已生成并保留逐文件摘要。苯使用解析正六边形固定构型，B3LYP/6-31G(d)、CSGT；两套各 240,630 点，π 轨道 17、20、21 由 Multiwfn 实际识别。独立提取参照的九分量和单位磁场响应完全一致，Aniso 最大绝对误差不超过 2.23e-16。该检查验证数据解析与定义，不代表独立科研签署。
 
-两个案例均已通过真实 MCP 导入、Computer Use 观察和自包含工程冷重开。公共日志仅规范化运行环境路径，原始科学字段和软件声明保留；规范化范围见各组 NOTICE.md。技术证据由[产物入口](../ARTIFACTS.md#windows-preview-20261026)定位，最终 CI 候选仍需另行绑定与安装验收。
+两个案例均已通过最终 CI 候选的真实 MCP 导入、Computer Use 观察和自包含工程冷重开。公共日志仅规范化运行环境路径，原始科学字段和软件声明保留；规范化范围见各组 NOTICE.md。技术证据由[产物入口](../ARTIFACTS.md#windows-preview-20261026)定位；最终候选的 ZIP、暂存远程仓库安装和 14 个数据对象冷读结果见[安装记录](../../validation/agent/acceptance/releases/v0.1.0/agent-installation.json)。正式公开地址安装在发布后另行验证，独立人工与科研签署仍为 `Not Run`。

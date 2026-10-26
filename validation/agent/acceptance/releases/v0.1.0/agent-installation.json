@@ -1,0 +1,253 @@
+{
+  "schema": "qcblender.agent-preview-evidence.v1",
+  "candidate_run_id": 40341330234,
+  "artifact_id": 12659470998,
+  "source_commit": "bec0877d025d95a291e99efdbc09fdad9c423be6",
+  "extension_sha256": "020efb1652c7f1ed9309d032bfd454898db95a61ec099c5109f43ad037006642",
+  "reviewer": "Codex Agent",
+  "environment": {
+    "os": "Windows 11 x64",
+    "blender": "5.1.1"
+  },
+  "checks": {
+    "cold_reopen": "Passed",
+    "computer_use": "Passed",
+    "mcp": "Passed",
+    "p01": "Passed",
+    "remote_repository_install": "Passed",
+    "scientific_displays": "Passed",
+    "tutorial_portability": "Passed",
+    "zip_install": "Passed"
+  },
+  "zip_install": {
+    "method": "Computer Use Install from Disk; installed and enabled through Blender UI",
+    "members_byte_identical": 137
+  },
+  "remote_repository_install": {
+    "method": "Computer Use Add Remote Repository, native sync, download and install; fresh isolated profile",
+    "module": "bl_ext.repository.qcblender",
+    "members_byte_identical": 137,
+    "staging": "Only archive_url changed to the task loopback HTTP server. Formal HTTPS URL verification follows publication."
+  },
+  "p01": {
+    "status": "Passed",
+    "source_sha256": "7f076278eec6d5f7abda3f6f7963469d4d8e1cdae790028569da0c85e0c7316f",
+    "grid": {
+      "origin": [
+        -3.0,
+        -3.0,
+        -3.6085853363791207
+      ],
+      "steps": [
+        [
+          0.2,
+          0,
+          0
+        ],
+        [
+          0,
+          0.2,
+          0
+        ],
+        [
+          0,
+          0,
+          0.2
+        ]
+      ],
+      "shape": [
+        31,
+        31,
+        38
+      ]
+    },
+    "parameters": {
+      "quantity": "orbital_amplitude",
+      "spin": "alpha",
+      "orbital": 9,
+      "memory_mb": 512
+    },
+    "isovalue": 0.045,
+    "low_mesh": [
+      1188,
+      1180
+    ],
+    "high_mesh": [
+      964,
+      956
+    ]
+  },
+  "projection": {
+    "status": "Passed",
+    "counts": {
+      "missed": 1652,
+      "valid": 849,
+      "unknown": 0
+    },
+    "point": {
+      "ix": 30,
+      "iy": 20,
+      "x": 0.0,
+      "y": 0.0,
+      "depth": -3.05,
+      "state": "valid"
+    }
+  },
+  "aicd_all": {
+    "status": "Passed",
+    "point": {
+      "index": 12345,
+      "block": 29,
+      "local_index": 73,
+      "position_angstrom": [
+        -0.8041906068637169,
+        2.2041871268510285,
+        -0.10529621053125567
+      ],
+      "weight": 0.00225692,
+      "tensor": [
+        [
+          -0.000385707,
+          0.00225529,
+          0.00825906
+        ],
+        [
+          -0.00255198,
+          -0.000571039,
+          0.0274463
+        ],
+        [
+          0.0033784,
+          -0.0163859,
+          0.000249716
+        ]
+      ],
+      "aniso": 0.01392638093082205,
+      "field": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "current": [
+        -0.00825906,
+        -0.0274463,
+        -0.000249716
+      ]
+    },
+    "settings": {
+      "arrow_color": [
+        0.8999999761581421,
+        0.07999999821186066,
+        0.02500000037252903
+      ],
+      "arrow_limit": 250,
+      "field": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "isovalue": 0.05000000074505806,
+      "length_scale": 3.0,
+      "opacity": 0.44999998807907104,
+      "show_arrows": true,
+      "show_atoms": true,
+      "show_surface": true,
+      "surface_color": [
+        0.8999999761581421,
+        0.6499999761581421,
+        0.07999999821186066
+      ]
+    }
+  },
+  "aicd_pi": {
+    "status": "Passed",
+    "comparison": "All and pi displayed with equal isovalue, field, arrow limit, length and opacity."
+  },
+  "cold_reopen": {
+    "status": "Passed",
+    "pid": 5244,
+    "candidate_sha256": "020efb1652c7f1ed9309d032bfd454898db95a61ec099c5109f43ad037006642",
+    "blender": "5.1.1",
+    "dataset_objects": 14,
+    "all_arrays_settings_points": "Passed",
+    "portable_bindings": "Passed",
+    "p01_mesh": [
+      964,
+      956
+    ]
+  },
+  "tutorial_portability": {
+    "status": "Passed",
+    "directory": "独立教程材料",
+    "all_twelve_topics": true
+  },
+  "raw_evidence": [
+    {
+      "path": "r2zip/installed.json",
+      "sha256": "e27c8d9ee110381c0c3f08f7c9b854270ce602bba0ae231ee411dd41916a86bf"
+    },
+    {
+      "path": "r2zip/runtime_observe.json",
+      "sha256": "df1ca0e32acbba4d4cccd2ba2b91e28808eab875bb97d9fbd974485602e717af"
+    },
+    {
+      "path": "r2zip/p01.json",
+      "sha256": "52356c661ad8fc57c3290236965c9c2e3852176c91bf98a5f520b01ec1ad3b6d"
+    },
+    {
+      "path": "r2zip/projection.json",
+      "sha256": "5e98ccd6968352b167fb9d642532efe463d569df48d0a24f7c65e1456638f447"
+    },
+    {
+      "path": "r2zip/aicd_all_observe.json",
+      "sha256": "abe51f5939cea895cf265fda14758cf2d67f60e9702d93f4388ce5b4f2672c31"
+    },
+    {
+      "path": "r2zip/aicd_pi_observe.json",
+      "sha256": "9d10d90cc0b4f6eaabf21568155eb8e3e961fb1220a63db7959b0547e7309f38"
+    },
+    {
+      "path": "r2zip/save.json",
+      "sha256": "f45fe132d603d56d7fc2fe1050441f8d9ba2d92a3ab05549a2bb4a817f66e3e3"
+    },
+    {
+      "path": "r2zip/cold.json",
+      "sha256": "6ef4a2eae0f17529e9ec1a905fd8c0303995d6cb35f5a25153b16ee56955506a"
+    },
+    {
+      "path": "r2zip/01-installed.png",
+      "sha256": "a798a183919956318d9da3fe4cd2790b0388b9c98951188ac372d21de481a371"
+    },
+    {
+      "path": "r2zip/02-p01.png",
+      "sha256": "4c6c8c4012722f3ff593849ef06e030fae5d7bdc02a8200d4ae69971c0c86ab2"
+    },
+    {
+      "path": "r2zip/03-projection.png",
+      "sha256": "6c9d5585b4dc6dee0969f101bf9537cf07adc51631dd4d227b539de1c8f12ed2"
+    },
+    {
+      "path": "r2zip/04-aicd-comparison.png",
+      "sha256": "7285cdaaef53b5a428b6bf1cc7fee5e0f3a3f209d5b0b0f74ffed15f1bf79d0a"
+    },
+    {
+      "path": "r2net/installed.json",
+      "sha256": "48483d55fd02fbb950edfa406efd837664f6c027f7394aedeb37bea381dcb6a8"
+    },
+    {
+      "path": "r2net/runtime_observe.json",
+      "sha256": "174f96e7a02f8465a586e1b20b61abf73c8c52e4af862428464a7acef9aee96f"
+    },
+    {
+      "path": "r2net/staging.json",
+      "sha256": "f397ac87edbe49bfde4e4c88ea2ab60351f2459764b4b80d93657896c0aadf34"
+    },
+    {
+      "path": "r2net/01-runtime-passed.png",
+      "sha256": "2e714813539ded81c3c21ec4700c7ac2af3faa7ed893dd4eecc35dba57108074"
+    }
+  ],
+  "independent_human_installation": "Not Run",
+  "independent_scientific_acceptance": "Not Run",
+  "formal_public_url_installation": "Not Run"
+}

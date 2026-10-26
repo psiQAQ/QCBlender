@@ -1,0 +1,69 @@
+{
+  "schema": "qcblender.release-gates.v1",
+  "candidate_run_id": 40341330234,
+  "artifact_id": 12659470998,
+  "source_commit": "bec0877d025d95a291e99efdbc09fdad9c423be6",
+  "extension_sha256": "020efb1652c7f1ed9309d032bfd454898db95a61ec099c5109f43ad037006642",
+  "license_review": {
+    "status": "Passed",
+    "reviewer": "Codex Agent",
+    "reviewed_at": "2026-10-26T14:55:34.176505+00:00",
+    "notes": "Exact candidate wheel bytes, original license notices and project license verified against the reviewed inventory. IOData/GBasis GPL metadata and LGPL root texts retained without rewriting. Public tutorial extras are project-owned cases with source/license records. This is a technical redistribution-material review, not an independent legal opinion.",
+    "evidence": [
+      {
+        "path": "license-audit.json",
+        "sha256": "642f142c3f1029e1de15fabfa9d596c8e10f738dfd6ba25ff11075b997eefe09"
+      },
+      {
+        "path": "candidate-verification.json",
+        "sha256": "7924676ed851f1f3924a9229a1af88e9ec9f9c6daefe06262f4504b8d45e99d3"
+      }
+    ]
+  },
+  "independent_alpha_installation": {
+    "status": "Not Run",
+    "notes": "No independent human installation was performed. The user authorized the separate Agent installation gate for this Alpha Preview only."
+  },
+  "public_release_approval": {
+    "status": "Passed",
+    "reviewer": "Codex Agent",
+    "reviewed_at": "2026-10-26T14:55:34.176505+00:00",
+    "notes": "Direct user approval authorizes this Windows Alpha Preview publication after candidate checks. No stable/latest designation or independent scientific claim.",
+    "evidence": [
+      {
+        "path": "publication-authorization.json",
+        "sha256": "2214ba55b66287cc669e718975fee78f28c1ecb4e1c5b33bfc46671d0fdfc8a8"
+      }
+    ]
+  },
+  "agent_preview_installation": {
+    "status": "Passed",
+    "reviewer": "Codex Agent",
+    "reviewed_at": "2026-10-26T14:55:34.176505+00:00",
+    "notes": "Exact CI candidate installed through both Blender UI paths in fresh isolated profiles. MCP runtime and science checks, Computer Use observations, P01 export, all/pi AICD, projection, portable save and fresh-process reopen passed. Prepublication remote test used an index differing only in archive_url; formal public URL must be verified after publication.",
+    "evidence": [
+      {
+        "path": "agent-installation.json",
+        "sha256": "e952ede5e89c8fe9171328baf5b9fcacfb4aab0b08617abda88b1a9253fe8525"
+      },
+      {
+        "path": "candidate-verification.json",
+        "sha256": "7924676ed851f1f3924a9229a1af88e9ec9f9c6daefe06262f4504b8d45e99d3"
+      },
+      {
+        "path": "cold-reopen.json",
+        "sha256": "6ef4a2eae0f17529e9ec1a905fd8c0303995d6cb35f5a25153b16ee56955506a"
+      }
+    ],
+    "checks": {
+      "cold_reopen": "Passed",
+      "computer_use": "Passed",
+      "mcp": "Passed",
+      "p01": "Passed",
+      "remote_repository_install": "Passed",
+      "scientific_displays": "Passed",
+      "tutorial_portability": "Passed",
+      "zip_install": "Passed"
+    }
+  }
+}

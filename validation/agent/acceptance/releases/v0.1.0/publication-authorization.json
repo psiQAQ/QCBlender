@@ -1,0 +1,8 @@
+{
+  "schema": "qcblender.preview-authorization.v1",
+  "authorized_at": "2026-10-26T12:34:08.917698+00:00",
+  "authority": "Direct user approval in this task",
+  "scope": "Publish v0.1.0 Windows x64 / Blender 5.1.1 Alpha Preview through CI, prerelease true and not latest; publish the exact five public assets and explicitly deploy Pages after exact candidate gates pass.",
+  "installation_gate": "Agent actual ZIP and remote installation with MCP and Computer Use for this preview only; independent human and scientific acceptance remain Not Run.",
+  "materials_override": "User subsequently authorized newly computed project-owned public cases instead of unlicensed historical examples."
+}

@@ -1,0 +1,653 @@
+{
+  "status": "Passed",
+  "candidate_run_id": 40341330234,
+  "artifact_id": 12659470998,
+  "source_commit": "bec0877d025d95a291e99efdbc09fdad9c423be6",
+  "artifact_sha256": "8dbe7c5746ee78af62c1557539f10cc7a50f6a5a0c59e10f661aaab8ec01a217",
+  "extension_sha256": "020efb1652c7f1ed9309d032bfd454898db95a61ec099c5109f43ad037006642",
+  "extension_source_and_wheels": "Passed",
+  "public_materials": "Passed",
+  "tutorial_portability": "Passed",
+  "documents": {
+    "markdown_files": 17,
+    "links": 336,
+    "numbered_operations": 98,
+    "require_images": true,
+    "image_slots": [
+      {
+        "path": "human/renders/P01-final.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/AICD02-all-pi.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/AICD02-display-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/AICD02-import-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/AICD02-source-response.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-install.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-orbital-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-orbital.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-output.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-phase-opacity.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-project-archive.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-project-sidecar.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-sidebar-summary.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-spin-density.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-summary-preview.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-summary.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-frequency-job-selection.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-gaussian-job-selection.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-nbo-block-selection.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-nbo-browser.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-optimization-step.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-vibration-mode.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-aim-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-aim-paths.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-aim-point.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-charge-dipole.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-clip-box.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-clip-plane.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-color-presets.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube-color-binding.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube-mapped.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube-overlay.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube-quantity-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-density-esp-binding.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-esp-analysis-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-esp-area.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-esp-extrema.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-fog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-igmh-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-igmh.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-iri.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-legend-layout.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-paired-filter-swapped.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-paired-filter.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-probe.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-profile-csv.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-profile-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-slice-gizmo.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-slice-three-atoms.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-slice.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-irc-end.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-irc-start.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-irc.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-mayer-colors.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-mayer-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-mayer.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-density.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-filter.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-pair-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-table-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-table.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-annotations.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-layers.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-nodes-make-local.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-nodes-oxygen.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-nodes-wiring.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-nodes.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-difference.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-intersect.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-invert.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-replace.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-union.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-source-association.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-xyz-frames.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/SD02-display-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/SD02-import-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/SD02-point-miss.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/SD02-surface-projection.png",
+        "present": true
+      }
+    ],
+    "images_supplied": 79,
+    "images_missing": [],
+    "screenshot_slots": [
+      {
+        "path": "human/screenshots/AICD02-all-pi.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/AICD02-display-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/AICD02-import-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/AICD02-source-response.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-install.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-orbital-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-orbital.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-output.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-phase-opacity.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-project-archive.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-project-sidecar.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-sidebar-summary.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-spin-density.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-summary-preview.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P01-summary.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-frequency-job-selection.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-gaussian-job-selection.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-nbo-block-selection.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-nbo-browser.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-optimization-step.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P02-vibration-mode.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-aim-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-aim-paths.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-aim-point.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-charge-dipole.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-clip-box.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-clip-plane.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-color-presets.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube-color-binding.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube-mapped.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube-overlay.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube-quantity-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-cube.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-density-esp-binding.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-esp-analysis-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-esp-area.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-esp-extrema.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-fog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-igmh-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-igmh.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-iri.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-legend-layout.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-paired-filter-swapped.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-paired-filter.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-probe.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-profile-csv.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-profile-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-slice-gizmo.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-slice-three-atoms.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P03-slice.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-irc-end.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-irc-start.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-irc.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-mayer-colors.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-mayer-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P04-mayer.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-density.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-filter.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-pair-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-table-import.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P05-nocv-table.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-annotations.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-layers.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-nodes-make-local.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-nodes-oxygen.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-nodes-wiring.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-nodes.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-difference.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-intersect.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-invert.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-replace.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-selection-union.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-source-association.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/P06-xyz-frames.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/SD02-display-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/SD02-import-dialog.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/SD02-point-miss.png",
+        "present": true
+      },
+      {
+        "path": "human/screenshots/SD02-surface-projection.png",
+        "present": true
+      }
+    ],
+    "screenshots_supplied": 78,
+    "human_execution": "Not Run"
+  }
+}

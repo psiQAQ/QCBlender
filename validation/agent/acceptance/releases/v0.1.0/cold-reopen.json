@@ -1,0 +1,13 @@
+{
+  "status": "Passed",
+  "pid": 5244,
+  "candidate_sha256": "020efb1652c7f1ed9309d032bfd454898db95a61ec099c5109f43ad037006642",
+  "blender": "5.1.1",
+  "dataset_objects": 14,
+  "all_arrays_settings_points": "Passed",
+  "portable_bindings": "Passed",
+  "p01_mesh": [
+    964,
+    956
+  ]
+}
