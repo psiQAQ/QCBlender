@@ -7,8 +7,13 @@ import { spawnSync } from 'node:child_process';
 import { createMarkdownProcessor } from '@astrojs/markdown-remark';
 import { generatedPath, mapping, repositoryRoot, rewriteTutorialUrl, remarkTutorialLinks } from './tutorial-links.mjs';
 import { deploymentViolations, internalTarget } from './verify-site.mjs';
-import { sha256 } from './prepare-docs.mjs';
+import { sha256, sourceMetrics } from './prepare-docs.mjs';
 import { loadPublicSamples } from './public-samples.mjs';
+
+test('tutorial steps and appendix explanations have separate inventories', () => {
+  const metrics = sourceMetrics('### 1. Import\n### A1. Units\n### A2. Provenance\n<details>More</details>\n![figure](image.png)');
+  assert.deepEqual(metrics, { steps: 1, details: 1, appendices: 2, images: 1, explicitAnchors: [] });
+});
 
 test('cross-directory links retain Chinese fragments and project base', () => {
   assert.equal(rewriteTutorialUrl('../SOP.md#保存工程', 'validation/human/topics/02-cube.md'), '/QCBlender/docs/getting-started/#保存工程');

@@ -261,6 +261,16 @@ Invoke-QCCheck 'qualification' $blenderPython @('-I', 'tools/qualify_package.py'
 
 候选 CI 在 `.github/workflows/extension-package.yml`；发布入口在 `extension-release.yml`，默认分支手动输入 `tag`、`candidate_run_id`、`dry_run`（默认 true）、`publish_preview`（默认 false）及 `gates_record`。发布只核验并上传原文件，不重新打包；先核对注释标签、main 可达性、manifest 版本、精确运行提交、artifact 与报告。v1 历史 artifact 仍可只读核验或按原门禁建立草稿，不可通过新的公开预览动作放行。
 
+### CI 分流与耗时
+
+`extension-package.yml` 先运行轻量的 `scope` job。仅当全部变更属于网站、根目录 README、Agent 规则或 Pages 工作流时，执行路由回归与 `git diff --check` 后跳过 Windows 候选构建；精确名单见 `tools/ci_scope.py`。教程、产品、测试、工具、依赖、未知路径及混合变更仍运行原完整资格链。push 比较整个推送前后，PR 比较共同祖先至 PR head；删除和重命名保留旧路径，无法取得差异时按完整验证处理。
+
+手动 `workflow_dispatch` 始终生成完整候选。轻量运行不生成候选 artifact，成功状态不代表可发布；发布仍要求确切源码提交、唯一候选 artifact、原始文件摘要、完整资格报告和既有人工／许可门禁。分流 job 为完整运行增加少量启动开销，主要收益是避免无关修改启动整套 Windows 验证。
+
+候选的每条子命令在 `outputs/candidate-ci/commands.json` 记录 UTC 起止时间、`elapsed_seconds`、退出码和原日志摘要，同时输出到 Actions 日志与摘要。计时单独上传为 `candidate-timings-<run_id>`，不加入候选包或公开附件；失败命令的计时也保留。比较性能时使用相同输入和验证范围，区分 job 启动等待与命令执行时间。
+
+Pages 在检查前准备一次文档，再直接执行已安装的 Astro 构建命令，避免 npm 的 `prebuild` 重复准备；本地 `npm run build` 仍自动准备文档。源码、图片、附录、公开素材许可、摘要和已发布版本的校验继续执行。
+
 ### 0.1.0 Windows 预览版
 
 本次预览按用户批准的计划采用 Agent 实际安装、MCP、Computer Use 门槛；正式版本的独立人工要求不变。公开发布限于 `v0.1.0`、Windows x64、Blender 5.1.1，设置 `prerelease=true`、`make_latest=false`。独立人工／科研验收保持真实状态，不从技术检查推导通过。

@@ -37,6 +37,7 @@ export function sourceMetrics(text) {
   return {
     steps: (text.match(/^### \d+\. /gm) ?? []).length,
     details: (text.match(/<details>/g) ?? []).length,
+    appendices: (text.match(/^### A\d+\. /gm) ?? []).length,
     images: (text.match(/^!\[/gm) ?? []).length,
     explicitAnchors: [...text.matchAll(/<a id="([^"]+)"\s*><\/a>/g)].map((match) => match[1]),
   };

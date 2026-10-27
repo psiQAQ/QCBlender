@@ -86,7 +86,7 @@ export async function verifySite(dist = path.join(websiteRoot, 'dist')) {
   require(JSON.stringify(report.archive) === JSON.stringify(publicSamples), 'Prepared archive differs from the active delivery');
   const expectedSources = mapping.pages.filter((page) => page.source).map((page) => page.source).sort();
   require(JSON.stringify(report.pages.map((page) => page.source).sort()) === JSON.stringify(expectedSources), 'Prepared tutorial page inventory differs from mapping');
-  const totals = { steps: 0, details: 0, images: 0 };
+  const totals = { steps: 0, details: 0, images: 0, appendices: 0 };
   for (const page of report.pages) {
     const source = await readFile(path.join(repositoryRoot, page.source));
     require(sha256(source) === page.sha256, `Source changed after prepare: ${page.source}`);
@@ -99,11 +99,12 @@ export async function verifySite(dist = path.join(websiteRoot, 'dist')) {
     require(document, `Missing tutorial page ${page.slug}`);
     if (!document) continue;
     require(document.article, `Missing tutorial content container: ${page.slug}`);
-    const counts = { steps: 0, details: 0, images: 0 };
+    const counts = { steps: 0, details: 0, images: 0, appendices: 0 };
     if (document.article) visit(document.article, (node) => {
       if (node.tagName === 'details') counts.details++;
       if (node.tagName === 'img') counts.images++;
       if (node.tagName === 'h3' && /^\d+\.\s/.test(textOf(node))) counts.steps++;
+      if (node.tagName === 'h3' && /^A\d+\.\s/.test(textOf(node))) counts.appendices++;
     });
     for (const key of Object.keys(totals)) {
       require(counts[key] === expected[key], `${page.slug}: ${key} ${counts[key]} != source ${expected[key]}`);
@@ -115,7 +116,7 @@ export async function verifySite(dist = path.join(websiteRoot, 'dist')) {
     const h1Count = (document.content.match(/<h1(?:\s|>)/g) ?? []).length;
     require(h1Count === 1, `${page.slug}: expected one page H1, got ${h1Count}`);
   }
-  require(totals.steps === 98 && totals.images === 79 && totals.details === 110,
+  require(totals.steps === 98 && totals.images === 79 && totals.details === 7 && totals.appendices === 92,
     `Tutorial inventory changed: ${JSON.stringify(totals)}`);
 
   const permittedAssets = new Map(report.images.map((entry) => [entry.path, entry.sha256]));
@@ -142,7 +143,7 @@ export async function verifySite(dist = path.join(websiteRoot, 'dist')) {
     require(html.has(route), `Missing download status page: ${route}`);
   }
   if (errors.length) throw new Error(`Site verification failed (${errors.length}):\n${errors.join('\n')}`);
-  console.log(`Passed: ${html.size} HTML pages, ${links} internal links/assets; ${totals.steps} steps, ${totals.images} images, ${totals.details} details; ${permittedAssets.size} reviewed public files with matching SHA-256. Chinese search and visual interaction require browser verification.`);
+  console.log(`Passed: ${html.size} HTML pages, ${links} internal links/assets; ${totals.steps} steps, ${totals.images} images, ${totals.details} details, ${totals.appendices} appendix sections; ${permittedAssets.size} reviewed public files with matching SHA-256. Chinese search and visual interaction require browser verification.`);
   return { pages: html.size, links, ...totals };
 }
 

@@ -353,6 +353,10 @@ class ReleaseTests(unittest.TestCase):
         artifact = {'id': 100, 'name': self.manifest['artifact_name'], 'expired': False,
                     'workflow_run': {'id': 42}}
         self.assertEqual(release.select_artifact({'artifacts': [artifact]}, artifact['name'], 42)['id'], 100)
+        timing = {'id': 101, 'name': 'candidate-timings-42', 'expired': False}
+        self.assertEqual(release.select_artifact({'artifacts': [artifact, timing]}, artifact['name'], 42)['id'], 100)
+        with self.assertRaisesRegex(ValueError, 'Expected exactly one candidate artifact'):
+            release.select_artifact({'artifacts': [timing]}, artifact['name'], 42)
         for items in ([], [artifact, artifact], [{**artifact, 'expired': True}],
                       [{**artifact, 'workflow_run': {'id': 43}}]):
             with self.subTest(items=items), self.assertRaises(ValueError):

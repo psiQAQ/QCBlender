@@ -69,7 +69,8 @@ jobs:
           npm run prepare:docs
           npm run check
           npm test
-          npm run build
+          # prepare:docs already ran before checking; bypass only npm's duplicate prebuild hook.
+          npm exec --no -- astro build
           npm run verify
       - name: Upload static website
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'

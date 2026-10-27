@@ -1,15 +1,46 @@
 """Run serial native qualification, then assemble the exact public candidate."""
 import argparse
+from datetime import datetime, timezone
 import json
 import os
 from pathlib import Path
 import subprocess
 import sys
+from time import perf_counter
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.candidate_artifacts import REQUIRED_REPORTS, assemble
 from tools.package_identity import extension_filename, file_record, source_identity
+
+
+def run_command(name, command, *, root, env, output, commands):
+    """Keep command evidence and timings on success, nonzero exit and launch failure."""
+    log = output / 'logs' / (name + '.log')
+    command = [str(value) for value in command]
+    started_at = datetime.now(timezone.utc).isoformat()
+    started = perf_counter()
+    exit_code = None
+    print(f'Starting {name}', flush=True)
+    try:
+        with log.open('wb') as stream:
+            process = subprocess.run(command, cwd=root, env=env, stdout=stream, stderr=subprocess.STDOUT)
+        exit_code = process.returncode
+    finally:
+        elapsed = round(perf_counter() - started, 3)
+        commands.append(dict(name=name, command=command, exit_code=exit_code,
+                             started_at=started_at, completed_at=datetime.now(timezone.utc).isoformat(),
+                             elapsed_seconds=elapsed, log=log.relative_to(output).as_posix(),
+                             log_sha256=file_record(log)['sha256']))
+        (output / 'commands.json').write_text(json.dumps(commands, indent=2) + '\n', encoding='utf-8')
+        print(f'Finished {name}: {elapsed:.3f}s, exit_code={exit_code}', flush=True)
+        if summary := env.get('GITHUB_STEP_SUMMARY'):
+            with open(summary, 'a', encoding='utf-8') as stream:
+                if len(commands) == 1:
+                    stream.write('### Candidate command timings\n\n| Command | Seconds | Exit code |\n| --- | ---: | --- |\n')
+                stream.write(f'| {name} | {elapsed:.3f} | {exit_code} |\n')
+    if exit_code:
+        raise RuntimeError(f'{name} failed with exit code {exit_code}; see {log}')
 
 
 def main():
@@ -49,15 +80,7 @@ def main():
     commands = []
 
     def run(name, command):
-        log = logs / (name + '.log')
-        with log.open('wb') as stream:
-            process = subprocess.run([str(value) for value in command], cwd=ROOT, env=env,
-                                     stdout=stream, stderr=subprocess.STDOUT)
-        commands.append(dict(name=name, command=[str(v) for v in command], exit_code=process.returncode,
-                             log=log.relative_to(out).as_posix(), log_sha256=file_record(log)['sha256']))
-        (out / 'commands.json').write_text(json.dumps(commands, indent=2) + '\n', encoding='utf-8')
-        if process.returncode:
-            raise RuntimeError(f'{name} failed with exit code {process.returncode}; see {log}')
+        run_command(name, command, root=ROOT, env=env, output=out, commands=commands)
 
     def fresh_report(source, name, candidate=None):
         data = json.loads(Path(source).read_text(encoding='utf-8'))

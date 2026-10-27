@@ -96,6 +96,7 @@ class WorkspacePaths(unittest.TestCase):
              patch.object(run_candidate_ci, 'source_identity', return_value=('a' * 40, None)), \
              patch('tools.tutorial_bundle.inventory', return_value=({}, None)) as inventory, \
              patch.dict(sys.modules, {'numpy': SimpleNamespace(__version__='fixture-version')}), \
+             patch.dict('os.environ', {'GITHUB_STEP_SUMMARY': str(self.root / 'summary.md')}), \
              patch.object(run_candidate_ci.subprocess, 'run', return_value=SimpleNamespace(returncode=7)) as process, \
              patch('sys.argv', ['run_candidate_ci', '--blender', 'blender.exe', '--run-id', '123']):
             with self.assertRaisesRegex(RuntimeError, 'stdlib failed with exit code 7'):
