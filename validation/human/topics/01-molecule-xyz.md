@@ -1,4 +1,4 @@
-# 分子显示与 XYZ
+# 01. 分子显示与 XYZ
 
 [返回教程目录](../SOP.md#topics)
 
@@ -18,10 +18,20 @@
   - [9. 关联 XYZ 与 FCHK 数据源](#step-09)
   - [10. 导入并切换多帧 XYZ](#step-10)
   - [11. 观察随帧更新的二面角](#step-11)
+- [附录：参数、原理与输入规范](#appendix)
+  - [A1. 了解 XYZ、坐标与源编号](#appendix-step-01)
+  - [A2. 了解三种分子样式与半径](#appendix-step-02)
+  - [A3. 了解隐藏氢与保留指定氢](#appendix-step-03)
+  - [A4. 了解局部选择的七种模式与距离邻域](#appendix-step-04)
+  - [A5. 标注设置、材质与朝向](#appendix-step-05)
+  - [A6. 了解局部层、复制层与当前版本视图](#appendix-step-06)
+  - [A7. 了解三组显示参数的复制范围](#appendix-step-08)
+  - [A8. 了解数据源关联与构型容差](#appendix-step-09)
+  - [A9. 了解 XYZ 帧与来源行](#appendix-step-10)
 
-路径相对材料根目录。已完成[插件安装](../SOP.md#install)；按[准备新工程](../SOP.md#new-scene)创建场景，再开始本页操作。
+路径均相对教程材料根目录（同时含 `human/` 和 `shared/`）。先完成[安装](../SOP.md#install)，按[准备新工程](../SOP.md#new-scene)开始；每次换对象后重新打开其对象属性。
 
-本页截图使用案例 `P06-` 前缀。
+---
 
 <a id="atoms"></a>
 ## 分子与标注
@@ -29,26 +39,237 @@
 <a id="step-01"></a>
 ### 1. 导入水二聚体并命名原子层
 
-- 点击 **N 侧栏 → 导入与导出（Import and Export） → 导入（Import） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 [shared/data/public/gaussian-v2/P06/water-dimer.xyz](../../shared/data/public/gaussian-v2/P06/water-dimer.xyz)。
-- 选中导入的原子对象，按 `F2` 命名为 **P06-single**。应出现两个水分子，共 **6 个原子，顺序 O/H/H/O/H/H**。
-- 切到 **材质预览（Material Preview）**。
+详细说明见[附录 A1：了解 XYZ、坐标与源编号](#appendix-step-01)。
 
-<details>
-<summary>了解 XYZ、坐标与源编号</summary>
-
-> XYZ 文件保存原子元素与坐标。本教程的坐标单位是 Å，1 Å = 0.1 nm；源原子编号从 1 开始。
-
-</details>
+1. 点击 **N 侧栏 → 导入与导出 → 导入 → 导入 Gaussian / Cube / XYZ**。
+2. 选择文件 `shared/data/public/gaussian-v2/P06/water-dimer.xyz`。
+3. 选中新生成的原子对象，按 `F2` 命名为 **P06-single**。场景中应出现 6 个原子（顺序为 O/H/H/O/H/H）。
+4. 视口切换至 **材质预览（Material Preview）**。
 
 <a id="step-02"></a>
 ### 2. 切换分子样式并调整半径
 
-- 保持 **P06-single** 活动，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**。
-- 在 **几何表示（Geometry Representation） → 样式（Style）** 依次选择 **球棍（Ball and Stick）、空间填充（Space Filling）、键线（Bonds）**，应看到三种表示。
-- 回到球棍，将 **原子半径（Atom Radius）** 设为 **0.35 Å**、**键半径（Bond Radius）** 设为 **0.12 Å**，球和键应变粗。
+详细说明见[附录 A2：了解三种分子样式与半径](#appendix-step-02)。
 
-<details>
-<summary>了解三种分子样式与半径</summary>
+1. 保持 **P06-single** 活动，点击 **N 侧栏 → 当前 QC 对象 → 打开对象属性**。
+2. 在 **几何表示 → 样式（Style）** 下依次体验三种表现样式：
+   - **球棍（Ball and Stick）**
+   - **空间填充（Space Filling）**
+   - **键线（Bonds）**
+3. 切换回球棍样式，调整以下参数：
+   - **原子半径（Atom Radius）**：`0.35 Å`
+   - **键半径（Bond Radius）**：`0.12 Å`
+
+<a id="step-03"></a>
+### 3. 练习氢的显隐
+
+详细说明见[附录 A3：了解隐藏氢与保留指定氢](#appendix-step-03)。
+
+在 **对象属性 → 局部选择与标注** 面板中控制氢原子的可见性：
+
+1. 点击 **隐藏氢（Hide Hydrogen）**，视口中仅保留 1 号与 4 号氧原子。
+2. 点击 **保留指定氢（Keep Specified Hydrogen）**，在弹窗中配置参数：
+   - **氢原子编号（从1开始）**：`2`
+   - 点击 **确定（OK）**，视口中显示 1、2、4 号原子。
+3. 点击 **显示全部氢（Show All Hydrogen）**，恢复全部 6 个原子显示。
+
+<a id="step-04"></a>
+### 4. 逐步设置局部选择范围
+
+原子编号按源文件从 1 开始；隐藏、筛选和裁剪不改变编号或来源原子总数。清除局部限制也会清除已保存的选择操作，其他显示设置仍生效。
+
+详细说明见[附录 A4：了解局部选择的七种模式与距离邻域](#appendix-step-04)。
+
+保持 **P06-single** 活动且全部氢可见，按顺序执行以下局部布尔操作：
+
+1. **A：指定单个水分子（Replace 模式）**：
+   - 点击 **设置局部选择（Set Local Selection）**。
+   - 配置参数：
+     - **显示范围更新方式**：替换（Replace）
+     - **源原子编号**：`1`
+     - **纳入距离邻域**：勾选开启
+     - **半径**：`1.0 Å`
+     - **包含种子原子**：勾选开启
+   - 确定后固定源编号更新为 `1,2,3`（第 1 个水分子）。截图保存至 `human/screenshots/P06-selection-replace.png`。
+
+![Replace完成后的固定源编号1、2、3及第一个水分子；源原子总数仍为6](../screenshots/P06-selection-replace.png)
+
+2. **B：添加原子（Union 模式）**：
+   - 再次点击 **设置局部选择**。
+   - 配置参数：
+     - **显示范围更新方式**：并集（Union）
+     - **源原子编号**：`4`
+     - **纳入距离邻域**：关闭
+   - 确定后固定源编号更新为 `1,2,3,4`。截图保存至 `human/screenshots/P06-selection-union.png`。
+
+![Union 将氧4加入已有水分子范围](../screenshots/P06-selection-union.png)
+
+3. **C：求交集（Intersect 模式）**：
+   - 点击 **设置局部选择**。
+   - 配置参数：
+     - **显示范围更新方式**：交集（Intersect）
+     - **源原子编号**：`1,4`
+     - **纳入距离邻域**：关闭
+   - 确定后固定编号更新为 `1,4`（只保留两氧原子，源原子总数仍为 6）。截图保存至 `human/screenshots/P06-selection-intersect.png`。
+
+![Intersect 只保留氧1和氧4，来源总数仍为6](../screenshots/P06-selection-intersect.png)
+
+4. **D：做差集（Difference 模式）**：
+   - 点击 **设置局部选择**。
+   - 配置参数：
+     - **显示范围更新方式**：差集（Difference）
+     - **源原子编号**：`1`
+     - **纳入距离邻域**：关闭
+   - 确定后固定编号仅剩 `4`。截图保存至 `human/screenshots/P06-selection-difference.png`。
+
+![Difference 从两个氧中排除氧1](../screenshots/P06-selection-difference.png)
+
+5. **E：查看其余原子（Invert 模式）**：
+   - 点击 **设置局部选择**，选择 **反选（Invert）**（无需输入编号），确定后固定编号为 `1,2,3,5,6`。截图保存至 `human/screenshots/P06-selection-invert.png`。
+
+![Invert 显示氧4之外的五个源原子](../screenshots/P06-selection-invert.png)
+
+6. **重算与恢复**：
+   - 点击 **按当前步重新计算（Recompute for Current Step）**，编号仍维持 `1,2,3,5,6`。
+   - 点击 **清除局部限制（Clear Local Restriction）**，恢复 6 原子完整显示。
+
+<a id="step-05"></a>
+### 5. 创建原子与几何测量标注
+
+标注使用独立整数控件，不填逗号分隔字符串。保持 **前缀模式=默认**；距离、角度和二面角均勾选 **显示测量几何**。编号须互不重复且在 1–6 内。需要改变顺序时优先使用相邻交换按钮，确认前核对最终顺序。
+
+详细说明见[附录 A5：标注设置、材质与朝向](#appendix-step-05)。
+
+保持 **P06-single** 活动并打开对象属性，在 **局部选择与标注** 中依次创建四项标注：
+
+1. **原子标注**：
+   - 点击 **原子（Atoms）**。
+   - 参数配置：
+     - **原子标注数量**：`1`
+     - **原子 1**：`1`
+   - 确定后氧 1 旁显示 `O` 标签。
+2. **距离标注**：
+   - 点击 **距离（Distance）**。
+   - 参数配置：
+     - **原子 1**：`1`
+     - **原子 2**：`4`
+     - **小数位数**：`3`
+     - **显示测量几何**：勾选
+   - 确定后两氧之间生成测量虚线与 `Distance(1,4) = 2.964 Å` 文本。
+3. **角度标注**：
+   - 点击 **角度（Angle）**。
+   - 通过 **1 ↔ 2** 交换按钮调整为：`原子 1=2`、`原子 2=1`、`原子 3=3`。
+   - **小数位数**：`3`
+   - 确定后生成内角圆弧与 `Angle(2,1,3) = 105.514 °`。
+4. **二面角标注**：
+   - 点击 **二面角（Dihedral）**。
+   - 调整序号为 `2/1/4/5`。
+   - **小数位数**：`3`
+   - 确定后生成半透明辅助三角面与 `Dihedral(2,1,4,5) = −123.860 °`。
+5. 选回 **P06-single** 并重新打开属性，在 **局部选择与标注 → 源原子标注** 找到对应行，点击设置图标修改 **偏移（Offset）** 并确认。核对六原子与测量几何，截图保存至 `human/screenshots/P06-annotations.png`。
+
+![水二聚体的六原子球棍、源原子编号及距离、角度、二面角](../screenshots/P06-annotations.png)
+
+---
+
+<a id="layers"></a>
+## 显示层
+
+<a id="step-06"></a>
+### 6. 创建局部显示层
+
+详细说明见[附录 A6：了解局部层、复制层与当前版本视图](#appendix-step-06)。
+
+1. 选中 **P06-single**，打开对象属性。
+2. 点击 **创建视图与工具 → 显示视图 → 创建局部显示层**。
+3. 配置参数：
+   - **源原子编号**：`1,4`
+   - **纳入距离邻域**：关闭
+4. 确定后生成名为 **P06-single / Local Selection** 的独立显示层，仅展示两个氧原子。
+5. 在大纲视图中隐藏原层观察局部层；看完后恢复原层并隐藏局部层，再继续后续练习。
+
+<a id="step-07"></a>
+### 7. 复制显示层并比较独立参数
+
+1. 在 **N 侧栏 → QC 对象导航** 中选中 **P06-single**。
+2. 重新打开 **P06-single** 的对象属性，在 **显示层管理** 面板点击 **复制（Duplicate）**。
+3. 将新副本按 `F2` 命名为 **P06-copy**。
+4. 打开 **P06-copy** 的属性，修改参数：
+   - **原子半径（Atom Radius）**：`0.25 Å`
+5. 分别检查原层（0.35 Å）与副本（0.25 Å），验证参数互不干扰。截图保存至 `human/screenshots/P06-layers.png`。
+
+![原层和副本的独立参数与显示层列表](../screenshots/P06-layers.png)
+
+<a id="step-08"></a>
+### 8. 复制显示参数并创建当前版本视图
+
+详细说明见[附录 A7：了解三组显示参数的复制范围](#appendix-step-08)。
+
+1. 在大纲视图中同时多选 **P06-copy** 与 **P06-single**（保持 **P06-single** 为活动对象）。
+2. 在 3D 视口菜单中进入 **物体 → QCBlender → 复制显示参数到选中视图**。
+3. 仅勾选 **几何表示（Geometry Representation）** 并确定。副本的半径将同步恢复为 `0.35 Å`。
+4. 选中 **P06-copy** 并重新打开其对象属性，在 **显示层管理 → 移除（Remove）** 删除该副本，核对原层仍在。
+5. 保持 **P06-single** 活动，点击 **创建视图与工具 → 显示视图 → 创建当前版本视图**，生成新视图。观察后隐藏新层，保留 **P06-single** 可见。
+
+---
+
+<a id="frames"></a>
+## 关联与多帧
+
+<a id="step-09"></a>
+### 9. 关联 XYZ 与 FCHK 数据源
+
+详细说明见[附录 A8：了解数据源关联与构型容差](#appendix-step-09)。
+
+1. 点击 **导入 Gaussian / Cube / XYZ**，导入 `shared/data/public/gaussian-v2/P03/water-dimer.fchk`，命名为 **P03-atoms**。
+2. 在大纲视图中多选 **P06-single** 与 **P03-atoms**（以 **P03-atoms** 为活动对象）。
+3. 打开对象属性，点击 **关联选中数据源（Associate Selected Sources）**。
+4. 配置参数：
+   - **最大原子偏差（Å）**：`0.001`
+   - **对齐刚体旋转与平移**：关闭
+5. 确定后提示结构完全匹配并成功关联。截图保存至 `human/screenshots/P06-source-association.png`。
+
+![XYZ与同源Gaussian FCHK的多选顺序、关联容差和刚体对齐选项](../screenshots/P06-source-association.png)
+
+<a id="step-10"></a>
+### 10. 导入并切换多帧 XYZ
+
+先隐藏本页已有原子层。该 XYZ 的三帧分别来自 P04 第 1、27、53 步，源映射见 [P06/source.json](../../shared/data/public/gaussian-v2/P06/source.json)；帧序本身不表示物理时间。此多帧工程保存到 `work/human/gaussian-v2/P06/P06.blend`，按[共同保存方法](../SOP.md#save)保留配套目录。
+
+详细说明见[附录 A9：了解 XYZ 帧与来源行](#appendix-step-10)。
+
+1. 点击导入文件 `shared/data/public/gaussian-v2/P06/p04-three-frames.xyz`，命名为 **P06-frames**。
+2. 打开对象属性，在 **XYZ 帧（XYZ Frames）** 面板中依次点击 **下一步（Next） → 下一步（Next） → 上一步（Previous）**。
+3. 观察构型按第 1 帧（负二面角端点）→ 第 2 帧（过渡态）→ 第 3 帧（正二面角端点）→ 第 2 帧离散切换；每帧均为 O/O/H/H 四原子。
+
+<a id="step-11"></a>
+### 11. 观察随帧更新的二面角
+
+1. 保持 **P06-frames** 活动，进入 **局部选择与标注 → 二面角**。
+2. 配置参数：
+   - **原子顺序**：调整为 `3/1/2/4`
+   - **小数位数**：`3`
+   - **显示测量几何**：勾选
+3. 当前在第 2 帧，先点 **上一步** 回到第 1 帧，再连续点两次 **下一步**，核对：
+   - 第 1 帧：读数显示约 `-124.948°`
+   - 第 2 帧：读数显示约 `+180.000°`
+   - 第 3 帧：读数显示约 `+124.948°`
+4. 确认测量数值、弧线及三角面随当前构型实时自动重算。回退至第 2 帧，截图保存至 `human/screenshots/P06-xyz-frames.png`。
+
+![三帧 XYZ 的当前帧与随帧二面角](../screenshots/P06-xyz-frames.png)
+
+---
+
+<a id="appendix"></a>
+## 附录：参数、原理与输入规范
+
+<a id="appendix-step-01"></a>
+### A1. 了解 XYZ、坐标与源编号
+
+> XYZ 文件保存原子元素与坐标。本教程的坐标单位是 Å，1 Å = 0.1 nm；源原子编号从 1 开始。
+
+<a id="appendix-step-02"></a>
+### A2. 了解三种分子样式与半径
 
 > 几何表示中的样式决定分子怎样画出来。显示键根据原子距离推断；改变样式只改变显示方式。
 
@@ -58,76 +279,15 @@
 
 > 范德华半径是表示原子空间大小的一种参考半径。
 
-</details>
-
-<a id="step-03"></a>
-### 3. 练习氢的显隐
-
-在 **对象属性（Object Properties） → 局部选择与标注（Local Selection and Annotations）** 调整氢的可见性。
-
-- 先点击 **隐藏氢（Hide Hydrogen）**，应只剩氧 1、4。
-- 点击 **保留指定氢（Keep Specified Hydrogen）**，在弹窗的 **氢原子编号（从1开始）（Hydrogen atom numbers (1-based)）** 输入 **2**，点击 **确定（OK）**，应显示 1、2、4。
-- 最后点击 **显示全部氢（Show All Hydrogen）**，恢复六个原子。
-
-<details>
-<summary>了解隐藏氢与保留指定氢</summary>
+<a id="appendix-step-03"></a>
+### A3. 了解隐藏氢与保留指定氢
 
 - **隐藏氢（Hide Hydrogen）**：隐藏全部氢，只查看其他元素。
 - **保留指定氢（Keep Specified Hydrogen）**：显示输入编号对应的氢，隐藏其他氢；其他元素仍可见。**氢原子编号（从1开始）（Hydrogen atom numbers (1-based)）** 填源文件中的氢原子编号。
 - **显示全部氢（Show All Hydrogen）**：恢复全部氢的可见性。
 
-</details>
-
-<a id="step-04"></a>
-### 4. 逐步设置局部选择范围
-
-编号使用源文件中从 1 开始的原子编号；隐藏原子不改变编号。
-
-- 保持 **P06-single** 活动，保持全部氢可见。
-- 按下面 A–E 从上到下连续操作；每行重新点击 **设置局部选择（Set Local Selection）**，选择对应 **显示范围更新方式（Display Range Update Mode）**，填写编号和邻域设置，再点击 **确定（OK）**。
-- 观察分子形状和面板中的 **固定源编号（Fixed source numbers）**。
-
-- **A：指定一个完整水分子**：重新打开 **设置局部选择（Set Local Selection）**，选择 **替换（Replace）**，**源原子编号=1**；开启 **纳入距离邻域（Include distance neighborhood）**，设 **半径（Å）（Radius (Å)）=1.0 Å**，勾选 **包含种子原子（Include seed atoms）**。确认后应显示 **1,2,3**，即第一个水分子的氧和两个氢。
-
-- 截图保存为 `human/screenshots/P06-selection-replace.png`。
-
-![Replace完成后的固定源编号1、2、3及第一个水分子；源原子总数仍为6](../screenshots/P06-selection-replace.png)
-
-- **B：向已有范围添加一个原子**：重新打开 **设置局部选择（Set Local Selection）**，选择 **并集（Union）**，**源原子编号=4**，关闭 **纳入距离邻域（Include distance neighborhood）**。确认后固定编号应为 **1,2,3,4**，显示第一个水分子和第二个氧。
-
-- 截图保存为 `human/screenshots/P06-selection-union.png`。
-
-![Union 将氧4加入已有水分子范围](../screenshots/P06-selection-union.png)
-
-- **C：只保留两个范围共有的原子**：重新打开 **设置局部选择（Set Local Selection）**，选择 **交集（Intersect）**，**源原子编号=1,4**，保持邻域搜索关闭。确认后固定编号应为 **1,4**，只显示两个氧；侧栏的来源原子总数仍为 **6**。
-
-- 截图保存为 `human/screenshots/P06-selection-intersect.png`。
-
-![Intersect 只保留氧1和氧4，来源总数仍为6](../screenshots/P06-selection-intersect.png)
-
-- **D：从已有范围减去一个原子**：重新打开 **设置局部选择（Set Local Selection）**，选择 **差集（Difference）**，**源原子编号=1**，保持邻域搜索关闭。确认后固定编号应为 **4**，只剩氧4。
-
-- 截图保存为 `human/screenshots/P06-selection-difference.png`。
-
-![Difference 从两个氧中排除氧1](../screenshots/P06-selection-difference.png)
-
-- **E：查看范围以外的原子**：重新打开 **设置局部选择（Set Local Selection）**，选择 **反选（Invert）**，无需填写编号或设置邻域。确认后固定编号应为 **1,2,3,5,6**，显示除氧4之外的五个原子。
-
-- 截图保存为 `human/screenshots/P06-selection-invert.png`。
-
-![Invert 显示氧4之外的五个源原子](../screenshots/P06-selection-invert.png)
-
-控件对照：显示范围更新方式对应 **Display Range Update Mode**；源原子编号对应 **Source atom numbers (1-based)**，使用源文件中**从 1 开始**的编号。
-
-演示过程中，在 **N 侧栏 → 当前 QC 对象（Current QC Object）** 核对来源原子总数仍为 **6**；例如 C 行只显示两个氧时，该总数不会变成 2，局部范围以 **固定源编号（Fixed source numbers）** 为准。
-
-- 完成上述演示后，先点击 **按当前步重新计算（Recompute for Current Step）**，用当前构型重新执行已保存的选择操作。本例构型没有改变，**固定源编号（Fixed source numbers）** 应仍为 **1,2,3,5,6**。
-- 再点击 **清除局部限制（Clear Local Restriction）**，应恢复两个完整水分子，共六个原子，再继续创建标注。
-- 清除也会删除已保存的选择操作；之后如需重算，应先重新设置局部选择。
-- 氢显隐等其他显示设置仍然生效。
-
-<details>
-<summary>了解局部选择的七种模式与距离邻域</summary>
+<a id="appendix-step-04"></a>
+### A4. 了解局部选择的七种模式与距离邻域
 
 > 局部选择用于限定当前原子显示层的显示范围，例如只查看一个水分子或某个原子附近的区域，不删除源文件中的原子。显示范围更新方式（Display Range Update Mode）决定怎样修改这个范围：先根据本次输入找出一组原子，再用所选模式替换、扩大或缩小已有范围；反选、清除和重新计算则直接处理已有范围。第一次设置时通常使用替换（Replace）；尚未设置局部限制时，原范围视为全部原子。
 
@@ -145,33 +305,10 @@
 - C：本次输入的两个氧都在原范围内，因此保留；原范围中的氢 2、3 被排除。
 - D：从两个氧中移除氧 1。
 
-</details>
+<a id="appendix-step-05"></a>
+### A5. 标注设置、材质与朝向
 
-<a id="step-05"></a>
-### 5. 创建原子与几何测量标注
-
-- 保持 **P06-single** 活动，重新打开该对象属性，在 **对象属性（Object Properties） → 局部选择与标注（Local Selection and Annotations）** 依次点击下表四个按钮。
-- 编号使用独立整数控件 **原子 1（Atom 1）**、**原子 2（Atom 2）** 等，可直接输入，也可点击左右箭头逐个增减；这里不填写逗号分隔的字符串。
-- 将 **前缀模式（Prefix mode）** 保持为 **默认（Default）**；后三种测量标注的 **小数位数（Decimal places）** 设为 **3**，勾选 **显示测量几何（Show measurement geometry）**，然后点击 **确定（OK）**。
-
-| 按钮 | 独立编号控件与填写顺序 | 应看到的内容 |
-| --- | --- | --- |
-| 原子（Atoms） | **原子标注数量（Number of atom labels）=1**，**原子 1（Atom 1）=1** | `O`，文字可用引线指向源编号为 1 的氧原子 |
-| 距离（Distance） | **原子 1（Atom 1）=1**，**原子 2（Atom 2）=4** | `Distance(1,4) = 2.964 Å`，两氧之间出现虚线 |
-| 角度（Angle） | 初始为 1/2/3，点击 **1 ↔ 2**，得到 2/1/3 | `Angle(2,1,3) = 105.514 °`，以氧 1 为圆心画内角圆弧 |
-| 二面角（Dihedral） | 初始为 1/2/3/4，先点 **1 ↔ 2**，再将 **原子 4（Atom 4）=5**、**原子 3（Atom 3）=4**，得到 2/1/4/5 | `Dihedral(2,1,4,5) = −123.860 °`，圆弧位于氧 1 与氧 4 的中点，两个三角面对应 H2–O1–O4 与 O1–O4–H5 |
-
-- 每组填写 **1–6** 内互不重复的整数编号。
-- 需要调整测量顺序时，使用 **1 ↔ 2**、**2 ↔ 3**、**3 ↔ 4** 等相邻交换按钮，确认前核对最终顺序。
-
-- 标注若重叠，选回 **P06-single**，点击 **打开对象属性（Open Object Properties）**，在 **对象属性（Object Properties） → 局部选择与标注（Local Selection and Annotations） → 源原子标注（Source Atom Annotations）** 找到对应原子编号的行，点击设置图标，修改 **偏移（Offset）** 后点击 **确定（OK）**。
-- 旋转视角，确认六原子球棍、读数、单位和相应测量几何可见；再打开二面角的设置，核对四个整数编号与相邻交换按钮。
-- 截图保存为 `human/screenshots/P06-annotations.png`。
-
-![水二聚体的六原子球棍、源原子编号及距离、角度、二面角](../screenshots/P06-annotations.png)
-
-<details>
-<summary>了解测量几何、坐标、字号与尺寸</summary>
+#### 了解测量几何、坐标、字号与尺寸
 
 > 标注由文字、可选引线和测量几何组成。引线把文字连到标注位置；距离虚线和角度圆弧表达所测的几何关系。小数位数（Decimal places）控制显示精度；偏移（Offset）只移动文字，不改变原子位置或测量值。
 
@@ -193,79 +330,39 @@
 
 **显示引线（Show leader）**、**显示测量几何（Show measurement geometry）** 和 **显示二面角三角面（Show dihedral planes）** 分别控制文字引线、虚线或圆弧、两个三角面；关闭整条标注的 **可见（Visible）** 会隐藏它的所有部件。
 
-</details>
-
-截图后点击 **取消（Cancel）**，保留当前设置。
-
-- 练习改测量对象时，打开距离标注的设置，将 **原子 2（Atom 2）** 从 **4** 改为 **5** 并确认；文字中的编号及虚线端点应随之更新，源原子坐标保持不变。
-- 再打开设置恢复 **原子 2（Atom 2）=4**，确认回到两氧之间的 **2.964 Å**。
-- 标注重选原子和局部选择范围是两项不同操作。
-
-- 需要自己的说明文字时，在设置中将 **前缀模式（Prefix mode）** 改为 **自定义（Custom）**，例如将距离标注的 **前缀（Prefix）** 填为 `氧间距：`，应显示 `氧间距：2.964 Å`。
-- 练习后改回 **默认（Default）**，方便继续对照本页。
-
-<details>
-<summary>了解默认前缀与自定义文字</summary>
+#### 了解默认前缀与自定义文字
 
 原子标注默认仅显示元素符号，例如 `O`；已有原子文字在编辑确认或构型刷新时也应用此规则。测量标注的默认前缀使用上述 `Distance(...) = `、`Angle(...) = `、`Dihedral(...) = ` 格式，不随界面语言切换。
 
 自定义内容整体替换默认前缀；中文、空串和输入的空格均原样保留，后面仍追加实际的元素符号，或测量值及单位。
 
-</details>
-
-- 后续改颜色和材质时，直接使用 Blender 的材质节点。
-- 先在大纲视图（Outliner）展开 **P06-single** 并选中目标标注的文字对象，切到 **着色（Shading）** 工作区，在 **着色器编辑器（Shader Editor）** 中编辑其 **QC annotation material**：例如修改 **原理化 BSDF（Principled BSDF） → 基础色（Base Color）**。
-- 可以先把距离文字改成红色，再回到标注设置中调整偏移，确认文字与虚线仍为红色；练习后在材质节点中恢复黑色。
-
-<details>
-<summary>了解标注材质的共享范围与后期颜色设置</summary>
+#### 了解标注材质的共享范围与后期颜色设置
 
 同一条标注的文字、引线、虚线或圆弧共享这份材质，会一起换色；不同条标注各用独立材质。二面角三角面使用另一份共享材质，需要改面颜色或透明度时选中对应三角面对象再编辑。标注设置窗口不再提供后期颜色控件，编辑布局、切换构型或更新标注均保留手工节点设置。
 
-</details>
-
-- 已有工程的标注不会在打开时自动统一材质。
-- 要让旧标注的文字、引线与测量几何采用上述组内共享方式，先选中所属的原子显示层，打开 **对象属性（Object Properties） → 局部选择与标注（Local Selection and Annotations） → 源原子标注（Source Atom Annotations） → 统一标注材质（Unify Annotation Materials）**，查看预览的待处理标注数量，再确认。
-- 旧材质及其节点保留为可随工程保存的备份，不会被删除；需要取消本次统一时可使用 **编辑（Edit） → 撤销（Undo）**。
-- 完成后按共同方法保存工程，保留新设置和旧材质备份。
-
-<details>
-<summary>了解旧标注材质如何统一与保全</summary>
+#### 了解旧标注材质如何统一与保全
 
 它以每条标注当前的文字材质为基准建立独立副本，并让该条的文字、引线和测量线共享；二面角三角面另用一份材质。
 
 仅修改旧标注的布局或首次补齐测量部件，不会自动统一其材质。
 
-</details>
-
-- 需要重新正对渲染相机时，先按[共同取景方法](../SOP.md#render)为当前案例设置活动相机。
-- 选回 **P06-single**，打开源原子标注面板，点击 **全部朝向相机（Face All to Camera）** 可旋转本层全部标注文字；各行的相机图标只处理该行文字。
-- 可先点一行的相机图标，再点击全部朝向，确认该层其他文字也转向相机。
-- 操作只转动文字，虚线、圆弧、三角面和源构型保持原位，其他原子显示层也不受影响。
-- 未设置活动相机时先创建相机，再执行朝向操作。
-
-保存、重新打开和归档仍按[共同保存方法](../SOP.md#save)保留 `.blend` 与同名 `.qcdata/`。
-
-<details>
-<summary>了解朝向更新与无效测量</summary>
+#### 了解朝向更新与无效测量
 
 创建标注时，文字会自动朝向当前活动相机一次；此后移动相机不会让文字持续跟随。没有活动相机时仍可创建，文字保持默认朝向。
 
 标注会随 XYZ 帧、优化步或 IRC 步读取当前源构型并更新测量几何；对象移动、缩放和振动演示位移不改变科学测量值。两原子重合时，距离仍可显示为零，零长虚线隐藏；0° 角的零长圆弧隐藏，180° 角仍有圆弧。构型无法定义角度或二面角时，文字显示 `undefined`（未定义）及原因，无效测量几何隐藏，不保留上一帧的图形。
 
-</details>
+#### 练习编辑标注、材质与朝向
 
-<a id="layers"></a>
-## 显示层
+- 在 **源原子标注** 对应行点击设置图标，将距离标注的 **原子 2** 从 4 改为 5 并确认，核对文字编号及虚线端点更新；随后恢复为 4，回到 `2.964 Å`。这不会改变源坐标或局部选择范围。
+- 将 **前缀模式** 改为 **自定义**，填写 `氧间距：`，应显示 `氧间距：2.964 Å`；练习后恢复 **默认**。
+- 在 Outliner 展开 **P06-single**，选中目标标注文字，在 **着色（Shading） → 着色器编辑器（Shader Editor）** 编辑 **QC annotation material → 原理化 BSDF → 基础色**。把距离文字改红，再调整偏移，颜色应保留；最后恢复黑色。
+- 旧工程若需要组内共享标注材质，先选原子显示层，在 **源原子标注 → 统一标注材质** 查看预览数量后确认。旧材质保留为备份，可撤销；完成后保存工程。
+- 先按[共同取景方法](../SOP.md#render)设置活动相机，再选回 **P06-single**、重新打开属性，点击某行相机图标或 **全部朝向相机**。只转动对应文字，测量几何和源构型保持原位。
+- 显示层管理的 **上移／下移** 改变导航顺序，眼睛与相机分别控制视口、渲染可见性。比较原层与副本半径时交替只显示一层；完成后恢复需要保留的层。
 
-<a id="step-06"></a>
-### 6. 创建局部显示层
-
-- 选 **P06-single**，重新打开该对象属性，点击 **对象属性（Object Properties） → 创建视图与工具（Create Views and Tools） → 显示视图（Display Views） → 创建局部显示层（Create Local Display Layer）**，在 **源原子编号（从1开始）（Source atom numbers (1-based)）** 输入 **1,4**，关闭 **纳入距离邻域（Include distance neighborhood）**，点击 **确定（OK）**。新层成为活动对象，名称为 **P06-single / Local Selection**，只显示两个氧；原层保留六个原子。
-- 在 Outliner 关闭原层的眼睛图标，便于观察新层；看完后恢复原层、隐藏局部层。
-
-<details>
-<summary>了解局部层、复制层与当前版本视图</summary>
+<a id="appendix-step-06"></a>
+### A6. 了解局部层、复制层与当前版本视图
 
 > 显示层是同一科学数据的一种展示。**N 侧栏 → QC 对象导航（QC Object Navigation）** 按来源分组列出这些对象，只负责选择；**对象属性（Object Properties） → 显示层管理（Display Layer Management）** 负责当前层的显隐、复制、移除及排序。创建额外显示层后，可以单独调整其参数和可见性。
 
@@ -273,31 +370,8 @@
 - **复制（Duplicate）**：复制当前层及其显示参数，适合并排或交替比较不同效果；副本的材质和几何参数可以单独调整。
 - **创建当前版本视图（Create Current-Version View）**：从科学数据新建使用当前插件版本的显示层，适合重新建立视图；原有显示层仍保留。
 
-</details>
-
-<a id="step-07"></a>
-### 7. 复制显示层并比较独立参数
-
-- 在 **N 侧栏 → QC 对象导航（QC Object Navigation）** 点击 **P06-single** 行的选择图标，重新打开该对象属性，在 **显示层管理（Display Layer Management）** 点击 **复制（Duplicate）**。新副本成为活动对象，按 `F2` 命名为 **P06-copy**，重新点击 **打开对象属性（Open Object Properties）**，将 **原子半径（Atom Radius）** 改为 **0.25 Å**。
-- 分别选原层和副本、重新打开各自的对象属性，在显示层管理用眼睛图标交替只显示其中一层，应看到它们的半径分别为 **0.35/0.25 Å**。
-- 本层标注及其测量部件也随之复制，副本采用独立数据和材质；副本内同一条标注仍共享自己的材质，修改副本配色不会改原层标注。
-- 当前层的 **渲染可见性（Render Visibility）** 控制是否参与渲染，**上移（Move Up） / 下移（Move Down）** 调整导航列表中的顺序。
-- 截图保存为 `human/screenshots/P06-layers.png`。
-
-![原层和副本的独立参数与显示层列表](../screenshots/P06-layers.png)
-
-<a id="step-08"></a>
-### 8. 复制显示参数并创建当前版本视图
-
-- 先在 Outliner 用眼睛图标显示 **P06-copy** 和 **P06-single**。
-- 在大纲视图（Outliner）单击 **P06-copy**，再按住 `Ctrl` 单击 **P06-single**，使这两层同时选中、原层为活动对象。
-- 将鼠标移入 **3D 视图（3D Viewport）**，打开 **物体（Object） → QCBlender → 复制显示参数到选中视图（Copy Display Parameters to Selected Views）**，只勾 **几何表示（Geometry Representation）** 并点击 **确定（OK）**。
-- 选回 **P06-copy**，打开它的对象属性，半径应变为 **0.35 Å**。
-- 在 **对象属性（Object Properties） → 显示层管理（Display Layer Management） → 移除（Remove）** 删除副本；原层应仍在。
-- 选回 **P06-single**，重新打开该对象属性，点击 **创建视图与工具（Create Views and Tools） → 显示视图（Display Views） → 创建当前版本视图（Create Current-Version View）**，应新建一个显示层；观察后在 Outliner 隐藏新层，保留 **P06-single** 可见。
-
-<details>
-<summary>了解三组显示参数的复制范围</summary>
+<a id="appendix-step-08"></a>
+### A7. 了解三组显示参数的复制范围
 
 > 多选时最后选中的是活动对象；这里由活动对象提供要复制的参数。QC 对象导航（QC Object Navigation）的选择图标只选一层并保留原来的显隐，多选使用大纲视图（Outliner）。
 
@@ -307,57 +381,15 @@
 - **外观（Appearance）**：复制材质、颜色、透明度及图例显隐等显示设置。
 - **数值设置（Numeric Settings）**：复制等值阈值、颜色数值范围等设置；涉及场时，需要相容的物理量与单位。
 
-</details>
-
-<a id="frames"></a>
-## 关联与多帧
-
-<a id="step-09"></a>
-### 9. 关联 XYZ 与 FCHK 数据源
-
-- 通过 **导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）** 导入 [shared/data/public/gaussian-v2/P03/water-dimer.fchk](../../shared/data/public/gaussian-v2/P03/water-dimer.fchk)，将新原子对象命名为 **P03-atoms**。
-- 在大纲视图（Outliner）单击 **P06-single**，再按住 `Ctrl` 单击 **P03-atoms**，只选这两层，并使 **P03-atoms** 活动。
-- 点击 **打开对象属性（Open Object Properties）**，在对象属性点击 **关联选中数据源（Associate Selected Sources）**，保持 **最大原子偏差（Å）（Maximum atom deviation (angstrom)）=0.001**、关闭 **对齐刚体旋转与平移（Align rigid rotation/translation）**，点击 **确定（OK）**。应提示原子顺序和构型匹配。
-- 关联与刷新按钮只在对象属性提供，侧栏详情用于查看汇总。
-
-- 截图保存为 `human/screenshots/P06-source-association.png`。
-
-![XYZ与同源Gaussian FCHK的多选顺序、关联容差和刚体对齐选项](../screenshots/P06-source-association.png)
-
-- 在 Outliner 隐藏本页已有的全部原子层，方便继续看多帧。
-
-<details>
-<summary>了解数据源关联与构型容差</summary>
+<a id="appendix-step-09"></a>
+### A8. 了解数据源关联与构型容差
 
 > 数据源关联用于确认两份文件能否作为同一原子顺序和构型的数据一起使用。关联后，每份文件仍保留自己的计算信息。
 
 - **最大原子偏差（Å）（Maximum atom deviation (angstrom)）**：对应原子允许的最大距离偏差；本例保持 **0.001 Å**，用于核对 XYZ 与 FCHK 的坐标是否一致。
 - **对齐刚体旋转与平移（Align rigid rotation/translation）**：关闭时直接比较原坐标；开启时允许先整体旋转和平移再比较，适合同一构型以不同朝向或位置保存的情况。整体对齐不改变分子内部构型。
 
-</details>
-
-<a id="step-10"></a>
-### 10. 导入并切换多帧 XYZ
-
-- 导入 [shared/data/public/gaussian-v2/P06/p04-three-frames.xyz](../../shared/data/public/gaussian-v2/P06/p04-three-frames.xyz)，选中新原子对象，命名为 **P06-frames**。
-- 点击 **打开对象属性（Open Object Properties）**，在 **XYZ 帧（XYZ Frames）** 点击 **下一步（Next） → 下一步（Next） → 上一步（Previous）**，应按 **1→2→3→2** 切换；每帧都是 **O/O/H/H** 四个原子。
-- 展开原注释与 **来源行（Source lines）** 可看到当前帧来源。
-- 本例新工程保存到 `work/human/gaussian-v2/P06/P06.blend`。本 XYZ 的三帧分别取自完整 P04 原生路径的第 **1、27、53** 步，即负二面角端点、过渡态、正二面角端点；对应源文件为 `shared/data/public/gaussian-v2/P04/step-001.fchk`、`shared/data/public/gaussian-v2/P04/step-027.fchk` 和 `shared/data/public/gaussian-v2/P04/step-053.fchk`。来源映射保存在 [shared/data/public/gaussian-v2/P06/source.json](../../shared/data/public/gaussian-v2/P06/source.json)。
-
-<details>
-<summary>了解 XYZ 帧与来源行</summary>
+<a id="appendix-step-10"></a>
+### A9. 了解 XYZ 帧与来源行
 
 > XYZ 帧是同一原子顺序的一组坐标，下一步（Next）/上一步（Previous）逐帧切换；来源行（Source lines）标示该帧在原文件中的行区间。帧序本身不提供物理时间。本例只抽取三个代表构型练习 XYZ 切帧，完整53步原生路径及电子能量请看 [IRC专题](07-irc-mayer.md#step-01)；XYZ 不包含这些波函数和能量。
-
-</details>
-
-<a id="step-11"></a>
-### 11. 观察随帧更新的二面角
-
-- 保持 **P06-frames** 活动，重新打开该对象属性，点击 **对象属性（Object Properties） → 局部选择与标注（Local Selection and Annotations） → 二面角（Dihedral）**，在四个编号控件初始为 1/2/3/4 时，先点击 **2 ↔ 3**，再点击 **1 ↔ 2**，核对 **原子 1/2/3/4（Atom 1/2/3/4）** 依次为 **3/1/2/4**；设 **小数位数（Decimal places）=3**，保持默认前缀和测量几何可见，点击 **确定（OK）**。
-- 当前已在第 2 帧，先点击 **上一步（Previous）** 回第 1 帧，再点击 **下一步（Next） → 下一步（Next）** 观察三帧；应依次看到约 **−124.948°、+180.000°、+124.948°**，文字读数、圆弧和三角面随当前构型更新。
-- 当前帧号在 **XYZ 帧（XYZ Frames）** 面板核对，来源构型保留在科学记录中，不额外拼入默认标注文字。
-- 最后点击 **上一步（Previous）** 回第 2 帧。
-- 截图保存为 `human/screenshots/P06-xyz-frames.png`。
-
-![三帧 XYZ 的当前帧与随帧二面角](../screenshots/P06-xyz-frames.png)

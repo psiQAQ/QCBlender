@@ -1,43 +1,59 @@
-# 复杂量子化学案例集
+# 复杂量化案例集 (Complex Examples)
 
-四例使用真实 Gaussian 结果，保留可编辑几何节点和科学数据。均为 STO-3G 小基组计算，适合演示及软件回归，不作为高精度科研计算结论。外部 RDG 预处理仅存在于案例准备脚本，不属于插件内置求值功能。
+本文档记录四个真实 Gaussian 历史验证案例及其重建参数。历史场景和成片已纳入[产物清理](../validation/agent/acceptance/storage-cleanup.md)，下表路径用于定位历史记录，当前不提供这些现成工程。需要使用时按[附录重建流程](#rebuild)从集中输入生成新的 `.blend` 与配套 `.qcdata/`，并验证新候选。
 
-## 打开与展示
+> [!NOTE]
+> 本文案例采用 STO-3G 小基组计算，主要用于检验插件在多类型数据组合下的可视化能力、节点兼容性及渲染表现，不作为高精度科研物理结论。RDG 等预处理计算由离线脚本准备，非插件内置 SCF 计算功能。
 
-历史场景和成片已纳入 [产物清理](../validation/agent/acceptance/storage-cleanup.md)，下表路径用于定位旧报告，不保证文件仍存在。后续从 [集中输入](../validation/agent/v1-acceptance/SOURCES.md) 按本页重建步骤生成场景；所需 ZIP 从当前源码构建并重新验证安装。移动新场景时必须同时复制同名 `.qcdata` 目录。
+---
 
-| 案例 | 场景与成片 | 物理量与参数 |
+## 案例一览与典型参数
+
+移动或复制工程场景时，**必须将同名的 `.qcdata/` 目录与 `.blend` 一同存放**。
+
+| 案例名称与体系特征 | 场景工程与渲染成果 | 涉及物理量与典型显示参数 |
 | --- | --- | --- |
-| DVB 自由基阳离子，20 原子，+1 / 双重态 | 场景（`outputs/complex-examples/orbitals/orbitals.blend`）、轨道与自旋（`outputs/complex-examples/orbitals/orbitals-spin.png`）、线框（`outputs/complex-examples/orbitals/orbital-wire.png`）、点（`outputs/complex-examples/orbitals/orbital-points.png`）、体积雾（`outputs/complex-examples/orbitals/spin-fog.png`） | UB3LYP；Alpha SOMO 35，等值 ±0.045 bohr^-3/2；自旋密度 α−β，等值 ±0.002 electron/bohr³；另存 Beta HOMO 34、总/Alpha/Beta 密度视图 |
-| 中性 DVB，20 原子，单重态 | 场景（`outputs/complex-examples/vibration/vibration.blend`）、振动与 IR（`outputs/complex-examples/vibration/vibration-ir.png`）、两秒动画（`outputs/complex-examples/vibration/vibration-ir.mp4`） | B3LYP；54 个模式；默认最强 IR 模式 45，3396.4292 cm⁻¹；显示振幅 0.35 Å，播放 1 Hz，非物理时间 |
-| 色氨酸，27 原子，中性单重态 | 场景（`outputs/complex-examples/polar/polar.blend`）、ESP / 电荷 / 偶极（`outputs/complex-examples/polar/density-esp-charges.png`）、ESP 切片（`outputs/complex-examples/polar/esp-slice.png`） | RHF；密度等值 0.004 electron/bohr³；ESP 色域 ±0.05 hartree/e；Mulliken 电荷色域 ±0.6 e；偶极显示缩放 1.5 Å/D |
-| 水二聚体，6 原子，中性单重态 | 场景（`outputs/complex-examples/interaction/interaction.blend`）、氢键区域（`outputs/complex-examples/interaction/hydrogen-bond-rdg.png`） | PBE；外部 RDG=0.5，以 sign(λ₂)ρ 着色，−0.035 / 0 / +0.02 electron/bohr³ 对应蓝 / 绿 / 红 |
+| **DVB 自由基阳离子**<br>(20 原子，+1 价，双重态) | • 场景：`outputs/complex-examples/orbitals/orbitals.blend`<br>• 轨道与自旋密度：`orbitals-spin.png`<br>• 体积雾：`spin-fog.png` | • 方法：UB3LYP<br>• Alpha SOMO (轨道 35)，等值面 ±0.045 bohr^-3/2<br>• 自旋密度 (α−β)，等值面 ±0.002 e/bohr³<br>• 包含 Beta HOMO (34) 及全密度分量视图 |
+| **中性 DVB 分子**<br>(20 原子，中性单重态) | • 场景：`outputs/complex-examples/vibration/vibration.blend`<br>• 简正振动与 IR 谱：`vibration-ir.png`<br>• 振动动画：`vibration-ir.mp4` (24 fps) | • 方法：B3LYP<br>• 54 个简正振动模式<br>• 默认最强红外模式 45 (3396.43 cm⁻¹)<br>• 振幅缩放 0.35 Å，动画播放频率 1 Hz（展示用标度） |
+| **色氨酸分子**<br>(27 原子，中性单重态) | • 场景：`outputs/complex-examples/polar/polar.blend`<br>• ESP / 电荷 / 偶极：`density-esp-charges.png`<br>• ESP 空间截面切片：`esp-slice.png` | • 方法：RHF<br>• 电子密度等值面：0.004 e/bohr³<br>• ESP 表面着色色域：±0.05 hartree/e<br>• Mulliken 电荷着色范围：±0.6 e；偶极矢量比例：1.5 Å/Debye |
+| **水二聚体弱相互作用**<br>(6 原子，中性单重态) | • 场景：`outputs/complex-examples/interaction/interaction.blend`<br>• 氢键 RDG 区域：`hydrogen-bond-rdg.png` | • 方法：PBE<br>• RDG 等值面：0.5，以 sign(λ₂)ρ 映射着色<br>• 映射范围：−0.035 / 0 / +0.02 e/bohr³ (蓝/绿/红) |
 
-中性 DVB 与阳离子属于不同计算，分开保存。色氨酸 FCHK 与 Log 原子顺序一致，最大坐标差约 4.99e-7 Å；偶极以 e·bohr 与 Debye 换算后核对。
+---
 
-## 操作与历史能力覆盖
+## 核心操作与交互要点
 
-1. 在轨道场景的 QCBlender 显示层选择左侧轨道，调整 `Isovalue`、`Link Thresholds`、正负相位、材质及透明度。切换 solid / wire / points。正负表示轨道相位；其他已生成物理量默认隐藏，可分别启用。
-2. 复制显示层，改变阈值或材质，再排序或删除复制层。复制层的外层节点图独立；进入 Geometry Nodes 可查看公共等值面、样式、采样和颜色映射节点的连接。
-3. 色氨酸场景中，密度决定表面位置，ESP 决定颜色。切片与原子 ESP 映射作为隐藏替代视图保留。右侧电荷空间填充模型可切换球棍或只显示键；偶极保持物理方向及源坐标原点。
-4. 轨道视图已有裁剪节点，可启用平面或包围盒。选择场视图，将 3D Cursor 放入网格，使用 `Read Field at 3D Cursor` 读取数值及单位。无效/网格外采样不作为物理零值。
-5. 振动场景中选择分子，切换模式并播放时间轴，IR 选中峰随之变化。图注描述默认模式，手动换模式后应同步修改图注再出图；展示振幅及播放速度不是实际振动振幅和频率。
-6. 相互作用场景分别绑定 RDG 几何来源与带符号密度颜色来源。RDG 等值、颜色范围和颜色中心独立可调；中心明确为零。
+1. **多层轨道与自旋显示**：
+   在轨道场景中，通过显示层分别控制正负相位、材质着色、实体/线框/点云（Solid / Wire / Points）显示。调整等值阈值时，正负相位可保持对称联动，也可解除联动独立调节。
+2. **图层复制与节点隔离**：
+   复制显示层后，新图层将获得独立的外层几何节点修改器参数。可分别指定不同的截断阈值或材质样式，底层计算网格与科学缓存保持只读共享。
+3. **静电势表面着色与空间探针**：
+   在色氨酸案例中，以电子密度曲面作为空间几何载体，将静电势场数值直接映射到曲面材质。场景内保留了 2D 剖面切片与原子电荷模型，并可通过 3D 游标探针读取网格点的具体数值。
+4. **振动模式与红外光谱联动**：
+   在振动工程中切换振动模式序号并播放时间轴，分子将沿简正坐标运动，同时视口中的 IR 光谱峰标会自动定位到对应吸收频率。
+5. **弱相互作用分析 (RDG / NCI)**：
+   利用几何节点将 RDG 空间场作为等值面生成源，同时绑定带符号密度 `sign(λ₂)ρ`（ρ 乘密度 Hessian 第二特征值的符号） 作为色彩源，实现经典 NCI 绿/蓝区域映射。
 
-| 能力 | 历史案例证据 |
-| --- | --- |
-| Log/FCHK/Cube 导入、状态与单位 | 四例真实导入；来源清单、`source-inspection.json` |
-| MO / 总 / Alpha / Beta / 自旋密度 | 轨道案例；总密度=Alpha+Beta、自旋=Alpha−Beta、69电子占据断言 |
-| ESP、原子电荷、偶极 | 色氨酸场景及匹配文件坐标、偶极核对 |
-| 节点组合、正负相位、阈值、表面/线框/点 | 轨道实际网格、三种渲染及独立阈值检查 |
-| 雾、切片、独立场着色 | 自旋雾、ESP 切片、RDG 表面着色 |
-| 图层复制/排序/删除、裁剪、游标 | 轨道操作断言；原视图阈值独立、科学缓存不变 |
-| 振动、IR、原生动画导出 | 54 模式、48 帧 PNG、24 fps MP4；冷重开后解码帧数 |
-| 工程可迁移 | 复制到 `portable/<case>` 后，新进程打开、核对网格和摘要、重新渲染 |
+---
 
-撤销重做、异常输入、解析场精度等细节继续由现有 M6/M7 验收覆盖，见 [验证说明](VALIDATION.md)。案例集不替代全部回归测试。
+## 数据来源与依赖规范
 
-## 来源与外部预处理
+各案例的上游来源与校验记录详见 [案例来源配置](../validation/shared/data/complex-example-sources.json)：
+
+- **cclib 测试数据集** (BSD-3-Clause)：DVB 阳离子与色氨酸算例原始输出。
+- **ChemTools 测试数据** (GPL-3.0+)：水二聚体与弱相互作用原始结构。
+
+离线预处理脚本使用 GBasis 计算空间网格中的密度一阶梯度与 Hessian 矩阵，生成的 RDG 与密度特征值网格遵循标准量化定义。
+
+---
+
+<a id="appendix"></a>
+## 附录：来源处理与复建
+
+- [来源、缩放及历史数值核对](#source-processing)
+- [从集中输入重建案例](#rebuild)
+
+<a id="source-processing"></a>
+### 来源、缩放及历史数值核对
 
 [来源清单](../validation/shared/data/complex-example-sources.json) 固定上游提交、URL、SHA-256 和仓库许可证。原始文件及许可证留在忽略的 `validation/shared/data/local/complex-examples/`，统一索引见 [数据目录](../validation/shared/data/README.md)。
 
@@ -50,9 +66,11 @@
 
 上游 NCIPLOT `dens.cube` 为 **100×sign(λ₂)ρ**，参考 RDG 中 457 点为过滤哨兵。去除倍率并仅对照未过滤 RDG 点，最大绝对差分别约 4.71e-6 electron/bohr³、5.02e-5。导数另与中心差分交叉检查；生成 Cube 经写入重读核对。
 
-## 复建
 
-在仓库根目录 PowerShell 执行。先按 [DEVELOPMENT](DEVELOPMENT.md) 从当前源码构建并安装新候选，沿用该隔离配置及 `$blender` / `$blenderPython`。已有输入先运行 `tools/local_inputs.py`；仅缺输入且下载已获授权时运行 `tools/fetch_complex_examples.py`。以下脚本固定写入 `outputs/complex-examples/`，先确认该目录没有需保护的旧工程。本轮未重跑完整四例流程（Not Run），下表数值为历史样本依据。
+<a id="rebuild"></a>
+### 从集中输入重建案例
+
+在仓库根目录 PowerShell 执行。先按 [DEVELOPMENT](DEVELOPMENT.md) 从当前源码构建并安装新候选，沿用该隔离配置及 `$blender` / `$blenderPython`。已有输入先运行 `tools/local_inputs.py`；仅缺输入且下载已获授权时运行 `tools/fetch_complex_examples.py`。以下脚本固定写入 `outputs/complex-examples/`，先确认该目录没有需保护的旧工程。
 
 ```powershell
 & $blenderPython -I tools/local_inputs.py
@@ -76,4 +94,4 @@ foreach ($case in @('orbitals', 'polar', 'interaction', 'vibration')) {
 
 `source-inspection.json` 记录科学核对；各例 `report.json` 保存网格、参数、耗时、缓存命中和图层，`reopen.json` 保存可迁移性检查。色氨酸网格 47×33×46，间距 0.28 Å，首次 ESP 本机实测约八分钟，后续命中缓存；该观察值不是性能保证。512 MiB 是求值预算，不是实测进程峰值，且不包含 Blender 和渲染开销。
 
-独立人工验收及发布仍为 **Not Run**。技术检查和 Agent 画面检查不替代用户对操作体验及科研适用性的确认。
+上述数值和运行耗时为历史记录，本次文档修订未重跑四例流程。当前候选与独立验收状态以 [VALIDATION](VALIDATION.md) 为准；历史技术检查和 Agent 画面检查不替代独立用户或科研验收。

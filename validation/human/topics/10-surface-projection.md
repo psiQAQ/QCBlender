@@ -1,4 +1,4 @@
-# 表面距离投影
+# 10. 表面距离投影
 
 [返回教程目录](../SOP.md#topics)
 
@@ -11,12 +11,15 @@
   - [4. 读取网格点并导出数据](#step-04)
   - [5. 保存并重新打开工程](#step-05)
 - [准备自己的输入](#inputs)
+- [附录：参数、原理与输入规范](#appendix)
+  - [A1. 理解投影深度、有效性与四份输入](#appendix-meaning)
+  - [A2. 了解色表、深度色域与自动等值线](#appendix-step-03)
+  - [A3. 了解网格索引和导出范围](#appendix-step-04)
+  - [A4. 准备自定义输入](#appendix-inputs)
 
-路径相对材料根目录，即同时包含 `human/` 和 `shared/` 的目录。先按[入门教程](../SOP.md#install)安装插件。本页用项目自建的六原子水二聚体构型及 Multiwfn 实际计算结果练习二维深度图的配色、等值线和点值读取。
+路径均相对教程材料根目录（同时含 `human/` 和 `shared/`）。先完成[安装](../SOP.md#install)，按[准备新工程](../SOP.md#new-scene)开始；每次换对象后重新打开其对象属性。
 
-本例完整输入位于教程材料的 `shared/data/public/scientific-displays/water-dimer-vdw-v1/`。分子必须保持距离图生成时的朝向，不能与其他分子的结果配对。构型来源、旋转和计算参数见该目录的 NOTICE.md。
-
-本页截图使用案例 `SD02-` 前缀。
+---
 
 <a id="example"></a>
 ## 导入并观察真实案例
@@ -24,33 +27,93 @@
 <a id="step-01"></a>
 ### 1. 准备同朝向的静态分子
 
-- 按[准备新工程](../SOP.md#new-scene)进入物体模式，点击 **N 侧栏 → QCBlender → 导入与导出（Import and Export） → 导入 Gaussian / Cube / XYZ（Import Gaussian / Cube / XYZ）**，选择 `shared/data/public/scientific-displays/water-dimer-vdw-v1/reference.xyz`。
-- 在 Outliner 选中导入的 **6 原子静态分子**，保留其原始朝向。若场景中还有其他案例对象，先隐藏它们。
+使用生成距离图的同源静态构型和朝向，不使用另行对齐后的坐标或动态轨迹。构型与旋转条件见[本例 NOTICE](../../shared/data/public/scientific-displays/water-dimer-vdw-v1/NOTICE.md)。
 
-此处必须使用生成距离图的静态构型；不要换成自动对齐后的另一份坐标。轨迹、优化或 IRC 动态对象不能作为参考。
+1. 点击 **N 侧栏 → 导入与导出 → 导入 → 导入 Gaussian / Cube / XYZ**。
+2. 选择文件 `shared/data/public/scientific-displays/water-dimer-vdw-v1/reference.xyz`。
+3. 导入 6 原子静态分子，保持其原始坐标与朝向。
 
 <a id="step-02"></a>
 ### 2. 导入距离图、扫描声明与日志
 
-- 保持选中第 1 步的分子，点击 **N 侧栏 → 导入与导出（Import and Export） → 导入外部结果（Import External Results） → 空间场分析（Spatial Field Analysis） → 表面距离投影（Surface Distance Projection）**，按下表选择四份文件并确认。
+深度为沿负 Z 扫描首次命中的 `z_hit-z_start`；有效、未命中和未知是三种不同状态，不能把扫描底值当作已测表面深度。
 
-| 控件 | 输入文件 |
-| --- | --- |
-| 距离图文本（Distance map text） | `shared/data/public/scientific-displays/water-dimer-vdw-v1/distmap.txt` |
-| 投影扫描 JSON（Projection scan JSON） | `shared/data/public/scientific-displays/water-dimer-vdw-v1/scan.json` |
-| Multiwfn 生成日志（Multiwfn generation log） | `shared/data/public/scientific-displays/water-dimer-vdw-v1/mwfn_log.txt` |
-| 有效性 CSV（可选）（Validity CSV (optional)） | `shared/data/public/scientific-displays/water-dimer-vdw-v1/validity.csv` |
+详细说明见[附录 A1：理解投影深度、有效性与四份输入](#appendix-meaning)。
 
-- 截图保存为 `human/screenshots/SD02-import-dialog.png`。
+1. 保持选中静态分子。
+2. 点击 **N 侧栏 → 导入与导出 → 导入外部结果 → 空间场分析 → 表面距离投影（Surface Distance Projection）**。
+3. 配置导入文件清单：
+   - **距离图文本（Distance map text）**：`shared/data/public/scientific-displays/water-dimer-vdw-v1/distmap.txt`
+   - **投影扫描 JSON（Projection scan JSON）**：`shared/data/public/scientific-displays/water-dimer-vdw-v1/scan.json`
+   - **Multiwfn 生成日志**：`shared/data/public/scientific-displays/water-dimer-vdw-v1/mwfn_log.txt`
+   - **有效性 CSV（可选）**：`shared/data/public/scientific-displays/water-dimer-vdw-v1/validity.csv`
+4. 确认导入，截图保存至 `human/screenshots/SD02-import-dialog.png`。
 
 ![表面距离投影导入的距离图、扫描声明、生成日志与有效性CSV](../screenshots/SD02-import-dialog.png)
 
-- 分子旁应出现独立二维投影图。选中图，点击 **N 侧栏 → 当前 QC 对象（Current QC Object） → 打开对象属性（Open Object Properties）**，展开 **表面距离投影（Surface Distance Projection）**，应显示网格 **61 × 41**、有效 **849**、未命中 **1652**、未知 **0**。
-- 保持选中图，按小键盘 `.` 居中观察。需要清楚查看图表时，关闭视口的 **显示叠加层（Show Overlays）**，隐藏网格和父子关系辅助线。
+5. 分子旁生成独立二维投影图。选中图并打开对象属性，确认网格规模为 `61 × 41`，有效点 849，未命中 1652，未知 0。若不提供有效性 CSV，底值点应保留为未知，不能自动判为未命中。
+
+<a id="step-03"></a>
+### 3. 调整色表、原子投影和等值线
+
+详细说明见[附录 A2：了解色表、深度色域与自动等值线](#appendix-step-03)。
+
+1. 选中投影图，在对象属性中点击 **表面投影显示设置（Surface Projection Display）**。
+2. 配置参数：
+   - **投影色表（Projection palette）**：`Cividis`
+   - **显示原子投影（Show projected atoms）**：开启
+   - **显示深度色标（Show depth legend）**：开启
+   - **显示投影等值线（Show projection contours）**：开启
+   - **深度等值值（Å；留空则自动）**：`-3.8, -3.2, -2.6`
+3. 确认设置，截图保存至 `human/screenshots/SD02-display-dialog.png`。
+
+![投影Cividis色表、原子投影、深度色标与三组等值线设置](../screenshots/SD02-display-dialog.png)
+
+4. 视口中呈现带有三组等值线轮廓与深度标尺的投影平面。截图保存至 `human/screenshots/SD02-surface-projection.png`。
+
+![水二聚体距离投影、Cividis 色表、等值线与点值面板](../screenshots/SD02-surface-projection.png)
+
+<a id="step-04"></a>
+### 4. 读取网格点并导出数据
+
+详细说明见[附录 A3：了解网格索引和导出范围](#appendix-step-04)。
+
+1. 在对象属性中点击 **读取投影网格点（Inspect Projection Point）**，设置坐标参数：
+   - **X 索引（从 0 开始）**：`30`
+   - **Y 索引（从 0 开始）**：`20`
+   - 确认回显：X 0, Y 0 Å, 深度 `-3.05 Å` (有效点)。
+2. 再次读取网格点：
+   - **X 索引 / Y 索引**：`0 / 0`
+   - 确认回显：X -4, Y -3 Å, 深度 `-8 Å` (未命中状态)。截图保存至 `human/screenshots/SD02-point-miss.png`。
+
+![索引0、0的扫描底值−8 Å及明确的未命中状态](../screenshots/SD02-point-miss.png)
+
+3. 按[共同导出步骤](../SOP.md#export)点击 **导出科学数据**，选择数据类型 `PROJECTION`，保存到 `work/human/gaussian-v1/SD02-export/`；保留 `surface_projection.csv` 与 `metadata.json`。
+
+<a id="step-05"></a>
+### 5. 保存并重新打开工程
+
+1. 将工程保存为 `work/human/gaussian-v1/SD02-projection.blend`（配套 `.qcdata/` 目录同步生成）。
+2. 退出并重开工程，再次读取点 `(30, 20)`，确认深度仍稳定显示为 `-3.05 Å`。
+
+---
+
+<a id="inputs"></a>
+## 准备自己的输入
+
+详细说明见[附录 A4：准备自定义输入](#appendix-inputs)。
+
+使用自定义体系时，保留同源、同朝向的静态分子、原始三列距离文本、扫描 JSON 与完整生成日志，按本节附录的格式填写。只有生成过程或独立参照能确定逐点命中状态时，才提供有效性 CSV；否则保留未知。
+
+---
+
+<a id="appendix"></a>
+## 附录：参数、原理与输入规范
+
+<a id="appendix-meaning"></a>
+### A1. 理解投影深度、有效性与四份输入
 
 <a id="meaning"></a>
-<details>
-<summary>理解投影深度、有效性与四份输入</summary>
 
 > 表面距离投影是在每个 XY 网格位置沿负 Z 扫描，记录首次命中表面的深度 `z_hit-z_start`，单位为 Å。深度通常为负值；它不是三维电子密度场，也不是到原子核的距离。
 
@@ -65,83 +128,28 @@
 
 若保持前三项不变、留空有效性 CSV，本例将显示有效 `849`、未知 `1652`；这些底值应为灰色。这两种结果对应不同的已知信息，不能把灰色点当作命中表面。
 
-</details>
-
-<a id="step-03"></a>
-### 3. 调整色表、原子投影和等值线
-
-- 保持选中投影图，在 **对象属性 → 表面距离投影（Surface Distance Projection）** 点击 **表面投影显示设置（Surface Projection Display）**，按下表设置并确认。
-
-| 控件 | 输入值 |
-| --- | --- |
-| 投影色表（Projection palette） | Cividis |
-| 显示原子投影（Show projected atoms） | 开启 |
-| 显示深度色标（Show depth legend） | 开启 |
-| 显示投影等值线（Show projection contours） | 开启 |
-| 深度等值值（Å；留空则自动）（Depth levels (Å; blank = automatic)） | `-3.8,-3.2,-2.6` |
-
-- 截图保存为 `human/screenshots/SD02-display-dialog.png`。
-
-![投影Cividis色表、原子投影、深度色标与三组等值线设置](../screenshots/SD02-display-dialog.png)
-
-- 图中应出现对应的三组等值线，并保留原子投影和色标；未命中和未知区域保持空缺，不跨接或填洞。
-- 截图保存为 `human/screenshots/SD02-surface-projection.png`。
-
-![水二聚体距离投影、Cividis 色表、等值线与点值面板](../screenshots/SD02-surface-projection.png)
-
-- 可重新打开显示设置，试选 Viridis 后取消，图中应保留 Cividis；确认修改后可用 **编辑 → 撤销 / 重做**恢复前后设置。
-
-<details>
-<summary>了解色表、深度色域与自动等值线</summary>
+<a id="appendix-step-03"></a>
+### A2. 了解色表、深度色域与自动等值线
 
 Viridis 和 Cividis 只改变配色。自动色域取有效点的深度范围；比较多张图时，开启 **手动深度色域（Manual depth range）**，为它们输入相同的最小值和最大值，且最小值必须小于最大值。
 
 **深度等值值（Å；留空则自动）（Depth levels (Å; blank = automatic)）** 留空时，程序按当前色域自动选取内部等值值。**以灰色显示未知点（Show unknown points in gray）** 只控制未知点是否可见，不改变其有效性。
 
-</details>
-
-<a id="step-04"></a>
-### 4. 读取网格点并导出数据
-
-- 在 **表面距离投影（Surface Distance Projection）** 面板点击 **读取投影网格点（Inspect Projection Point）**，设 **X 索引（从 0 开始）（X index (0-based)）=30**、**Y 索引（从 0 开始）（Y index (0-based)）=20** 并确认。面板应显示 **X 0、Y 0 Å、深度 −3.05 Å、有效**。
-- 再次读取，将 X、Y 索引都设为 **0**，应显示 **X −4、Y −3 Å、深度 −8 Å、未命中**。这里的 `-8` 是保留的扫描底值，不是已测得的表面深度。
-
-- 截图保存为 `human/screenshots/SD02-point-miss.png`。
-
-![索引0、0的扫描底值−8 Å及明确的未命中状态](../screenshots/SD02-point-miss.png)
-
-- 点击面板中的 **导出科学数据（Export Scientific Data）**，按[公共导出步骤](../SOP.md#export)选择 **数据（Data）=PROJECTION**，保存到 `work/human/gaussian-v1/SD02-export/`，应得到 `surface_projection.csv` 和随附元数据。
-
-<details>
-<summary>了解网格索引和导出范围</summary>
+<a id="appendix-step-04"></a>
+### A3. 了解网格索引和导出范围
 
 索引从 `0` 开始，本例 X 为 `0–60`，Y 为 `0–40`。索引用于定位排序后的网格点，点的坐标和深度仍读取原始数据。
 
 `surface_projection.csv` 保留全部 2,501 个点的索引、源 XY、绝对 XY、原始深度与状态；随附元数据保留扫描声明和来源。显示隐藏或色域裁剪不会删除导出点。
 
-</details>
+<a id="appendix-inputs"></a>
+### A4. 准备自定义输入
 
-<a id="step-05"></a>
-### 5. 保存并重新打开工程
-
-- 若第 2 步为观察图表关闭了视口叠加层，先恢复原设置，再按[保存与重开](../SOP.md#save)保存为 `work/human/gaussian-v1/SD02-projection.blend`，保留同名 `.qcdata/`。
-- 重开后选中投影图，查看点数、Cividis 色表、等值线、原子投影与最后读取的网格点；再次读取 **(30,20)**，应仍显示 **深度 −3.05 Å、有效**。
-- 移动工程时，同时移动 `.blend` 和 `.qcdata/`。
-
-<a id="inputs"></a>
-## 准备自己的输入
-
-使用自己的案例时，先保留生成距离图的静态分子、原始三列距离图、扫描 JSON 和完整 Multiwfn 日志，再从第 1 步开始。只有能确定逐点命中状态时才补充有效性 CSV；各文件要求见下方说明。
-
-<details>
-<summary>检查距离图格式、网格与大小限制</summary>
+#### 检查距离图格式、网格与大小限制
 
 距离图必须是未缩放的 Å 单位三列 `X Y depth`，每行一个点；支持乱序行和非方形规则网格。重复点、缺点、非有限值、非规则网格或与声明冲突的坐标会被拒绝。每轴至少两个点，总数不超过 250,000；每份文本输入不超过 64 MiB。
 
-</details>
-
-<details>
-<summary>填写扫描 JSON 并核对生成日志</summary>
+#### 填写扫描 JSON 并核对生成日志
 
 扫描 JSON 必须明确来源版本、物理量、坐标模式和范围。下面是本例的声明；自己的数据须按实际生成设置填写，不能直接套用其中数值：
 
@@ -176,11 +184,6 @@ vdW 表面使用 `union_of_open_vdw_spheres` 和 `radius_scale`；若实际生�
 
 日志必须保留 Multiwfn 版本、最后一组扫描参数、表面条件及 `distmap.txt` 导出信息；声明和日志不符时应核查生成记录，不要修改日志来绕过检查。选择的静态分子与结果同源、同朝向仍由操作者确认，程序不能从三列数值证明任意分子的对应关系。
 
-</details>
-
-<details>
-<summary>准备可选的有效性 CSV</summary>
+#### 准备可选的有效性 CSV
 
 可选掩码的表头必须为 `ix,iy,state`，完整覆盖排序后的全部网格点。状态 `0` 为未命中、`1` 为有效、`2` 为未知；未命中只能用于扫描底值。只有生成过程或独立参照足以判断时才填写明确状态，否则省略掩码并保留未知。
-
-</details>
